@@ -1,0 +1,15 @@
+
+
+call iniciar(){
+
+    pular();
+
+}
+
+
+act pular(){
+
+
+}
+
+
