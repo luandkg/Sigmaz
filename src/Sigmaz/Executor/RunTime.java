@@ -1,65 +1,167 @@
 package Sigmaz.Executor;
 
-import Sigmaz.Compilador.AST;
+import Sigmaz.Utils.AST;
+import Sigmaz.Utils.Documentador;
+import Sigmaz.Utils.Documento;
 
 import java.util.ArrayList;
 
 public class RunTime {
 
-	private ArrayList<AST> mASTS;
-	private ArrayList<String> mErros;
+    private ArrayList<AST> mASTS;
+    private ArrayList<String> mErros;
+    private DataTypes mDataTypes;
 
-	public RunTime() {
+    private Escopo mEscopoGlobal;
 
-		mASTS = new ArrayList<>();
+    public RunTime() {
 
-		mErros = new ArrayList<>();
+        mASTS = new ArrayList<>();
 
-	}
+        mErros = new ArrayList<>();
 
-	public ArrayList<String> getErros() {
-		return mErros;
-	}
+        mDataTypes = new DataTypes();
 
-	public void init(ArrayList<AST> eASTs) {
-		mASTS = eASTs;
+        mEscopoGlobal=null;
 
-		mErros.clear();
+    }
 
-		Escopo OlimpusInternal = new Escopo(this,null);
-		AST mOLIMPUS = null;
+    public ArrayList<AST> getASTS() {
+        return mASTS;
+    }
 
-		for (AST ASTC : mASTS) {
+    public ArrayList<String> getErros() {
+        return mErros;
+    }
 
-			 if (ASTC.mesmoTipo("OLIMPUS")) {
-				 mOLIMPUS = ASTC;
-			 }
-		}
+    public void init(String eArquivo) {
 
-		if (mOLIMPUS != null) {
+        mASTS.clear();
+        mErros.clear();
 
-			for (AST ASTC : mOLIMPUS.getBranch("LIBS").getASTS()) {
+        Documentador DC = new Documentador();
 
-
-
-			}
+        mASTS = DC.Decompilar(eArquivo);
 
 
-			for (AST ASTC : mOLIMPUS.getBranch("INIT").getASTS()) {
-				if (OlimpusInternal.run(ASTC) == false) {
-					break;
-				}
+    }
 
-				if (mErros.size() > 0) {
-					break;
-				}
 
-			}
-		} else {
+    public Escopo getEscopoGlobal(){
+        return mEscopoGlobal;
+    }
 
-			mErros.add("Olimpus Vazio !");
-		}
+    public void run() {
 
-	}
+
+        Escopo Global = new Escopo(this, null);
+        Global.setNome("GLOBAL");
+
+        mEscopoGlobal=Global;
+
+        for (AST ASTCGlobal : mASTS) {
+
+            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
+
+                for (AST ASTC : ASTCGlobal.getASTS()) {
+
+
+                    if (ASTC.mesmoTipo("FUNCTION")) {
+                        Global.guardar(ASTC);
+                    } else if (ASTC.mesmoTipo("ACTION")) {
+                        Global.guardar(ASTC);
+                    }
+                }
+
+                for (AST ASTC : ASTCGlobal.getASTS()) {
+
+                    if (ASTC.mesmoTipo("DEFINE")) {
+                        Global.definirVariavel(ASTC);
+                    } else if (ASTC.mesmoTipo("MOCKIZ")) {
+                        Global.definirConstante(ASTC);
+                    } else if (ASTC.mesmoTipo("INVOKE")) {
+
+                        Run_Invoke mAST = new Run_Invoke(this, Global);
+                        mAST.init(ASTC);
+
+                    }
+
+                }
+
+                for (AST ASTC : ASTCGlobal.getASTS()) {
+
+                    if (ASTC.mesmoTipo("CALL")) {
+
+
+                        AST mSending = ASTC.getBranch("SENDING");
+
+                        Run_Action mAST = new Run_Action(this, Global);
+                        mAST.init(mSending);
+
+                    }
+
+
+                    if (mErros.size() > 0) {
+                        break;
+                    }
+
+                }
+
+
+            }
+        }
+
+        if (mASTS.size() == 0) {
+            mErros.add("Sigmaz Vazio !");
+        }
+
+
+    }
+
+    public boolean isPrimitivo(String eTipo) {
+        return mDataTypes.isPrimitivo(eTipo);
+    }
+
+    public String getArvoreDeInstrucoes() {
+
+        Documento DocumentoC = new Documento();
+
+        DocumentoC.adicionarLinha("");
+
+        for (AST a : getASTS()) {
+
+            if (a.getValor().length() > 0) {
+                DocumentoC.adicionarLinha(" " + a.getTipo() + " -> " + a.getNome() + " : " + a.getValor());
+            } else {
+                DocumentoC.adicionarLinha(" " + a.getTipo() + " -> " + a.getNome());
+            }
+
+            SubArvoreDeInstrucoes("   ", a, DocumentoC);
+
+        }
+
+        DocumentoC.adicionarLinha("");
+
+        return DocumentoC.getConteudo();
+    }
+
+    private void SubArvoreDeInstrucoes(String ePref, AST ASTC, Documento DocumentoC) {
+
+        for (AST a : ASTC.getASTS()) {
+
+            if (a.getValor().length() > 0) {
+                DocumentoC.adicionarLinha(ePref + a.getTipo() + " -> " + a.getNome() + " : " + a.getValor());
+
+            } else {
+                DocumentoC.adicionarLinha(ePref + a.getTipo() + " -> " + a.getNome());
+
+            }
+
+            SubArvoreDeInstrucoes(ePref + "   ", a, DocumentoC);
+
+        }
+
+    }
+
 
 }

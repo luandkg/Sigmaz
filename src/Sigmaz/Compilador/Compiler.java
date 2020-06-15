@@ -3,17 +3,10 @@ package Sigmaz.Compilador;
 import Sigmaz.Lexer.Lexer;
 import Sigmaz.Lexer.Token;
 import Sigmaz.Lexer.TokenTipo;
-import Sigmaz.Utils.Documentador;
-import Sigmaz.Utils.Requerimento;
+import Sigmaz.Utils.*;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-
 
 
 public class Compiler {
@@ -24,35 +17,34 @@ public class Compiler {
     private ArrayList<Token> mTokens;
     private ArrayList<AST> mASTS;
 
-    private ArrayList<String> mErros_Lexer;
-    private ArrayList<String> mErros_Compiler;
+    private ArrayList<GrupoDeErro> mErros_Lexer;
+    private ArrayList<GrupoDeErro> mErros_Compiler;
 
     private ArrayList<String> mRequisitados;
 
     private String mLocal;
+    private String mArquivo;
 
     private int mIChars;
     private int mITokens;
 
-    private ArrayList<Requerimento> mRequerimentos;
-
     public Compiler() {
+
+        mArquivo = "";
 
         mIndex = 0;
         mTamanho = 0;
 
-        mIChars=0;
-        mITokens=0;
+        mIChars = 0;
+        mITokens = 0;
 
         mTokens = new ArrayList<>();
         mASTS = new ArrayList<>();
         mErros_Lexer = new ArrayList<>();
         mErros_Compiler = new ArrayList<>();
         mLocal = "";
-        mRequerimentos = new ArrayList<>();
         mRequisitados = new ArrayList<>();
 
-        RequirimentosCarregar();
 
     }
 
@@ -72,8 +64,22 @@ public class Compiler {
         mIndex += 1;
     }
 
+    public String getLocal(){return mLocal;}
+
+
     public Token getTokenCorrente() {
         return mTokens.get(mIndex);
+    }
+
+    public Token getTokenAvante() {
+        mIndex += 1;
+
+        if (mIndex < mTamanho) {
+            return mTokens.get(mIndex);
+        } else {
+            return new Token(TokenTipo.DESCONHECIDO, "", mIndex, mIndex);
+        }
+
     }
 
     public ArrayList<AST> getASTS() {
@@ -93,10 +99,11 @@ public class Compiler {
         return mRet;
     }
 
-    public ArrayList<String> getErros_Lexer() {
+    public ArrayList<GrupoDeErro> getErros_Lexer() {
         return mErros_Lexer;
     }
-    public ArrayList<String> getErros_Compiler() {
+
+    public ArrayList<GrupoDeErro> getErros_Compiler() {
         return mErros_Compiler;
     }
 
@@ -108,241 +115,277 @@ public class Compiler {
         int t = 0;
 
         for (AST a : getASTS()) {
-            if (a.getASTS().size() > 0) {
-                t += subInstrucoes(a);
-            }
-            t += 1;
+            t += a.getInstrucoes();
         }
 
         return t;
     }
 
-    private int subInstrucoes(AST ASTC) {
-        int t = 0;
 
-        for (AST a : ASTC.getASTS()) {
-            if (a.getASTS().size() > 0) {
-                t += subInstrucoes(a);
-            }
-            t += 1;
-        }
 
-        return t;
-    }
-
-    public void init(String eArquivo, String eLocal) {
+    public void init(String eArquivo) {
         mIndex = 0;
 
+        mArquivo = eArquivo;
         mTokens.clear();
         mASTS.clear();
         mErros_Lexer.clear();
         mErros_Compiler.clear();
         mRequisitados.clear();
-        mLocal = eLocal;
-        mIChars=0;
-        mITokens=0;
+        mLocal = "";
+        mIChars = 0;
+        mITokens = 0;
 
         Lexer LexerC = new Lexer();
 
         LexerC.init(eArquivo);
-        mIChars=LexerC.getChars();
-        mITokens=LexerC.getTokens().size();
-
-        System.out.println(" -->> " + mITokens);
+        mIChars = LexerC.getChars();
+        mITokens = LexerC.getTokens().size();
 
 
-        for (String mErro : LexerC.getErros()) {
-            mErros_Lexer.add(mErro);
+        for (Erro mErro : LexerC.getErros()) {
+            errarLexer(mErro.getMensagem(), mErro.getPosicao());
         }
 
 
         for (Token TokenC : LexerC.getTokens()) {
-            if (TokenC.Tipo() != TokenTipo.COMENTARIO) {
+            if (TokenC.getTipo() != TokenTipo.COMENTARIO) {
                 mTokens.add(TokenC);
             }
         }
 
+
         mTamanho = mTokens.size();
+
+        File arq = new File(eArquivo);
+        mLocal = arq.getParent() + "/";
+
+
+
+        compilando();
+
+    }
+
+    public void requisitando(String eArquivo, ArrayList<String> eRequisitados) {
+        mIndex = 0;
+
+        mArquivo = eArquivo;
+
+        mTokens.clear();
+        mASTS.clear();
+        mErros_Lexer.clear();
+        mErros_Compiler.clear();
+        mRequisitados = eRequisitados;
+        mLocal = "";
+        mIChars = 0;
+        mITokens = 0;
+
+        Lexer LexerC = new Lexer();
+
+        LexerC.init(eArquivo);
+        mIChars = LexerC.getChars();
+        mITokens = LexerC.getTokens().size();
+
+        if (LexerC.getErros().size() > 0) {
+            GrupoDeErro Ge = new GrupoDeErro(eArquivo);
+            for (Erro mErro : LexerC.getErros()) {
+                Ge.getErros().add(mErro);
+            }
+            mErros_Lexer.add(Ge);
+        }
+
+
+        for (Token TokenC : LexerC.getTokens()) {
+            if (TokenC.getTipo() != TokenTipo.COMENTARIO) {
+                mTokens.add(TokenC);
+            }
+
+          //  System.out.println(" TOKEN : " + TokenC.getConteudo());
+        }
+
+
+        mTamanho = mTokens.size();
+
+        File arq = new File(eArquivo);
+        mLocal = arq.getParent() + "/";
+
+        if (LexerC.getErros().size() == 0) {
+            compilando();
+        }
+
+    }
+
+
+    private void compilando() {
 
         AST AST_Raiz = new AST("SIGMAZ");
         mASTS.add(AST_Raiz);
 
 
-        AST AST_INIT= AST_Raiz.criarBranch("INIT");
-        AST AST_LIBS= AST_Raiz.criarBranch("LIBS");
 
+        while (Continuar()) {
+
+            Token TokenC = this.getTokenCorrente();
+            if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("require")) {
+
+                AST_Requisicao mAST = new AST_Requisicao(this);
+                mAST.init(AST_Raiz);
+
+                if (mErros_Lexer.size() > 0) {
+                    break;
+                }
+                if (mErros_Compiler.size() > 0) {
+                    break;
+                }
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
+
+                AST_Action mAST = new AST_Action(this);
+                mAST.init(AST_Raiz);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
+
+                AST_Function mAST = new AST_Function(this);
+                mAST.init(AST_Raiz);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("call")) {
+
+                AST_Call mAST = new AST_Call(this);
+                mAST.init(AST_Raiz);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
+
+                AST_Mockiz mAST = new AST_Mockiz(this);
+                mAST.init(AST_Raiz);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
+
+                AST_Define mAST = new AST_Define(this);
+                mAST.init(AST_Raiz);
+
+            }else if (TokenC.getTipo()==TokenTipo.ID && TokenC.mesmoConteudo("invoke")){
+
+                AST_Invoke mAST = new AST_Invoke(this);
+                mAST.init(AST_Raiz);
+
+            } else {
+                errarCompilacao("Token Desconhecido : " + TokenC.getTipo() + " " + TokenC.getConteudo(), TokenC.getInicio());
+                return;
+            }
+
+            Proximo();
+        }
 
 
     }
 
+    public Token getTokenAvanteStatus(TokenTipo eTokenTipo,String eErro){
+        Token TokenP = getTokenAvante();
+        if (TokenP.getTipo() == eTokenTipo) {
 
-
-    public String ArvoreDeInstrucoes() {
-
-        Documentador documentadorC = new Documentador();
-
-        return documentadorC.ImprimirArvoreDeInstrucoes_De(getASTS());
+        }else{
+            errarCompilacao(eErro, TokenP.getInicio());
+            errarCompilacao("Contudo encontrou : " + TokenP.getConteudo(), TokenP.getInicio());
+        }
+        return TokenP;
     }
 
-    public String ArvoreDeInstrucoes_De(ArrayList<AST> lsAST) {
+    public void errarLexer(String eMensagem, int ePosicao) {
 
-        Documentador documentadorC = new Documentador();
+        boolean enc = false;
 
-        return documentadorC.ImprimirArvoreDeInstrucoes_De(lsAST);
+        for (GrupoDeErro G : mErros_Lexer) {
+            if (G.mesmmoArquivo(mArquivo)) {
+                G.adicionarErro(eMensagem, ePosicao);
+                enc = true;
+                break;
+            }
+        }
 
+        if (!enc) {
+            GrupoDeErro nG = new GrupoDeErro(mArquivo);
+            nG.adicionarErro(eMensagem, ePosicao);
+            mErros_Lexer.add(nG);
+        }
     }
+
+    public void errarCompilacao(String eMensagem, int ePosicao) {
+
+        boolean enc = false;
+
+        for (GrupoDeErro G : mErros_Compiler) {
+            if (G.mesmmoArquivo(mArquivo)) {
+                G.adicionarErro(eMensagem, ePosicao);
+                enc = true;
+                break;
+            }
+        }
+
+        if (!enc) {
+            GrupoDeErro nG = new GrupoDeErro(mArquivo);
+            nG.adicionarErro(eMensagem, ePosicao);
+            mErros_Compiler.add(nG);
+        }
+    }
+
 
 
     public void Compilar(String eArquivo) {
 
         Documentador documentadorC = new Documentador();
 
-        String documento = documentadorC.MontandoArvoreDeInstrucoes(this.getASTS());
+        documentadorC.compilar(this.getASTS(),eArquivo);
 
-        byte[] bytes = documento.getBytes(StandardCharsets.UTF_8);
 
-        int t = bytes.length;
-        //System.out.println("Tam : " + t);
+    }
 
-        int i = 0;
-        int o = documento.length();
 
-        int auxilador = 53;
 
-        while (i < o) {
-            int novo = (int) bytes[i];
 
-            novo += auxilador;
-            if (novo >= 255) {
-                novo -= 255;
+    public String getArvoreDeInstrucoes() {
+
+        Documento DocumentoC = new Documento();
+
+        DocumentoC.adicionarLinha("");
+
+        for (AST a : getASTS()) {
+
+            if (a.getValor().length() > 0) {
+                DocumentoC.adicionarLinha(" " + a.getTipo() + " -> " + a.getNome() + " : " + a.getValor());
+            } else {
+                DocumentoC.adicionarLinha(" " + a.getTipo() + " -> " + a.getNome());
             }
 
+            SubArvoreDeInstrucoes("   ", a, DocumentoC);
 
-            bytes[i] = (byte) novo;
-            i += 1;
         }
 
-        Path path = Paths.get(eArquivo);
-        try {
-            Files.write(path, bytes);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        DocumentoC.adicionarLinha("");
 
-
+        return DocumentoC.getConteudo();
     }
 
-    public String tamanhoObjeto(String eArquivo) {
+    private void SubArvoreDeInstrucoes(String ePref, AST ASTC, Documento DocumentoC) {
 
-        File file = new File(eArquivo);
+        for (AST a : ASTC.getASTS()) {
 
-        long t = file.length();
+            if (a.getValor().length() > 0) {
+                DocumentoC.adicionarLinha(ePref + a.getTipo() + " -> " + a.getNome() + " : " + a.getValor());
 
+            } else {
+                DocumentoC.adicionarLinha(ePref + a.getTipo() + " -> " + a.getNome());
 
-        return t + "";
-    }
-
-
-    public String mapaObjeto(String eArquivo) {
-
-        String saida = "";
-
-        Path dpath = Paths.get(eArquivo);
-
-
-        try {
-            byte[] l = Files.readAllBytes(dpath);
-
-            int li = 0;
-            int lo = l.length;
-
-            int d = 0;
-
-            while (li < lo) {
-                int novo = (int) l[li];
-
-                saida += " " + novo;
-
-
-                if (d >= 50) {
-                    d = 0;
-                    saida += "\n";
-                }
-
-                li += 1;
-                d += 1;
             }
 
+            SubArvoreDeInstrucoes(ePref + "   ", a, DocumentoC);
 
-        } catch (IOException e) {
-            e.printStackTrace();
         }
 
-        return saida;
-
     }
 
 
-    public ArrayList<AST> Decompilar(String eArquivo) {
-
-        ArrayList<AST> ASTSaida = new ArrayList<AST>();
 
 
-        Path dpath = Paths.get(eArquivo);
-        int auxilador = 53;
-
-        String saida = "";
-
-        try {
-            byte[] l = Files.readAllBytes(dpath);
-
-            int li = 0;
-            int lo = l.length;
-
-            while (li < lo) {
-                int novo = (int) l[li];
-
-                novo -= auxilador;
-                if (novo < 0) {
-                    novo += 256;
-                }
 
 
-                l[li] = (byte) novo;
-                li += 1;
-            }
-
-            //try {
-            //	Files.write(dpath, l);
-            //} catch (IOException e) {
-            //	e.printStackTrace();
-            //}
-
-            saida = new String(l, "UTF-8");
-
-            //	System.out.println("Decompilado : " + saida);
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        Documentador DC = new Documentador();
-
-        ASTSaida = DC.decompilar(saida);
-
-        return ASTSaida;
-
-    }
-
-
-    public void RequirimentosCarregar() {
-
-        Bibliotecas BibliotecaC = new Bibliotecas();
-
-        mRequerimentos.add(new Requerimento("operador", BibliotecaC.operador()));
-        mRequerimentos.add(new Requerimento("area", BibliotecaC.area()));
-
-    }
 
 }

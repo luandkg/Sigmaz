@@ -1,5 +1,6 @@
 package Sigmaz.Lexer;
 
+import Sigmaz.Utils.Erro;
 import Sigmaz.Utils.Texto;
 
 import java.io.File;
@@ -16,7 +17,7 @@ public class Lexer {
 	private final String ALFANUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz0123456789";
 
 	private ArrayList<Token> mTokens;
-	private ArrayList<String> mErros;
+	private ArrayList<Erro> mErros;
 
 	public Lexer() {
 		mConteudo="";
@@ -30,12 +31,16 @@ public class Lexer {
 	
 	public ArrayList<Token> getTokens(){return mTokens;}
 	
-	public ArrayList<String> getErros() {
+	public ArrayList<Erro> getErros() {
 		return mErros;
 	}
 
 	public int getChars(){
 		return mConteudo.length();
+	}
+
+	private void errar(String eMensagem,int ePosicao){
+		mErros.add(new Erro(eMensagem,ePosicao));
 	}
 
 	public void init(String eArquivo) {
@@ -53,13 +58,21 @@ public class Lexer {
 		if(arq.exists()){
 			mConteudo= Texto.Ler(eArquivo);
 		}else{
-			mErros.add("Arquivo nao encontrado : " +eArquivo );
+			errar("Arquivo nao encontrado : " +eArquivo ,0);
 		}
 
 		mTamanho=mConteudo.length();
 		
 		while(Continuar()) {
 			String charC =String.valueOf( mConteudo.charAt(mIndex));
+			String charP ="";
+
+			if(mIndex+1<mTamanho){
+				charP=String.valueOf( mConteudo.charAt(mIndex+1));
+			}
+
+
+
 			if (ALFA.contains(charC)) {
 				
 				int eInicio =mIndex;
@@ -81,6 +94,14 @@ public class Lexer {
 				int eFim=mIndex;
 				
 				mTokens.add(new Token(TokenTipo.NUMERO,eTokenConteudo,eInicio,eFim));
+			} else 	if (charC.contentEquals("-") && charP.contentEquals(">")) {
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mIndex+=1;
+
+				mTokens.add(new Token(TokenTipo.SETA,"->",eInicio,eFim) );
+
 			} else 	if (charC.contentEquals("-")) {
 				int eInicio =mIndex;
 				mIndex+=1;
@@ -89,7 +110,54 @@ public class Lexer {
 				int eFim=mIndex;
 				
 				mTokens.add(new Token(TokenTipo.NUMERO,eTokenConteudo,eInicio,eFim));
-			
+
+			} else 	if (charC.contentEquals(":") && charP.contentEquals(":")) {
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mIndex+=1;
+
+				mTokens.add(new Token(TokenTipo.QUAD,"::",eInicio,eFim) );
+
+			} else 	if (charC.contentEquals(":")) {
+
+
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mTokens.add(new Token(TokenTipo.DOISPONTOS,":",eInicio,eFim));
+			} else 	if (charC.contentEquals(",")) {
+
+
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mTokens.add(new Token(TokenTipo.VIRGULA,",",eInicio,eFim));
+			} else 	if (charC.contentEquals("=") && charP.contentEquals("=")) {
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mIndex+=1;
+
+				mTokens.add(new Token(TokenTipo.COMPARADOR_IGUALDADE,"==",eInicio,eFim) );
+			} else 	if (charC.contentEquals("!") && charP.contentEquals("!")) {
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mIndex+=1;
+
+				mTokens.add(new Token(TokenTipo.COMPARADOR_DIFERENTE,"!!",eInicio,eFim) );
+			} else 	if (charC.contentEquals("=")) {
+
+
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mTokens.add(new Token(TokenTipo.IGUAL,"=",eInicio,eFim));
+
+
+
+
 			} else 	if (charC.contentEquals("#")) {
 				int eInicio =mIndex;
 				String eTokenConteudo = ObterComentario();
@@ -114,12 +182,27 @@ public class Lexer {
 				int eInicio =mIndex;
 				int eFim=mIndex;
 
-				mTokens.add(new Token(TokenTipo.ABRE,"{",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.CHAVE_ABRE,"{",eInicio,eFim) );
 			} else 	if (charC.contentEquals("}")) {
 				int eInicio =mIndex;
 				int eFim=mIndex;
 
-				mTokens.add(new Token(TokenTipo.FECHA,"}",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.CHAVE_FECHA,"}",eInicio,eFim) );
+			} else 	if (charC.contentEquals(";")) {
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mTokens.add(new Token(TokenTipo.PONTOVIRGULA,";",eInicio,eFim) );
+			} else 	if (charC.contentEquals("(")) {
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mTokens.add(new Token(TokenTipo.PARENTESES_ABRE,"(",eInicio,eFim) );
+			} else 	if (charC.contentEquals(")")) {
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mTokens.add(new Token(TokenTipo.PARENTESES_FECHA,")",eInicio,eFim) );
 			} else 	if (charC.contentEquals("@")) {
 			
 				int eInicio =mIndex;
@@ -129,13 +212,14 @@ public class Lexer {
 				
 				mTokens.add(new Token(TokenTipo.ARROBA,eTokenConteudo,eInicio,eFim) );
 
+
 			} else 	if (charC.contentEquals("\n")) {
 			} else 	if (charC.contentEquals("\t")) {
 			} else 	if (charC.contentEquals(" ")) {
 
 			} else {
-				
-				mErros.add("Lexema Desconhecido : " + charC);
+
+				errar("Lexema Desconhecido : " + charC,mIndex);
 
 			}
 			
@@ -168,7 +252,9 @@ public class Lexer {
 	public String ObterNUM() {
 		String ret = String.valueOf( mConteudo.charAt(mIndex));
 		mIndex+=1;
-		
+
+		int eIndex = mIndex;
+
 		boolean pontuar = false;
 		
 		while(Continuar()) {
@@ -181,6 +267,7 @@ public class Lexer {
 				mIndex+=1;
 				break;
 			} else {
+				mIndex-=1;
 				break;
 			}
 			mIndex+=1;
@@ -198,13 +285,15 @@ public class Lexer {
 					ret+=charC;
 					pontuou=true;
 				} else {
+					mIndex-=1;
+
 					break;
 				}
 				mIndex+=1;
 			}
 			
 			if (!pontuou) {
-				mErros.add("Numerop invalido !");
+				errar("Numerop invalido !",eIndex);
 			}
 		}
 		
@@ -232,16 +321,27 @@ public class Lexer {
 	public String ObterTexto(String eFinalizador) {
 		String ret ="";
 		mIndex+=1;
+		int eIndex=mIndex;
+
+		boolean finalizado = false;
+
 		while(Continuar()) {
 			String charC =String.valueOf( mConteudo.charAt(mIndex));
 
 			if (charC.contentEquals(eFinalizador)) {
+				finalizado=true;
 				break;
 			} else {
 				ret+=charC;
 			}
 			mIndex+=1;
 		}
+
+		if(finalizado==false){
+			errar("Texto nao finalizado !",eIndex);
+
+		}
+
 		return ret;
 	}
 	

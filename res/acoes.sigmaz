@@ -1,0 +1,8 @@
+
+require "anexo.sigmaz";
+
+act correr(){}
+
+act pular(){}
+
+act andar(){}

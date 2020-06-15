@@ -1,0 +1,6 @@
+
+require "acoes.sigmaz";
+
+act amontoar(){}
+
+act retardar(){}

@@ -14,10 +14,10 @@ public class Token {
 		mFim=eFim;
 	}
 	
-	public TokenTipo Tipo() {return mTipo;}
-	public String Conteudo() {return mConteudo;}
-	public int Inicio() {return mInicio;}
-	public int  Fim() {return mFim;}
+	public TokenTipo getTipo() {return mTipo;}
+	public String getConteudo() {return mConteudo;}
+	public int getInicio() {return mInicio;}
+	public int  getFim() {return mFim;}
 
-	public boolean MesmoConteudo(String eOutroConteudo) { return mConteudo.contentEquals(eOutroConteudo);}
+	public boolean mesmoConteudo(String eOutroConteudo) { return mConteudo.contentEquals(eOutroConteudo);}
 }

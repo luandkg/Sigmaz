@@ -1,15 +1,13 @@
 
 
-call iniciar(){
-
-    pular();
-
-}
-
+call iniciar -> pular();
 
 act pular(){
 
 
 }
+
+
+
 
 

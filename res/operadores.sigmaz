@@ -1,0 +1,36 @@
+
+func somar(a:num,b:num) : num {
+
+    def c : num;
+
+    invoke math -> operator_sum (a,b) :: c;
+
+    return c;
+}
+
+func subtrair(a:num,b:num) : num {
+
+    def c : num;
+
+    invoke math -> operator_sub (a,b) :: c;
+
+    return c;
+}
+
+func multiplicar(a:num,b:num) : num {
+
+    def c : num;
+
+    invoke math -> operator_mux(a,b) :: c;
+
+    return c;
+}
+
+func dividir(a:num,b:num) : num {
+
+    def c : num;
+
+    invoke math -> operator_div (a,b) :: c;
+
+    return c;
+}

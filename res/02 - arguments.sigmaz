@@ -1,0 +1,19 @@
+
+
+
+call passaro -> voar(50,false);
+
+call rapina -> rapina(12,-450.12,"Eaer",INA);
+
+
+act voar(n : num,b:bool){
+
+}
+
+act rapina( n:num, v:num, s:string, w:string){
+
+
+
+}
+
+

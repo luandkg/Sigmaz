@@ -1,4 +1,4 @@
-package Sigmaz.Compilador;
+package Sigmaz.Utils;
 
 import java.util.ArrayList;
 
@@ -26,6 +26,9 @@ public class AST {
 
     public String getTipo() {
         return mTipo;
+    }
+    public void setTipo(String eTipo) {
+        mTipo = eTipo;
     }
 
 
@@ -119,9 +122,47 @@ public class AST {
     public boolean mesmoTipo(String eTipo) {
         return this.mTipo.contentEquals(eTipo);
     }
+    public boolean mesmoNome(String eNome) {
+        return this.mNome.contentEquals(eNome);
+    }
+    public boolean mesmoValor(String eValor) {
+        return this.mValor.contentEquals(eValor);
+    }
 
 
+    public int getInstrucoes() {
+        int t = 1;
 
+        for (AST a : getASTS()) {
+            if (a.getASTS().size() > 0) {
+                t += subInstrucoes(a);
+            }
+            t += 1;
+        }
 
+        return t;
+    }
+
+    private int subInstrucoes(AST ASTC) {
+        int t = 0;
+
+        for (AST a : ASTC.getASTS()) {
+            if (a.getASTS().size() > 0) {
+                t += subInstrucoes(a);
+            }
+            t += 1;
+        }
+
+        return t;
+    }
+
+    public void limpar(){
+
+        this.getASTS().clear();
+        this.setNome("");
+        this.setValor("");
+        this.setTipo("");
+
+    }
 
 }

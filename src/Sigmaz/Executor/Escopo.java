@@ -1,264 +1,242 @@
 package Sigmaz.Executor;
 
-import Sigmaz.Compilador.AST;
+import Sigmaz.Compilador.AST_Value;
+import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
 
 public class Escopo {
 
-	private ArrayList<ItemCash> mItens;
-	private RunTime mRunTime;
-	private Escopo mEscopoAnterior;
-
-	private boolean mCancel;
-	private boolean mContinue;
-	
-	public Escopo(RunTime eRunTime, Escopo eEscopoAnterior) {
-		mItens = new ArrayList<>();
-		mRunTime = eRunTime;
-		mEscopoAnterior = eEscopoAnterior;
-		mCancel = false;
-		mContinue = false;
-
-		mRunTime = eRunTime;
-
-	}
-	
-	public Escopo getEscopoAnterior() {
-		return mEscopoAnterior;
-	}
-
-
-
-	public boolean run(AST ASTC) {
-
-		boolean ret = true;
-
-		 System.out.println("RUNNING " + ASTC.getNome() + " :: " + ASTC.getValor());
-
-		return ret;
-	}
-	
-
-	public void Make(String eNome) {
-		boolean enc = false;
-
-		for (ItemCash i : mItens) {
-			if (i.getNome().contentEquals(eNome)) {
-				enc = true;
-				break;
-			}
-		}
-
-		if (!enc) {
-
-			ItemCash IC = BuscarAnterior(eNome);
-			if (IC != null) {
-				enc = true;
-			}
-
-		}
-
-		if (enc) {
-			mRunTime.getErros().add("Variavel Duplicada : " + eNome);
-		} else {
-			mItens.add(new ItemCash(eNome));
-
-		}
-	}
+    private ArrayList<Item> mStacks;
+    private RunTime mRunTime;
+    private Escopo mEscopoAnterior;
 
-	public void Const(String eNome, float eValor) {
-		boolean enc = false;
-
-		for (ItemCash i : mItens) {
-			if (i.getNome().contentEquals(eNome)) {
-				enc = true;
-				break;
-			}
-		}
-
-		if (!enc) {
-
-			ItemCash IC = BuscarAnterior(eNome);
-			if (IC != null) {
-				enc = true;
-			}
-
-		}
-
-		if (enc) {
-			mRunTime.getErros().add("Variavel Duplicada : " + eNome);
-		} else {
-			ItemCash Novo = new ItemCash(eNome);
-			Novo.setTipo(1);
-			Novo.setValor(eValor);
-			mItens.add(Novo);
-
-		}
-	}
-
-	public void Apply(String eNome, float eValor) {
-		boolean enc = false;
-
-		for (ItemCash i : mItens) {
-			if (i.getNome().contentEquals(eNome)) {
-				enc = true;
-				if (i.getTipo() == 0) {
-					i.setValor(eValor);
-					//System.out.println("Aplicando Valor em : " + eNome + " -->> " + eValor);
-				} else {
-					mRunTime.getErros().add("A constante nao pode ser alterada : " + eNome);
-				}
-				break;
-			}
-		}
+    private EscopoDebug mDebug;
+    private EscopoStack mEscopoStack;
 
-		if (!enc) {
+    private ArrayList<AST> mGuardados;
 
-			ItemCash IC = BuscarAnterior(eNome);
-			if (IC != null) {
-				enc = true;
-				if (IC.getTipo() == 0) {
-					IC.setValor(eValor);
-				} else {
-					mRunTime.getErros().add("A constante nao pode ser alterada : " + eNome);
-				}
+    private boolean mCancel;
+    private boolean mContinue;
 
-			}
+    private String mNome;
 
-		}
 
-		if (!enc) {
-			mRunTime.getErros().add("Variavel nao Encontrada : " + eNome);
+    public void setNome(String eNome) {
+        mNome = eNome;
+    }
 
-		}
-	}
+    public String getNome() {
+        return mNome;
+    }
 
-	public float Use(String eNome) {
-		boolean enc = false;
-		float ret = 0;
+    public Escopo(RunTime eRunTime, Escopo eEscopoAnterior) {
+        mStacks = new ArrayList<>();
+        mRunTime = eRunTime;
+        mEscopoAnterior = eEscopoAnterior;
+        mCancel = false;
+        mContinue = false;
 
-		//Listar();
-		
-		for (ItemCash i : mItens) {
-			if (i.getNome().contentEquals(eNome)) {
-				enc = true;
-				ret = i.getValor();
-				break;
-			}
-		}
+        mGuardados = new ArrayList<>();
 
-		if (!enc) {
 
-			ItemCash IC = BuscarAnterior(eNome);
-			if (IC != null) {
-				enc = true;
-				ret = IC.getValor();
+        mRunTime = eRunTime;
+        mDebug = new EscopoDebug(this);
+        mEscopoStack = new EscopoStack(mRunTime, this);
+    }
 
-			}
+    public Escopo getEscopoAnterior() {
+        return mEscopoAnterior;
+    }
 
-		}
 
-		if (!enc) {
-			mRunTime.getErros().add("Variavel nao Encontrada : " + eNome);
-		}
+    public boolean run(AST ASTC) {
 
-		return ret;
-	}
+        boolean ret = true;
 
-	public ItemCash BuscarAnterior(String eNome) {
-		ItemCash IC = null;
-		boolean enc = false;
+        System.out.println("RUNNING " + ASTC.getNome() + " :: " + ASTC.getValor());
 
-	//	System.out.println("Buscando anterior : " + eNome);
-		
-		if (mEscopoAnterior != null) {
-			for (ItemCash i : mEscopoAnterior.mItens) {
-				if (i.getNome().contentEquals(eNome)) {
-					enc = true;
-					IC = i;
-					break;
-				}
-			}
+        return ret;
+    }
 
-		}
 
-		if (!enc) {
-			if (mEscopoAnterior != null) {
-				return mEscopoAnterior.BuscarAnterior(eNome);
-			}
+    public void guardar(AST eAST) {
 
-		}
 
-		return IC;
-	}
+        mGuardados.add(eAST);
 
-	public void Listar() {
-		for (ItemCash i : mItens) {
+    }
 
-			System.out.println(" - " + i.getNome() + " = " + i.getValor());
+    public void definirVariavel(AST eAST) {
 
-		}
 
-	}
+        AST mValor = eAST.getBranch("VALUE");
 
+        Run_Value mAST = new Run_Value(mRunTime, this);
+        mAST.init(mValor, eAST.getValor());
 
+        if (mAST.getIsNulo()) {
+            criarDefinicaoNula(eAST.getNome(), eAST.getValor());
+        } else if (mAST.getIsPrimitivo()) {
 
 
+            if(eAST.getValor().contentEquals(mAST.getRetornoTipo())){
+                criarDefinicao(eAST.getNome(), eAST.getValor(), mAST.getPrimitivo());
+            }else{
+                mRunTime.getErros().add("Retorno incompativel : " +mAST.getRetornoTipo() );
+            }
 
-	
-	public void setCancel(boolean eCancel) {
-		mCancel = eCancel;
-	}
 
-	public boolean getCancel() {
-		return mCancel;
-	}
+        } else {
+            mRunTime.getErros().add("AST_Value com problemas !");
+        }
 
-	public void setContinue(boolean eContinue) {
-		mContinue = eContinue;
-	}
 
-	public boolean getContinue() {
-		return mContinue;
-	}
+    }
 
-	
+    public void definirConstante(AST eAST) {
 
-	
-	
-	public class ItemCash {
 
-		private String mNome;
-		private float mValor;
-		private int mTipo;
+        AST mValor = eAST.getBranch("VALUE");
 
-		public ItemCash(String eNome) {
-			this.mNome = eNome;
-			mValor = 0;
-			mTipo = 0;
-		}
+        Run_Value mAST = new Run_Value(mRunTime, this);
+        mAST.init(mValor, eAST.getValor());
 
-		public void setTipo(int eTipo) {
-			mTipo = eTipo;
-		}
+        if (mAST.getIsNulo()) {
+            criarConstanteNula(eAST.getNome(), eAST.getValor());
+        } else if (mAST.getIsPrimitivo()) {
 
-		public int getTipo() {
-			return mTipo;
-		}
+            if(eAST.getValor().contentEquals(mAST.getRetornoTipo())){
+                criarConstante(eAST.getNome(), eAST.getValor(), mAST.getPrimitivo());
+            }else{
+                mRunTime.getErros().add("Retorno incompativel : " +mAST.getRetornoTipo() );
+            }
 
-		public void setValor(float eValor) {
-			mValor = eValor;
-		}
+        } else {
+            mRunTime.getErros().add("AST_Value com problemas !");
+        }
 
-		public float getValor() {
-			return mValor;
-		}
 
-		public String getNome() {
-			return mNome;
-		}
+    }
 
-	}
+
+    public void ListarGlobal() {
+        mDebug.ListarGlobal();
+    }
+
+    public void ListarActions() {
+        mDebug.ListarActions();
+    }
+
+    public void ListarFunctions() {
+        mDebug.ListarFunctions();
+    }
+
+    public void ListarDefines() {
+        mDebug.ListarDefines();
+    }
+
+    public void ListarConstants() {
+        mDebug.ListarConstants();
+    }
+
+    public void ListarAll() {
+        mDebug.ListarAll();
+    }
+
+    public ArrayList<Item> getStacks() {
+        return mStacks;
+    }
+
+    public ArrayList<Item> getStacksAll() {
+
+        ArrayList<Item> gc = new ArrayList<Item>();
+
+
+        if (this.mEscopoAnterior != null) {
+            for (Item fAST : mEscopoAnterior.getStacksAll()) {
+                gc.add(fAST);
+            }
+        }
+
+        for (Item fAST : mStacks) {
+            gc.add(fAST);
+        }
+
+        return gc;
+    }
+
+
+    public ArrayList<AST> getGuardados() {
+        return mGuardados;
+    }
+
+    public ArrayList<AST> getGuardadosCompleto() {
+
+        ArrayList<AST> gc = new ArrayList<AST>();
+
+        for (AST fAST : mGuardados) {
+            gc.add(fAST);
+        }
+
+        if (this.mEscopoAnterior != null) {
+            for (AST fAST : mEscopoAnterior.getGuardadosCompleto()) {
+                gc.add(fAST);
+            }
+        }
+
+        return gc;
+    }
+
+    public void setCancel(boolean eCancel) {
+        mCancel = eCancel;
+    }
+
+    public boolean getCancel() {
+        return mCancel;
+    }
+
+    public void setContinue(boolean eContinue) {
+        mContinue = eContinue;
+    }
+
+    public boolean getContinue() {
+        return mContinue;
+    }
+
+    public Item BuscarAnterior(String eNome) {
+        return mEscopoStack.BuscarAnterior(eNome);
+    }
+    public void criarDefinicaoNula(String eNome, String eTipo) {
+         mEscopoStack.criarDefinicaoNula(eNome,eTipo);
+    }
+    public void criarConstanteNula(String eNome, String eTipo) {
+        mEscopoStack.criarConstanteNula(eNome,eTipo);
+
+    }
+
+    public void criarDefinicao(String eNome, String eTipo, String eValor) {
+        mEscopoStack.criarDefinicao(eNome,eTipo,eValor);
+
+    }
+    public void criarConstante(String eNome, String eTipo, String eValor) {
+        mEscopoStack.criarConstante(eNome,eTipo,eValor);
+
+    }
+    public void setDefinido(String eNome, String eValor) {
+        mEscopoStack.setDefinido(eNome,eValor);
+    }
+    public String getDefinidoTipo(String eNome) {
+      return  mEscopoStack.getDefinidoTipo(eNome);
+    }
+    public void anularDefinido(String eNome) {
+        mEscopoStack.anularDefinido(eNome);
+    }
+    public String getDefinido(String eNome) {
+        return  mEscopoStack.getDefinido(eNome);
+    }
+    public String getDefinidoNum(String eNome) {
+        return  mEscopoStack.getDefinidoNum(eNome);
+    }
 
 }
