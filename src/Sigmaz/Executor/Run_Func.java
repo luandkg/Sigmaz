@@ -132,6 +132,26 @@ public class Run_Func {
 
                     //   mRunTime.getErros().add(" Argumento Complexo !");
 
+                } else if (a.mesmoValor("COMPARATOR")) {
+
+                    Run_Value mAST = new Run_Value(mRunTime, mEscopo);
+                    mAST.init(a, "bool");
+
+                    AST v = new AST("VALUE");
+
+                    if (mAST.getIsNulo()) {
+                        v.setNome("NULL");
+                    } else if (mAST.getIsPrimitivo()) {
+                        v.setNome(mAST.getPrimitivo());
+                    } else {
+                        mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
+                    }
+
+                    v.setValor("bool");
+
+
+                    mArgumentos.add(v);
+
                 }
             }
 

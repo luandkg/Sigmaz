@@ -1,0 +1,38 @@
+
+call iniciar -> conditionando();
+
+
+act conditionando(){
+
+
+    def a1 : num = 10;
+    def a2 : num = 10;
+
+    def a3 : bool = a1 == a2;
+    def a4 : bool = a1 !! a2;
+
+
+    def f : bool = igual(50==50,false);
+
+    if(a1 == a2) {
+        def a3 : num = 50;
+    }
+
+    # if (a1) {} other () { }
+
+    if(igual(a1==a2,a1==a2)){}
+
+
+
+    invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
+
+
+
+}
+
+func igual(a:bool,b:bool) : bool {
+
+return a;
+
+}
+

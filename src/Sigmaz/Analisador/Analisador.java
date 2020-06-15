@@ -140,6 +140,7 @@ public class Analisador {
             } else if (mAST.mesmoTipo("RETURN")) {
                 retornou = true;
             } else if (mAST.mesmoTipo("APPLY")) {
+            } else if (mAST.mesmoTipo("IF")) {
 
             } else {
                 mErros.add("AST : " + mAST.getTipo());
@@ -168,6 +169,9 @@ public class Analisador {
                 analisandoDefines(mAST);
             } else if (mAST.mesmoTipo("INVOKE")) {
             } else if (mAST.mesmoTipo("APPLY")) {
+            } else if (mAST.mesmoTipo("RETURN")) {
+                mErros.add("Action " + ASTPai.getNome() + " : Nao pode ter RETORNO !");
+            } else if (mAST.mesmoTipo("IF")) {
 
             } else {
                 mErros.add("AST : " + mAST.getTipo());

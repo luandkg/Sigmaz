@@ -82,6 +82,22 @@ public class Compiler {
 
     }
 
+    public Token getTokenFuturo() {
+
+
+        if (mIndex+1 < mTamanho) {
+            return mTokens.get(mIndex+1);
+        } else {
+            return new Token(TokenTipo.DESCONHECIDO, "", mIndex+1, mIndex+1);
+        }
+
+    }
+
+    public void voltar(){
+        mIndex-=1;
+    }
+
+
     public ArrayList<AST> getASTS() {
         return mASTS;
     }

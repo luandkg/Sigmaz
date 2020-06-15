@@ -47,6 +47,10 @@ public class AST_Corpo {
 
                 AST_Invoke mAST = new AST_Invoke(mCompiler);
                 mAST.init(ASTPai);
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("if")){
+
+                AST_Condition mAST = new AST_Condition(mCompiler);
+                mAST.init(ASTPai);
 
             }else if (TokenD.getTipo()==TokenTipo.ID ){
 
