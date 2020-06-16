@@ -50,9 +50,6 @@ public class Escopo {
     }
 
 
-
-
-
     public void guardar(AST eAST) {
 
 
@@ -73,10 +70,10 @@ public class Escopo {
         } else if (mAST.getIsPrimitivo()) {
 
 
-            if(eAST.getValor().contentEquals(mAST.getRetornoTipo())){
+            if (eAST.getValor().contentEquals(mAST.getRetornoTipo())) {
                 criarDefinicao(eAST.getNome(), eAST.getValor(), mAST.getPrimitivo());
-            }else{
-                mRunTime.getErros().add("Retorno incompativel : " +mAST.getRetornoTipo() );
+            } else {
+                mRunTime.getErros().add("Retorno incompativel : " + mAST.getRetornoTipo());
             }
 
 
@@ -86,6 +83,8 @@ public class Escopo {
 
 
     }
+
+
 
     public void definirConstante(AST eAST) {
 
@@ -99,10 +98,10 @@ public class Escopo {
             criarConstanteNula(eAST.getNome(), eAST.getValor());
         } else if (mAST.getIsPrimitivo()) {
 
-            if(eAST.getValor().contentEquals(mAST.getRetornoTipo())){
+            if (eAST.getValor().contentEquals(mAST.getRetornoTipo())) {
                 criarConstante(eAST.getNome(), eAST.getValor(), mAST.getPrimitivo());
-            }else{
-                mRunTime.getErros().add("Retorno incompativel : " +mAST.getRetornoTipo() );
+            } else {
+                mRunTime.getErros().add("Retorno incompativel : " + mAST.getRetornoTipo());
             }
 
         } else {
@@ -184,6 +183,7 @@ public class Escopo {
     public void setCancelar(boolean eCancelar) {
         mCancelar = eCancelar;
     }
+
     public void setContinuar(boolean eContinuar) {
 
         mContinuar = eContinuar;
@@ -192,6 +192,7 @@ public class Escopo {
     public boolean getCancelar() {
         return mCancelar;
     }
+
     public boolean getContinuar() {
         return mContinuar;
     }
@@ -207,36 +208,44 @@ public class Escopo {
     public Item BuscarAnterior(String eNome) {
         return mEscopoStack.BuscarAnterior(eNome);
     }
+
     public void criarDefinicaoNula(String eNome, String eTipo) {
-         mEscopoStack.criarDefinicaoNula(eNome,eTipo);
+        mEscopoStack.criarDefinicaoNula(eNome, eTipo);
     }
+
     public void criarConstanteNula(String eNome, String eTipo) {
-        mEscopoStack.criarConstanteNula(eNome,eTipo);
+        mEscopoStack.criarConstanteNula(eNome, eTipo);
 
     }
 
     public void criarDefinicao(String eNome, String eTipo, String eValor) {
-        mEscopoStack.criarDefinicao(eNome,eTipo,eValor);
+        mEscopoStack.criarDefinicao(eNome, eTipo, eValor);
 
     }
+
     public void criarConstante(String eNome, String eTipo, String eValor) {
-        mEscopoStack.criarConstante(eNome,eTipo,eValor);
+        mEscopoStack.criarConstante(eNome, eTipo, eValor);
 
     }
+
     public void setDefinido(String eNome, String eValor) {
-        mEscopoStack.setDefinido(eNome,eValor);
+        mEscopoStack.setDefinido(eNome, eValor);
     }
+
     public String getDefinidoTipo(String eNome) {
-      return  mEscopoStack.getDefinidoTipo(eNome);
+        return mEscopoStack.getDefinidoTipo(eNome);
     }
+
     public void anularDefinido(String eNome) {
         mEscopoStack.anularDefinido(eNome);
     }
+
     public String getDefinido(String eNome) {
-        return  mEscopoStack.getDefinido(eNome);
+        return mEscopoStack.getDefinido(eNome);
     }
+
     public String getDefinidoNum(String eNome) {
-        return  mEscopoStack.getDefinidoNum(eNome);
+        return mEscopoStack.getDefinidoNum(eNome);
     }
 
 }

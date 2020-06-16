@@ -96,6 +96,11 @@ public class Run_Body {
                 Run_Step mAST = new Run_Step(mRunTime, mEscopo);
                 mAST.init(fAST);
 
+            } else if (fAST.mesmoTipo("STEPDEF")) {
+
+                Run_Step mAST = new Run_Step(mRunTime, mEscopo);
+                mAST.initDef(fAST);
+
             } else if (fAST.mesmoTipo("RETURN")) {
 
 
