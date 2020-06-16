@@ -90,7 +90,7 @@ public class Lexer {
 			} else 	if (charC.contentEquals("+")) {
 				int eInicio =mIndex;
 				mIndex+=1;
-				String eTokenConteudo ="-"+ ObterNUM();
+				String eTokenConteudo ="+"+ ObterNUM();
 				int eFim=mIndex;
 				
 				mTokens.add(new Token(TokenTipo.NUMERO,eTokenConteudo,eInicio,eFim));

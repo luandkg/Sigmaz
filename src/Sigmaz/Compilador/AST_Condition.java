@@ -21,20 +21,74 @@ public class AST_Condition {
         AST AST_Corrente = new AST("IF");
         ASTPai.getASTS().add(AST_Corrente);
 
-        AST AST_Condicao=  AST_Corrente.criarBranch("CONDITION");
-
+        AST AST_Condicao = AST_Corrente.criarBranch("CONDITION");
         AST_Value mAST = new AST_Value(mCompiler);
-
         mAST.initParam(AST_Condicao);
         AST_Condicao.setTipo("CONDITION");
 
-        AST_Corpo cAST = new AST_Corpo(mCompiler);
 
+        System.out.println("Depois : " + mCompiler.getTokenCorrente().getConteudo());
+        if (mCompiler.getTokenCorrente().getTipo() == TokenTipo.PARENTESES_FECHA) {
+
+        }else{
+            mCompiler.errarCompilacao("Era esperado fechar paresenteses",mCompiler.getTokenCorrente().getInicio());
+        }
+
+
+        Token TokenSeta = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma SETA");
+
+
+        AST_Corpo cAST = new AST_Corpo(mCompiler);
         cAST.init(AST_Corrente.criarBranch("BODY"));
 
-        Token TokenF = mCompiler.getTokenFuturo();
 
-        System.out.println("Futuro : " + TokenF.getConteudo());
+        while (true) {
+            Token TokenF = mCompiler.getTokenFuturo();
+            System.out.println("Futuro : " + TokenF.getConteudo());
+
+            if (TokenF.mesmoConteudo("other")) {
+
+                TokenF = mCompiler.getTokenAvante();
+                Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
+
+                AST AST_Other = AST_Corrente.criarBranch("OTHER");
+
+                AST AST_OtherCondition = AST_Other.criarBranch("CONDITION");
+                AST AST_OtherBody = AST_Other.criarBranch("BODY");
+
+                AST_Value mASTOther = new AST_Value(mCompiler);
+                mASTOther.initParam(AST_OtherCondition);
+                AST_OtherCondition.setTipo("CONDITION");
+
+
+                System.out.println("Depois : " + mCompiler.getTokenCorrente().getConteudo());
+                if (mCompiler.getTokenCorrente().getTipo() == TokenTipo.PARENTESES_FECHA) {
+
+                } else {
+                    mCompiler.errarCompilacao("Era esperado fechar paresenteses", mCompiler.getTokenCorrente().getInicio());
+                }
+
+                Token TokenSeta2 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma SETA");
+
+                AST_Corpo cASTOther = new AST_Corpo(mCompiler);
+                cASTOther.init(AST_OtherBody);
+
+            } else    if (TokenF.mesmoConteudo("others")) {
+
+                TokenF = mCompiler.getTokenAvante();
+
+
+                AST AST_Other = AST_Corrente.criarBranch("OTHERS");
+                AST_Corpo cASTOther = new AST_Corpo(mCompiler);
+                cASTOther.init(AST_Other);
+
+
+            } else {
+                break;
+            }
+
+        }
+
 
     }
 

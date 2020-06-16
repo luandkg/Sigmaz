@@ -1,0 +1,45 @@
+
+require "operadores.sigmaz";
+require "terminal.sigmaz";
+require "cast.sigmaz";
+
+call iniciar -> operando();
+
+
+act operando(){
+
+
+    def cc : num = 0;
+
+
+    step cc :: (0,10,somar_inteiro(cc,1)) -> {
+
+        def ac : num = cc;
+
+
+        if (ac == 8) -> {  println(" - SAINDO : " ,ac); cancel; }
+        if (ac == 5) -> {  println(" - PULANDO : " ,ac);continue; }
+
+        if (ac == 3) -> {
+                println(" - TERCERIZANDO : " ,ac);
+        } other (ac == 4) -> {
+                println(" - QUARTANDO : " ,ac);
+        } others {
+                println(" - OUTROS : " ,ac);
+                  if (ac == 7) -> {
+
+                            println(" - SEPTANDO : " ,ac);
+                            cancel;
+                  }
+        }
+
+        println("Valor : " ,ac);
+
+
+    }
+
+
+
+}
+
+

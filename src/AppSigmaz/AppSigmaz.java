@@ -14,7 +14,12 @@ public class AppSigmaz {
        // String arquivo = "res/06 - functions2.sigmaz";
        // String arquivo = "res/07 - mockiz.sigmaz";
        // String arquivo = "res/08 - matches.sigmaz";
-       String arquivo = "res/09 - condition.sigmaz";
+       //String arquivo = "res/09 - condition.sigmaz";
+        //String arquivo = "res/10 - while.sigmaz";
+       // String arquivo = "res/11 - cancel.sigmaz";
+       // String arquivo = "res/12 - continue.sigmaz";
+      //  String arquivo = "res/13 - step.sigmaz";
+        String arquivo = "res/14 - step2.sigmaz";
 
         String saida = "res/Sigmaz.sigmad";
 

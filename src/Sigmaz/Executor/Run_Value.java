@@ -76,9 +76,16 @@ public class Run_Value {
             Run_Value mRun_Esquerda = new Run_Value(mRunTime, mEscopo);
             mRun_Esquerda.init(ASTCorrente.getBranch("LEFT"), "<<ANY>>");
 
+            if(mRunTime.getErros().size()>0){
+                return;
+            }
+
             Run_Value mRun_Direita = new Run_Value(mRunTime, mEscopo);
             mRun_Direita.init(ASTCorrente.getBranch("RIGHT"), "<<ANY>>");
 
+            if(mRunTime.getErros().size()>0){
+                return;
+            }
 
          //   System.out.println(" Tipagem : " + mRun_Esquerda.getRetornoTipo() + " : " + mRun_Direita.getRetornoTipo());
           //  System.out.println(" Comparando " + eModo.getNome() + " : " + mRun_Esquerda.getPrimitivo() + " : " + mRun_Direita.getPrimitivo() + " -> " + mPrimitivo);
@@ -135,6 +142,10 @@ public class Run_Value {
 
                     Run_Func mAST = new Run_Func(mRunTime, mEscopo);
                     mAST.init(ASTCorrente, eReturne);
+
+                    if(mRunTime.getErros().size()>0){
+                      return;
+                    }
 
                     mRetornoTipo = mAST.getRetornoFunction();
 

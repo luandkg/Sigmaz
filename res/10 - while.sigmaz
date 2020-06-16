@@ -1,0 +1,44 @@
+
+require "operadores.sigmaz";
+require "terminal.sigmaz";
+require "cast.sigmaz";
+
+call iniciar -> operando();
+
+
+act operando(){
+
+
+    def a1 : num = 0;
+
+    def raiz : num = 0;
+
+    while(menor(a1,10)) -> {
+
+        println("Valor : " ,inteiro(a1));
+
+        def cc : num = aleatorio(10,30);
+
+        cc = somar(inteiro(cc),raiz) ;
+
+        raiz = somar(raiz,0.12);
+
+        println("  - Numero : " ,cc);
+        println("  - Inteiro : " ,inteiro(cc));
+        println("  - Decimal : " ,decimal(cc));
+
+        a1 = somar(a1,1);
+
+    }
+
+
+
+
+
+    # invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
+
+
+
+}
+
+

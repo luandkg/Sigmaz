@@ -1,4 +1,6 @@
 
+# OPERACOES
+
 func somar(a:num,b:num) : num {
 
     def c : num;
@@ -8,11 +10,33 @@ func somar(a:num,b:num) : num {
     return c;
 }
 
+func somar_inteiro(a:num,b:num) : num {
+
+    def c : num;
+
+    invoke math -> operator_sum (a,b) :: c;
+    invoke casting -> cast_integer (c) :: c;
+
+    return c;
+}
+
+
+
 func subtrair(a:num,b:num) : num {
 
     def c : num;
 
     invoke math -> operator_sub (a,b) :: c;
+
+    return c;
+}
+
+func subtrair_inteiro(a:num,b:num) : num {
+
+    def c : num;
+
+    invoke math -> operator_sub (a,b) :: c;
+    invoke casting -> cast_integer (c) :: c;
 
     return c;
 }
@@ -26,6 +50,16 @@ func multiplicar(a:num,b:num) : num {
     return c;
 }
 
+func multiplicar_inteiro(a:num,b:num) : num {
+
+    def c : num;
+
+    invoke math -> operator_mux (a,b) :: c;
+    invoke casting -> cast_integer (c) :: c;
+
+    return c;
+}
+
 func dividir(a:num,b:num) : num {
 
     def c : num;
@@ -33,4 +67,115 @@ func dividir(a:num,b:num) : num {
     invoke math -> operator_div (a,b) :: c;
 
     return c;
+}
+
+func dividir_inteiro(a:num,b:num) : num {
+
+    def c : num;
+
+    invoke math -> operator_div (a,b) :: c;
+    invoke casting -> cast_integer (c) :: c;
+
+    return c;
+}
+
+func resto(a:num,b:num) : num {
+
+    def c : num;
+
+    invoke math -> operator_trash (a,b) :: c;
+
+    return c;
+}
+
+func resto_inteiro(a:num,b:num) : num {
+
+    def c : num;
+
+    invoke math -> operator_trash (a,b) :: c;
+    invoke casting -> cast_integer (c) :: c;
+
+    return c;
+}
+
+
+# COMPARADORES
+
+func igual(a:num,b:num) : bool {
+
+    def c : bool;
+
+    invoke math -> operator_equal (a,b) :: c;
+
+    return c;
+}
+
+func diferente(a:num,b:num) : bool {
+
+    def c : bool;
+
+    invoke math -> operator_not (a,b) :: c;
+
+    return c;
+}
+
+func menor(a:num,b:num) : bool {
+
+    def c : bool;
+
+    invoke math -> operator_less (a,b) :: c;
+
+    return c;
+}
+
+func maior(a:num,b:num) : bool {
+
+    def c : bool;
+
+    invoke math -> operator_great (a,b) :: c;
+
+    return c;
+}
+
+func maior_igual(a:num,b:num) : bool {
+
+    def c1 : bool;
+    def c2 : bool;
+
+    def c3 : bool = false;
+
+    invoke math -> operator_great (a,b) :: c1;
+    invoke math -> operator_equal (a,b) :: c2;
+
+    if (c1) -> { c3 = true;  }
+    if (c2) -> { c3 = true; }
+
+
+    return c3;
+}
+
+func menor_igual(a:num,b:num) : bool {
+
+    def c1 : bool;
+    def c2 : bool;
+
+    invoke math -> operator_less (a,b) :: c1;
+    invoke math -> operator_equal (a,b) :: c2;
+
+    def c3 : bool = false;
+    if (c1) -> { c3 = true; }
+    if (c2) -> { c3 = true; }
+
+
+    return c3;
+}
+
+func aleatorio(a:num,b:num) : num {
+
+
+    def c : num;
+    invoke math -> operator_random (a,b) :: c;
+
+    return c;
+
 }

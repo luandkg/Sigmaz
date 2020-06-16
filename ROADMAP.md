@@ -26,6 +26,15 @@ Linguagem de Programação Estruturada
     - 2020 06 15 
         - MOCKIZ
         - MOC
+        - VALUE
         - MATCH
         - MISMATCH
         - ANALISE
+        - APPLY
+
+    - 2020 06 16
+        - WHILE
+        - STEP
+        - CONTINUE
+        - CANCEL
+       

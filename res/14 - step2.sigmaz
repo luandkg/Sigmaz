@@ -1,0 +1,30 @@
+
+require "sigmaz.sigmaz";
+
+call iniciar -> operando();
+
+
+act operando(){
+
+
+    def numero : num = 0;
+
+    moc PARAR : num = 10;
+    moc PASSO : num = 1;
+
+    step numero :: (0,PARAR,somar_inteiro(numero,PASSO)) -> {
+
+        def resto : num = resto_inteiro(numero,2);
+
+
+        if (resto == 0) -> {  println(numero," : PAR");  }
+        if (resto == 1) -> {  println(numero," : IMPAR"); }
+
+
+    }
+
+
+
+}
+
+

@@ -280,7 +280,7 @@ public class Run_Func {
         AST mASTBody = mFunction.getBranch("BODY");
 
         Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
-        mAST.initFunction(mASTBody, this, eReturne);
+        mAST.init(mASTBody, this, eReturne);
 
 
     }

@@ -66,7 +66,7 @@ public class Analisador {
                 analisandoDefines(mAST);
             } else if (mAST.mesmoTipo("ACTION")) {
 
-                analisarAction(mAST);
+              //  analisarAction(mAST);
 
             } else if (mAST.mesmoTipo("FUNCTION")) {
 
@@ -76,7 +76,7 @@ public class Analisador {
 
             } else {
 
-                mErros.add("AST : " + mAST.getTipo());
+                mErros.add("AST x : " + mAST.getTipo());
 
 
             }
@@ -131,26 +131,62 @@ public class Analisador {
         for (AST mAST : ASTPai.getBranch("BODY").getASTS()) {
 
 
-            if (mAST.mesmoTipo("DEF")) {
-                analisandoDefines(mAST);
-            } else if (mAST.mesmoTipo("MOC")) {
-                analisandoDefines(mAST);
-            } else if (mAST.mesmoTipo("INVOKE")) {
-
-            } else if (mAST.mesmoTipo("RETURN")) {
+            boolean ret = analisarDentroFunction(mAST);
+            if (ret) {
                 retornou = true;
-            } else if (mAST.mesmoTipo("APPLY")) {
-            } else if (mAST.mesmoTipo("IF")) {
-
-            } else {
-                mErros.add("AST : " + mAST.getTipo());
             }
-
-
         }
 
         if (retornou == false) {
             mErros.add("Function " + ASTPai.getNome() + " : Nao possui retorno !");
+        }
+
+    }
+
+    public boolean analisarDentroFunction(AST ASTPai) {
+
+        boolean retornou = false;
+
+        if (ASTPai.mesmoTipo("DEF")) {
+            analisandoDefines(ASTPai);
+        } else if (ASTPai.mesmoTipo("MOC")) {
+            analisandoDefines(ASTPai);
+        } else if (ASTPai.mesmoTipo("INVOKE")) {
+
+        } else if (ASTPai.mesmoTipo("RETURN")) {
+            retornou = true;
+        } else if (ASTPai.mesmoTipo("APPLY")) {
+        } else if (ASTPai.mesmoTipo("EXECUTE")) {
+
+        } else if (ASTPai.mesmoTipo("IF")) {
+            analisarCondicao(ASTPai, true);
+        } else if (ASTPai.mesmoTipo("WHILE")) {
+            analisarWhile(ASTPai, true);
+        } else {
+            mErros.add("AST : " + ASTPai.getTipo());
+        }
+
+        return retornou;
+    }
+
+    public void analisarDentroAction(AST ASTPai) {
+
+        if (ASTPai.mesmoTipo("DEF")) {
+            analisandoDefines(ASTPai);
+        } else if (ASTPai.mesmoTipo("MOC")) {
+            analisandoDefines(ASTPai);
+        } else if (ASTPai.mesmoTipo("INVOKE")) {
+        } else if (ASTPai.mesmoTipo("APPLY")) {
+        } else if (ASTPai.mesmoTipo("EXECUTE")) {
+
+        } else if (ASTPai.mesmoTipo("RETURN")) {
+            mErros.add("Action " + ASTPai.getNome() + " : Nao pode ter RETORNO !");
+        } else if (ASTPai.mesmoTipo("IF")) {
+            analisarCondicao(ASTPai, false);
+        } else if (ASTPai.mesmoTipo("WHILE")) {
+            analisarWhile(ASTPai, false);
+        } else {
+            mErros.add("AST : " + ASTPai.getTipo());
         }
 
     }
@@ -162,25 +198,108 @@ public class Analisador {
 
         for (AST mAST : ASTPai.getBranch("BODY").getASTS()) {
 
-
-            if (mAST.mesmoTipo("DEF")) {
-                analisandoDefines(mAST);
-            } else if (mAST.mesmoTipo("MOC")) {
-                analisandoDefines(mAST);
-            } else if (mAST.mesmoTipo("INVOKE")) {
-            } else if (mAST.mesmoTipo("APPLY")) {
-            } else if (mAST.mesmoTipo("RETURN")) {
-                mErros.add("Action " + ASTPai.getNome() + " : Nao pode ter RETORNO !");
-            } else if (mAST.mesmoTipo("IF")) {
-
-            } else {
-                mErros.add("AST : " + mAST.getTipo());
-            }
+            analisarDentroAction(mAST);
 
 
         }
 
     }
+
+    public void analisarWhile(AST ASTPai, boolean dentroFunction) {
+
+        for (AST mAST : ASTPai.getASTS()) {
+
+            if (mAST.mesmoTipo("CONDITION")) {
+
+                if (mAST.getValor().length() == 0) {
+                    mErros.add("É necessario uma condição !");
+                }
+
+            } else if (mAST.mesmoTipo("BODY")) {
+                if (dentroFunction) {
+                    for (AST sAST : mAST.getASTS()) {
+                        analisarDentroFunction(sAST);
+                    }
+                } else {
+                    for (AST sAST : mAST.getASTS()) {
+                        analisarDentroAction(sAST);
+                    }
+                }
+            }
+
+        }
+    }
+
+
+    public void analisarCondicao(AST ASTPai, boolean dentroFunction) {
+
+        int condition = 0;
+        int other = 0;
+        int others = 0;
+
+        for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("CONDITION")) {
+                condition += 1;
+
+                if (mAST.getValor().length() == 0) {
+                    mErros.add("É necessario uma condição !");
+                }
+            } else if (mAST.mesmoTipo("OTHER")) {
+                other += 1;
+                if (others > 0) {
+                    mErros.add("A condicao OTHERS deve ser a ultima ! !");
+                }
+
+
+                if (dentroFunction) {
+                    for (AST sAST : mAST.getBranch("BODY").getASTS()) {
+                        analisarDentroFunction(sAST);
+                    }
+                } else {
+                    for (AST sAST : mAST.getBranch("BODY").getASTS()) {
+                        analisarDentroAction(sAST);
+                    }
+                }
+
+
+            } else if (mAST.mesmoTipo("OTHERS")) {
+                others += 1;
+
+                if (dentroFunction) {
+                    for (AST sAST : mAST.getASTS()) {
+                        analisarDentroFunction(sAST);
+                    }
+                } else {
+                    for (AST sAST : mAST.getASTS()) {
+                        analisarDentroAction(sAST);
+                    }
+                }
+
+            } else if (mAST.mesmoTipo("BODY")) {
+                if (dentroFunction) {
+                    for (AST sAST : mAST.getASTS()) {
+                        analisarDentroFunction(sAST);
+                    }
+                } else {
+                    for (AST sAST : mAST.getASTS()) {
+                        analisarDentroAction(sAST);
+                    }
+                }
+            }
+
+
+        }
+
+        if (condition == 0) {
+            mErros.add("É necessario uma condição !");
+        }
+
+        if (others > 1) {
+            mErros.add("Existe mais de um OTHERS na condição !");
+        }
+
+    }
+
 
     public void analisandoDefines(AST ASTPai) {
 

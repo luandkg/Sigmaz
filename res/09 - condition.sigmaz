@@ -1,38 +1,76 @@
 
-call iniciar -> conditionando();
+require "operadores.sigmaz";
+require "terminal.sigmaz";
+
+call iniciar -> operando();
 
 
-act conditionando(){
+act operando(){
 
 
     def a1 : num = 10;
-    def a2 : num = 10;
+    def a2 : num = 5;
 
-    def a3 : bool = a1 == a2;
-    def a4 : bool = a1 !! a2;
+    def t : bool = a1 == a2;
 
 
-    def f : bool = igual(50==50,false);
+    println("A1 : : ",a1);
+    println("A2 : : ",a2);
 
-    if(a1 == a2) {
-        def a3 : num = 50;
+    println("");
+
+
+    if(t) -> {
+            println("Parte : ","Igual");
+    } others {
+            println("Parte : ","Diferente");
     }
 
-    # if (a1) {} other () { }
-
-    if(igual(a1==a2,a1==a2)){}
+    def modo : string = "";
 
 
+    if(menor(a1,a2)) -> {
+           modo = "Menor";
+    } other (igual(a1,a2)) -> {
+        modo = "Igual";
+    } others {
+        modo = "Maior";
+    }
 
-    invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
+
+    println("Comparacao : ",modo);
+    println("");
+
+
+    def cai1 : bool = maior_igual(4,6);
+    def cai2 : bool = maior_igual(4,2);
+    def cai3 : bool = maior_igual(4,4);
+
+
+    def cei1 : bool = menor_igual(4,2);
+    def cei2 : bool = menor_igual(4,4);
+    def cei3 : bool = menor_igual(4,6);
+
+    println("Operador Maior Igual");
+
+
+    println("4 >= 6 : ",cai1);
+    println("4 >= 2 : ",cai2);
+    println("4 >= 4 : ",cai3);
+    println("");
+
+    println("Operador Menor Igual");
+
+
+    println("4 <= 2 : ",cei1);
+    println("4 <= 4 : ",cei2);
+    println("4 <= 6 : ",cei3);
+
+
+    # invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
 
 
 
 }
 
-func igual(a:bool,b:bool) : bool {
-
-return a;
-
-}
 

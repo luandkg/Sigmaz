@@ -1,0 +1,54 @@
+
+func num_to_string(a:num,b:num) : string  {
+
+    def c : string;
+
+    invoke casting -> cast_fns (a,b) :: c;
+
+    return c;
+}
+
+func num_to_string(a:num) : string  {
+
+    def c : string;
+
+    invoke casting -> cast_ns (a) :: c;
+
+    return c;
+}
+
+func bool_to_string(a:bool) : string  {
+
+    def c : string;
+
+    invoke casting -> cast_bs (a) :: c;
+
+    return c;
+}
+
+func string_to_bool(a:string) : bool  {
+
+    def c : bool;
+
+    invoke casting -> cast_sb (a) :: c;
+
+    return c;
+}
+
+func inteiro(a:num) : num  {
+
+    def c : num;
+
+    invoke casting -> cast_integer (a) :: c;
+
+    return c;
+}
+
+func decimal(a:num) : num  {
+
+    def c : num;
+
+    invoke casting -> cast_decimal (a) :: c;
+
+    return c;
+}

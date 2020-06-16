@@ -16,11 +16,14 @@ public class AST_Comando {
     public void init(AST ASTPai){
 
 
-            Token TokenD = mCompiler.getTokenCorrente();
+        AST ASTCorrente = ASTPai.criarBranch("EXECUTE");
+
+
+        Token TokenD = mCompiler.getTokenCorrente();
             if (TokenD.getTipo() == TokenTipo.NUMERO) {
 
-                ASTPai.setNome(TokenD.getConteudo());
-                ASTPai.setValor("Num");
+                ASTCorrente.setNome(TokenD.getConteudo());
+                ASTCorrente.setValor("Num");
 
                 Token P2 = mCompiler.getTokenAvante();
 
@@ -32,8 +35,8 @@ public class AST_Comando {
             } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
 
 
-                ASTPai.setNome(TokenD.getConteudo());
-                ASTPai.setValor("Text");
+                ASTCorrente.setNome(TokenD.getConteudo());
+                ASTCorrente.setValor("Text");
 
                 Token P2 = mCompiler.getTokenAvante();
 
@@ -48,24 +51,24 @@ public class AST_Comando {
 
 
 
-                ASTPai.setNome(TokenD.getConteudo());
-                ASTPai.setValor("ID");
+                ASTCorrente.setNome(TokenD.getConteudo());
+                ASTCorrente.setValor("ID");
 
                 Token P2 = mCompiler.getTokenAvante();
 
                 if(P2.getTipo()==TokenTipo.IGUAL) {
 
-                    AST ASTDireita = ASTPai.copiar();
+                    AST ASTDireita = ASTCorrente.copiar();
                     ASTDireita.setTipo("SETTABLE");
 
-                    ASTPai.getASTS().clear();
-                    ASTPai.setNome("");
-                    ASTPai.setValor("");
+                    ASTCorrente.getASTS().clear();
+                    ASTCorrente.setNome("");
+                    ASTCorrente.setValor("");
 
-                    ASTPai.setTipo("APPLY");
-                    ASTPai.getASTS().add(ASTDireita);
+                    ASTCorrente.setTipo("APPLY");
+                    ASTCorrente.getASTS().add(ASTDireita);
 
-                    AST ASTC = ASTPai.criarBranch("VALUE");
+                    AST ASTC = ASTCorrente.criarBranch("VALUE");
 
                     AST_Value mAST = new AST_Value(mCompiler);
 
@@ -74,9 +77,9 @@ public class AST_Comando {
 
                 } else if(P2.getTipo()==TokenTipo.PARENTESES_ABRE){
 
-                    ASTPai.setValor("FUNCT");
+                    ASTCorrente.setValor("FUNCT");
 
-                    recebendoParametros(ASTPai);
+                    recebendoParametros(ASTCorrente);
 
                     Token P3 = mCompiler.getTokenAvante();
 
@@ -84,17 +87,17 @@ public class AST_Comando {
 
                     } else     if(P3.getTipo()==TokenTipo.IGUAL) {
 
-                        AST ASTDireita = ASTPai.copiar();
+                        AST ASTDireita = ASTCorrente.copiar();
                         ASTDireita.setTipo("SETTABLE");
 
-                        ASTPai.getASTS().clear();
-                        ASTPai.setNome("");
-                        ASTPai.setValor("");
+                        ASTCorrente.getASTS().clear();
+                        ASTCorrente.setNome("");
+                        ASTCorrente.setValor("");
 
-                        ASTPai.setTipo("APPLY");
-                        ASTPai.getASTS().add(ASTDireita);
+                        ASTCorrente.setTipo("APPLY");
+                        ASTCorrente.getASTS().add(ASTDireita);
 
-                        AST ASTC = ASTPai.criarBranch("VALUE");
+                        AST ASTC = ASTCorrente.criarBranch("VALUE");
 
                         AST_Value mAST = new AST_Value(mCompiler);
 

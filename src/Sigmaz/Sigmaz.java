@@ -115,12 +115,21 @@ public class Sigmaz {
             System.out.println("\t - Erros : " + AnaliseC.getErros().size());
 
 
+
             if (AnaliseC.getErros().size() > 0) {
                 System.out.println("\n\t ERROS DE ANALISE : ");
 
                 for (String Erro : AnaliseC.getErros()) {
                     System.out.println("\t\t" + Erro);
                 }
+
+                System.out.println("");
+                System.out.println("################ AST - COM DEFEITOS ################");
+                System.out.println("");
+
+                Documentador DC = new Documentador();
+                System.out.println(CompilerC.getArvoreDeInstrucoes());
+
             } else {
 
 
@@ -134,10 +143,10 @@ public class Sigmaz {
 
                 CompilerC.Compilar(saida);
 
-                Documentador DC = new Documentador();
+                Documentador DC2 = new Documentador();
 
                 System.out.println("\t Iniciado : " + getDate().toString());
-                System.out.println("\t - Tamanho : " + DC.tamanhoObjeto(saida));
+                System.out.println("\t - Tamanho : " + DC2.tamanhoObjeto(saida));
                 System.out.println("\t Finalizado : " + getDate().toString());
 
                 System.out.println("");

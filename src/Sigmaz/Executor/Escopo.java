@@ -16,8 +16,8 @@ public class Escopo {
 
     private ArrayList<AST> mGuardados;
 
-    private boolean mCancel;
-    private boolean mContinue;
+    private boolean mCancelar;
+    private boolean mContinuar;
 
     private String mNome;
 
@@ -34,8 +34,8 @@ public class Escopo {
         mStacks = new ArrayList<>();
         mRunTime = eRunTime;
         mEscopoAnterior = eEscopoAnterior;
-        mCancel = false;
-        mContinue = false;
+        mCancelar = false;
+        mContinuar = false;
 
         mGuardados = new ArrayList<>();
 
@@ -50,14 +50,7 @@ public class Escopo {
     }
 
 
-    public boolean run(AST ASTC) {
 
-        boolean ret = true;
-
-        System.out.println("RUNNING " + ASTC.getNome() + " :: " + ASTC.getValor());
-
-        return ret;
-    }
 
 
     public void guardar(AST eAST) {
@@ -188,20 +181,27 @@ public class Escopo {
         return gc;
     }
 
-    public void setCancel(boolean eCancel) {
-        mCancel = eCancel;
+    public void setCancelar(boolean eCancelar) {
+        mCancelar = eCancelar;
+    }
+    public void setContinuar(boolean eContinuar) {
+
+        mContinuar = eContinuar;
     }
 
-    public boolean getCancel() {
-        return mCancel;
+    public boolean getCancelar() {
+        return mCancelar;
+    }
+    public boolean getContinuar() {
+        return mContinuar;
     }
 
     public void setContinue(boolean eContinue) {
-        mContinue = eContinue;
+        mContinuar = eContinue;
     }
 
     public boolean getContinue() {
-        return mContinue;
+        return mContinuar;
     }
 
     public Item BuscarAnterior(String eNome) {

@@ -35,7 +35,24 @@ public class InvokeMath {
         } else   if (eAcao.contentEquals("operator_div")) {
 
             argumentos_2num(eAcao,eSaida, ASTArgumentos);
+        } else   if (eAcao.contentEquals("operator_trash")) {
 
+            argumentos_2num(eAcao,eSaida, ASTArgumentos);
+        } else   if (eAcao.contentEquals("operator_less")) {
+
+            argumentos_2num(eAcao,eSaida, ASTArgumentos);
+        } else   if (eAcao.contentEquals("operator_great")) {
+
+            argumentos_2num(eAcao,eSaida, ASTArgumentos);
+        } else   if (eAcao.contentEquals("operator_equal")) {
+
+            argumentos_2num(eAcao,eSaida, ASTArgumentos);
+        } else   if (eAcao.contentEquals("operator_not")) {
+
+            argumentos_2num(eAcao,eSaida, ASTArgumentos);
+        } else   if (eAcao.contentEquals("operator_random")) {
+
+            argumentos_2num(eAcao,eSaida, ASTArgumentos);
         } else {
 
             mRunTime.getErros().add("Invocacao : Acao nao encontrada ->  " + eAcao);
@@ -150,8 +167,122 @@ public class InvokeMath {
                 catch (Exception e) {
                     mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
                 }
+            } else  if(eAcao.contentEquals("operator_trash")){
+
+                try {
+                    float f1 = Float.parseFloat(p1);
+                    float f2 = Float.parseFloat(p2);
+
+                    if(f2==0){
+                        mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                    }else{
+                        float f3 = f1 % f2;
+                        mEscopo.setDefinido(eSaida,String.valueOf(f3));
+                    }
+
+                }
+                catch (Exception e) {
+                    mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                }
+
+            } else  if(eAcao.contentEquals("operator_less")){
+
+                try {
+                    float f1 = Float.parseFloat(p1);
+                    float f2 = Float.parseFloat(p2);
 
 
+                        boolean f3 = f1<f2;
+                        mEscopo.setDefinido(eSaida,String.valueOf(f3));
+
+
+                }
+                catch (Exception e) {
+                    mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                }
+            } else  if(eAcao.contentEquals("operator_great")){
+
+                try {
+                    float f1 = Float.parseFloat(p1);
+                    float f2 = Float.parseFloat(p2);
+
+
+                    boolean f3 = f1>f2;
+                    mEscopo.setDefinido(eSaida,String.valueOf(f3));
+
+
+                }
+                catch (Exception e) {
+                    mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                }
+            } else  if(eAcao.contentEquals("operator_equal")){
+
+                try {
+                    float f1 = Float.parseFloat(p1);
+                    float f2 = Float.parseFloat(p2);
+
+
+                    boolean f3 = f1==f2;
+                    mEscopo.setDefinido(eSaida,String.valueOf(f3));
+
+
+                }
+                catch (Exception e) {
+                    mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                }
+            } else  if(eAcao.contentEquals("operator_not")){
+
+                try {
+                    float f1 = Float.parseFloat(p1);
+                    float f2 = Float.parseFloat(p2);
+
+
+                    boolean f3 = f1!=f2;
+                    mEscopo.setDefinido(eSaida,String.valueOf(f3));
+
+
+                }
+                catch (Exception e) {
+                    mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                }
+            } else  if(eAcao.contentEquals("operator_random")){
+
+
+                try {
+                    float f1 = Float.parseFloat(p1);
+                    float f2 = Float.parseFloat(p2);
+                    float f3=0;
+
+                    if(f1==f2){
+
+                        f3 = f1;
+
+                    }else{
+
+                        if(f1>f2){
+                            float t = f1;
+                            f1 = f2;
+                            f2 = t;
+                        }
+
+
+
+                        float delta = f2-f1;
+
+                        f3 = f1 + (float)(Math.random() * delta);
+
+
+                    }
+
+
+
+                    mEscopo.setDefinido(eSaida,String.valueOf(f3));
+
+
+                }
+                catch (Exception e) {
+                    mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                }
             }
 
 

@@ -52,12 +52,31 @@ public class AST_Corpo {
                 AST_Condition mAST = new AST_Condition(mCompiler);
                 mAST.init(ASTPai);
 
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("while")){
+
+                AST_While mAST = new AST_While(mCompiler);
+                mAST.init(ASTPai);
+
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("step")){
+
+                AST_Step mAST = new AST_Step(mCompiler);
+                mAST.init(ASTPai);
+
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("cancel")){
+
+                AST mCancel = ASTPai.criarBranch("CANCEL");
+                Token TokenC2= mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado abrir ponto e virgula" );
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("continue")){
+
+                AST mCancel = ASTPai.criarBranch("CONTINUE");
+                Token TokenC2= mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado abrir ponto e virgula" );
+
+
             }else if (TokenD.getTipo()==TokenTipo.ID ){
 
-                AST ASTC = ASTPai.criarBranch("ACTION");
 
                 AST_Comando mAST = new AST_Comando(mCompiler);
-                mAST.init(ASTC);
+                mAST.init(ASTPai);
 
             }else{
 
