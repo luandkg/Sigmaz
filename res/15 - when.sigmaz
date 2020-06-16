@@ -1,0 +1,34 @@
+
+require "sigmaz.sigmaz";
+
+call iniciar -> operando();
+
+
+act operando(){
+
+    def escolha : num = 10;
+
+    when (escolha) -> {
+
+        case 10 -> { }
+        case somar(2,2) -> {}
+        case "Luan" -> {}
+        case a -> {}
+        case 10 == 3 -> {}
+
+        case (a==b)  -> {}
+
+
+        others {
+
+
+
+        }
+    }
+
+
+
+
+}
+
+

@@ -66,7 +66,7 @@ public class Analisador {
                 analisandoDefines(mAST);
             } else if (mAST.mesmoTipo("ACTION")) {
 
-              //  analisarAction(mAST);
+                analisarAction(mAST);
 
             } else if (mAST.mesmoTipo("FUNCTION")) {
 
@@ -131,7 +131,7 @@ public class Analisador {
         for (AST mAST : ASTPai.getBranch("BODY").getASTS()) {
 
 
-            boolean ret = analisarDentroFunction(mAST);
+            boolean ret = analisarDentroFunction(mAST,false);
             if (ret) {
                 retornou = true;
             }
@@ -143,7 +143,7 @@ public class Analisador {
 
     }
 
-    public boolean analisarDentroFunction(AST ASTPai) {
+    public boolean analisarDentroFunction(AST ASTPai, boolean laco) {
 
         boolean retornou = false;
 
@@ -157,11 +157,24 @@ public class Analisador {
             retornou = true;
         } else if (ASTPai.mesmoTipo("APPLY")) {
         } else if (ASTPai.mesmoTipo("EXECUTE")) {
+        } else if (ASTPai.mesmoTipo("WHEN")) {
 
         } else if (ASTPai.mesmoTipo("IF")) {
-            analisarCondicao(ASTPai, true);
+            analisarCondicao(ASTPai, true,laco);
         } else if (ASTPai.mesmoTipo("WHILE")) {
             analisarWhile(ASTPai, true);
+        } else if (ASTPai.mesmoTipo("STEP")) {
+            analisarStep(ASTPai, true);
+        } else if (ASTPai.mesmoTipo("STEPDEF")) {
+            analisarStepDef(ASTPai, true);
+        } else if (ASTPai.mesmoTipo("CANCEL")) {
+            if (!laco) {
+                mErros.add("CANCEL so pode existir dentro de um laco !");
+            }
+        } else if (ASTPai.mesmoTipo("CONTINUE")) {
+            if (!laco) {
+                mErros.add("CONTINUE so pode existir dentro de um laco !");
+            }
         } else {
             mErros.add("AST : " + ASTPai.getTipo());
         }
@@ -169,7 +182,7 @@ public class Analisador {
         return retornou;
     }
 
-    public void analisarDentroAction(AST ASTPai) {
+    public void analisarDentroAction(AST ASTPai, boolean laco) {
 
         if (ASTPai.mesmoTipo("DEF")) {
             analisandoDefines(ASTPai);
@@ -178,13 +191,26 @@ public class Analisador {
         } else if (ASTPai.mesmoTipo("INVOKE")) {
         } else if (ASTPai.mesmoTipo("APPLY")) {
         } else if (ASTPai.mesmoTipo("EXECUTE")) {
+        } else if (ASTPai.mesmoTipo("WHEN")) {
 
         } else if (ASTPai.mesmoTipo("RETURN")) {
             mErros.add("Action " + ASTPai.getNome() + " : Nao pode ter RETORNO !");
         } else if (ASTPai.mesmoTipo("IF")) {
-            analisarCondicao(ASTPai, false);
+            analisarCondicao(ASTPai, false,laco);
         } else if (ASTPai.mesmoTipo("WHILE")) {
             analisarWhile(ASTPai, false);
+        } else if (ASTPai.mesmoTipo("STEP")) {
+            analisarStep(ASTPai, false);
+        } else if (ASTPai.mesmoTipo("STEPDEF")) {
+            analisarStepDef(ASTPai, false);
+        } else if (ASTPai.mesmoTipo("CANCEL")) {
+            if (!laco) {
+                mErros.add("CANCEL so pode existir dentro de um laco !");
+            }
+        } else if (ASTPai.mesmoTipo("CONTINUE")) {
+            if (!laco) {
+                mErros.add("CONTINUE so pode existir dentro de um laco !");
+            }
         } else {
             mErros.add("AST : " + ASTPai.getTipo());
         }
@@ -198,7 +224,7 @@ public class Analisador {
 
         for (AST mAST : ASTPai.getBranch("BODY").getASTS()) {
 
-            analisarDentroAction(mAST);
+            analisarDentroAction(mAST,false);
 
 
         }
@@ -218,11 +244,11 @@ public class Analisador {
             } else if (mAST.mesmoTipo("BODY")) {
                 if (dentroFunction) {
                     for (AST sAST : mAST.getASTS()) {
-                        analisarDentroFunction(sAST);
+                        analisarDentroFunction(sAST,true);
                     }
                 } else {
                     for (AST sAST : mAST.getASTS()) {
-                        analisarDentroAction(sAST);
+                        analisarDentroAction(sAST,true);
                     }
                 }
             }
@@ -231,7 +257,41 @@ public class Analisador {
     }
 
 
-    public void analisarCondicao(AST ASTPai, boolean dentroFunction) {
+    public void analisarStepDef(AST ASTPai, boolean dentroFunction) {
+        analisarStep(ASTPai,dentroFunction);
+    }
+
+    public void analisarStep(AST ASTPai, boolean dentroFunction) {
+
+
+        int a = 0;
+
+        for (AST sAST : ASTPai.getBranch("ARGUMENTS").getASTS()) {
+            if (sAST.mesmoTipo("ARGUMENT")) {
+                a += 1;
+            }
+        }
+
+        if (a == 3) {
+
+        } else {
+            mErros.add("O Step deve ser formado por 3 ARGUMENTS !");
+        }
+
+        if (dentroFunction) {
+            for (AST sAST : ASTPai.getBranch("BODY").getASTS()) {
+                analisarDentroFunction(sAST,true);
+            }
+        } else {
+            for (AST sAST : ASTPai.getBranch("BODY").getASTS()) {
+                analisarDentroAction(sAST,true);
+            }
+        }
+
+
+    }
+
+    public void analisarCondicao(AST ASTPai, boolean dentroFunction,boolean laco) {
 
         int condition = 0;
         int other = 0;
@@ -253,11 +313,11 @@ public class Analisador {
 
                 if (dentroFunction) {
                     for (AST sAST : mAST.getBranch("BODY").getASTS()) {
-                        analisarDentroFunction(sAST);
+                        analisarDentroFunction(sAST,laco);
                     }
                 } else {
                     for (AST sAST : mAST.getBranch("BODY").getASTS()) {
-                        analisarDentroAction(sAST);
+                        analisarDentroAction(sAST,laco);
                     }
                 }
 
@@ -267,22 +327,22 @@ public class Analisador {
 
                 if (dentroFunction) {
                     for (AST sAST : mAST.getASTS()) {
-                        analisarDentroFunction(sAST);
+                        analisarDentroFunction(sAST,laco);
                     }
                 } else {
                     for (AST sAST : mAST.getASTS()) {
-                        analisarDentroAction(sAST);
+                        analisarDentroAction(sAST,laco);
                     }
                 }
 
             } else if (mAST.mesmoTipo("BODY")) {
                 if (dentroFunction) {
                     for (AST sAST : mAST.getASTS()) {
-                        analisarDentroFunction(sAST);
+                        analisarDentroFunction(sAST,laco);
                     }
                 } else {
                     for (AST sAST : mAST.getASTS()) {
-                        analisarDentroAction(sAST);
+                        analisarDentroAction(sAST,laco);
                     }
                 }
             }

@@ -61,6 +61,10 @@ public class AST_Corpo {
 
                 AST_Step mAST = new AST_Step(mCompiler);
                 mAST.init(ASTPai);
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("when")){
+
+                AST_When mAST = new AST_When(mCompiler);
+                mAST.init(ASTPai);
 
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("cancel")){
 

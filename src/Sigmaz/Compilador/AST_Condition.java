@@ -27,7 +27,6 @@ public class AST_Condition {
         AST_Condicao.setTipo("CONDITION");
 
 
-        System.out.println("Depois : " + mCompiler.getTokenCorrente().getConteudo());
         if (mCompiler.getTokenCorrente().getTipo() == TokenTipo.PARENTESES_FECHA) {
 
         }else{
@@ -44,7 +43,6 @@ public class AST_Condition {
 
         while (true) {
             Token TokenF = mCompiler.getTokenFuturo();
-            System.out.println("Futuro : " + TokenF.getConteudo());
 
             if (TokenF.mesmoConteudo("other")) {
 
@@ -61,7 +59,6 @@ public class AST_Condition {
                 AST_OtherCondition.setTipo("CONDITION");
 
 
-                System.out.println("Depois : " + mCompiler.getTokenCorrente().getConteudo());
                 if (mCompiler.getTokenCorrente().getTipo() == TokenTipo.PARENTESES_FECHA) {
 
                 } else {
