@@ -7,15 +7,13 @@ public class EscopoStack {
     private Escopo mEscopo;
     private RunTime mRunTime;
 
-    public EscopoStack(RunTime eRunTime, Escopo eEscopo){
-        mRunTime=eRunTime;
-        mEscopo=eEscopo;
+    public EscopoStack(RunTime eRunTime, Escopo eEscopo) {
+        mRunTime = eRunTime;
+        mEscopo = eEscopo;
     }
 
 
-
-
-        public void criarDefinicaoNula(String eNome, String eTipo) {
+    public void criarDefinicaoNula(String eNome, String eTipo) {
         boolean enc = false;
 
         for (Item i : mEscopo.getStacks()) {
@@ -112,7 +110,7 @@ public class EscopoStack {
     }
 
 
-        public void criarConstante(String eNome, String eTipo, String eValor) {
+    public void criarConstante(String eNome, String eTipo, String eValor) {
         boolean enc = false;
 
         for (Item i : mEscopo.getStacks()) {
@@ -145,86 +143,34 @@ public class EscopoStack {
     }
 
     public void setDefinido(String eNome, String eValor) {
-        boolean enc = false;
 
-        for (Item i : mEscopo.getStacks()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                if (i.getModo() == 0) {
-                    i.setValor(eValor);
-                    i.setNulo(false);
-                    //System.out.println("Aplicando Valor em : " + eNome + " -->> " + eValor);
-                } else {
-                    mRunTime.getErros().add("A constante nao pode ser alterada : " + eNome);
-                }
-                break;
-            }
+
+        Item mItem = getItem(eNome);
+        if (mItem.getModo() == 0) {
+            mItem.setValor(eValor);
+            mItem.setNulo(false);
+            //System.out.println("Aplicando Valor em : " + eNome + " -->> " + eValor);
+        } else {
+            mRunTime.getErros().add("A constante nao pode ser alterada : " + eNome);
         }
 
-        if (!enc) {
-
-            Item IC = BuscarAnterior(eNome);
-            if (IC != null) {
-                enc = true;
-                if (IC.getModo() == 0) {
-                    IC.setValor(eValor);
-                    IC.setNulo(false);
-                } else {
-                    mRunTime.getErros().add("A constante nao pode ser alterada : " + eNome);
-                }
-
-            }
-
-        }
-
-        if (!enc) {
-            mRunTime.getErros().add("Variavel nao Encontrada : " + eNome);
-
-        }
     }
 
     public void anularDefinido(String eNome) {
-        boolean enc = false;
 
-        for (Item i : mEscopo.getStacks()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                if (i.getModo() == 0) {
-                    i.setValor("");
-                    i.setNulo(true);
-                    //System.out.println("Aplicando Valor em : " + eNome + " -->> " + eValor);
-                } else {
-                    mRunTime.getErros().add("A constante nao pode ser alterada : " + eNome);
-                }
-                break;
-            }
+        Item mItem = getItem(eNome);
+        if (mItem.getModo() == 0) {
+            mItem.setValor("");
+            mItem.setNulo(true);
+            //System.out.println("Aplicando Valor em : " + eNome + " -->> " + eValor);
+        } else {
+            mRunTime.getErros().add("A constante nao pode ser alterada : " + eNome);
         }
 
-        if (!enc) {
-
-            Item IC = BuscarAnterior(eNome);
-            if (IC != null) {
-                enc = true;
-                if (IC.getModo() == 0) {
-                    IC.setValor("");
-                    IC.setNulo(true);
-                } else {
-                    mRunTime.getErros().add("A constante nao pode ser alterada : " + eNome);
-                }
-
-            }
-
-        }
-
-        if (!enc) {
-            mRunTime.getErros().add("Variavel nao Encontrada : " + eNome);
-
-        }
     }
 
 
-
-        public String getDefinidoTipo(String eNome) {
+    public String getDefinidoTipo(String eNome) {
 
         boolean enc = false;
         String ret = "";
@@ -257,6 +203,71 @@ public class EscopoStack {
 
     }
 
+    public Item getItem(String eNome) {
+
+        boolean enc = false;
+        Item ret = null;
+
+
+        for (Item i : mEscopo.getStacks()) {
+            if (i.getNome().contentEquals(eNome)) {
+                enc = true;
+                ret = i;
+                break;
+            }
+        }
+
+        if (!enc) {
+
+            Item IC = BuscarAnterior(eNome);
+            if (IC != null) {
+                enc = true;
+                ret = IC;
+
+            }
+
+        }
+
+        if (!enc) {
+            mRunTime.getErros().add("Variavel nao Encontrada : " + eNome);
+        }
+
+        return ret;
+    }
+
+    public boolean getDefinidoPrimitivo(String eNome) {
+        Item t = getItem(eNome);
+
+        if(t==null){
+            return false;
+        }else{
+            return t.getPrimitivo();
+        }
+
+    }
+    public boolean getDefinidoNulo(String eNome) {
+
+        Item t = getItem(eNome);
+
+        if(t==null){
+            return false;
+        }else{
+            return t.getNulo();
+        }
+
+    }
+
+    public String getDefinidoConteudo(String eNome) {
+
+        Item t = getItem(eNome);
+
+        if(t==null){
+            return "";
+        }else{
+            return t.getValor();
+        }
+
+    }
 
     public String getDefinido(String eNome) {
         boolean enc = false;

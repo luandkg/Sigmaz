@@ -36,13 +36,13 @@ public class Run_Condition {
 
         if (mAST.getRetornoTipo().contentEquals("bool")) {
 
-            if (mAST.getPrimitivo().contentEquals("true")) {
+            if (mAST.getConteudo().contentEquals("true")) {
 
                 Escopo EscopoInterno = new Escopo(mRunTime, mEscopo);
                 EscopoInterno.setNome("Condicionate");
 
                 Run_Body cAST = new Run_Body(mRunTime, EscopoInterno);
-                cAST.init(mCorpo, null, "");
+                cAST.init(mCorpo);
 
                 if (cAST.getCancelado()) {
                     mEscopo.setCancelar(true);
@@ -64,13 +64,13 @@ public class Run_Condition {
                         Run_Value ouAST = new Run_Value(mRunTime, mEscopo);
                         ouAST.init(ouCondicao, "bool");
                         if (ouAST.getRetornoTipo().contentEquals("bool")) {
-                            if (ouAST.getPrimitivo().contentEquals("true")) {
+                            if (ouAST.getConteudo().contentEquals("true")) {
                                 sucesso = true;
 
                                 Escopo EscopoInterno = new Escopo(mRunTime, mEscopo);
 
                                 Run_Body cAST = new Run_Body(mRunTime, EscopoInterno);
-                                cAST.init(ouCorpo, null, "");
+                                cAST.init(ouCorpo);
                                 if (cAST.getCancelado()) {
                                     mEscopo.setCancelar(true);
                                 }
@@ -113,7 +113,7 @@ public class Run_Condition {
                 Escopo EscopoInterno = new Escopo(mRunTime, mEscopo);
 
                 Run_Body cAST = new Run_Body(mRunTime, EscopoInterno);
-                cAST.init(fAST, null, "");
+                cAST.init(fAST);
 
                 if (cAST.getCancelado()) {
                     mEscopo.setCancelar(true);

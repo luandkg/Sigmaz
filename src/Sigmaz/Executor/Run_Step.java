@@ -39,7 +39,7 @@ public class Run_Step {
             mRunTime.getErros().add("Valor inicial do Step com problemas !");
         } else if (mAST.getIsPrimitivo()) {
 
-            mEscopo.setDefinido(mPassador,mAST.getPrimitivo());
+            mEscopo.setDefinido(mPassador,mAST.getConteudo());
 
 
             Run_Value mAST2 = new Run_Value(mRunTime, mEscopo);
@@ -47,10 +47,10 @@ public class Run_Step {
 
             int w = 0;
 
-            String mPassante = mAST.getPrimitivo();
+            String mPassante = mAST.getConteudo();
 
 
-            while(!mPassante.contentEquals(mAST2.getPrimitivo())){
+            while(!mPassante.contentEquals(mAST2.getConteudo())){
 
            //     System.out.println("C1 : "+mAST.getPrimitivo());
               //  System.out.println("C2 : "+mAST2.getPrimitivo());
@@ -59,7 +59,7 @@ public class Run_Step {
                 EscopoInterno.setNome("Step");
 
                 Run_Body cAST = new Run_Body(mRunTime, EscopoInterno);
-                cAST.init(mCorpo,null,"");
+                cAST.init(mCorpo);
 
                 if(cAST.getCancelado()){
                     break;
@@ -72,8 +72,8 @@ public class Run_Step {
                 Run_Value mAST3= new Run_Value(mRunTime, mEscopo);
                 mAST3.init(mArgumentos.getASTS().get(2), "num");
 
-                mEscopo.setDefinido(mPassador,mAST3.getPrimitivo());
-                mPassante = mAST3.getPrimitivo();
+                mEscopo.setDefinido(mPassador,mAST3.getConteudo());
+                mPassante = mAST3.getConteudo();
 
                 if( mRunTime.getErros().size()>0){
                     break;
@@ -115,7 +115,7 @@ public class Run_Step {
             mRunTime.getErros().add("Valor inicial do Step com problemas !");
         } else if (mAST.getIsPrimitivo()) {
 
-            EscopoPrimario.setDefinido(mPassador,mAST.getPrimitivo());
+            EscopoPrimario.setDefinido(mPassador,mAST.getConteudo());
 
 
             Run_Value mAST2 = new Run_Value(mRunTime, EscopoPrimario);
@@ -123,10 +123,10 @@ public class Run_Step {
 
             int w = 0;
 
-            String mPassante = mAST.getPrimitivo();
+            String mPassante = mAST.getConteudo();
 
 
-            while(!mPassante.contentEquals(mAST2.getPrimitivo())){
+            while(!mPassante.contentEquals(mAST2.getConteudo())){
 
                 //     System.out.println("C1 : "+mAST.getPrimitivo());
                 //  System.out.println("C2 : "+mAST2.getPrimitivo());
@@ -135,7 +135,7 @@ public class Run_Step {
                 EscopoInterno.setNome("Step");
 
                 Run_Body cAST = new Run_Body(mRunTime, EscopoInterno);
-                cAST.init(mCorpo,null,"");
+                cAST.init(mCorpo);
 
                 if(cAST.getCancelado()){
                     break;
@@ -148,8 +148,12 @@ public class Run_Step {
                 Run_Value mAST3= new Run_Value(mRunTime, EscopoPrimario);
                 mAST3.init(mArgumentos.getASTS().get(2), "num");
 
-                EscopoPrimario.setDefinido(mPassador,mAST3.getPrimitivo());
-                mPassante = mAST3.getPrimitivo();
+                if( mRunTime.getErros().size()>0){
+                    break;
+                }
+
+                EscopoPrimario.setDefinido(mPassador,mAST3.getConteudo());
+                mPassante = mAST3.getConteudo();
 
                 if( mRunTime.getErros().size()>0){
                     break;

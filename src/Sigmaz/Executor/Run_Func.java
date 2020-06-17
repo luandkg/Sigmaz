@@ -9,39 +9,33 @@ public class Run_Func {
     private RunTime mRunTime;
     private Escopo mEscopo;
 
-    private String mTipo;
 
-    private String mPrimitivo;
+    private boolean mIsNulo;
+    private boolean mIsPrimitivo;
+
+
+    private String mConteudo;
     private Object mObjeto;
 
-    private String mRetornoFunction;
+    private String mRetornoTipo;
+
 
     public Run_Func(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
-        mTipo = "";
-        mPrimitivo = "";
+
+        mIsNulo = false;
+        mIsPrimitivo = false;
+
         mObjeto = null;
-
-        mRetornoFunction = "";
+        mConteudo = null;
+        mRetornoTipo = null;
 
     }
 
-    public String getTipo() {
-        return mTipo;
-    }
-
-    public void setTipo(String eTipo) {
-        mTipo = eTipo;
-    }
-
-    public String getPrimitivo() {
-        return mPrimitivo;
-    }
-
-    public void setPrimitivo(String ePrimitivo) {
-        mPrimitivo = ePrimitivo;
+    public String getConteudo() {
+        return mConteudo;
     }
 
     public Object getObjeto() {
@@ -49,20 +43,39 @@ public class Run_Func {
     }
 
     public boolean getIsNulo() {
-        return mTipo.contentEquals("NULL");
+        return mIsNulo;
     }
 
     public boolean getIsPrimitivo() {
-        return mTipo.contentEquals("PRIMITIVE");
+        return mIsPrimitivo;
     }
 
     public boolean getIsStruct() {
-        return mTipo.contentEquals("STRUCT");
+        return !mIsPrimitivo;
     }
 
+    public String getRetornoTipo() {
+        return mRetornoTipo;
+    }
+
+    public void setNulo(boolean eNulo) {
+        mIsNulo = eNulo;
+    }
+
+    public void setPrimitivo(boolean ePrimitivo) {
+        mIsPrimitivo = ePrimitivo;
+    }
+
+    public void setRetornoTipo(String eRetornoTipo) {
+        mRetornoTipo = eRetornoTipo;
+    }
+
+    public void setConteudo(String eConteudo) {
+        mConteudo = eConteudo;
+    }
 
     public String getRetornoFunction() {
-        return mRetornoFunction;
+        return mRetornoTipo;
     }
 
 
@@ -76,83 +89,33 @@ public class Run_Func {
         for (AST a : ASTCorrente.getASTS()) {
             if (a.mesmoTipo("ARGUMENT")) {
                 argumentos += 1;
-                if (a.mesmoValor("Num")) {
 
-                    AST v = a.copiar();
-                    v.setValor("num");
+                AST v = new AST("VALUE");
 
-                    mArgumentos.add(v);
-                } else if (a.mesmoValor("Text")) {
-                    AST v = a.copiar();
-                    v.setValor("string");
-
-                    mArgumentos.add(v);
-                } else if (a.mesmoValor("ID")) {
-
-                    // System.out.println(" Argumentando -> " + a.getNome() + " : "  );
-
-                    AST v = new AST("VALUE");
-
-                    if (a.mesmoNome("true") || a.mesmoNome("false")) {
-
-                        v.setNome(a.getNome());
-                        v.setValor("bool");
-                     //   System.out.println("Argumento DIRETO -> " + a.getNome());
-
-                    } else if (a.mesmoNome("null")) {
-                        v.setNome(a.getNome());
-                        v.setValor("<<ANY>>");
-                    } else {
-                        v.setNome(mEscopo.getDefinido(a.getNome()));
-                        v.setValor(mEscopo.getDefinidoTipo(a.getNome()));
-                    }
+                Run_Value mAST = new Run_Value(mRunTime, mEscopo);
+                mAST.init(a, "<<ANY>>");
 
 
-                    mArgumentos.add(v);
+                if (mAST.getIsNulo()) {
+                    //  v.setValor("NULL");
 
-                } else if (a.mesmoValor("FUNCT")) {
+                    v.setValor(mAST.getRetornoTipo());
+                    v.setNome(mAST.getConteudo());
 
-                    AST v = new AST("VALUE");
+                } else if (mAST.getIsPrimitivo()) {
 
-                    Run_Func mAST = new Run_Func(mRunTime, mEscopo);
-                    mAST.init(a, eReturne);
+                    v.setValor(mAST.getRetornoTipo());
+                    v.setNome(mAST.getConteudo());
 
-                    if (mAST.getIsNulo()) {
-                        v.setNome("NULL");
-                    } else if (mAST.getIsPrimitivo()) {
-                        v.setNome(mAST.getPrimitivo());
-                    } else {
-                        mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
-                    }
+                    //  System.out.println("  - FUNCT ARGUMENTANDO  -> " + mAST.getConteudo() + " : " + mAST.getRetornoTipo());
 
-                    v.setValor(mAST.getRetornoFunction());
-
-
-                    mArgumentos.add(v);
-
-                    //   mRunTime.getErros().add(" Argumento Complexo !");
-
-                } else if (a.mesmoValor("COMPARATOR")) {
-
-                    Run_Value mAST = new Run_Value(mRunTime, mEscopo);
-                    mAST.init(a, "bool");
-
-                    AST v = new AST("VALUE");
-
-                    if (mAST.getIsNulo()) {
-                        v.setNome("NULL");
-                    } else if (mAST.getIsPrimitivo()) {
-                        v.setNome(mAST.getPrimitivo());
-                    } else {
-                        mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
-                    }
-
-                    v.setValor("bool");
-
-
-                    mArgumentos.add(v);
-
+                } else {
+                    mRunTime.getErros().add("AST_Value com problemas !");
                 }
+
+                mArgumentos.add(v);
+
+
             }
 
         }
@@ -201,7 +164,7 @@ public class Run_Func {
 
                                 v += 1;
                             }
-                             //   System.out.println("\t - Checando Tipo :  " + mArgumentos.get(argC).getValor() + " e " + mArgumentandoTipos.get(argC));
+                            //   System.out.println("\t - Checando Tipo :  " + mArgumentos.get(argC).getValor() + " e " + mArgumentandoTipos.get(argC));
 
                         }
 
@@ -232,6 +195,11 @@ public class Run_Func {
 
                 if (mFunction.mesmoValor(eReturne) || eReturne.contentEquals("<<ANY>>")) {
 
+                    if (mRunTime.getErros().size() > 0) {
+                        return;
+                    }
+
+
                     execute(mFunction, argumentos, mArgumentandoNome, mArgumentos, eReturne);
 
                 } else {
@@ -253,24 +221,25 @@ public class Run_Func {
     public void execute(AST mFunction, int argumentos, ArrayList<String> mArgumentandoNome, ArrayList<AST> mArgumentos, String eReturne) {
 
 
-        mRetornoFunction = mFunction.getValor();
+        mRetornoTipo = mFunction.getValor();
 
-        //  System.out.println("Function " + mFunction.getNome() + " : " + mFunction.getValor());
+        // System.out.println(" EXECUTAR Function " + mFunction.getNome() + " : " + mFunction.getValor());
 
 
         Escopo mEscopoInterno = new Escopo(mRunTime, mRunTime.getEscopoGlobal());
+        //Escopo mEscopoInterno = new Escopo(mRunTime, null);
 
         if (argumentos > 0) {
 
             for (int argC = 0; argC < argumentos; argC++) {
 
-              //   System.out.println("\t - Alocando : " + mArgumentandoNome.get(argC) + " -> " + mArgumentos.get(argC).getNome() + " :: " + mArgumentos.get(argC).getValor());
+                //   System.out.println("\t - Alocando : " + mArgumentandoNome.get(argC) + " -> " + mArgumentos.get(argC).getNome() + " :: " + mArgumentos.get(argC).getValor());
 
-                if(mArgumentandoNome.get(argC).contentEquals("true") || mArgumentandoNome.get(argC).contentEquals("false")){
+                if (mArgumentandoNome.get(argC).contentEquals("true") || mArgumentandoNome.get(argC).contentEquals("false")) {
 
                     mEscopoInterno.criarDefinicao(mArgumentandoNome.get(argC), mArgumentos.get(argC).getValor(), mArgumentos.get(argC).getNome());
 
-                }else{
+                } else {
                     mEscopoInterno.criarDefinicao(mArgumentandoNome.get(argC), mArgumentos.get(argC).getValor(), mArgumentos.get(argC).getNome());
                 }
             }
@@ -280,7 +249,27 @@ public class Run_Func {
         AST mASTBody = mFunction.getBranch("BODY");
 
         Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
-        mAST.init(mASTBody, this, eReturne);
+        mAST.init(mASTBody);
+
+        mIsNulo = mAST.getIsNulo();
+        mIsPrimitivo = mAST.getIsPrimitivo();
+        mConteudo = mAST.getConteudo();
+        mRetornoTipo = mAST.getRetornoTipo();
+
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
+
+        if (mRetornoTipo.contentEquals("bool")) {
+            mIsPrimitivo = true;
+        } else if (mRetornoTipo.contentEquals("num")) {
+            mIsPrimitivo = true;
+        } else if (mRetornoTipo.contentEquals("string")) {
+            mIsPrimitivo = true;
+        }
+
+
+        // System.out.println("  Retornando -> " + mAST.getConteudo());
 
 
     }

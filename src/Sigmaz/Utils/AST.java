@@ -63,6 +63,20 @@ public class AST {
         return mRet;
     }
 
+
+    public boolean existeBranch(String eTipo) {
+        boolean enc = false;
+
+        for (AST mAST : mASTS) {
+            if (mAST.mesmoTipo(eTipo)) {
+                enc=true;
+                break;
+            }
+        }
+
+        return enc;
+    }
+
     public AST criarBranch(String eTipo) {
 
         AST mRet = new AST(eTipo);

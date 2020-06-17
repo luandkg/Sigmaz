@@ -16,6 +16,7 @@ act operando(){
 
         def ac : num = cc;
 
+        println("ANTES : " ,ac);
 
         if (ac == 8) -> {  println(" - SAINDO : " ,ac); cancel; }
         if (ac == 5) -> {  println(" - PULANDO : " ,ac);continue; }
@@ -29,11 +30,12 @@ act operando(){
                   if (ac == 7) -> {
 
                             println(" - SEPTANDO : " ,ac);
-                            cancel;
+                            continue;
                   }
         }
 
-        println("Valor : " ,ac);
+        println("DEPOIS : " ,ac);
+
 
 
     }

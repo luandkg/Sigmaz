@@ -1,0 +1,40 @@
+
+require "sigmaz.sigmaz";
+
+call iniciar -> operando();
+
+
+act operando(){
+
+    def x : num = 10;
+
+    def resposta : string = "";
+
+
+
+    all (x) -> {
+
+        inside (0,10) -> {  resposta = "Entre 0 e 10";  }
+
+        start (0,10) -> {  resposta = "Igual a 0 ate menor que 10";  }
+
+        end (0,10) -> {  resposta = "Maior que 0 ate igual a 10";  }
+
+        extrem (0,10) -> {  resposta = "Igual a 0 ou 10";  }
+
+        outside (0,10) -> {  resposta = "Fora de 0 e 10";  }
+
+
+
+        others {  resposta = "Desconhecido"; }
+
+    }
+
+
+
+  println("Escolheu : = ",resposta);
+
+
+}
+
+

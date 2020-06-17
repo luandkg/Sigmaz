@@ -74,86 +74,46 @@ public class Run_ActionFunction {
 
         for (AST a : ASTCorrente.getASTS()) {
             if (a.mesmoTipo("ARGUMENT")) {
+
                 argumentos += 1;
-                if (a.mesmoValor("Num")) {
 
-                    AST v = a.copiar();
-                    v.setValor("num");
+                AST v = new AST("VALUE");
 
-                    mArgumentos.add(v);
-                } else if (a.mesmoValor("Text")) {
-                    AST v = a.copiar();
-                    v.setValor("string");
+                Run_Value mAST = new Run_Value(mRunTime, mEscopo);
+                mAST.init(a, "<<ANY>>");
 
-                    mArgumentos.add(v);
-                } else if (a.mesmoValor("ID")) {
-
-                    // System.out.println(" Argumentando -> " + a.getNome() + " : "  );
-
-                    AST v = new AST("VALUE");
-
-                    if (a.mesmoNome("true") || a.mesmoNome("false")) {
-
-                        v.setNome(a.getNome());
-                        v.setValor("bool");
-                        //   System.out.println("Argumento DIRETO -> " + a.getNome());
-
-                    } else if (a.mesmoNome("null")) {
-                        v.setNome(a.getNome());
-                        v.setValor("<<ANY>>");
-                    } else {
-                        v.setNome(mEscopo.getDefinido(a.getNome()));
-                        v.setValor(mEscopo.getDefinidoTipo(a.getNome()));
-                    }
-
-
-                    mArgumentos.add(v);
-
-                } else if (a.mesmoValor("FUNCT")) {
-
-                    AST v = new AST("VALUE");
-
-                    Run_Func mAST = new Run_Func(mRunTime, mEscopo);
-                    mAST.init(a, "<<ANY>>");
-
-                    if (mAST.getIsNulo()) {
-                        v.setNome("NULL");
-                    } else if (mAST.getIsPrimitivo()) {
-                        v.setNome(mAST.getPrimitivo());
-                    } else {
-                        mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
-                    }
-
-                    v.setValor(mAST.getRetornoFunction());
-
-
-                    mArgumentos.add(v);
-
-                    //   mRunTime.getErros().add(" Argumento Complexo !");
-
-                } else if (a.mesmoValor("COMPARATOR")) {
-
-                    Run_Value mAST = new Run_Value(mRunTime, mEscopo);
-                    mAST.init(a, "bool");
-
-                    AST v = new AST("VALUE");
-
-                    if (mAST.getIsNulo()) {
-                        v.setNome("NULL");
-                    } else if (mAST.getIsPrimitivo()) {
-                        v.setNome(mAST.getPrimitivo());
-                    } else {
-                        mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
-                    }
-
-                    v.setValor("bool");
-
-
-                    mArgumentos.add(v);
-
+                if (mRunTime.getErros().size() > 0) {
+                    return;
                 }
+
+                if (mAST.getIsNulo()) {
+                    //v.setValor("NULL");
+
+                    v.setValor(mAST.getRetornoTipo());
+                    v.setNome(mAST.getConteudo());
+
+                    // System.out.println("  - FUNCT ARGUMENTANDO  -> " + mAST.getConteudo() + " : " + mAST.getRetornoTipo());
+
+                } else if (mAST.getIsPrimitivo()) {
+
+                    v.setValor(mAST.getRetornoTipo());
+                    v.setNome(mAST.getConteudo());
+
+                    //  System.out.println("  - FUNCT ARGUMENTANDO  -> " + mAST.getConteudo() + " : " + mAST.getRetornoTipo());
+
+                } else {
+                    mRunTime.getErros().add("AST_Value com problemas !");
+                }
+
+                mArgumentos.add(v);
+
+
             }
 
+        }
+
+        if (mRunTime.getErros().size() > 0) {
+            return;
         }
 
         //  System.out.println("Procurando FUNC " + ASTCorrente.getNome());
@@ -166,7 +126,8 @@ public class Run_ActionFunction {
         ArrayList<String> mArgumentandoNome = new ArrayList<String>();
         ArrayList<String> mArgumentandoTipos = new ArrayList<String>();
 
-        for (AST a : mEscopo.getGuardadosCompleto()) {
+        for (
+                AST a : mEscopo.getGuardadosCompleto()) {
 
             if ((a.mesmoTipo("ACTION") || a.mesmoTipo("FUNCTION")) && a.mesmoNome(ASTCorrente.getNome())) {
                 enc = true;
@@ -200,7 +161,7 @@ public class Run_ActionFunction {
 
                                 v += 1;
                             }
-                            //   System.out.println("\t - Checando Tipo :  " + mArgumentos.get(argC).getValor() + " e " + mArgumentandoTipos.get(argC));
+                           //   System.out.println("\t - Checando em " + a.getNome() + " Parametro :  " + mArgumentos.get(argC).getValor() + " e " + mArgumentandoTipos.get(argC));
 
                         }
 
@@ -259,11 +220,11 @@ public class Run_ActionFunction {
 
                 //   System.out.println("\t - Alocando : " + mArgumentandoNome.get(argC) + " -> " + mArgumentos.get(argC).getNome() + " :: " + mArgumentos.get(argC).getValor());
 
-                if(mArgumentandoNome.get(argC).contentEquals("true") || mArgumentandoNome.get(argC).contentEquals("false")){
+                if (mArgumentandoNome.get(argC).contentEquals("true") || mArgumentandoNome.get(argC).contentEquals("false")) {
 
                     mEscopoInterno.criarDefinicao(mArgumentandoNome.get(argC), mArgumentos.get(argC).getValor(), mArgumentos.get(argC).getNome());
 
-                }else{
+                } else {
                     mEscopoInterno.criarDefinicao(mArgumentandoNome.get(argC), mArgumentos.get(argC).getValor(), mArgumentos.get(argC).getNome());
                 }
             }
@@ -273,7 +234,7 @@ public class Run_ActionFunction {
         AST mASTBody = mFunction.getBranch("BODY");
 
         Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
-        mAST.init(mASTBody,null,"");
+        mAST.init(mASTBody);
 
 
     }

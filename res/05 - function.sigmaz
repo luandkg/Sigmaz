@@ -1,66 +1,37 @@
 
 
 define BLA : string = "Luan Alves Freitas";
+
 define FZ3 : num = -512;
+
+define NULO : num = null;
 
 define FZ4 : num = FZ3;
 
+
+
+
 define TGA : num = somar(10,5);
-define RCU : num;
+
+
+
 
 define DUPLO : num = somar(10,somar(1,1));
 
 define ABERTO : bool = true;
+
 define FECHADO : bool = false;
 
-define NULO : num = null;
-
-define ALEATORIO : num = ale();
-
+invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
 
 call iniciar -> pular();
 
 act pular(){
 
-    def s : num = somar(10,5);
 
-    def a : num = 10;
 
-    dizerAlgo(12);
-
-    a = s;
-
-    a = null;
-
-    def g : num = somar(10,5) ;
-
-    NULO  = somar(somar(10,2),somar(algumaCoisa(30),10));
-
-    #  invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
-    #  invoke __COMPILER__ -> SHOW_ACTION () :: ALL;
-    #  invoke __COMPILER__ -> SHOW_FUNCTION () :: ALL;
-
-      invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
 
 }
-
-act dizerAlgo(a:num)  {
-
-    def s1 : num = somar(10,5);
-    def s2 : num = somar(12,8);
-
-    def s3 : num = somar(s1,s2);
-
-    # invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
-
-}
-
-func algumaCoisa(a:num) : num {
-
-    return a;
-}
-
-
 
 func somar(a:num,b:num) : num {
 
@@ -68,17 +39,5 @@ func somar(a:num,b:num) : num {
 
     invoke math -> operator_sum (a,b) :: c;
 
-    #invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
-
     return c;
 }
-
-func ale() : num {
-
-    return 100;
-
-}
-
-
-#invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
-

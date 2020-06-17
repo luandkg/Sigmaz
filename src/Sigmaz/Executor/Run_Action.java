@@ -27,47 +27,35 @@ public class Run_Action {
 
         for (AST a : ASTCorrente.getASTS()) {
             if (a.mesmoTipo("ARGUMENT")) {
-                argumentos += 1;
-                if (a.mesmoValor("Num")) {
-
-                    AST v = a.copiar();
-                    v.setValor("num");
-
-                    mArgumentos.add(v);
-                } else if (a.mesmoValor("Text")) {
-                    AST v = a.copiar();
-                    v.setValor("string");
-
-                    mArgumentos.add(v);
-                } else if (a.mesmoValor("FUNCT")) {
-
-                    AST v = new AST("VALUE");
-
-                    Run_Func mAST = new Run_Func(mRunTime, mEscopo);
-                    mAST.init(a, "any");
-
-                    if (mAST.getIsNulo()) {
-                        v.setNome("NULL");
-                    } else if (mAST.getIsPrimitivo()) {
-                        v.setNome(mAST.getPrimitivo());
-                    } else {
-                        mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
-                    }
-
-                    v.setValor(mAST.getRetornoFunction());
 
 
-                    mArgumentos.add(v);
+                AST v = new AST("VALUE");
 
-                    //   mRunTime.getErros().add(" Argumento Complexo !");
+                Run_Value mAST = new Run_Value(mRunTime, mEscopo);
+                mAST.init(a, "<<ANY>>");
 
+
+                if (mAST.getIsNulo()) {
+                    v.setValor("NULL");
+                } else if (mAST.getIsPrimitivo()) {
+
+                    v.setValor(mAST.getRetornoTipo());
+                    v.setNome(mAST.getConteudo());
+
+
+                } else {
+                    mRunTime.getErros().add("AST_Value com problemas !");
                 }
+
+                mArgumentos.add(v);
+                argumentos+=1;
+
             }
 
         }
 
-        //  System.out.println("Procurando FUNC " + ASTCorrente.getNome());
-        //System.out.println("\t - Argumentos :  " + argumentos);
+     //    System.out.println("Procurando FUNC " + ASTCorrente.getNome());
+      //  System.out.println("\t - Argumentos :  " + argumentos);
 
         boolean enc = false;
         boolean algum = false;
@@ -92,7 +80,7 @@ public class Run_Action {
                         mArgumentandoNome.add(b.getNome());
                         mArgumentandoTipos.add(b.getValor());
 
-                        System.out.println("\t - Complexo :  " + b.getValor());
+                      //  System.out.println("\t - Complexo :  " + b.getValor());
 
                     }
 
@@ -114,7 +102,7 @@ public class Run_Action {
                                 v += 1;
                             }
 
-                            System.out.println("\t - Checando Tipo :  " + mArgumentos.get(argC).getValor() + " e " + mArgumentandoTipos.get(argC));
+                       //     System.out.println("\t - Checando Tipo :  " + mArgumentos.get(argC).getValor() + " e " + mArgumentandoTipos.get(argC));
 
                         }
 
@@ -172,7 +160,7 @@ public class Run_Action {
 
             for (int argC = 0; argC < argumentos; argC++) {
 
-                /// System.out.println("\t - Alocando : " + mArgumentandoNome.get(argC) + " -> " + mArgumentos.get(argC).getNome() + " :: " + mArgumentos.get(argC).getValor());
+                System.out.println("\t - Alocando : " + mArgumentandoNome.get(argC) + " -> " + mArgumentos.get(argC).getNome() + " :: " + mArgumentos.get(argC).getValor());
 
                 mEscopoInterno.criarDefinicao(mArgumentandoNome.get(argC), mArgumentos.get(argC).getValor(), mArgumentos.get(argC).getNome());
             }
@@ -182,7 +170,7 @@ public class Run_Action {
         AST mASTBody = mFunction.getBranch("BODY");
 
         Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
-        mAST.init(mASTBody,null,"");
+        mAST.init(mASTBody);
 
 
     }

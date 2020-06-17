@@ -21,6 +21,7 @@ public class AST_When {
         mCompiler.Proximo();
 
         AST AST_Arguments = AST_Corrente.criarBranch("CHOOSABLE");
+        AST AST_Casos = AST_Corrente.criarBranch("CASES");
 
         AST_Value mAST = new AST_Value(mCompiler);
         mAST.initParam(AST_Arguments);
@@ -45,9 +46,11 @@ public class AST_When {
 
                 AST_Value mVal = new AST_Value(mCompiler);
 
-                AST AST_CASE = AST_Corrente.criarBranch("CASE");
+                AST AST_CASE = AST_Casos.criarBranch("CASE");
+                AST AST_CONDITION = AST_CASE.criarBranch("CONDITION");
+                mVal.initSeta(AST_CONDITION);
 
-                mVal.initSeta(AST_CASE.criarBranch("CONDITION"));
+                AST_CONDITION.setTipo("CONDITION");
 
                 mCompiler.voltar();
 

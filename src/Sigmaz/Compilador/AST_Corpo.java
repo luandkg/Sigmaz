@@ -47,6 +47,7 @@ public class AST_Corpo {
 
                 AST_Invoke mAST = new AST_Invoke(mCompiler);
                 mAST.init(ASTPai);
+
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("if")){
 
                 AST_Condition mAST = new AST_Condition(mCompiler);
@@ -64,6 +65,10 @@ public class AST_Corpo {
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("when")){
 
                 AST_When mAST = new AST_When(mCompiler);
+                mAST.init(ASTPai);
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("all")){
+
+                AST_All mAST = new AST_All(mCompiler);
                 mAST.init(ASTPai);
 
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("cancel")){

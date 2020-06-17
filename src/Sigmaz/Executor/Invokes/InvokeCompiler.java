@@ -88,7 +88,7 @@ public class InvokeCompiler {
 
             if (eSaida.contentEquals("ALL")) {
 
-                mEscopo.ListarGlobal();
+                mEscopo.ListarGlobalAll();
 
             } else {
                 mRunTime.getErros().add("Invocacao : " + eAcao + " -> Problema com saida !");

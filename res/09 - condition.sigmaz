@@ -66,8 +66,12 @@ act operando(){
     println("4 <= 4 : ",cei2);
     println("4 <= 6 : ",cei3);
 
+      def CC : bool = (10==12) == false;
 
-    # invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
+     def w : string = ("Luan");
+
+     invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
+
 
 
 

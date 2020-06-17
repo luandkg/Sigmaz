@@ -15,11 +15,14 @@ act operando(){
 
     while(menor(a1,10)) -> {
 
+
         println("Valor : " ,inteiro(a1));
 
-        def cc : num = aleatorio(10,30);
+        def cc : num = 121;
+
 
         cc = somar(inteiro(cc),raiz) ;
+
 
         raiz = somar(raiz,0.12);
 

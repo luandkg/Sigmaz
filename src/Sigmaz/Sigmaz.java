@@ -128,7 +128,7 @@ public class Sigmaz {
                 System.out.println("");
 
                 Documentador DC = new Documentador();
-                System.out.println(CompilerC.getArvoreDeInstrucoes());
+             //   System.out.println(CompilerC.getArvoreDeInstrucoes());
 
             } else {
 

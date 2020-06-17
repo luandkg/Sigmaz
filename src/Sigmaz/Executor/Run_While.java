@@ -31,30 +31,33 @@ public class Run_While {
         Run_Value mAST = new Run_Value(mRunTime, mEscopo);
         mAST.init(mCondicao, "bool");
 
+        if (mRunTime.getErros().size() > 0) {
+           return;
+        }
+
         if (mAST.getRetornoTipo().contentEquals("bool")) {
 
-            if (mAST.getPrimitivo().contentEquals("true")) {
+            if (mAST.getConteudo().contentEquals("true")) {
 
                 int w = 0;
 
-                while(mAST.getPrimitivo().contentEquals("true")){
+                while(mAST.getConteudo().contentEquals("true")){
 
                     Escopo EscopoInterno = new Escopo(mRunTime, mEscopo);
                     EscopoInterno.setNome("While");
 
                     Run_Body cAST = new Run_Body(mRunTime, EscopoInterno);
-                    cAST.init(mCorpo,null,"");
+                    cAST.init(mCorpo);
 
                     if(cAST.getCancelado()){
                         break;
                     }
                     if(cAST.getContinuar()){
 
-                     //   System.out.println("\n  -->> Voltando o Continuar : " + mEscopo.getNome());
-
-                        // break;
                     }
-
+                    if (mRunTime.getErros().size() > 0) {
+                        return;
+                    }
 
                     w+=1;
 

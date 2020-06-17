@@ -93,6 +93,21 @@ public class Compiler {
 
     }
 
+    public void pularLinha(){
+
+        mIndex+=1;
+        while(mIndex<mTamanho){
+           Token TokenC =  mTokens.get(mIndex);
+            if(TokenC.getTipo()==TokenTipo.PONTOVIRGULA){
+                mIndex+=1;
+                break;
+            }
+            mIndex+=1;
+        }
+
+
+    }
+
     public void voltar(){
         mIndex-=1;
     }

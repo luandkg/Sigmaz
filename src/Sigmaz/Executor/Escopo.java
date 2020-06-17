@@ -57,59 +57,10 @@ public class Escopo {
 
     }
 
-    public void definirVariavel(AST eAST) {
-
-
-        AST mValor = eAST.getBranch("VALUE");
-
-        Run_Value mAST = new Run_Value(mRunTime, this);
-        mAST.init(mValor, eAST.getValor());
-
-        if (mAST.getIsNulo()) {
-            criarDefinicaoNula(eAST.getNome(), eAST.getValor());
-        } else if (mAST.getIsPrimitivo()) {
-
-
-            if (eAST.getValor().contentEquals(mAST.getRetornoTipo())) {
-                criarDefinicao(eAST.getNome(), eAST.getValor(), mAST.getPrimitivo());
-            } else {
-                mRunTime.getErros().add("Retorno incompativel : " + mAST.getRetornoTipo());
-            }
-
-
-        } else {
-            mRunTime.getErros().add("AST_Value com problemas !");
-        }
-
-
-    }
 
 
 
-    public void definirConstante(AST eAST) {
 
-
-        AST mValor = eAST.getBranch("VALUE");
-
-        Run_Value mAST = new Run_Value(mRunTime, this);
-        mAST.init(mValor, eAST.getValor());
-
-        if (mAST.getIsNulo()) {
-            criarConstanteNula(eAST.getNome(), eAST.getValor());
-        } else if (mAST.getIsPrimitivo()) {
-
-            if (eAST.getValor().contentEquals(mAST.getRetornoTipo())) {
-                criarConstante(eAST.getNome(), eAST.getValor(), mAST.getPrimitivo());
-            } else {
-                mRunTime.getErros().add("Retorno incompativel : " + mAST.getRetornoTipo());
-            }
-
-        } else {
-            mRunTime.getErros().add("AST_Value com problemas !");
-        }
-
-
-    }
 
 
     public void ListarGlobal() {
@@ -135,6 +86,12 @@ public class Escopo {
     public void ListarAll() {
         mDebug.ListarAll();
     }
+
+    public void ListarGlobalAll() {
+        mDebug.ListarGlobalAll();
+    }
+
+
 
     public ArrayList<Item> getStacks() {
         return mStacks;
@@ -236,6 +193,10 @@ public class Escopo {
         return mEscopoStack.getDefinidoTipo(eNome);
     }
 
+    public boolean getDefinidoPrimitivo(String eNome) {
+        return mEscopoStack.getDefinidoPrimitivo(eNome);
+    }
+
     public void anularDefinido(String eNome) {
         mEscopoStack.anularDefinido(eNome);
     }
@@ -246,6 +207,18 @@ public class Escopo {
 
     public String getDefinidoNum(String eNome) {
         return mEscopoStack.getDefinidoNum(eNome);
+    }
+
+    public String getDefinidoConteudo(String eNome) {
+        return mEscopoStack.getDefinidoConteudo(eNome);
+    }
+
+    public boolean getDefinidoNulo(String eNome) {
+        return mEscopoStack.getDefinidoNulo(eNome);
+    }
+
+    public Item getItem(String eNome) {
+        return mEscopoStack.getItem(eNome);
     }
 
 }

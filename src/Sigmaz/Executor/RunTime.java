@@ -75,10 +75,22 @@ public class RunTime {
 
                 for (AST ASTC : ASTCGlobal.getASTS()) {
 
+                    if (this.getErros().size() > 0) {
+                        return;
+                    }
+
                     if (ASTC.mesmoTipo("DEFINE")) {
-                        Global.definirVariavel(ASTC);
+
+                        Run_Def mAST = new Run_Def(this, Global);
+                        mAST.init(ASTC);
+
+
                     } else if (ASTC.mesmoTipo("MOCKIZ")) {
-                        Global.definirConstante(ASTC);
+
+
+                        Run_Moc mAST = new Run_Moc(this, Global);
+                        mAST.init(ASTC);
+
                     } else if (ASTC.mesmoTipo("INVOKE")) {
 
                         Run_Invoke mAST = new Run_Invoke(this, Global);

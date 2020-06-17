@@ -1,12 +1,16 @@
 package Sigmaz.Executor;
 
 public class Item {
-    private String mNome;
 
-    private String mValor;
-    private int mModo;
-    private String mTipo;
+    private String mNome;
     private boolean mNulo;
+    private String mTipo;
+    private int mModo;
+    private String mValor;
+    private boolean mPrimitivo;
+
+
+
 
     public Item(String eNome) {
         this.mNome = eNome;
@@ -14,6 +18,7 @@ public class Item {
         mModo = 0;
         mTipo = "";
         mNulo = false;
+        mPrimitivo=true;
     }
 
     public boolean getNulo() {
@@ -52,5 +57,12 @@ public class Item {
         return mTipo;
     }
 
+    public void setPrimitivo(boolean ePrimitivo) {
+        mPrimitivo = ePrimitivo;
+    }
+
+    public boolean getPrimitivo() {
+        return mPrimitivo;
+    }
 
 }

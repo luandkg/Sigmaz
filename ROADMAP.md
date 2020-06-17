@@ -17,7 +17,7 @@ Linguagem de Programação Estruturada
         - DEF
         - DEFINE
         - VALUE
-        - TYPES : Num, String e Bool
+        - TYPES : NUM, STRING e BOOL
         - REQUIRE
         - ARGUMENTS
         - BODY
@@ -37,4 +37,8 @@ Linguagem de Programação Estruturada
         - STEP
         - CONTINUE
         - CANCEL
+        
+    - 2020 06 17
+        - ALL
+        - VALUE : Reestruturação
        

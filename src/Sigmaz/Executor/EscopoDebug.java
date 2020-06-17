@@ -98,6 +98,91 @@ public class EscopoDebug {
 
     }
 
+    public void ListarGlobalAll() {
+
+
+        System.out.println(" ######################### STACK - GLOBAL ############################ ");
+
+
+        ArrayList<Item> ls_Defines = new ArrayList<>();
+        ArrayList<Item> ls_Constants = new ArrayList<>();
+
+        int defines_nulos = 0;
+        int defines_validos = 0;
+
+        for (Item i : mEscopo.getStacksAll()) {
+            if (i.getModo() == 0) {
+                ls_Defines.add(i);
+
+                if (i.getNulo()) {
+                    defines_nulos += 1;
+                } else {
+                    defines_validos += 1;
+                }
+
+            } else if (i.getModo() == 1) {
+                ls_Constants.add(i);
+            }
+        }
+
+        System.out.println(" - DEFINES : ");
+
+
+        System.out.println("\t - NAO NULOS : ");
+
+        for (Item i : ls_Defines) {
+            if (i.getNulo() == false) {
+                System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+            }
+        }
+
+
+        System.out.println("\t - NULOS : ");
+        for (Item i : ls_Defines) {
+
+            if (i.getNulo()) {
+                System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = NULL");
+            }
+        }
+
+        System.out.println(" - CONSTANTS : ");
+
+
+        System.out.println("\t - NAO NULOS : ");
+
+        for (Item i : ls_Constants) {
+            if (i.getNulo() == false) {
+                System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+            }
+        }
+
+
+        System.out.println("\t - NULOS : ");
+        for (Item i : ls_Constants) {
+
+            if (i.getNulo()) {
+                System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = NULL");
+            }
+        }
+
+        System.out.println(" - ACTIONS : ");
+        for (AST mAST : mEscopo.getGuardadosCompleto()) {
+            if (mAST.mesmoTipo("ACTION")) {
+                System.out.println("\t - " + mAST.getNome()+ " ( " + getParametros(mAST) + " ) ");
+            }
+        }
+        System.out.println(" - FUNCTIONS : ");
+        for (AST mAST : mEscopo.getGuardadosCompleto()) {
+            if (mAST.mesmoTipo("FUNCTION")) {
+                System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
+            }
+        }
+
+        System.out.println(" ######################### ##### ############################ ");
+
+    }
+
+
     public String getParametros(AST ASTPai) {
         String ret = "";
 

@@ -8,13 +8,63 @@ public class Run_Body {
     private Escopo mEscopo;
 
 
+    private boolean mIsNulo;
+    private boolean mIsPrimitivo;
+
+
+    private String mConteudo;
+    private Object mObjeto;
+
+    private String mRetornoTipo;
+
     public Run_Body(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
 
+        mIsNulo = false;
+        mIsPrimitivo = false;
+
+        mObjeto = null;
+        mConteudo = null;
+        mRetornoTipo=null;
 
     }
+
+    public String getConteudo() {
+        return mConteudo;
+    }
+    public Object getObjeto() {
+        return mObjeto;
+    }
+    public boolean getIsNulo() {
+        return mIsNulo;
+    }
+    public boolean getIsPrimitivo() {
+        return mIsPrimitivo;
+    }
+    public boolean getIsStruct() {
+        return !mIsPrimitivo;
+    }
+    public String getRetornoTipo() {
+        return mRetornoTipo;
+    }
+    public void setNulo(boolean eNulo){
+        mIsNulo=eNulo;
+    }
+    public void setPrimitivo(boolean ePrimitivo){
+        mIsPrimitivo=ePrimitivo;
+    }
+    public void setRetornoTipo(String eRetornoTipo){
+        mRetornoTipo=eRetornoTipo;
+    }
+    public void setConteudo(String eConteudo){
+        mConteudo=eConteudo;
+    }
+    public String getRetornoFunction() {
+        return mRetornoTipo;
+    }
+
 
     public boolean getCancelado() {
         return mEscopo.getCancelar();
@@ -37,10 +87,19 @@ public class Run_Body {
     }
 
 
-    public void init(AST ASTCorrente, Run_Func eRun_Func, String eReturne) {
+    public void init(AST ASTCorrente) {
+
+       // System.out.println("\n  -->> Em Corpo para Retornar : " + eReturne + " :: " + ASTCorrente.getASTS().size());
 
         for (AST fAST : ASTCorrente.getASTS()) {
 
+           // System.out.println("\n  -->> IN :: " + fAST.getTipo());
+
+        }
+
+        for (AST fAST : ASTCorrente.getASTS()) {
+
+           // System.out.println("\n  -->> EX :: " + fAST.getTipo());
 
             if (mRunTime.getErros().size() > 0) {
                 break;
@@ -57,16 +116,20 @@ public class Run_Body {
 
             if (fAST.mesmoTipo("DEF")) {
 
-                mEscopo.definirVariavel(fAST);
+
+                Run_Def mAST = new Run_Def(mRunTime, mEscopo);
+                mAST.init(fAST);
 
             } else if (fAST.mesmoTipo("MOC")) {
 
-                mEscopo.definirConstante(fAST);
+                Run_Moc mAST = new Run_Moc(mRunTime, mEscopo);
+                mAST.init(fAST);
 
             } else if (fAST.mesmoTipo("INVOKE")) {
 
                 Run_Invoke mAST = new Run_Invoke(mRunTime, mEscopo);
                 mAST.init(fAST);
+
             } else if (fAST.mesmoTipo("APPLY")) {
 
                 Run_Apply mAST = new Run_Apply(mRunTime, mEscopo);
@@ -81,8 +144,6 @@ public class Run_Body {
                     Cancelar();
                 }
                 if (mAST.getContinuar()) {
-
-
                     Continuar();
                 }
 
@@ -101,31 +162,52 @@ public class Run_Body {
                 Run_Step mAST = new Run_Step(mRunTime, mEscopo);
                 mAST.initDef(fAST);
 
+            } else if (fAST.mesmoTipo("WHEN")) {
+
+                Run_When mAST = new Run_When(mRunTime, mEscopo);
+
+                mAST.init(fAST);
+                if (mAST.getCancelado()) {
+                    Cancelar();
+                }
+                if (mAST.getContinuar()) {
+                    Continuar();
+                }
+            } else if (fAST.mesmoTipo("ALL")) {
+
+                Run_All mAST = new Run_All(mRunTime, mEscopo);
+
+                mAST.init(fAST);
+                if (mAST.getCancelado()) {
+                    Cancelar();
+                }
+                if (mAST.getContinuar()) {
+                    Continuar();
+                }
+
+
             } else if (fAST.mesmoTipo("RETURN")) {
 
 
                 Run_Value mAST = new Run_Value(mRunTime, mEscopo);
-                mAST.init(fAST, eReturne);
+                mAST.init(fAST, "<<ANY>>");
 
-                if (mAST.getIsNulo()) {
-                    // mTipo = "NULL";
-                    eRun_Func.setTipo("NULL");
-                } else if (mAST.getIsPrimitivo()) {
+            //   System.out.println("Retorando de Corpo -> " +mAST.getConteudo());
 
-                    //  mTipo = "PRIMITIVE";
-                    //  mPrimitivo = mAST.getPrimitivo();
 
-                    eRun_Func.setTipo("PRIMITIVE");
-                    eRun_Func.setPrimitivo(mAST.getPrimitivo());
+                mIsNulo = mAST.getIsNulo();
+                mIsPrimitivo=mAST.getIsPrimitivo();
+                mConteudo = mAST.getConteudo();
+                mRetornoTipo = mAST.getRetornoTipo();
 
-                } else {
-                    mRunTime.getErros().add("AST_Value com problemas !");
-                }
+
+
             } else if (fAST.mesmoTipo("CANCEL")) {
                 Cancelar();
             } else if (fAST.mesmoTipo("CONTINUE")) {
                 Continuar();
             } else if (fAST.mesmoTipo("EXECUTE")) {
+
 
                 Run_Execute mAST = new Run_Execute(mRunTime, mEscopo);
                 mAST.init(fAST);

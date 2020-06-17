@@ -32,7 +32,7 @@ public class Run_Apply {
                 mEscopo.anularDefinido(mSettable.getNome());
             } else if (mAST.getIsPrimitivo()) {
 
-                String eValor = mAST.getPrimitivo();
+                String eValor = mAST.getConteudo();
                 String eTipo = mEscopo.getDefinidoTipo(mSettable.getNome());
 
                 if (eTipo.contentEquals(mAST.getRetornoTipo())) {
