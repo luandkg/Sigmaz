@@ -65,7 +65,9 @@ public class Compiler {
         mIndex += 1;
     }
 
-    public String getLocal(){return mLocal;}
+    public String getLocal() {
+        return mLocal;
+    }
 
 
     public Token getTokenCorrente() {
@@ -86,31 +88,31 @@ public class Compiler {
     public Token getTokenFuturo() {
 
 
-        if (mIndex+1 < mTamanho) {
-            return mTokens.get(mIndex+1);
+        if (mIndex + 1 < mTamanho) {
+            return mTokens.get(mIndex + 1);
         } else {
-            return new Token(TokenTipo.DESCONHECIDO, "", mIndex+1, mIndex+1);
+            return new Token(TokenTipo.DESCONHECIDO, "", mIndex + 1, mIndex + 1);
         }
 
     }
 
-    public void pularLinha(){
+    public void pularLinha() {
 
-        mIndex+=1;
-        while(mIndex<mTamanho){
-           Token TokenC =  mTokens.get(mIndex);
-            if(TokenC.getTipo()==TokenTipo.PONTOVIRGULA){
-                mIndex+=1;
+        mIndex += 1;
+        while (mIndex < mTamanho) {
+            Token TokenC = mTokens.get(mIndex);
+            if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
+                mIndex += 1;
                 break;
             }
-            mIndex+=1;
+            mIndex += 1;
         }
 
 
     }
 
-    public void voltar(){
-        mIndex-=1;
+    public void voltar() {
+        mIndex -= 1;
     }
 
 
@@ -154,7 +156,6 @@ public class Compiler {
     }
 
 
-
     public void init(String eArquivo) {
         mIndex = 0;
 
@@ -193,10 +194,179 @@ public class Compiler {
         mLocal = arq.getParent() + "/";
 
 
-
         compilando();
 
+        ArrayList<AST> mEstruturas = new ArrayList<AST>();
+
+        for (AST mAST : mASTS) {
+
+            if (mAST.mesmoTipo("SIGMAZ")) {
+
+                for (AST Struct_AST : mAST.getASTS()) {
+
+                    if (Struct_AST.mesmoTipo("STRUCT")) {
+                        mEstruturas.add(Struct_AST);
+                    }
+
+                }
+
+            }
+        }
+
+        int c = mEstruturas.size();
+        int v = 0;
+
+
+        for (AST Struct_AST : mEstruturas) {
+            AST AST_With = Struct_AST.getBranch("WITH");
+            if (AST_With.mesmoValor("TRUE")) {
+
+                ArrayList<String> mDependencias = new ArrayList<String>();
+                boolean normalizavel = getNormalizavel(AST_With.getNome(), mEstruturas, mDependencias);
+
+                if (normalizavel) {
+                    v += 1;
+                    System.out.println("Estrutural : " + Struct_AST.getNome() + " -->> " + AST_With.getNome());
+
+                    for (String eDepende : mDependencias) {
+
+                        System.out.println("   - " + eDepende);
+                    }
+                } else {
+
+                    System.out.println("Estrutural : " + Struct_AST.getNome() + " -->> " + AST_With.getNome() + "  :: PROBLEMA DE DEPENDENCIA");
+
+                }
+
+
+            } else {
+                System.out.println("Estrutural : " + Struct_AST.getNome());
+                v += 1;
+            }
+        }
+
+        if (c == v) {
+
+            ArrayList<AST> Realizar = new ArrayList<AST>();
+
+            for (AST Struct_AST : mEstruturas) {
+                AST AST_With = Struct_AST.getBranch("WITH");
+
+                if (AST_With.mesmoValor("TRUE")) {
+                    ArrayList<String> mDependencias = new ArrayList<String>();
+                    boolean normalizavel = getNormalizavel(AST_With.getNome(), mEstruturas, mDependencias);
+
+                    System.out.println("Estrutural : " + Struct_AST.getNome() + " -->> Complexidade : " + (1 + mDependencias.size()));
+
+                    Realizar.add(Struct_AST);
+
+
+
+                } else {
+
+                    System.out.println("Estrutural : " + Struct_AST.getNome() + " -->> Complexidade : 1");
+
+                }
+
+            }
+
+            for (AST Struct_AST : Realizar) {
+
+                AST AST_With = Struct_AST.getBranch("WITH");
+                ArrayList<String> mDependencias = new ArrayList<String>();
+                boolean normalizavel = getNormalizavel(AST_With.getNome(), mEstruturas, mDependencias);
+
+                Realizar_Heranca(Struct_AST, mDependencias, mEstruturas);
+
+            }
+        }
+
+
     }
+
+    public void Realizar_Heranca(AST Struct_AST, ArrayList<String> mDependencias, ArrayList<AST> mEstruturas) {
+
+        System.out.println("Realizando Heranca : " + Struct_AST.getNome() );
+
+        AST Corpo = Struct_AST.getBranch("BODY");
+
+        for (String mDepende : mDependencias) {
+            DependencieAgora(Corpo, mDepende, mEstruturas);
+        }
+
+    }
+
+    public void DependencieAgora(AST Struct_Corpo, String eNome, ArrayList<AST> mEstruturas) {
+
+        for (AST Procurando : mEstruturas) {
+            if (Procurando.mesmoNome(eNome)) {
+
+                System.out.println("  - Herdando : " + Procurando.getNome() );
+
+                AST Corpo = Procurando.getBranch("BODY");
+
+                for (AST migrando : Corpo.getASTS()) {
+
+                    Struct_Corpo.getASTS().add(migrando);
+
+                }
+
+
+                break;
+            }
+        }
+
+    }
+
+    public boolean getNormalizavel(String eNome, ArrayList<AST> mEstruturas, ArrayList<String> mDependencias) {
+
+
+        boolean enc = false;
+        boolean mais = false;
+        String eProximo = "";
+
+        for (AST Struct_AST : mEstruturas) {
+            if (Struct_AST.mesmoNome(eNome)) {
+                enc = true;
+
+                AST AST_With = Struct_AST.getBranch("WITH");
+                if (AST_With.mesmoValor("TRUE")) {
+                    mais = true;
+                    eProximo = AST_With.getNome();
+                }
+
+                break;
+            }
+        }
+
+        if (enc) {
+
+            if (mDependencias.contains(eNome)) {
+                return false;
+            } else {
+                mDependencias.add(eNome);
+
+                if (mais) {
+
+                    return getNormalizavel(eProximo, mEstruturas, mDependencias);
+                } else {
+
+                    return true;
+                }
+
+            }
+
+        } else {
+            return false;
+        }
+
+    }
+
+    public void getDependencia(String eNome, ArrayList<AST> mEstruturas, ArrayList<String> mDependencias) {
+
+
+    }
+
 
     public void requisitando(String eArquivo, ArrayList<String> eRequisitados) {
         mIndex = 0;
@@ -232,7 +402,7 @@ public class Compiler {
                 mTokens.add(TokenC);
             }
 
-          //  System.out.println(" TOKEN : " + TokenC.getConteudo());
+            //  System.out.println(" TOKEN : " + TokenC.getConteudo());
         }
 
 
@@ -252,7 +422,6 @@ public class Compiler {
 
         AST AST_Raiz = new AST("SIGMAZ");
         mASTS.add(AST_Raiz);
-
 
 
         while (Continuar()) {
@@ -294,22 +463,22 @@ public class Compiler {
                 AST_Define mAST = new AST_Define(this);
                 mAST.init(AST_Raiz);
 
-            }else if (TokenC.getTipo()==TokenTipo.ID && TokenC.mesmoConteudo("invoke")){
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("invoke")) {
 
                 AST_Invoke mAST = new AST_Invoke(this);
                 mAST.init(AST_Raiz);
 
-            }else if (TokenC.getTipo()==TokenTipo.ID && TokenC.mesmoConteudo("operation")){
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operation")) {
 
                 AST_Operation mAST = new AST_Operation(this);
                 mAST.init(AST_Raiz);
 
-            }else if (TokenC.getTipo()==TokenTipo.ID && TokenC.mesmoConteudo("cast")){
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("cast")) {
 
                 AST_Cast mAST = new AST_Cast(this);
                 mAST.init(AST_Raiz);
 
-            }else if (TokenC.getTipo()==TokenTipo.ID && TokenC.mesmoConteudo("struct")){
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("struct")) {
 
                 AST_Struct mAST = new AST_Struct(this);
                 mAST.init(AST_Raiz);
@@ -326,11 +495,11 @@ public class Compiler {
 
     }
 
-    public Token getTokenAvanteStatus(TokenTipo eTokenTipo,String eErro){
+    public Token getTokenAvanteStatus(TokenTipo eTokenTipo, String eErro) {
         Token TokenP = getTokenAvante();
         if (TokenP.getTipo() == eTokenTipo) {
 
-        }else{
+        } else {
             errarCompilacao(eErro, TokenP.getInicio());
             errarCompilacao("Contudo encontrou : " + TokenP.getConteudo(), TokenP.getInicio());
         }
@@ -376,17 +545,14 @@ public class Compiler {
     }
 
 
-
     public void Compilar(String eArquivo) {
 
         Documentador documentadorC = new Documentador();
 
-        documentadorC.compilar(this.getASTS(),eArquivo);
+        documentadorC.compilar(this.getASTS(), eArquivo);
 
 
     }
-
-
 
 
     public String getArvoreDeInstrucoes() {
@@ -429,8 +595,6 @@ public class Compiler {
         }
 
     }
-
-
 
 
     public String getData() {

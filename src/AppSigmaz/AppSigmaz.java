@@ -7,9 +7,9 @@ public class AppSigmaz {
 
     public static void main(String[] args) {
 
-       // UM();
+        UM();
 
-        TESTE_GERAL();
+      //  TESTE_GERAL();
 
     }
 
@@ -41,8 +41,9 @@ public class AppSigmaz {
         //  String arquivo = "res/22 - internal.sigmaz";
         //String arquivo = "res/23 - oo.sigmaz";
         //   String arquivo = "res/24 - oo2.sigmaz";
-        String arquivo = "res/25 - recursao.sigmaz";
+        //String arquivo = "res/25 - recursao.sigmaz";
         //  String arquivo = "res/26 - oorecursao.sigmaz";
+         String arquivo = "res/27 - heranca.sigmaz";
 
         String saida = "res/Sigmaz.sigmad";
 

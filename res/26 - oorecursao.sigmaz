@@ -1,7 +1,7 @@
 
 call iniciar -> recursao(10);
 
-
+# PROBLEMA GRAVE COM RECURSAO EM OO - Transferencia de Escopo
 
 act recursao( h : num){
 
