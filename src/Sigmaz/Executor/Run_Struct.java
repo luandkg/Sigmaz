@@ -19,10 +19,10 @@ public class Run_Struct {
 
     private AST mStructCorpo;
 
-    public Run_Struct(RunTime eRunTime, Escopo eEscopo) {
+    public Run_Struct(RunTime eRunTime) {
 
         mRunTime = eRunTime;
-        mEscopo = eEscopo;
+      //  mEscopo = eEscopo;
 
         mNome = "";
         mStructNome = "";
@@ -60,6 +60,10 @@ public class Run_Struct {
     }
 
     public void init(String eNome) {
+
+        mEscopo = new Escopo(mRunTime, null);
+        mEscopo.setNome(eNome);
+
 
         mStructCorpo = null;
 
@@ -195,6 +199,7 @@ public class Run_Struct {
 
     public Item init_Function(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
 
+          //System.out.println("Procurando FUNC " + this.getStructNome() + "." + ASTCorrente.getNome());
 
         Item mRet = null;
 
@@ -242,7 +247,7 @@ public class Run_Struct {
                         }
 
 
-                        mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, BuscadorDeVariaveis, mEscopo, mIndex_Function, mArgumentos, eRetorne);
+                        mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eRetorne);
 
                     } else {
                         mRunTime.getErros().add("Function " + mStructNome + "." + ASTCorrente.getNome() + " : Retorno incompativel !");
@@ -279,6 +284,8 @@ public class Run_Struct {
 
     public void init_Action(AST ASTCorrente, Escopo BuscadorDeVariaveis) {
 
+     //   System.out.println(" -->> DENTRO : " + this.getStructNome() );
+      //  System.out.println(" -->> Procurando ACTION " + this.getStructNome() + "." + ASTCorrente.getNome());
 
         ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, BuscadorDeVariaveis, ASTCorrente.getBranch("ARGUMENTS"));
 
@@ -321,7 +328,7 @@ public class Run_Struct {
                     }
 
 
-                    mPreparadorDeArgumentos.executar_Action(mRunTime, BuscadorDeVariaveis, mEscopo, mIndex_Function, mArgumentos);
+                    mPreparadorDeArgumentos.executar_Action(mRunTime,  mEscopo, mIndex_Function, mArgumentos);
 
 
                     break;

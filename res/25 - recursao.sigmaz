@@ -1,0 +1,42 @@
+
+call iniciar -> recursao(10);
+
+
+act recursao( a : num){
+
+
+    println("Valor A : ",a);
+    a = somar_inteiro(a,1);
+
+    if (menor(a,20)) -> {  recursao(a);  }
+
+}
+
+
+func somar_inteiro(a:num,b:num) : num {
+
+    def c : num;
+
+    invoke math -> operator_sum (a,b) :: c;
+    invoke casting -> cast_integer (c) :: c;
+
+    return c;
+}
+
+func menor(a:num,b:num) : bool {
+
+    def c : bool;
+
+    invoke math -> operator_less (a,b) :: c;
+
+    return c;
+}
+
+act println(a:string,b:num)  {
+
+    def c : num;
+    invoke terminal -> change () :: c;
+    invoke terminal -> print (a) :: c;
+    invoke terminal -> print (b) :: c;
+
+}

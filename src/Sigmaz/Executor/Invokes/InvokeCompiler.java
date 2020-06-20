@@ -198,7 +198,20 @@ public class InvokeCompiler {
                     mEscopo.ListarGlobalAll();
                 }
 
+            } else    if (eSaida.contentEquals("COUNT")) {
 
+                if (mRunTime.getExterno()) {
+
+                    System.out.println("\n Contando Escopos : " + mEscopo.getContagem());
+
+                }
+            } else    if (eSaida.contentEquals("PATH")) {
+
+                if (mRunTime.getExterno()) {
+
+                    System.out.println("\n Caminho Escopos : " + mEscopo.getCaminho());
+
+                }
             } else {
                 mRunTime.getErros().add("Invocacao : " + eAcao + " -> Problema com saida !");
             }

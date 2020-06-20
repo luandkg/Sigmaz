@@ -68,7 +68,10 @@ public class Run_Func {
 
                         //executar_Function(mIndex_Function, mArgumentos, eReturne);
 
-                        mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mEscopo, mIndex_Function, mArgumentos, eReturne);
+                    //    mRet = mPreparadorDeArgumentos.executar_FunctionGlobal(mRunTime, mIndex_Function, mArgumentos, eReturne);
+
+                        mRet = mPreparadorDeArgumentos.executar_Function(mRunTime,mEscopo, mIndex_Function, mArgumentos, eReturne);
+
 
                     } else {
                         mRunTime.getErros().add("Function " + ASTCorrente.getNome() + " : Retorno incompativel !");
@@ -113,6 +116,13 @@ public class Run_Func {
         boolean enc = false;
         boolean algum = false;
 
+      //  System.out.println("\t - ESCOPO :  " + mEscopo.getNome());
+
+        for (Index_Action mIndex_Function : mEscopo.getActionFunctionsCompleto()) {
+
+         //   System.out.println("\t\t - AF :  " + mIndex_Function.getNome());
+
+        }
 
         for (Index_Action mIndex_Function : mEscopo.getActionFunctionsCompleto()) {
 
@@ -132,7 +142,9 @@ public class Run_Func {
                     }
 
 
-                    executar_Action(mIndex_Function, mArgumentos);
+                    //executar_Action(mIndex_Function, mArgumentos);
+
+                   mPreparadorDeArgumentos.executar_Action(mRunTime,mEscopo, mIndex_Function, mArgumentos);
 
 
                     break;
@@ -146,10 +158,10 @@ public class Run_Func {
 
         if (enc) {
             if (!algum) {
-                mRunTime.getErros().add("Function " + ASTCorrente.getNome() + " : Argumentos incompativeis !");
+                mRunTime.getErros().add("Function x " + ASTCorrente.getNome() + " : Argumentos incompativeis !");
             }
         } else {
-            mRunTime.getErros().add("Function  " + ASTCorrente.getNome() + " : Nao Encontrada !");
+            mRunTime.getErros().add("Function  x " + ASTCorrente.getNome() + " : Nao Encontrada !");
         }
 
 
@@ -214,7 +226,7 @@ public class Run_Func {
 
                         //  executar_Function(mIndex_Function, mArgumentos, eReturne);
 
-                        mItem = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mEscopo, mIndex_Function, mArgumentos, eReturne);
+                        mItem = mPreparadorDeArgumentos.executar_FunctionGlobal(mRunTime, mIndex_Function, mArgumentos, eReturne);
 
                     } else {
                         mRunTime.getErros().add("Operation " + eNome + " : Retorno incompativel !");

@@ -44,6 +44,9 @@ public class CSigmaz {
         mArquivos.add("res/21 - struct.sigmaz");
         mArquivos.add("res/22 - internal.sigmaz");
         mArquivos.add("res/23 - oo.sigmaz");
+        mArquivos.add("res/24 - oo2.sigmaz");
+        mArquivos.add("res/25 - recursao.sigmaz");
+     //   mArquivos.add("res/26 - oorecursao.sigmaz");
 
         String DDI = getData();
 

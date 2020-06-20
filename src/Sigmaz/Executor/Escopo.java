@@ -175,6 +175,29 @@ public class Escopo {
         return gc;
     }
 
+    public int getContagem() {
+        int i = 0;
+
+        if (this.mEscopoAnterior != null) {
+            i += this.mEscopoAnterior.getContagem();
+        } else {
+            i = 1;
+        }
+
+        return i;
+    }
+
+    public String getCaminho() {
+       String i = "";
+
+        if (this.mEscopoAnterior != null) {
+            i = this.mEscopoAnterior.getCaminho() + "." + i ;
+        } else {
+            i = this.getNome();
+        }
+
+        return i;
+    }
 
     public String getNomeStruct() {
         if (this.getNome() == null) {

@@ -217,11 +217,9 @@ public class Run_Value {
             Run_Func mAST = new Run_Func(mRunTime, mEscopo);
             Item eItem = mAST.init_Function(ASTCorrente, eRetorno);
 
-
             if (mRunTime.getErros().size() > 0) {
                  return;
             }
-
 
             this.setNulo(eItem.getNulo());
             this.setPrimitivo(eItem.getPrimitivo());
@@ -242,13 +240,10 @@ public class Run_Value {
             long HEAPID = mRunTime.getHEAPID();
             String eNome = "<Struct::" + eRetorno + ":" + HEAPID + ">";
 
-            Escopo mStructEscopo = new Escopo(mRunTime, null);
-            mStructEscopo.setNome(eNome);
 
-            Run_Struct mRun_Struct = new Run_Struct(mRunTime, mStructEscopo);
+
+            Run_Struct mRun_Struct = new Run_Struct(mRunTime );
             mRun_Struct.setNome(eNome);
-
-
             mRun_Struct.init(eRetorno);
 
 
@@ -257,7 +252,6 @@ public class Run_Value {
             mIsNulo = false;
             mIsPrimitivo = false;
             mRetornoTipo = eRetorno;
-            mObjeto = mStructEscopo;
             mIsEstrutura = true;
             mConteudo = eNome;
 

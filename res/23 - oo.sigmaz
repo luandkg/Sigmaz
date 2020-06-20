@@ -4,12 +4,7 @@ require "lib.sigmaz";
 require "sacola.sigmaz";
 require "pessoa.sigmaz";
 
-
 call iniciar -> pular();
-
-
-
-
 
 
 act pular(){
@@ -55,7 +50,7 @@ act pular(){
 
     p1.mostrar_detalhes();
 
-    sacola1.mostrar_detalhes();
+    #sacola1.mostrar_detalhes();
 
     #invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
 
@@ -63,13 +58,13 @@ act pular(){
 
     def zz : num = sacola1.someisso(2,2);
 
-   # def tt : num = sacola1.somar(2,2);
+    def c : num = 30;
 
-    def ss : num = somar(2,2);
+    def ss : num = somar(2,3);
 
     invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
 
-    #sacola1.mostrar_struct();
+   # sacola1.mostrar_struct();
 
 }
 

@@ -6,6 +6,17 @@ import Sigmaz.CSigmaz;
 public class AppSigmaz {
 
     public static void main(String[] args) {
+
+       // UM();
+
+        TESTE_GERAL();
+
+    }
+
+
+
+    public static void UM(){
+
         //String arquivo = "res/01 - init.sigmaz";
         // String arquivo = "res/02 - arguments.sigmaz";
         // String arquivo = "res/03 - define.sigmaz";
@@ -28,7 +39,10 @@ public class AppSigmaz {
         // String arquivo = "res/20 - cast2.sigmaz";
         // String arquivo = "res/21 - struct.sigmaz";
         //  String arquivo = "res/22 - internal.sigmaz";
-        String arquivo = "res/23 - oo.sigmaz";
+        //String arquivo = "res/23 - oo.sigmaz";
+        //   String arquivo = "res/24 - oo2.sigmaz";
+        String arquivo = "res/25 - recursao.sigmaz";
+        //  String arquivo = "res/26 - oorecursao.sigmaz";
 
         String saida = "res/Sigmaz.sigmad";
 
@@ -36,10 +50,7 @@ public class AppSigmaz {
 
         SigmazC.init(arquivo, saida);
 
-        TESTE_GERAL();
-
     }
-
 
     public static void TESTE_GERAL() {
 

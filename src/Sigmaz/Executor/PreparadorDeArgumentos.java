@@ -55,7 +55,7 @@ public class PreparadorDeArgumentos {
 
             for (int argC = 0; argC < eParametrosNomes.size(); argC++) {
 
-               //  System.out.println("\t - Passando Parametro : " + eParametrosNomes.get(argC) + " -> " + mArgumentos.get(argC).getTipo() + " :: " + mArgumentos.get(argC).getValor());
+                // System.out.println("\t - Passando Parametro : " + eParametrosNomes.get(argC) + " -> " + mArgumentos.get(argC).getTipo() + " :: " + mArgumentos.get(argC).getValor());
 
                 if (mArgumentos.get(argC).getIsEstrutura()) {
                     mEscopoInterno.criarParametroStruct(eParametrosNomes.get(argC), mArgumentos.get(argC).getTipo(), mArgumentos.get(argC).getObjeto(), mArgumentos.get(argC).getValor());
@@ -72,20 +72,18 @@ public class PreparadorDeArgumentos {
 
     }
 
-    public Item executar_Function(RunTime mRunTime, Escopo mBuscadorDeVariaveis, Escopo mStructEscopo, Index_Function mFunction, ArrayList<Item> mArgumentos, String eReturne) {
+    public Item executar_Function(RunTime mRunTime, Escopo mStructEscopo, Index_Function mFunction, ArrayList<Item> mArgumentos, String eReturne) {
 
 
         Item Saida = new Item("");
 
         Saida.setTipo(mFunction.getTipo());
 
-       //   System.out.println(" EXECUTAR Function " + mFunction.getNome() + " : " + mFunction.getTipo());
+        //   System.out.println(" EXECUTAR Function " + mFunction.getNome() + " : " + mFunction.getTipo());
 
 
         Escopo mEscopoInterno = new Escopo(mRunTime, mStructEscopo);
         //Escopo mEscopoInterno = new Escopo(mRunTime, null);
-
-
 
 
         passarParametros(mEscopoInterno, mFunction.getParamentos(), mArgumentos);
@@ -107,6 +105,7 @@ public class PreparadorDeArgumentos {
 
         }
 
+
         if (Saida.getTipo().contentEquals("bool")) {
             Saida.setPrimitivo(true);
         } else if (Saida.getTipo().contentEquals("num")) {
@@ -121,17 +120,17 @@ public class PreparadorDeArgumentos {
         return Saida;
     }
 
-    public void executar_Action(RunTime mRunTime, Escopo mBuscadorDeVariaveis, Escopo mStructEscopo, Index_Action mFunction, ArrayList<Item> mArgumentos) {
+    public void executar_Action(RunTime mRunTime,  Escopo mStructEscopo, Index_Action mFunction, ArrayList<Item> mArgumentos) {
 
 
-
-
-        //  System.out.println(" EXECUTAR Function " + mFunction.getNome() + " : " + mFunction.getTipo());
+      //   System.out.println(" -->> ACTION CALL : " + mFunction.getNome() );
+      //  System.out.println("\t - Escopo : " + mStructEscopo.getNome() );
 
 
         Escopo mEscopoInterno = new Escopo(mRunTime, mStructEscopo);
         //Escopo mEscopoInterno = new Escopo(mRunTime, null);
 
+        mEscopoInterno.setNome(mStructEscopo.getNome() );
 
 
 
@@ -143,13 +142,20 @@ public class PreparadorDeArgumentos {
         mAST.init(mASTBody);
 
 
-
         //   System.out.println( mFunction.getNome() + "  Retornando -> " + mAST.getConteudo() + " :: " +mRetornoTipo );
 
 
         if (mRunTime.getErros().size() > 0) {
 
         }
+
+
+    }
+
+    public Item executar_FunctionGlobal(RunTime mRunTime, Index_Function mFunction, ArrayList<Item> mArgumentos, String eReturne) {
+
+
+        return executar_Function(mRunTime, mRunTime.getEscopoGlobal(), mFunction, mArgumentos, eReturne);
 
 
     }
