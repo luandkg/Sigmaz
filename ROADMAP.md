@@ -41,4 +41,21 @@ Linguagem de Programação Estruturada
     - 2020 06 17
         - ALL
         - VALUE : Reestruturação
+        - OPERATION
+        - UNIAO : Run_Function Run_Action e Run_ActionFunction
+        - COMPILACAO EM LOTE
+        
+    - 2020 06 18
+        - CAST
+        
+    - 2020 06 19
+        - PRIMITIVE TO CAST
+        - CAST TO PRIMITIVE
+        
+    - 2020 06 20
+        - REORGANIZACAO DE ESCOPO
+        - REORGANIZACAO DO AST_VALUE
+        - REORGANIZACAO DO RUN_FUNC
+        - STRUCT
+        - ORIENTACAO A OBJETO
        

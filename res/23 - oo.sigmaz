@@ -1,0 +1,76 @@
+
+require "lib.sigmaz";
+
+require "sacola.sigmaz";
+require "pessoa.sigmaz";
+
+
+call iniciar -> pular();
+
+
+
+
+
+
+act pular(){
+
+
+    def p1 : Pessoa = init Pessoa();
+
+    p1.setNome("Luan Alves Freitas");
+
+    p1.setIdade(12);
+
+    p1.mostrar();
+
+    def p2 : Pessoa = init Pessoa();
+
+    p2.setNome("Ana Bucar Xord");
+
+    p2.setIdade(12);
+
+    p2.mostrar();
+
+
+
+    def igual : bool = p1.getIdade() == p2.getIdade();
+
+    def sacola1 : Sacola = init Sacola();
+
+    p1.sacola = sacola1;
+
+    p1.sacola.aumentar(2);
+
+    p1.sacola.mostrar();
+
+    p1.mostrar();
+
+    sacola1.aumentar(2);
+
+    p1.sacola_aumentar();
+
+    p1.sacola.aumentar(3);
+
+    def gg : num = p1.sacola.quantidade();
+
+    p1.mostrar_detalhes();
+
+    sacola1.mostrar_detalhes();
+
+    #invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
+
+    #invoke __COMPILER__ -> SHOW_HEAP () :: ALL;
+
+    def zz : num = sacola1.someisso(2,2);
+
+   # def tt : num = sacola1.somar(2,2);
+
+    def ss : num = somar(2,2);
+
+    invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
+
+    #sacola1.mostrar_struct();
+
+}
+
+

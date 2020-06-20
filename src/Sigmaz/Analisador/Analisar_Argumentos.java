@@ -14,7 +14,7 @@ public class Analisar_Argumentos {
 
     }
 
-    public String analisarArguments(AST ASTPai) {
+    public String analisarArguments(AST ASTPai,ArrayList<String> mAlocadosAntes) {
 
         ArrayList<String> mNomes = new ArrayList<String>();
 
@@ -22,6 +22,8 @@ public class Analisar_Argumentos {
 
         for (AST mAST : ASTPai.getASTS()) {
             if (mAST.mesmoTipo("ARGUMENT")) {
+
+               // mAnalisador.analisarAlocacao(mAST,mAlocadosAntes);
 
                 if (!mNomes.contains(mAST.getNome())) {
                     mNomes.add(mAST.getNome());
@@ -32,6 +34,7 @@ public class Analisar_Argumentos {
                 mParametragem += "<" + mAST.getValor() + "> ";
 
                 mAnalisador.analisandoDefines(mAST);
+
             } else {
                 mAnalisador.getErros().add("Tipo Desconhecido : " + mAST.getTipo());
             }

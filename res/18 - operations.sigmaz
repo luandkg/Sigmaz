@@ -1,0 +1,84 @@
+
+
+call iniciar -> pular();
+
+act pular(){
+
+
+    def f : num = 13;
+
+    def a : bool = 13 == f;
+
+    def v : bool = (true !! false) ;
+
+    def t : bool = "a" !! "ab";
+
+
+
+invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
+
+}
+
+func somar(a:num,b:num) : num {
+
+    def c : num;
+
+    invoke math -> operator_sum (a,b) :: c;
+
+    return c;
+}
+
+operation == (a:num,b:num) : bool  {
+
+     def c : bool;
+
+    invoke math -> operator_equal (a,b) :: c;
+
+    return c;
+
+}
+operation !! (a:num,b:num) : bool  {
+
+     def c : bool;
+
+    invoke math -> operator_not (a,b) :: c;
+
+    return c;
+
+}
+operation == (a:bool,b:bool) : bool  {
+
+     def c : bool;
+
+    invoke math -> operator_match (a,b) :: c;
+
+    return c;
+
+}
+operation !! (a:bool,b:bool) : bool  {
+
+     def c : bool;
+
+    invoke math -> operator_unmatch (a,b) :: c;
+
+    return c;
+
+}
+operation == (a:string,b:string) : bool  {
+
+     def c : bool;
+
+    invoke terminal -> operator_match (a,b) :: c;
+
+    return c;
+
+}
+operation !! (a:string,b:string) : bool  {
+
+     def c : bool;
+
+    invoke terminal -> operator_unmatch (a,b) :: c;
+
+    return c;
+
+}

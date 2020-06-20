@@ -53,7 +53,7 @@ public class Run_All {
         for (AST fAST : ASTCorrente.getBranch("CASES").getASTS()) {
 
 
-            AST ouCondicao = fAST.getBranch("CONDITION");
+            AST ouCondicao = fAST.getBranch("ARGUMENTS");
             AST ouCorpo = fAST.getBranch("BODY");
 
             if (ouCondicao.getASTS().size() != 2) {

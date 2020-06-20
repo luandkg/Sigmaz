@@ -47,7 +47,6 @@ public class AST_Step {
             AST_Corrente.setNome(TokenC.getConteudo());
             ASTPai.getASTS().add(AST_Corrente);
 
-            AST AST_Arguments = AST_Corrente.criarBranch("ARGUMENTS");
             AST AST_BODY = AST_Corrente.criarBranch("BODY");
 
             Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado Dois Pontos");
@@ -60,7 +59,7 @@ public class AST_Step {
             Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado ( ");
 
             AST_Value mAST = new AST_Value(mCompiler);
-            mAST.ReceberArgumentos(AST_Arguments);
+            mAST.ReceberArgumentos(AST_Corrente);
 
             Token TokenC6 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado -> ");
 
@@ -84,14 +83,13 @@ public class AST_Step {
         AST_Corrente.setNome(TokenC.getConteudo());
         ASTPai.getASTS().add(AST_Corrente);
 
-        AST AST_Arguments = AST_Corrente.criarBranch("ARGUMENTS");
         AST AST_BODY = AST_Corrente.criarBranch("BODY");
 
         Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.QUAD, "Era esperado :: ");
         Token TokenC3 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado ( ");
 
         AST_Value mAST = new AST_Value(mCompiler);
-        mAST.ReceberArgumentos(AST_Arguments);
+        mAST.ReceberArgumentos(AST_Corrente);
 
         Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado -> ");
 

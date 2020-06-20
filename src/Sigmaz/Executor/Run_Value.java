@@ -1,5 +1,6 @@
 package Sigmaz.Executor;
 
+import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Utils.AST;
 
 public class Run_Value {
@@ -9,10 +10,10 @@ public class Run_Value {
 
     private boolean mIsNulo;
     private boolean mIsPrimitivo;
-
+    private boolean mIsEstrutura;
 
     private String mConteudo;
-    private Object mObjeto;
+    private Escopo mObjeto;
 
     private String mRetornoTipo;
 
@@ -22,6 +23,7 @@ public class Run_Value {
         mEscopo = eEscopo;
         mIsNulo = false;
         mIsPrimitivo = false;
+        mIsEstrutura = false;
 
         mObjeto = null;
         mConteudo = null;
@@ -34,7 +36,7 @@ public class Run_Value {
         return mConteudo;
     }
 
-    public Object getObjeto() {
+    public Escopo getObjeto() {
         return mObjeto;
     }
 
@@ -70,6 +72,15 @@ public class Run_Value {
         mConteudo = eConteudo;
     }
 
+    public void setEstrutura(boolean eEstrutura) {
+        mIsEstrutura = eEstrutura;
+    }
+
+    public boolean getEstrutura() {
+        return mIsEstrutura;
+    }
+
+
     public void init(AST ASTCorrente, String eRetorno) {
 
         mRetornoTipo = eRetorno;
@@ -77,9 +88,13 @@ public class Run_Value {
 
         if (ASTCorrente.mesmoValor("NULL")) {
 
+            //  System.out.println("Valorando  -> NULL");
+
             mIsNulo = true;
 
         } else if (ASTCorrente.mesmoValor("Text")) {
+
+            //    System.out.println("Valorando  -> " + ASTCorrente.getNome());
 
             mIsNulo = false;
             mIsPrimitivo = true;
@@ -87,6 +102,8 @@ public class Run_Value {
             mConteudo = ASTCorrente.getNome();
 
         } else if (ASTCorrente.mesmoValor("Num")) {
+
+            //   System.out.println("Valorando  -> " + ASTCorrente.getNome());
 
             mIsNulo = false;
             mIsPrimitivo = true;
@@ -98,12 +115,16 @@ public class Run_Value {
 
             if (ASTCorrente.mesmoNome("true") || ASTCorrente.mesmoNome("false")) {
 
+                //  System.out.println("Valorando  -> " + ASTCorrente.getNome());
+
                 mIsNulo = false;
                 mIsPrimitivo = true;
                 mRetornoTipo = "bool";
                 mConteudo = ASTCorrente.getNome();
 
             } else if (ASTCorrente.mesmoNome("null")) {
+
+                //  System.out.println("Valorando  -> NULL");
 
                 // System.out.println("ANULANDO INIT  -> " + ASTCorrente.getNome());
 
@@ -112,13 +133,19 @@ public class Run_Value {
 
             } else {
 
+                //   System.out.println("Valorando  -> Def " + ASTCorrente.getNome());
+
                 Item mItem = mEscopo.getItem(ASTCorrente.getNome());
 
                 if (mItem != null) {
 
-                    mIsNulo =mItem.getNulo();
+                    mIsNulo = mItem.getNulo();
                     mRetornoTipo = mItem.getTipo();
                     mConteudo = mItem.getValor();
+
+
+                    mIsPrimitivo = mItem.getPrimitivo();
+                    mIsEstrutura = mItem.getIsEstrutura();
 
 
                     if (mRetornoTipo.contentEquals("bool")) {
@@ -129,14 +156,13 @@ public class Run_Value {
                         mIsPrimitivo = true;
                     }
 
-                }
 
+                }
 
 
                 if (mRunTime.getErros().size() > 0) {
                     return;
                 }
-
 
 
             }
@@ -148,8 +174,8 @@ public class Run_Value {
 
         } else if (ASTCorrente.mesmoValor("COMPARATOR")) {
 
-            mRetornoTipo = "bool";
-            mIsPrimitivo = true;
+
+            //System.out.println("Valorando  -> COMPARATOR");
 
             AST eModo = ASTCorrente.getBranch("MODE");
 
@@ -171,12 +197,12 @@ public class Run_Value {
 
             if (eModo.mesmoNome("MATCH")) {
 
-                verificarIgualdade(mRun_Esquerda, mRun_Direita);
+                verificarIgualdade(mRun_Esquerda, mRun_Direita, mRetornoTipo);
 
 
             } else if (eModo.mesmoNome("MISMATCH")) {
 
-                verificarDesIgualdade(mRun_Esquerda, mRun_Direita);
+                verificarDesIgualdade(mRun_Esquerda, mRun_Direita, mRetornoTipo);
 
 
             } else {
@@ -186,23 +212,144 @@ public class Run_Value {
 
         } else if (ASTCorrente.getValor().contentEquals("FUNCT")) {
 
-            //  System.out.println("FUNCT INIT  -> " + ASTCorrente.getNome());
+             // System.out.println("Valorando  -> FUNCT " + ASTCorrente.getNome());
 
             Run_Func mAST = new Run_Func(mRunTime, mEscopo);
-            mAST.init(ASTCorrente, eRetorno);
+            Item eItem = mAST.init_Function(ASTCorrente, eRetorno);
 
 
             if (mRunTime.getErros().size() > 0) {
-             return;
-              }
+                 return;
+            }
 
 
-            mIsNulo = mAST.getIsNulo();
-            mIsPrimitivo = mAST.getIsPrimitivo();
-            mConteudo = mAST.getConteudo();
-            mRetornoTipo = mAST.getRetornoFunction();
+            this.setNulo(eItem.getNulo());
+            this.setPrimitivo(eItem.getPrimitivo());
+            this.setConteudo(eItem.getValor());
+            this.setRetornoTipo(eItem.getTipo());
 
-            //  System.out.println("FUNCT EXIT  -> " + ASTCorrente.getNome() + " -> " + mAST.getConteudo() + " P : " + mIsPrimitivo + " N : " + mIsNulo);
+            //   mIsNulo = mAST.getIsNulo();
+            //   mIsPrimitivo = mAST.getIsPrimitivo();
+            //   mConteudo = mAST.getConteudo();
+            //   mRetornoTipo = mAST.getRetornoFunction();
+
+            //  System.out.println("FUNCT EXIT  -> " + ASTCorrente.getNome() + " -> " + this.getConteudo() + " P : " + mIsPrimitivo + " N : " + mIsNulo + " T : " + mRetornoTipo);
+
+
+        } else if (ASTCorrente.getValor().contentEquals("INIT")) {
+
+            //  mRunTime.getErros().add("Vamos Struct - " + eRetorno);
+            long HEAPID = mRunTime.getHEAPID();
+            String eNome = "<Struct::" + eRetorno + ":" + HEAPID + ">";
+
+            Escopo mStructEscopo = new Escopo(mRunTime, null);
+            mStructEscopo.setNome(eNome);
+
+            Run_Struct mRun_Struct = new Run_Struct(mRunTime, mStructEscopo);
+            mRun_Struct.setNome(eNome);
+
+
+            mRun_Struct.init(eRetorno);
+
+
+            mRunTime.adicionarHeap(mRun_Struct);
+
+            mIsNulo = false;
+            mIsPrimitivo = false;
+            mRetornoTipo = eRetorno;
+            mObjeto = mStructEscopo;
+            mIsEstrutura = true;
+            mConteudo = eNome;
+
+        } else if (ASTCorrente.getValor().contentEquals("STRUCT")) {
+
+
+            Item mItem = mEscopo.getItem(ASTCorrente.getNome());
+
+            Run_Struct mEscopoStruct = mRunTime.getRun_Struct(mItem.getValor());
+
+            AST eInternal = ASTCorrente.getBranch("INTERNAL");
+
+            if (eInternal.mesmoValor("STRUCT_FUNCT")) {
+
+
+                Item eItem = mEscopoStruct.init_Function(eInternal, mEscopo, "<<ANY>>");
+
+                if (mRunTime.getErros().size() > 0) {
+                    return;
+                }
+
+                this.setNulo(eItem.getNulo());
+                this.setPrimitivo(eItem.getPrimitivo());
+                this.setConteudo(eItem.getValor());
+                this.setRetornoTipo(eItem.getTipo());
+
+
+                //   mRunTime.getErros().add("STRUCT : " + mEscopoStruct.getNome() + " -> " + eInternal.getNome() + " : " + eItem.getValor());
+
+
+            } else if (eInternal.mesmoValor("STRUCT_OBJECT")) {
+
+                // mRunTime.getErros().add("STRUCT : " + mEscopoStruct.getNome());
+
+                Item eItem = mEscopoStruct.init_Object(eInternal, mEscopo, "<<ANY>>");
+
+                while (eInternal.existeBranch("INTERNAL")) {
+
+                    AST sInternal = eInternal.getBranch("INTERNAL");
+
+                    if (sInternal.mesmoValor("STRUCT_ACT")) {
+
+                    } else if (sInternal.mesmoValor("STRUCT_FUNCT")) {
+
+                        //System.out.println("STRUCT OBJECT : " + eItem.getValor());
+
+                        if (mRunTime.getErros().size() > 0) {
+                            return;
+                        }
+
+                        if (!eItem.getTipo().contentEquals(eRetorno)) {
+                            mEscopoStruct = mRunTime.getRun_Struct(eItem.getValor());
+
+                            eItem = mEscopoStruct.init_Function(sInternal, mEscopo, "<<ANY>>");
+
+                            if (mRunTime.getErros().size() > 0) {
+                                return;
+                            }
+                        } else {
+                            this.setNulo(eItem.getNulo());
+                            this.setPrimitivo(eItem.getPrimitivo());
+                            this.setConteudo(eItem.getValor());
+                            this.setRetornoTipo(eItem.getTipo());
+                            break;
+                        }
+
+
+                        this.setNulo(eItem.getNulo());
+                        this.setPrimitivo(eItem.getPrimitivo());
+                        this.setConteudo(eItem.getValor());
+                        this.setRetornoTipo(eItem.getTipo());
+
+                    } else if (sInternal.mesmoValor("STRUCT_OBJECT")) {
+
+                    }
+                }
+
+
+                if (mRunTime.getErros().size() > 0) {
+                    return;
+                }
+
+                this.setNulo(eItem.getNulo());
+                this.setPrimitivo(eItem.getPrimitivo());
+                this.setConteudo(eItem.getValor());
+                this.setRetornoTipo(eItem.getTipo());
+
+            } else {
+
+                mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
+
+            }
 
 
         } else {
@@ -214,83 +361,85 @@ public class Run_Value {
 
         }
 
+
     }
 
 
-    public void verificarIgualdade(Run_Value mRun_Esquerda, Run_Value mRun_Direita) {
+    public void verificarIgualdade(Run_Value mRun_Esquerda, Run_Value mRun_Direita, String eRetorno) {
 
-        if (mRun_Esquerda.getRetornoTipo().contentEquals(mRun_Direita.getRetornoTipo())) {
 
-            if (mRun_Esquerda.getRetornoTipo().contentEquals("num")) {
+        Run_Func mRun_Matchable = new Run_Func(mRunTime, mEscopo);
+        Item mItem = mRun_Matchable.init_Operation("MATCH", mRun_Esquerda, mRun_Direita, eRetorno);
 
-                float f1 = Float.parseFloat(mRun_Esquerda.getConteudo());
-                float f2 = Float.parseFloat(mRun_Direita.getConteudo());
-                if (f1 == f2) {
-                    mConteudo = "true";
-                } else {
-                    mConteudo = "false";
-                }
-            } else {
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
 
-                if (mRun_Esquerda.getIsNulo() && mRun_Direita.getIsNulo()) {
-                    mConteudo = "true";
-                } else {
 
-                    if (mRun_Esquerda.getConteudo().contentEquals(mRun_Direita.getConteudo())) {
-                        mConteudo = "true";
 
-                    } else {
-                        mConteudo = "false";
-                    }
+        mIsNulo = mItem.getNulo();
+        mIsPrimitivo = mItem.getPrimitivo();
+        mConteudo = mItem.getValor();
+        mRetornoTipo = mItem.getTipo();
 
-                }
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
 
-            }
-
-        } else {
-
-            mConteudo = "false";
-
+        if (mRetornoTipo.contentEquals("bool")) {
+            mIsPrimitivo = true;
+        } else if (mRetornoTipo.contentEquals("num")) {
+            mIsPrimitivo = true;
+        } else if (mRetornoTipo.contentEquals("string")) {
+            mIsPrimitivo = true;
         }
 
     }
 
 
-    public void verificarDesIgualdade(Run_Value mRun_Esquerda, Run_Value mRun_Direita) {
+    public void verificarDesIgualdade(Run_Value mRun_Esquerda, Run_Value mRun_Direita, String eRetorno) {
 
-        if (mRun_Esquerda.getRetornoTipo().contentEquals(mRun_Direita.getRetornoTipo())) {
+        Run_Func mRun_Matchable = new Run_Func(mRunTime, mEscopo);
+        Item mItem = mRun_Matchable.init_Operation("UNMATCH", mRun_Esquerda, mRun_Direita, eRetorno);
 
-            if (mRun_Esquerda.getRetornoTipo().contentEquals("num")) {
 
-                float f1 = Float.parseFloat(mRun_Esquerda.getConteudo());
-                float f2 = Float.parseFloat(mRun_Direita.getConteudo());
-                if (f1 == f2) {
-                    mConteudo = "false";
-                } else {
-                    mConteudo = "true";
-                }
-            } else {
 
-                if (mRun_Esquerda.getIsNulo() && mRun_Direita.getIsNulo()) {
-                    mConteudo = "false";
-                } else {
 
-                    if (mRun_Esquerda.getConteudo().contentEquals(mRun_Direita.getConteudo())) {
-                        mConteudo = "false";
+        mIsNulo = mItem.getNulo();
+        mIsPrimitivo = mItem.getPrimitivo();
+        mConteudo = mItem.getValor();
+        mRetornoTipo = mItem.getTipo();
 
-                    } else {
-                        mConteudo = "true";
-                    }
-
-                }
-
-            }
-
-        } else {
-
-            mConteudo = "true";
-
+        if (mRunTime.getErros().size() > 0) {
+            return;
         }
+
+        if (mRetornoTipo.contentEquals("bool")) {
+            mIsPrimitivo = true;
+        } else if (mRetornoTipo.contentEquals("num")) {
+            mIsPrimitivo = true;
+        } else if (mRetornoTipo.contentEquals("string")) {
+            mIsPrimitivo = true;
+        }
+
+    }
+
+    public String getModulante() {
+
+        String emodo = "";
+
+        if (mIsPrimitivo) {
+            emodo = "Primitivo";
+        }
+        if (mIsEstrutura) {
+            emodo = "Estrututura";
+        }
+        if (!mIsEstrutura) {
+            emodo = "Primitivo";
+        }
+
+
+        return emodo;
 
     }
 }

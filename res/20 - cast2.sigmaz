@@ -1,0 +1,118 @@
+
+
+call iniciar -> pular();
+
+cast pos {
+
+    getter a : num -> { if(menor(a,0)) -> { exception "Nao e possivel obter valores negativos !";} return a; }
+
+    setter b : num -> { if(menor(b,0)) -> { exception "Nao e possivel obter valores negativos !";} return b;  }
+
+}
+
+
+cast neg {
+
+    getter a : num -> { if(maior(a,0)) -> { exception "Nao e possivel obter valores positivos !";} return a; }
+
+    setter b : num -> { if(maior(b,0)) -> { exception "Nao e possivel obter valores positivos !";} return b;  }
+
+}
+
+func menor(a:num,b:num) : bool {
+
+    def c : bool;
+
+    invoke math -> operator_less (a,b) :: c;
+
+    return c;
+}
+
+func maior(a:num,b:num) : bool {
+
+    def c : bool;
+
+    invoke math -> operator_great (a,b) :: c;
+
+    return c;
+}
+
+operation == (a:pos,b:pos) : bool  {
+
+    def c : bool;
+
+    def c1 : num = a;
+    def c2 : num = b;
+
+    invoke math -> operator_equal (c1,c2) :: c;
+
+    return c;
+
+}
+
+operation !! (a:pos,b:pos) : bool  {
+
+    def c : bool;
+
+    def c1 : num = a;
+    def c2 : num = b;
+
+    invoke math -> operator_not (c1,c2) :: c;
+
+    return c;
+
+}
+
+operation == (a:num,b:num) : bool  {
+
+    def c : bool;
+
+    invoke math -> operator_equal (a,b) :: c;
+
+    return c;
+
+}
+
+act pular(){
+
+
+    def P1 : pos = 13;
+
+    def v : num = P1;
+
+    def P2 : pos = 40;
+
+    def igual : bool = P1 == P2;
+    def diferente : bool = P1 !! P2;
+
+    def N1 : neg = -13;
+
+    def v2 : num = N1;
+
+
+    def P3 : pos = positivar(P1,pos(5));
+
+    def v3 : num = num(P3);
+
+    def ii : bool = num(pos(0)) == num(neg(0));
+
+
+    invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
+
+}
+
+
+
+func positivar(p1:pos,p2:pos) : pos {
+
+
+    p1 = p2;
+
+    p1 = 5;
+
+
+    #invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
+
+    return p1;
+
+}

@@ -1,11 +1,11 @@
 
 
 
-func somar(a:num,b:num) : num {
+func somar(b1:num,b:num) : num {
 
     def c : num;
 
-    invoke math -> operator_sum (a,b) :: c;
+    invoke math -> operator_sum (b1,b) :: c;
 
     return c;
 }
@@ -43,6 +43,16 @@ act println(a:string,b:num)  {
     invoke terminal -> change () :: c;
     invoke terminal -> print (a) :: c;
     invoke terminal -> print (b) :: c;
+
+}
+
+operation == (a:num,b:num) : bool  {
+
+     def c : bool;
+
+    invoke math -> operator_equal (a,b) :: c;
+
+    return c;
 
 }
 
@@ -200,14 +210,12 @@ act operar(geral : num){
 
 
 
-
 }
 
 
 mockiz OPERANTE : num = 2;
-define b : num = somar(2,2);
+define SGeral : num = somar(2,2);
 
-invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
 
 call iniciar -> operar(OPERANTE);
 

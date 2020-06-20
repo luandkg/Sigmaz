@@ -2,6 +2,7 @@ package Sigmaz.Executor.Invokes;
 
 import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.RunTime;
+import Sigmaz.Executor.Run_Invoke;
 import Sigmaz.Utils.AST;
 
 import java.text.DecimalFormat;
@@ -10,26 +11,33 @@ public class InvokeTerminal {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private Run_Invoke mRun_Invoke;
 
 
-    public InvokeTerminal(RunTime eRunTime, Escopo eEscopo) {
+    public InvokeTerminal(RunTime eRunTime, Escopo eEscopo, Run_Invoke eRun_Invoke) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
+        mRun_Invoke = eRun_Invoke;
 
 
     }
 
     public void init(String eAcao, String eSaida, AST ASTArgumentos) {
 
+        int i = mRun_Invoke.argumentosContagem(ASTArgumentos);
 
-        if (eAcao.contentEquals("change")) {
+        if (i == 0) {
 
             argumentos_vazio(eAcao, eSaida, ASTArgumentos);
 
-        } else if (eAcao.contentEquals("print")) {
+        } else if (i == 1) {
 
             argumentos_1num(eAcao, eSaida, ASTArgumentos);
+
+        } else if (i == 2) {
+
+            argumentos_2(eAcao, eSaida, ASTArgumentos);
 
         } else {
 
@@ -44,41 +52,17 @@ public class InvokeTerminal {
 
         int i = 0;
 
-        String p1 = "";
-
-        for (AST eAST : ASTArgumentos.getASTS()) {
-
-            if (eAST.mesmoTipo("ARGUMENT")) {
-
-                //System.out.println(" \t - Argumento : " + eAST.getNome() + " : " + eAST.getValor());
+        String p1 = mRun_Invoke.getQualquer(ASTArgumentos, 1);
 
 
-                if (eAST.mesmoValor("ID")) {
 
-                    p1 = mEscopo.getDefinido(eAST.getNome());
-
-
-                } else if (eAST.mesmoValor("Num")) {
-                    p1 = eAST.getNome();
-                } else if (eAST.mesmoValor("Text")) {
-
-                    mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
-
-                    break;
-                }
-
-                i += 1;
-
-            }
-
-        }
-
-        if (i == 1) {
 
             if (eAcao.contentEquals("print")) {
 
 
-                System.out.print(p1);
+                if(mRunTime.getExterno()){
+                    System.out.print(p1);
+                }
 
                 mEscopo.setDefinido(eSaida, "true");
 
@@ -104,15 +88,14 @@ public class InvokeTerminal {
                 } else {
                     mRunTime.getErros().add("Conversao impossivel !");
                 }
-
-
             } else {
 
                 mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
 
+
             }
 
-        }
+
     }
 
     public void argumentos_vazio(String eAcao, String eSaida, AST ASTArgumentos) {
@@ -132,8 +115,10 @@ public class InvokeTerminal {
 
             if (eAcao.contentEquals("change")) {
 
+                if(mRunTime.getExterno()) {
+                    System.out.print("\n");
+                }
 
-                System.out.print("\n");
 
                 mEscopo.setDefinido(eSaida, "true");
 
@@ -145,6 +130,43 @@ public class InvokeTerminal {
             }
 
         }
+    }
+
+
+    public void argumentos_2(String eAcao, String eSaida, AST ASTArgumentos) {
+
+        if (eAcao.contentEquals("operator_match")) {
+
+            String p1 = mRun_Invoke.getString(ASTArgumentos, 1);
+            String p2 = mRun_Invoke.getString(ASTArgumentos, 2);
+
+
+            if (p1.contentEquals(p2)) {
+                mEscopo.setDefinido(eSaida, "true");
+            } else {
+                mEscopo.setDefinido(eSaida, "false");
+            }
+
+
+        } else if (eAcao.contentEquals("operator_unmatch")) {
+
+            String p1 = mRun_Invoke.getString(ASTArgumentos, 1);
+            String p2 = mRun_Invoke.getString(ASTArgumentos, 2);
+
+
+            if (p1.contentEquals(p2)) {
+                mEscopo.setDefinido(eSaida, "false");
+            } else {
+                mEscopo.setDefinido(eSaida, "true");
+            }
+
+
+        } else {
+
+            mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+
+        }
+
     }
 
 

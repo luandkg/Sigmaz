@@ -23,6 +23,10 @@ public class EscopoStack {
             }
         }
 
+        if (enc) {
+            mRunTime.getErros().add("Variavel Duplicada : " + eNome);
+        }
+
         if (!enc) {
 
             Item IC = BuscarAnterior(eNome);
@@ -33,7 +37,7 @@ public class EscopoStack {
         }
 
         if (enc) {
-            mRunTime.getErros().add("Variavel Duplicada : " + eNome);
+       //     mRunTime.getErros().add("Variavel Duplicada : " + eNome);
         } else {
             Item eItem = new Item(eNome);
             eItem.setTipo(eTipo);
@@ -54,6 +58,11 @@ public class EscopoStack {
             }
         }
 
+        if (enc) {
+            mRunTime.getErros().add("Variavel Duplicada : " + eNome);
+        }
+
+
         if (!enc) {
 
             Item IC = BuscarAnterior(eNome);
@@ -64,7 +73,7 @@ public class EscopoStack {
         }
 
         if (enc) {
-            mRunTime.getErros().add("Constante Duplicada : " + eNome);
+         //   mRunTime.getErros().add("Constante Duplicada : " + eNome);
         } else {
             Item eItem = new Item(eNome);
             eItem.setModo(1);
@@ -86,6 +95,11 @@ public class EscopoStack {
             }
         }
 
+        if (enc) {
+            mRunTime.getErros().add("Variavel Duplicada : " + eNome);
+        }
+
+
         if (!enc) {
 
             Item IC = BuscarAnterior(eNome);
@@ -96,7 +110,7 @@ public class EscopoStack {
         }
 
         if (enc) {
-            mRunTime.getErros().add("Variavel Duplicada : " + eNome);
+            //mRunTime.getErros().add("Variavel Duplicada : " + eNome);
         } else {
             Item Novo = new Item(eNome);
             Novo.setModo(0);
@@ -109,6 +123,140 @@ public class EscopoStack {
         }
     }
 
+    public void criarDefinicaoStruct(String eNome, String eTipo, String eValor,String eRef) {
+
+        boolean enc = false;
+
+        for (Item i : mEscopo.getStacks()) {
+            if (i.getNome().contentEquals(eNome)) {
+                enc = true;
+                break;
+            }
+        }
+
+        if (enc) {
+            mRunTime.getErros().add("Variavel Duplicada : " + eNome);
+        }
+
+
+        if (!enc) {
+
+            Item IC = BuscarAnterior(eNome);
+            if (IC != null) {
+                enc = true;
+            }
+
+        }
+
+        if (enc) {
+          //  mRunTime.getErros().add("Variavel Duplicada : " + eNome);
+        } else {
+            Item Novo = new Item(eNome);
+            Novo.setModo(0);
+            Novo.setTipo(eTipo);
+            Novo.setNulo(false);
+            Novo.setPrimitivo(false);
+            Novo.setIsEstrutura(true);
+            Novo.setValor(eRef);
+            mEscopo.getStacks().add(Novo);
+
+        }
+    }
+
+    public void criarConstanteStruct(String eNome, String eTipo, String eValor,String eRef) {
+
+        boolean enc = false;
+
+        for (Item i : mEscopo.getStacks()) {
+            if (i.getNome().contentEquals(eNome)) {
+                enc = true;
+                break;
+            }
+        }
+
+        if (enc) {
+            mRunTime.getErros().add("Variavel Duplicada : " + eNome);
+        }
+
+
+        if (!enc) {
+
+            Item IC = BuscarAnterior(eNome);
+            if (IC != null) {
+                enc = true;
+            }
+
+        }
+
+        if (enc) {
+         //   mRunTime.getErros().add("Variavel Duplicada : " + eNome);
+        } else {
+            Item Novo = new Item(eNome);
+            Novo.setModo(0);
+            Novo.setTipo(eTipo);
+            Novo.setNulo(false);
+            Novo.setPrimitivo(false);
+            Novo.setIsEstrutura(true);
+            Novo.setValor(eRef);
+            mEscopo.getStacks().add(Novo);
+
+        }
+    }
+
+
+    public void criarParametro(String eNome, String eTipo, String eValor) {
+        boolean enc = false;
+
+        for (Item i : mEscopo.getParametros()) {
+            if (i.getNome().contentEquals(eNome)) {
+                enc = true;
+                break;
+            }
+        }
+
+
+        if (enc) {
+            mRunTime.getErros().add("Parametro Duplicado : " + eNome);
+        } else {
+            Item Novo = new Item(eNome);
+            Novo.setModo(0);
+            Novo.setTipo(eTipo);
+            Novo.setValor(eValor);
+            Novo.setNulo(false);
+
+            mEscopo.getParametros().add(Novo);
+
+        }
+    }
+
+    public void criarParametroStruct(String eNome, String eTipo, Escopo eValor,String eRef) {
+        boolean enc = false;
+
+        for (Item i : mEscopo.getParametros()) {
+            if (i.getNome().contentEquals(eNome)) {
+                enc = true;
+                break;
+            }
+        }
+
+
+        if (enc) {
+            mRunTime.getErros().add("Parametro Duplicado : " + eNome);
+        } else {
+            Item Novo = new Item(eNome);
+            Novo.setModo(0);
+            Novo.setTipo(eTipo);
+
+            Novo.setNulo(false);
+            Novo.setIsEstrutura(true);
+            Novo.setPrimitivo(false);
+            Novo.setObjeto(eValor);
+            Novo.setValor(eRef);
+
+            mEscopo.getParametros().add(Novo);
+
+        }
+    }
 
     public void criarConstante(String eNome, String eTipo, String eValor) {
         boolean enc = false;
@@ -156,7 +304,20 @@ public class EscopoStack {
 
     }
 
-    public void anularDefinido(String eNome) {
+    public void setDefinidoStruct(String eNome, String eValor) {
+
+        Item mItem = getItem(eNome);
+        if (mItem.getModo() == 0) {
+            mItem.setValor(eValor);
+            mItem.setNulo(false);
+            //System.out.println("Aplicando Valor em : " + eNome + " -->> " + eValor);
+        } else {
+            mRunTime.getErros().add("A constante nao pode ser alterada : " + eNome);
+        }
+
+    }
+
+        public void anularDefinido(String eNome) {
 
         Item mItem = getItem(eNome);
         if (mItem.getModo() == 0) {
@@ -175,6 +336,13 @@ public class EscopoStack {
         boolean enc = false;
         String ret = "";
 
+        for (Item i : mEscopo.getParametros()) {
+            if (i.getNome().contentEquals(eNome)) {
+                enc = true;
+                ret = i.getTipo();
+                return ret;
+            }
+        }
 
         for (Item i : mEscopo.getStacks()) {
             if (i.getNome().contentEquals(eNome)) {
@@ -208,6 +376,13 @@ public class EscopoStack {
         boolean enc = false;
         Item ret = null;
 
+        for (Item i : mEscopo.getParametros()) {
+            if (i.getNome().contentEquals(eNome)) {
+                enc = true;
+                ret = i;
+                return ret;
+            }
+        }
 
         for (Item i : mEscopo.getStacks()) {
             if (i.getNome().contentEquals(eNome)) {
@@ -273,6 +448,14 @@ public class EscopoStack {
         boolean enc = false;
         String ret = "";
 
+        for (Item i : mEscopo.getParametros()) {
+            if (i.getNome().contentEquals(eNome)) {
+                enc = true;
+                ret = i.getValor();
+                return ret;
+            }
+        }
+
 
         for (Item i : mEscopo.getStacks()) {
             if (i.getNome().contentEquals(eNome)) {
@@ -305,6 +488,13 @@ public class EscopoStack {
         boolean enc = false;
         String ret = "";
 
+        for (Item i : mEscopo.getParametros()) {
+            if (i.getNome().contentEquals(eNome)) {
+                enc = true;
+                ret = i.getValor();
+                return ret;
+            }
+        }
 
         for (Item i : mEscopo.getStacks()) {
             if (i.getNome().contentEquals(eNome)) {
@@ -344,6 +534,16 @@ public class EscopoStack {
         //	System.out.println("Buscando anterior : " + eNome);
 
         if (mEscopo.getEscopoAnterior() != null) {
+
+            for (Item i : mEscopo.getEscopoAnterior().getParametros()) {
+                if (i.getNome().contentEquals(eNome)) {
+                    enc = true;
+                    IC = i;
+                    break;
+                }
+            }
+
+
             for (Item i : mEscopo.getEscopoAnterior().getStacks()) {
                 if (i.getNome().contentEquals(eNome)) {
                     enc = true;

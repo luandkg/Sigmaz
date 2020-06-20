@@ -30,7 +30,7 @@ public class Analisar_All {
 
         for (AST mAST : ASTPai.getASTS()) {
 
-            if (mAST.mesmoTipo("CONDITION")) {
+            if (mAST.mesmoTipo("ARGUMENTS")) {
 
                 if (mAST.getASTS().size() == 2) {
 

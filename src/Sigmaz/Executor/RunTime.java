@@ -1,5 +1,6 @@
 package Sigmaz.Executor;
 
+import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Utils.AST;
 import Sigmaz.Utils.Documentador;
 import Sigmaz.Utils.Documento;
@@ -13,6 +14,11 @@ public class RunTime {
     private DataTypes mDataTypes;
 
     private Escopo mEscopoGlobal;
+    private ArrayList<Run_Struct> mHeap;
+
+    private long mHEAPID;
+
+    private boolean mExterno;
 
     public RunTime() {
 
@@ -22,8 +28,34 @@ public class RunTime {
 
         mDataTypes = new DataTypes();
 
-        mEscopoGlobal=null;
+        mHeap = new ArrayList<Run_Struct>();
 
+        mEscopoGlobal = null;
+        mHEAPID = 0;
+
+        mExterno = true;
+
+    }
+
+    public void externarlizar() {
+        mExterno = true;
+    }
+
+    public void internalizar() {
+        mExterno = false;
+    }
+
+    public boolean getExterno() {
+        return mExterno;
+    }
+
+    public long getHEAPID() {
+        mHEAPID += 1;
+        return mHEAPID;
+    }
+
+    public ArrayList<Run_Struct> getHeap() {
+        return mHeap;
     }
 
     public ArrayList<AST> getASTS() {
@@ -38,6 +70,8 @@ public class RunTime {
 
         mASTS.clear();
         mErros.clear();
+        mHeap.clear();
+        mHEAPID = 0;
 
         Documentador DC = new Documentador();
 
@@ -47,17 +81,51 @@ public class RunTime {
     }
 
 
-    public Escopo getEscopoGlobal(){
+    public Escopo getEscopoGlobal() {
         return mEscopoGlobal;
     }
 
+
+    public void adicionarHeap(Run_Struct eEscopo) {
+        mHeap.add(eEscopo);
+    }
+
+    public Run_Struct getRun_Struct(String eNome) {
+
+        Run_Struct mRet = null;
+
+        for (Run_Struct mRun_Struct : mHeap) {
+            if (mRun_Struct.mesmoNome(eNome)) {
+                mRet = mRun_Struct;
+                break;
+            }
+        }
+        return mRet;
+
+    }
+
+    public AST getSigmaz() {
+
+        AST mRet = null;
+
+        for (AST ASTCGlobal : mASTS) {
+            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
+                mRet = ASTCGlobal;
+            }
+        }
+        return mRet;
+    }
+
     public void run() {
+
+        mHeap.clear();
+        mErros.clear();
 
 
         Escopo Global = new Escopo(this, null);
         Global.setNome("GLOBAL");
 
-        mEscopoGlobal=Global;
+        mEscopoGlobal = Global;
 
         for (AST ASTCGlobal : mASTS) {
 
@@ -70,7 +138,12 @@ public class RunTime {
                         Global.guardar(ASTC);
                     } else if (ASTC.mesmoTipo("ACTION")) {
                         Global.guardar(ASTC);
+                    } else if (ASTC.mesmoTipo("OPERATION")) {
+                        Global.guardar(ASTC);
+                    } else if (ASTC.mesmoTipo("CAST")) {
+                        Global.guardar(ASTC);
                     }
+
                 }
 
                 for (AST ASTC : ASTCGlobal.getASTS()) {
@@ -107,8 +180,8 @@ public class RunTime {
 
                         AST mSending = ASTC.getBranch("SENDING");
 
-                        Run_Action mAST = new Run_Action(this, Global);
-                        mAST.init(mSending);
+                        Run_Func mAST = new Run_Func(this, Global);
+                        mAST.init_Action(mSending);
 
                     }
 

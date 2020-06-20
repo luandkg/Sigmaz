@@ -26,7 +26,7 @@ public class Analisar_Apply {
 
                 if (!mAlocadosAntes.contains(mSETTABLE.getNome())) {
 
-                    mAnalisador.getErros().add("Variavel nao existente : " + mSETTABLE.getNome());
+                  //  mAnalisador.getErros().add("Variavel nao existente : " + mSETTABLE.getNome());
                 }
 
 

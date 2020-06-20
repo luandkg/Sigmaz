@@ -27,40 +27,50 @@ public class Run_Body {
 
         mObjeto = null;
         mConteudo = null;
-        mRetornoTipo=null;
+        mRetornoTipo = null;
 
     }
 
     public String getConteudo() {
         return mConteudo;
     }
+
     public Object getObjeto() {
         return mObjeto;
     }
+
     public boolean getIsNulo() {
         return mIsNulo;
     }
+
     public boolean getIsPrimitivo() {
         return mIsPrimitivo;
     }
+
     public boolean getIsStruct() {
         return !mIsPrimitivo;
     }
+
     public String getRetornoTipo() {
         return mRetornoTipo;
     }
-    public void setNulo(boolean eNulo){
-        mIsNulo=eNulo;
+
+    public void setNulo(boolean eNulo) {
+        mIsNulo = eNulo;
     }
-    public void setPrimitivo(boolean ePrimitivo){
-        mIsPrimitivo=ePrimitivo;
+
+    public void setPrimitivo(boolean ePrimitivo) {
+        mIsPrimitivo = ePrimitivo;
     }
-    public void setRetornoTipo(String eRetornoTipo){
-        mRetornoTipo=eRetornoTipo;
+
+    public void setRetornoTipo(String eRetornoTipo) {
+        mRetornoTipo = eRetornoTipo;
     }
-    public void setConteudo(String eConteudo){
-        mConteudo=eConteudo;
+
+    public void setConteudo(String eConteudo) {
+        mConteudo = eConteudo;
     }
+
     public String getRetornoFunction() {
         return mRetornoTipo;
     }
@@ -89,17 +99,19 @@ public class Run_Body {
 
     public void init(AST ASTCorrente) {
 
-       // System.out.println("\n  -->> Em Corpo para Retornar : " + eReturne + " :: " + ASTCorrente.getASTS().size());
+        // System.out.println("\n  -->> Em Corpo para Retornar : " + eReturne + " :: " + ASTCorrente.getASTS().size());
 
         for (AST fAST : ASTCorrente.getASTS()) {
 
-           // System.out.println("\n  -->> IN :: " + fAST.getTipo());
+            // System.out.println("\n  -->> IN :: " + fAST.getTipo());
 
         }
 
         for (AST fAST : ASTCorrente.getASTS()) {
 
-           // System.out.println("\n  -->> EX :: " + fAST.getTipo());
+           // System.out.println("\n  -->> EX :: " + fAST.getTipo() + " :: " + mRunTime.getErros().size());
+
+
 
             if (mRunTime.getErros().size() > 0) {
                 break;
@@ -188,18 +200,18 @@ public class Run_Body {
 
             } else if (fAST.mesmoTipo("RETURN")) {
 
+             //   System.out.println("Iniciando Retorando de Corpo ");
 
                 Run_Value mAST = new Run_Value(mRunTime, mEscopo);
                 mAST.init(fAST, "<<ANY>>");
 
-            //   System.out.println("Retorando de Corpo -> " +mAST.getConteudo());
+              //  System.out.println("Retorando de Corpo -> " + mAST.getConteudo() + "  Tipo : " + mAST.getRetornoTipo());
 
 
                 mIsNulo = mAST.getIsNulo();
-                mIsPrimitivo=mAST.getIsPrimitivo();
+                mIsPrimitivo = mAST.getIsPrimitivo();
                 mConteudo = mAST.getConteudo();
                 mRetornoTipo = mAST.getRetornoTipo();
-
 
 
             } else if (fAST.mesmoTipo("CANCEL")) {
@@ -211,6 +223,10 @@ public class Run_Body {
 
                 Run_Execute mAST = new Run_Execute(mRunTime, mEscopo);
                 mAST.init(fAST);
+
+            } else if (fAST.mesmoTipo("EXCEPTION")) {
+
+                mRunTime.getErros().add(fAST.getNome());
 
             } else {
 

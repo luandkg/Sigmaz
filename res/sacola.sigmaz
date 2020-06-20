@@ -1,0 +1,38 @@
+struct Sacola {
+
+    define itens : num = 0;
+
+    act aumentar( g : num)  {
+         itens= somar_inteiro(itens,g);
+    }
+
+    func quantidade() : num { return itens; }
+
+
+
+   act mostrar()  {
+
+        invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
+
+    }
+
+    act mostrar_detalhes(){
+
+        println("");
+
+        println(" SACOLA : ");
+        println("    - Itens : ", itens);
+
+    }
+
+    act mostrar_struct(){
+
+        invoke __COMPILER__ -> SHOW_STRUCT () :: ALL;
+
+    }
+
+    func someisso(a:num,b:num) : num {
+        return somar_inteiro(a,b);
+    }
+
+}

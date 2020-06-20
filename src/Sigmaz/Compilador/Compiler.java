@@ -7,6 +7,7 @@ import Sigmaz.Utils.*;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class Compiler {
@@ -298,6 +299,22 @@ public class Compiler {
                 AST_Invoke mAST = new AST_Invoke(this);
                 mAST.init(AST_Raiz);
 
+            }else if (TokenC.getTipo()==TokenTipo.ID && TokenC.mesmoConteudo("operation")){
+
+                AST_Operation mAST = new AST_Operation(this);
+                mAST.init(AST_Raiz);
+
+            }else if (TokenC.getTipo()==TokenTipo.ID && TokenC.mesmoConteudo("cast")){
+
+                AST_Cast mAST = new AST_Cast(this);
+                mAST.init(AST_Raiz);
+
+            }else if (TokenC.getTipo()==TokenTipo.ID && TokenC.mesmoConteudo("struct")){
+
+                AST_Struct mAST = new AST_Struct(this);
+                mAST.init(AST_Raiz);
+
+
             } else {
                 errarCompilacao("Token Desconhecido : " + TokenC.getTipo() + " " + TokenC.getConteudo(), TokenC.getInicio());
                 return;
@@ -416,7 +433,21 @@ public class Compiler {
 
 
 
+    public String getData() {
 
+        Calendar c = Calendar.getInstance();
+
+        int dia = c.get(Calendar.DAY_OF_MONTH);
+        int mes = c.get(Calendar.MONTH) + 1;
+        int ano = c.get(Calendar.YEAR);
+
+        int hora = c.get(Calendar.HOUR);
+        int minutos = c.get(Calendar.MINUTE);
+        int segundos = c.get(Calendar.SECOND);
+
+        return dia + "/" + mes + "/" + ano + " " + hora + ":" + minutos + ":" + segundos;
+
+    }
 
 
 }

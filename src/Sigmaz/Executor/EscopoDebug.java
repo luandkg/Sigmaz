@@ -1,5 +1,7 @@
 package Sigmaz.Executor;
 
+import Sigmaz.Executor.Indexador.Index_Action;
+import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
@@ -18,6 +20,32 @@ public class EscopoDebug {
 
 
         System.out.println(" ######################### STACK - " + mEscopo.getNome() + " ############################ ");
+
+
+        System.out.println(" - PARAM : ");
+        ArrayList<Item> ls_Param = new ArrayList<>();
+        for (Item i : mEscopo.getParametros()) {
+            ls_Param.add(i);
+        }
+
+        System.out.println("\t - NAO NULOS : ");
+
+        for (Item i : ls_Param) {
+            if (i.getNulo() == false) {
+                mostrarItem(i);
+
+            }
+        }
+
+
+        System.out.println("\t - NULOS : ");
+        for (Item i : ls_Param) {
+
+            if (i.getNulo()) {
+                mostrarItem(i);
+
+            }
+        }
 
 
         ArrayList<Item> ls_Defines = new ArrayList<>();
@@ -48,7 +76,8 @@ public class EscopoDebug {
 
         for (Item i : ls_Defines) {
             if (i.getNulo() == false) {
-                System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+                mostrarItem(i);
+
             }
         }
 
@@ -57,7 +86,8 @@ public class EscopoDebug {
         for (Item i : ls_Defines) {
 
             if (i.getNulo()) {
-                System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = NULL");
+                mostrarItem(i);
+
             }
         }
 
@@ -68,7 +98,8 @@ public class EscopoDebug {
 
         for (Item i : ls_Constants) {
             if (i.getNulo() == false) {
-                System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+                mostrarItem(i);
+
             }
         }
 
@@ -77,7 +108,8 @@ public class EscopoDebug {
         for (Item i : ls_Constants) {
 
             if (i.getNulo()) {
-                System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = NULL");
+                mostrarItem(i);
+
             }
         }
 
@@ -94,14 +126,134 @@ public class EscopoDebug {
             }
         }
 
+        System.out.println(" - OPERATIONS : ");
+        for (Index_Function mIndex_Function : mEscopo.getOperationsCompleto()) {
+            System.out.println("\t - " +mIndex_Function.getDefinicao());
+        }
+
+        System.out.println(" - CASTS : ");
+        for (AST mIndex_Function : mEscopo.getCastsCompleto()) {
+            System.out.println("\t - " +mIndex_Function.getNome());
+        }
+
+
         System.out.println(" ######################### ##### ############################ ");
+
+    }
+
+    public void ListarStruct() {
+
+
+        System.out.println("\n ######################### STRUCT - " + mEscopo.getNomeStruct() + " ############################ ");
+
+
+        System.out.println(" - DEFINES : ");
+        for (AST mAST : mEscopo.getStructCompleto()) {
+            if (mAST.mesmoTipo("DEFINE")) {
+                System.out.println("\t - " + mAST.getNome()  + " : " + mAST.getValor());
+            }
+        }
+        System.out.println(" - MOCKIZES : ");
+        for (AST mAST : mEscopo.getStructCompleto()) {
+            if (mAST.mesmoTipo("MOCKIZ")) {
+                System.out.println("\t - " + mAST.getNome()  + " : " + mAST.getValor());
+            }
+        }
+
+
+        System.out.println(" - ACTIONS : ");
+        for (AST mAST : mEscopo.getStructCompleto()) {
+            if (mAST.mesmoTipo("ACTION")) {
+                System.out.println("\t - " + mAST.getNome()+ " ( " + getParametros(mAST) + " ) ");
+            }
+        }
+        System.out.println(" - FUNCTIONS : ");
+        for (AST mAST : mEscopo.getStructCompleto()) {
+            if (mAST.mesmoTipo("FUNCTION")) {
+                System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
+            }
+        }
+
+        System.out.println(" - OPERATIONS : ");
+        for (AST mAST : mEscopo.getStructCompleto()) {
+            if (mAST.mesmoTipo("OPERATION")) {
+                System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
+            }
+        }
+
+        System.out.println(" - CASTS : ");
+        for (AST mAST : mEscopo.getStructCompleto()) {
+            if (mAST.mesmoTipo("CAST")) {
+                System.out.println("\t - " + mAST.getNome() );
+            }
+        }
+
+
+
+        System.out.println(" ######################### ##### ############################ ");
+
+    }
+
+    public void mostrarItem(Item eItem){
+
+
+        if (eItem.getNulo()) {
+            System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " = NULL");
+        }else{
+
+
+            if(eItem.getIsEstrutura()){
+
+
+                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " -> " + eItem.getValor());
+
+
+            }else{
+                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " = " + eItem.getValor());
+            }
+
+        }
+
+
+
+
 
     }
 
     public void ListarGlobalAll() {
 
 
-        System.out.println(" ######################### STACK - GLOBAL ############################ ");
+        System.out.println(" ######################### STACK - GLOBAL " + mEscopo.getNome() + " ############################ ");
+
+
+
+
+
+        System.out.println(" - PARAM : ");
+        ArrayList<Item> ls_Param = new ArrayList<>();
+        for (Item i : mEscopo.getParametros()) {
+            ls_Param.add(i);
+        }
+
+        System.out.println("\t - NAO NULOS : ");
+
+        for (Item i : ls_Param) {
+            if (i.getNulo() == false) {
+
+                mostrarItem(i);
+
+            }
+        }
+
+
+        System.out.println("\t - NULOS : ");
+        for (Item i : ls_Param) {
+
+            if (i.getNulo()) {
+                mostrarItem(i);
+            }
+        }
+
 
 
         ArrayList<Item> ls_Defines = new ArrayList<>();
@@ -132,7 +284,9 @@ public class EscopoDebug {
 
         for (Item i : ls_Defines) {
             if (i.getNulo() == false) {
-                System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+
+                mostrarItem(i);
+
             }
         }
 
@@ -141,7 +295,7 @@ public class EscopoDebug {
         for (Item i : ls_Defines) {
 
             if (i.getNulo()) {
-                System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = NULL");
+                mostrarItem(i);
             }
         }
 
@@ -152,7 +306,15 @@ public class EscopoDebug {
 
         for (Item i : ls_Constants) {
             if (i.getNulo() == false) {
-                System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+                if(i.getIsEstrutura()){
+               //     System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getObjeto().getNome());
+                }else{
+                 //   System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+                }
+
+                System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getValor());
+
+
             }
         }
 
@@ -166,16 +328,17 @@ public class EscopoDebug {
         }
 
         System.out.println(" - ACTIONS : ");
-        for (AST mAST : mEscopo.getGuardadosCompleto()) {
-            if (mAST.mesmoTipo("ACTION")) {
-                System.out.println("\t - " + mAST.getNome()+ " ( " + getParametros(mAST) + " ) ");
-            }
+        for (Index_Action mIndex_Function : mEscopo.getActionsCompleto()) {
+            System.out.println("\t - " +mIndex_Function.getDefinicao());
         }
         System.out.println(" - FUNCTIONS : ");
-        for (AST mAST : mEscopo.getGuardadosCompleto()) {
-            if (mAST.mesmoTipo("FUNCTION")) {
-                System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
-            }
+        for (Index_Function mIndex_Function : mEscopo.getFunctionsCompleto()) {
+                System.out.println("\t - " +mIndex_Function.getDefinicao());
+        }
+
+        System.out.println(" - OPERATIONS : ");
+        for (Index_Function mIndex_Function : mEscopo.getOperationsCompleto()) {
+            System.out.println("\t - " +mIndex_Function.getDefinicao());
         }
 
         System.out.println(" ######################### ##### ############################ ");
@@ -238,7 +401,11 @@ public class EscopoDebug {
 
             for (Item i : ls) {
                 if (i.getNulo() == false) {
-                    System.out.println("\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+                    if(i.getIsEstrutura()){
+                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getObjeto().getNome());
+                    }else{
+                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+                    }
                 }
             }
         }
@@ -284,7 +451,11 @@ public class EscopoDebug {
 
             for (Item i : ls) {
                 if (i.getNulo() == false) {
-                    System.out.println("\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+                    if(i.getIsEstrutura()){
+                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getObjeto().getNome());
+                    }else{
+                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+                    }
                 }
             }
         }
@@ -325,7 +496,11 @@ public class EscopoDebug {
 
             for (Item i : ls) {
                 if (i.getNulo() == false) {
-                    System.out.println("\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+                    if(i.getIsEstrutura()){
+                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getObjeto().getNome());
+                    }else{
+                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+                    }
                 }
             }
         }

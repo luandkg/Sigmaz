@@ -6,9 +6,11 @@ public class Item {
     private boolean mNulo;
     private String mTipo;
     private int mModo;
-    private String mValor;
     private boolean mPrimitivo;
+    private boolean mEstrutura;
 
+    private String mValor;
+    private Escopo mObjeto;
 
 
 
@@ -19,6 +21,8 @@ public class Item {
         mTipo = "";
         mNulo = false;
         mPrimitivo=true;
+        mEstrutura=false;
+        mObjeto=null;
     }
 
     public boolean getNulo() {
@@ -64,5 +68,22 @@ public class Item {
     public boolean getPrimitivo() {
         return mPrimitivo;
     }
+
+    public void setIsEstrutura(boolean eEstrutura) {
+        mEstrutura = eEstrutura;
+    }
+
+    public boolean getIsEstrutura() {
+        return mEstrutura;
+    }
+
+    public Escopo getObjeto() {
+        return mObjeto;
+    }
+
+    public void setObjeto(Escopo eObjeto) {
+        mObjeto = eObjeto;
+    }
+
 
 }

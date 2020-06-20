@@ -14,6 +14,8 @@ public class Analisador {
 
     private ArrayList<String> mFunctions;
     private ArrayList<String> mFunctions_Nomes;
+    private ArrayList<String> mCasts_Nomes;
+    private ArrayList<String> mStructs_Nomes;
 
     private Analisar_All mAnalisar_All;
     private Analisar_When mAnalisar_When;
@@ -37,6 +39,8 @@ public class Analisador {
 
         mFunctions = new ArrayList<String>();
         mFunctions_Nomes = new ArrayList<String>();
+        mCasts_Nomes = new ArrayList<String>();
+        mStructs_Nomes= new ArrayList<String>();
 
         mAnalisar_All = new Analisar_All(this);
         mAnalisar_When = new Analisar_When(this);
@@ -61,7 +65,8 @@ public class Analisador {
         mErros.clear();
         mFunctions.clear();
         mFunctions_Nomes.clear();
-
+        mCasts_Nomes.clear();
+        mStructs_Nomes.clear();
 
         ArrayList<String> mAlocados = new ArrayList<String>();
 
@@ -118,6 +123,23 @@ public class Analisador {
             if (mAST.mesmoTipo("FUNCTION")) {
 
                 mFunctions_Nomes.add(mAST.getNome());
+
+            } else if (mAST.mesmoTipo("CAST")) {
+
+                if(!mCasts_Nomes.contains(mAST.getNome())){
+                    mCasts_Nomes.add(mAST.getNome());
+                }else{
+                    getErros().add("Cast Duplicado : " + mAST.getTipo());
+                }
+            } else if (mAST.mesmoTipo("STRUCT")) {
+
+                if(!mStructs_Nomes.contains(mAST.getNome())){
+                    mStructs_Nomes.add(mAST.getNome());
+                }else{
+                    getErros().add("Struct Duplicado : " + mAST.getTipo());
+                }
+
+
             }
 
         }
@@ -163,6 +185,10 @@ public class Analisador {
             } else if (mAST.mesmoTipo("DEFINE")) {
             } else if (mAST.mesmoTipo("MOCKIZ")) {
 
+            } else if (mAST.mesmoTipo("OPERATION")) {
+            } else if (mAST.mesmoTipo("CAST")) {
+            } else if (mAST.mesmoTipo("STRUCT")) {
+
             } else {
 
                 mErros.add("AST x : " + mAST.getTipo());
@@ -184,7 +210,30 @@ public class Analisador {
 
         analisandoDefines(ASTPai);
 
-        String mParametragem = ASTPai.getNome() + " ( " + mAnalisar_Argumentos.analisarArguments(ASTPai.getBranch("ARGUMENTS")) + ") ";
+
+        String mParametrizando = "";
+
+        for (AST mAST : ASTPai.getBranch("ARGUMENTS").getASTS()) {
+            if (mAST.mesmoTipo("ARGUMENT")) {
+
+                // mAnalisador.analisarAlocacao(mAST,mAlocadosAntes);
+
+                if (!mAlocados.contains(mAST.getNome())) {
+                    mAlocados.add(mAST.getNome());
+                } else {
+                    getErros().add("Argumento Duplicado : " + mAST.getNome());
+                }
+
+                mParametrizando += "<" + mAST.getValor() + "> ";
+
+                analisandoDefines(mAST);
+
+            } else {
+                getErros().add("Tipo Desconhecido : " + mAST.getTipo());
+            }
+        }
+
+        String mParametragem = ASTPai.getNome() + " ( " + mAnalisar_Argumentos.analisarArguments(ASTPai.getBranch("ARGUMENTS"), mAlocados) + ") ";
 
 
         if (!mFunctions.contains(mParametragem)) {
@@ -197,8 +246,6 @@ public class Analisador {
         boolean retornou = false;
 
         for (AST mAST : ASTPai.getBranch("BODY").getASTS()) {
-
-
             boolean ret = analisarDentroFunction(mAST, mAlocados, false);
             if (ret) {
                 retornou = true;
@@ -324,9 +371,29 @@ public class Analisador {
 
     public void analisarAction(AST ASTPai, ArrayList<String> mAlocadosAntes) {
 
-        mAnalisar_Argumentos.analisarArguments(ASTPai.getBranch("ARGUMENTS"));
-
         ArrayList<String> mAlocados = copiarAlocados(mAlocadosAntes);
+
+
+        String mParametrizando = "";
+
+        for (AST mAST : ASTPai.getBranch("ARGUMENTS").getASTS()) {
+            if (mAST.mesmoTipo("ARGUMENT")) {
+
+
+                if (!mAlocados.contains(mAST.getNome())) {
+                    mAlocados.add(mAST.getNome());
+                } else {
+                    getErros().add("Argumento Duplicado : " + mAST.getNome());
+                }
+
+                mParametrizando += "<" + mAST.getValor() + "> ";
+
+                analisandoDefines(mAST);
+
+            } else {
+                getErros().add("Tipo Desconhecido : " + mAST.getTipo());
+            }
+        }
 
         for (AST mAST : ASTPai.getBranch("BODY").getASTS()) {
 
@@ -341,6 +408,8 @@ public class Analisador {
     public void analisandoDefines(AST ASTPai) {
 
         if (mPrimitivos.contains(ASTPai.getValor())) {
+        } else if (mCasts_Nomes.contains(ASTPai.getValor())) {
+        } else if (mStructs_Nomes.contains(ASTPai.getValor())) {
 
         } else {
             mErros.add("Tipo deconhecido : " + ASTPai.getValor());

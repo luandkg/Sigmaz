@@ -110,6 +110,13 @@ public class Lexer {
 				int eFim=mIndex;
 				
 				mTokens.add(new Token(TokenTipo.NUMERO,eTokenConteudo,eInicio,eFim));
+			} else 	if (charC.contentEquals(".")) {
+				int eInicio =mIndex;
+
+				String eTokenConteudo =".";
+				int eFim=mIndex;
+
+				mTokens.add(new Token(TokenTipo.PONTO,eTokenConteudo,eInicio,eFim));
 
 			} else 	if (charC.contentEquals(":") && charP.contentEquals(":")) {
 				int eInicio =mIndex;

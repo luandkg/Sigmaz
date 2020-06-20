@@ -98,12 +98,11 @@ public class AST_All {
         Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado ( ");
 
 
-        AST AST_CONDITION = AST_CASE.criarBranch("CONDITION");
 
         AST_Value mAST = new AST_Value(mCompiler);
-        mAST.ReceberArgumentos(AST_CONDITION);
+        mAST.ReceberArgumentos(AST_CASE);
 
-        AST_CONDITION.setTipo("CONDITION");
+       // AST_CONDITION.setTipo("CONDITION");
 
 
         Token TokenC7 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado -> ");

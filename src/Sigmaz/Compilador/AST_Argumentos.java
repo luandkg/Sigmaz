@@ -42,7 +42,7 @@ public class AST_Argumentos {
                 mais=false;
 
                 AST ASTCorrente =   ASTPai.criarBranch("ARGUMENT");
-                ASTCorrente.setNome(TokenD.getConteudo());
+                ASTCorrente.setNome( TokenD.getConteudo() );
 
 
 

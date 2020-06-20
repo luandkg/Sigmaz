@@ -1,6 +1,6 @@
 
 require "anexo.sigmaz";
 
-call iniciar -> amontar();
+call iniciar -> amontoar();
 
 

@@ -24,8 +24,56 @@ public class Run_Execute {
         if (ASTCorrente.mesmoValor("FUNCT")) {
 
 
-            Run_ActionFunction mAST = new Run_ActionFunction(mRunTime, mEscopo);
-            mAST.init(ASTCorrente);
+            Run_Func mAST = new Run_Func(mRunTime, mEscopo);
+            mAST.init_ActionFunction(ASTCorrente);
+
+        } else if (ASTCorrente.getValor().contentEquals("STRUCT")) {
+
+            Item mItem = mEscopo.getItem(ASTCorrente.getNome());
+
+            //   System.out.println("Execuntando em  : " + ASTCorrente.getNome());
+
+            Run_Struct mEscopoStruct = mRunTime.getRun_Struct(mItem.getValor());
+
+            while (ASTCorrente.existeBranch("INTERNAL")) {
+
+                AST eInternal = ASTCorrente.getBranch("INTERNAL");
+
+                if (eInternal.mesmoValor("STRUCT_ACT")) {
+
+                 //   System.out.println("STRUCT ACT : " +eInternal.getNome() );
+
+                    mEscopoStruct.init_Action(eInternal, mEscopo);
+                    break;
+                } else if (eInternal.mesmoValor("STRUCT_FUNCT")) {
+
+                } else if (eInternal.mesmoValor("STRUCT_OBJECT")) {
+
+                  //  System.out.println("STRUCT OBJECT : " +eInternal.getNome() );
+
+                    if (mRunTime.getErros().size() > 0) {
+                        return;
+                    }
+
+                    if(mEscopoStruct==null){
+                        mRunTime.getErros().add("Estrutura" + " " + ASTCorrente.getNome() + " : Nula !");
+                        return;
+                    }
+
+                    Item eItem = mEscopoStruct.init_Object(eInternal, mEscopo, "<<ANY>>");
+
+                   // System.out.println("STRUCT OBJECT II : " +mEscopoStruct.getNome() );
+                   // System.out.println("STRUCT OBJECT III : " +eItem.getValor() );
+
+                   mEscopoStruct = mRunTime.getRun_Struct(eItem.getValor());
+
+                  //  System.out.println("STRUCT OBJECT III : " +mEscopoStruct.getNome() );
+
+
+                }
+
+                ASTCorrente = eInternal;
+            }
 
 
         } else {

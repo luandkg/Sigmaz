@@ -1,25 +1,33 @@
 package Sigmaz.Executor;
 
 import Sigmaz.Compilador.AST_Value;
+import Sigmaz.Executor.Indexador.Index_Action;
+import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
 
 public class Escopo {
 
+    private ArrayList<Item> mParam;
     private ArrayList<Item> mStacks;
+
+
     private RunTime mRunTime;
     private Escopo mEscopoAnterior;
 
     private EscopoDebug mDebug;
     private EscopoStack mEscopoStack;
 
-    private ArrayList<AST> mGuardados;
 
     private boolean mCancelar;
     private boolean mContinuar;
 
     private String mNome;
+
+
+    private OO mOO;
+    private AO mAO;
 
 
     public void setNome(String eNome) {
@@ -30,37 +38,63 @@ public class Escopo {
         return mNome;
     }
 
+
+    public RunTime getRunTime() {
+        return mRunTime;
+    }
+
+
     public Escopo(RunTime eRunTime, Escopo eEscopoAnterior) {
+
+
+        mParam = new ArrayList<>();
         mStacks = new ArrayList<>();
+
         mRunTime = eRunTime;
         mEscopoAnterior = eEscopoAnterior;
         mCancelar = false;
         mContinuar = false;
 
-        mGuardados = new ArrayList<>();
+
+        mAO = new AO(this);
+
+        mOO = new OO(this);
 
 
         mRunTime = eRunTime;
         mDebug = new EscopoDebug(this);
         mEscopoStack = new EscopoStack(mRunTime, this);
+
     }
 
     public Escopo getEscopoAnterior() {
         return mEscopoAnterior;
     }
 
+    public EscopoDebug getDebug() {
+        return mDebug;
+    }
 
-    public void guardar(AST eAST) {
+    public OO getOO() {
+        return mOO;
+    }
 
+    public AO getAO() {
+        return mAO;
+    }
 
-        mGuardados.add(eAST);
+    public void guardarStruct(AST eAST) {
+
+        mOO.guardar(eAST);
 
     }
 
 
+    public void guardar(AST eAST) {
 
+        mAO.guardar(eAST);
 
-
+    }
 
 
     public void ListarGlobal() {
@@ -92,10 +126,36 @@ public class Escopo {
     }
 
 
+    public ArrayList<Index_Function> getFunctionsCompleto() {
+        return mAO.getFunctionsCompleto();
+    }
+
+    public ArrayList<Index_Action> getActionsCompleto() {
+        return mAO.getActionsCompleto();
+
+    }
+
+    public ArrayList<Index_Action> getActionFunctionsCompleto() {
+        return mAO.getActionFunctionsCompleto();
+    }
+
+    public ArrayList<Index_Function> getOperationsCompleto() {
+        return mAO.getOperationsCompleto();
+    }
+
+    public ArrayList<AST> getCastsCompleto() {
+        return mAO.getCastsCompleto();
+    }
+
 
     public ArrayList<Item> getStacks() {
         return mStacks;
     }
+
+    public ArrayList<Item> getParametros() {
+        return mParam;
+    }
+
 
     public ArrayList<Item> getStacksAll() {
 
@@ -116,26 +176,60 @@ public class Escopo {
     }
 
 
-    public ArrayList<AST> getGuardados() {
-        return mGuardados;
+    public String getNomeStruct() {
+        if (this.getNome() == null) {
+            if (this.mEscopoAnterior != null) {
+                return this.mEscopoAnterior.getNome();
+            } else {
+                return "";
+            }
+        } else {
+            return this.getNome();
+        }
     }
 
     public ArrayList<AST> getGuardadosCompleto() {
+        return mAO.getGuardadosCompleto();
+    }
 
-        ArrayList<AST> gc = new ArrayList<AST>();
 
-        for (AST fAST : mGuardados) {
-            gc.add(fAST);
-        }
+    public ArrayList<AST> getStruct() {
+        return mOO.getStruct();
+    }
 
-        if (this.mEscopoAnterior != null) {
-            for (AST fAST : mEscopoAnterior.getGuardadosCompleto()) {
-                gc.add(fAST);
+    public AST getCast(String eNome) {
+
+        AST gc = null;
+
+        for (AST mCast : getCastsCompleto()) {
+            if (mCast.mesmoNome(eNome)) {
+                gc = mCast;
+                break;
             }
         }
 
         return gc;
     }
+
+    public ArrayList<AST> getStructCompleto() {
+
+        ArrayList<AST> gc = new ArrayList<AST>();
+
+        if (this.mEscopoAnterior != null) {
+
+            for (AST fAST : mEscopoAnterior.getStruct()) {
+                gc.add(fAST);
+            }
+        }
+
+        for (AST fAST : getStruct()) {
+            gc.add(fAST);
+        }
+
+
+        return gc;
+    }
+
 
     public void setCancelar(boolean eCancelar) {
         mCancelar = eCancelar;
@@ -175,9 +269,16 @@ public class Escopo {
 
     }
 
+    public void criarParametro(String eNome, String eTipo, String eValor) {
+        mEscopoStack.criarParametro(eNome, eTipo, eValor);
+    }
+
+    public void criarParametroStruct(String eNome, String eTipo, Escopo eValor, String eRef) {
+        mEscopoStack.criarParametroStruct(eNome, eTipo, eValor, eRef);
+    }
+
     public void criarDefinicao(String eNome, String eTipo, String eValor) {
         mEscopoStack.criarDefinicao(eNome, eTipo, eValor);
-
     }
 
     public void criarConstante(String eNome, String eTipo, String eValor) {
@@ -185,8 +286,21 @@ public class Escopo {
 
     }
 
+
+    public void criarDefinicaoStruct(String eNome, String eTipo, String eValor, String eRef) {
+        mEscopoStack.criarDefinicaoStruct(eNome, eTipo, eValor, eRef);
+    }
+
+    public void criarConstanteStruct(String eNome, String eTipo, String eValor, String eRef) {
+        mEscopoStack.criarConstanteStruct(eNome, eTipo, eValor, eRef);
+    }
+
     public void setDefinido(String eNome, String eValor) {
         mEscopoStack.setDefinido(eNome, eValor);
+    }
+
+    public void setDefinidoStruct(String eNome, String eValor) {
+        mEscopoStack.setDefinidoStruct(eNome, eValor);
     }
 
     public String getDefinidoTipo(String eNome) {
@@ -221,4 +335,16 @@ public class Escopo {
         return mEscopoStack.getItem(eNome);
     }
 
+
+    public boolean existeCast(String eNome) {
+        boolean ret = false;
+
+        for (AST fAST : this.getCastsCompleto()) {
+            if (fAST.mesmoNome(eNome)) {
+                ret = true;
+            }
+        }
+
+        return ret;
+    }
 }

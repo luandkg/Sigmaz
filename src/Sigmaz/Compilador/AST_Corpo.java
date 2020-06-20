@@ -80,6 +80,10 @@ public class AST_Corpo {
                 AST mCancel = ASTPai.criarBranch("CONTINUE");
                 Token TokenC2= mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado abrir ponto e virgula" );
 
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("exception")){
+
+                AST_Exception mAST = new AST_Exception(mCompiler);
+                mAST.init(ASTPai);
 
             }else if (TokenD.getTipo()==TokenTipo.ID ){
 

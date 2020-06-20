@@ -27,7 +27,6 @@ public class AST_While {
         AST_Condicao.setTipo("CONDITION");
 
 
-        System.out.println("Depois : " + mCompiler.getTokenCorrente().getConteudo());
         if (mCompiler.getTokenCorrente().getTipo() == TokenTipo.PARENTESES_FECHA) {
 
         }else{

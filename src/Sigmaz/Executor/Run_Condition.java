@@ -36,6 +36,10 @@ public class Run_Condition {
 
         if (mAST.getRetornoTipo().contentEquals("bool")) {
 
+            if (mRunTime.getErros().size() > 0) {
+               return;
+            }
+
             if (mAST.getConteudo().contentEquals("true")) {
 
                 Escopo EscopoInterno = new Escopo(mRunTime, mEscopo);

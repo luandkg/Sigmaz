@@ -39,17 +39,17 @@ public class Sigmaz {
 
         System.out.println("################# LEXER ##################");
         System.out.println("");
-        System.out.println("\t Iniciado : " + getDate().toString());
+        System.out.println("\t Iniciado : " + CompilerC.getData().toString());
         System.out.println("\t - Chars : " + CompilerC.getIChars());
         System.out.println("\t - Tokens : " + CompilerC.getITokens());
         System.out.println("\t - Erros : " + CompilerC.getErros_Lexer().size());
-        System.out.println("\t Finalizado : " + getDate().toString());
+        System.out.println("\t Finalizado : " + CompilerC.getData().toString());
         System.out.println("");
 
 
         System.out.println("############### COMPILADOR ###############");
         System.out.println("");
-        System.out.println("\t Iniciado : " + getDate().toString());
+        System.out.println("\t Iniciado : " + CompilerC.getData().toString());
         System.out.println("\t - Instrucoes : " + CompilerC.Instrucoes());
         System.out.println("\t - Erros : " + CompilerC.getErros_Compiler().size());
         System.out.println("\t - Requisitados : ");
@@ -58,7 +58,7 @@ public class Sigmaz {
             System.out.println("\t\t - " + Req);
         }
 
-        System.out.println("\t Finalizado : " + getDate().toString());
+        System.out.println("\t Finalizado : " + CompilerC.getData().toString());
 
 
         if (CompilerC.getErros_Lexer().size() > 0) {
@@ -104,9 +104,9 @@ public class Sigmaz {
 
 
             Analisador AnaliseC = new Analisador();
-            String AI = getDate().toString();
+            String AI = CompilerC.getData().toString();
             AnaliseC.init(CompilerC.getASTS());
-            String AF = getDate().toString();
+            String AF = CompilerC.getData().toString();
 
 
             System.out.println("\t - Iniciado : " + AI);
@@ -128,7 +128,7 @@ public class Sigmaz {
                 System.out.println("");
 
                 Documentador DC = new Documentador();
-             //   System.out.println(CompilerC.getArvoreDeInstrucoes());
+               System.out.println(CompilerC.getArvoreDeInstrucoes());
 
             } else {
 
@@ -145,9 +145,9 @@ public class Sigmaz {
 
                 Documentador DC2 = new Documentador();
 
-                System.out.println("\t Iniciado : " + getDate().toString());
+                System.out.println("\t Iniciado : " + CompilerC.getData().toString());
                 System.out.println("\t - Tamanho : " + DC2.tamanhoObjeto(saida));
-                System.out.println("\t Finalizado : " + getDate().toString());
+                System.out.println("\t Finalizado : " + CompilerC.getData().toString());
 
                 System.out.println("");
 
@@ -158,7 +158,7 @@ public class Sigmaz {
                 System.out.println("");
 
                 RunTime RunTimeC = new RunTime();
-                String DI = getDate().toString();
+                String DI = CompilerC.getData().toString();
 
 
                 RunTimeC.init(saida);
@@ -183,7 +183,7 @@ public class Sigmaz {
                 System.out.println("----------------------------------------------");
                 System.out.println("");
 
-                String DF = getDate().toString();
+                String DF = CompilerC.getData().toString();
 
                 System.out.println("\t - Iniciado : " + DI);
                 System.out.println("\t - Finalizado : " + DF);
@@ -214,20 +214,6 @@ public class Sigmaz {
 
     }
 
-    public String getDate() {
 
-        Calendar c = Calendar.getInstance();
-
-        int dia = c.get(Calendar.DAY_OF_MONTH);
-        int mes = c.get(Calendar.MONTH) + 1;
-        int ano = c.get(Calendar.YEAR);
-
-        int hora = c.get(Calendar.HOUR);
-        int minutos = c.get(Calendar.MINUTE);
-        int segundos = c.get(Calendar.SECOND);
-
-        return dia + "/" + mes + "/" + ano + " " + hora + ":" + minutos + ":" + segundos;
-
-    }
 
 }
