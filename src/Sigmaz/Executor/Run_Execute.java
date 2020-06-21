@@ -23,6 +23,7 @@ public class Run_Execute {
 
         if (ASTCorrente.mesmoValor("FUNCT")) {
 
+             //  System.out.println("Execuntando em  : " + ASTCorrente.getNome());
 
             Run_Func mAST = new Run_Func(mRunTime, mEscopo);
             mAST.init_ActionFunction(ASTCorrente);
@@ -41,9 +42,11 @@ public class Run_Execute {
 
                 if (eInternal.mesmoValor("STRUCT_ACT")) {
 
-                 //   System.out.println("STRUCT ACT : " +eInternal.getNome() );
+                  //  System.out.println("STRUCT ACT Estou : " +mEscopo.getNome() );
+                  //  System.out.println("STRUCT ACT Preciso : " +mEscopoStruct.getNome() );
 
                     mEscopoStruct.init_Action(eInternal, mEscopo);
+
                     break;
                 } else if (eInternal.mesmoValor("STRUCT_FUNCT")) {
 

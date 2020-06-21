@@ -25,6 +25,8 @@ public class Analisador {
     private Analisar_Argumentos mAnalisar_Argumentos;
     private Analisar_Apply mAnalisar_Apply;
 
+    private Heranca mHeranca;
+
     public Analisador() {
 
         mASTS = new ArrayList<>();
@@ -49,6 +51,8 @@ public class Analisador {
         mAnalisar_While = new Analisar_While(this);
         mAnalisar_Argumentos = new Analisar_Argumentos(this);
         mAnalisar_Apply = new Analisar_Apply(this);
+
+        mHeranca = new Heranca(this);
 
     }
 
@@ -84,6 +88,8 @@ public class Analisador {
 
         }
 
+
+        mHeranca.init(mASTS);
 
     }
 

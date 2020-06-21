@@ -63,7 +63,7 @@ public class Run_Struct {
 
         mEscopo = new Escopo(mRunTime, null);
         mEscopo.setNome(eNome);
-
+        mEscopo.setEstrutura(true);
 
         mStructCorpo = null;
 
@@ -328,6 +328,9 @@ public class Run_Struct {
                     }
 
 
+                   // System.out.println("\t - Executando Dentro :  " +this.getNome());
+
+                  //  mPreparadorDeArgumentos.executar_Action(mRunTime,  mEscopo, mIndex_Function, mArgumentos);
                     mPreparadorDeArgumentos.executar_Action(mRunTime,  mEscopo, mIndex_Function, mArgumentos);
 
 

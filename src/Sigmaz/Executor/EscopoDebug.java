@@ -143,18 +143,27 @@ public class EscopoDebug {
 
     public void ListarStruct() {
 
+        Escopo mEstrutura = mEscopo.getEstruturador();
 
-        System.out.println("\n ######################### STRUCT - " + mEscopo.getNomeStruct() + " ############################ ");
+        if(mEstrutura==null){
+
+            System.out.println("\n ######################### STRUCT - NULL ############################ ");
+            System.out.println(" ######################### ##### ############################ ");
+
+            return;
+        }
+
+        System.out.println("\n ######################### STRUCT - " + mEstrutura.getNomeStruct() + " ############################ ");
 
 
         System.out.println(" - DEFINES : ");
-        for (AST mAST : mEscopo.getStructCompleto()) {
+        for (AST mAST : mEstrutura.getStructCompleto()) {
             if (mAST.mesmoTipo("DEFINE")) {
                 System.out.println("\t - " + mAST.getNome()  + " : " + mAST.getValor());
             }
         }
         System.out.println(" - MOCKIZES : ");
-        for (AST mAST : mEscopo.getStructCompleto()) {
+        for (AST mAST : mEstrutura.getStructCompleto()) {
             if (mAST.mesmoTipo("MOCKIZ")) {
                 System.out.println("\t - " + mAST.getNome()  + " : " + mAST.getValor());
             }
@@ -162,27 +171,27 @@ public class EscopoDebug {
 
 
         System.out.println(" - ACTIONS : ");
-        for (AST mAST : mEscopo.getStructCompleto()) {
+        for (AST mAST : mEstrutura.getStructCompleto()) {
             if (mAST.mesmoTipo("ACTION")) {
                 System.out.println("\t - " + mAST.getNome()+ " ( " + getParametros(mAST) + " ) ");
             }
         }
         System.out.println(" - FUNCTIONS : ");
-        for (AST mAST : mEscopo.getStructCompleto()) {
+        for (AST mAST : mEstrutura.getStructCompleto()) {
             if (mAST.mesmoTipo("FUNCTION")) {
                 System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
             }
         }
 
         System.out.println(" - OPERATIONS : ");
-        for (AST mAST : mEscopo.getStructCompleto()) {
+        for (AST mAST : mEstrutura.getStructCompleto()) {
             if (mAST.mesmoTipo("OPERATION")) {
                 System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
             }
         }
 
         System.out.println(" - CASTS : ");
-        for (AST mAST : mEscopo.getStructCompleto()) {
+        for (AST mAST : mEstrutura.getStructCompleto()) {
             if (mAST.mesmoTipo("CAST")) {
                 System.out.println("\t - " + mAST.getNome() );
             }

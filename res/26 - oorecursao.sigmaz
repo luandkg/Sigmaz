@@ -15,14 +15,10 @@ struct Matematica {
 
     act recursor( a : num){
 
-        invoke __COMPILER__ -> SHOW_GLOBAL () :: COUNT;
-        invoke __COMPILER__ -> SHOW_GLOBAL () :: PATH;
-
-        println("Valor A : ",a);
         def b : num = somar_inteiro(a,1);
         println("Valor B : ",b);
 
-        #invoke __COMPILER__ -> SHOW_STRUCT () :: ALL;
+        invoke __COMPILER__ -> SHOW_STRUCT () :: ALL;
 
         if (menor(b,20)) -> {   recursor(b);  }
 

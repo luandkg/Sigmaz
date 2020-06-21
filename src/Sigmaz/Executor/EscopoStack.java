@@ -13,7 +13,8 @@ public class EscopoStack {
     }
 
 
-    public void criarDefinicaoNula(String eNome, String eTipo) {
+    public void alocarPrimitivo(String eNome, String eTipo, boolean econstante, boolean possuiValor, String eValor) {
+
         boolean enc = false;
 
         for (Item i : mEscopo.getStacks()) {
@@ -24,106 +25,40 @@ public class EscopoStack {
         }
 
         if (enc) {
-            mRunTime.getErros().add("Variavel Duplicada : " + eNome);
-        }
+            mRunTime.getErros().add("Definicao Duplicada : " + eNome);
+        }else{
 
-        if (!enc) {
 
-            Item IC = BuscarAnterior(eNome);
-            if (IC != null) {
-                enc = true;
-            }
-
-        }
-
-        if (enc) {
-       //     mRunTime.getErros().add("Variavel Duplicada : " + eNome);
-        } else {
             Item eItem = new Item(eNome);
             eItem.setTipo(eTipo);
-            eItem.setNulo(true);
+            eItem.setPrimitivo(true);
+            eItem.setIsEstrutura(false);
+
+            if(possuiValor){
+                eItem.setNulo(false);
+            }else{
+                eItem.setNulo(true);
+            }
+
+            if(econstante){
+                eItem.setModo(1);
+            }else{
+                eItem.setModo(0);
+            }
+
+            eItem.setValor(eValor);
+
 
             mEscopo.getStacks().add(eItem);
 
+
         }
+
     }
 
-    public void criarConstanteNula(String eNome, String eTipo) {
-        boolean enc = false;
-
-        for (Item i : mEscopo.getStacks()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                break;
-            }
-        }
-
-        if (enc) {
-            mRunTime.getErros().add("Variavel Duplicada : " + eNome);
-        }
 
 
-        if (!enc) {
-
-            Item IC = BuscarAnterior(eNome);
-            if (IC != null) {
-                enc = true;
-            }
-
-        }
-
-        if (enc) {
-         //   mRunTime.getErros().add("Constante Duplicada : " + eNome);
-        } else {
-            Item eItem = new Item(eNome);
-            eItem.setModo(1);
-            eItem.setTipo(eTipo);
-            eItem.setNulo(true);
-
-            mEscopo.getStacks().add(eItem);
-
-        }
-    }
-
-    public void criarDefinicao(String eNome, String eTipo, String eValor) {
-        boolean enc = false;
-
-        for (Item i : mEscopo.getStacks()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                break;
-            }
-        }
-
-        if (enc) {
-            mRunTime.getErros().add("Variavel Duplicada : " + eNome);
-        }
-
-
-        if (!enc) {
-
-            Item IC = BuscarAnterior(eNome);
-            if (IC != null) {
-                enc = true;
-            }
-
-        }
-
-        if (enc) {
-            //mRunTime.getErros().add("Variavel Duplicada : " + eNome);
-        } else {
-            Item Novo = new Item(eNome);
-            Novo.setModo(0);
-            Novo.setTipo(eTipo);
-            Novo.setValor(eValor);
-            Novo.setNulo(false);
-
-            mEscopo.getStacks().add(Novo);
-
-        }
-    }
-
-    public void criarDefinicaoStruct(String eNome, String eTipo, String eValor,String eRef) {
+    public void criarDefinicaoStruct(String eNome, String eTipo, String eValor, String eRef) {
 
         boolean enc = false;
 
@@ -149,7 +84,7 @@ public class EscopoStack {
         }
 
         if (enc) {
-          //  mRunTime.getErros().add("Variavel Duplicada : " + eNome);
+            //  mRunTime.getErros().add("Variavel Duplicada : " + eNome);
         } else {
             Item Novo = new Item(eNome);
             Novo.setModo(0);
@@ -163,7 +98,7 @@ public class EscopoStack {
         }
     }
 
-    public void criarConstanteStruct(String eNome, String eTipo, String eValor,String eRef) {
+    public void criarConstanteStruct(String eNome, String eTipo, String eValor, String eRef) {
 
         boolean enc = false;
 
@@ -189,7 +124,7 @@ public class EscopoStack {
         }
 
         if (enc) {
-         //   mRunTime.getErros().add("Variavel Duplicada : " + eNome);
+            //   mRunTime.getErros().add("Variavel Duplicada : " + eNome);
         } else {
             Item Novo = new Item(eNome);
             Novo.setModo(0);
@@ -229,7 +164,7 @@ public class EscopoStack {
         }
     }
 
-    public void criarParametroStruct(String eNome, String eTipo, Escopo eValor,String eRef) {
+    public void criarParametroStruct(String eNome, String eTipo, Escopo eValor, String eRef) {
         boolean enc = false;
 
         for (Item i : mEscopo.getParametros()) {
@@ -258,37 +193,7 @@ public class EscopoStack {
         }
     }
 
-    public void criarConstante(String eNome, String eTipo, String eValor) {
-        boolean enc = false;
 
-        for (Item i : mEscopo.getStacks()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                break;
-            }
-        }
-
-        if (!enc) {
-
-            Item IC = BuscarAnterior(eNome);
-            if (IC != null) {
-                enc = true;
-            }
-
-        }
-
-        if (enc) {
-            mRunTime.getErros().add("Constante Duplicada : " + eNome);
-        } else {
-            Item Novo = new Item(eNome);
-            Novo.setModo(1);
-            Novo.setTipo(eTipo);
-            Novo.setValor(eValor);
-            Novo.setNulo(false);
-            mEscopo.getStacks().add(Novo);
-
-        }
-    }
 
     public void setDefinido(String eNome, String eValor) {
 
@@ -317,7 +222,7 @@ public class EscopoStack {
 
     }
 
-        public void anularDefinido(String eNome) {
+    public void anularDefinido(String eNome) {
 
         Item mItem = getItem(eNome);
         if (mItem.getModo() == 0) {
@@ -413,20 +318,21 @@ public class EscopoStack {
     public boolean getDefinidoPrimitivo(String eNome) {
         Item t = getItem(eNome);
 
-        if(t==null){
+        if (t == null) {
             return false;
-        }else{
+        } else {
             return t.getPrimitivo();
         }
 
     }
+
     public boolean getDefinidoNulo(String eNome) {
 
         Item t = getItem(eNome);
 
-        if(t==null){
+        if (t == null) {
             return false;
-        }else{
+        } else {
             return t.getNulo();
         }
 
@@ -436,9 +342,9 @@ public class EscopoStack {
 
         Item t = getItem(eNome);
 
-        if(t==null){
+        if (t == null) {
             return "";
-        }else{
+        } else {
             return t.getValor();
         }
 

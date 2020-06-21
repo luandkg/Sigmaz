@@ -24,6 +24,7 @@ public class Escopo {
     private boolean mContinuar;
 
     private String mNome;
+    private boolean mEstrutura;
 
 
     private OO mOO;
@@ -36,6 +37,14 @@ public class Escopo {
 
     public String getNome() {
         return mNome;
+    }
+
+    public void setEstrutura(boolean eEstrutura) {
+        mEstrutura = eEstrutura;
+    }
+
+    public boolean getEstrutura() {
+        return mEstrutura;
     }
 
 
@@ -60,6 +69,7 @@ public class Escopo {
 
         mOO = new OO(this);
 
+        mEstrutura = false;
 
         mRunTime = eRunTime;
         mDebug = new EscopoDebug(this);
@@ -175,6 +185,23 @@ public class Escopo {
         return gc;
     }
 
+    public Escopo getEstruturador() {
+
+        Escopo ret = null;
+
+        if (this.getEstrutura() == true) {
+            ret = this;
+        } else {
+            if (this.mEscopoAnterior != null) {
+                ret = mEscopoAnterior.getEstruturador();
+            }
+        }
+
+
+        return ret;
+    }
+
+
     public int getContagem() {
         int i = 0;
 
@@ -188,10 +215,10 @@ public class Escopo {
     }
 
     public String getCaminho() {
-       String i = "";
+        String i = "";
 
         if (this.mEscopoAnterior != null) {
-            i = this.mEscopoAnterior.getCaminho() + "." + i ;
+            i = this.mEscopoAnterior.getCaminho() + "." + i;
         } else {
             i = this.getNome();
         }
@@ -284,11 +311,11 @@ public class Escopo {
     }
 
     public void criarDefinicaoNula(String eNome, String eTipo) {
-        mEscopoStack.criarDefinicaoNula(eNome, eTipo);
+        mEscopoStack.alocarPrimitivo(eNome, eTipo, false, false, "");
     }
 
     public void criarConstanteNula(String eNome, String eTipo) {
-        mEscopoStack.criarConstanteNula(eNome, eTipo);
+        mEscopoStack.alocarPrimitivo(eNome, eTipo, true, false, "");
 
     }
 
@@ -301,11 +328,11 @@ public class Escopo {
     }
 
     public void criarDefinicao(String eNome, String eTipo, String eValor) {
-        mEscopoStack.criarDefinicao(eNome, eTipo, eValor);
+        mEscopoStack.alocarPrimitivo(eNome, eTipo, false, true, eValor);
     }
 
     public void criarConstante(String eNome, String eTipo, String eValor) {
-        mEscopoStack.criarConstante(eNome, eTipo, eValor);
+        mEscopoStack.alocarPrimitivo(eNome, eTipo, true, true, eValor);
 
     }
 
