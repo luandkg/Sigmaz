@@ -77,6 +77,17 @@ public class AO {
 
             Index_Action mAct = new Index_Action(eAST);
             mInits.add(mAct);
+        } else if(eAST.mesmoTipo("STAGES")){
+
+            int i = 0;
+
+            for (AST AST_STAGE : eAST.getASTS()) {
+
+                mEscopo.criarDefinicao(eAST.getNome() + "::" + AST_STAGE.getNome(),eAST.getNome(),String.valueOf(i));
+
+                i+=1;
+
+            }
 
         }
 

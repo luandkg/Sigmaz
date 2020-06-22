@@ -64,4 +64,6 @@ Linguagem de Programação Estruturada
         - REORGANIZACAO EM STACKS
         - RECURSAO EM OO
         - INICIALIZADORES DE STRUCT
+        - HERANCA DO INICIALIZADOR DE STRUCT
+        - STAGES
        

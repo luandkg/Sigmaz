@@ -43,4 +43,32 @@ public class Analisar_Argumentos {
         return mParametragem;
     }
 
+    public String analisarArguments(AST ASTPai) {
+
+        ArrayList<String> mNomes = new ArrayList<String>();
+
+        String mParametragem = "";
+
+        for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("ARGUMENT")) {
+
+
+                if (!mNomes.contains(mAST.getNome())) {
+                    mNomes.add(mAST.getNome());
+                } else {
+                    mAnalisador.getErros().add("Argumento Duplicado : " + mAST.getNome());
+                }
+
+                mParametragem += "<" + mAST.getValor() + "> ";
+
+
+
+            } else {
+                mAnalisador.getErros().add("Tipo Desconhecido : " + mAST.getTipo());
+            }
+        }
+
+        return mParametragem;
+    }
+
 }

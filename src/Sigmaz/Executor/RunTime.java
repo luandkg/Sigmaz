@@ -16,6 +16,8 @@ public class RunTime {
     private Escopo mEscopoGlobal;
     private ArrayList<Run_Struct> mHeap;
 
+    private ArrayList<AST> mStages;
+
     private long mHEAPID;
 
     private boolean mExterno;
@@ -35,6 +37,7 @@ public class RunTime {
 
         mExterno = true;
 
+        mStages = new ArrayList<AST>();
     }
 
     public void externarlizar() {
@@ -72,6 +75,7 @@ public class RunTime {
         mErros.clear();
         mHeap.clear();
         mHEAPID = 0;
+        mStages.clear();
 
         Documentador DC = new Documentador();
 
@@ -120,6 +124,7 @@ public class RunTime {
 
         mHeap.clear();
         mErros.clear();
+        mStages.clear();
 
 
         Escopo Global = new Escopo(this, null);
@@ -142,6 +147,12 @@ public class RunTime {
                         Global.guardar(ASTC);
                     } else if (ASTC.mesmoTipo("CAST")) {
                         Global.guardar(ASTC);
+                    } else if (ASTC.mesmoTipo("STAGES")) {
+
+                        Global.guardar(ASTC);
+
+                        mStages.add(ASTC);
+
                     }
 
                 }
@@ -205,6 +216,24 @@ public class RunTime {
 
     public boolean isPrimitivo(String eTipo) {
         return mDataTypes.isPrimitivo(eTipo);
+    }
+
+    public boolean existeStage(String eStage) {
+        boolean enc = false;
+
+        for (AST mAST : mStages) {
+            for (AST sAST : mAST.getASTS()) {
+
+                String tmp = mAST.getNome() + "::" + sAST.getNome();
+                if (tmp.contentEquals(eStage)) {
+                    enc = true;
+                    break;
+                }
+
+            }
+        }
+
+        return enc;
     }
 
     public String getArvoreDeInstrucoes() {

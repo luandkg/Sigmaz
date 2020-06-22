@@ -1,0 +1,100 @@
+
+call iniciar -> vamos_herdar_com_init();
+
+
+act vamos_herdar_com_init(){
+
+    def a1 : Animal = init Animal("Muito Fofo",40);
+
+    #a1.setIdade(12);
+    #a1.setQualidade("Lindo");
+
+    a1.mostrar();
+
+
+}
+
+
+struct Qualidade {
+
+    define qualidade : string = "";
+    define idade : num = 0;
+
+    init Qualidade(a : string,b2 : num) {
+           qualidade = a;
+           idade = b2;
+    }
+
+     act setQualidade( a : string){
+           qualidade = a;
+     }
+
+    act setIdade( a : num){
+           idade = a;
+    }
+
+    func getQualidade() : string { return qualidade; }
+}
+
+struct Animal with Qualidade {
+
+    # PROBLEMA COM FUNCOES NA REPASSAGEM
+    init Animal (v2 : string,i : num) -> Qualidade(v2,i) {  }
+
+
+
+    act mostrar(){
+
+        println(" --- ANIMAL --- ");
+        println("");
+        println("     - IDADE : ", idade);
+        println("     - QUALIDADE : ", qualidade);
+
+    }
+
+    func somar_inteiro(a:num,b:num) : num {
+
+        def c : num;
+
+        invoke math -> operator_sum (a,b) :: c;
+        invoke casting -> cast_integer (c) :: c;
+
+        return c;
+    }
+
+    func menor(a:num,b:num) : bool {
+
+        def c : bool;
+
+        invoke math -> operator_less (a,b) :: c;
+
+        return c;
+    }
+
+    act println(a:string,b:num)  {
+
+        def c : num;
+        invoke terminal -> change () :: c;
+        invoke terminal -> print (a) :: c;
+        invoke terminal -> print (b) :: c;
+
+    }
+
+    act println(a:string,b:string)  {
+
+        def c : num;
+        invoke terminal -> change () :: c;
+        invoke terminal -> print (a) :: c;
+        invoke terminal -> print (b) :: c;
+
+    }
+
+    act println(a:string)  {
+
+        def c : num;
+        invoke terminal -> change () :: c;
+        invoke terminal -> print (a) :: c;
+
+    }
+
+}

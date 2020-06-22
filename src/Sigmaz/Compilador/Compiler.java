@@ -197,13 +197,7 @@ public class Compiler {
         compilando();
 
 
-
-
-
     }
-
-
-
 
 
     public void requisitando(String eArquivo, ArrayList<String> eRequisitados) {
@@ -321,6 +315,10 @@ public class Compiler {
                 AST_Struct mAST = new AST_Struct(this);
                 mAST.init(AST_Raiz);
 
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("stages")) {
+
+                AST_Stages mAST = new AST_Stages(this);
+                mAST.init(AST_Raiz);
 
             } else {
                 errarCompilacao("Token Desconhecido : " + TokenC.getTipo() + " " + TokenC.getConteudo(), TokenC.getInicio());

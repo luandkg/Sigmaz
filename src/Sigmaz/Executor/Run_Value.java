@@ -212,13 +212,13 @@ public class Run_Value {
 
         } else if (ASTCorrente.getValor().contentEquals("FUNCT")) {
 
-             // System.out.println("Valorando  -> FUNCT " + ASTCorrente.getNome());
+            // System.out.println("Valorando  -> FUNCT " + ASTCorrente.getNome());
 
             Run_Func mAST = new Run_Func(mRunTime, mEscopo);
             Item eItem = mAST.init_Function(ASTCorrente, eRetorno);
 
             if (mRunTime.getErros().size() > 0) {
-                 return;
+                return;
             }
 
             this.setNulo(eItem.getNulo());
@@ -232,7 +232,25 @@ public class Run_Value {
             //   mRetornoTipo = mAST.getRetornoFunction();
 
             //  System.out.println("FUNCT EXIT  -> " + ASTCorrente.getNome() + " -> " + this.getConteudo() + " P : " + mIsPrimitivo + " N : " + mIsNulo + " T : " + mRetornoTipo);
+        } else if (ASTCorrente.getValor().contentEquals("STAGE")) {
 
+            AST mFilho = ASTCorrente.getBranch("STAGED");
+
+            if (mRunTime.existeStage(ASTCorrente.getNome() + "::" + mFilho.getNome())){
+
+            }else{
+                mRunTime.getErros().add("Stage Deconhecido : " +ASTCorrente.getNome() + "::" + mFilho.getNome() );
+                return;
+            }
+
+            Item eItem = mEscopo.getItem(ASTCorrente.getNome() + "::" + mFilho.getNome());
+
+
+
+            this.setNulo(eItem.getNulo());
+            this.setPrimitivo(eItem.getPrimitivo());
+            this.setConteudo(eItem.getValor());
+            this.setRetornoTipo(eItem.getTipo());
 
         } else if (ASTCorrente.getValor().contentEquals("INIT")) {
 
@@ -241,10 +259,9 @@ public class Run_Value {
             String eNome = "<Struct::" + eRetorno + ":" + HEAPID + ">";
 
 
-
-            Run_Struct mRun_Struct = new Run_Struct(mRunTime );
+            Run_Struct mRun_Struct = new Run_Struct(mRunTime);
             mRun_Struct.setNome(eNome);
-            mRun_Struct.init(eRetorno,ASTCorrente,mEscopo);
+            mRun_Struct.init(eRetorno, ASTCorrente, mEscopo);
 
 
             mRunTime.adicionarHeap(mRun_Struct);
@@ -370,7 +387,6 @@ public class Run_Value {
         }
 
 
-
         mIsNulo = mItem.getNulo();
         mIsPrimitivo = mItem.getPrimitivo();
         mConteudo = mItem.getValor();
@@ -395,8 +411,6 @@ public class Run_Value {
 
         Run_Func mRun_Matchable = new Run_Func(mRunTime, mEscopo);
         Item mItem = mRun_Matchable.init_Operation("UNMATCH", mRun_Esquerda, mRun_Direita, eRetorno);
-
-
 
 
         mIsNulo = mItem.getNulo();

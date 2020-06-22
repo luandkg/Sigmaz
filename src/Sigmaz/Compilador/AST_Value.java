@@ -62,15 +62,16 @@ public class AST_Value {
         mAST.mTerminar = mTerminar;
         mAST.mTerminarErro = mTerminarErro;
 
+
         mAST.initUltimo(ASTDireita);
 
         ASTDireita.setTipo("RIGHT");
 
-      //  arrumar(ASTEsquerda,ASTDireita);
+        //  arrumar(ASTEsquerda,ASTDireita);
 
     }
 
-    public void arrumar(AST ASTEsquerda,AST  ASTDireita){
+    public void arrumar(AST ASTEsquerda, AST ASTDireita) {
 
 
         AST EA = new AST("ARGUMENTS");
@@ -118,7 +119,7 @@ public class AST_Value {
 
         ASTDireita.setTipo("RIGHT");
 
-      //  arrumar(ASTEsquerda,ASTDireita);
+        //  arrumar(ASTEsquerda,ASTDireita);
 
     }
 
@@ -146,7 +147,7 @@ public class AST_Value {
 
         ASTDireita.setTipo("RIGHT");
 
-      //  arrumar(ASTEsquerda,ASTDireita);
+        //  arrumar(ASTEsquerda,ASTDireita);
 
     }
 
@@ -173,7 +174,7 @@ public class AST_Value {
 
         ASTDireita.setTipo("RIGHT");
 
-      //  arrumar(ASTEsquerda,ASTDireita);
+        //  arrumar(ASTEsquerda,ASTDireita);
 
     }
 
@@ -295,6 +296,32 @@ public class AST_Value {
                     match_final(ASTPai);
                 } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
                     unmatch_final(ASTPai);
+
+                } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
+
+                    ASTPai.setValor("STAGE");
+                    Token TokenC3 = mCompiler.getTokenAvante();
+                    if (TokenC3.getTipo() == TokenTipo.ID) {
+                        ASTPai.criarBranch("STAGED").setNome(TokenC3.getConteudo());
+                    } else {
+                        System.out.println("Problema ZZ : " + TokenC3.getConteudo());
+                    }
+
+
+                    Token TokenC4 = mCompiler.getTokenAvante();
+                    if (TokenC4.getTipo() == mTerminar) {
+                        return;
+                    } else if (TokenC4.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
+
+
+                        match_final(ASTPai);
+                    } else if (TokenC4.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
+                        unmatch_final(ASTPai);
+                    } else {
+                        System.out.println("Problema E :  " + TokenC4.getConteudo());
+                    }
+
+
                 } else if (TokenC2.getTipo() == TokenTipo.PONTO) {
 
                     // System.out.println("Vamos pontuar o escopo 1 !");
@@ -442,7 +469,7 @@ public class AST_Value {
             } else {
                 System.out.println("Problema D : " + TokenC2.getConteudo());
             }
-        } else  if (TokenD.getTipo() == TokenTipo.NUMERO) {
+        } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
 
             ASTPai.setNome(TokenD.getConteudo());
             ASTPai.setValor("Num");
@@ -469,6 +496,7 @@ public class AST_Value {
 
         } else if (TokenD.getTipo() == TokenTipo.ID) {
 
+
             ASTPai.setNome(TokenD.getConteudo());
             ASTPai.setValor("ID");
 
@@ -487,6 +515,25 @@ public class AST_Value {
                 } else {
                     System.out.println("Problema 6 : " + TokenC3.getConteudo());
                 }
+            } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
+
+                System.out.println("Passando Aqui : " + TokenC2.getConteudo());
+
+                ASTPai.setValor("STAGE");
+                Token TokenC3 = mCompiler.getTokenAvante();
+                if (TokenC3.getTipo() == TokenTipo.ID) {
+                    ASTPai.criarBranch("STAGED").setNome(TokenC3.getConteudo());
+                } else {
+                    System.out.println("Problema ZZ : " + TokenC3.getConteudo());
+                }
+
+                Token TokenC4 = mCompiler.getTokenAvante();
+                if (TokenC4.getTipo() == mTerminar) {
+                    return;
+                } else {
+                    System.out.println("Problema EE :  " + TokenC4.getConteudo());
+                }
+
             } else if (TokenC2.getTipo() == TokenTipo.PONTO) {
 
 
@@ -572,6 +619,22 @@ public class AST_Value {
                     System.out.println("Problema x2 : " + TokenC3.getConteudo());
                 }
 
+            } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
+
+                ASTPai.setValor("STAGE");
+                Token TokenC3 = mCompiler.getTokenAvante();
+                if (TokenC3.getTipo() == TokenTipo.ID) {
+                    ASTPai.criarBranch("STAGED").setNome(TokenC3.getConteudo());
+                } else {
+                    System.out.println("Problema ZZ : " + TokenC3.getConteudo());
+                }
+
+                Token TokenC4 = mCompiler.getTokenAvante();
+                if (TokenC4.getTipo() == mTerminar) {
+                    return;
+                } else {
+                    System.out.println("Problema EE :  " + TokenC4.getConteudo());
+                }
 
             } else {
                 System.out.println("Problema : " + TokenD.getConteudo());
@@ -644,6 +707,22 @@ public class AST_Value {
 
                 } else if (TokenC3.getTipo() == TokenTipo.PARENTESES_FECHA) {
                 } else if (TokenC3.getTipo() == TokenTipo.VIRGULA) {
+                } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
+
+                    ASTPai.setValor("STAGE");
+                    Token TokenC37 = mCompiler.getTokenAvante();
+                    if (TokenC37.getTipo() == TokenTipo.ID) {
+                        ASTPai.criarBranch("STAGED").setNome(TokenC37.getConteudo());
+                    } else {
+                        System.out.println("Problema ZZ : " + TokenC37.getConteudo());
+                    }
+
+                    Token TokenC4 = mCompiler.getTokenAvante();
+                    if (TokenC4.getTipo() == mTerminar) {
+                        return;
+                    } else {
+                        System.out.println("Problema EE :  " + TokenC4.getConteudo());
+                    }
 
                 } else {
                     System.out.println("Problema x3 : " + TokenC3.getConteudo());

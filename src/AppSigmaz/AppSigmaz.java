@@ -45,7 +45,9 @@ public class AppSigmaz {
         // String arquivo = "res/26 - oorecursao.sigmaz";
          //String arquivo = "res/27 - construtor.sigmaz";
         // String arquivo = "res/28 - heranca.sigmaz";
-        String arquivo = "res/29 - initheranca.sigmaz";
+       // String arquivo = "res/29 - initheranca.sigmaz";
+     //   String arquivo = "res/30 - initheranca2.sigmaz";
+        String arquivo = "res/31 - stages.sigmaz";
 
         String saida = "res/Sigmaz.sigmad";
 

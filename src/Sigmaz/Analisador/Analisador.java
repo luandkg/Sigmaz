@@ -144,7 +144,13 @@ public class Analisador {
                 }else{
                     getErros().add("Struct Duplicado : " + mAST.getTipo());
                 }
+            } else if (mAST.mesmoTipo("STAGES")) {
 
+                if(!mStructs_Nomes.contains(mAST.getNome())){
+                    mStructs_Nomes.add(mAST.getNome());
+                }else{
+                    getErros().add("Struct Duplicado : " + mAST.getTipo());
+                }
 
             }
 
@@ -196,7 +202,8 @@ public class Analisador {
             } else if (mAST.mesmoTipo("STRUCT")) {
 
                 Analisar_Struct mAnalisar_Struct = new Analisar_Struct(this);
-                mAnalisar_Struct.init_Struct(mAST,mAlocados);
+               // mAnalisar_Struct.init_Struct(mAST,mAlocados);
+            } else if (mAST.mesmoTipo("STAGES")) {
 
             } else {
 

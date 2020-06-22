@@ -51,10 +51,9 @@ public class AST_InitStruct {
                 }
 
 
-                Token AP = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
 
-                AST_Value mRA = new AST_Value(mCompiler);
-                mRA.ReceberArgumentos(AST_Call);
+                AST_Transferencia mRA = new AST_Transferencia(mCompiler);
+                mRA.init(AST_Call);
 
 
             }

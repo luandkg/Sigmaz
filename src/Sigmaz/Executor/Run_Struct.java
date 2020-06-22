@@ -271,9 +271,10 @@ public class Run_Struct {
                             ArgumentoC.setNome(mIndex_Function3.getParamentos().get(ai));
                         }
 
-                      //  System.out.println("\t\t - Arg :  " + ArgumentoC.getNome() + " = " + ArgumentoC.getValor());
+                       //System.out.println("\t\t - Arg :  " + ArgumentoC.getNome() + " = " + ArgumentoC.getValor());
                         ai += 1;
                     }
+
 
                     for (Item ArgumentoC : mArgumentos) {
 
@@ -285,6 +286,21 @@ public class Run_Struct {
                     }
 
 
+                    // TEMPORARIO
+
+                   // ArrayList<Item> mArgumentos2 = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, tmpEscopo, mIndex_Function3.getPonteiro().getBranch("ARGUMENTS"));
+
+                  //  System.out.println("INITER : " +mIndex_Function3.getPonteiro().getNome() );
+                  //  for (AST ArgumentoC : mIndex_Function3.getPonteiro().getBranch("ARGUMENTS").getASTS()) {
+                  //      System.out.println(" AST : " +ArgumentoC.getNome() + " = " + ArgumentoC.getValor() );
+                  //  }
+
+                  //  for (Item ArgumentoC : mArgumentos2) {
+                   //   System.out.println("ARGUMENTADOR : " +ArgumentoC.getNome() + " = " + ArgumentoC.getValor() );
+                  //      ri+=1;
+                  //  }
+
+                    //
 
 
                   //  tmpEscopo.ListarAll();

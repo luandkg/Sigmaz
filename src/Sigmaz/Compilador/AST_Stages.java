@@ -4,11 +4,11 @@ import Sigmaz.Lexer.Token;
 import Sigmaz.Lexer.TokenTipo;
 import Sigmaz.Utils.AST;
 
-public class AST_Transferencia {
+public class AST_Stages {
 
     private Compiler mCompiler;
 
-    public AST_Transferencia(Compiler eCompiler) {
+    public AST_Stages(Compiler eCompiler) {
         mCompiler = eCompiler;
     }
 
@@ -16,11 +16,25 @@ public class AST_Transferencia {
     public void init(AST ASTAvo){
 
 
-        AST ASTPai = ASTAvo.criarBranch("ARGUMENTS");
+        AST ASTPai = ASTAvo.criarBranch("STAGES");
+
+
+        Token TokenN = mCompiler.getTokenAvanteStatus(TokenTipo.ID,"Era esperado o nome do STAGES !");
+
+
+        ASTPai.setNome(TokenN.getConteudo());
+
+
+        Token TokenP = mCompiler.getTokenAvanteStatus(TokenTipo.SETA,"Era esperado uma SETA !");
+
+
+
+
+
 
 
         Token TokenI = mCompiler.getTokenAvante();
-        if (TokenI.getTipo() == TokenTipo.PARENTESES_ABRE) {
+        if (TokenI.getTipo() == TokenTipo.CHAVE_ABRE) {
 
 
         }else{
@@ -33,7 +47,7 @@ public class AST_Transferencia {
 
         while (mCompiler.Continuar()) {
             Token TokenD = mCompiler.getTokenAvante();
-            if (TokenD.getTipo() == TokenTipo.PARENTESES_FECHA) {
+            if (TokenD.getTipo() == TokenTipo.CHAVE_FECHA) {
 
                 if(mais){
                     mCompiler.errarCompilacao("Era esperado outro parametro",   TokenD.getInicio());
@@ -48,7 +62,7 @@ public class AST_Transferencia {
 
 
 
-                AST ASTCorrente =   ASTPai.criarBranch("ARGUMENT");
+                AST ASTCorrente =   ASTPai.criarBranch("STAGE");
                 ASTCorrente.setNome(TokenD.getConteudo());
                 ASTCorrente.setValor("string");
 
@@ -57,7 +71,7 @@ public class AST_Transferencia {
 
                 if(P2.getTipo()==TokenTipo.VIRGULA) {
                     mais=true;
-                } else  if (P2.getTipo() == TokenTipo.PARENTESES_FECHA) {
+                } else  if (P2.getTipo() == TokenTipo.CHAVE_FECHA) {
                     saiu = true;
                     break;
                 }else{
@@ -72,8 +86,11 @@ public class AST_Transferencia {
         }
 
         if (!saiu) {
-            mCompiler.errarCompilacao("Era esperado fechar parenteses" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante().getInicio());
+            mCompiler.errarCompilacao("Era esperado fechar chaves" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante().getInicio());
         }
+
+        Token TokenV = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado um ponto e virgula !");
+
 
     }
 }

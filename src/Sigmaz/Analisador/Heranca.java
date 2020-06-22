@@ -176,20 +176,34 @@ public class Heranca {
                         for (AST migrando_struct : Struct_Inits.getASTS()) {
                             System.out.println("  - Struct Init : " + Struct_AST.getNome() + "(" + getAssinatura(migrando_struct.getBranch("ARGUMENTS")) + ")");
 
-                            for (AST migrando_heranca : Heranca_Inits.getASTS()) {
+                            AST mCall = migrando_struct.getBranch("CALL");
 
-                                AST mCall = migrando_struct.getBranch("CALL");
+                            if (mCall.mesmoValor("TRUE")) {
+                                System.out.println("  -  VALOR : " + mCall.getValor());
 
-                                if(mCall.existeBranch("ARGUMENTS") && migrando_struct.existeBranch("ARGUMENTS")){
-                                    if (getContagemAssinatura(migrando_struct.getBranch("ARGUMENTS")) >= (getContagemAssinatura(mCall.getBranch("ARGUMENTS")))) {
-                                        compativel = true;
-                                        break;
+                                if (mCall.existeBranch("ARGUMENTS")) {
+                                    int t = getContagemAssinatura(mCall.getBranch("ARGUMENTS"));
+                                    int r = getContagemAssinatura(migrando_struct.getBranch("ARGUMENTS"));
+
+                                    System.out.println("  - Args Init Call : " + (getContagemAssinatura(mCall.getBranch("ARGUMENTS"))));
+                                    System.out.println("  - Ass Init Call : " + (getAssinatura(mCall.getBranch("ARGUMENTS"))));
+
+                                    if (t == r) {
+
+                                        for (AST migrando_heranca : Heranca_Inits.getASTS()) {
+                                            if (t==getContagemAssinatura(migrando_struct.getBranch("ARGUMENTS"))){
+                                                compativel = true;
+                                                System.out.println("  - Heranca Init : " + Procurando.getNome() + "(" + getAssinatura(migrando_heranca.getBranch("ARGUMENTS")) + ")");
+
+                                            }
+
+                                        }
                                     }
                                 }
 
-
-                                System.out.println("  - Heranca Init : " + Procurando.getNome() + "(" + getAssinatura(migrando_heranca.getBranch("ARGUMENTS")) + ")");
                             }
+
+
 
                             if (compativel) {
                                 System.out.println("  - Struct " + Struct_AST.getNome() + " pode herdar  " + Procurando.getNome());
@@ -223,7 +237,6 @@ public class Heranca {
                     Struct_Corpo.getASTS().add(migrando);
 
                 }
-
 
 
                 break;

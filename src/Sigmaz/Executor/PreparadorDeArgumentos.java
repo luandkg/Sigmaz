@@ -41,6 +41,7 @@ public class PreparadorDeArgumentos {
 
                 mArgumentos.add(v);
 
+              //  System.out.println(" ARG : " + mAST.getConteudo());
 
             }
 
