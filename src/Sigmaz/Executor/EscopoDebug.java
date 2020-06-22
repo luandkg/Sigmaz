@@ -113,6 +113,13 @@ public class EscopoDebug {
             }
         }
 
+        System.out.println(" - INITS : ");
+        for (AST mAST : mEscopo.getGuardadosCompleto()) {
+            if (mAST.mesmoTipo("INIT")) {
+                System.out.println("\t - " + mAST.getNome()+ " ( " + getParametros(mAST) + " ) ");
+            }
+        }
+
         System.out.println(" - ACTIONS : ");
         for (AST mAST : mEscopo.getGuardadosCompleto()) {
             if (mAST.mesmoTipo("ACTION")) {

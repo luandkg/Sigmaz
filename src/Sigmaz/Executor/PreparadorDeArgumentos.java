@@ -28,6 +28,7 @@ public class PreparadorDeArgumentos {
 
                 Item v = new Item("");
 
+                v.setModo(0);
                 v.setNulo(mAST.getIsNulo());
                 v.setPrimitivo(mAST.getIsPrimitivo());
                 v.setIsEstrutura(mAST.getIsStruct());
@@ -135,6 +136,10 @@ public class PreparadorDeArgumentos {
 
 
         passarParametros(mEscopoInterno, mFunction.getParamentos(), mArgumentos);
+
+
+      //  mEscopoInterno.ListarAll();
+
 
         AST mASTBody = mFunction.getPonteiro().getBranch("BODY");
 

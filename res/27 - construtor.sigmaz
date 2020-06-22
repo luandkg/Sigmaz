@@ -1,0 +1,84 @@
+
+call iniciar -> inicializando();
+
+
+act inicializando(){
+
+    def a1 : Animal = init Animal(15);
+    a1.mostrar();
+
+    def a2 : Animal = init Animal(30);
+    a2.mostrar();
+
+}
+
+
+
+struct Animal  {
+
+    define idade : num = -1;
+
+
+
+   init Animal (eIdade : num) {
+        idade = eIdade;
+   }
+
+    act setIdade( a : num){
+           idade = a;
+    }
+
+    act mostrar(){
+
+        println(" --- ANIMAL --- ");
+        println("");
+        println("     - IDADE : ", idade);
+
+    }
+
+    func somar_inteiro(a:num,b:num) : num {
+
+        def c : num;
+
+        invoke math -> operator_sum (a,b) :: c;
+        invoke casting -> cast_integer (c) :: c;
+
+        return c;
+    }
+
+    func menor(a:num,b:num) : bool {
+
+        def c : bool;
+
+        invoke math -> operator_less (a,b) :: c;
+
+        return c;
+    }
+
+    act println(a:string,b:num)  {
+
+        def c : num;
+        invoke terminal -> change () :: c;
+        invoke terminal -> print (a) :: c;
+        invoke terminal -> print (b) :: c;
+
+    }
+
+    act println(a:string,b:string)  {
+
+        def c : num;
+        invoke terminal -> change () :: c;
+        invoke terminal -> print (a) :: c;
+        invoke terminal -> print (b) :: c;
+
+    }
+
+    act println(a:string)  {
+
+        def c : num;
+        invoke terminal -> change () :: c;
+        invoke terminal -> print (a) :: c;
+
+    }
+
+}

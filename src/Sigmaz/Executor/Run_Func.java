@@ -29,7 +29,7 @@ public class Run_Func {
 
         Item mRet = null;
 
-           // System.out.println("Procurando FUNC " + ASTCorrente.getNome());
+        // System.out.println("Procurando FUNC " + ASTCorrente.getNome());
 
         ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, mEscopo, ASTCorrente.getBranch("ARGUMENTS"));
         //    System.out.println("\t - Argumentos :  " + mArgumentos.size());
@@ -68,9 +68,9 @@ public class Run_Func {
 
                         //executar_Function(mIndex_Function, mArgumentos, eReturne);
 
-                    //    mRet = mPreparadorDeArgumentos.executar_FunctionGlobal(mRunTime, mIndex_Function, mArgumentos, eReturne);
+                        //    mRet = mPreparadorDeArgumentos.executar_FunctionGlobal(mRunTime, mIndex_Function, mArgumentos, eReturne);
 
-                        mRet = mPreparadorDeArgumentos.executar_Function(mRunTime,mEscopo, mIndex_Function, mArgumentos, eReturne);
+                        mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eReturne);
 
 
                     } else {
@@ -116,11 +116,11 @@ public class Run_Func {
         boolean enc = false;
         boolean algum = false;
 
-      //  System.out.println("\t - ESCOPO :  " + mEscopo.getNome());
+        //  System.out.println("\t - ESCOPO :  " + mEscopo.getNome());
 
         for (Index_Action mIndex_Function : mEscopo.getActionFunctionsCompleto()) {
 
-         //   System.out.println("\t\t - AF :  " + mIndex_Function.getNome());
+            //   System.out.println("\t\t - AF :  " + mIndex_Function.getNome());
 
         }
 
@@ -144,7 +144,7 @@ public class Run_Func {
 
                     //executar_Action(mIndex_Function, mArgumentos);
 
-                   mPreparadorDeArgumentos.executar_Action(mRunTime,mEscopo, mIndex_Function, mArgumentos);
+                    mPreparadorDeArgumentos.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
 
 
                     break;
@@ -166,6 +166,8 @@ public class Run_Func {
 
 
     }
+
+
 
     public Item init_Operation(String eNome, Run_Value Esquerda, Run_Value Direita, String eReturne) {
 

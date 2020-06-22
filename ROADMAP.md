@@ -57,6 +57,11 @@ Linguagem de Programação Estruturada
         - REORGANIZACAO DO AST_VALUE
         - REORGANIZACAO DO RUN_FUNC
         - STRUCT
-        - ORIENTACAO A OBJETO
-        - IMPLEMENTANDO HERANCA
+        - ORIENTACAO A OBJETO - INICIO
+        - IMPLEMENTANDO HERANCA - INICIO
+        
+    - 2020 06 21
+        - REORGANIZACAO EM STACKS
+        - RECURSAO EM OO
+        - INICIALIZADORES DE STRUCT
        

@@ -35,15 +35,7 @@ struct Sacola {
         return somar_inteiro(a,b);
     }
 
-    act acordare() {
-       acordaro(40);
-    }
 
-    act acordaro(v:num){
-
-        println("Oie :: ",v);
-       # acordare();
-    }
 
 }
 
@@ -84,28 +76,17 @@ act pular(){
     sacola1.mostrar_struct();
 
     sacola1.aumentar(2);
+
+    sacola_aumentar(sacola1);
+
     sacola1.mostrar_detalhes();
 
-    sacola1.acordare();
+}
 
+act sacola_aumentar (s : Sacola) {
 
-    #sacola1.acordar(2);
-
-    #acordar(3);
-
-
+   s.aumentar(2);
 
 }
 
-act acordar () {
-
-    println("Acordando : ", 8);
-
-}
-
-act acordar (as : num) {
-
-    println("Acordando : ", as);
-
-}
 

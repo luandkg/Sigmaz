@@ -25,6 +25,11 @@ public class Item {
         mObjeto=null;
     }
 
+    public void setNome(String eNome) {
+        mNome = eNome;
+    }
+
+
     public boolean getNulo() {
         return mNulo;
     }

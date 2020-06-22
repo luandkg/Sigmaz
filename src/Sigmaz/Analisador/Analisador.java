@@ -195,6 +195,9 @@ public class Analisador {
             } else if (mAST.mesmoTipo("CAST")) {
             } else if (mAST.mesmoTipo("STRUCT")) {
 
+                Analisar_Struct mAnalisar_Struct = new Analisar_Struct(this);
+                mAnalisar_Struct.init_Struct(mAST,mAlocados);
+
             } else {
 
                 mErros.add("AST x : " + mAST.getTipo());
@@ -208,6 +211,7 @@ public class Analisador {
     }
 
 
+
     public void analisarFunction(AST ASTPai, ArrayList<String> mAlocadosAntes) {
 
 
@@ -216,28 +220,6 @@ public class Analisador {
 
         analisandoDefines(ASTPai);
 
-
-        String mParametrizando = "";
-
-        for (AST mAST : ASTPai.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoTipo("ARGUMENT")) {
-
-                // mAnalisador.analisarAlocacao(mAST,mAlocadosAntes);
-
-                if (!mAlocados.contains(mAST.getNome())) {
-                    mAlocados.add(mAST.getNome());
-                } else {
-                    getErros().add("Argumento Duplicado : " + mAST.getNome());
-                }
-
-                mParametrizando += "<" + mAST.getValor() + "> ";
-
-                analisandoDefines(mAST);
-
-            } else {
-                getErros().add("Tipo Desconhecido : " + mAST.getTipo());
-            }
-        }
 
         String mParametragem = ASTPai.getNome() + " ( " + mAnalisar_Argumentos.analisarArguments(ASTPai.getBranch("ARGUMENTS"), mAlocados) + ") ";
 

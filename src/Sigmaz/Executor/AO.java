@@ -14,6 +14,8 @@ public class AO {
     private ArrayList<Index_Action> mActionFunctions;
     private ArrayList<AST> mCasts;
 
+    private ArrayList<Index_Action> mInits;
+
     private ArrayList<AST> mGuardados;
 
     private Escopo mEscopo;
@@ -24,6 +26,8 @@ public class AO {
         mEscopo = eEscopo;
 
         mGuardados = new ArrayList<>();
+
+        mInits = new ArrayList<Index_Action>();
 
         mActions = new ArrayList<Index_Action>();
         mActionFunctions = new ArrayList<Index_Action>();
@@ -69,11 +73,18 @@ public class AO {
 
             mCasts.add(eAST);
 
+        } else if (eAST.mesmoTipo("INIT")) {
+
+            Index_Action mAct = new Index_Action(eAST);
+            mInits.add(mAct);
 
         }
 
     }
 
+    public ArrayList<Index_Action> getInits() {
+        return mInits;
+    }
 
     public ArrayList<Index_Function> getFunctions() {
         return mFunctions;

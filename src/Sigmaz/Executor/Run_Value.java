@@ -244,7 +244,7 @@ public class Run_Value {
 
             Run_Struct mRun_Struct = new Run_Struct(mRunTime );
             mRun_Struct.setNome(eNome);
-            mRun_Struct.init(eRetorno);
+            mRun_Struct.init(eRetorno,ASTCorrente,mEscopo);
 
 
             mRunTime.adicionarHeap(mRun_Struct);

@@ -42,8 +42,10 @@ public class AppSigmaz {
         //String arquivo = "res/23 - oo.sigmaz";
         //   String arquivo = "res/24 - oo2.sigmaz";
         //String arquivo = "res/25 - recursao.sigmaz";
-         String arquivo = "res/26 - oorecursao.sigmaz";
-        // String arquivo = "res/27 - heranca.sigmaz";
+        // String arquivo = "res/26 - oorecursao.sigmaz";
+         //String arquivo = "res/27 - construtor.sigmaz";
+        // String arquivo = "res/28 - heranca.sigmaz";
+        String arquivo = "res/29 - initheranca.sigmaz";
 
         String saida = "res/Sigmaz.sigmad";
 
@@ -84,7 +86,7 @@ public class AppSigmaz {
         mCSigmaz.adicionar("res/24 - oo2.sigmaz");
         mCSigmaz.adicionar("res/25 - recursao.sigmaz");
         mCSigmaz.adicionar("res/26 - oorecursao.sigmaz");
-        mCSigmaz.adicionar("res/27 - heranca.sigmaz");
+        mCSigmaz.adicionar("res/28 - heranca.sigmaz");
 
 
 

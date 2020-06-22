@@ -11,6 +11,9 @@ public class OO {
     private Escopo mEscopo;
 
     private ArrayList<AST> mStructGuardados;
+
+    private ArrayList<Index_Action> mInits;
+
     private ArrayList<Index_Action> mActions;
     private ArrayList<Index_Function> mFunctions;
     private ArrayList<Index_Function> mOperations;
@@ -23,6 +26,8 @@ public class OO {
         mEscopo = eEscopo;
 
         mStructGuardados = new ArrayList<>();
+
+        mInits = new ArrayList<Index_Action>();
 
         mActions = new ArrayList<Index_Action>();
         mActionFunctions = new ArrayList<Index_Action>();
@@ -59,11 +64,16 @@ public class OO {
         } else if (eAST.mesmoTipo("CAST")) {
 
             mCasts.add(eAST);
+        } else if (eAST.mesmoTipo("INIT")) {
+
+            Index_Action mAct = new Index_Action(eAST);
+            mInits.add(mAct);
 
 
         }
 
     }
+
 
     public ArrayList<AST> getStruct() {
         return mStructGuardados;
@@ -75,7 +85,11 @@ public class OO {
     }
 
 
-        public ArrayList<Index_Function> getFunctions() {
+    public ArrayList<Index_Action> getInits() {
+        return mInits;
+    }
+
+    public ArrayList<Index_Function> getFunctions() {
         return mFunctions;
     }
 

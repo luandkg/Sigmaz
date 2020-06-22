@@ -26,6 +26,9 @@ public class AST_Struct {
            AST AST_With =  AST_Corrente.criarBranch("WITH");
             AST_With.setValor("FALSE");
 
+            AST AST_Inits =  AST_Corrente.criarBranch("INITS");
+
+
             Token Futuro = mCompiler.getTokenFuturo();
             if (Futuro.getTipo() == TokenTipo.ID && Futuro.mesmoConteudo("with")) {
                 mCompiler.Proximo();
@@ -47,7 +50,7 @@ public class AST_Struct {
 
 
             AST_StructCorpo mAST = new AST_StructCorpo(mCompiler);
-            mAST.init(AST_Corrente);
+            mAST.init(AST_Corrente,AST_Inits,TokenC.getConteudo());
 
 
         } else {

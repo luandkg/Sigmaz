@@ -12,7 +12,7 @@ public class AST_StructCorpo {
         mCompiler = eCompiler;
     }
 
-    public void init(AST AST_Corrente) {
+    public void init(AST AST_Corrente, AST AST_Inits,String NomeStruct) {
 
 
         AST AST_Corpo = AST_Corrente.criarBranch("BODY");
@@ -31,6 +31,11 @@ public class AST_StructCorpo {
             if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
                 saiu = true;
                 break;
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("init")) {
+
+                AST_InitStruct mAST = new AST_InitStruct(mCompiler);
+                mAST.init(AST_Inits,NomeStruct);
+
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
 
                 AST_Action mAST = new AST_Action(mCompiler);
