@@ -12,9 +12,9 @@ public class AppSigmaz {
         ArrayList<String> mArquivos = Carregar_Arquivos();
 
 
-        int TESTE = 2;
+        int TESTE = 1;
 
-        int ARQUIVO = 40;
+        int ARQUIVO = 32;
 
 
         if (TESTE == 1) {

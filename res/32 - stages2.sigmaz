@@ -1,35 +1,25 @@
 
 call iniciar -> varios_estagios();
 
-
 act varios_estagios(){
 
     invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
 
     def cor1 : CORES = CORES::AMARELO;
-
     def cor2 : CORES = CORES::AZUL;
 
     def t1 : bool = CORES::AZUL == CORES::AMARELO;
-
     def t2 : bool = CORES::AZUL == CORES::AZUL;
-
     def t3 : bool = CORES::AZUL !! CORES::AMARELO;
-
     def t4 : bool = CORES::AZUL !! CORES::AZUL;
-
-
 
     def q1 : string = qualcor(CORES::AMARELO);
     def q2 : string = qualcor(CORES::VERMELHO);
 
-    #def q3 : string = qualcor(null);
-
     def d1: bool = DIAS::SEGUNDA == DIAS::SEGUNDA;
 
-
     def n1 : string = DIAS->nameOf(DIAS::TERCA);
-    #def v1 : num = DIAS->valueOf(DIAS::TERCA);
+    def v1 : num = DIAS->valueOf(DIAS::TERCA);
 
 
     invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
