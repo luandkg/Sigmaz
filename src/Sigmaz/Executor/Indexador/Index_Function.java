@@ -38,6 +38,24 @@ public class Index_Function {
 
     }
 
+
+    public boolean isExtern() {
+        return mPonteiro.getBranch("VISIBILITY").mesmoNome("EXTERN");
+    }
+
+    public boolean isAll() {
+        return mPonteiro.getBranch("VISIBILITY").mesmoNome("ALL");
+    }
+
+    public boolean isRestrict() {
+        return mPonteiro.getBranch("VISIBILITY").mesmoNome("RESTRICT");
+    }
+
+    public String getModo() {
+        return mPonteiro.getBranch("VISIBILITY").getNome();
+    }
+
+
     public void setNome(String eNome) {
         mNome = eNome;
     }
@@ -54,21 +72,22 @@ public class Index_Function {
         return mTipo;
     }
 
-    public AST getPonteiro(){return mPonteiro;}
+    public AST getPonteiro() {
+        return mPonteiro;
+    }
 
     public boolean mesmoNome(String eNome) {
         return eNome.contentEquals(mNome);
     }
 
 
-    public ArrayList<String> getParamentos(){
+    public ArrayList<String> getParamentos() {
         return mNomeArgumentos;
     }
 
     public boolean mesmoArgumentos(ArrayList<Item> eArgumentos) {
-        return mArgumentador.mesmoArgumentos(mTipoArgumentos,eArgumentos);
+        return mArgumentador.mesmoArgumentos(mTipoArgumentos, eArgumentos);
     }
-
 
 
     public void argumentar(String eNome, String eTipo) {

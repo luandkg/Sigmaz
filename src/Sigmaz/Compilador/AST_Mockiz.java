@@ -12,7 +12,7 @@ public class AST_Mockiz {
         mCompiler = eCompiler;
     }
 
-    public void init(AST ASTPai) {
+    public void init(AST ASTPai,String Visibilidade) {
 
         Token TokenC = mCompiler.getTokenAvante();
 
@@ -21,6 +21,9 @@ public class AST_Mockiz {
             AST AST_Corrente = new AST("MOCKIZ");
             AST_Corrente.setNome(TokenC.getConteudo());
             ASTPai.getASTS().add(AST_Corrente);
+
+            AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
+            AST_Visibilidade.setNome(Visibilidade);
 
             AST AST_Valor = AST_Corrente.criarBranch("VALUE");
 

@@ -1,0 +1,28 @@
+
+require "lib.sigmaz";
+
+require "sacola.sigmaz";
+require "pessoa.sigmaz";
+
+call iniciar -> pular();
+
+
+act pular(){
+
+
+    def sacola1 : Sacola = init Sacola();
+
+
+    sacola1.aumentar(2);
+
+    def t : num = sacola1.getQuantidade();
+
+    def s : num = somar(2,sacola1.getQuantidade());
+
+    invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
+
+    #sacola1.mostrar_struct();
+
+}
+
+

@@ -273,12 +273,12 @@ public class Compiler {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
 
                 AST_Action mAST = new AST_Action(this);
-                mAST.init(AST_Raiz);
+                mAST.init(AST_Raiz,"ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
 
                 AST_Function mAST = new AST_Function(this);
-                mAST.init(AST_Raiz);
+                mAST.init(AST_Raiz,"ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("call")) {
 
@@ -288,12 +288,12 @@ public class Compiler {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 
                 AST_Mockiz mAST = new AST_Mockiz(this);
-                mAST.init(AST_Raiz);
+                mAST.init(AST_Raiz,"ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
 
                 AST_Define mAST = new AST_Define(this);
-                mAST.init(AST_Raiz);
+                mAST.init(AST_Raiz,"ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("invoke")) {
 
@@ -303,7 +303,7 @@ public class Compiler {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operation")) {
 
                 AST_Operation mAST = new AST_Operation(this);
-                mAST.init(AST_Raiz);
+                mAST.init(AST_Raiz,"ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("cast")) {
 

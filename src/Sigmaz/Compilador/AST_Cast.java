@@ -87,6 +87,9 @@ public class AST_Cast {
             AST_Func_Get.setNome(eNome);
             AST_Func_Get.setValor(eNome);
 
+            AST AST_Visibilidade = AST_Func_Get.criarBranch("VISIBILITY");
+            AST_Visibilidade.setNome("ALL");
+
             AST AST_Func_Args =AST_Func_Get.criarBranch("ARGUMENTS");
             AST AST_Func_Arg =AST_Func_Args.criarBranch("ARGUMENT");
             AST_Func_Arg.setNome("alfa");
@@ -142,6 +145,9 @@ public class AST_Cast {
 
             AST_Func_Get.setNome(TokenC3.getConteudo());
             AST_Func_Get.setValor(TokenC3.getConteudo());
+
+            AST AST_Visibilidade = AST_Func_Get.criarBranch("VISIBILITY");
+            AST_Visibilidade.setNome("ALL");
 
             AST AST_Func_Args =AST_Func_Get.criarBranch("ARGUMENTS");
             AST AST_Func_Arg =AST_Func_Args.criarBranch("ARGUMENT");

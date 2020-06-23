@@ -1,0 +1,34 @@
+
+cast neg {
+
+    getter a : num -> { if(maior(a,0)) -> { exception "Nao e possivel obter valores positivos !";} return a; }
+
+    setter b : num -> { if(maior(b,0)) -> { exception "Nao e possivel obter valores positivos !";} return b;  }
+
+}
+
+operation == (a:neg,b:neg) : bool  {
+
+    def c : bool;
+
+    def c1 : num = num(a);
+    def c2 : num = num(b);
+
+    invoke math -> operator_equal (c1,c2) :: c;
+
+    return c;
+
+}
+
+operation !! (a:neg,b:neg) : bool  {
+
+    def c : bool;
+
+    def c1 : num = a;
+    def c2 : num = b;
+
+    invoke math -> operator_not (c1,c2) :: c;
+
+    return c;
+
+}

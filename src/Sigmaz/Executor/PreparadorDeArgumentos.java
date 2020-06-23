@@ -41,7 +41,7 @@ public class PreparadorDeArgumentos {
 
                 mArgumentos.add(v);
 
-              //  System.out.println(" ARG : " + mAST.getConteudo());
+                //  System.out.println(" ARG : " + mAST.getConteudo());
 
             }
 
@@ -62,7 +62,7 @@ public class PreparadorDeArgumentos {
                 if (mArgumentos.get(argC).getIsEstrutura()) {
                     mEscopoInterno.criarParametroStruct(eParametrosNomes.get(argC), mArgumentos.get(argC).getTipo(), mArgumentos.get(argC).getObjeto(), mArgumentos.get(argC).getValor());
 
-                    //        System.out.println("\t - Passando Parametro Struct : " + eParametrosNomes.get(argC) + " -> " + mArgumentos.get(argC).getTipo() + " :: " );
+                        //   System.out.println("\t - Passando Parametro Struct : " + eParametrosNomes.get(argC) + " -> " + mArgumentos.get(argC).getTipo() + " :: " );
 
                 } else {
                     mEscopoInterno.criarParametro(eParametrosNomes.get(argC), mArgumentos.get(argC).getTipo(), mArgumentos.get(argC).getValor());
@@ -104,7 +104,7 @@ public class PreparadorDeArgumentos {
 
 
         if (mRunTime.getErros().size() > 0) {
-
+            return null;
         }
 
 
@@ -122,24 +122,23 @@ public class PreparadorDeArgumentos {
         return Saida;
     }
 
-    public void executar_Action(RunTime mRunTime,  Escopo mStructEscopo, Index_Action mFunction, ArrayList<Item> mArgumentos) {
+    public void executar_Action(RunTime mRunTime, Escopo mStructEscopo, Index_Action mFunction, ArrayList<Item> mArgumentos) {
 
 
-      //   System.out.println(" -->> ACTION CALL : " + mFunction.getNome() );
-      //  System.out.println("\t - Escopo : " + mStructEscopo.getNome() );
+        //   System.out.println(" -->> ACTION CALL : " + mFunction.getNome() );
+        //  System.out.println("\t - Escopo : " + mStructEscopo.getNome() );
 
 
         Escopo mEscopoInterno = new Escopo(mRunTime, mStructEscopo);
         //Escopo mEscopoInterno = new Escopo(mRunTime, null);
 
-        mEscopoInterno.setNome(mStructEscopo.getNome() );
-
+        mEscopoInterno.setNome(mStructEscopo.getNome());
 
 
         passarParametros(mEscopoInterno, mFunction.getParamentos(), mArgumentos);
 
 
-      //  mEscopoInterno.ListarAll();
+        //  mEscopoInterno.ListarAll();
 
 
         AST mASTBody = mFunction.getPonteiro().getBranch("BODY");

@@ -14,7 +14,29 @@ public class Analisar_Argumentos {
 
     }
 
-    public String analisarArguments(AST ASTPai,ArrayList<String> mAlocadosAntes) {
+    public String getDefinicao(AST ASTPai) {
+
+        String mParametrizando = "";
+
+        for (AST mAST : ASTPai.getBranch("ARGUMENTS").getASTS()) {
+            if (mAST.mesmoTipo("ARGUMENT")) {
+
+
+                mParametrizando += "<" + mAST.getValor() + "> ";
+
+                mAnalisador.getAnalisar_Outros().analisandoDefines(mAST);
+
+            } else {
+                mAnalisador.getErros().add("Tipo Desconhecido : " + mAST.getTipo());
+            }
+        }
+
+        String mParametragem = ASTPai.getNome() + " ( " + mParametrizando + ") ";
+
+        return mParametragem;
+    }
+
+    public String analisarArguments(AST ASTPai, ArrayList<String> mAlocadosAntes) {
 
         ArrayList<String> mNomes = new ArrayList<String>();
 
@@ -23,7 +45,7 @@ public class Analisar_Argumentos {
         for (AST mAST : ASTPai.getASTS()) {
             if (mAST.mesmoTipo("ARGUMENT")) {
 
-               // mAnalisador.analisarAlocacao(mAST,mAlocadosAntes);
+                mAnalisador.analisarAlocacao(mAST, mAlocadosAntes);
 
                 if (!mNomes.contains(mAST.getNome())) {
                     mNomes.add(mAST.getNome());
@@ -33,7 +55,7 @@ public class Analisar_Argumentos {
 
                 mParametragem += "<" + mAST.getValor() + "> ";
 
-                mAnalisador.analisandoDefines(mAST);
+                mAnalisador.getAnalisar_Outros().analisandoDefines(mAST);
 
             } else {
                 mAnalisador.getErros().add("Tipo Desconhecido : " + mAST.getTipo());
@@ -60,7 +82,6 @@ public class Analisar_Argumentos {
                 }
 
                 mParametragem += "<" + mAST.getValor() + "> ";
-
 
 
             } else {

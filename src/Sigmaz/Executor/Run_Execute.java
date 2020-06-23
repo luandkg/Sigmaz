@@ -36,6 +36,10 @@ public class Run_Execute {
 
             Run_Struct mEscopoStruct = mRunTime.getRun_Struct(mItem.getValor());
 
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+
             while (ASTCorrente.existeBranch("INTERNAL")) {
 
                 AST eInternal = ASTCorrente.getBranch("INTERNAL");
@@ -44,6 +48,10 @@ public class Run_Execute {
 
                   //  System.out.println("STRUCT ACT Estou : " +mEscopo.getNome() );
                   //  System.out.println("STRUCT ACT Preciso : " +mEscopoStruct.getNome() );
+
+                    if (mRunTime.getErros().size() > 0) {
+                        return;
+                    }
 
                     mEscopoStruct.init_Action(eInternal, mEscopo);
 

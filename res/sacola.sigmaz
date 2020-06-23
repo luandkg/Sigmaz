@@ -8,6 +8,8 @@ struct Sacola {
 
     func quantidade() : num { return itens; }
 
+    func getQuantidade() : num { return itens; }
+
 
 
    act mostrar()  {

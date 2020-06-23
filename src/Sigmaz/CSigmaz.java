@@ -65,7 +65,10 @@ public class CSigmaz {
 
 
                     Analisador AnaliseC = new Analisador();
+                    AnaliseC.internalizar();
+
                     AnaliseC.init(CompilerC.getASTS());
+
                     if (AnaliseC.getErros().size() == 0) {
 
                         CompilerC.Compilar(saida);

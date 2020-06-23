@@ -43,11 +43,11 @@ public class Analisar_Step {
 
         if (dentroFunction) {
             for (AST sAST : ASTPai.getBranch("BODY").getASTS()) {
-                mAnalisador.analisarDentroFunction(sAST,mAlocados,true);
+                mAnalisador.getAnalisar_Function().analisarDentroFunction(sAST,mAlocados,true);
             }
         } else {
             for (AST sAST : ASTPai.getBranch("BODY").getASTS()) {
-                mAnalisador.analisarDentroAction(sAST,mAlocados,true);
+                mAnalisador.getAnalisar_Action().analisarDentroAction(sAST,mAlocados,true);
             }
         }
 

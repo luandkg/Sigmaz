@@ -19,22 +19,29 @@ public class Argumentador {
             for (Item mArgumentos : eArgumentos) {
 
 
-
-                if(mArgumentos.getPrimitivo()){
-
-                    if (mArgumentos.getTipo().contentEquals(mTipoArgumentos.get(i))){
-
-                        v += 1;
-                    }
-
-                } else if (mArgumentos.getIsEstrutura()){
+                if (mArgumentos.getTipo().contentEquals(mTipoArgumentos.get(i))){
 
                     v += 1;
-
-
                 }
 
-              //  System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
+              //  if(mArgumentos.getPrimitivo()){
+
+                 //   if (mArgumentos.getTipo().contentEquals(mTipoArgumentos.get(i))){
+//
+                  //      v += 1;
+                //    }
+
+              //  } else if (mArgumentos.getIsEstrutura()){
+
+                  //  if (mArgumentos.getTipo().contentEquals(mTipoArgumentos.get(i))){
+
+                  //      v += 1;
+                 //   }
+
+
+              //  }
+
+             //  System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
 
                 i += 1;
 

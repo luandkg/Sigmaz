@@ -29,11 +29,11 @@ public class Analisar_While {
             } else if (mAST.mesmoTipo("BODY")) {
                 if (dentroFunction) {
                     for (AST sAST : mAST.getASTS()) {
-                        mAnalisador.analisarDentroFunction(sAST,mAlocados,true);
+                        mAnalisador.getAnalisar_Function().analisarDentroFunction(sAST,mAlocados,true);
                     }
                 } else {
                     for (AST sAST : mAST.getASTS()) {
-                        mAnalisador.analisarDentroAction(sAST,mAlocados,true);
+                        mAnalisador.getAnalisar_Action().analisarDentroAction(sAST,mAlocados,true);
                     }
                 }
             }

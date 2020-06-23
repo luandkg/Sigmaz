@@ -196,6 +196,7 @@ public class Run_Func {
 
         String mTipagem = ve.getValor() + " e " + vd.getValor();
 
+        //System.out.println("MATCH : " +mTipagem );
 
         mArgumentos.add(ve);
         mArgumentos.add(vd);
@@ -211,9 +212,10 @@ public class Run_Func {
 
             if (mIndex_Function.mesmoNome(eNome)) {
 
-                // System.out.println("\t - Funcao :  " +mIndex_Function.getNome());
                 enc = true;
                 if (mIndex_Function.mesmoArgumentos(mArgumentos)) {
+
+                 //   System.out.println("\t - Funcao :  " +mIndex_Function.getNome() + " " + mIndex_Function.getParametragem());
 
                     // System.out.println("\t - Executar :  " +mIndex_Function.getNome());
 
@@ -277,7 +279,7 @@ public class Run_Func {
     public void init_Action(AST ASTCorrente) {
 
 
-        ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, mEscopo, ASTCorrente);
+        ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, mEscopo, ASTCorrente.getBranch("ARGUMENTS"));
 
         //  System.out.println("Procurando FUNC " + ASTCorrente.getNome());
         //System.out.println("\t - Argumentos :  " + argumentos);

@@ -1,6 +1,14 @@
 
 # OPERACOES
 
+define IGUALDADE : bool = true;
+
+mockiz PI : num = 3.14;
+mockiz ZERO : num = 0;
+
+mockiz TRUE : bool = true;
+mockiz FALSE : bool = false;
+
 func somar(a:num,b:num) : num {
 
 
@@ -111,6 +119,8 @@ func igual(a:num,b:num) : bool {
     return c;
 }
 
+
+
 func diferente(a:num,b:num) : bool {
 
     def c : bool;
@@ -200,6 +210,16 @@ operation !! (a:num,b:num) : bool  {
     return c;
 
 }
+
+func igual(a:bool,b:bool) : bool {
+
+    def c : bool;
+
+    invoke math -> operator_match (a,b) :: c;
+
+    return c;
+}
+
 operation == (a:bool,b:bool) : bool  {
 
      def c : bool;
@@ -209,6 +229,16 @@ operation == (a:bool,b:bool) : bool  {
     return c;
 
 }
+
+func diferente(a:bool,b:bool) : bool {
+
+    def c : bool;
+
+    invoke math -> operator_unmatch (a,b) :: c;
+
+    return c;
+}
+
 operation !! (a:bool,b:bool) : bool  {
 
      def c : bool;

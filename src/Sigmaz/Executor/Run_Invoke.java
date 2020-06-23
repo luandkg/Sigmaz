@@ -1,9 +1,6 @@
 package Sigmaz.Executor;
 
-import Sigmaz.Executor.Invokes.InvokeCasting;
-import Sigmaz.Executor.Invokes.InvokeCompiler;
-import Sigmaz.Executor.Invokes.InvokeMath;
-import Sigmaz.Executor.Invokes.InvokeTerminal;
+import Sigmaz.Executor.Invokes.*;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
@@ -37,26 +34,28 @@ public class Run_Invoke {
         if (eNome.contentEquals("__COMPILER__")) {
 
 
-            InvokeCompiler mCor = new InvokeCompiler(mRunTime,mEscopo);
-
+            InvokeCompiler mCor = new InvokeCompiler(mRunTime,mEscopo,this);
             mCor.init(eAcao, eSaida, mArgumentos);
 
         } else   if (eNome.contentEquals("terminal")) {
 
             InvokeTerminal mCor = new InvokeTerminal(mRunTime,mEscopo,this);
-
             mCor.init(eAcao, eSaida, mArgumentos);
 
         } else   if (eNome.contentEquals("casting")) {
 
             InvokeCasting mCor = new InvokeCasting(mRunTime,mEscopo);
-
             mCor.init(eAcao, eSaida, mArgumentos);
 
 
         } else   if (eNome.contentEquals("math")) {
-            InvokeMath mCor = new InvokeMath(mRunTime,mEscopo,this);
 
+            InvokeMath mCor = new InvokeMath(mRunTime,mEscopo,this);
+            mCor.init(eAcao, eSaida, mArgumentos);
+
+        } else   if (eNome.contentEquals("stages")) {
+
+            InvokeStages mCor = new InvokeStages(mRunTime,mEscopo,this);
             mCor.init(eAcao, eSaida, mArgumentos);
 
 

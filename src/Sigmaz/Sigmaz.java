@@ -19,17 +19,14 @@ import java.util.Calendar;
 
 public class Sigmaz {
 
-    public void init(String eArquivo, String saida) {
-
-
-
+    private void geral(int eOpcao, String eArquivo, String saida) {
 
         System.out.println("################ SIGMAZ ################");
         System.out.println("");
         System.out.println(" - AUTOR	: LUAN FREITAS");
         System.out.println(" - VERSAO   : 1.0");
         System.out.println(" - STATUS  	: ALPHA");
-		System.out.println(" - INICIO  	: 2020.06.12");
+        System.out.println(" - INICIO  	: 2020.06.12");
 
         System.out.println("");
 
@@ -40,6 +37,7 @@ public class Sigmaz {
         System.out.println("################# LEXER ##################");
         System.out.println("");
         System.out.println("\t Iniciado : " + CompilerC.getData().toString());
+        System.out.println("\t - Arquivo : " + eArquivo);
         System.out.println("\t - Chars : " + CompilerC.getIChars());
         System.out.println("\t - Tokens : " + CompilerC.getITokens());
         System.out.println("\t - Erros : " + CompilerC.getErros_Lexer().size());
@@ -115,7 +113,6 @@ public class Sigmaz {
             System.out.println("\t - Erros : " + AnaliseC.getErros().size());
 
 
-
             if (AnaliseC.getErros().size() > 0) {
                 System.out.println("\n\t ERROS DE ANALISE : ");
 
@@ -128,7 +125,7 @@ public class Sigmaz {
                 System.out.println("");
 
                 Documentador DC = new Documentador();
-               System.out.println(CompilerC.getArvoreDeInstrucoes());
+                System.out.println(CompilerC.getArvoreDeInstrucoes());
 
             } else {
 
@@ -138,7 +135,7 @@ public class Sigmaz {
                 System.out.println("");
 
 
-               // String instrucoes = CompilerC.ArvoreDeInstrucoes();
+                // String instrucoes = CompilerC.ArvoreDeInstrucoes();
 
 
                 CompilerC.Compilar(saida);
@@ -147,14 +144,16 @@ public class Sigmaz {
 
                 System.out.println("\t Iniciado : " + CompilerC.getData().toString());
                 System.out.println("\t - Tamanho : " + DC2.tamanhoObjeto(saida));
+                System.out.println("\t - Saida : " + saida);
                 System.out.println("\t Finalizado : " + CompilerC.getData().toString());
 
                 System.out.println("");
 
 
-
                 System.out.println("");
                 System.out.println("################ RUNTIME ################");
+                System.out.println("");
+                System.out.println("\t - Executando : " + saida);
                 System.out.println("");
 
                 RunTime RunTimeC = new RunTime();
@@ -163,20 +162,37 @@ public class Sigmaz {
 
                 RunTimeC.init(saida);
 
+                System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
+                System.out.println("");
+                System.out.println("\t - Actions : " + RunTimeC.getActions());
+                System.out.println("\t - Casts : " + RunTimeC.getCasts());
+                System.out.println("\t - Functions : " + RunTimeC.getFunctions());
+                System.out.println("\t - Operations : " + RunTimeC.getOperations());
+                System.out.println("\t - Structs : " + RunTimeC.getStructs());
+                System.out.println("\t - Stages : " + RunTimeC.getStages());
 
                 System.out.println("");
 
 
-                System.out.println( RunTimeC.getArvoreDeInstrucoes());
+                System.out.println(RunTimeC.getArvoreDeInstrucoes());
 
                 System.out.println("");
                 System.out.println("----------------------------------------------");
                 System.out.println("");
 
+                if (eOpcao == 1) {
 
-                RunTimeC.run();
+                    RunTimeC.run();
 
+                } else if (eOpcao == 2) {
 
+                    RunTimeC.estrutura();
+
+                } else {
+
+                    System.out.println("\t - Opcao : Desconhecida ");
+
+                }
 
 
                 System.out.println("");
@@ -205,15 +221,27 @@ public class Sigmaz {
             }
 
 
-        }else{
-
-
+        } else {
 
 
         }
 
     }
 
+
+    public void init(String eArquivo, String saida) {
+
+
+        geral(1, eArquivo, saida);
+
+    }
+
+
+    public void estrutural(String eArquivo, String saida) {
+
+        geral(2, eArquivo, saida);
+
+    }
 
 
 }

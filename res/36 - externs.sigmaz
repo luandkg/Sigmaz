@@ -1,0 +1,54 @@
+
+stages Tipos -> { ALFA, BETA};
+
+struct Pessoa {
+
+    all :
+        define privado : num = somar_inteiro(30,20);
+
+    extern :
+        define publico : num = Pessoa->vazar(10,10);
+
+        define tipo : Tipos = Tipos::ALFA;
+
+    extern : func vazar(a:num,b:num) : num {
+
+        def c : num;
+
+        invoke math -> operator_sum (a,b) :: c;
+        invoke casting -> cast_integer (c) :: c;
+
+        return c;
+    }
+
+}
+
+call iniciar -> inicio();
+
+
+act inicio(){
+
+    def valor : num = Pessoa->publico;
+
+    def P1 : Pessoa = init Pessoa();
+
+    invoke __COMPILER__ -> UNIQUE_STRUCT (P1) :: ALL;
+
+    invoke __COMPILER__ -> UNIQUE_EXTERN (Pessoa) :: ALL;
+
+    Pessoa->publico = 2;
+    Pessoa->tipo = Tipos::ZETA;
+
+    invoke __COMPILER__ -> UNIQUE_EXTERN (Pessoa) :: ALL;
+
+}
+
+func somar_inteiro(a:num,b:num) : num {
+
+    def c : num;
+
+    invoke math -> operator_sum (a,b) :: c;
+    invoke casting -> cast_integer (c) :: c;
+
+    return c;
+}

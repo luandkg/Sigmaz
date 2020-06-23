@@ -3,7 +3,7 @@ require "operadores.sigmaz";
 
 call iniciar -> operando();
 
-mockiz PI : num = 3.14;
+mockiz MATEMATICA_PI : num = 3.14;
 
 act operando(){
 

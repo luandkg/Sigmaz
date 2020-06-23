@@ -1,0 +1,61 @@
+
+call iniciar -> varios_estagios();
+
+
+act varios_estagios(){
+
+    invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
+
+    def cor1 : CORES = CORES::AMARELO;
+
+    def cor2 : CORES = CORES::AZUL;
+
+    def t1 : bool = CORES::AZUL == CORES::AMARELO;
+
+    def t2 : bool = CORES::AZUL == CORES::AZUL;
+
+    def t3 : bool = CORES::AZUL !! CORES::AMARELO;
+
+    def t4 : bool = CORES::AZUL !! CORES::AZUL;
+
+
+
+
+    def q1 : string = qualcor(CORES::AMARELO);
+    def q2 : string = qualcor(CORES::VERMELHO);
+
+    invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
+}
+
+
+
+stages CORES -> {AMARELO, VERMELHO, AZUL, BRANCO};
+
+operation == (a:CORES,b:CORES) : bool {
+
+    def c : bool;
+
+    invoke stages -> match (a,b) :: c;
+
+    return c;
+}
+
+operation !! (a:CORES,b:CORES) : bool {
+
+    def c : bool;
+
+    invoke stages -> unmatch (a,b) :: c;
+
+    return c;
+}
+
+
+func qualcor(a:CORES) : string {
+
+    def resp : string = "Desconhecido";
+
+    if(a == CORES::AMARELO ) -> {resp="Amarelo";}
+    if(a == CORES::VERMELHO ) -> {resp="Vermelho";}
+
+    return resp;
+}

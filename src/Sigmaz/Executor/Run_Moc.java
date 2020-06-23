@@ -28,6 +28,9 @@ public class Run_Moc{
         Run_Value mAST = new Run_Value(mRunTime, mEscopo);
         mAST.init(mValor, eAST.getValor());
 
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
 
         if (mAST.getIsNulo()) {
             mEscopo.criarConstanteNula(eAST.getNome(), mAST.getRetornoTipo());

@@ -60,6 +60,11 @@ public class Run_Struct {
         return mTamanho;
     }
 
+    public String getModo(AST eAST) {
+        return eAST.getBranch("VISIBILITY").getNome();
+    }
+
+
     public void init(String eNome, AST ASTCorrente, Escopo BuscadorDeArgumentos) {
 
         mEscopo = new Escopo(mRunTime, null);
@@ -139,18 +144,27 @@ public class Run_Struct {
 
             if (ASTC.mesmoTipo("DEFINE")) {
 
-                Run_Def mAST = new Run_Def(mRunTime, mEscopo);
-                mAST.init(ASTC);
+               if( !getModo(ASTC).contentEquals("EXTERN")){
+                   Run_Def mAST = new Run_Def(mRunTime, mEscopo);
+                   mAST.init(ASTC);
 
-                mEscopo.guardarStruct(ASTC);
+                   mEscopo.guardarStruct(ASTC);
+               }
+
+
 
             } else if (ASTC.mesmoTipo("MOCKIZ")) {
 
+                if( !getModo(ASTC).contentEquals("EXTERN")){
 
-                Run_Moc mAST = new Run_Moc(mRunTime, mEscopo);
-                mAST.init(ASTC);
+                    Run_Moc mAST = new Run_Moc(mRunTime, mEscopo);
+                    mAST.init(ASTC);
 
-                mEscopo.guardarStruct(ASTC);
+                    mEscopo.guardarStruct(ASTC);
+
+                }
+
+
 
             }
 
@@ -407,11 +421,11 @@ public class Run_Struct {
 
         //   System.out.println(" STRUCT :: "  +this.getNome());
 
-        for (Index_Function mIndex_Function : mEscopo.getOO().getFunctions()) {
+        for (Index_Function mIndex_Function : mEscopo.getOO().getFunctions_All()) {
             // System.out.println("\t - " + mIndex_Function.getNome());
         }
 
-        for (Index_Function mIndex_Function : mEscopo.getOO().getFunctions()) {
+        for (Index_Function mIndex_Function : mEscopo.getOO().getFunctions_All()) {
 
             //  System.out.println("\t - Funcao :  " +mIndex_Function.getNome());
             //  for (AST ArgumentoC : mArgumentos) {
@@ -474,6 +488,8 @@ public class Run_Struct {
         return mRet;
     }
 
+
+
     public void init_Action(AST ASTCorrente, Escopo BuscadorDeVariaveis) {
 
         //   System.out.println(" -->> DENTRO : " + this.getStructNome() );
@@ -492,7 +508,7 @@ public class Run_Struct {
         // System.out.println("\t - Executando Dentro :  " +this.getNome());
 
 
-        for (Index_Action mIndex_Function : mEscopo.getOO().getActions()) {
+        for (Index_Action mIndex_Function : mEscopo.getOO().getActions_All()) {
 
             //  System.out.println("\t - Funcao :  " +mIndex_Function.getNome());
             //  for (AST ArgumentoC : mArgumentos) {

@@ -23,6 +23,7 @@ public class AST_Call {
             ASTPai.getASTS().add(AST_Corrente);
 
             AST AST_SENDING = AST_Corrente.criarBranch("SENDING");
+            AST AST_Argumentos = AST_SENDING.criarBranch("ARGUMENTS");
 
 
             Token TokenP = mCompiler.getTokenAvanteStatus(TokenTipo.SETA,"Era esperado uma SETA !");
@@ -33,7 +34,7 @@ public class AST_Call {
 
 
 
-            recebendoParametros(AST_SENDING);
+            recebendoParametros(AST_Argumentos);
 
             Token TokenP3 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado PONTO E VIRGULA !");
 

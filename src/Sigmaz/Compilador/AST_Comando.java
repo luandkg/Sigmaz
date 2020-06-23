@@ -113,6 +113,45 @@ public class AST_Comando {
                 } else {
                     mCompiler.errarCompilacao("Era esperado um ponto e virgula ! : " + P3.getConteudo(), P3.getInicio());
                 }
+            } else if (P2.getTipo() == TokenTipo.SETA) {
+
+                ASTCorrente.setValor("STRUCT_EXTERN");
+
+
+                ReceberNovoEscopo(ASTCorrente);
+
+                Token P3 = mCompiler.getTokenAvante();
+
+                if (P3.getTipo() == TokenTipo.PONTOVIRGULA) {
+
+                    if (mGuardeASTSub != null) {
+                        mGuardeASTSub.setValor("STRUCT_ACT");
+                    }
+
+                } else if (P3.getTipo() == TokenTipo.IGUAL) {
+
+                    AST ASTDireita = ASTCorrente.copiar();
+                    ASTDireita.setTipo("SETTABLE");
+
+                    ASTCorrente.getASTS().clear();
+                    ASTCorrente.setNome("");
+                    ASTCorrente.setValor("");
+
+                    ASTCorrente.setTipo("APPLY");
+                    ASTCorrente.getASTS().add(ASTDireita);
+
+                    AST ASTC = ASTCorrente.criarBranch("VALUE");
+
+                    AST_Value mAST = new AST_Value(mCompiler);
+
+                    mAST.init(ASTC);
+
+                    ASTDireita.setValor("STRUCT_EXTERN");
+
+                } else {
+                    mCompiler.errarCompilacao("Era esperado um ponto e virgula ! : " + P3.getConteudo(), P3.getInicio());
+                }
+
 
 
             } else if (P2.getTipo() == TokenTipo.PARENTESES_ABRE) {

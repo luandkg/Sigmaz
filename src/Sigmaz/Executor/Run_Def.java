@@ -32,6 +32,9 @@ public class Run_Def {
 
        // System.out.println("Retornou  -> Def " + eAST.getNome() + " : " + mAST.getRetornoTipo() + " = " + mAST.getConteudo() + " -> " + mAST.getModulante());
 
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
 
         if (mAST.getIsNulo()) {
             mEscopo.criarDefinicaoNula(eAST.getNome(), mAST.getRetornoTipo());

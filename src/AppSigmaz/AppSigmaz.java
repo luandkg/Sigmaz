@@ -3,93 +3,162 @@ package AppSigmaz;
 import Sigmaz.Sigmaz;
 import Sigmaz.CSigmaz;
 
+import java.util.ArrayList;
+
 public class AppSigmaz {
 
     public static void main(String[] args) {
 
-        UM();
-
-      //  TESTE_GERAL();
-
-    }
+        ArrayList<String> mArquivos = Carregar_Arquivos();
 
 
+        int TESTE = 1;
 
-    public static void UM(){
+        int ARQUIVO = 36;
 
-        //String arquivo = "res/01 - init.sigmaz";
-        // String arquivo = "res/02 - arguments.sigmaz";
-        // String arquivo = "res/03 - define.sigmaz";
-        // String arquivo = "res/04 - require.sigmaz";
-        //String arquivo = "res/05 - function.sigmaz";
-        //  String arquivo = "res/06 - functions2.sigmaz";
-        // String arquivo = "res/07 - mockiz.sigmaz";
-        //   String arquivo = "res/08 - matches.sigmaz";
-        //    String arquivo = "res/09 - condition.sigmaz";
-        //   String arquivo = "res/10 - while.sigmaz";
-        // String arquivo = "res/11 - cancel.sigmaz";
-        // String arquivo = "res/12 - continue.sigmaz";
-        //  String arquivo = "res/13 - step.sigmaz";
-        //String arquivo = "res/14 - stepdef.sigmaz";
-        //String arquivo = "res/15 - when.sigmaz";
-        //  String arquivo = "res/16 - all.sigmaz";
-        //String arquivo = "res/17 - test.sigmaz";
-        // String arquivo = "res/18 - operations.sigmaz";
-        // String arquivo = "res/19 - cast.sigmaz";
-        // String arquivo = "res/20 - cast2.sigmaz";
-        // String arquivo = "res/21 - struct.sigmaz";
-        //  String arquivo = "res/22 - internal.sigmaz";
-        //String arquivo = "res/23 - oo.sigmaz";
-        //   String arquivo = "res/24 - oo2.sigmaz";
-        //String arquivo = "res/25 - recursao.sigmaz";
-        // String arquivo = "res/26 - oorecursao.sigmaz";
-         //String arquivo = "res/27 - construtor.sigmaz";
-        // String arquivo = "res/28 - heranca.sigmaz";
-       // String arquivo = "res/29 - initheranca.sigmaz";
-     //   String arquivo = "res/30 - initheranca2.sigmaz";
-        String arquivo = "res/31 - stages.sigmaz";
 
-        String saida = "res/Sigmaz.sigmad";
 
-        Sigmaz SigmazC = new Sigmaz();
+        if (TESTE == 1) {
 
-        SigmazC.init(arquivo, saida);
+            UM(ARQUIVO, mArquivos);
+
+        } else if (TESTE == 2) {
+
+            ESTRUTURAL(ARQUIVO, mArquivos);
+
+        } else {
+
+            TESTE_GERAL(mArquivos);
+
+
+        }
+
 
     }
 
-    public static void TESTE_GERAL() {
+    public static ArrayList<String> Carregar_Arquivos() {
+
+        ArrayList<String> mArquivos = new ArrayList<String>();
+
+        // INICIANTE
+
+        mArquivos.add("res/01 - init.sigmaz");
+        mArquivos.add("res/02 - arguments.sigmaz");
+        mArquivos.add("res/03 - define.sigmaz");
+        mArquivos.add("res/04 - require.sigmaz");
+        mArquivos.add("res/05 - function.sigmaz");
+        mArquivos.add("res/06 - functions2.sigmaz");
+        mArquivos.add("res/07 - mockiz.sigmaz");
+        mArquivos.add("res/08 - matches.sigmaz");
+
+        // STATEMENTS
+
+        mArquivos.add("res/09 - condition.sigmaz");
+        mArquivos.add("res/10 - while.sigmaz");
+        mArquivos.add("res/11 - cancel.sigmaz");
+        mArquivos.add("res/12 - continue.sigmaz");
+        mArquivos.add("res/13 - step.sigmaz");
+        mArquivos.add("res/14 - stepdef.sigmaz");
+        mArquivos.add("res/15 - when.sigmaz");
+        mArquivos.add("res/16 - all.sigmaz");
+        mArquivos.add("res/17 - test.sigmaz");
+        mArquivos.add("res/18 - operations.sigmaz");
+
+        // ESTRUTURANTES
+
+        mArquivos.add("res/19 - cast.sigmaz");
+        mArquivos.add("res/20 - cast2.sigmaz");
+        mArquivos.add("res/21 - struct.sigmaz");
+        mArquivos.add("res/22 - internal.sigmaz");
+        mArquivos.add("res/23 - oo.sigmaz");
+        mArquivos.add("res/24 - oo2.sigmaz");
+        mArquivos.add("res/25 - recursao.sigmaz");
+        mArquivos.add("res/26 - oorecursao.sigmaz");
+        mArquivos.add("res/27 - construtor.sigmaz");
+
+        // HERANCA
+
+        mArquivos.add("res/28 - heranca.sigmaz");
+        mArquivos.add("res/29 - initheranca.sigmaz");
+        mArquivos.add("res/30 - initheranca2.sigmaz");
+        mArquivos.add("res/31 - stages.sigmaz");
+
+        // OUTROS
+
+        mArquivos.add("res/32 - stages2.sigmaz");
+        mArquivos.add("res/33 - oo.sigmaz");
+        mArquivos.add("res/34 - visibility.sigmaz");
+        mArquivos.add("res/35 - extern.sigmaz");
+        mArquivos.add("res/36 - externs.sigmaz");
+
+        return mArquivos;
+    }
+
+    public static void UM(int eIndice, ArrayList<String> mArquivos) {
+
+
+        int iContando = 0;
+        boolean enc = false;
+
+        for (String mArquivo : mArquivos) {
+            iContando += 1;
+            if (iContando == eIndice) {
+
+                enc = true;
+
+                String saida = "res/Sigmaz.sigmad";
+
+                Sigmaz SigmazC = new Sigmaz();
+
+                SigmazC.init(mArquivo, saida);
+
+                break;
+            }
+        }
+
+        if (!enc) {
+            System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+    }
+
+    public static void ESTRUTURAL(int eIndice, ArrayList<String> mArquivos) {
+
+
+        int iContando = 0;
+        boolean enc = false;
+
+        for (String mArquivo : mArquivos) {
+            iContando += 1;
+            if (iContando == eIndice) {
+
+                enc = true;
+
+                String saida = "res/Sigmaz.sigmad";
+
+                Sigmaz SigmazC = new Sigmaz();
+
+                SigmazC.estrutural(mArquivo, saida);
+
+                break;
+            }
+        }
+
+        if (!enc) {
+            System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+    }
+
+    public static void TESTE_GERAL(ArrayList<String> mArquivos) {
 
         CSigmaz mCSigmaz = new CSigmaz();
 
-
-        mCSigmaz.adicionar("res/01 - init.sigmaz");
-        mCSigmaz.adicionar("res/02 - arguments.sigmaz");
-        mCSigmaz.adicionar("res/03 - define.sigmaz");
-        mCSigmaz.adicionar("res/04 - require.sigmaz");
-        mCSigmaz.adicionar("res/05 - function.sigmaz");
-        mCSigmaz.adicionar("res/06 - functions2.sigmaz");
-        mCSigmaz.adicionar("res/07 - mockiz.sigmaz");
-        mCSigmaz.adicionar("res/08 - matches.sigmaz");
-        mCSigmaz.adicionar("res/09 - condition.sigmaz");
-        mCSigmaz.adicionar("res/10 - while.sigmaz");
-        mCSigmaz.adicionar("res/11 - cancel.sigmaz");
-        mCSigmaz.adicionar("res/12 - continue.sigmaz");
-        mCSigmaz.adicionar("res/13 - step.sigmaz");
-        mCSigmaz.adicionar("res/14 - stepdef.sigmaz");
-        mCSigmaz.adicionar("res/15 - when.sigmaz");
-        mCSigmaz.adicionar("res/16 - all.sigmaz");
-        mCSigmaz.adicionar("res/17 - test.sigmaz");
-        mCSigmaz.adicionar("res/18 - operations.sigmaz");
-        mCSigmaz.adicionar("res/19 - cast.sigmaz");
-        mCSigmaz.adicionar("res/20 - cast2.sigmaz");
-        mCSigmaz.adicionar("res/21 - struct.sigmaz");
-        mCSigmaz.adicionar("res/22 - internal.sigmaz");
-        mCSigmaz.adicionar("res/23 - oo.sigmaz");
-        mCSigmaz.adicionar("res/24 - oo2.sigmaz");
-        mCSigmaz.adicionar("res/25 - recursao.sigmaz");
-        mCSigmaz.adicionar("res/26 - oorecursao.sigmaz");
-        mCSigmaz.adicionar("res/28 - heranca.sigmaz");
-
+        for (String mArquivo : mArquivos) {
+            mCSigmaz.adicionar(mArquivo);
+        }
 
 
         mCSigmaz.init();

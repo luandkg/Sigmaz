@@ -12,7 +12,7 @@ public class AST_InitStruct {
         mCompiler = eCompiler;
     }
 
-    public void init(AST ASTPai, String NomeStruct) {
+    public void init(AST ASTPai, String NomeStruct,String Visibilidade) {
 
         Token TokenC = mCompiler.getTokenAvante();
 
@@ -21,6 +21,11 @@ public class AST_InitStruct {
             AST AST_Corrente = new AST("INIT");
             AST_Corrente.setNome(TokenC.getConteudo());
             ASTPai.getASTS().add(AST_Corrente);
+
+
+            AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
+            AST_Visibilidade.setNome(Visibilidade);
+
 
             AST AST_Call = AST_Corrente.criarBranch("CALL");
             AST_Call.setValor("FALSE");

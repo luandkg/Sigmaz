@@ -99,7 +99,7 @@ public class AST_All {
 
 
 
-        AST_Value mAST = new AST_Value(mCompiler);
+        AST_Value_Argument mAST = new AST_Value_Argument(mCompiler);
         mAST.ReceberArgumentos(AST_CASE);
 
        // AST_CONDITION.setTipo("CONDITION");

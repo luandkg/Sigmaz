@@ -12,13 +12,10 @@ act operando(){
     def a3: bool = true;
 
 
-
     def t1 : bool = a1 == a2;
 
 
-
     def a : num = dividir(6,2);
-
 
 
     def b : num = 15;
@@ -28,14 +25,9 @@ act operando(){
 
     def bl : bool = true;
 
-
-
-    #def ll : bool = igual(e,igual(false,true));
+    def ll : bool = igual(bl,igual(false,false));
 
     invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
 
 }
 
-func igual(a:bool,b:bool) : bool {
-    return b;
-}

@@ -14,13 +14,22 @@ public class RunTime {
     private DataTypes mDataTypes;
 
     private Escopo mEscopoGlobal;
+
     private ArrayList<Run_Struct> mHeap;
+    private ArrayList<Run_Extern> mExtern;
 
     private ArrayList<AST> mStages;
 
     private long mHEAPID;
 
     private boolean mExterno;
+
+    private int mContador_Actions;
+    private int mContador_Casts;
+    private int mContador_Functions;
+    private int mContador_Opertations;
+    private int mContador_Structs;
+    private int mContador_Stages;
 
     public RunTime() {
 
@@ -31,14 +40,44 @@ public class RunTime {
         mDataTypes = new DataTypes();
 
         mHeap = new ArrayList<Run_Struct>();
+        mExtern = new ArrayList<Run_Extern>();
 
         mEscopoGlobal = null;
-        mHEAPID = 0;
 
         mExterno = true;
 
         mStages = new ArrayList<AST>();
+
+
+        limpar();
+
     }
+
+    public void limpar() {
+
+
+        mASTS.clear();
+        mErros.clear();
+
+
+        mHEAPID = 0;
+
+        mContador_Actions = 0;
+        mContador_Casts = 0;
+        mContador_Functions = 0;
+        mContador_Opertations = 0;
+        mContador_Structs = 0;
+        mContador_Stages = 0;
+
+
+        mHeap.clear();
+        mExtern.clear();
+
+        mStages.clear();
+
+
+    }
+
 
     public void externarlizar() {
         mExterno = true;
@@ -61,6 +100,10 @@ public class RunTime {
         return mHeap;
     }
 
+    public ArrayList<Run_Extern> getExtern() {
+        return mExtern;
+    }
+
     public ArrayList<AST> getASTS() {
         return mASTS;
     }
@@ -71,15 +114,14 @@ public class RunTime {
 
     public void init(String eArquivo) {
 
-        mASTS.clear();
-        mErros.clear();
-        mHeap.clear();
-        mHEAPID = 0;
-        mStages.clear();
+
+        limpar();
 
         Documentador DC = new Documentador();
 
         mASTS = DC.Decompilar(eArquivo);
+
+        contagem();
 
 
     }
@@ -94,19 +136,62 @@ public class RunTime {
         mHeap.add(eEscopo);
     }
 
+
+    public void removerHeap(String eNome) {
+
+        for (Run_Struct mRun_Struct : mHeap) {
+            if (mRun_Struct.mesmoNome(eNome)) {
+                mHeap.remove(mRun_Struct);
+                break;
+            }
+        }
+
+    }
+
+
     public Run_Struct getRun_Struct(String eNome) {
 
         Run_Struct mRet = null;
+        boolean enc = false;
 
         for (Run_Struct mRun_Struct : mHeap) {
             if (mRun_Struct.mesmoNome(eNome)) {
                 mRet = mRun_Struct;
+                enc = true;
                 break;
             }
         }
+
+        if (!enc) {
+            mErros.add("Nao foi possivel encontrar a struct : " + eNome);
+        }
+
         return mRet;
 
     }
+
+
+    public Run_Extern getRun_Extern(String eNome) {
+
+        Run_Extern mRet = null;
+        boolean enc = false;
+
+        for (Run_Extern mRun_Struct : mExtern) {
+            if (mRun_Struct.mesmoNome(eNome)) {
+                mRet = mRun_Struct;
+                enc = true;
+                break;
+            }
+        }
+
+        if (!enc) {
+            mErros.add("Nao foi possivel encontrar a struct : " + eNome);
+        }
+
+        return mRet;
+
+    }
+
 
     public AST getSigmaz() {
 
@@ -120,6 +205,37 @@ public class RunTime {
         return mRet;
     }
 
+
+    public void contagem() {
+
+        for (AST ASTCGlobal : mASTS) {
+
+            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
+
+                for (AST ASTC : ASTCGlobal.getASTS()) {
+
+
+                    if (ASTC.mesmoTipo("FUNCTION")) {
+                        mContador_Functions += 1;
+                    } else if (ASTC.mesmoTipo("ACTION")) {
+                        mContador_Actions += 1;
+                    } else if (ASTC.mesmoTipo("OPERATION")) {
+                        mContador_Opertations += 1;
+                    } else if (ASTC.mesmoTipo("CAST")) {
+                        mContador_Casts += 1;
+                    } else if (ASTC.mesmoTipo("STAGES")) {
+                        mContador_Stages += 1;
+                    } else if (ASTC.mesmoTipo("STRUCT")) {
+                        mContador_Structs += 1;
+                    }
+
+                }
+            }
+        }
+
+    }
+
+
     public void run() {
 
         mHeap.clear();
@@ -131,6 +247,8 @@ public class RunTime {
         Global.setNome("GLOBAL");
 
         mEscopoGlobal = Global;
+
+        ArrayList<AST> mStructs = new ArrayList<AST>();
 
         for (AST ASTCGlobal : mASTS) {
 
@@ -153,8 +271,25 @@ public class RunTime {
 
                         mStages.add(ASTC);
 
+                    } else if (ASTC.mesmoTipo("STRUCT")) {
+
+                        mStructs.add(ASTC);
+
+
+
                     }
 
+                }
+
+
+                for (AST mStruct : mStructs) {
+                    Run_Extern mRE = new Run_Extern(this);
+                    mRE.init(mStruct);
+                    mExtern.add(mRE);
+                }
+
+                for (Run_Extern mRE : mExtern) {
+                    mRE.run();
                 }
 
                 for (AST ASTC : ASTCGlobal.getASTS()) {
@@ -205,12 +340,75 @@ public class RunTime {
 
 
             }
+
+
+
         }
 
         if (mASTS.size() == 0) {
             mErros.add("Sigmaz Vazio !");
         }
 
+
+    }
+
+    public void estrutura() {
+
+        mHeap.clear();
+        mErros.clear();
+        mStages.clear();
+
+
+        Estrutural mEstrutural = new Estrutural();
+
+
+        for (AST ASTCGlobal : mASTS) {
+
+            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
+
+                for (AST ASTC : ASTCGlobal.getASTS()) {
+
+
+                    if (ASTC.mesmoTipo("FUNCTION")) {
+                        mEstrutural.guardar(ASTC);
+                    } else if (ASTC.mesmoTipo("ACTION")) {
+                        mEstrutural.guardar(ASTC);
+                    } else if (ASTC.mesmoTipo("OPERATION")) {
+                        mEstrutural.guardar(ASTC);
+                    } else if (ASTC.mesmoTipo("CAST")) {
+                        mEstrutural.guardar(ASTC);
+                    } else if (ASTC.mesmoTipo("STRUCT")) {
+                        mEstrutural.guardar(ASTC);
+                    } else if (ASTC.mesmoTipo("STAGES")) {
+                        mEstrutural.guardar(ASTC);
+                    } else if (ASTC.mesmoTipo("CALL")) {
+
+                        mEstrutural.guardar(ASTC);
+
+
+                    } else if (ASTC.mesmoTipo("DEFINE")) {
+                        mEstrutural.guardar(ASTC);
+
+                    } else if (ASTC.mesmoTipo("MOCKIZ")) {
+                        mEstrutural.guardar(ASTC);
+
+                    }
+
+                }
+
+
+            }
+
+            if (mASTS.size() == 0) {
+                mErros.add("Sigmaz Vazio !");
+            } else {
+
+                mEstrutural.mostrar();
+
+            }
+
+
+        }
 
     }
 
@@ -277,5 +475,39 @@ public class RunTime {
 
     }
 
+    public int getInstrucoes() {
+
+        int ret = 0;
+
+        for (AST ASTCGlobal : mASTS) {
+            ret += ASTCGlobal.getInstrucoes();
+        }
+
+        return ret;
+    }
+
+    public int getActions() {
+        return mContador_Actions;
+    }
+
+    public int getCasts() {
+        return mContador_Casts;
+    }
+
+    public int getFunctions() {
+        return mContador_Functions;
+    }
+
+    public int getOperations() {
+        return mContador_Opertations;
+    }
+
+    public int getStages() {
+        return mContador_Stages;
+    }
+
+    public int getStructs() {
+        return mContador_Structs;
+    }
 
 }

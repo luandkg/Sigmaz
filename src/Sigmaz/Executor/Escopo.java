@@ -28,7 +28,7 @@ public class Escopo {
 
 
     private OO mOO;
-    private AO mAO;
+    private OO mAO;
 
 
     public void setNome(String eNome) {
@@ -65,7 +65,7 @@ public class Escopo {
         mContinuar = false;
 
 
-        mAO = new AO(this);
+        mAO = new OO(this);
 
         mOO = new OO(this);
 
@@ -89,7 +89,7 @@ public class Escopo {
         return mOO;
     }
 
-    public AO getAO() {
+    public OO getAO() {
         return mAO;
     }
 
@@ -397,4 +397,8 @@ public class Escopo {
 
         return ret;
     }
-}
+
+
+
+
+    }

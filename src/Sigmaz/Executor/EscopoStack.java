@@ -188,6 +188,8 @@ public class EscopoStack {
             Novo.setObjeto(eValor);
             Novo.setValor(eRef);
 
+         //   System.out.println("\t - Passando Parametro Struct : " + eRef );
+
             mEscopo.getParametros().add(Novo);
 
         }
@@ -212,6 +214,11 @@ public class EscopoStack {
     public void setDefinidoStruct(String eNome, String eValor) {
 
         Item mItem = getItem(eNome);
+
+        if (mRunTime.getErros().size() > 0) {
+           return;
+        }
+
         if (mItem.getModo() == 0) {
             mItem.setValor(eValor);
             mItem.setNulo(false);
@@ -311,6 +318,8 @@ public class EscopoStack {
         if (!enc) {
             mRunTime.getErros().add("Variavel nao Encontrada : " + eNome);
         }
+
+
 
         return ret;
     }

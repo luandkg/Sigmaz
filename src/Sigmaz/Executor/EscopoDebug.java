@@ -158,7 +158,17 @@ public class EscopoDebug {
             System.out.println(" ######################### ##### ############################ ");
 
             return;
+        } else{
+
+            mostrar_Struct(mEstrutura);
+
         }
+
+
+
+    }
+
+    public void mostrar_Struct(Escopo mEstrutura){
 
         System.out.println("\n ######################### STRUCT - " + mEstrutura.getNomeStruct() + " ############################ ");
 
@@ -207,7 +217,6 @@ public class EscopoDebug {
 
 
         System.out.println(" ######################### ##### ############################ ");
-
     }
 
     public void mostrarItem(Item eItem){
@@ -229,9 +238,6 @@ public class EscopoDebug {
             }
 
         }
-
-
-
 
 
     }
@@ -568,5 +574,7 @@ public class EscopoDebug {
         System.out.println(" ######################### ##### ############################ ");
 
     }
+
+
 
 }

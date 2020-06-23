@@ -8,11 +8,15 @@ public class Heranca {
 
     private Analisador mAnalisador;
 
+    private boolean mExterno;
+
     public Heranca(Analisador eAnalisador) {
 
         mAnalisador = eAnalisador;
+        mExterno = true;
 
     }
+
 
 
     public void init(ArrayList<AST> mTodos) {
@@ -121,7 +125,7 @@ public class Heranca {
 
     public void Realizar_Heranca(AST Struct_AST, ArrayList<String> mDependencias, ArrayList<AST> mEstruturas) {
 
-        System.out.println("Realizando Heranca : " + Struct_AST.getNome());
+        mAnalisador.mensagem("Realizando Heranca : " + Struct_AST.getNome());
 
 
         for (String mDepende : mDependencias) {
@@ -139,7 +143,7 @@ public class Heranca {
 
         for (AST migrando : Struct_Inits.getASTS()) {
 
-            System.out.println("  - Init da Struct : " + Struct_AST.getNome() + "(" + getAssinatura(migrando.getBranch("ARGUMENTS")) + ")");
+            mAnalisador.mensagem("  - Init da Struct : " + Struct_AST.getNome() + "(" + getAssinatura(migrando.getBranch("ARGUMENTS")) + ")");
             S_inits += 1;
 
         }
@@ -148,7 +152,7 @@ public class Heranca {
         for (AST Procurando : mEstruturas) {
             if (Procurando.mesmoNome(eNome)) {
 
-                System.out.println("  - Herdando : " + Procurando.getNome());
+                mAnalisador.mensagem("  - Herdando : " + Procurando.getNome());
 
 
                 AST Heranca_Inits = Procurando.getBranch("INITS");
@@ -157,14 +161,14 @@ public class Heranca {
 
                 for (AST migrando : Heranca_Inits.getASTS()) {
 
-                    System.out.println("  - Init da Heranca : " + Procurando.getNome() + "(" + getAssinatura(migrando.getBranch("ARGUMENTS")) + ")");
+                    mAnalisador.mensagem("  - Init da Heranca : " + Procurando.getNome() + "(" + getAssinatura(migrando.getBranch("ARGUMENTS")) + ")");
                     H_inits += 1;
 
                 }
 
                 if (H_inits > 0) {
 
-                    System.out.println("  - Obrigatoriedade de Init em " + Struct_AST.getNome() + " -> " + Procurando.getNome());
+                    mAnalisador.mensagem("  - Obrigatoriedade de Init em " + Struct_AST.getNome() + " -> " + Procurando.getNome());
 
                     if (S_inits == 0) {
                         System.out.println("  - Struct " + Struct_AST.getNome() + " Nao consegue herdar  " + Procurando.getNome());
@@ -174,43 +178,42 @@ public class Heranca {
                         boolean compativel = false;
 
                         for (AST migrando_struct : Struct_Inits.getASTS()) {
-                            System.out.println("  - Struct Init : " + Struct_AST.getNome() + "(" + getAssinatura(migrando_struct.getBranch("ARGUMENTS")) + ")");
+                            mAnalisador.mensagem("  - Struct Init : " + Struct_AST.getNome() + "(" + getAssinatura(migrando_struct.getBranch("ARGUMENTS")) + ")");
 
                             AST mCall = migrando_struct.getBranch("CALL");
 
                             if (mCall.mesmoValor("TRUE")) {
-                                System.out.println("  -  VALOR : " + mCall.getValor());
+                                mAnalisador.mensagem("  -  VALOR : " + mCall.getValor());
 
                                 if (mCall.existeBranch("ARGUMENTS")) {
                                     int t = getContagemAssinatura(mCall.getBranch("ARGUMENTS"));
                                     int r = getContagemAssinatura(migrando_struct.getBranch("ARGUMENTS"));
 
-                                    System.out.println("  - Args Init Call : " + (getContagemAssinatura(mCall.getBranch("ARGUMENTS"))));
-                                    System.out.println("  - Ass Init Call : " + (getAssinatura(mCall.getBranch("ARGUMENTS"))));
+                                    mAnalisador.mensagem("  - Args Init Call : " + (getContagemAssinatura(mCall.getBranch("ARGUMENTS"))));
+                                    mAnalisador.mensagem("  - Ass Init Call : " + (getAssinatura(mCall.getBranch("ARGUMENTS"))));
 
-                                    if (t == r) {
+                                    // if (t == r) {
 
-                                        for (AST migrando_heranca : Heranca_Inits.getASTS()) {
-                                            if (t==getContagemAssinatura(migrando_struct.getBranch("ARGUMENTS"))){
-                                                compativel = true;
-                                                System.out.println("  - Heranca Init : " + Procurando.getNome() + "(" + getAssinatura(migrando_heranca.getBranch("ARGUMENTS")) + ")");
+                                    for (AST migrando_heranca : Heranca_Inits.getASTS()) {
+                                        //  if (t==getContagemAssinatura(migrando_struct.getBranch("ARGUMENTS"))){
+                                        compativel = true;
+                                        mAnalisador.mensagem("  - Heranca Init : " + Procurando.getNome() + "(" + getAssinatura(migrando_heranca.getBranch("ARGUMENTS")) + ")");
 
-                                            }
+                                        //  }
 
-                                        }
                                     }
+                                    //  }
                                 }
 
                             }
 
 
-
                             if (compativel) {
-                                System.out.println("  - Struct " + Struct_AST.getNome() + " pode herdar  " + Procurando.getNome());
+                                mAnalisador.mensagem("  - Struct " + Struct_AST.getNome() + " pode herdar  " + Procurando.getNome());
 
 
                             } else {
-                                System.out.println("  - Struct " + Struct_AST.getNome() + " Nao consegue herdar  " + Procurando.getNome());
+                                mAnalisador.mensagem("  - Struct " + Struct_AST.getNome() + " Nao consegue herdar  " + Procurando.getNome());
                                 mAnalisador.getErros().add("  - Struct " + Struct_AST.getNome() + " Nao consegue herdar  " + Procurando.getNome());
                             }
 
@@ -307,7 +310,7 @@ public class Heranca {
 
                 mParametragem += "<" + mAST.getValor() + "> ";
 
-                mAnalisador.analisandoDefines(mAST);
+                mAnalisador.getAnalisar_Outros().analisandoDefines(mAST);
 
 
             } else {

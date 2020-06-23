@@ -10,12 +10,10 @@ public class Analisador {
 
     private ArrayList<String> mErros;
 
-    private ArrayList<String> mPrimitivos;
 
-    private ArrayList<String> mFunctions;
-    private ArrayList<String> mFunctions_Nomes;
-    private ArrayList<String> mCasts_Nomes;
-    private ArrayList<String> mStructs_Nomes;
+
+    private Analisar_Function mAnalisar_Function;
+    private Analisar_Action mAnalisar_Action;
 
     private Analisar_All mAnalisar_All;
     private Analisar_When mAnalisar_When;
@@ -24,8 +22,13 @@ public class Analisador {
     private Analisar_While mAnalisar_While;
     private Analisar_Argumentos mAnalisar_Argumentos;
     private Analisar_Apply mAnalisar_Apply;
+    private Analisar_Execute mAnalisar_Execute;
+
+    private Analisar_Outros mAnalisar_Outros;
 
     private Heranca mHeranca;
+
+    private boolean mExterno;
 
     public Analisador() {
 
@@ -33,16 +36,10 @@ public class Analisador {
 
 
         mErros = new ArrayList<>();
-        mPrimitivos = new ArrayList<>();
 
-        mPrimitivos.add("bool");
-        mPrimitivos.add("string");
-        mPrimitivos.add("num");
 
-        mFunctions = new ArrayList<String>();
-        mFunctions_Nomes = new ArrayList<String>();
-        mCasts_Nomes = new ArrayList<String>();
-        mStructs_Nomes= new ArrayList<String>();
+        mAnalisar_Function = new Analisar_Function(this);
+        mAnalisar_Action = new Analisar_Action(this);
 
         mAnalisar_All = new Analisar_All(this);
         mAnalisar_When = new Analisar_When(this);
@@ -51,8 +48,52 @@ public class Analisador {
         mAnalisar_While = new Analisar_While(this);
         mAnalisar_Argumentos = new Analisar_Argumentos(this);
         mAnalisar_Apply = new Analisar_Apply(this);
+        mAnalisar_Execute = new Analisar_Execute(this);
+
+        mAnalisar_Outros = new Analisar_Outros(this);
 
         mHeranca = new Heranca(this);
+        mExterno = true;
+
+    }
+
+    public Analisar_Function getAnalisar_Function(){return mAnalisar_Function;}
+    public Analisar_Action getAnalisar_Action(){return mAnalisar_Action;}
+
+
+    public Analisar_All getAnalisar_All(){return mAnalisar_All;}
+    public Analisar_When getAnalisar_When(){return mAnalisar_When;}
+    public Analisar_Step getAnalisar_Step(){return mAnalisar_Step;}
+    public Analisar_Condition getAnalisar_Condition(){return mAnalisar_Condition;}
+    public Analisar_While getAnalisar_While(){return mAnalisar_While;}
+    public Analisar_Argumentos getAnalisar_Argumentos(){return mAnalisar_Argumentos;}
+    public Analisar_Apply getAnalisar_Apply(){return mAnalisar_Apply;}
+    public Analisar_Execute getAnalisar_Execute(){return mAnalisar_Execute;}
+
+    public Analisar_Outros getAnalisar_Outros(){return mAnalisar_Outros;}
+
+
+
+
+    public void externarlizar() {
+        mExterno = true;
+    }
+
+    public void internalizar() {
+        mExterno = false;
+    }
+
+    public boolean getExterno() {
+        return mExterno;
+    }
+
+    public void mensagem(String eMensagem) {
+
+        if (mExterno) {
+
+            System.out.println(eMensagem);
+
+        }
 
     }
 
@@ -60,17 +101,18 @@ public class Analisador {
         return mErros;
     }
 
+    public ArrayList<String> getActions_Nomes() {
+        return mAnalisar_Outros.getActions_Nomes();
+    }
     public ArrayList<String> getFunctions_Nomes() {
-        return mFunctions_Nomes;
+        return mAnalisar_Outros.getFunctions_Nomes();
     }
 
     public void init(ArrayList<AST> eASTs) {
         mASTS = eASTs;
         mErros.clear();
-        mFunctions.clear();
-        mFunctions_Nomes.clear();
-        mCasts_Nomes.clear();
-        mStructs_Nomes.clear();
+
+        getAnalisar_Outros().limpar();
 
         ArrayList<String> mAlocados = new ArrayList<String>();
 
@@ -124,38 +166,8 @@ public class Analisador {
 
         ArrayList<String> mAlocados = copiarAlocados(mAlocadosAntes);
 
-        for (AST mAST : ASTPai.getASTS()) {
 
-            if (mAST.mesmoTipo("FUNCTION")) {
-
-                mFunctions_Nomes.add(mAST.getNome());
-
-            } else if (mAST.mesmoTipo("CAST")) {
-
-                if(!mCasts_Nomes.contains(mAST.getNome())){
-                    mCasts_Nomes.add(mAST.getNome());
-                }else{
-                    getErros().add("Cast Duplicado : " + mAST.getTipo());
-                }
-            } else if (mAST.mesmoTipo("STRUCT")) {
-
-                if(!mStructs_Nomes.contains(mAST.getNome())){
-                    mStructs_Nomes.add(mAST.getNome());
-                }else{
-                    getErros().add("Struct Duplicado : " + mAST.getTipo());
-                }
-            } else if (mAST.mesmoTipo("STAGES")) {
-
-                if(!mStructs_Nomes.contains(mAST.getNome())){
-                    mStructs_Nomes.add(mAST.getNome());
-                }else{
-                    getErros().add("Struct Duplicado : " + mAST.getTipo());
-                }
-
-            }
-
-        }
-
+        mAnalisar_Outros.inclusao(ASTPai);
 
         for (AST mAST : ASTPai.getASTS()) {
 
@@ -163,7 +175,7 @@ public class Analisador {
 
                 analisarAlocacao(mAST, mAlocados);
 
-                analisandoDefines(mAST);
+                mAnalisar_Outros.analisandoDefines(mAST);
                 analisarValoracao(ASTPai, mAlocadosAntes);
 
 
@@ -172,7 +184,7 @@ public class Analisador {
                 analisarAlocacao(mAST, mAlocados);
 
 
-                analisandoDefines(mAST);
+                mAnalisar_Outros.analisandoDefines(mAST);
                 analisarValoracao(ASTPai, mAlocadosAntes);
 
 
@@ -185,11 +197,11 @@ public class Analisador {
 
             if (mAST.mesmoTipo("ACTION")) {
 
-                analisarAction(mAST, mAlocados);
+                mAnalisar_Action.analisarAction(mAST, mAlocados);
 
             } else if (mAST.mesmoTipo("FUNCTION")) {
 
-                analisarFunction(mAST, mAlocados);
+               mAnalisar_Function.analisarFunction(mAST, mAlocados);
 
             } else if (mAST.mesmoTipo("CALL")) {
             } else if (mAST.mesmoTipo("INVOKE")) {
@@ -198,11 +210,16 @@ public class Analisador {
             } else if (mAST.mesmoTipo("MOCKIZ")) {
 
             } else if (mAST.mesmoTipo("OPERATION")) {
+
+                mAnalisar_Function.analisarFunction(mAST, mAlocados);
+
+
             } else if (mAST.mesmoTipo("CAST")) {
             } else if (mAST.mesmoTipo("STRUCT")) {
 
                 Analisar_Struct mAnalisar_Struct = new Analisar_Struct(this);
-               // mAnalisar_Struct.init_Struct(mAST,mAlocados);
+                mAnalisar_Struct.init_Struct(mAST,mAlocados);
+
             } else if (mAST.mesmoTipo("STAGES")) {
 
             } else {
@@ -215,201 +232,15 @@ public class Analisador {
 
         }
 
-    }
 
-
-
-    public void analisarFunction(AST ASTPai, ArrayList<String> mAlocadosAntes) {
-
-
-        ArrayList<String> mAlocados = copiarAlocados(mAlocadosAntes);
-
-
-        analisandoDefines(ASTPai);
-
-
-        String mParametragem = ASTPai.getNome() + " ( " + mAnalisar_Argumentos.analisarArguments(ASTPai.getBranch("ARGUMENTS"), mAlocados) + ") ";
-
-
-        if (!mFunctions.contains(mParametragem)) {
-            mFunctions.add(mParametragem);
-        } else {
-            mErros.add("Function Duplicada : " + mParametragem);
-        }
-
-
-        boolean retornou = false;
-
-        for (AST mAST : ASTPai.getBranch("BODY").getASTS()) {
-            boolean ret = analisarDentroFunction(mAST, mAlocados, false);
-            if (ret) {
-                retornou = true;
-            }
-        }
-
-        if (retornou == false) {
-            mErros.add("Function " + ASTPai.getNome() + " : Nao possui retorno !");
-        }
-
-    }
-
-    public boolean analisarDentroFunction(AST ASTPai, ArrayList<String> mAlocadosAntes, boolean laco) {
-
-        boolean retornou = false;
-
-        if (ASTPai.mesmoTipo("DEF")) {
-
-            analisandoDefines(ASTPai);
-            analisarValoracao(ASTPai, mAlocadosAntes);
-
-        } else if (ASTPai.mesmoTipo("MOC")) {
-
-            analisandoDefines(ASTPai);
-            analisarValoracao(ASTPai, mAlocadosAntes);
-
-
-        } else if (ASTPai.mesmoTipo("INVOKE")) {
-
-        } else if (ASTPai.mesmoTipo("RETURN")) {
-            retornou = true;
-        } else if (ASTPai.mesmoTipo("APPLY")) {
-
-            mAnalisar_Apply.analisar_Apply(ASTPai, mAlocadosAntes);
-
-
-        } else if (ASTPai.mesmoTipo("EXECUTE")) {
-        } else if (ASTPai.mesmoTipo("WHEN")) {
-
-            mAnalisar_When.analisar_When(ASTPai, mAlocadosAntes, true);
-
-
-        } else if (ASTPai.mesmoTipo("ALL")) {
-
-            mAnalisar_All.analisar_All(ASTPai, mAlocadosAntes, true);
-
-        } else if (ASTPai.mesmoTipo("IF")) {
-            mAnalisar_Condition.analisarCondicao(ASTPai, mAlocadosAntes, true, laco);
-        } else if (ASTPai.mesmoTipo("WHILE")) {
-            mAnalisar_While.analisarWhile(ASTPai, mAlocadosAntes, true);
-        } else if (ASTPai.mesmoTipo("STEP")) {
-            mAnalisar_Step.analisarStep(ASTPai, mAlocadosAntes, true);
-        } else if (ASTPai.mesmoTipo("STEPDEF")) {
-            mAnalisar_Step.analisarStepDef(ASTPai, mAlocadosAntes, true);
-        } else if (ASTPai.mesmoTipo("CANCEL")) {
-            if (!laco) {
-                mErros.add("CANCEL so pode existir dentro de um laco !");
-            }
-        } else if (ASTPai.mesmoTipo("CONTINUE")) {
-            if (!laco) {
-                mErros.add("CONTINUE so pode existir dentro de um laco !");
-            }
-        } else {
-            mErros.add("AST : " + ASTPai.getTipo());
-        }
-
-        return retornou;
-    }
-
-    public void analisarDentroAction(AST ASTPai, ArrayList<String> mAlocadosAntes, boolean laco) {
-
-        if (ASTPai.mesmoTipo("DEF")) {
-
-            analisarAlocacao(ASTPai, mAlocadosAntes);
-            analisarValoracao(ASTPai, mAlocadosAntes);
-
-            analisandoDefines(ASTPai);
-        } else if (ASTPai.mesmoTipo("MOC")) {
-
-            analisarAlocacao(ASTPai, mAlocadosAntes);
-            analisarValoracao(ASTPai, mAlocadosAntes);
-
-            analisandoDefines(ASTPai);
-        } else if (ASTPai.mesmoTipo("INVOKE")) {
-        } else if (ASTPai.mesmoTipo("APPLY")) {
-
-            mAnalisar_Apply.analisar_Apply(ASTPai, mAlocadosAntes);
-
-        } else if (ASTPai.mesmoTipo("EXECUTE")) {
-        } else if (ASTPai.mesmoTipo("WHEN")) {
-
-            mAnalisar_When.analisar_When(ASTPai, mAlocadosAntes, false);
-
-
-        } else if (ASTPai.mesmoTipo("ALL")) {
-
-            mAnalisar_All.analisar_All(ASTPai, mAlocadosAntes, false);
-
-
-        } else if (ASTPai.mesmoTipo("RETURN")) {
-            mErros.add("Action " + ASTPai.getNome() + " : Nao pode ter RETORNO !");
-        } else if (ASTPai.mesmoTipo("IF")) {
-            mAnalisar_Condition.analisarCondicao(ASTPai, mAlocadosAntes, false, laco);
-        } else if (ASTPai.mesmoTipo("WHILE")) {
-            mAnalisar_While.analisarWhile(ASTPai, mAlocadosAntes, false);
-        } else if (ASTPai.mesmoTipo("STEP")) {
-            mAnalisar_Step.analisarStep(ASTPai, mAlocadosAntes, false);
-        } else if (ASTPai.mesmoTipo("STEPDEF")) {
-            mAnalisar_Step.analisarStepDef(ASTPai, mAlocadosAntes, false);
-        } else if (ASTPai.mesmoTipo("CANCEL")) {
-            if (!laco) {
-                mErros.add("CANCEL so pode existir dentro de um laco !");
-            }
-        } else if (ASTPai.mesmoTipo("CONTINUE")) {
-            if (!laco) {
-                mErros.add("CONTINUE so pode existir dentro de um laco !");
-            }
-        } else {
-            mErros.add("AST : " + ASTPai.getTipo());
-        }
-
-    }
-
-    public void analisarAction(AST ASTPai, ArrayList<String> mAlocadosAntes) {
-
-        ArrayList<String> mAlocados = copiarAlocados(mAlocadosAntes);
-
-
-        String mParametrizando = "";
-
-        for (AST mAST : ASTPai.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoTipo("ARGUMENT")) {
-
-
-                if (!mAlocados.contains(mAST.getNome())) {
-                    mAlocados.add(mAST.getNome());
-                } else {
-                    getErros().add("Argumento Duplicado : " + mAST.getNome());
-                }
-
-                mParametrizando += "<" + mAST.getValor() + "> ";
-
-                analisandoDefines(mAST);
-
-            } else {
-                getErros().add("Tipo Desconhecido : " + mAST.getTipo());
-            }
-        }
-
-        for (AST mAST : ASTPai.getBranch("BODY").getASTS()) {
-
-            analisarDentroAction(mAST, mAlocados, false);
-
-
-        }
+        mAnalisar_Outros.exportarOperadores(ASTPai);
 
     }
 
 
-    public void analisandoDefines(AST ASTPai) {
 
-        if (mPrimitivos.contains(ASTPai.getValor())) {
-        } else if (mCasts_Nomes.contains(ASTPai.getValor())) {
-        } else if (mStructs_Nomes.contains(ASTPai.getValor())) {
 
-        } else {
-            mErros.add("Tipo deconhecido : " + ASTPai.getValor());
-        }
 
-    }
+
 
 }

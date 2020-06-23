@@ -50,11 +50,11 @@ public class Analisar_All {
 
                 if (dentroFunction) {
                     for (AST sAST : mAST.getASTS()) {
-                        mAnalisador.analisarDentroFunction(sAST,mAlocadosAntes, true);
+                        mAnalisador.getAnalisar_Function().analisarDentroFunction(sAST,mAlocadosAntes, true);
                     }
                 } else {
                     for (AST sAST : mAST.getASTS()) {
-                        mAnalisador.analisarDentroAction(sAST,mAlocadosAntes, true);
+                        mAnalisador.getAnalisar_Action().analisarDentroAction(sAST,mAlocadosAntes, true);
                     }
                 }
 

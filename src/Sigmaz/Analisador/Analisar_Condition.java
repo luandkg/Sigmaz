@@ -41,11 +41,11 @@ public class Analisar_Condition {
 
                 if (dentroFunction) {
                     for (AST sAST : mAST.getBranch("BODY").getASTS()) {
-                        mAnalisador.analisarDentroFunction(sAST,mAlocados,laco);
+                        mAnalisador.getAnalisar_Function().analisarDentroFunction(sAST,mAlocados,laco);
                     }
                 } else {
                     for (AST sAST : mAST.getBranch("BODY").getASTS()) {
-                        mAnalisador.analisarDentroAction(sAST,mAlocados,laco);
+                        mAnalisador.getAnalisar_Action().analisarDentroAction(sAST,mAlocados,laco);
                     }
                 }
 
@@ -57,11 +57,11 @@ public class Analisar_Condition {
 
                 if (dentroFunction) {
                     for (AST sAST : mAST.getASTS()) {
-                        mAnalisador.analisarDentroFunction(sAST,mAlocados,laco);
+                        mAnalisador.getAnalisar_Function().analisarDentroFunction(sAST,mAlocados,laco);
                     }
                 } else {
                     for (AST sAST : mAST.getASTS()) {
-                        mAnalisador.analisarDentroAction(sAST,mAlocados,laco);
+                        mAnalisador.getAnalisar_Action().analisarDentroAction(sAST,mAlocados,laco);
                     }
                 }
 
@@ -71,11 +71,11 @@ public class Analisar_Condition {
 
                 if (dentroFunction) {
                     for (AST sAST : mAST.getASTS()) {
-                        mAnalisador.analisarDentroFunction(sAST,mAlocados,laco);
+                        mAnalisador.getAnalisar_Function().analisarDentroFunction(sAST,mAlocados,laco);
                     }
                 } else {
                     for (AST sAST : mAST.getASTS()) {
-                        mAnalisador.analisarDentroAction(sAST,mAlocados,laco);
+                        mAnalisador.getAnalisar_Action().analisarDentroAction(sAST,mAlocados,laco);
                     }
                 }
             }

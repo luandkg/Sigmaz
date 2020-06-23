@@ -12,7 +12,7 @@ public class AST_Operation {
         mCompiler = eCompiler;
     }
 
-    public void init(AST ASTPai) {
+    public void init(AST ASTPai,String Visibilidade) {
 
         Token TokenC = mCompiler.getTokenAvante();
 
@@ -21,6 +21,9 @@ public class AST_Operation {
             AST AST_Corrente = new AST("OPERATION");
             AST_Corrente.setNome("MATCH");
             ASTPai.getASTS().add(AST_Corrente);
+
+            AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
+            AST_Visibilidade.setNome(Visibilidade);
 
             AST AST_Arguments = AST_Corrente.criarBranch("ARGUMENTS");
 
@@ -44,6 +47,9 @@ public class AST_Operation {
             AST AST_Corrente = new AST("OPERATION");
             AST_Corrente.setNome("UNMATCH");
             ASTPai.getASTS().add(AST_Corrente);
+
+            AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
+            AST_Visibilidade.setNome(Visibilidade);
 
             AST AST_Arguments = AST_Corrente.criarBranch("ARGUMENTS");
 

@@ -66,4 +66,25 @@ Linguagem de Programação Estruturada
         - INICIALIZADORES DE STRUCT
         - HERANCA DO INICIALIZADOR DE STRUCT
         - STAGES
+        
+    - 2020 06 22
+        - CONTADORES NO RUNTIME
+        - APRIMORAMENTO DO SISTEMA DE ANALISE
+            - UNICIDADE
+            - EXECUTE
+            - OUTROS
+        - ESTRUTURAL
+        - REORGANIZACAO DO AST_VALUE
+        - SEPARACAO EM DUAS PARTES DO AST_VALUE
+            - AST_VALUE
+            - AST_VALUE_ARGUMENT
+            
+    - 2020 06 23
+        - VISIBILIDADE : ALL, RESTRICT e EXTERN
+        - EXPORTACAO DE OPERADORES EXTERN DE STRUCTS
+        - REMOCAO DE STRUCT DO HEAP
+        - PILHA DE EXTERN
+        - OPERADOR SETA PARA EXTERN
+        - CARREGAMENTO DE EXTERN DURANTE RUN
+            
        
