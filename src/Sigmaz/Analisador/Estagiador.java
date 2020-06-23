@@ -61,9 +61,14 @@ public class Estagiador {
         AST mStruct = mSigmaz.criarBranch("STRUCT");
         mStruct.setNome(mStageDef.getNome());
 
+
+        mStruct.criarBranch("WITH").setValor("FALSE");
+
+        AST AST_Stages =  mStruct.criarBranch("STAGES");
+        AST_Stages.setValor("TRUE");
+
         mStruct.criarBranch("INITS");
         AST mCorpo = mStruct.criarBranch("BODY");
-        mStruct.criarBranch("WITH").setValor("FALSE");
 
         criarFunction_NameOf(mCorpo, mStageDef);
         criarFunction_ValueOf(mCorpo, mStageDef);

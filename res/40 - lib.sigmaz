@@ -9,6 +9,9 @@ act inicio(){
 
 
 
+    invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
+
+
 }
 
 

@@ -36,9 +36,9 @@ act varios_estagios(){
 }
 
 
-stages_def DIAS -> {SEGUNDA,TERCA,QUARTA,QUINTA,SEXTA,SABADO,DOMINGO};
+stages DIAS -> {SEGUNDA,TERCA,QUARTA,QUINTA,SEXTA,SABADO,DOMINGO};
 
-stages CORES -> {AMARELO, VERMELHO, AZUL, BRANCO};
+match CORES -> {AMARELO, VERMELHO, AZUL, BRANCO};
 
 operation == (a:CORES,b:CORES) : bool {
 

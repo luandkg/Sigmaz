@@ -25,7 +25,11 @@ public class AST_Struct {
            AST AST_With =  AST_Corrente.criarBranch("WITH");
             AST_With.setValor("FALSE");
 
+            AST AST_Stages =  AST_Corrente.criarBranch("STAGES");
+            AST_Stages.setValor("FALSE");
+
             AST AST_Inits =  AST_Corrente.criarBranch("INITS");
+
 
 
             Token Futuro = mCompiler.getTokenFuturo();

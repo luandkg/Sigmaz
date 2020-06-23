@@ -14,8 +14,8 @@
 
     require "organismos.sigmaz";
 
-    stages_def Numeros -> { POSITIVO, NEGATIVO };
-    stages_def Comparacao -> { MAIOR, MENOR, IGUAL };
-    stages_def Logico -> { TRUE, FALSE, UNKOWN };
+    stages Numeros -> { POSITIVO, NEGATIVO };
+    stages Comparacao -> { MAIOR, MENOR, IGUAL };
+    stages Logico -> { TRUE, FALSE, UNKOWN };
 
 
