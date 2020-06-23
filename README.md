@@ -4,6 +4,8 @@
 
    Linguagem de Programação Estruturada
 
+![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/sigmaz_01.png)
+
  ### FUNCTION
  
     Bloco de codigo com retorno tipificado
