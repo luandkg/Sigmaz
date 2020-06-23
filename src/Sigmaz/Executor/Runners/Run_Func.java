@@ -210,14 +210,17 @@ public class Run_Func {
         boolean algum = false;
 
 
-        for (Index_Function mIndex_Function : mEscopo.getOperationsCompleto()) {
+        for (Index_Function mIndex_Function : mRunTime.getOperations_Definidas()) {
 
             if (mIndex_Function.mesmoNome(eNome)) {
+
 
                 enc = true;
                 if (mIndex_Function.mesmoArgumentos(mArgumentos)) {
 
-                 //   System.out.println("\t - Funcao :  " +mIndex_Function.getNome() + " " + mIndex_Function.getParametragem());
+
+
+                    //   System.out.println("\t - Funcao :  " +mIndex_Function.getNome() + " " + mIndex_Function.getParametragem());
 
                     // System.out.println("\t - Executar :  " +mIndex_Function.getNome());
 
@@ -233,6 +236,7 @@ public class Run_Func {
                         //  executar_Function(mIndex_Function, mArgumentos, eReturne);
 
                         mItem = mPreparadorDeArgumentos.executar_FunctionGlobal(mRunTime, mIndex_Function, mArgumentos, eReturne);
+
 
                     } else {
                         mRunTime.getErros().add("Operation " + eNome + " : Retorno incompativel !");

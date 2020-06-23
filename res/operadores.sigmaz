@@ -1,7 +1,7 @@
 
 # OPERACOES
 
-define IGUALDADE : bool = true;
+
 
 mockiz PI : num = 3.14;
 mockiz ZERO : num = 0;

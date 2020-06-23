@@ -14,7 +14,7 @@ public class AppSigmaz {
 
         int TESTE = 2;
 
-        int ARQUIVO = 32;
+        int ARQUIVO = 40;
 
 
         if (TESTE == 1) {
@@ -84,6 +84,11 @@ public class AppSigmaz {
         mArquivos.add("res/36 - externs.sigmaz");
         mArquivos.add("res/37 - this.sigmaz");
         mArquivos.add("res/38 - exception.sigmaz");
+        mArquivos.add("res/39 - others.sigmaz");
+
+        // TUDO
+
+        mArquivos.add("res/40 - lib.sigmaz");
 
         return mArquivos;
     }

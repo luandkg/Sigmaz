@@ -1,5 +1,6 @@
 package Sigmaz.Executor;
 
+import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Executor.Runners.*;
 import Sigmaz.Utils.AST;
 import Sigmaz.Utils.Documentador;
@@ -20,6 +21,8 @@ public class RunTime {
 
     private ArrayList<AST> mStages;
     private ArrayList<AST> mStructs;
+
+    private ArrayList<Index_Function> mOperacoes;
 
     private long mHEAPID;
 
@@ -49,7 +52,7 @@ public class RunTime {
 
         mStages = new ArrayList<AST>();
         mStructs = new ArrayList<AST>();
-
+        mOperacoes = new  ArrayList<Index_Function>();
 
         limpar();
 
@@ -77,6 +80,7 @@ public class RunTime {
 
         mStages.clear();
         mStructs.clear();
+        mOperacoes.clear();
 
     }
 
@@ -264,6 +268,9 @@ public class RunTime {
                         Global.guardar(ASTC);
                     } else if (ASTC.mesmoTipo("OPERATION")) {
                         Global.guardar(ASTC);
+
+                        mOperacoes.add(new Index_Function(ASTC));
+
                     } else if (ASTC.mesmoTipo("CAST")) {
                         Global.guardar(ASTC);
                     } else if (ASTC.mesmoTipo("STAGES")) {
@@ -277,11 +284,22 @@ public class RunTime {
                         mStructs.add(ASTC);
 
 
-
                     }
 
                 }
 
+
+                for (AST mStruct : mStructs) {
+                    for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
+                        if (mStructBody.mesmoTipo("OPERATION") && mStructBody.getBranch("VISIBILITY").mesmoNome("EXTERN")) {
+                           // System.out.println("PORRA PERDIDA");
+
+                            mOperacoes.add(new Index_Function(mStructBody));
+
+
+                        }
+                    }
+                }
 
                 for (AST mStruct : mStructs) {
                     Run_Extern mRE = new Run_Extern(this);
@@ -376,6 +394,11 @@ public class RunTime {
     public ArrayList<AST> getStructs_Definidas() {
         return mStructs;
     }
+
+    public ArrayList<Index_Function> getOperations_Definidas() {
+        return mOperacoes;
+    }
+
 
     public boolean existeStage(String eStage) {
         boolean enc = false;

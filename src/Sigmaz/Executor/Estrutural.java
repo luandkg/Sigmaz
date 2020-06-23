@@ -140,6 +140,18 @@ public class Estrutural {
             System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
         }
 
+        for (AST mStruct : mStructs) {
+            for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
+                if (mStructBody.mesmoTipo("OPERATION") && mStructBody.getBranch("VISIBILITY").mesmoNome("EXTERN")) {
+
+                    System.out.println("\t - " + mStructBody.getNome() + " ( " + getParametros(mStructBody) + " ) -> " + mStructBody.getValor());
+
+
+
+                }
+            }
+        }
+
         System.out.println(" - CASTS : ");
         for (AST mAST : mCasts) {
             System.out.println("\t - " + mAST.getNome());

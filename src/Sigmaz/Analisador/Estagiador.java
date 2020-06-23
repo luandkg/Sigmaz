@@ -42,8 +42,6 @@ public class Estagiador {
 
                 for (AST mStageDef : mStages) {
 
-                    System.out.println("Definir " + mStageDef.getNome());
-
 
 
                     criarStructExtern(mSigmaz, mStageDef);

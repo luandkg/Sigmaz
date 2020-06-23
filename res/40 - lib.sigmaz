@@ -1,0 +1,14 @@
+
+require "lib.sigmaz";
+
+call iniciar -> inicio();
+
+
+act inicio(){
+
+
+
+
+}
+
+
