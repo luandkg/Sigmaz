@@ -1,6 +1,6 @@
 package Sigmaz.Executor;
 
-import Sigmaz.Executor.Indexador.Index_Function;
+import Sigmaz.Executor.Runners.*;
 import Sigmaz.Utils.AST;
 import Sigmaz.Utils.Documentador;
 import Sigmaz.Utils.Documento;
@@ -11,7 +11,7 @@ public class RunTime {
 
     private ArrayList<AST> mASTS;
     private ArrayList<String> mErros;
-    private DataTypes mDataTypes;
+    private Primitivos mPrimitivos;
 
     private Escopo mEscopoGlobal;
 
@@ -19,6 +19,7 @@ public class RunTime {
     private ArrayList<Run_Extern> mExtern;
 
     private ArrayList<AST> mStages;
+    private ArrayList<AST> mStructs;
 
     private long mHEAPID;
 
@@ -37,7 +38,7 @@ public class RunTime {
 
         mErros = new ArrayList<>();
 
-        mDataTypes = new DataTypes();
+        mPrimitivos = new Primitivos();
 
         mHeap = new ArrayList<Run_Struct>();
         mExtern = new ArrayList<Run_Extern>();
@@ -47,6 +48,7 @@ public class RunTime {
         mExterno = true;
 
         mStages = new ArrayList<AST>();
+        mStructs = new ArrayList<AST>();
 
 
         limpar();
@@ -74,7 +76,7 @@ public class RunTime {
         mExtern.clear();
 
         mStages.clear();
-
+        mStructs.clear();
 
     }
 
@@ -248,7 +250,6 @@ public class RunTime {
 
         mEscopoGlobal = Global;
 
-        ArrayList<AST> mStructs = new ArrayList<AST>();
 
         for (AST ASTCGlobal : mASTS) {
 
@@ -342,7 +343,6 @@ public class RunTime {
             }
 
 
-
         }
 
         if (mASTS.size() == 0) {
@@ -350,6 +350,52 @@ public class RunTime {
         }
 
 
+    }
+
+    public void AlocarStages(AST eAST, Escopo mEscopo) {
+
+
+        int i = 0;
+
+        for (AST AST_STAGE : eAST.getBranch("OPTIONS").getASTS()) {
+
+            if (AST_STAGE.mesmoTipo("STAGE")) {
+                mEscopo.criarDefinicao(eAST.getNome() + "::" + AST_STAGE.getNome(), eAST.getNome(), String.valueOf(i));
+                i += 1;
+            }
+
+
+        }
+
+    }
+
+    public ArrayList<AST> getStages_Definidas() {
+        return mStages;
+    }
+
+    public ArrayList<AST> getStructs_Definidas() {
+        return mStructs;
+    }
+
+    public boolean existeStage(String eStage) {
+        boolean enc = false;
+
+        for (AST mAST : mStages) {
+            for (AST sAST : mAST.getBranch("OPTIONS").getASTS()) {
+
+                if (sAST.mesmoTipo("STAGE")) {
+                    String tmp = mAST.getNome() + "::" + sAST.getNome();
+                    if (tmp.contentEquals(eStage)) {
+                        enc = true;
+                        break;
+                    }
+                }
+
+
+            }
+        }
+
+        return enc;
     }
 
     public void estrutura() {
@@ -413,26 +459,9 @@ public class RunTime {
     }
 
     public boolean isPrimitivo(String eTipo) {
-        return mDataTypes.isPrimitivo(eTipo);
+        return mPrimitivos.isPrimitivo(eTipo);
     }
 
-    public boolean existeStage(String eStage) {
-        boolean enc = false;
-
-        for (AST mAST : mStages) {
-            for (AST sAST : mAST.getASTS()) {
-
-                String tmp = mAST.getNome() + "::" + sAST.getNome();
-                if (tmp.contentEquals(eStage)) {
-                    enc = true;
-                    break;
-                }
-
-            }
-        }
-
-        return enc;
-    }
 
     public String getArvoreDeInstrucoes() {
 

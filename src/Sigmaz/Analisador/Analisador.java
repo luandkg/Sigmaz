@@ -27,6 +27,7 @@ public class Analisador {
     private Analisar_Outros mAnalisar_Outros;
 
     private Heranca mHeranca;
+    private Estagiador mEstagiador;
 
     private boolean mExterno;
 
@@ -53,6 +54,9 @@ public class Analisador {
         mAnalisar_Outros = new Analisar_Outros(this);
 
         mHeranca = new Heranca(this);
+        mEstagiador = new Estagiador(this);
+
+
         mExterno = true;
 
     }
@@ -132,6 +136,8 @@ public class Analisador {
 
 
         mHeranca.init(mASTS);
+
+        mEstagiador.init(mASTS);
 
     }
 

@@ -363,6 +363,17 @@ public class EscopoDebug {
             System.out.println("\t - " +mIndex_Function.getDefinicao());
         }
 
+        System.out.println(" - STAGES : ");
+        for (AST mAST : mEscopo.getStages_RunTime()) {
+            System.out.println("\t - " +mAST.getNome());
+        }
+
+        System.out.println(" - STRUCTS : ");
+        for (AST mAST : mEscopo.getStructs_RunTime()) {
+            System.out.println("\t - " +mAST.getNome());
+        }
+
+
         System.out.println(" ######################### ##### ############################ ");
 
     }
@@ -424,7 +435,7 @@ public class EscopoDebug {
             for (Item i : ls) {
                 if (i.getNulo() == false) {
                     if(i.getIsEstrutura()){
-                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getObjeto().getNome());
+                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getValor());
                     }else{
                         System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
                     }
@@ -474,7 +485,7 @@ public class EscopoDebug {
             for (Item i : ls) {
                 if (i.getNulo() == false) {
                     if(i.getIsEstrutura()){
-                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getObjeto().getNome());
+                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getValor());
                     }else{
                         System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
                     }
@@ -519,7 +530,7 @@ public class EscopoDebug {
             for (Item i : ls) {
                 if (i.getNulo() == false) {
                     if(i.getIsEstrutura()){
-                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getObjeto().getNome());
+                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getValor());
                     }else{
                         System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
                     }

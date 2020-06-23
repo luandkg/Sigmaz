@@ -86,5 +86,11 @@ Linguagem de Programação Estruturada
         - PILHA DE EXTERN
         - OPERADOR SETA PARA EXTERN
         - CARREGAMENTO DE EXTERN DURANTE RUN
+        - ESCOPO THIS
+        - STAGE_DEF
+            - FUNCTION nameOf
+            - FUNCTION valueOf
+            - OPERATION MATCH
+            - OPERATION UNMATCH
             
        

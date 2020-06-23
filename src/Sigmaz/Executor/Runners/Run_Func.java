@@ -1,7 +1,11 @@
-package Sigmaz.Executor;
+package Sigmaz.Executor.Runners;
 
+import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.Indexador.Argumentador;
 import Sigmaz.Executor.Indexador.Index_Action;
 import Sigmaz.Executor.Indexador.Index_Function;
+import Sigmaz.Executor.Item;
+import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
@@ -12,7 +16,7 @@ public class Run_Func {
     private Escopo mEscopo;
 
 
-    private PreparadorDeArgumentos mPreparadorDeArgumentos;
+    private Argumentador mPreparadorDeArgumentos;
 
     public Run_Func(RunTime eRunTime, Escopo eEscopo) {
 
@@ -20,7 +24,7 @@ public class Run_Func {
         mEscopo = eEscopo;
 
 
-        mPreparadorDeArgumentos = new PreparadorDeArgumentos();
+        mPreparadorDeArgumentos = new Argumentador();
 
     }
 
@@ -183,7 +187,6 @@ public class Run_Func {
         ve.setPrimitivo(Esquerda.getIsPrimitivo());
         ve.setIsEstrutura(Esquerda.getIsStruct());
         ve.setValor(Esquerda.getConteudo());
-        ve.setObjeto(Esquerda.getObjeto());
         ve.setTipo(Esquerda.getRetornoTipo());
 
 
@@ -191,7 +194,6 @@ public class Run_Func {
         vd.setPrimitivo(Direita.getIsPrimitivo());
         vd.setIsEstrutura(Direita.getIsStruct());
         vd.setValor(Direita.getConteudo());
-        vd.setObjeto(Direita.getObjeto());
         vd.setTipo(Direita.getRetornoTipo());
 
         String mTipagem = ve.getValor() + " e " + vd.getValor();

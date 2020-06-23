@@ -159,8 +159,8 @@ public class Estrutural {
         for (AST mAST : mStages) {
             System.out.println("\t - " + mAST.getNome());
 
-            for (AST sAST : mAST.getASTS()) {
-                System.out.println("\t\t - " + sAST.getNome());
+            for (AST AST_STAGE : mAST.getBranch("OPTIONS").getASTS()) {
+                System.out.println("\t\t - " + AST_STAGE.getNome());
             }
 
         }

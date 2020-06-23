@@ -291,7 +291,7 @@ public class AST_Value {
                     ASTPai.setValor("FUNCT");
 
                     AST_Value_Argument gAST = new AST_Value_Argument(mCompiler);
-                    gAST. ReceberArgumentos(ASTPai);
+                    gAST.ReceberArgumentos(ASTPai);
 
                     Token TokenC3 = mCompiler.getTokenAvante();
                     if (TokenC3.getTipo() == mTerminar) {

@@ -1,5 +1,8 @@
-package Sigmaz.Executor;
+package Sigmaz.Executor.Runners;
 
+import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.Item;
+import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
@@ -81,7 +84,7 @@ public class Run_Moc{
         } else if (mAST.getIsStruct()) {
 
 
-            mEscopo.criarConstanteStruct(eAST.getNome(), eAST.getValor(), mAST.getConteudo(),mAST.getConteudo());
+            mEscopo.criarConstanteStruct(eAST.getNome(), eAST.getValor(), mAST.getConteudo());
 
         } else {
 

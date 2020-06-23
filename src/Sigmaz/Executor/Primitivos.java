@@ -2,11 +2,11 @@ package Sigmaz.Executor;
 
 import java.util.ArrayList;
 
-public class DataTypes {
+public class Primitivos {
 
     private ArrayList<String> mPrimitivos;
 
-    public DataTypes() {
+    public Primitivos() {
         mPrimitivos = new ArrayList<>();
 
         mPrimitivos.add("string");

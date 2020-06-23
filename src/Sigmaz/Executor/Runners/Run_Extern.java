@@ -1,7 +1,11 @@
-package Sigmaz.Executor;
+package Sigmaz.Executor.Runners;
 
+import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.Indexador.Argumentador;
 import Sigmaz.Executor.Indexador.Index_Action;
 import Sigmaz.Executor.Indexador.Index_Function;
+import Sigmaz.Executor.Item;
+import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
@@ -11,7 +15,7 @@ public class Run_Extern {
     private RunTime mRunTime;
     private Escopo mEscopo;
     private String mNome;
-    private PreparadorDeArgumentos mPreparadorDeArgumentos;
+    private Argumentador mPreparadorDeArgumentos;
     private  AST mStructCorpo;
 
     private int CA;
@@ -26,7 +30,7 @@ public class Run_Extern {
 
         mNome = "";
 
-        mPreparadorDeArgumentos = new PreparadorDeArgumentos();
+        mPreparadorDeArgumentos = new Argumentador();
 
         mDesseExtern = new ArrayList<String>();
 
@@ -78,15 +82,8 @@ public class Run_Extern {
                 mEscopo.guardar(ASTC);
             } else if(ASTC.mesmoTipo("STAGES")){
 
-                int i = 0;
 
-                for (AST AST_STAGE : ASTC.getASTS()) {
-
-                    mEscopo.criarDefinicao(ASTC.getNome() + "::" + AST_STAGE.getNome(), ASTC.getNome(), String.valueOf(i));
-
-                    i += 1;
-
-                }
+                mRunTime.AlocarStages(ASTC,mEscopo);
 
             }
 

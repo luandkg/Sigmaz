@@ -1,5 +1,5 @@
 
-stages Tipos -> { ALFA, BETA};
+stages Tipos -> { ALFA, BETA,ZETA};
 
 struct Pessoa {
 

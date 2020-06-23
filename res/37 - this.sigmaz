@@ -1,0 +1,52 @@
+
+
+struct Pessoa {
+
+   define idade : num =0;
+
+   act aumentar(){
+        idade = somar_inteiro(idade,1);
+   }
+
+   act aumentar_comigo(){
+        this.aumentar();
+   }
+
+    func getContagem() : num {
+        return somar_inteiro(idade,Pessoa->TGR);
+    }
+
+   extern :
+
+        mockiz TGR : num = 2;
+
+
+}
+
+call iniciar -> inicio();
+
+
+act inicio(){
+
+
+    def P1 : Pessoa = init Pessoa();
+
+    P1.aumentar_comigo();
+
+    def tt : num = P1.idade;
+    def cc : num = P1.getContagem();
+
+    invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
+
+
+}
+
+func somar_inteiro(a:num,b:num) : num {
+
+    def c : num;
+
+    invoke math -> operator_sum (a,b) :: c;
+    invoke casting -> cast_integer (c) :: c;
+
+    return c;
+}

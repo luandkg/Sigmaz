@@ -1,5 +1,6 @@
-package Sigmaz.Executor;
+package Sigmaz.Executor.Runners;
 
+import Sigmaz.Executor.*;
 import Sigmaz.Utils.AST;
 
 public class Run_Body {
@@ -109,8 +110,7 @@ public class Run_Body {
 
         for (AST fAST : ASTCorrente.getASTS()) {
 
-           // System.out.println("\n  -->> EX :: " + fAST.getTipo() + " :: " + mRunTime.getErros().size());
-
+            // System.out.println("\n  -->> EX :: " + fAST.getTipo() + " :: " + mRunTime.getErros().size());
 
 
             if (mRunTime.getErros().size() > 0) {
@@ -200,12 +200,12 @@ public class Run_Body {
 
             } else if (fAST.mesmoTipo("RETURN")) {
 
-             //   System.out.println("Iniciando Retorando de Corpo ");
+                //   System.out.println("Iniciando Retorando de Corpo ");
 
                 Run_Value mAST = new Run_Value(mRunTime, mEscopo);
                 mAST.init(fAST, "<<ANY>>");
 
-              //  System.out.println("Retorando de Corpo -> " + mAST.getConteudo() + "  Tipo : " + mAST.getRetornoTipo());
+                //  System.out.println("Retorando de Corpo -> " + mAST.getConteudo() + "  Tipo : " + mAST.getRetornoTipo());
 
 
                 mIsNulo = mAST.getIsNulo();
@@ -226,7 +226,9 @@ public class Run_Body {
 
             } else if (fAST.mesmoTipo("EXCEPTION")) {
 
-                mRunTime.getErros().add(fAST.getNome());
+
+                Run_Exception mAST = new Run_Exception(mRunTime, mEscopo);
+                mAST.init(fAST);
 
             } else {
 

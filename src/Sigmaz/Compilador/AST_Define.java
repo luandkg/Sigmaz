@@ -41,7 +41,6 @@ public class AST_Define {
             } else  if (TokenP3.getTipo() == TokenTipo.IGUAL) {
 
                 AST_Value mAST = new AST_Value(mCompiler);
-
                 mAST.init(AST_Valor);
             }else{
 

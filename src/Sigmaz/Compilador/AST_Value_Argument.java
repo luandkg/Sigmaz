@@ -118,6 +118,27 @@ public class AST_Value_Argument {
                 } else {
                     System.out.println("Problema A : " + TokenC3.getConteudo());
                 }
+
+            } else if (TokenC2.getTipo() == TokenTipo.SETA) {
+
+                // System.out.println("Vamos pontuar o escopo 1 !");
+
+
+                ASTPai.setValor("STRUCT_EXTERN");
+
+                ReceberNovoEscopo(ASTPai);
+
+                Token TokenC3 = mCompiler.getTokenAvante();
+                if (TokenC3.getTipo() == TokenTipo.PARENTESES_FECHA || TokenC3.getTipo() == TokenTipo.VIRGULA) {
+                    return;
+                } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
+                    Matcher.match_final_argumento(ASTPai);
+                } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
+                    Matcher.unmatch_final_argumento(ASTPai);
+                } else {
+                    System.out.println("Problema A : " + TokenC3.getConteudo());
+                }
+
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
                 Matcher.match_final_argumento(ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
@@ -125,6 +146,7 @@ public class AST_Value_Argument {
             } else {
                 System.out.println("Problema : " + TokenD.getConteudo());
             }
+
 
         } else {
 

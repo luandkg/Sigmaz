@@ -12,25 +12,17 @@ public class AppSigmaz {
         ArrayList<String> mArquivos = Carregar_Arquivos();
 
 
-        int TESTE = 1;
+        int TESTE = 2;
 
-        int ARQUIVO = 36;
-
+        int ARQUIVO = 32;
 
 
         if (TESTE == 1) {
-
             UM(ARQUIVO, mArquivos);
-
         } else if (TESTE == 2) {
-
             ESTRUTURAL(ARQUIVO, mArquivos);
-
         } else {
-
             TESTE_GERAL(mArquivos);
-
-
         }
 
 
@@ -90,6 +82,8 @@ public class AppSigmaz {
         mArquivos.add("res/34 - visibility.sigmaz");
         mArquivos.add("res/35 - extern.sigmaz");
         mArquivos.add("res/36 - externs.sigmaz");
+        mArquivos.add("res/37 - this.sigmaz");
+        mArquivos.add("res/38 - exception.sigmaz");
 
         return mArquivos;
     }

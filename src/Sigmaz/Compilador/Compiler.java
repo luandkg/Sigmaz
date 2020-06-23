@@ -318,7 +318,12 @@ public class Compiler {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("stages")) {
 
                 AST_Stages mAST = new AST_Stages(this);
-                mAST.init(AST_Raiz);
+                mAST.init(AST_Raiz,false);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("stages_def")) {
+
+                AST_Stages mAST = new AST_Stages(this);
+                mAST.init(AST_Raiz,true);
 
             } else {
                 errarCompilacao("Token Desconhecido : " + TokenC.getTipo() + " " + TokenC.getConteudo(), TokenC.getInicio());

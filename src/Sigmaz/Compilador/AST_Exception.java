@@ -14,20 +14,16 @@ public class AST_Exception {
 
     public void init(AST ASTPai) {
 
-        Token TokenC = mCompiler.getTokenAvante();
 
-        if (TokenC.getTipo() == TokenTipo.TEXTO) {
+        AST AST_Corrente = new AST("EXCEPTION");
+        ASTPai.getASTS().add(AST_Corrente);
 
-            AST AST_Corrente = new AST("EXCEPTION");
-            AST_Corrente.setNome(TokenC.getConteudo());
-            ASTPai.getASTS().add(AST_Corrente);
+        AST AST_Valor = AST_Corrente.criarBranch("VALUE");
 
-            Token TokenP3 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado PONTO E VIRGULA !");
+        AST_Value mAST = new AST_Value(mCompiler);
+        mAST.init(AST_Valor);
 
 
-        } else {
-            mCompiler.errarCompilacao("Era esperado um texto !", TokenC.getInicio());
-        }
 
 
     }

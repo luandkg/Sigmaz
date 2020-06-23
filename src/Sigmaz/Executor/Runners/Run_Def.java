@@ -1,8 +1,8 @@
-package Sigmaz.Executor;
+package Sigmaz.Executor.Runners;
 
+import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
-
-import java.util.ArrayList;
 
 public class Run_Def {
 
@@ -85,7 +85,7 @@ public class Run_Def {
         } else if (mAST.getIsStruct()) {
 
 
-            mEscopo.criarDefinicaoStruct(eAST.getNome(), eAST.getValor(), mAST.getConteudo(),mAST.getConteudo());
+            mEscopo.criarDefinicaoStruct(eAST.getNome(), eAST.getValor(), mAST.getConteudo());
 
         } else {
 

@@ -1,6 +1,9 @@
 package Sigmaz.Executor.Invokes;
 
 import Sigmaz.Executor.*;
+import Sigmaz.Executor.Runners.Run_Extern;
+import Sigmaz.Executor.Runners.Run_Invoke;
+import Sigmaz.Executor.Runners.Run_Struct;
 import Sigmaz.Utils.AST;
 
 public class InvokeCompiler {

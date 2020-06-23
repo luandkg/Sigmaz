@@ -251,6 +251,7 @@ public class Documentador {
 
 			saida = new String(l, StandardCharsets.UTF_8);
 
+
 		//	System.out.println("Decompilado : " + saida);
 
 

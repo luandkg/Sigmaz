@@ -1,8 +1,9 @@
-package Sigmaz.Executor;
+package Sigmaz.Executor.Runners;
 
+import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.Item;
+import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
-
-import java.util.ArrayList;
 
 public class Run_Execute {
 
@@ -33,6 +34,11 @@ public class Run_Execute {
             Item mItem = mEscopo.getItem(ASTCorrente.getNome());
 
             //   System.out.println("Execuntando em  : " + ASTCorrente.getNome());
+
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+
 
             Run_Struct mEscopoStruct = mRunTime.getRun_Struct(mItem.getValor());
 

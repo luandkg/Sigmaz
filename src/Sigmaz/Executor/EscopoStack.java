@@ -15,18 +15,11 @@ public class EscopoStack {
 
     public void alocarPrimitivo(String eNome, String eTipo, boolean econstante, boolean possuiValor, String eValor) {
 
-        boolean enc = false;
-
-        for (Item i : mEscopo.getStacks()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                break;
-            }
-        }
+        boolean enc = existeAqui(eNome, mEscopo.getStacks());
 
         if (enc) {
             mRunTime.getErros().add("Definicao Duplicada : " + eNome);
-        }else{
+        } else {
 
 
             Item eItem = new Item(eNome);
@@ -34,15 +27,15 @@ public class EscopoStack {
             eItem.setPrimitivo(true);
             eItem.setIsEstrutura(false);
 
-            if(possuiValor){
+            if (possuiValor) {
                 eItem.setNulo(false);
-            }else{
+            } else {
                 eItem.setNulo(true);
             }
 
-            if(econstante){
+            if (econstante) {
                 eItem.setModo(1);
-            }else{
+            } else {
                 eItem.setModo(0);
             }
 
@@ -57,17 +50,9 @@ public class EscopoStack {
     }
 
 
+    public void criarDefinicaoStruct(String eNome, String eTipo, String eRef) {
 
-    public void criarDefinicaoStruct(String eNome, String eTipo, String eValor, String eRef) {
-
-        boolean enc = false;
-
-        for (Item i : mEscopo.getStacks()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                break;
-            }
-        }
+        boolean enc = existeAqui(eNome, mEscopo.getStacks());
 
         if (enc) {
             mRunTime.getErros().add("Variavel Duplicada : " + eNome);
@@ -98,21 +83,13 @@ public class EscopoStack {
         }
     }
 
-    public void criarConstanteStruct(String eNome, String eTipo, String eValor, String eRef) {
+    public void criarConstanteStruct(String eNome, String eTipo, String eRef) {
 
-        boolean enc = false;
-
-        for (Item i : mEscopo.getStacks()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                break;
-            }
-        }
+        boolean enc = existeAqui(eNome, mEscopo.getStacks());
 
         if (enc) {
             mRunTime.getErros().add("Variavel Duplicada : " + eNome);
         }
-
 
         if (!enc) {
 
@@ -140,15 +117,8 @@ public class EscopoStack {
 
 
     public void criarParametro(String eNome, String eTipo, String eValor) {
-        boolean enc = false;
 
-        for (Item i : mEscopo.getParametros()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                break;
-            }
-        }
-
+        boolean enc = existeAqui(eNome, mEscopo.getParametros());
 
         if (enc) {
             mRunTime.getErros().add("Parametro Duplicado : " + eNome);
@@ -164,16 +134,22 @@ public class EscopoStack {
         }
     }
 
-    public void criarParametroStruct(String eNome, String eTipo, Escopo eValor, String eRef) {
+    public boolean existeAqui(String eNome, ArrayList<Item> mProcurar) {
+
         boolean enc = false;
 
-        for (Item i : mEscopo.getParametros()) {
+        for (Item i : mProcurar) {
             if (i.getNome().contentEquals(eNome)) {
                 enc = true;
                 break;
             }
         }
+        return enc;
+    }
 
+    public void criarParametroStruct(String eNome, String eTipo, String eRef) {
+
+        boolean enc = existeAqui(eNome, mEscopo.getParametros());
 
         if (enc) {
             mRunTime.getErros().add("Parametro Duplicado : " + eNome);
@@ -185,16 +161,14 @@ public class EscopoStack {
             Novo.setNulo(false);
             Novo.setIsEstrutura(true);
             Novo.setPrimitivo(false);
-            Novo.setObjeto(eValor);
             Novo.setValor(eRef);
 
-         //   System.out.println("\t - Passando Parametro Struct : " + eRef );
+            //   System.out.println("\t - Passando Parametro Struct : " + eRef );
 
             mEscopo.getParametros().add(Novo);
 
         }
     }
-
 
 
     public void setDefinido(String eNome, String eValor) {
@@ -216,7 +190,7 @@ public class EscopoStack {
         Item mItem = getItem(eNome);
 
         if (mRunTime.getErros().size() > 0) {
-           return;
+            return;
         }
 
         if (mItem.getModo() == 0) {
@@ -245,41 +219,15 @@ public class EscopoStack {
 
     public String getDefinidoTipo(String eNome) {
 
-        boolean enc = false;
-        String ret = "";
 
-        for (Item i : mEscopo.getParametros()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                ret = i.getTipo();
-                return ret;
-            }
+        Item t = getItem(eNome);
+
+        if (t == null) {
+            return "";
+        } else {
+            return t.getTipo();
         }
 
-        for (Item i : mEscopo.getStacks()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                ret = i.getTipo();
-                break;
-            }
-        }
-
-        if (!enc) {
-
-            Item IC = BuscarAnterior(eNome);
-            if (IC != null) {
-                enc = true;
-                ret = IC.getTipo();
-
-            }
-
-        }
-
-        if (!enc) {
-            mRunTime.getErros().add("Variavel nao Encontrada : " + eNome);
-        }
-
-        return ret;
 
     }
 
@@ -318,7 +266,6 @@ public class EscopoStack {
         if (!enc) {
             mRunTime.getErros().add("Variavel nao Encontrada : " + eNome);
         }
-
 
 
         return ret;
@@ -360,86 +307,34 @@ public class EscopoStack {
     }
 
     public String getDefinido(String eNome) {
-        boolean enc = false;
-        String ret = "";
 
-        for (Item i : mEscopo.getParametros()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                ret = i.getValor();
-                return ret;
-            }
+        Item t = getItem(eNome);
+
+        if (t == null) {
+            return "";
+        } else {
+            return t.getValor();
         }
 
-
-        for (Item i : mEscopo.getStacks()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                ret = i.getValor();
-                break;
-            }
-        }
-
-        if (!enc) {
-
-            Item IC = BuscarAnterior(eNome);
-            if (IC != null) {
-                enc = true;
-                ret = IC.getValor();
-
-            }
-
-        }
-
-        if (!enc) {
-            mRunTime.getErros().add("Variavel nao Encontrada : " + eNome);
-        }
-
-        return ret;
     }
 
 
     public String getDefinidoNum(String eNome) {
-        boolean enc = false;
-        String ret = "";
 
-        for (Item i : mEscopo.getParametros()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                ret = i.getValor();
-                return ret;
-            }
-        }
 
-        for (Item i : mEscopo.getStacks()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                ret = i.getValor();
-                if (i.getTipo().contentEquals("num") == false) {
-                    mRunTime.getErros().add("Era esperado uma variavel do tipo num !");
-                }
-                break;
-            }
-        }
+        Item t = getItem(eNome);
 
-        if (!enc) {
+        if (t == null) {
+            return "";
+        } else {
 
-            Item IC = BuscarAnterior(eNome);
-            if (IC != null) {
-                enc = true;
-                ret = IC.getValor();
-                if (IC.getTipo().contentEquals("num") == false) {
-                    mRunTime.getErros().add("Era esperado uma variavel do tipo num !");
-                }
+            if (t.getTipo().contentEquals("num") == false) {
+                mRunTime.getErros().add("Era esperado uma variavel do tipo num !");
             }
 
+            return t.getValor();
         }
 
-        if (!enc) {
-            mRunTime.getErros().add("Variavel nao Encontrada : " + eNome);
-        }
-
-        return ret;
     }
 
     public Item BuscarAnterior(String eNome) {

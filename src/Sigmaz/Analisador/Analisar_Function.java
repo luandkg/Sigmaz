@@ -102,6 +102,8 @@ public class Analisar_Function {
             if (!laco) {
                 mAnalisador.getErros().add("CONTINUE so pode existir dentro de um laco !");
             }
+        } else if (ASTPai.mesmoTipo("EXCEPTION")) {
+
         } else {
             mAnalisador.getErros().add("AST : " + ASTPai.getTipo());
         }

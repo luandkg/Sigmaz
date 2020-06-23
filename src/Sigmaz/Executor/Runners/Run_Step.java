@@ -1,5 +1,7 @@
-package Sigmaz.Executor;
+package Sigmaz.Executor.Runners;
 
+import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
 
 public class Run_Step {

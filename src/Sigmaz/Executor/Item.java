@@ -10,8 +10,6 @@ public class Item {
     private boolean mEstrutura;
 
     private String mValor;
-    private Escopo mObjeto;
-
 
 
     public Item(String eNome) {
@@ -22,7 +20,6 @@ public class Item {
         mNulo = false;
         mPrimitivo=true;
         mEstrutura=false;
-        mObjeto=null;
     }
 
     public void setNome(String eNome) {
@@ -82,13 +79,6 @@ public class Item {
         return mEstrutura;
     }
 
-    public Escopo getObjeto() {
-        return mObjeto;
-    }
-
-    public void setObjeto(Escopo eObjeto) {
-        mObjeto = eObjeto;
-    }
 
 
 }

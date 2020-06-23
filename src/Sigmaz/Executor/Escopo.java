@@ -65,9 +65,9 @@ public class Escopo {
         mContinuar = false;
 
 
-        mAO = new OO(this);
+        mAO = new OO(this,mRunTime);
 
-        mOO = new OO(this);
+        mOO = new OO(this,mRunTime);
 
         mEstrutura = false;
 
@@ -281,6 +281,31 @@ public class Escopo {
     }
 
 
+    public ArrayList<AST> getStructs_RunTime() {
+
+        ArrayList<AST> gc = new ArrayList<AST>();
+
+        for (AST fAST : mRunTime.getStructs_Definidas()) {
+            gc.add(fAST);
+        }
+
+
+        return gc;
+    }
+
+    public ArrayList<AST> getStages_RunTime() {
+
+        ArrayList<AST> gc = new ArrayList<AST>();
+
+        for (AST fAST : mRunTime.getStages_Definidas()) {
+            gc.add(fAST);
+        }
+
+
+        return gc;
+    }
+
+
     public void setCancelar(boolean eCancelar) {
         mCancelar = eCancelar;
     }
@@ -323,8 +348,8 @@ public class Escopo {
         mEscopoStack.criarParametro(eNome, eTipo, eValor);
     }
 
-    public void criarParametroStruct(String eNome, String eTipo, Escopo eValor, String eRef) {
-        mEscopoStack.criarParametroStruct(eNome, eTipo, eValor, eRef);
+    public void criarParametroStruct(String eNome, String eTipo,  String eRef) {
+        mEscopoStack.criarParametroStruct(eNome, eTipo,  eRef);
     }
 
     public void criarDefinicao(String eNome, String eTipo, String eValor) {
@@ -337,12 +362,12 @@ public class Escopo {
     }
 
 
-    public void criarDefinicaoStruct(String eNome, String eTipo, String eValor, String eRef) {
-        mEscopoStack.criarDefinicaoStruct(eNome, eTipo, eValor, eRef);
+    public void criarDefinicaoStruct(String eNome, String eTipo, String eRef) {
+        mEscopoStack.criarDefinicaoStruct(eNome, eTipo,  eRef);
     }
 
-    public void criarConstanteStruct(String eNome, String eTipo, String eValor, String eRef) {
-        mEscopoStack.criarConstanteStruct(eNome, eTipo, eValor, eRef);
+    public void criarConstanteStruct(String eNome, String eTipo,  String eRef) {
+        mEscopoStack.criarConstanteStruct(eNome, eTipo,  eRef);
     }
 
     public void setDefinido(String eNome, String eValor) {

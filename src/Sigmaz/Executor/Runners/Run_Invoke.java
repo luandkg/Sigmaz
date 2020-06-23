@@ -1,6 +1,8 @@
-package Sigmaz.Executor;
+package Sigmaz.Executor.Runners;
 
+import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.Invokes.*;
+import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;

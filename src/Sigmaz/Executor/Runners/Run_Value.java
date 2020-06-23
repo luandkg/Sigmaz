@@ -1,6 +1,8 @@
-package Sigmaz.Executor;
+package Sigmaz.Executor.Runners;
 
-import Sigmaz.Executor.Indexador.Index_Function;
+import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.Item;
+import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
 
 public class Run_Value {
@@ -91,6 +93,7 @@ public class Run_Value {
             //  System.out.println("Valorando  -> NULL");
 
             mIsNulo = true;
+            mRetornoTipo = eRetorno;
 
         } else if (ASTCorrente.mesmoValor("Text")) {
 

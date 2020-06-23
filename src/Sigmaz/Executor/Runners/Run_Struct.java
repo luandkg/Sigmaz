@@ -1,7 +1,13 @@
-package Sigmaz.Executor;
+package Sigmaz.Executor.Runners;
 
+import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.Indexador.Argumentador;
 import Sigmaz.Executor.Indexador.Index_Action;
 import Sigmaz.Executor.Indexador.Index_Function;
+import Sigmaz.Executor.Item;
+import Sigmaz.Executor.RunTime;
+import Sigmaz.Executor.Runners.Run_Def;
+import Sigmaz.Executor.Runners.Run_Moc;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
@@ -12,7 +18,7 @@ public class Run_Struct {
     private Escopo mEscopo;
 
     private String mNome;
-    private PreparadorDeArgumentos mPreparadorDeArgumentos;
+    private Argumentador mPreparadorDeArgumentos;
 
     private String mStructNome;
     private int mTamanho;
@@ -31,7 +37,7 @@ public class Run_Struct {
         mStructCorpo = null;
 
 
-        mPreparadorDeArgumentos = new PreparadorDeArgumentos();
+        mPreparadorDeArgumentos = new Argumentador();
 
     }
 
@@ -170,11 +176,15 @@ public class Run_Struct {
 
         }
 
-        if (mStructInits.getASTS().size() > 0) {
+        mEscopo.criarConstanteStruct("this",mStructNome,mNome);
 
+
+        if (mStructInits.getASTS().size() > 0) {
 
             Inicializador(mStructNome,ASTCorrente, BuscadorDeArgumentos);
         }
+
+
 
     }
 

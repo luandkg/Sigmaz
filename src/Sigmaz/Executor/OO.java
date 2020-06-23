@@ -9,6 +9,7 @@ import java.util.ArrayList;
 public class OO {
 
     private Escopo mEscopo;
+    private RunTime mRunTime;
 
     private ArrayList<AST> mGuardados;
 
@@ -39,9 +40,10 @@ public class OO {
     private ArrayList<Index_Function> mOperations_Restrict;
     private ArrayList<Index_Function> mOperations_Extern;
 
-    public OO(Escopo eEscopo) {
+    public OO(Escopo eEscopo,RunTime eRunTime) {
 
         mEscopo = eEscopo;
+        mRunTime = eRunTime;
 
         mGuardados = new ArrayList<>();
 
@@ -170,15 +172,8 @@ public class OO {
 
         } else if (eAST.mesmoTipo("STAGES")) {
 
-            int i = 0;
+            mRunTime.AlocarStages(eAST,mEscopo);
 
-            for (AST AST_STAGE : eAST.getASTS()) {
-
-                mEscopo.criarDefinicao(eAST.getNome() + "::" + AST_STAGE.getNome(), eAST.getNome(), String.valueOf(i));
-
-                i += 1;
-
-            }
 
         }
 

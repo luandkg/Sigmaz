@@ -13,10 +13,18 @@ public class AST_Stages {
     }
 
 
-    public void init(AST ASTAvo){
+    public void init(AST ASTAvo,boolean isDefined){
 
 
         AST ASTPai = ASTAvo.criarBranch("STAGES");
+
+        if(isDefined){
+            ASTPai.criarBranch("DEFINED").setNome("TRUE");
+        }else{
+            ASTPai.criarBranch("DEFINED").setNome("FALSE");
+        }
+
+       AST AST_Opcoes = ASTPai.criarBranch("OPTIONS");
 
 
         Token TokenN = mCompiler.getTokenAvanteStatus(TokenTipo.ID,"Era esperado o nome do STAGES !");
@@ -62,9 +70,8 @@ public class AST_Stages {
 
 
 
-                AST ASTCorrente =   ASTPai.criarBranch("STAGE");
+                AST ASTCorrente =   AST_Opcoes.criarBranch("STAGE");
                 ASTCorrente.setNome(TokenD.getConteudo());
-                ASTCorrente.setValor("string");
 
 
                 Token P2 = mCompiler.getTokenAvante();

@@ -1,0 +1,14 @@
+
+call iniciar -> inicio();
+
+
+act inicio(){
+
+    def a : num = 12;
+
+    #exception a;
+
+
+}
+
+

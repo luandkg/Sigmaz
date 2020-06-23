@@ -1,6 +1,5 @@
 package Sigmaz.Compilador;
 
-import Sigmaz.Executor.Run_When;
 import Sigmaz.Lexer.Token;
 import Sigmaz.Lexer.TokenTipo;
 import Sigmaz.Utils.AST;
