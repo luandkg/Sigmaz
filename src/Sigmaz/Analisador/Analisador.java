@@ -176,6 +176,12 @@ public class Analisador {
         mAnalisar_Outros.inclusao(ASTPai);
 
         for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("REQUIRED")) {
+
+            }
+        }
+
+        for (AST mAST : ASTPai.getASTS()) {
 
             if (mAST.mesmoTipo("DEFINE")) {
 
@@ -227,6 +233,8 @@ public class Analisador {
                 mAnalisar_Struct.init_Struct(mAST,mAlocados);
 
             } else if (mAST.mesmoTipo("STAGES")) {
+
+            } else if (mAST.mesmoTipo("REQUIRED")) {
 
             } else {
 

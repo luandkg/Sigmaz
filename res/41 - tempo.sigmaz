@@ -1,25 +1,13 @@
-
 require "libs/lib.sigmaz";
 
-call iniciar -> inicio();
+call iniciar -> inicio ( );
 
-act inicio(){
-
-
-    def Tempo : string = getTempo_Formatado();
-    def Data : string = getData_Formatado();
-
-    def TempoData : string = getTempoData_Formatado();
-    def DataTempo : string = getDataTempo_Formatado();
-
-    def TempoData_Externo : string = TempoData->getTempoData_Formatado();
-    def DataTempo_Externo : string = TempoData->getDataTempo_Formatado();
-
-
-    invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
-
+act inicio ( ) {
+	def Tempo : string = getTempo_Formatado ( );
+	def Data : string = getData_Formatado ( );
+	def TempoData : string = getTempoData_Formatado ( );
+	def DataTempo : string = getDataTempo_Formatado ( );
+	def TempoData_Externo : string = TempoData -> getTempoData_Formatado ( );
+	def DataTempo_Externo : string = TempoData -> getDataTempo_Formatado ( );
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
-
-
-
-

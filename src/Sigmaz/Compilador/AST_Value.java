@@ -154,6 +154,47 @@ public class AST_Value {
                 System.out.println("Problema E :  " + TokenD.getConteudo());
             }
 
+        } else if (TokenD.getTipo() == TokenTipo.SETA) {
+
+            ASTPai.setValor("TERNAL");
+
+
+            Token TokenC = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
+
+
+            AST AST_Condicao = ASTPai.criarBranch("CONDITION");
+            AST_Value mAST = new AST_Value(mCompiler);
+            mAST.initParam(AST_Condicao);
+            AST_Condicao.setTipo("CONDITION");
+
+
+            Token TokenQ1 = mCompiler.getTokenAvanteStatus(TokenTipo.QUAD, "Era esperado ::");
+            Token TokenC_1 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
+
+            AST AST_True = ASTPai.criarBranch("TRUE");
+            AST_Value mAST_TRUE = new AST_Value(mCompiler);
+            mAST_TRUE.initParam(AST_True);
+            AST_True.setTipo("TRUE");
+
+            Token TokenQ2= mCompiler.getTokenAvanteIDStatus("not", "Era esperado not");
+            Token TokenC_2 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
+
+            AST AST_False = ASTPai.criarBranch("FALSE");
+            AST_Value mAST_False = new AST_Value(mCompiler);
+            mAST_False.initParam(AST_False);
+            AST_False.setTipo("FALSE");
+
+            Token TokenC2 = mCompiler.getTokenAvante();
+            if (TokenC2.getTipo() == mTerminar) {
+                return;
+            } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
+                match_final(ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
+                unmatch_final(ASTPai);
+            } else {
+                System.out.println("Problema E :  " + TokenC2.getConteudo());
+            }
+
         } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
 
             ASTPai.setNome(TokenD.getConteudo());

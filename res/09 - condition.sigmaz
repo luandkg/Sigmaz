@@ -1,80 +1,46 @@
-
 require "libs/operadores.sigmaz";
 require "libs/terminal.sigmaz";
 
-call iniciar -> operando();
+call iniciar -> operando ( );
 
-
-act operando(){
-
-
-    def a1 : num = 10;
-    def a2 : num = 5;
-
-    def t : bool = a1 == a2;
-
-
-    println("A1 : : ",a1);
-    println("A2 : : ",a2);
-
-    println("");
-
-
-    if(t) -> {
-            println("Parte : ","Igual");
-    } others {
-            println("Parte : ","Diferente");
-    }
-
-    def modo : string = "";
-
-
-    if(menor(a1,a2)) -> {
-           modo = "Menor";
-    } other (igual(a1,a2)) -> {
-        modo = "Igual";
-    } others {
-        modo = "Maior";
-    }
-
-
-    println("Comparacao : ",modo);
-    println("");
-
-
-    def cai1 : bool = maior_igual(4,6);
-    def cai2 : bool = maior_igual(4,2);
-    def cai3 : bool = maior_igual(4,4);
-
-
-    def cei1 : bool = menor_igual(4,2);
-    def cei2 : bool = menor_igual(4,4);
-    def cei3 : bool = menor_igual(4,6);
-
-    println("Operador Maior Igual");
-
-
-    println("4 >= 6 : ",cai1);
-    println("4 >= 2 : ",cai2);
-    println("4 >= 4 : ",cai3);
-    println("");
-
-    println("Operador Menor Igual");
-
-
-    println("4 <= 2 : ",cei1);
-    println("4 <= 4 : ",cei2);
-    println("4 <= 6 : ",cei3);
-
-      def CC : bool = (10==12) == false;
-
-     def w : string = ("Luan");
-
-     invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
-
-
-
-
+act operando ( ) {
+	def a1 : num = 10;
+	def a2 : num = 5;
+	def t : bool = a1 == a2;
+	println ( "A1 : : ", a1 );
+	println ( "A2 : : ", a2 );
+	println ( "");
+	if ( t ) -> {
+		println ( "Parte : ", "Igual");
+	}others {
+		println ( "Parte : ", "Diferente");
+	}
+	def modo : string = "";
+	if ( menor ( a1 , a2 ) ) -> {
+		modo = "Menor";
+	}other ( igual ( a1 , a2 ) ) -> {
+		modo = "Igual";
+	}others {
+		modo = "Maior";
+	}
+	println ( "Comparacao : ", modo );
+	println ( "");
+	def cai1 : bool = maior_igual ( 4 , 6 );
+	def cai2 : bool = maior_igual ( 4 , 2 );
+	def cai3 : bool = maior_igual ( 4 , 4 );
+	def cei1 : bool = menor_igual ( 4 , 2 );
+	def cei2 : bool = menor_igual ( 4 , 4 );
+	def cei3 : bool = menor_igual ( 4 , 6 );
+	println ( "Operador Maior Igual");
+	println ( "4 >= 6 : ", cai1 );
+	println ( "4 >= 2 : ", cai2 );
+	println ( "4 >= 4 : ", cai3 );
+	println ( "");
+	println ( "Operador Menor Igual");
+	println ( "4 <= 2 : ", cei1 );
+	println ( "4 <= 4 : ", cei2 );
+	println ( "4 <= 6 : ", cei3 );
+	def CC : bool = ( 10 == 12 ) == false;
+	def w : string = ( "Luan");
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
-
-

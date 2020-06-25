@@ -1,57 +1,37 @@
-
-
-call iniciar -> pular();
-
+call iniciar -> pular ( );
 cast pos {
-
-    getter a : num -> { return a; }
-
-    setter b : num -> { return b;  }
-
+	getter a : num -> {
+		return a;
+	}
+	setter b : num -> {
+		return b;
+	}
+	
 }
 
-operation == (a:pos,b:pos) : bool  {
-
-    def c : bool;
-
-    def c1 : num = num(a);
-    def c2 : num = num(b);
-
-    invoke math -> operator_equal (c1,c2) :: c;
-
-    return c;
-
+operation == ( a : pos , b : pos ) : bool {
+	def c : bool;
+	def c1 : num = num ( a );
+	def c2 : num = num ( b );
+	invoke math -> operator_equal ( c1 , c2 ) :: c;
+	return c;
 }
 
-operation !! (a:pos,b:pos) : bool  {
-
-    def c : bool;
-
-    def c1 : num = a;
-    def c2 : num = b;
-
-    invoke math -> operator_not (c1,c2) :: c;
-
-    return c;
-
+operation !! ( a : pos , b : pos ) : bool {
+	def c : bool;
+	def c1 : num = a;
+	def c2 : num = b;
+	invoke math -> operator_not ( c1 , c2 ) :: c;
+	return c;
 }
 
-
-act pular(){
-
-
-    def f : pos = 13;
-
-    def v : num = f;
-
-    def g : pos = f;
-
-    invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
-
-    def igual : bool = f == g;
-   # def diferente : bool = f !! g;
-
-
-    invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
-
+act pular ( ) {
+	def f : pos = 13;
+	def v : num = f;
+	def g : pos = f;
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	def igual : bool = f == g;
+	
+	# def diferente : bool = f !! g;
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }

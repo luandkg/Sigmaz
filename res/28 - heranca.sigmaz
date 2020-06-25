@@ -1,120 +1,95 @@
+call iniciar -> vamos_herdar ( );
 
-call iniciar -> vamos_herdar();
-
-
-act vamos_herdar(){
-
-    def a1 : Animal = init Animal();
-
-    a1.setIdade(12);
-    a1.setQualidade("Lindo");
-
-    a1.mostrar();
-
-
+act vamos_herdar ( ) {
+	def a1 : Animal = init Animal ( );
+	a1.setIdade ( 12 );
+	a1.setQualidade ( "Lindo");
+	a1.mostrar ( );
 }
-
 
 struct Qualidade {
+	define qualidade : string = "";
 
-    define qualidade : string = "";
-
-     act setQualidade( a : string){
-           qualidade = a;
-     }
-
-    func getQualidade() : string { return qualidade; }
+act setQualidade ( a : string ) {
+		qualidade = a;
+	}
+	func getQualidade ( ) : string {
+		return qualidade;
+	}
+	
 }
 
-struct Celula  {
-
+struct Celula {
+	
 }
 
-struct Celulas  {
-
+struct Celulas {
+	
 }
-
 
 struct Multicelular with Celulas {
-
+	
 }
 
 struct Bacteria with Celula {
-
+	
 }
 
 struct Fungo with Multicelular {
-
+	
 }
 
 struct Cocos with Bacteria {
-
+	
 }
 
 struct EstreptoCocos with Bacteria {
-
+	
 }
 
 struct Animal with Qualidade {
+	define idade : num = 0;
 
-    define idade : num = 0;
+act setIdade ( a : num ) {
+		idade = a;
+	}
 
-    act setIdade( a : num){
-           idade = a;
-    }
+	act mostrar ( ) {
+		println ( " --- ANIMAL --- ");
+		println ( "");
+		println ( "     - IDADE : ", idade );
+		println ( "     - QUALIDADE : ", qualidade );
+	}
+	func somar_inteiro ( a : num , b : num ) : num {
+		def c : num;
+		invoke math -> operator_sum ( a , b ) :: c;
+		invoke casting -> cast_integer ( c ) :: c;
+		return c;
+	}
+	func menor ( a : num , b : num ) : bool {
+		def c : bool;
+		invoke math -> operator_less ( a , b ) :: c;
+		return c;
+	}
 
-    act mostrar(){
+	act println ( a : string , b : num ) {
+		def c : num;
+		invoke terminal -> change ( ) :: c;
+		invoke terminal -> print ( a ) :: c;
+		invoke terminal -> print ( b ) :: c;
+	}
 
-        println(" --- ANIMAL --- ");
-        println("");
-        println("     - IDADE : ", idade);
-        println("     - QUALIDADE : ", qualidade);
+	act println ( a : string , b : string ) {
+		def c : num;
+		invoke terminal -> change ( ) :: c;
+		invoke terminal -> print ( a ) :: c;
+		invoke terminal -> print ( b ) :: c;
+	}
 
-    }
-
-    func somar_inteiro(a:num,b:num) : num {
-
-        def c : num;
-
-        invoke math -> operator_sum (a,b) :: c;
-        invoke casting -> cast_integer (c) :: c;
-
-        return c;
-    }
-
-    func menor(a:num,b:num) : bool {
-
-        def c : bool;
-
-        invoke math -> operator_less (a,b) :: c;
-
-        return c;
-    }
-
-    act println(a:string,b:num)  {
-
-        def c : num;
-        invoke terminal -> change () :: c;
-        invoke terminal -> print (a) :: c;
-        invoke terminal -> print (b) :: c;
-
-    }
-
-    act println(a:string,b:string)  {
-
-        def c : num;
-        invoke terminal -> change () :: c;
-        invoke terminal -> print (a) :: c;
-        invoke terminal -> print (b) :: c;
-
-    }
-
-    act println(a:string)  {
-
-        def c : num;
-        invoke terminal -> change () :: c;
-        invoke terminal -> print (a) :: c;
-
-    }
-
+	act println ( a : string ) {
+		def c : num;
+		invoke terminal -> change ( ) :: c;
+		invoke terminal -> print ( a ) :: c;
+	}
+	
 }

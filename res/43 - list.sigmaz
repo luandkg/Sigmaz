@@ -1,71 +1,54 @@
-
 require "libs/lib.sigmaz";
 
-call iniciar -> inicio();
+call iniciar -> inicio ( );
+define GERAL : Item >> ( num ) = null;
 
-define GERAL : Item >> (num) = null;
-
-act inicio(){
-
-
-    def ig : Lista >> (num) = init >> (num) Lista();
-
-    ig.add(10);
-    ig.add(10);
-    ig.add(10);
-
-    def a : num = ig.getQuantidade();
-
-    invoke __COMPILER__ -> SHOW_GLOBAL () :: STACK;
-
+act inicio ( ) {
+	def ig : Lista >> ( num ) = init >> ( num ) Lista ( );
+	ig.add ( 10 );
+	ig.add ( 10 );
+	ig.add ( 10 );
+	def a : num = ig.getQuantidade ( );
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 }
 
-struct Lista in (T) {
+struct Lista in ( T ) {
+	restrict : 
+	define mRaiz : Item >> ( T ) = null;
+	define mQuantidade : num = 0;
+	all : 
+	func getQuantidade ( ) : num {
+		return mQuantidade;
+	}
 
-    restrict :
-        define mRaiz : Item >> (T) = null;
-        define mQuantidade : num = 0;
-
-    all :
-
-        func  getQuantidade() : num { return mQuantidade; }
-
-        act add(novo:T) {
-
-            if (isNull(mRaiz)) -> {
-                   mRaiz = init >> (T) Item();
-                   mRaiz.setValor(novo);
-                   mQuantidade = somar_inteiro(mQuantidade,1);
-           } others {
-
-                     mQuantidade = somar_inteiro(mQuantidade,1);
-           }
-        }
-
+	act add ( novo : T ) {
+		if ( isNull ( mRaiz ) ) -> {
+			mRaiz = init >> ( T ) Item ( );
+			mRaiz.setValor ( novo );
+			mQuantidade = somar_inteiro ( mQuantidade , 1 );
+		}others {
+			mQuantidade = somar_inteiro ( mQuantidade , 1 );
+		}
+		
+	}
+	
 }
 
-struct Item in (T)  {
+struct Item in ( T ) {
+	restrict : 
+	define mValor : T = null;
+	define mProximo : Item >> ( T ) = null;
+	all : 
+	func getValor ( ) : T {
+		return mValor;
+	}
 
-    restrict:
-        define mValor : T = null;
-        define mProximo : Item >> (T) = null;
-
-    all:
-        func getValor() : T {
-            return mValor;
-        }
-
-        act setValor(eValor:T) {
-            mValor = eValor;
-         }
-
+	act setValor ( eValor : T ) {
+		mValor = eValor;
+	}
+	
 }
 
-struct Normal{
-
-
+struct Normal {
+	
 }
-
-
-
-

@@ -1,40 +1,21 @@
+call iniciar -> inicio ( );
+define GERAL : Item >> ( num ) = null;
 
-
-
-call iniciar -> inicio();
-
-define GERAL : Item >> (num) = null;
-
-act inicio(){
-
-
-    def ig : Item >> (num) = init >> (num) Item();
-
-    def a : num = ig.getA();
-
-    invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
-
+act inicio ( ) {
+	def ig : Item >> ( num ) = init >> ( num ) Item ( );
+	def a : num = ig.getA ( );
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
 
-struct Item in (T)  {
-
-    define A : T = null;
-
-    func getA() : T {
-
-        def mA : T = A;
-
-        return mA;
-
-     }
-
+struct Item in ( T ) {
+	define A : T = null;
+	func getA ( ) : T {
+		def mA : T = A;
+		return mA;
+	}
+	
 }
 
-struct Normal{
-
-
+struct Normal {
+	
 }
-
-
-
-

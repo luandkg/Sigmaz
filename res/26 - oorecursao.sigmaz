@@ -1,56 +1,38 @@
-
-call iniciar -> recursao(10);
+call iniciar -> recursao ( 10 );
 
 # PROBLEMA GRAVE COM RECURSAO EM OO - Transferencia de Escopo
-
-act recursao( h : num){
-
-    def m : Matematica = init Matematica();
-
-    m.recursor(12);
-
+act recursao ( h : num ) {
+	def m : Matematica = init Matematica ( );
+	m.recursor ( 12 );
 }
 
 struct Matematica {
+	act recursor ( a : num ) {
+		def b : num = somar_inteiro ( a , 1 );
+		println ( "Valor B : ", b );
+		invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+		if ( menor ( b , 20 ) ) -> {
+			recursor ( b );
+		}
+		
+	}
+	func somar_inteiro ( a : num , b : num ) : num {
+		def c : num;
+		invoke math -> operator_sum ( a , b ) :: c;
+		invoke casting -> cast_integer ( c ) :: c;
+		return c;
+	}
+	func menor ( a : num , b : num ) : bool {
+		def c : bool;
+		invoke math -> operator_less ( a , b ) :: c;
+		return c;
+	}
 
-    act recursor( a : num){
-
-        def b : num = somar_inteiro(a,1);
-        println("Valor B : ",b);
-
-        invoke __COMPILER__ -> SHOW_STRUCT () :: ALL;
-
-        if (menor(b,20)) -> {   recursor(b);  }
-
-    }
-
-
-    func somar_inteiro(a:num,b:num) : num {
-
-        def c : num;
-
-        invoke math -> operator_sum (a,b) :: c;
-        invoke casting -> cast_integer (c) :: c;
-
-        return c;
-    }
-
-    func menor(a:num,b:num) : bool {
-
-        def c : bool;
-
-        invoke math -> operator_less (a,b) :: c;
-
-        return c;
-    }
-
-    act println(a:string,b:num)  {
-
-        def c : num;
-        invoke terminal -> change () :: c;
-        invoke terminal -> print (a) :: c;
-        invoke terminal -> print (b) :: c;
-
-    }
-
+	act println ( a : string , b : num ) {
+		def c : num;
+		invoke terminal -> change ( ) :: c;
+		invoke terminal -> print ( a ) :: c;
+		invoke terminal -> print ( b ) :: c;
+	}
+	
 }

@@ -5,7 +5,9 @@ import Sigmaz.Executor.Runners.*;
 import Sigmaz.Utils.AST;
 import Sigmaz.Utils.Documentador;
 import Sigmaz.Utils.Documento;
+import Sigmaz.Utils.Texto;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class RunTime {
@@ -23,6 +25,8 @@ public class RunTime {
     private ArrayList<AST> mStructs;
 
     private ArrayList<Index_Function> mOperacoes;
+
+    private String mLocal;
 
     private long mHEAPID;
 
@@ -47,12 +51,13 @@ public class RunTime {
         mExtern = new ArrayList<Run_Extern>();
 
         mEscopoGlobal = null;
+        mLocal = "";
 
         mExterno = true;
 
         mStages = new ArrayList<AST>();
         mStructs = new ArrayList<AST>();
-        mOperacoes = new  ArrayList<Index_Function>();
+        mOperacoes = new ArrayList<Index_Function>();
 
         limpar();
 
@@ -66,6 +71,7 @@ public class RunTime {
 
 
         mHEAPID = 0;
+
 
         mContador_Actions = 0;
         mContador_Casts = 0;
@@ -120,6 +126,8 @@ public class RunTime {
 
     public void init(String eArquivo) {
 
+        File arq = new File(eArquivo);
+        mLocal = arq.getParent() + "/";
 
         limpar();
 
@@ -254,10 +262,64 @@ public class RunTime {
 
         mEscopoGlobal = Global;
 
+        ArrayList<String> mRequiscoes = new ArrayList<>();
+
+
+        for (AST ASTCGlobal : mASTS) {
+            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
+
+                for (AST ASTC : ASTCGlobal.getASTS()) {
+                    if (ASTC.mesmoTipo("REQUIRED")) {
+
+                        String mReq = mLocal + ASTC.getNome() + ".sigmad";
+                        mRequiscoes.add(mReq);
+
+
+
+                    }
+
+                }
+
+            }
+        }
+
+        // IMPORTANDO BIBLIOTECAS EXTERNAS
+
+        for (String mReq : mRequiscoes) {
+
+            File arq = new File(mReq);
+
+            if (arq.exists()) {
+
+
+                RunTime RunTimeC = new RunTime();
+
+                try {
+                    RunTimeC.init(mReq);
+
+                    for (AST ASTR : RunTimeC.getBranch("SIGMAZ").getASTS()) {
+
+                        this.getBranch("SIGMAZ").getASTS().add(ASTR);
+
+                    }
+
+
+                } catch (Exception e) {
+                    mErros.add("Library " + mReq + " : Problema ao carregar !");
+                }
+
+            } else {
+                mErros.add("Library " + mReq + " : Nao Encontrado !");
+            }
+
+        }
+
+        // INICIANDO EXECUCAO
 
         for (AST ASTCGlobal : mASTS) {
 
             if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
+
 
                 for (AST ASTC : ASTCGlobal.getASTS()) {
 
@@ -292,7 +354,7 @@ public class RunTime {
                 for (AST mStruct : mStructs) {
                     for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
                         if (mStructBody.mesmoTipo("OPERATION") && mStructBody.getBranch("VISIBILITY").mesmoNome("EXTERN")) {
-                           // System.out.println("PORRA PERDIDA");
+                            // System.out.println("PORRA PERDIDA");
 
                             mOperacoes.add(new Index_Function(mStructBody));
 
@@ -368,6 +430,19 @@ public class RunTime {
         }
 
 
+    }
+
+    public AST getBranch(String eTipo) {
+        AST mRet = null;
+
+        for (AST mAST : mASTS) {
+            if (mAST.mesmoTipo(eTipo)) {
+                mRet = mAST;
+                break;
+            }
+        }
+
+        return mRet;
     }
 
     public void AlocarStages(AST eAST, Escopo mEscopo) {

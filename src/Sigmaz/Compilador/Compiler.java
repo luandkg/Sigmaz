@@ -270,15 +270,28 @@ public class Compiler {
                 if (mErros_Compiler.size() > 0) {
                     break;
                 }
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("required")) {
+
+                AST_Requisicao mAST = new AST_Requisicao(this);
+                mAST.inited(AST_Raiz);
+
+                if (mErros_Lexer.size() > 0) {
+                    break;
+                }
+                if (mErros_Compiler.size() > 0) {
+                    break;
+                }
+
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
 
                 AST_Action mAST = new AST_Action(this);
-                mAST.init(AST_Raiz,"ALL");
+                mAST.init(AST_Raiz, "ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
 
                 AST_Function mAST = new AST_Function(this);
-                mAST.init(AST_Raiz,"ALL");
+                mAST.init(AST_Raiz, "ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("call")) {
 
@@ -288,12 +301,12 @@ public class Compiler {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 
                 AST_Alocador mAST = new AST_Alocador(this);
-                mAST.init_Mockiz(AST_Raiz,"ALL");
+                mAST.init_Mockiz(AST_Raiz, "ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
 
                 AST_Alocador mAST = new AST_Alocador(this);
-                mAST.init_Define(AST_Raiz,"ALL");
+                mAST.init_Define(AST_Raiz, "ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("invoke")) {
 
@@ -303,7 +316,7 @@ public class Compiler {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operation")) {
 
                 AST_Operation mAST = new AST_Operation(this);
-                mAST.init(AST_Raiz,"ALL");
+                mAST.init(AST_Raiz, "ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("cast")) {
 
@@ -318,12 +331,12 @@ public class Compiler {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("match")) {
 
                 AST_Stages mAST = new AST_Stages(this);
-                mAST.init(AST_Raiz,false);
+                mAST.init(AST_Raiz, false);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("stages")) {
 
                 AST_Stages mAST = new AST_Stages(this);
-                mAST.init(AST_Raiz,true);
+                mAST.init(AST_Raiz, true);
 
             } else {
                 errarCompilacao("Token Desconhecido : " + TokenC.getTipo() + " " + TokenC.getConteudo(), TokenC.getInicio());
@@ -346,6 +359,24 @@ public class Compiler {
         }
         return TokenP;
     }
+
+    public Token getTokenAvanteIDStatus(String eQualID, String eErro) {
+        Token TokenP = getTokenAvante();
+        if (TokenP.getTipo() == TokenTipo.ID) {
+
+            if (TokenP.mesmoConteudo(eQualID)){
+
+            }else{
+                errarCompilacao(eErro + " contudo encontrou : " + TokenP.getConteudo(), TokenP.getInicio());
+            }
+
+
+        } else {
+            errarCompilacao(eErro + " contudo encontrou : " + TokenP.getConteudo(), TokenP.getInicio());
+        }
+        return TokenP;
+    }
+
 
     public void errarLexer(String eMensagem, int ePosicao) {
 

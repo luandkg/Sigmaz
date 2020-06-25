@@ -1,146 +1,99 @@
 
 # PRINT SIMPLES
-
-act print(a:string)  {
-
-    def b : num;
-
-    invoke terminal -> print (a) :: b;
-
+act print ( a : string ) {
+	def b : num;
+	invoke terminal -> print ( a ) :: b;
 }
 
-act print(a:num)  {
-
-    def b : num;
-
-    invoke terminal -> print (a) :: b;
-
+act print ( a : num ) {
+	def b : num;
+	invoke terminal -> print ( a ) :: b;
 }
 
-act print(a:bool)  {
-
-    def b : num;
-
-    invoke terminal -> print (a) :: b;
+act print ( a : bool ) {
+	def b : num;
+	invoke terminal -> print ( a ) :: b;
 }
-
-
-
-
 
 # PRINT NOVA LINHA
-
-
-act println(a:string)  {
-
-    def b : num;
-    invoke terminal -> change () :: b;
-    invoke terminal -> print (a) :: b;
-
-
+act println ( a : string ) {
+	def b : num;
+	invoke terminal -> change ( ) :: b;
+	invoke terminal -> print ( a ) :: b;
 }
 
-act println(a:num)  {
-
-    def b : num;
-    invoke terminal -> change () :: b;
-    invoke terminal -> print (a) :: b;
-
-
+act println ( a : num ) {
+	def b : num;
+	invoke terminal -> change ( ) :: b;
+	invoke terminal -> print ( a ) :: b;
 }
 
-act println(a:bool)  {
-
-    def b : num;
-    invoke terminal -> change () :: b;
-    invoke terminal -> print (a) :: b;
-
+act println ( a : bool ) {
+	def b : num;
+	invoke terminal -> change ( ) :: b;
+	invoke terminal -> print ( a ) :: b;
 }
-
-
-
-
-
 
 # PRINT NOVA LINHA E DUPLO
-
-act println(a:string,b:string)  {
-
-    def c : num;
-    invoke terminal -> change () :: c;
-    invoke terminal -> print (a) :: c;
-    invoke terminal -> print (b) :: c;
-
+act println ( a : string , b : string ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
 }
 
-act println(a:string,b:num)  {
-
-    def c : num;
-    invoke terminal -> change () :: c;
-    invoke terminal -> print (a) :: c;
-    invoke terminal -> print (b) :: c;
-
+act println ( a : string , b : num ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
 }
 
-act println(a:string,b:bool)  {
-
-    def c : num;
-    invoke terminal -> change () :: c;
-    invoke terminal -> print (a) :: c;
-    invoke terminal -> print (b) :: c;
-
+act println ( a : string , b : bool ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
 }
 
-act println(a:num,b:string)  {
-
-    def c : num;
-    invoke terminal -> change () :: c;
-    invoke terminal -> print (a) :: c;
-    invoke terminal -> print (b) :: c;
-
+act println ( a : num , b : string ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
 }
 
-act println(a:num,b:num)  {
-
-    def c : num;
-    invoke terminal -> change () :: c;
-    invoke terminal -> print (a) :: c;
-    invoke terminal -> print (b) :: c;
-
+act println ( a : num , b : num ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
 }
 
-act println(a:num,b:bool)  {
-
-    def c : num;
-    invoke terminal -> change () :: c;
-    invoke terminal -> print (a) :: c;
-    invoke terminal -> print (b) :: c;
-
+act println ( a : num , b : bool ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
 }
 
-act println(a:bool,b:string)  {
-
-    def c : num;
-    invoke terminal -> change () :: c;
-    invoke terminal -> print (a) :: c;
-    invoke terminal -> print (b) :: c;
-
+act println ( a : bool , b : string ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
 }
 
-act println(a:bool,b:num)  {
-
-    def c : num;
-    invoke terminal -> change () :: c;
-    invoke terminal -> print (a) :: c;
-    invoke terminal -> print (b) :: c;
-
+act println ( a : bool , b : num ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
 }
 
-act println(a:bool,b:bool)  {
-
-    def c : num;
-    invoke terminal -> change () :: c;
-    invoke terminal -> print (a) :: c;
-    invoke terminal -> print (b) :: c;
-
+act println ( a : bool , b : bool ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
 }

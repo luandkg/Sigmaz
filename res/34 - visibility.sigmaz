@@ -1,114 +1,73 @@
-
 require "libs/lib.sigmaz";
 
-call iniciar -> pular();
+call iniciar -> pular ( );
 
-
-act pular(){
-
-
-    def sacola1 : Sacola = init Sacola();
-
-
-    sacola1.aumentar(2);
-
-    def t : num = sacola1.getQuantidade();
-
-    def s : num = somar(2,sacola1.getQuantidade());
-
-    #sacola1.tratar(3,3);
-
-
-    sacola1.mostrar_struct();
-
-    def sacola2 : Sacola = init Sacola();
-    sacola2.aumentar(2);
-
-    def rr : bool = sacola1 == sacola2;
-
-    invoke __COMPILER__ -> SHOW_HEAP () :: ALL;
-
-    invoke __COMPILER__ -> STRUCT (sacola2) :: REMOVE;
-
-    #sacola2.aumentar(2);
-
-    invoke __COMPILER__ -> SHOW_HEAP () :: ALL;
-
+act pular ( ) {
+	def sacola1 : Sacola = init Sacola ( );
+	sacola1.aumentar ( 2 );
+	def t : num = sacola1.getQuantidade ( );
+	def s : num = somar ( 2 , sacola1.getQuantidade ( ) );
+	
+	#sacola1.tratar(3,3);
+	sacola1.mostrar_struct ( );
+	def sacola2 : Sacola = init Sacola ( );
+	sacola2.aumentar ( 2 );
+	def rr : bool = sacola1 == sacola2;
+	invoke __COMPILER__ -> SHOW_HEAP ( ) :: ALL;
+	invoke __COMPILER__ -> STRUCT ( sacola2 ) :: REMOVE;
+	
+	#sacola2.aumentar(2);
+	invoke __COMPILER__ -> SHOW_HEAP ( ) :: ALL;
 }
-
-
 
 struct Sacola {
+	init Sacola ( ) {
+		
+	}
+	define itens : num = 0;
+	all : 
+	act aumentar ( g : num ) {
+		itens = somar_inteiro ( itens , g );
+	}
+	func quantidade ( ) : num {
+		return itens;
+	}
+	func getQuantidade ( ) : num {
+		return itens;
+	}
 
+	act mostrar ( ) {
+		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	}
 
+	act mostrar_detalhes ( ) {
+		println ( "");
+		println ( " SACOLA : ");
+		println ( "    - Itens : ", itens );
+	}
 
-    init Sacola() {}
-
-
-
-    define itens : num = 0;
-
-    all :
-
-    act aumentar( g : num)  {
-         itens= somar_inteiro(itens,g);
-    }
-
-    func quantidade() : num { return itens; }
-
-    func getQuantidade() : num { return itens; }
-
-
-
-   act mostrar()  {
-
-        invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
-
-    }
-
-    act mostrar_detalhes(){
-
-        println("");
-
-        println(" SACOLA : ");
-        println("    - Itens : ", itens);
-
-    }
-
-    act mostrar_struct(){
-
-        invoke __COMPILER__ -> SHOW_STRUCT () :: ALL;
-
-    }
-
-    func someisso(a:num,b:num) : num {
-        return somar_inteiro(a,b);
-    }
-
-    all :
-
-    extern : operation == (a : Sacola,b : Sacola) : bool {
-
-        invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
-
-    def t : bool =  a.itens == b.itens;
-        invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
-
-     return t ;
-     }
-    #extern : operation !! (a : Sacola,b : Sacola) : bool { return a.itens !! b.itens; }
-
-
-
-       func someisso(a:num,b:num) : num {
-           return somar_inteiro(a,b);
-       }
-
-     restrict :
-
-       func tratar(a:num,b:num) : num {
-            return somar_inteiro(a,b);
-       }
-
+	act mostrar_struct ( ) {
+		invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+	}
+	func someisso ( a : num , b : num ) : num {
+		return somar_inteiro ( a , b );
+	}
+	all : 
+	extern : 
+	operation == ( a : Sacola , b : Sacola ) : bool {
+		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+		def t : bool = a.itens == b.itens;
+		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+		return t;
+	}
+	
+	#extern : operation !! (a : Sacola,b : Sacola) : bool { return a.itens !! b.itens; }
+	func someisso ( a : num , b : num ) : num {
+		return somar_inteiro ( a , b );
+	}
+	restrict : 
+	func tratar ( a : num , b : num ) : num {
+		return somar_inteiro ( a , b );
+	}
+	
 }
-

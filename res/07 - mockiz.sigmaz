@@ -1,17 +1,9 @@
-
 require "libs/operadores.sigmaz";
 
-call iniciar -> operando();
-
+call iniciar -> operando ( );
 mockiz MATEMATICA_PI : num = 3.14;
 
-act operando(){
-
-
-    moc ZAC : num = 10;
-
-
-    invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
-
+act operando ( ) {
+	moc ZAC : num = 10;
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }
-

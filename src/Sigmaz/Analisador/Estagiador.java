@@ -64,8 +64,8 @@ public class Estagiador {
 
         mStruct.criarBranch("WITH").setValor("FALSE");
 
-        AST AST_Stages =  mStruct.criarBranch("STAGES");
-        AST_Stages.setValor("TRUE");
+        AST AST_Stages =  mStruct.criarBranch("EXTENDED");
+        AST_Stages.setNome("STAGES");
 
         mStruct.criarBranch("INITS");
         AST mCorpo = mStruct.criarBranch("BODY");
@@ -95,6 +95,7 @@ public class Estagiador {
 
 
         AST mDef = mBody.criarBranch("DEF");
+        mDef.criarBranch("GENERIC").setNome("FALSE");
         mDef.setNome("BETA");
         mDef.setValor("string");
 
@@ -162,6 +163,8 @@ public class Estagiador {
 
 
         AST mDef = mBody.criarBranch("DEF");
+        mDef.criarBranch("GENERIC").setNome("FALSE");
+
         mDef.setNome("BETA");
         mDef.setValor("num");
 
@@ -237,6 +240,8 @@ public class Estagiador {
         AST mBody = mMATCH.criarBranch("BODY");
 
         AST mDef = mBody.criarBranch("DEF");
+        mDef.criarBranch("GENERIC").setNome("FALSE");
+
         mDef.setNome("GAMA");
         mDef.setValor("bool");
 

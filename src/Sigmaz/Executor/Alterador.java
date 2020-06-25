@@ -1,4 +1,4 @@
-package Sigmaz.Executor.Runners;
+package Sigmaz.Executor;
 
 import Sigmaz.Utils.AST;
 

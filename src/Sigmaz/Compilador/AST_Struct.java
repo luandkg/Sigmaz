@@ -31,6 +31,10 @@ public class AST_Struct {
             AST AST_Stages =  AST_Corrente.criarBranch("STAGES");
             AST_Stages.setValor("FALSE");
 
+            AST mExtended = AST_Corrente.criarBranch("EXTENDED");
+            mExtended.setValor("FALSE");
+
+
             AST AST_Inits =  AST_Corrente.criarBranch("INITS");
 
 

@@ -1,4 +1,4 @@
-package Sigmaz;
+package AppSigmaz;
 
 import Sigmaz.Analisador.Analisador;
 import Sigmaz.Compilador.Compiler;
@@ -9,11 +9,11 @@ import Sigmaz.Utils.GrupoDeErro;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class CSigmaz {
+public class Testes {
 
     private ArrayList<String> mArquivos;
 
-    public CSigmaz() {
+    public Testes() {
 
         mArquivos = new ArrayList<String>();
 

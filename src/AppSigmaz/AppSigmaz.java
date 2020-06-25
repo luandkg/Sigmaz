@@ -1,7 +1,8 @@
 package AppSigmaz;
 
 import Sigmaz.Sigmaz;
-import Sigmaz.CSigmaz;
+
+import Sigmaz.Utils.Identador;
 
 import java.util.ArrayList;
 
@@ -9,92 +10,60 @@ public class AppSigmaz {
 
     public static void main(String[] args) {
 
-        ArrayList<String> mArquivos = Carregar_Arquivos();
+        ArrayList<String> mArquivos = Carregadores.Carregar_Arquivos();
+        ArrayList<String> mBibliotecas = Carregadores.Carregar_Bibliotecas();
+
+        String mBiblioteca_Fonte = "res/libs/lib.sigmaz";
+        String mBiblioteca_Sigmad = "res/lib.sigmad";
 
 
-        int TESTE = 1;
+        Fases mFase = Fases.EXECUTAR;
 
-        int ARQUIVO = 43;
+        int ARQUIVO = 44;
 
 
-        if (TESTE == 1) {
+        if (mFase == Fases.EXECUTAR) {
+
             UM(ARQUIVO, mArquivos);
-        } else if (TESTE == 2) {
+
+        } else if (mFase == Fases.DEPENDENCIAS) {
+
+            DEPENDENCIA(ARQUIVO, mArquivos);
+
+        } else if (mFase == Fases.IDENTAR) {
+
+            IDENTAR(ARQUIVO, mArquivos);
+
+        } else if (mFase == Fases.ESTRUTURADOR) {
+
             ESTRUTURAL(ARQUIVO, mArquivos);
-        } else {
+
+        } else if (mFase == Fases.TESTES) {
+
             TESTE_GERAL(mArquivos);
+
+        } else if (mFase == Fases.IDENTAR_TUDO) {
+
+            IDENTAR_LOTE("ARQUIVOS",mArquivos);
+
+        } else if (mFase == Fases.IDENTAR_BIBLIOTECAS) {
+
+            IDENTAR_LOTE("BIBLIOTECAS",mBibliotecas);
+
+        } else if (mFase == Fases.MONTAR_BIBLIOTECAS) {
+
+            MONTAR_BIBLIOTECA(mBiblioteca_Fonte,mBiblioteca_Sigmad);
+
+        } else {
+
+            System.out.println("\t - Fases : Desconhecida !");
+
         }
 
 
     }
 
-    public static ArrayList<String> Carregar_Arquivos() {
 
-        ArrayList<String> mArquivos = new ArrayList<String>();
-
-        // INICIANTE
-
-        mArquivos.add("res/01 - init.sigmaz");
-        mArquivos.add("res/02 - arguments.sigmaz");
-        mArquivos.add("res/03 - define.sigmaz");
-        mArquivos.add("res/04 - require.sigmaz");
-        mArquivos.add("res/05 - function.sigmaz");
-        mArquivos.add("res/06 - functions2.sigmaz");
-        mArquivos.add("res/07 - mockiz.sigmaz");
-        mArquivos.add("res/08 - matches.sigmaz");
-
-        // STATEMENTS
-
-        mArquivos.add("res/09 - condition.sigmaz");
-        mArquivos.add("res/10 - while.sigmaz");
-        mArquivos.add("res/11 - cancel.sigmaz");
-        mArquivos.add("res/12 - continue.sigmaz");
-        mArquivos.add("res/13 - step.sigmaz");
-        mArquivos.add("res/14 - stepdef.sigmaz");
-        mArquivos.add("res/15 - when.sigmaz");
-        mArquivos.add("res/16 - all.sigmaz");
-        mArquivos.add("res/17 - test.sigmaz");
-        mArquivos.add("res/18 - operations.sigmaz");
-
-        // ESTRUTURANTES
-
-        mArquivos.add("res/19 - cast.sigmaz");
-        mArquivos.add("res/20 - cast2.sigmaz");
-        mArquivos.add("res/21 - struct.sigmaz");
-        mArquivos.add("res/22 - internal.sigmaz");
-        mArquivos.add("res/23 - oo.sigmaz");
-        mArquivos.add("res/24 - oo2.sigmaz");
-        mArquivos.add("res/25 - recursao.sigmaz");
-        mArquivos.add("res/26 - oorecursao.sigmaz");
-        mArquivos.add("res/27 - construtor.sigmaz");
-
-        // HERANCA
-
-        mArquivos.add("res/28 - heranca.sigmaz");
-        mArquivos.add("res/29 - initheranca.sigmaz");
-        mArquivos.add("res/30 - initheranca2.sigmaz");
-        mArquivos.add("res/31 - stages.sigmaz");
-
-        // OUTROS
-
-        mArquivos.add("res/32 - stages2.sigmaz");
-        mArquivos.add("res/33 - oo.sigmaz");
-        mArquivos.add("res/34 - visibility.sigmaz");
-        mArquivos.add("res/35 - extern.sigmaz");
-        mArquivos.add("res/36 - externs.sigmaz");
-        mArquivos.add("res/37 - this.sigmaz");
-        mArquivos.add("res/38 - exception.sigmaz");
-        mArquivos.add("res/39 - time.sigmaz");
-
-        // TUDO
-
-        mArquivos.add("res/40 - lib.sigmaz");
-        mArquivos.add("res/41 - tempo.sigmaz");
-        mArquivos.add("res/42 - generic.sigmaz");
-        mArquivos.add("res/43 - list.sigmaz");
-
-        return mArquivos;
-    }
 
     public static void UM(int eIndice, ArrayList<String> mArquivos) {
 
@@ -124,6 +93,42 @@ public class AppSigmaz {
 
 
     }
+
+    public static void MONTAR_BIBLIOTECA(String eArquivo,String eSaida){
+
+        Sigmaz SigmazC = new Sigmaz();
+
+        SigmazC.estrutural(eArquivo, eSaida);
+
+    }
+
+    public static void DEPENDENCIA(int eIndice, ArrayList<String> mArquivos) {
+
+
+        int iContando = 0;
+        boolean enc = false;
+
+        for (String mArquivo : mArquivos) {
+            iContando += 1;
+            if (iContando == eIndice) {
+
+                enc = true;
+
+                Sigmaz SigmazC = new Sigmaz();
+
+                SigmazC.initDependencia(mArquivo);
+
+                break;
+            }
+        }
+
+        if (!enc) {
+            System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+    }
+
 
     public static void ESTRUTURAL(int eIndice, ArrayList<String> mArquivos) {
 
@@ -156,14 +161,85 @@ public class AppSigmaz {
 
     public static void TESTE_GERAL(ArrayList<String> mArquivos) {
 
-        CSigmaz mCSigmaz = new CSigmaz();
+        System.out.println("");
+
+        Testes mTestes = new Testes();
 
         for (String mArquivo : mArquivos) {
-            mCSigmaz.adicionar(mArquivo);
+            mTestes.adicionar(mArquivo);
         }
 
 
-        mCSigmaz.init();
+        mTestes.init();
+
+    }
+
+    public static void IDENTAR(int eIndice, ArrayList<String> mArquivos) {
+
+
+        int iContando = 0;
+        boolean enc = false;
+
+        for (String mArquivo : mArquivos) {
+            iContando += 1;
+            if (iContando == eIndice) {
+
+                enc = true;
+
+                Identador mIdentador = new Identador();
+                mIdentador.init(mArquivo, mArquivo);
+
+
+                break;
+            }
+        }
+
+        if (!enc) {
+            System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+    }
+
+    public static void IDENTAR_LOTE(String eNome,ArrayList<String> mArquivos) {
+
+        System.out.println("");
+        System.out.println("################ IDENTADOR - " + eNome + " ################");
+
+        Identador mIdentador = new Identador();
+        String DDI = mIdentador.getData();
+
+        System.out.println("");
+        System.out.println(" - AUTOR	: LUAN FREITAS");
+        System.out.println(" - VERSAO   : 1.0");
+        System.out.println(" - STATUS  	: ALPHA");
+
+        System.out.println("");
+        System.out.println(" - INICIO  	: " + DDI);
+        System.out.println("");
+
+        int Contador = 1;
+
+        for (String mArquivo : mArquivos) {
+
+            String sContador = String.valueOf(Contador);
+
+            if (sContador.length() == 1) {
+                sContador = "0" + sContador;
+            }
+
+            boolean t = mIdentador.initSimples(mArquivo, mArquivo);
+
+            if (t) {
+                System.out.println(" Arquivo : " + sContador + " -> " + mArquivo + " : SUCESSO ");
+            } else {
+                System.out.println(" Arquivo : " + sContador + " -> " + mArquivo + " : FALHOU ");
+            }
+
+            Contador += 1;
+
+        }
+
 
     }
 

@@ -131,6 +131,11 @@ public class Run_Value {
 
             Funct(ASTCorrente, eRetorno);
 
+        } else if (ASTCorrente.getValor().contentEquals("TERNAL")) {
+
+            Ternal(ASTCorrente, eRetorno);
+
+
         } else if (ASTCorrente.getValor().contentEquals("STAGE")) {
 
             Stage(ASTCorrente, eRetorno);
@@ -285,6 +290,48 @@ public class Run_Value {
         this.setPrimitivo(eItem.getPrimitivo());
         this.setConteudo(eItem.getValor());
         this.setRetornoTipo(eItem.getTipo());
+
+
+        //  System.out.println("FUNCT EXIT  -> " + ASTCorrente.getNome() + " -> " + this.getConteudo() + " P : " + mIsPrimitivo + " N : " + mIsNulo + " T : " + mRetornoTipo);
+
+
+    }
+
+    public void Ternal(AST ASTCorrente, String eRetorno) {
+
+        // System.out.println("Valorando  -> FUNCT " + ASTCorrente.getNome());
+
+        Run_Value mRun_Value = new Run_Value(mRunTime,mEscopo);
+        mRun_Value.init(ASTCorrente.getBranch("CONDITION"),"bool");
+
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
+
+        if (mRun_Value.getConteudo().contentEquals("true")){
+
+            Run_Value sRun_Value = new Run_Value(mRunTime,mEscopo);
+            sRun_Value.init(ASTCorrente.getBranch("TRUE"),eRetorno);
+
+            this.setNulo(sRun_Value.getIsNulo());
+            this.setPrimitivo(sRun_Value.getIsPrimitivo());
+            this.setConteudo(sRun_Value.getConteudo());
+            this.setRetornoTipo(sRun_Value.getRetornoTipo());
+
+        }else{
+
+            Run_Value sRun_Value = new Run_Value(mRunTime,mEscopo);
+            sRun_Value.init(ASTCorrente.getBranch("FALSE"),eRetorno);
+
+            this.setNulo(sRun_Value.getIsNulo());
+            this.setPrimitivo(sRun_Value.getIsPrimitivo());
+            this.setConteudo(sRun_Value.getConteudo());
+            this.setRetornoTipo(sRun_Value.getRetornoTipo());
+
+
+        }
+
+
 
 
         //  System.out.println("FUNCT EXIT  -> " + ASTCorrente.getNome() + " -> " + this.getConteudo() + " P : " + mIsPrimitivo + " N : " + mIsNulo + " T : " + mRetornoTipo);

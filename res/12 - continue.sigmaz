@@ -1,35 +1,23 @@
-
 require "libs/operadores.sigmaz";
 require "libs/terminal.sigmaz";
 require "libs/cast.sigmaz";
 
-call iniciar -> operando();
+call iniciar -> operando ( );
 
-
-act operando(){
-
-
-    def cc : num = 0;
-
-
-    while(menor(cc,20)) -> {
-
-        def ac : num = cc;
-        cc =  somar_inteiro(cc,1);
-
-
-        if (ac == 8) -> {  println(" - SAINDO : " ,ac); cancel; }
-        if (ac == 5) -> {  println(" - PULANDO : " ,ac);continue; }
-
-
-        println("Valor : " ,ac);
-
-
-
-    }
-
-
-
+act operando ( ) {
+	def cc : num = 0;
+	while ( menor ( cc , 20 ) ) -> {
+		def ac : num = cc;
+		cc = somar_inteiro ( cc , 1 );
+		if ( ac == 8 ) -> {
+			println ( " - SAINDO : ", ac );
+			cancel;
+		}
+		if ( ac == 5 ) -> {
+			println ( " - PULANDO : ", ac );
+			continue;
+		}
+		println ( "Valor : ", ac );
+	}
+	
 }
-
-

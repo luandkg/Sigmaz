@@ -1,23 +1,25 @@
 
+require "operadores.sigmaz";
+require "terminal.sigmaz";
+require "cast.sigmaz";
+require "strings.sigmaz";
+require "pos.sigmaz";
+require "neg.sigmaz";
+require "tempo.sigmaz";
 
-    mockiz SIGMAZ : string = "SIGMAZ 1.0";
-    mockiz VERSAO : num = 1.0;
+mockiz SIGMAZ : string = "SIGMAZ 1.0";
+mockiz VERSAO : num = 1.0;
+define ALGO : string = "__ALGO__";
 
-    define ALGO : string = "__ALGO__";
 
-    require "operadores.sigmaz";
-    require "terminal.sigmaz";
-    require "cast.sigmaz";
-    require "strings.sigmaz";
-
-    require "pos.sigmaz";
-    require "neg.sigmaz";
-
-    #require "organismos.sigmaz";
-
-    stages Numeros -> { POSITIVO, NEGATIVO };
-    stages Comparacao -> { MAIOR, MENOR, IGUAL };
-    stages Logico -> { TRUE, FALSE, UNKOWN };
-
-    require "tempo.sigmaz";
+#require "organismos.sigmaz";
+stages Numeros -> {
+	POSITIVO , NEGATIVO 
+}
+stages Comparacao -> {
+	MAIOR , MENOR , IGUAL 
+}
+stages Logico -> {
+	TRUE , FALSE , UNKOWN 
+}
 

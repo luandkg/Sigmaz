@@ -243,5 +243,46 @@ public class Sigmaz {
 
     }
 
+    public void initDependencia(String eArquivo) {
+
+
+
+        Compiler CompilerC = new Compiler();
+        CompilerC.init(eArquivo);
+
+
+        System.out.println("");
+        System.out.println("############## DEPENDENCIAS ###############");
+        System.out.println("");
+
+        if (CompilerC.getErros_Lexer().size() == 0 && CompilerC.getErros_Compiler().size() == 0) {
+
+
+
+            ArrayList<String> mDep = new ArrayList<>();
+
+
+            mDep.add(eArquivo);
+
+
+            for (String Req : CompilerC.getRequisitados()) {
+                Req = Req.replace("\\","/");
+                if (!mDep.contains(Req)) {
+                    mDep.add(Req);
+                }
+            }
+
+
+            for (String Req : mDep) {
+                System.out.println("\t\t - " + Req);
+            }
+
+        }else{
+
+            System.out.println("\n\t - ERROS DE PROCESSAMENTO ");
+
+        }
+    }
+
 
 }

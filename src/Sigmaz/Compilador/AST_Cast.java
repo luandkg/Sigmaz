@@ -100,6 +100,9 @@ public class AST_Cast {
             AST_Func_Def.setNome("beta");
             AST_Func_Def.setValor(eNome);
 
+            AST_Func_Def.criarBranch("GENERIC").setNome("FALSE");
+
+
             AST AST_Func_Val =AST_Func_Def.criarBranch("VALUE");
             AST_Func_Val.setNome("alfa");
             AST_Func_Val.setValor("ID");
@@ -158,6 +161,8 @@ public class AST_Cast {
             AST AST_Func_Def =AST_Func_Body.criarBranch("DEF");
             AST_Func_Def.setNome("beta");
             AST_Func_Def.setValor(TokenC3.getConteudo());
+
+            AST_Func_Def.criarBranch("GENERIC").setNome("FALSE");
 
             AST AST_Func_Val =AST_Func_Def.criarBranch("VALUE");
             AST_Func_Val.setNome("alfa");

@@ -1,78 +1,39 @@
+call iniciar -> pular ( );
 
+struct Pessoa {
+	define nome : string;
+	define idade : num;
+	func getNome ( ) : string {
+		nome = "Luan Alves";
+		return nome;
+	}
 
-call iniciar -> pular();
-
-struct Pessoa{
-
-    define nome : string;
-    define idade : num;
-
-
-
-    func getNome() : string {
-
-        nome = "Luan Alves";
-
-
-        return nome;
-
-    }
-
-    act mostrar()  {
-
-     invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
-
-
-
-    }
-
+	act mostrar ( ) {
+		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	}
+	
 }
 
-
-act pular(){
-
-
-    def P1 : Pessoa = init Pessoa();
-
-
-
-   alterador_Pessoa(P1);
-
-     P1.nome = "Alice";
-
-    P1.mostrar();
-
-
-    def t : num = somar(2,2);
-
-
-
+act pular ( ) {
+	def P1 : Pessoa = init Pessoa ( );
+	alterador_Pessoa ( P1 );
+	P1.nome = "Alice";
+	P1.mostrar ( );
+	def t : num = somar ( 2 , 2 );
 }
 
-
-act alterador_Pessoa( a : Pessoa) {
-
-
-    def t : Pessoa = a;
-
-    #def n : string = t.getNome("A").mostrar();
-
-    #def b : string = t.nome.pular().criar(12==13);
-
-    def nome1 : string = a.getNome();
-
-    def nome2 : string = a.nome;
-
-    invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
-
+act alterador_Pessoa ( a : Pessoa ) {
+	def t : Pessoa = a;
+	
+	#def n : string = t.getNome("A").mostrar();
+	
+	#def b : string = t.nome.pular().criar(12==13);
+	def nome1 : string = a.getNome ( );
+	def nome2 : string = a.nome;
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }
-
-func somar(a:num,b:num) : num {
-
-    def c : num;
-
-
-    invoke math -> operator_sum (a,b) :: c;
-
-    return c;
+func somar ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_sum ( a , b ) :: c;
+	return c;
 }

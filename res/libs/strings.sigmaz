@@ -1,52 +1,31 @@
-
-func string_length(a:string) : num  {
-
-    def c : num;
-
-    invoke __UTILS__ -> string_length (a) :: c;
-
-    return c;
+func string_length ( a : string ) : num {
+	def c : num;
+	invoke __UTILS__ -> string_length ( a ) :: c;
+	return c;
 }
-
-
-func string_append(a:string,b:string) : string  {
-
-    def ret : string;
-
-    invoke __UTILS__ -> string_append (a,b) :: ret;
-
-    return ret;
+func string_append ( a : string , b : string ) : string {
+	def ret : string;
+	invoke __UTILS__ -> string_append ( a , b ) :: ret;
+	return ret;
 }
-
-func string_append(a:string,b:string,c:string) : string  {
-
-    def ret : string;
-
-    invoke __UTILS__ -> string_append (a,b) :: ret;
-    invoke __UTILS__ -> string_append (ret,c) :: ret;
-
-    return ret;
+func string_append ( a : string , b : string , c : string ) : string {
+	def ret : string;
+	invoke __UTILS__ -> string_append ( a , b ) :: ret;
+	invoke __UTILS__ -> string_append ( ret , c ) :: ret;
+	return ret;
 }
-
-func string_append(a:string,b:string,c:string,d:string) : string  {
-
-    def ret : string;
-
-    invoke __UTILS__ -> string_append (a,b) :: ret;
-    invoke __UTILS__ -> string_append (ret,c) :: ret;
-    invoke __UTILS__ -> string_append (ret,d) :: ret;
-
-    return ret;
+func string_append ( a : string , b : string , c : string , d : string ) : string {
+	def ret : string;
+	invoke __UTILS__ -> string_append ( a , b ) :: ret;
+	invoke __UTILS__ -> string_append ( ret , c ) :: ret;
+	invoke __UTILS__ -> string_append ( ret , d ) :: ret;
+	return ret;
 }
-
-func string_append(a:string,b:string,c:string,d:string,e:string) : string  {
-
-    def ret : string;
-
-    invoke __UTILS__ -> string_append (a,b) :: ret;
-    invoke __UTILS__ -> string_append (ret,c) :: ret;
-    invoke __UTILS__ -> string_append (ret,d) :: ret;
-    invoke __UTILS__ -> string_append (ret,e) :: ret;
-
-    return ret;
+func string_append ( a : string , b : string , c : string , d : string , e : string ) : string {
+	def ret : string;
+	invoke __UTILS__ -> string_append ( a , b ) :: ret;
+	invoke __UTILS__ -> string_append ( ret , c ) :: ret;
+	invoke __UTILS__ -> string_append ( ret , d ) :: ret;
+	invoke __UTILS__ -> string_append ( ret , e ) :: ret;
+	return ret;
 }

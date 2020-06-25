@@ -1,92 +1,60 @@
 struct Sacola {
+	define itens : num = 0;
 
-    define itens : num = 0;
+act aumentar ( g : num ) {
+		itens = somar_inteiro ( itens , g );
+	}
+	func quantidade ( ) : num {
+		return itens;
+	}
 
-    act aumentar( g : num)  {
-         itens= somar_inteiro(itens,g);
-    }
+	act mostrar ( ) {
+		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	}
 
-    func quantidade() : num { return itens; }
+	act mostrar_detalhes ( ) {
+		println ( "");
+		println ( " SACOLA : ");
+		println ( "    - Itens : ", itens );
+	}
 
-
-
-   act mostrar()  {
-
-        invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
-
-    }
-
-    act mostrar_detalhes(){
-
-        println("");
-
-        println(" SACOLA : ");
-        println("    - Itens : ", itens);
-
-    }
-
-    act mostrar_struct(){
-
-        invoke __COMPILER__ -> SHOW_STRUCT () :: ALL;
-
-    }
-
-    func someisso(a:num,b:num) : num {
-        return somar_inteiro(a,b);
-    }
-
-
-
+	act mostrar_struct ( ) {
+		invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+	}
+	func someisso ( a : num , b : num ) : num {
+		return somar_inteiro ( a , b );
+	}
+	
+}
+func somar_inteiro ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_sum ( a , b ) :: c;
+	invoke casting -> cast_integer ( c ) :: c;
+	return c;
 }
 
-func somar_inteiro(a:num,b:num) : num {
-
-    def c : num;
-
-    invoke math -> operator_sum (a,b) :: c;
-    invoke casting -> cast_integer (c) :: c;
-
-    return c;
+act println ( a : string , b : num ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
 }
 
-act println(a:string,b:num)  {
+act println ( a : string ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+}
+call iniciar -> pular ( );
 
-    def c : num;
-    invoke terminal -> change () :: c;
-    invoke terminal -> print (a) :: c;
-    invoke terminal -> print (b) :: c;
-
+act pular ( ) {
+	def sacola1 : Sacola = init Sacola ( );
+	sacola1.mostrar_struct ( );
+	sacola1.aumentar ( 2 );
+	sacola_aumentar ( sacola1 );
+	sacola1.mostrar_detalhes ( );
 }
 
-act println(a:string)  {
-
-    def c : num;
-    invoke terminal -> change () :: c;
-    invoke terminal -> print (a) :: c;
-
+act sacola_aumentar ( s : Sacola ) {
+	s.aumentar ( 2 );
 }
-
-call iniciar -> pular();
-
-
-act pular(){
-
-    def sacola1 : Sacola = init Sacola();
-
-    sacola1.mostrar_struct();
-
-    sacola1.aumentar(2);
-
-    sacola_aumentar(sacola1);
-
-    sacola1.mostrar_detalhes();
-
-}
-
-act sacola_aumentar (s : Sacola) {
-
-   s.aumentar(2);
-
-}
-
-

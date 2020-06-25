@@ -9,8 +9,9 @@ import java.io.File;
 public class AST_Requisicao {
 
     private Compiler mCompiler;
-    public AST_Requisicao(Compiler eCompiler){
-        mCompiler=eCompiler;
+
+    public AST_Requisicao(Compiler eCompiler) {
+        mCompiler = eCompiler;
     }
 
     public void init(AST ASTPai) {
@@ -20,8 +21,7 @@ public class AST_Requisicao {
         if (TokenC.getTipo() == TokenTipo.TEXTO) {
 
 
-
-            Token TokenP3 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado PONTO E VIRGULA !");
+            Token TokenP3 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA, "Era esperado PONTO E VIRGULA !");
 
 
             String mLocalRequisicao = mCompiler.getLocal() + TokenC.getConteudo();
@@ -39,7 +39,7 @@ public class AST_Requisicao {
                     mCompiler.getErros_Lexer().addAll(CompilerC.getErros_Lexer());
                     mCompiler.getErros_Compiler().addAll(CompilerC.getErros_Compiler());
 
-                    for(AST ASTCorrente : CompilerC.getAST("SIGMAZ").getASTS()){
+                    for (AST ASTCorrente : CompilerC.getAST("SIGMAZ").getASTS()) {
                         ASTPai.getASTS().add(ASTCorrente);
                     }
 
@@ -53,8 +53,28 @@ public class AST_Requisicao {
 
 
         } else {
-            mCompiler. errarCompilacao("Era esperado o caminho de uma requisicao !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o caminho de uma requisicao !", TokenC.getInicio());
         }
+
+    }
+
+    public void inited(AST ASTPai) {
+
+        Token TokenC = mCompiler.getTokenAvante();
+
+        if (TokenC.getTipo() == TokenTipo.ID) {
+
+
+            AST mReq = ASTPai.criarBranch("REQUIRED");
+            mReq.setNome(TokenC.getConteudo());
+
+            Token TokenP3 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA, "Era esperado PONTO E VIRGULA !");
+
+
+        } else {
+            mCompiler.errarCompilacao("Era esperado o caminho de uma requisicao !", TokenC.getInicio());
+        }
+
 
     }
 

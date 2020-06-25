@@ -93,11 +93,17 @@ Linguagem de Programação Estruturada
             - FUNCTION valueOf
             - OPERATION MATCH
             - OPERATION UNMATCH
-            
         - LIBRARY : TIME, DATE, DATETIME
         
     - 2020 06 24
         - GENERIC TYPE
         - ALTER TYPE RUNTIME -> GENERIC TYPE
+        
+    - 2020 06 25
+        - IDENT
+        - IDENT LIBRARIES
+        - IDENT ALL
+        - VALUE TERNAL
+        - REQUIRED 
             
        

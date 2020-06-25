@@ -1,13 +1,12 @@
 package Sigmaz.Executor.Runners;
 
+import Sigmaz.Executor.Alterador;
 import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.Indexador.Argumentador;
 import Sigmaz.Executor.Indexador.Index_Action;
 import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
-import Sigmaz.Executor.Runners.Run_Def;
-import Sigmaz.Executor.Runners.Run_Moc;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
@@ -194,13 +193,15 @@ public class Run_Struct {
             mRunTime.getErros().add("Struct " + mStructNome + " : Nao e Generica !");
         }
 
-        mStructCorpo.ImprimirArvoreDeInstrucoes();
+        if (mRunTime.getExterno()){
+           // mStructCorpo.ImprimirArvoreDeInstrucoes();
+        }
+
 
 
         for (AST ASTC : mStructInits.getASTS()) {
             mEscopo.guardarStruct(ASTC);
             mEscopo.guardar(ASTC);
-
         }
 
         //  System.out.println("Inicializadores de " + mStructNome + " = " + mStructInits.getASTS().size());
