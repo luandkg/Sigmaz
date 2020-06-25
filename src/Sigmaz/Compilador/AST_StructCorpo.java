@@ -51,13 +51,13 @@ public class AST_StructCorpo {
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 
-                AST_Mockiz mAST = new AST_Mockiz(mCompiler);
-                mAST.init(AST_Corpo,VISIBILIDADE);
+                AST_Alocador mAST = new AST_Alocador(mCompiler);
+                mAST.init_Mockiz(AST_Corpo,VISIBILIDADE);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
 
-                AST_Define mAST = new AST_Define(mCompiler);
-                mAST.init(AST_Corpo,VISIBILIDADE);
+                AST_Alocador mAST = new AST_Alocador(mCompiler);
+                mAST.init_Define(AST_Corpo,VISIBILIDADE);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operation")) {
 

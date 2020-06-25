@@ -22,12 +22,15 @@ public class Argumentador {
 
 
                 if (mArgumentos.getTipo().contentEquals(mTipoArgumentos.get(i))){
-
                     v += 1;
+                }else{
+                    if (mTipoArgumentos.get(i).contentEquals("any")){
+                        v += 1;
+                    }
                 }
 
 
-             //  System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
+               //System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
 
                 i += 1;
 
@@ -96,13 +99,29 @@ public class Argumentador {
 
                 // System.out.println("\t - Passando Parametro : " + eParametrosNomes.get(argC) + " -> " + mArgumentos.get(argC).getTipo() + " :: " + mArgumentos.get(argC).getValor());
 
+               // System.out.println("Passando : " + eParametrosNomes.get(argC) + " Est : " + mArgumentos.get(argC).getIsEstrutura() + " -> " +mArgumentos.get(argC).getNulo());
+
                 if (mArgumentos.get(argC).getIsEstrutura()) {
-                    mEscopoInterno.criarParametroStruct(eParametrosNomes.get(argC), mArgumentos.get(argC).getTipo(),  mArgumentos.get(argC).getValor());
+
+
+                    if (mArgumentos.get(argC).getNulo()){
+                        mEscopoInterno.criarParametroStructNulo(eParametrosNomes.get(argC), mArgumentos.get(argC).getTipo(),  mArgumentos.get(argC).getValor());
+                    }else{
+                        mEscopoInterno.criarParametroStruct(eParametrosNomes.get(argC), mArgumentos.get(argC).getTipo(),  mArgumentos.get(argC).getValor());
+                    }
+
 
                     //   System.out.println("\t - Passando Parametro Struct : " + eParametrosNomes.get(argC) + " -> " + mArgumentos.get(argC).getTipo() + " :: " );
 
                 } else {
-                    mEscopoInterno.criarParametro(eParametrosNomes.get(argC), mArgumentos.get(argC).getTipo(), mArgumentos.get(argC).getValor());
+
+                    if (mArgumentos.get(argC).getNulo()){
+                        mEscopoInterno.criarParametroNulo(eParametrosNomes.get(argC), mArgumentos.get(argC).getTipo(), mArgumentos.get(argC).getValor());
+                    }else{
+                        mEscopoInterno.criarParametro(eParametrosNomes.get(argC), mArgumentos.get(argC).getTipo(), mArgumentos.get(argC).getValor());
+                    }
+
+
                 }
 
             }

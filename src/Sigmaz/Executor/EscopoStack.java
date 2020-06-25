@@ -134,6 +134,24 @@ public class EscopoStack {
         }
     }
 
+    public void criarParametroNulo(String eNome, String eTipo, String eValor) {
+
+        boolean enc = existeAqui(eNome, mEscopo.getParametros());
+
+        if (enc) {
+            mRunTime.getErros().add("Parametro Duplicado : " + eNome);
+        } else {
+            Item Novo = new Item(eNome);
+            Novo.setModo(0);
+            Novo.setTipo(eTipo);
+            Novo.setValor(eValor);
+            Novo.setNulo(true);
+
+            mEscopo.getParametros().add(Novo);
+
+        }
+    }
+
     public boolean existeAqui(String eNome, ArrayList<Item> mProcurar) {
 
         boolean enc = false;
@@ -159,6 +177,29 @@ public class EscopoStack {
             Novo.setTipo(eTipo);
 
             Novo.setNulo(false);
+            Novo.setIsEstrutura(true);
+            Novo.setPrimitivo(false);
+            Novo.setValor(eRef);
+
+            //   System.out.println("\t - Passando Parametro Struct : " + eRef );
+
+            mEscopo.getParametros().add(Novo);
+
+        }
+    }
+
+    public void criarParametroStructNulo(String eNome, String eTipo, String eRef) {
+
+        boolean enc = existeAqui(eNome, mEscopo.getParametros());
+
+        if (enc) {
+            mRunTime.getErros().add("Parametro Duplicado : " + eNome);
+        } else {
+            Item Novo = new Item(eNome);
+            Novo.setModo(0);
+            Novo.setTipo(eTipo);
+
+            Novo.setNulo(true);
             Novo.setIsEstrutura(true);
             Novo.setPrimitivo(false);
             Novo.setValor(eRef);
@@ -289,6 +330,9 @@ public class EscopoStack {
         if (t == null) {
             return false;
         } else {
+         //   System.out.println("Nulo " + eNome + " : " + t.getNulo());
+          //  System.out.println("Valor " + eNome + " : " + t.getValor());
+
             return t.getNulo();
         }
 

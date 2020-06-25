@@ -378,6 +378,118 @@ public class EscopoDebug {
 
     }
 
+    public void ListarGlobalStack() {
+
+
+        System.out.println(" ######################### STACK - GLOBAL STACK ############################ ");
+
+
+
+
+
+        System.out.println(" - PARAM : ");
+        ArrayList<Item> ls_Param = new ArrayList<>();
+        for (Item i : mEscopo.getParametros()) {
+            ls_Param.add(i);
+        }
+
+        System.out.println("\t - NAO NULOS : ");
+
+        for (Item i : ls_Param) {
+            if (i.getNulo() == false) {
+
+                mostrarItem(i);
+
+            }
+        }
+
+
+        System.out.println("\t - NULOS : ");
+        for (Item i : ls_Param) {
+
+            if (i.getNulo()) {
+                mostrarItem(i);
+            }
+        }
+
+
+
+        ArrayList<Item> ls_Defines = new ArrayList<>();
+        ArrayList<Item> ls_Constants = new ArrayList<>();
+
+        int defines_nulos = 0;
+        int defines_validos = 0;
+
+        for (Item i : mEscopo.getStacksAll()) {
+            if (i.getModo() == 0) {
+                ls_Defines.add(i);
+
+                if (i.getNulo()) {
+                    defines_nulos += 1;
+                } else {
+                    defines_validos += 1;
+                }
+
+            } else if (i.getModo() == 1) {
+                ls_Constants.add(i);
+            }
+        }
+
+        System.out.println(" - DEFINES : ");
+
+
+        System.out.println("\t - NAO NULOS : ");
+
+        for (Item i : ls_Defines) {
+            if (i.getNulo() == false) {
+
+                mostrarItem(i);
+
+            }
+        }
+
+
+        System.out.println("\t - NULOS : ");
+        for (Item i : ls_Defines) {
+
+            if (i.getNulo()) {
+                mostrarItem(i);
+            }
+        }
+
+        System.out.println(" - CONSTANTS : ");
+
+
+        System.out.println("\t - NAO NULOS : ");
+
+        for (Item i : ls_Constants) {
+            if (i.getNulo() == false) {
+                if(i.getIsEstrutura()){
+                    //     System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getObjeto().getNome());
+                }else{
+                    //   System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+                }
+
+                System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getValor());
+
+
+            }
+        }
+
+
+        System.out.println("\t - NULOS : ");
+        for (Item i : ls_Constants) {
+
+            if (i.getNulo()) {
+                System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = NULL");
+            }
+        }
+
+
+        System.out.println(" ######################### ##### ############################ ");
+
+    }
+
 
     public String getParametros(AST ASTPai) {
         String ret = "";

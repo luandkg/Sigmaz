@@ -196,6 +196,10 @@ public class Run_Value {
 
             if (mItem != null) {
 
+               //    System.out.println(mItem.getNome() + " E nulo :" + mItem.getNulo());
+              //  System.out.println(mItem.getNome() + " E Estrutura :" + mItem.getIsEstrutura());
+
+
                 mIsNulo = mItem.getNulo();
                 mRetornoTipo = mItem.getTipo();
                 mConteudo = mItem.getValor();
@@ -304,7 +308,7 @@ public class Run_Value {
 
         mIsNulo = false;
         mIsPrimitivo = false;
-        mRetornoTipo = eRetorno;
+        mRetornoTipo =mRun_Struct.getTipoCompleto();
         mIsEstrutura = true;
         mConteudo = eNome;
 

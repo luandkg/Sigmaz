@@ -30,13 +30,13 @@ public class AST_Corpo {
                 break;
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("def")){
 
-                AST_Def mAST = new AST_Def(mCompiler);
-                mAST.init(ASTPai);
+                AST_Alocador mAST = new AST_Alocador(mCompiler);
+                mAST.init_Def(ASTPai);
 
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("moc")){
 
-                AST_Moc mAST = new AST_Moc(mCompiler);
-                mAST.init(ASTPai);
+                AST_Alocador mAST = new AST_Alocador(mCompiler);
+                mAST.init_Moc(ASTPai);
 
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("return")){
 

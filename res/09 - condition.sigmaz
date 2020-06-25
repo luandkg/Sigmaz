@@ -1,6 +1,6 @@
 
-require "operadores.sigmaz";
-require "terminal.sigmaz";
+require "libs/operadores.sigmaz";
+require "libs/terminal.sigmaz";
 
 call iniciar -> operando();
 

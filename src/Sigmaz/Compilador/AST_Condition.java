@@ -22,6 +22,8 @@ public class AST_Condition {
         ASTPai.getASTS().add(AST_Corrente);
 
         AST AST_Condicao = AST_Corrente.criarBranch("CONDITION");
+
+
         AST_Value mAST = new AST_Value(mCompiler);
         mAST.initParam(AST_Condicao);
         AST_Condicao.setTipo("CONDITION");

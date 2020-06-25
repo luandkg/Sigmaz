@@ -52,3 +52,13 @@ func decimal(a:num) : num  {
 
     return c;
 }
+
+func isNull(ObjetoNulo:any) : bool {
+
+    def c : bool;
+
+    invoke casting -> cast_isnull (ObjetoNulo) :: c;
+
+    return c;
+
+}

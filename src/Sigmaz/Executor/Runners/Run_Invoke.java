@@ -32,34 +32,37 @@ public class Run_Invoke {
         String eSaida = mSaida.getNome();
 
 
-
         if (eNome.contentEquals("__COMPILER__")) {
 
 
-            InvokeCompiler mCor = new InvokeCompiler(mRunTime,mEscopo,this);
+            InvokeCompiler mCor = new InvokeCompiler(mRunTime, mEscopo, this);
             mCor.init(eAcao, eSaida, mArgumentos);
 
-        } else   if (eNome.contentEquals("terminal")) {
+        } else if (eNome.contentEquals("terminal")) {
 
-            InvokeTerminal mCor = new InvokeTerminal(mRunTime,mEscopo,this);
+            InvokeTerminal mCor = new InvokeTerminal(mRunTime, mEscopo, this);
             mCor.init(eAcao, eSaida, mArgumentos);
 
-        } else   if (eNome.contentEquals("casting")) {
+        } else if (eNome.contentEquals("casting")) {
 
-            InvokeCasting mCor = new InvokeCasting(mRunTime,mEscopo);
+            InvokeCasting mCor = new InvokeCasting(mRunTime, mEscopo);
             mCor.init(eAcao, eSaida, mArgumentos);
 
 
-        } else   if (eNome.contentEquals("math")) {
+        } else if (eNome.contentEquals("math")) {
 
-            InvokeMath mCor = new InvokeMath(mRunTime,mEscopo,this);
+            InvokeMath mCor = new InvokeMath(mRunTime, mEscopo, this);
             mCor.init(eAcao, eSaida, mArgumentos);
 
-        } else   if (eNome.contentEquals("stages")) {
+        } else if (eNome.contentEquals("stages")) {
 
-            InvokeStages mCor = new InvokeStages(mRunTime,mEscopo,this);
+            InvokeStages mCor = new InvokeStages(mRunTime, mEscopo, this);
             mCor.init(eAcao, eSaida, mArgumentos);
 
+        } else if (eNome.contentEquals("__UTILS__")) {
+
+            InvokeUtils mCor = new InvokeUtils(mRunTime, mEscopo, this);
+            mCor.init(eAcao, eSaida, mArgumentos);
 
         } else {
 

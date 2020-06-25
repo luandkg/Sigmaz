@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class AST {
 
-    private String mTipo;
-    private String mNome;
-    private String mValor;
+    private String mTipo = "";
+    private String mNome = "";
+    private String mValor = "";
 
     private ArrayList<AST> mASTS;
 
@@ -94,9 +94,11 @@ public class AST {
         copia.setNome(this.getNome());
         copia.setValor(this.getValor());
 
-        for (AST a : getASTS()) {
+        for (AST mSubCopia : getASTS()) {
 
-            copia.getASTS().add(a.copiar());
+            AST mSub = mSubCopia.copiar();
+
+            copia.getASTS().add(mSub);
 
         }
 
@@ -106,15 +108,18 @@ public class AST {
     }
 
 
+
     public void ImprimirArvoreDeInstrucoes() {
 
         System.out.println(this.getTipo() + " -> " + this.getNome());
 
+        String eTab = "   ";
+
         for (AST a : getASTS()) {
 
-            System.out.println("        " + a.getTipo() + " -> " + a.getNome());
+            System.out.println(eTab+  a.getTipo() + " -> " + a.getNome() + " : " + a.getValor());
 
-            ImprimirSubArvoreDeInstrucoes("   ", a);
+            ImprimirSubArvoreDeInstrucoes(eTab+ "   " , a);
 
         }
 
@@ -124,7 +129,7 @@ public class AST {
 
         for (AST a : ASTC.getASTS()) {
 
-            System.out.println(ePref + a.getTipo() + " -> " + a.getNome());
+            System.out.println(ePref + a.getTipo() + " -> " + a.getNome()+ " : " + a.getValor());
 
             ImprimirSubArvoreDeInstrucoes(ePref + "   ", a);
 

@@ -287,13 +287,13 @@ public class Compiler {
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 
-                AST_Mockiz mAST = new AST_Mockiz(this);
-                mAST.init(AST_Raiz,"ALL");
+                AST_Alocador mAST = new AST_Alocador(this);
+                mAST.init_Mockiz(AST_Raiz,"ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
 
-                AST_Define mAST = new AST_Define(this);
-                mAST.init(AST_Raiz,"ALL");
+                AST_Alocador mAST = new AST_Alocador(this);
+                mAST.init_Define(AST_Raiz,"ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("invoke")) {
 

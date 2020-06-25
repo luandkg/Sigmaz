@@ -339,6 +339,12 @@ public class InvokeCompiler {
                     mEscopo.ListarGlobalAll();
                 }
 
+            } else if (eSaida.contentEquals("STACK")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.ListarGlobalStack();
+                }
+
             } else if (eSaida.contentEquals("COUNT")) {
 
                 if (mRunTime.getExterno()) {

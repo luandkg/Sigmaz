@@ -94,4 +94,10 @@ Linguagem de Programação Estruturada
             - OPERATION MATCH
             - OPERATION UNMATCH
             
+        - LIBRARY : TIME, DATE, DATETIME
+        
+    - 2020 06 24
+        - GENERIC TYPE
+        - ALTER TYPE RUNTIME -> GENERIC TYPE
+            
        

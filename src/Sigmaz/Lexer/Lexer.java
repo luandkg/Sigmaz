@@ -162,7 +162,34 @@ public class Lexer {
 
 				mTokens.add(new Token(TokenTipo.IGUAL,"=",eInicio,eFim));
 
+			} else 	if (charC.contentEquals("<") && charP.contentEquals("<")) {
+				int eInicio =mIndex;
+				int eFim=mIndex;
 
+				mIndex+=1;
+
+				mTokens.add(new Token(TokenTipo.RECEBER,"<<",eInicio,eFim) );
+			} else 	if (charC.contentEquals("<")) {
+
+
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mTokens.add(new Token(TokenTipo.MENOR,"=",eInicio,eFim));
+			} else 	if (charC.contentEquals(">") && charP.contentEquals(">")) {
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mIndex+=1;
+
+				mTokens.add(new Token(TokenTipo.ENVIAR,">>",eInicio,eFim) );
+			} else 	if (charC.contentEquals(">")) {
+
+
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mTokens.add(new Token(TokenTipo.MAIOR,"=",eInicio,eFim));
 
 
 			} else 	if (charC.contentEquals("#")) {

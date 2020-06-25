@@ -1,0 +1,394 @@
+
+func getTempo() : Tempo {
+
+    def a : Tempo = init Tempo();
+
+    return a;
+}
+
+func getData() : Data {
+
+    def a : Data = init Data();
+
+    return a;
+}
+
+func getTempo_Formatado() : string{
+
+        def mHora : num = 0;
+        def mMinuto : num = 0;
+        def mSegundo : num = 0;
+
+        invoke __UTILS__ -> Time_getHour () :: mHora;
+        invoke __UTILS__ -> Time_getMinute () :: mMinuto;
+        invoke __UTILS__ -> Time_getSecond () :: mSegundo;
+
+        def f1 : string =num_to_string(mHora);
+        def f2 : string =num_to_string(mMinuto);
+        def f3 : string =num_to_string(mSegundo);
+
+         if (menor(string_length(f1),2)) -> { f1 = string_append("0",f1);  }
+         if (menor(string_length(f2),2)) -> { f2 = string_append("0",f2);  }
+         if (menor(string_length(f3),2)) -> { f3 = string_append("0",f3);  }
+
+        def formatado : string = string_append(f1,":",f2,":",f3);
+
+
+        return formatado;
+
+}
+
+func getData_Formatado() : string{
+
+      def mDia : num = 0;
+      def mMes : num = 0;
+      def mAno : num = 0;
+
+      invoke __UTILS__ -> Date_getDay () :: mDia;
+      invoke __UTILS__ -> Date_getMonth () :: mMes;
+      invoke __UTILS__ -> Date_getYear () :: mAno;
+
+      def f1 : string =num_to_string(mDia);
+      def f2 : string =num_to_string(mMes);
+      def f3 : string =num_to_string(mAno);
+
+      if (menor(string_length(f1),2)) -> { f1 = string_append("0",f1);  }
+      if (menor(string_length(f2),2)) -> { f2 = string_append("0",f2);  }
+
+      def formatado : string = string_append(f1,"/",f2,"/",f3);
+
+
+      return formatado;
+
+}
+
+func getTempoData_Formatado() : string{
+
+
+     def mHora : num = 0;
+     def mMinuto : num = 0;
+     def mSegundo : num = 0;
+     def mDia : num = 0;
+     def mMes : num = 0;
+     def mAno : num = 0;
+
+     invoke __UTILS__ -> Time_getHour () :: mHora;
+     invoke __UTILS__ -> Time_getMinute () :: mMinuto;
+     invoke __UTILS__ -> Time_getSecond () :: mSegundo;
+
+     invoke __UTILS__ -> Date_getDay () :: mDia;
+     invoke __UTILS__ -> Date_getMonth () :: mMes;
+     invoke __UTILS__ -> Date_getYear () :: mAno;
+
+     def f1 : string =num_to_string(mDia);
+     def f2 : string =num_to_string(mMes);
+     def f3 : string =num_to_string(mAno);
+
+     if (menor(string_length(f1),2)) -> { f1 = string_append("0",f1);  }
+     if (menor(string_length(f2),2)) -> { f2 = string_append("0",f2);  }
+
+     def alfa : string = string_append(f1,"/",f2,"/",f3);
+
+     def p1 : string =num_to_string(mHora);
+     def p2 : string =num_to_string(mMinuto);
+     def p3 : string =num_to_string(mSegundo);
+
+     if (menor(string_length(p1),2)) -> { p1 = string_append("0",p1);  }
+     if (menor(string_length(p2),2)) -> { p2 = string_append("0",p2);  }
+     if (menor(string_length(p3),2)) -> { p3 = string_append("0",p3);  }
+
+     def beta : string = string_append(p1,":",p2,":",p3);
+
+     def formatado : string = string_append(alfa," ",beta);
+
+     return formatado;
+
+}
+
+func getDataTempo_Formatado() : string{
+
+
+     def mHora : num = 0;
+     def mMinuto : num = 0;
+     def mSegundo : num = 0;
+     def mDia : num = 0;
+     def mMes : num = 0;
+     def mAno : num = 0;
+
+     invoke __UTILS__ -> Time_getHour () :: mHora;
+     invoke __UTILS__ -> Time_getMinute () :: mMinuto;
+     invoke __UTILS__ -> Time_getSecond () :: mSegundo;
+
+     invoke __UTILS__ -> Date_getDay () :: mDia;
+     invoke __UTILS__ -> Date_getMonth () :: mMes;
+     invoke __UTILS__ -> Date_getYear () :: mAno;
+
+     def f1 : string =num_to_string(mDia);
+     def f2 : string =num_to_string(mMes);
+     def f3 : string =num_to_string(mAno);
+
+     if (menor(string_length(f1),2)) -> { f1 = string_append("0",f1);  }
+     if (menor(string_length(f2),2)) -> { f2 = string_append("0",f2);  }
+
+     def alfa : string = string_append(f1,"/",f2,"/",f3);
+
+     def p1 : string =num_to_string(mHora);
+     def p2 : string =num_to_string(mMinuto);
+     def p3 : string =num_to_string(mSegundo);
+
+     if (menor(string_length(p1),2)) -> { p1 = string_append("0",p1);  }
+     if (menor(string_length(p2),2)) -> { p2 = string_append("0",p2);  }
+     if (menor(string_length(p3),2)) -> { p3 = string_append("0",p3);  }
+
+     def beta : string = string_append(p1,":",p2,":",p3);
+
+     def formatado : string = string_append(beta," ",alfa);
+
+     return formatado;
+
+}
+
+struct Tempo {
+
+    restrict :
+        define mHora : num = 0;
+        define mMinuto : num = 0;
+        define mSegundo : num = 0;
+
+    all :
+        init Tempo(h:num,m:num,s:num){
+            mHora = h;
+            mMinuto = m;
+            mSegundo = s;
+        }
+
+        init Tempo(){
+               invoke __UTILS__ -> Time_getHour () :: mHora;
+               invoke __UTILS__ -> Time_getMinute () :: mMinuto;
+               invoke __UTILS__ -> Time_getSecond () :: mSegundo;
+        }
+
+        func getHora() : num { return mHora; }
+        func getMinuto() : num { return mMinuto; }
+        func getSegundo() : num { return mSegundo; }
+
+        func getFormatado() : string {
+
+            def f1 : string =num_to_string(mHora);
+            def f2 : string =num_to_string(mMinuto);
+            def f3 : string =num_to_string(mSegundo);
+
+            if (menor(string_length(f1),2)) -> { f1 = string_append("0",f1);  }
+            if (menor(string_length(f2),2)) -> { f2 = string_append("0",f2);  }
+            if (menor(string_length(f3),2)) -> { f3 = string_append("0",f3);  }
+
+            def formatado : string = string_append(f1,":",f2,":",f3);
+
+            return formatado;
+
+        }
+}
+
+
+struct Data {
+
+    restrict :
+
+        define mDia : num = 0;
+        define mMes : num = 0;
+        define mAno : num = 0;
+
+    all :
+        init Data(d:num,m:num,a:num){
+            mDia = d;
+            mMes = m;
+            mAno = a;
+        }
+
+        init Data(){
+               invoke __UTILS__ -> Date_getDay () :: mDia;
+               invoke __UTILS__ -> Date_getMonth () :: mMes;
+               invoke __UTILS__ -> Date_getYear () :: mAno;
+        }
+
+        func getDia() : num { return mDia; }
+        func getMes() : num { return mMes; }
+        func getAno() : num { return mAno; }
+
+        func getFormatado() : string {
+
+            def f1 : string =num_to_string(mDia);
+            def f2 : string =num_to_string(mMes);
+
+            if (menor(string_length(f1),2)) -> { f1 = string_append("0",f1);  }
+            if (menor(string_length(f2),2)) -> { f2 = string_append("0",f2);  }
+
+            def formatado : string = string_append(f1,"/",f2,"/",f3);
+
+
+            return formatado;
+
+        }
+}
+
+struct TempoData {
+
+    restrict :
+
+        define mHora : num = 0;
+        define mMinuto : num = 0;
+        define mSegundo : num = 0;
+
+        define mDia : num = 0;
+        define mMes : num = 0;
+        define mAno : num = 0;
+
+    all :
+        init TempoData(h:num,mi:num,s:num,d:num,me:num,a:num){
+
+            mHora = h;
+            mMinuto = mi;
+            mSegundo = s;
+
+            mDia = d;
+            mMes = me;
+            mAno = a;
+        }
+
+        init TempoData(){
+
+             invoke __UTILS__ -> Time_getHour () :: mHora;
+             invoke __UTILS__ -> Time_getMinute () :: mMinuto;
+             invoke __UTILS__ -> Time_getSecond () :: mSegundo;
+
+             invoke __UTILS__ -> Date_getDay () :: mDia;
+             invoke __UTILS__ -> Date_getMonth () :: mMes;
+             invoke __UTILS__ -> Date_getYear () :: mAno;
+
+        }
+
+        func getHora() : num { return mHora; }
+        func getMinuto() : num { return mMinuto; }
+        func getSegundo() : num { return mSegundo; }
+        func getDia() : num { return mDia; }
+        func getMes() : num { return mMes; }
+        func getAno() : num { return mAno; }
+
+        func getFormatado() : string {
+
+            def f1 : string =num_to_string(mDia);
+            def f2 : string =num_to_string(mMes);
+            def f3 : string =num_to_string(mAno);
+
+            if (menor(string_length(f1),2)) -> { f1 = string_append("0",f1);  }
+            if (menor(string_length(f2),2)) -> { f2 = string_append("0",f2);  }
+
+            def alfa : string = string_append(f1,"/",f2,"/",f3);
+
+            def p1 : string =num_to_string(mHora);
+            def p2 : string =num_to_string(mMinuto);
+            def p3 : string =num_to_string(mSegundo);
+
+            if (menor(string_length(p1),2)) -> { p1 = string_append("0",p1);  }
+            if (menor(string_length(p2),2)) -> { p2 = string_append("0",p2);  }
+            if (menor(string_length(p3),2)) -> { p3 = string_append("0",p3);  }
+
+            def beta : string = string_append(p1,":",p2,":",p3);
+
+            def formatado : string = string_append(alfa," ",beta);
+
+            return formatado;
+
+        }
+
+        extern :
+
+            func getTempoData_Formatado() : string{
+
+
+                 def mHora : num = 0;
+                 def mMinuto : num = 0;
+                 def mSegundo : num = 0;
+                 def mDia : num = 0;
+                 def mMes : num = 0;
+                 def mAno : num = 0;
+
+                 invoke __UTILS__ -> Time_getHour () :: mHora;
+                 invoke __UTILS__ -> Time_getMinute () :: mMinuto;
+                 invoke __UTILS__ -> Time_getSecond () :: mSegundo;
+
+                 invoke __UTILS__ -> Date_getDay () :: mDia;
+                 invoke __UTILS__ -> Date_getMonth () :: mMes;
+                 invoke __UTILS__ -> Date_getYear () :: mAno;
+
+                 def f1 : string =num_to_string(mDia);
+                 def f2 : string =num_to_string(mMes);
+                 def f3 : string =num_to_string(mAno);
+
+                 if (menor(string_length(f1),2)) -> { f1 = string_append("0",f1);  }
+                 if (menor(string_length(f2),2)) -> { f2 = string_append("0",f2);  }
+
+                 def alfa : string = string_append(f1,"/",f2,"/",f3);
+
+                 def p1 : string =num_to_string(mHora);
+                 def p2 : string =num_to_string(mMinuto);
+                 def p3 : string =num_to_string(mSegundo);
+
+                 if (menor(string_length(p1),2)) -> { p1 = string_append("0",p1);  }
+                 if (menor(string_length(p2),2)) -> { p2 = string_append("0",p2);  }
+                 if (menor(string_length(p3),2)) -> { p3 = string_append("0",p3);  }
+
+                 def beta : string = string_append(p1,":",p2,":",p3);
+
+                 def formatado : string = string_append(alfa," ",beta);
+
+                 return formatado;
+
+            }
+
+            func getDataTempo_Formatado() : string{
+
+
+                 def mHora : num = 0;
+                 def mMinuto : num = 0;
+                 def mSegundo : num = 0;
+                 def mDia : num = 0;
+                 def mMes : num = 0;
+                 def mAno : num = 0;
+
+                 invoke __UTILS__ -> Time_getHour () :: mHora;
+                 invoke __UTILS__ -> Time_getMinute () :: mMinuto;
+                 invoke __UTILS__ -> Time_getSecond () :: mSegundo;
+
+                 invoke __UTILS__ -> Date_getDay () :: mDia;
+                 invoke __UTILS__ -> Date_getMonth () :: mMes;
+                 invoke __UTILS__ -> Date_getYear () :: mAno;
+
+                 def f1 : string =num_to_string(mDia);
+                 def f2 : string =num_to_string(mMes);
+                 def f3 : string =num_to_string(mAno);
+
+                 if (menor(string_length(f1),2)) -> { f1 = string_append("0",f1);  }
+                 if (menor(string_length(f2),2)) -> { f2 = string_append("0",f2);  }
+
+                 def alfa : string = string_append(f1,"/",f2,"/",f3);
+
+                 def p1 : string =num_to_string(mHora);
+                 def p2 : string =num_to_string(mMinuto);
+                 def p3 : string =num_to_string(mSegundo);
+
+                 if (menor(string_length(p1),2)) -> { p1 = string_append("0",p1);  }
+                 if (menor(string_length(p2),2)) -> { p2 = string_append("0",p2);  }
+                 if (menor(string_length(p3),2)) -> { p3 = string_append("0",p3);  }
+
+                 def beta : string = string_append(p1,":",p2,":",p3);
+
+                 def formatado : string = string_append(beta," ",alfa);
+
+                 return formatado;
+
+            }
+
+
+
+}

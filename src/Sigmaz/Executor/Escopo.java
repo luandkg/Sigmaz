@@ -111,6 +111,9 @@ public class Escopo {
         mDebug.ListarGlobal();
     }
 
+
+
+
     public void ListarActions() {
         mDebug.ListarActions();
     }
@@ -135,6 +138,9 @@ public class Escopo {
         mDebug.ListarGlobalAll();
     }
 
+    public void ListarGlobalStack() {
+        mDebug.ListarGlobalStack();
+    }
 
     public ArrayList<Index_Function> getFunctionsCompleto() {
         return mAO.getFunctionsCompleto();
@@ -346,6 +352,14 @@ public class Escopo {
 
     public void criarParametro(String eNome, String eTipo, String eValor) {
         mEscopoStack.criarParametro(eNome, eTipo, eValor);
+    }
+
+    public void criarParametroNulo(String eNome, String eTipo, String eValor) {
+        mEscopoStack.criarParametroNulo(eNome, eTipo, eValor);
+    }
+
+    public void criarParametroStructNulo(String eNome, String eTipo,  String eRef) {
+        mEscopoStack.criarParametroStructNulo(eNome, eTipo,  eRef);
     }
 
     public void criarParametroStruct(String eNome, String eTipo,  String eRef) {

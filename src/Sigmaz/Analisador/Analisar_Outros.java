@@ -29,6 +29,7 @@ public class Analisar_Outros {
         mPrimitivos.add("bool");
         mPrimitivos.add("string");
         mPrimitivos.add("num");
+        mPrimitivos.add("any");
 
         mFunctions = new ArrayList<String>();
         mCasts_Nomes = new ArrayList<String>();

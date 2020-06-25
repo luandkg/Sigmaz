@@ -1,5 +1,5 @@
 
-require "lib.sigmaz";
+require "libs/lib.sigmaz";
 
 require "sacola.sigmaz";
 require "pessoa.sigmaz";

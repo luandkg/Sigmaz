@@ -49,7 +49,10 @@ public class InvokeCasting {
 
             argumentos_1num(eAcao, eSaida, ASTArgumentos);
 
+        } else if (eAcao.contentEquals("cast_isnull")) {
 
+
+            argumentos_1num(eAcao, eSaida, ASTArgumentos);
 
         } else {
 
@@ -66,6 +69,8 @@ public class InvokeCasting {
 
         String p1 = "";
 
+        boolean isnull = false;
+
         for (AST eAST : ASTArgumentos.getASTS()) {
 
             if (eAST.mesmoTipo("ARGUMENT")) {
@@ -76,6 +81,9 @@ public class InvokeCasting {
                 if (eAST.mesmoValor("ID")) {
 
                     p1 = mEscopo.getDefinido(eAST.getNome());
+
+                    isnull = mEscopo.getDefinidoNulo(eAST.getNome());
+                   // System.out.println("Nulo :: " + isnull);
 
 
                 } else if (eAST.mesmoValor("Num")) {
@@ -133,10 +141,10 @@ public class InvokeCasting {
                 int o = s.length();
                 while (index < o) {
                     String v = s.charAt(index) + "";
-                    if(v.contentEquals(".")){
+                    if (v.contentEquals(".")) {
                         break;
-                    }else{
-                        inteiro+=v;
+                    } else {
+                        inteiro += v;
                     }
                     index += 1;
                 }
@@ -152,10 +160,10 @@ public class InvokeCasting {
                 int o = s.length();
                 while (index < o) {
                     String v = s.charAt(index) + "";
-                    if(v.contentEquals(".")){
+                    if (v.contentEquals(".")) {
                         index += 1;
                         break;
-                    }else{
+                    } else {
 
                     }
                     index += 1;
@@ -164,16 +172,24 @@ public class InvokeCasting {
                 while (index < o) {
                     String v = s.charAt(index) + "";
 
-                        inteiro+=v;
+                    inteiro += v;
 
                     index += 1;
                 }
-if(inteiro.length()==0){
-    inteiro="0";
-}
+                if (inteiro.length() == 0) {
+                    inteiro = "0";
+                }
 
 
-                mEscopo.setDefinido(eSaida, "0." +inteiro);
+                mEscopo.setDefinido(eSaida, "0." + inteiro);
+
+            } else if (eAcao.contentEquals("cast_isnull")) {
+
+                if (isnull) {
+                    mEscopo.setDefinido(eSaida, "true");
+                } else {
+                    mEscopo.setDefinido(eSaida, "false");
+                }
 
             } else {
 

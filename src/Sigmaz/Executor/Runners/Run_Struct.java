@@ -23,6 +23,7 @@ public class Run_Struct {
     private String mStructNome;
     private int mTamanho;
 
+    private AST mStructGeneric;
     private AST mStructCorpo;
 
     public Run_Struct(RunTime eRunTime) {
@@ -34,6 +35,7 @@ public class Run_Struct {
         mStructNome = "";
 
         mTamanho = 0;
+        mStructGeneric = null;
         mStructCorpo = null;
 
 
@@ -70,6 +72,11 @@ public class Run_Struct {
         return eAST.getBranch("VISIBILITY").getNome();
     }
 
+    private String mTipoCompleto;
+
+    public String getTipoCompleto() {
+        return mTipoCompleto;
+    }
 
     public void init(String eNome, AST ASTCorrente, Escopo BuscadorDeArgumentos) {
 
@@ -79,11 +86,14 @@ public class Run_Struct {
 
         mStructCorpo = null;
 
-        mStructNome = eNome;
+        mStructNome = ASTCorrente.getNome();
 
         mEscopo.setNome(eNome);
 
+
         AST mStructInits = null;
+
+        AST mAST_Struct = null;
 
 
         for (AST ASTC : mRunTime.getSigmaz().getASTS()) {
@@ -98,9 +108,12 @@ public class Run_Struct {
             } else if (ASTC.mesmoTipo("CAST")) {
                 mEscopo.guardar(ASTC);
             } else if (ASTC.mesmoTipo("STRUCT")) {
-                if (ASTC.mesmoNome(eNome)) {
-                    mStructCorpo = ASTC.getBranch("BODY");
-                    mStructInits = ASTC.getBranch("INITS");
+                if (ASTC.mesmoNome(mStructNome)) {
+
+                    mStructGeneric = ASTC.getBranch("GENERIC");
+
+                    mAST_Struct = ASTC;
+
 
                     AST AST_Stages = ASTC.getBranch("STAGES");
                     if (AST_Stages.mesmoValor("TRUE")) {
@@ -112,6 +125,77 @@ public class Run_Struct {
             }
 
         }
+
+
+        AST init_Generic = ASTCorrente.getBranch("GENERIC");
+        String structTipagem = "";
+        int StructContagem = 0;
+
+        for (AST ASTC : mStructGeneric.getASTS()) {
+            structTipagem += "<" + ASTC.getNome() + ">";
+            StructContagem += 1;
+        }
+
+        //  System.out.println("Struct : " + mStructNome);
+        //  System.out.println("\t - Abstrata : " + mStructGeneric.getNome());
+        //   System.out.println("\t - Tipagem : " + structTipagem);
+
+
+        String initTipagem = "";
+        int initContagem = 0;
+
+        for (AST ASTC : init_Generic.getASTS()) {
+            initTipagem += "<" + ASTC.getNome() + ">";
+            initContagem += 1;
+        }
+
+        mTipoCompleto = mStructNome + initTipagem;
+
+        //  System.out.println("Init");
+        //   System.out.println("\t - Abstrata : " + init_Generic.getNome());
+        //    System.out.println("\t - Tipagem : " + initTipagem);
+
+        mStructCorpo = mAST_Struct.getBranch("BODY").copiar();
+        mStructInits = mAST_Struct.getBranch("INITS").copiar();
+
+
+        if (init_Generic.mesmoNome("TRUE") && mStructGeneric.mesmoNome("TRUE")) {
+
+
+            if (StructContagem == initContagem) {
+
+                Alterador mAlterador = new Alterador();
+
+                int i = 0;
+                for (AST eSub : mStructGeneric.getASTS()) {
+
+                    mAlterador.adicionar(eSub.getNome(), init_Generic.getASTS().get(i).getNome());
+
+                    i += 1;
+                }
+
+
+                mAlterador.alterar(mStructCorpo);
+                mAlterador.alterar(mStructInits);
+
+
+            } else {
+
+                mRunTime.getErros().add("Struct " + mStructNome + " : Tipos abstratos nao conferem !");
+
+            }
+
+
+        } else if (init_Generic.mesmoNome("FALSE") && mStructGeneric.mesmoNome("FALSE")) {
+
+        } else if (init_Generic.mesmoNome("FALSE") && mStructGeneric.mesmoNome("TRUE")) {
+            mRunTime.getErros().add("Struct " + mStructNome + " : Precisa retornar uma Instancia Generica !");
+        } else {
+            mRunTime.getErros().add("Struct " + mStructNome + " : Nao e Generica !");
+        }
+
+        mStructCorpo.ImprimirArvoreDeInstrucoes();
+
 
         for (AST ASTC : mStructInits.getASTS()) {
             mEscopo.guardarStruct(ASTC);
