@@ -196,4 +196,70 @@ public class AST_Alocador {
 
     }
 
+
+    public void init_Define_Definicao(AST ASTPai) {
+
+        Token TokenC1 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome da DEFINE");
+
+        AST AST_Corrente = new AST("DEFINE");
+        AST_Corrente.setNome(TokenC1.getConteudo());
+        ASTPai.getASTS().add(AST_Corrente);
+
+
+        AST AST_Generico = AST_Corrente.criarBranch("GENERIC");
+        AST_Generico.setNome("FALSE");
+
+        Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado Dois Pontos");
+        Token TokenC3 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado uma Tipagem");
+
+        AST_Corrente.setValor(TokenC3.getConteudo());
+
+        Token TokenFuturo = mCompiler.getTokenFuturo();
+        if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
+
+            AST_Generico.setNome("TRUE");
+
+            AST_Generic mg = new AST_Generic(mCompiler);
+            mg.init(AST_Generico);
+
+
+        }
+
+        Token TokenP2 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado PONTO E VIRGULA !");
+
+
+    }
+
+    public void init_Mockiz_Definicao(AST ASTPai) {
+
+        Token TokenC1 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome da MOCKIZ");
+
+        AST AST_Corrente = new AST("MOCKIZ");
+        AST_Corrente.setNome(TokenC1.getConteudo());
+        ASTPai.getASTS().add(AST_Corrente);
+
+
+        AST AST_Generico = AST_Corrente.criarBranch("GENERIC");
+        AST_Generico.setNome("FALSE");
+
+        Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado Dois Pontos");
+        Token TokenC3 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado uma Tipagem");
+
+        AST_Corrente.setValor(TokenC3.getConteudo());
+
+        Token TokenFuturo = mCompiler.getTokenFuturo();
+        if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
+
+            AST_Generico.setNome("TRUE");
+
+            AST_Generic mg = new AST_Generic(mCompiler);
+            mg.init(AST_Generico);
+
+
+        }
+
+        Token TokenP2 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado PONTO E VIRGULA !");
+
+
+    }
 }

@@ -97,4 +97,67 @@ public class AST_StructCorpo {
         }
     }
 
+    public void initExternal(AST AST_Corrente) {
+
+
+        AST AST_Corpo = AST_Corrente.criarBranch("BODY");
+
+        String VISIBILIDADE = "EXTERN";
+
+
+        Token TokenD = mCompiler.getTokenAvanteStatus(TokenTipo.CHAVE_ABRE, "Era esperado abrir chaves");
+
+        if (TokenD.getTipo() != TokenTipo.CHAVE_ABRE) {
+            return;
+        }
+
+        boolean saiu = false;
+
+        while (mCompiler.Continuar()) {
+            Token TokenC = mCompiler.getTokenAvante();
+            if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+                saiu = true;
+                break;
+
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
+
+                AST_Action mAST = new AST_Action(mCompiler);
+                mAST.init(AST_Corpo,VISIBILIDADE);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
+
+                AST_Function mAST = new AST_Function(mCompiler);
+                mAST.init(AST_Corpo,VISIBILIDADE);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
+
+                AST_Alocador mAST = new AST_Alocador(mCompiler);
+                mAST.init_Mockiz(AST_Corpo,VISIBILIDADE);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
+
+                AST_Alocador mAST = new AST_Alocador(mCompiler);
+                mAST.init_Define(AST_Corpo,VISIBILIDADE);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operation")) {
+
+                AST_Operation mAST = new AST_Operation(mCompiler);
+                mAST.init(AST_Corpo,VISIBILIDADE);
+
+
+            } else {
+
+
+                mCompiler.errarCompilacao("Comando Deconhecido : " + TokenC.getConteudo(), TokenC.getInicio());
+
+            }
+        }
+
+        if (!saiu) {
+            mCompiler.errarCompilacao("Era esperado fechar chaves" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante().getInicio());
+        }
+    }
+
+
 }

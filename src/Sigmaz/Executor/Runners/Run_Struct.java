@@ -95,6 +95,9 @@ public class Run_Struct {
         AST mAST_Struct = null;
 
 
+        boolean enc = false;
+
+
         for (AST ASTC : mRunTime.getSigmaz().getASTS()) {
 
 
@@ -110,21 +113,30 @@ public class Run_Struct {
                 if (ASTC.mesmoNome(mStructNome)) {
 
                     mStructGeneric = ASTC.getBranch("GENERIC");
+                    enc = true;
 
                     mAST_Struct = ASTC;
 
+                    AST init_Extend = ASTC.getBranch("EXTENDED");
 
-                    AST AST_Stages = ASTC.getBranch("STAGES");
-                    if (AST_Stages.mesmoValor("TRUE")) {
+                    if (init_Extend.mesmoNome("STAGES")) {
+                        mRunTime.getErros().add("Struct " + mStructNome + " : Nao pode ser instanciada !");
+                        return;
+                    } else if (init_Extend.mesmoNome("EXTERNAL")) {
                         mRunTime.getErros().add("Struct " + mStructNome + " : Nao pode ser instanciada !");
                         return;
                     }
+
 
                 }
             }
 
         }
 
+        if (!enc) {
+            mRunTime.getErros().add("Struct " + mStructNome + " : Nao Encontrada !");
+            return;
+        }
 
         AST init_Generic = ASTCorrente.getBranch("GENERIC");
         String structTipagem = "";
@@ -397,33 +409,32 @@ public class Run_Struct {
         ArrayList<String> mAnterior = new ArrayList<String>();
 
         for (AST pIndex_Function : InicializadorAnterior.getBranch("ARGUMENTS").getASTS()) {
-      //      System.out.println("\t      Anterior :  " + pIndex_Function.getNome() + " :: " + pIndex_Function.getValor());
+            //      System.out.println("\t      Anterior :  " + pIndex_Function.getNome() + " :: " + pIndex_Function.getValor());
             mAnterior.add(pIndex_Function.getNome());
         }
 
         //System.out.println("\t -->> Sub Inicializando :  " + eOrigem);
-       for (AST pIndex_Function : ASTCorrente.getBranch("ARGUMENTS").getASTS()) {
-         //   System.out.println("\t      Precisa :  " + pIndex_Function.getNome() + " :: " + pIndex_Function.getValor());
+        for (AST pIndex_Function : ASTCorrente.getBranch("ARGUMENTS").getASTS()) {
+            //   System.out.println("\t      Precisa :  " + pIndex_Function.getNome() + " :: " + pIndex_Function.getValor());
             mPrecisa.add(pIndex_Function.getNome());
-       }
+        }
 
-       // for (Item ArgumentoC : mArgumentos) {
-       //     System.out.println("\t      Passou :  " + ArgumentoC.getNome() + " :: " + ArgumentoC.getTipo());
-       // }
+        // for (Item ArgumentoC : mArgumentos) {
+        //     System.out.println("\t      Passou :  " + ArgumentoC.getNome() + " :: " + ArgumentoC.getTipo());
+        // }
 
         ArrayList<Item> argumentos2 = new ArrayList<Item>();
 
         int i = 0;
 
-        for(String Anterior : mAnterior){
+        for (String Anterior : mAnterior) {
 
             if (mPrecisa.contains(Anterior)) {
                 argumentos2.add(mArgumentos.get(i));
             }
 
-            i+=1;
+            i += 1;
         }
-
 
 
         mArgumentos = argumentos2;

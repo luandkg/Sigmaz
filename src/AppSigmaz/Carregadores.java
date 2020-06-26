@@ -87,7 +87,8 @@ public class Carregadores {
         mArquivos.add("res/42 - generic.sigmaz");
         mArquivos.add("res/43 - list.sigmaz");
         mArquivos.add("res/44 - initlib.sigmaz");
-        mArquivos.add("res/45 - anonymous.sigmaz");
+        mArquivos.add("res/45 - external.sigmaz");
+        mArquivos.add("res/46 - model.sigmaz");
 
         return mArquivos;
     }

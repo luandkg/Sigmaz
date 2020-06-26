@@ -328,15 +328,22 @@ public class Compiler {
                 AST_Struct mAST = new AST_Struct(this);
                 mAST.init(AST_Raiz);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("match")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("external")) {
 
-                AST_Stages mAST = new AST_Stages(this);
-                mAST.init(AST_Raiz, false);
+                AST_External mAST = new AST_External(this);
+                mAST.init(AST_Raiz);
+
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("stages")) {
 
                 AST_Stages mAST = new AST_Stages(this);
-                mAST.init(AST_Raiz, true);
+                mAST.init(AST_Raiz);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("model")) {
+
+                AST_Model mAST = new AST_Model(this);
+                mAST.init(AST_Raiz);
+
 
             } else {
                 errarCompilacao("Token Desconhecido : " + TokenC.getTipo() + " " + TokenC.getConteudo(), TokenC.getInicio());

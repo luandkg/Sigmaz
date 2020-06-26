@@ -18,7 +18,7 @@ act varios_estagios ( ) {
 stages DIAS -> {
 	SEGUNDA , TERCA , QUARTA , QUINTA , SEXTA , SABADO , DOMINGO 
 }
-match CORES -> {
+stages CORES -> not {
 	AMARELO , VERMELHO , AZUL , BRANCO 
 }
 

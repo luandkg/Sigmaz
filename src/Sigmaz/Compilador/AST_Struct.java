@@ -28,6 +28,9 @@ public class AST_Struct {
            AST AST_With =  AST_Corrente.criarBranch("WITH");
             AST_With.setValor("FALSE");
 
+            AST AST_Model =  AST_Corrente.criarBranch("MODEL");
+            AST_Model.setValor("FALSE");
+
             AST AST_Stages =  AST_Corrente.criarBranch("STAGES");
             AST_Stages.setValor("FALSE");
 
@@ -66,12 +69,24 @@ public class AST_Struct {
                     AST_With.setNome(TokenP.getConteudo());
                     AST_With.setValor("TRUE");
 
-
                 }
-
-
             }
 
+            Token Futuro_AT = mCompiler.getTokenFuturo();
+            if (Futuro_AT.getTipo() == TokenTipo.ID && Futuro_AT.mesmoConteudo("at")) {
+                mCompiler.Proximo();
+
+              //  System.out.println("vamos comecar a modelar...");
+
+                Token TokenP = mCompiler.getTokenAvante();
+
+                if (TokenP.getTipo() == TokenTipo.ID ) {
+
+                    AST_Model.setNome(TokenP.getConteudo());
+                    AST_Model.setValor("TRUE");
+
+                }
+            }
 
             AST_StructCorpo mAST = new AST_StructCorpo(mCompiler);
             mAST.init(AST_Corrente,AST_Inits,TokenC.getConteudo());

@@ -14,12 +14,11 @@ public class AST_Argumentos {
 
     public void init(AST ASTPai) {
 
-        Token TokenC= mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE,"Era esperado abrir parenteses" );
+        Token TokenC = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado abrir parenteses");
 
         if (TokenC.getTipo() != TokenTipo.PARENTESES_ABRE) {
             return;
         }
-
 
 
         boolean saiu = false;
@@ -31,38 +30,37 @@ public class AST_Argumentos {
             Token TokenD = mCompiler.getTokenAvante();
             if (TokenD.getTipo() == TokenTipo.PARENTESES_FECHA) {
 
-                if(mais){
-                    mCompiler.errarCompilacao("Era esperado outro argumento",   TokenD.getInicio());
+                if (mais) {
+                    mCompiler.errarCompilacao("Era esperado outro argumento", TokenD.getInicio());
                 }
 
                 saiu = true;
                 break;
             } else if (TokenD.getTipo() == TokenTipo.ID) {
 
-                mais=false;
+                mais = false;
 
-                AST ASTCorrente =   ASTPai.criarBranch("ARGUMENT");
-                ASTCorrente.setNome( TokenD.getConteudo() );
+                AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
+                ASTCorrente.setNome(TokenD.getConteudo());
 
 
-
-                Token TokenC2= mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS,"Era esperado Dois Pontos" );
-                Token TokenC3= mCompiler.getTokenAvanteStatus(TokenTipo.ID,"Era esperado uma Tipagem" );
+                Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado Dois Pontos");
+                Token TokenC3 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado uma Tipagem");
 
 
                 ASTCorrente.setValor(TokenC3.getConteudo());
 
                 Token P2 = mCompiler.getTokenAvante();
 
-                if(P2.getTipo()==TokenTipo.VIRGULA) {
-                    mais=true;
-                } else  if (P2.getTipo() == TokenTipo.PARENTESES_FECHA) {
+                if (P2.getTipo() == TokenTipo.VIRGULA) {
+                    mais = true;
+                } else if (P2.getTipo() == TokenTipo.PARENTESES_FECHA) {
                     saiu = true;
                     break;
-                }else{
-                    mCompiler.errarCompilacao("Era esperado um argumento : " + P2.getConteudo(),   P2.getInicio());
+                } else {
+                    mCompiler.errarCompilacao("Era esperado um argumento : " + P2.getConteudo(), P2.getInicio());
                 }
-            }else{
+            } else {
                 break;
             }
         }
@@ -72,5 +70,56 @@ public class AST_Argumentos {
         }
     }
 
+    public void init_Tipagem(AST ASTPai) {
+
+        Token TokenC = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado abrir parenteses");
+
+        if (TokenC.getTipo() != TokenTipo.PARENTESES_ABRE) {
+            return;
+        }
+
+
+        boolean saiu = false;
+
+        boolean mais = false;
+
+
+        while (mCompiler.Continuar()) {
+            Token TokenD = mCompiler.getTokenAvante();
+            if (TokenD.getTipo() == TokenTipo.PARENTESES_FECHA) {
+
+                if (mais) {
+                    mCompiler.errarCompilacao("Era esperado outro tipo", TokenD.getInicio());
+                }
+
+                saiu = true;
+                break;
+            } else if (TokenD.getTipo() == TokenTipo.ID) {
+
+                mais = false;
+
+                AST ASTCorrente = ASTPai.criarBranch("TYPE");
+                ASTCorrente.setValor(TokenD.getConteudo());
+
+
+                Token P2 = mCompiler.getTokenAvante();
+
+                if (P2.getTipo() == TokenTipo.VIRGULA) {
+                    mais = true;
+                } else if (P2.getTipo() == TokenTipo.PARENTESES_FECHA) {
+                    saiu = true;
+                    break;
+                } else {
+                    mCompiler.errarCompilacao("Era esperado um tipo : " + P2.getConteudo(), P2.getInicio());
+                }
+            } else {
+                break;
+            }
+        }
+
+        if (!saiu) {
+            mCompiler.errarCompilacao("Era esperado fechar parenteses" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante().getInicio());
+        }
+    }
 
 }

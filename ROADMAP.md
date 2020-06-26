@@ -110,4 +110,7 @@ Linguagem de Programação Estruturada
     - 2020 06 26
         - REESTRUTURACAO DA HERANCA
         - REESTRUTURACAO DE INICIALIZADORES DE HERANCA
+        - EXTERNAL
+        - GENERIC EM TIPAGEM DE FUNCTIONS
+        - MODEL
        

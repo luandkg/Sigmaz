@@ -13,40 +13,46 @@ public class AST_Stages {
     }
 
 
-    public void init(AST ASTAvo,boolean isDefined){
+    public void init(AST ASTAvo) {
 
 
         AST ASTPai = ASTAvo.criarBranch("STAGES");
 
-        if(isDefined){
-            ASTPai.criarBranch("DEFINED").setNome("TRUE");
-        }else{
-            ASTPai.criarBranch("DEFINED").setNome("FALSE");
-        }
 
-       AST AST_Opcoes = ASTPai.criarBranch("OPTIONS");
+        AST AST_DEFINED = ASTPai.criarBranch("DEFINED");
+        AST_DEFINED.setNome("TRUE");
 
 
-        Token TokenN = mCompiler.getTokenAvanteStatus(TokenTipo.ID,"Era esperado o nome do STAGES !");
+        AST AST_Opcoes = ASTPai.criarBranch("OPTIONS");
+
+
+        Token TokenN = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome do STAGES !");
 
 
         ASTPai.setNome(TokenN.getConteudo());
 
 
-        Token TokenP = mCompiler.getTokenAvanteStatus(TokenTipo.SETA,"Era esperado uma SETA !");
+        Token TokenP = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma SETA !");
 
 
+        Token TokenFuturo = mCompiler.getTokenFuturo();
+        if (TokenFuturo.getTipo() == TokenTipo.ID && TokenFuturo.mesmoConteudo("not")) {
 
+            mCompiler.Proximo();
+            AST_DEFINED.setNome("FALSE");
+        } else if (TokenFuturo.getTipo() == TokenTipo.CHAVE_ABRE) {
 
-
+        } else {
+            mCompiler.errarCompilacao("Era esperado not ou {", TokenFuturo.getInicio());
+        }
 
 
         Token TokenI = mCompiler.getTokenAvante();
         if (TokenI.getTipo() == TokenTipo.CHAVE_ABRE) {
 
 
-        }else{
-            mCompiler.errarCompilacao("Era esperado abrir parenteses",   TokenI.getInicio());
+        } else {
+            mCompiler.errarCompilacao("Era esperado abrir parenteses", TokenI.getInicio());
         }
 
 
@@ -57,8 +63,8 @@ public class AST_Stages {
             Token TokenD = mCompiler.getTokenAvante();
             if (TokenD.getTipo() == TokenTipo.CHAVE_FECHA) {
 
-                if(mais){
-                    mCompiler.errarCompilacao("Era esperado outro parametro",   TokenD.getInicio());
+                if (mais) {
+                    mCompiler.errarCompilacao("Era esperado outro parametro", TokenD.getInicio());
                 }
 
                 saiu = true;
@@ -66,28 +72,27 @@ public class AST_Stages {
 
             } else if (TokenD.getTipo() == TokenTipo.ID) {
 
-                mais=false;
+                mais = false;
 
 
-
-                AST ASTCorrente =   AST_Opcoes.criarBranch("STAGE");
+                AST ASTCorrente = AST_Opcoes.criarBranch("STAGE");
                 ASTCorrente.setNome(TokenD.getConteudo());
 
 
                 Token P2 = mCompiler.getTokenAvante();
 
-                if(P2.getTipo()==TokenTipo.VIRGULA) {
-                    mais=true;
-                } else  if (P2.getTipo() == TokenTipo.CHAVE_FECHA) {
+                if (P2.getTipo() == TokenTipo.VIRGULA) {
+                    mais = true;
+                } else if (P2.getTipo() == TokenTipo.CHAVE_FECHA) {
                     saiu = true;
                     break;
-                }else{
-                    mCompiler.errarCompilacao("Era esperado um argumento : " + P2.getConteudo(),   P2.getInicio());
+                } else {
+                    mCompiler.errarCompilacao("Era esperado um argumento : " + P2.getConteudo(), P2.getInicio());
                 }
 
 
-            }else{
-                mCompiler.errarCompilacao("Era esperado um argumento : " + TokenD.getConteudo(),   TokenD.getInicio());
+            } else {
+                mCompiler.errarCompilacao("Era esperado um argumento : " + TokenD.getConteudo(), TokenD.getInicio());
                 break;
             }
         }
@@ -95,7 +100,6 @@ public class AST_Stages {
         if (!saiu) {
             mCompiler.errarCompilacao("Era esperado fechar chaves" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante().getInicio());
         }
-
 
 
     }

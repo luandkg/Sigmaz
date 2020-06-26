@@ -12,7 +12,7 @@ public class AST_Action {
         mCompiler = eCompiler;
     }
 
-    public void init(AST ASTPai,String Visibilidade) {
+    public void init(AST ASTPai, String Visibilidade) {
 
         Token TokenC = mCompiler.getTokenAvante();
 
@@ -43,6 +43,30 @@ public class AST_Action {
     }
 
 
+    public void init_Definicao(AST ASTPai) {
+
+        Token TokenC = mCompiler.getTokenAvante();
+
+        if (TokenC.getTipo() == TokenTipo.ID) {
+
+            AST AST_Corrente = new AST("ACTION");
+            AST_Corrente.setNome(TokenC.getConteudo());
+            ASTPai.getASTS().add(AST_Corrente);
+
+            AST AST_Arguments = AST_Corrente.criarBranch("ARGUMENTS");
+
+            AST_Argumentos mArgumentos = new AST_Argumentos(mCompiler);
+            mArgumentos.init_Tipagem(AST_Arguments);
+
+
+            Token TokenP2 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado PONTO E VIRGULA !");
+
+
+        } else {
+            mCompiler.errarCompilacao("Era esperado o nome para uma ACTION !", TokenC.getInicio());
+        }
+
+    }
 
 
 }
