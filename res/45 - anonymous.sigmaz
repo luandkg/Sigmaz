@@ -1,0 +1,12 @@
+
+
+call iniciar -> inicio ( );
+
+act inicio ( ) {
+
+    def valor : num = 1;
+
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+}
+

@@ -46,7 +46,7 @@ public class Carregadores {
         mArquivos.add("res/13 - step.sigmaz");
         mArquivos.add("res/14 - stepdef.sigmaz");
         mArquivos.add("res/15 - when.sigmaz");
-        mArquivos.add("res/16 - all.sigmaz");
+        mArquivos.add("res/16 - daz.sigmaz");
         mArquivos.add("res/17 - test.sigmaz");
         mArquivos.add("res/18 - operations.sigmaz");
 
@@ -87,6 +87,7 @@ public class Carregadores {
         mArquivos.add("res/42 - generic.sigmaz");
         mArquivos.add("res/43 - list.sigmaz");
         mArquivos.add("res/44 - initlib.sigmaz");
+        mArquivos.add("res/45 - anonymous.sigmaz");
 
         return mArquivos;
     }

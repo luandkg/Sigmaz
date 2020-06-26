@@ -18,10 +18,10 @@ public class Heranca {
     }
 
 
-
     public void init(ArrayList<AST> mTodos) {
 
         ArrayList<AST> mEstruturas = new ArrayList<AST>();
+        ArrayList<AST> mEstruturasComHeranca = new ArrayList<AST>();
 
         for (AST mAST : mTodos) {
 
@@ -45,35 +45,39 @@ public class Heranca {
 
         for (AST Struct_AST : mEstruturas) {
             AST AST_With = Struct_AST.getBranch("WITH");
+
             if (AST_With.mesmoValor("TRUE")) {
 
+                String Struct_Base = Struct_AST.getBranch("WITH").getNome();
+
                 ArrayList<String> mDependencias = new ArrayList<String>();
-                boolean normalizavel = getNormalizavel(AST_With.getNome(), mEstruturas, mDependencias);
+                boolean normalizavel = getNormalizavel(Struct_Base, mEstruturas, mDependencias);
 
                 if (normalizavel) {
+
                     v += 1;
-                    //   System.out.println("Estrutural : " + Struct_AST.getNome() + " -->> " + AST_With.getNome());
 
-                    for (String eDepende : mDependencias) {
+                    Struct_AST.getBranch("EXTENDED").setValor("" + (1 + mDependencias.size()));
 
-                        //    System.out.println("   - " + eDepende);
-                    }
+                    mEstruturasComHeranca.add(Struct_AST);
+
                 } else {
-
                     mAnalisador.getErros().add("Estrutural : " + Struct_AST.getNome() + " -->> " + AST_With.getNome() + "  :: PROBLEMA DE DEPENDENCIA");
-
                 }
 
 
             } else {
                 //   System.out.println("Estrutural : " + Struct_AST.getNome());
+
+                Struct_AST.getBranch("EXTENDED").setValor("1");
+
                 v += 1;
             }
         }
 
         if (c == v) {
 
-            herdar(mEstruturas);
+            herdar(mEstruturas, mEstruturasComHeranca);
 
         } else {
 
@@ -85,168 +89,218 @@ public class Heranca {
     }
 
 
-    public void herdar(ArrayList<AST> mEstruturas) {
+    public void herdar(ArrayList<AST> mEstruturas, ArrayList<AST> mEstruturasComHeranca) {
 
 
-        ArrayList<AST> Realizar = new ArrayList<AST>();
+        for (AST Struct_AST : mEstruturasComHeranca) {
 
-        for (AST Struct_AST : mEstruturas) {
-            AST AST_With = Struct_AST.getBranch("WITH");
+            String Struct_Base = Struct_AST.getBranch("WITH").getNome();
 
-            if (AST_With.mesmoValor("TRUE")) {
-                ArrayList<String> mDependencias = new ArrayList<String>();
-                boolean normalizavel = getNormalizavel(AST_With.getNome(), mEstruturas, mDependencias);
-
-                //  System.out.println("Estrutural : " + Struct_AST.getNome() + " -->> Complexidade : " + (1 + mDependencias.size()));
-
-                Realizar.add(Struct_AST);
-
-
-            } else {
-
-                //     System.out.println("Estrutural : " + Struct_AST.getNome() + " -->> Complexidade : 1");
-
-            }
-
-        }
-
-        for (AST Struct_AST : Realizar) {
-
-            AST AST_With = Struct_AST.getBranch("WITH");
             ArrayList<String> mDependencias = new ArrayList<String>();
-            boolean normalizavel = getNormalizavel(AST_With.getNome(), mEstruturas, mDependencias);
 
-            Realizar_Heranca(Struct_AST, mDependencias, mEstruturas);
+            boolean normalizavel = getNormalizavel(Struct_Base, mEstruturas, mDependencias);
+
+            Realizar_Heranca(Struct_AST.getNome(), mDependencias, mEstruturas);
 
         }
 
     }
 
 
-    public void Realizar_Heranca(AST Struct_AST, ArrayList<String> mDependencias, ArrayList<AST> mEstruturas) {
+    public void Realizar_Heranca(String Struct_Nome, ArrayList<String> mDependencias, ArrayList<AST> mEstruturas) {
 
-        mAnalisador.mensagem("Realizando Heranca : " + Struct_AST.getNome());
+        AST Super = ProcurarStruct(Struct_Nome, mEstruturas);
+
+        String eBase = Super.getBranch("WITH").getNome();
+
+        mAnalisador.mensagem("---------------------------------------------------");
+
+        mAnalisador.mensagem("              " + Struct_Nome + "           ");
+
+        mAnalisador.mensagem("---------------------------------------------------");
+
+
+        mAnalisador.mensagem("Realizando Heranca : " + Struct_Nome + " -> " + eBase);
+        for (String mDepende : mDependencias) {
+
+            AST Base = ProcurarStruct(mDepende, mEstruturas);
+
+            if (Base.getBranch("WITH").mesmoValor("TRUE")) {
+                mAnalisador.mensagem("\t\t - Precisa de : " + mDepende + " -> " + Base.getBranch("WITH").getNome());
+            } else {
+                mAnalisador.mensagem("\t\t - Precisa de : " + mDepende);
+            }
+        }
+
+
+        DependencieAgora("", Struct_Nome, eBase, mEstruturas);
 
 
         for (String mDepende : mDependencias) {
-            DependencieAgora(Struct_AST, mDepende, mEstruturas);
+            Super.getBranch("BASES").criarBranch("BASE").setNome(mDepende);
         }
+
+
 
     }
 
-    public void DependencieAgora(AST Struct_AST, String eNome, ArrayList<AST> mEstruturas) {
+    public AST ProcurarStruct(String eNome, ArrayList<AST> mEstruturas) {
+        AST mRet = null;
+        for (AST Procurando : mEstruturas) {
+            if (Procurando.mesmoNome(eNome)) {
+                mRet = Procurando;
+            }
+        }
+        return mRet;
+    }
 
-        AST Struct_Inits = Struct_AST.getBranch("INITS");
-        AST Struct_Corpo = Struct_AST.getBranch("BODY");
+    public AST MontarBase(String ePref, String eBaseNome, ArrayList<AST> mEstruturas) {
+        AST copia = ProcurarStruct(eBaseNome, mEstruturas).copiar();
 
-        int S_inits = 0;
 
-        for (AST migrando : Struct_Inits.getASTS()) {
+        if (copia.getBranch("WITH").mesmoValor("TRUE")) {
 
-            mAnalisador.mensagem("  - Init da Struct : " + Struct_AST.getNome() + "(" + getAssinatura(migrando.getBranch("ARGUMENTS")) + ")");
-            S_inits += 1;
+            DependencieAgora(ePref + "\t", eBaseNome, copia.getBranch("WITH").getNome(), mEstruturas);
+
+        } else {
+
+
+            mAnalisador.mensagem(ePref + "--------------------------------------------------");
+
+            mAnalisador.mensagem(ePref + "  - Simples  : " + eBaseNome);
+
 
         }
 
+        return copia;
+    }
 
-        for (AST Procurando : mEstruturas) {
-            if (Procurando.mesmoNome(eNome)) {
-
-                mAnalisador.mensagem("  - Herdando : " + Procurando.getNome());
-
-
-                AST Heranca_Inits = Procurando.getBranch("INITS");
-
-                int H_inits = 0;
-
-                for (AST migrando : Heranca_Inits.getASTS()) {
-
-                    mAnalisador.mensagem("  - Init da Heranca : " + Procurando.getNome() + "(" + getAssinatura(migrando.getBranch("ARGUMENTS")) + ")");
-                    H_inits += 1;
-
-                }
-
-                if (H_inits > 0) {
-
-                    mAnalisador.mensagem("  - Obrigatoriedade de Init em " + Struct_AST.getNome() + " -> " + Procurando.getNome());
-
-                    if (S_inits == 0) {
-                        System.out.println("  - Struct " + Struct_AST.getNome() + " Nao consegue herdar  " + Procurando.getNome());
-                        mAnalisador.getErros().add("  - Struct " + Struct_AST.getNome() + " Nao consegue herdar  " + Procurando.getNome());
-                    } else {
-
-                        boolean compativel = false;
-
-                        for (AST migrando_struct : Struct_Inits.getASTS()) {
-                            mAnalisador.mensagem("  - Struct Init : " + Struct_AST.getNome() + "(" + getAssinatura(migrando_struct.getBranch("ARGUMENTS")) + ")");
-
-                            AST mCall = migrando_struct.getBranch("CALL");
-
-                            if (mCall.mesmoValor("TRUE")) {
-                                mAnalisador.mensagem("  -  VALOR : " + mCall.getValor());
-
-                                if (mCall.existeBranch("ARGUMENTS")) {
-                                    int t = getContagemAssinatura(mCall.getBranch("ARGUMENTS"));
-                                    int r = getContagemAssinatura(migrando_struct.getBranch("ARGUMENTS"));
-
-                                    mAnalisador.mensagem("  - Args Init Call : " + (getContagemAssinatura(mCall.getBranch("ARGUMENTS"))));
-                                    mAnalisador.mensagem("  - Ass Init Call : " + (getAssinatura(mCall.getBranch("ARGUMENTS"))));
-
-                                    // if (t == r) {
-
-                                    for (AST migrando_heranca : Heranca_Inits.getASTS()) {
-                                        //  if (t==getContagemAssinatura(migrando_struct.getBranch("ARGUMENTS"))){
-                                        compativel = true;
-                                        mAnalisador.mensagem("  - Heranca Init : " + Procurando.getNome() + "(" + getAssinatura(migrando_heranca.getBranch("ARGUMENTS")) + ")");
-
-                                        //  }
-
-                                    }
-                                    //  }
-                                }
-
-                            }
+    public void DependencieAgora(String ePref, String eStructNome, String eBaseNome, ArrayList<AST> mEstruturas) {
 
 
-                            if (compativel) {
-                                mAnalisador.mensagem("  - Struct " + Struct_AST.getNome() + " pode herdar  " + Procurando.getNome());
+        AST Base = MontarBase(ePref, eBaseNome, mEstruturas);
 
 
-                            } else {
-                                mAnalisador.mensagem("  - Struct " + Struct_AST.getNome() + " Nao consegue herdar  " + Procurando.getNome());
-                                mAnalisador.getErros().add("  - Struct " + Struct_AST.getNome() + " Nao consegue herdar  " + Procurando.getNome());
-                            }
+        mAnalisador.mensagem(ePref + "--------------------------------------------------");
 
 
-                        }
+        AST Super = ProcurarStruct(eStructNome, mEstruturas);
+
+        AST Base_Inits = Base.getBranch("INITS");
+        AST Super_Inits = Super.getBranch("INITS");
+
+        mAnalisador.mensagem(ePref + "  - Super  : " + eStructNome + " (" + Super_Inits.getASTS().size() + ")" + "   Base : " + eBaseNome + " (" + Base_Inits.getASTS().size() + ")");
 
 
-                    }
+        ArrayList<AST> mSuper_Inits_Filtrados = new ArrayList<AST>();
 
-                }
-
-                AST Heranca_Init = Procurando.getBranch("INITS");
-
-                for (AST migrando : Heranca_Init.getASTS()) {
-
-                    Struct_Inits.getASTS().add(migrando);
-
-                }
-
-                AST Heranca_Corpo = Procurando.getBranch("BODY");
-
-                for (AST migrando : Heranca_Corpo.getASTS()) {
-
-                    Struct_Corpo.getASTS().add(migrando);
-
-                }
-
-
-                break;
+        for (AST mStruct_Init : Super_Inits.getASTS()) {
+            if (mStruct_Init.mesmoNome((eStructNome))) {
+                mSuper_Inits_Filtrados.add(mStruct_Init);
             }
         }
 
+
+        if (Base_Inits.getASTS().size() > 0) {
+
+            if (mSuper_Inits_Filtrados.size() > 0) {
+
+
+                for (AST mStruct_Init : mSuper_Inits_Filtrados) {
+                    AST mCall = mStruct_Init.getBranch("CALL");
+
+
+                    if (mCall.mesmoValor("TRUE")) {
+
+                        if (mCall.mesmoNome(eBaseNome)) {
+
+
+                            if (checarArgumentos(mCall, eBaseNome, Base_Inits.getASTS())) {
+
+
+                            } else {
+                                mAnalisador.mensagem("  - Struct " + eStructNome + " com Chamador  " + eBaseNome + " : Quantidade de argumentos invalido !");
+                                mAnalisador.getErros().add("  - Struct " + eStructNome + " com Chamador  " + eBaseNome + " : Quantidade de argumentos invalido !");
+                                return;
+                            }
+
+
+                        } else {
+                            mAnalisador.mensagem("  - Struct " + eStructNome + " deve ter um chamador com o mesmo nome da Struct Base : " + eBaseNome);
+                            mAnalisador.getErros().add("  - Struct " + eStructNome + " deve ter um chamador com o mesmo nome da Struct Base : " + eBaseNome);
+                            return;
+                        }
+
+
+                    } else {
+                        mAnalisador.mensagem("  - Struct " + eStructNome + " deve ter um chamador ! ");
+                        mAnalisador.getErros().add("  - Struct " + eStructNome + " deve ter um chamador ! ");
+                        return;
+                    }
+                }
+
+
+            } else {
+                mAnalisador.mensagem("  - Struct " + eStructNome + " deve possuir um inicializador  ");
+                mAnalisador.getErros().add("  - Struct " + eStructNome + " deve possuir um inicializador  ");
+                return;
+            }
+
+        } else {
+            for (AST mStruct_Init : Super_Inits.getASTS()) {
+                AST mCall = mStruct_Init.getBranch("CALL");
+                if (mCall.mesmoValor("TRUE")) {
+                    mAnalisador.mensagem("  - Struct " + eStructNome + " nao pode ter chamadores ! ");
+
+                    mAnalisador.getErros().add("  - Struct " + eStructNome + " nao pode ter chamadores ! ");
+                    return;
+                }
+            }
+        }
+
+
+        // REALIZAR HERANCA INTERNA
+
+        AST Base_Corpo = Base.getBranch("BODY");
+        AST Super_Corpo = Super.getBranch("BODY");
+
+
+        for (AST migrando : Base_Inits.getASTS()) {
+            Super_Inits.getASTS().add(migrando);
+        }
+
+
+        for (AST migrando : Base_Corpo.getASTS()) {
+            Super_Corpo.getASTS().add(migrando);
+        }
+
     }
+
+
+    public boolean checarArgumentos(AST mCall, String eBaseNome, ArrayList<AST> mInits) {
+
+        boolean ret = false;
+
+        int quantidade = mCall.getBranch("ARGUMENTS").getASTS().size();
+
+
+        for (AST mBaseInit : mInits) {
+
+            if (mBaseInit.mesmoNome(eBaseNome)) {
+                int init_quantidade = mBaseInit.getBranch("ARGUMENTS").getASTS().size();
+
+                if (init_quantidade == quantidade) {
+                    ret = true;
+                    break;
+                }
+            }
+
+
+        }
+
+        return ret;
+    }
+
 
     public boolean getNormalizavel(String eNome, ArrayList<AST> mEstruturas, ArrayList<String> mDependencias) {
 

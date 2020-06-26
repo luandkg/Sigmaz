@@ -4,13 +4,13 @@ import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
 
-public class Run_All {
+public class Run_Daz {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
 
 
-    public Run_All(RunTime eRunTime, Escopo eEscopo) {
+    public Run_Daz(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
@@ -47,7 +47,7 @@ public class Run_All {
         try {
             CGeral = Float.parseFloat(mAST.getConteudo());
         } catch (Exception e) {
-            mRunTime.getErros().add("Uma condição all requer argumentos numericos  !");
+            mRunTime.getErros().add("Uma condição Daz requer argumentos numericos  !");
             return;
         }
 
@@ -59,7 +59,7 @@ public class Run_All {
             AST ouCorpo = fAST.getBranch("BODY");
 
             if (ouCondicao.getASTS().size() != 2) {
-                mRunTime.getErros().add("Uma condição All requer 2 argumentos !");
+                mRunTime.getErros().add("Uma condição Daz requer 2 argumentos !");
                 return;
             }
 
@@ -77,7 +77,7 @@ public class Run_All {
                 P1 = Float.parseFloat(RV_1.getConteudo());
                 P2 = Float.parseFloat(RV_2.getConteudo());
             } catch (Exception e) {
-                mRunTime.getErros().add("Uma condição All requer argumentos numericos  !");
+                mRunTime.getErros().add("Uma condição Daz requer argumentos numericos  !");
                 return;
             }
 

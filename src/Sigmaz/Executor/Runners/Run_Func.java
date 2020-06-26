@@ -210,7 +210,7 @@ public class Run_Func {
         boolean algum = false;
 
 
-        for (Index_Function mIndex_Function : mRunTime.getOperations_Definidas()) {
+        for (Index_Function mIndex_Function : mRunTime.getGlobalOperations()) {
 
             if (mIndex_Function.mesmoNome(eNome)) {
 

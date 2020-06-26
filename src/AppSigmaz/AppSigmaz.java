@@ -19,7 +19,7 @@ public class AppSigmaz {
 
         Fases mFase = Fases.EXECUTAR;
 
-        int ARQUIVO = 44;
+        int ARQUIVO = 29;
 
 
         if (mFase == Fases.EXECUTAR) {

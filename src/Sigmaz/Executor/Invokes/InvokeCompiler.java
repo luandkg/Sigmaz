@@ -285,6 +285,11 @@ public class InvokeCompiler {
                     mEscopo.ListarAll();
                 }
 
+            } else if (eSaida.contentEquals("STACK")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.ListarStack();
+                }
 
             } else if (eSaida.contentEquals("ACTIONS")) {
                 if (mRunTime.getExterno()) {
@@ -305,6 +310,11 @@ public class InvokeCompiler {
             } else if (eSaida.contentEquals("CONSTANTS")) {
                 if (mRunTime.getExterno()) {
                     mEscopo.ListarConstants();
+                }
+
+            } else if (eSaida.contentEquals("STRUCTS")) {
+                if (mRunTime.getExterno()) {
+                    mEscopo.ListarStructs();
                 }
 
             } else {
@@ -345,6 +355,32 @@ public class InvokeCompiler {
                     mEscopo.ListarGlobalStack();
                 }
 
+
+            } else if (eSaida.contentEquals("ACTIONS")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.ListarGlobalActions();
+                }
+            } else if (eSaida.contentEquals("FUNCTIONS")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.ListarGlobalFunctions();
+                }
+            } else if (eSaida.contentEquals("OPERATIONS")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.ListarGlobalOperations();
+                }
+            } else if (eSaida.contentEquals("STAGES")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.ListarGlobalStages();
+                }
+            } else if (eSaida.contentEquals("STRUCTS")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.ListarGlobalStructs();
+                }
             } else if (eSaida.contentEquals("COUNT")) {
 
                 if (mRunTime.getExterno()) {

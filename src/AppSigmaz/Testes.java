@@ -67,7 +67,7 @@ public class Testes {
                     Analisador AnaliseC = new Analisador();
                     AnaliseC.internalizar();
 
-                    AnaliseC.init(CompilerC.getASTS());
+                    AnaliseC.init(CompilerC.getASTS(),"res/");
 
                     if (AnaliseC.getErros().size() == 0) {
 

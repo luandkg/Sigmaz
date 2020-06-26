@@ -21,10 +21,12 @@ public class RunTime {
     private ArrayList<Run_Struct> mHeap;
     private ArrayList<Run_Extern> mExtern;
 
-    private ArrayList<AST> mStages;
-    private ArrayList<AST> mStructs;
 
-    private ArrayList<Index_Function> mOperacoes;
+    private ArrayList<AST> mGlobalActions;
+    private ArrayList<AST> mGlobalFunctions;
+    private ArrayList<Index_Function> mGlobalOperacoes;
+    private ArrayList<AST> mGlobalStages;
+    private ArrayList<AST> mGlobalStructs;
 
     private String mLocal;
 
@@ -47,6 +49,12 @@ public class RunTime {
 
         mPrimitivos = new Primitivos();
 
+        mGlobalActions = new ArrayList<>();
+        mGlobalFunctions = new ArrayList<>();
+        mGlobalStages = new ArrayList<AST>();
+        mGlobalStructs = new ArrayList<AST>();
+        mGlobalOperacoes = new ArrayList<Index_Function>();
+
         mHeap = new ArrayList<Run_Struct>();
         mExtern = new ArrayList<Run_Extern>();
 
@@ -55,9 +63,6 @@ public class RunTime {
 
         mExterno = true;
 
-        mStages = new ArrayList<AST>();
-        mStructs = new ArrayList<AST>();
-        mOperacoes = new ArrayList<Index_Function>();
 
         limpar();
 
@@ -66,7 +71,7 @@ public class RunTime {
     public void limpar() {
 
 
-        mASTS.clear();
+        //   mASTS.clear();
         mErros.clear();
 
 
@@ -84,9 +89,11 @@ public class RunTime {
         mHeap.clear();
         mExtern.clear();
 
-        mStages.clear();
-        mStructs.clear();
-        mOperacoes.clear();
+        mGlobalActions.clear();
+        mGlobalFunctions.clear();
+        mGlobalStages.clear();
+        mGlobalStructs.clear();
+        mGlobalOperacoes.clear();
 
     }
 
@@ -252,9 +259,7 @@ public class RunTime {
 
     public void run() {
 
-        mHeap.clear();
-        mErros.clear();
-        mStages.clear();
+        limpar();
 
 
         Escopo Global = new Escopo(this, null);
@@ -273,7 +278,6 @@ public class RunTime {
 
                         String mReq = mLocal + ASTC.getNome() + ".sigmad";
                         mRequiscoes.add(mReq);
-
 
 
                     }
@@ -326,12 +330,18 @@ public class RunTime {
 
                     if (ASTC.mesmoTipo("FUNCTION")) {
                         Global.guardar(ASTC);
+
+                        mGlobalFunctions.add(ASTC);
+
                     } else if (ASTC.mesmoTipo("ACTION")) {
                         Global.guardar(ASTC);
+
+                        mGlobalActions.add(ASTC);
+
                     } else if (ASTC.mesmoTipo("OPERATION")) {
                         Global.guardar(ASTC);
 
-                        mOperacoes.add(new Index_Function(ASTC));
+                        mGlobalOperacoes.add(new Index_Function(ASTC));
 
                     } else if (ASTC.mesmoTipo("CAST")) {
                         Global.guardar(ASTC);
@@ -339,11 +349,11 @@ public class RunTime {
 
                         Global.guardar(ASTC);
 
-                        mStages.add(ASTC);
+                        mGlobalStages.add(ASTC);
 
                     } else if (ASTC.mesmoTipo("STRUCT")) {
 
-                        mStructs.add(ASTC);
+                        mGlobalStructs.add(ASTC);
 
 
                     }
@@ -351,19 +361,19 @@ public class RunTime {
                 }
 
 
-                for (AST mStruct : mStructs) {
+                for (AST mStruct : mGlobalStructs) {
                     for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
                         if (mStructBody.mesmoTipo("OPERATION") && mStructBody.getBranch("VISIBILITY").mesmoNome("EXTERN")) {
                             // System.out.println("PORRA PERDIDA");
 
-                            mOperacoes.add(new Index_Function(mStructBody));
+                            mGlobalOperacoes.add(new Index_Function(mStructBody));
 
 
                         }
                     }
                 }
 
-                for (AST mStruct : mStructs) {
+                for (AST mStruct : mGlobalStructs) {
                     Run_Extern mRE = new Run_Extern(this);
                     mRE.init(mStruct);
                     mExtern.add(mRE);
@@ -462,23 +472,31 @@ public class RunTime {
 
     }
 
-    public ArrayList<AST> getStages_Definidas() {
-        return mStages;
+    public ArrayList<AST> getGlobalActions() {
+        return mGlobalActions;
     }
 
-    public ArrayList<AST> getStructs_Definidas() {
-        return mStructs;
+    public ArrayList<AST> getGlobalFunctions() {
+        return mGlobalFunctions;
     }
 
-    public ArrayList<Index_Function> getOperations_Definidas() {
-        return mOperacoes;
+    public ArrayList<AST> getGlobalStages() {
+        return mGlobalStages;
+    }
+
+    public ArrayList<AST> getGlobalStructs() {
+        return mGlobalStructs;
+    }
+
+    public ArrayList<Index_Function> getGlobalOperations() {
+        return mGlobalOperacoes;
     }
 
 
     public boolean existeStage(String eStage) {
         boolean enc = false;
 
-        for (AST mAST : mStages) {
+        for (AST mAST : mGlobalStages) {
             for (AST sAST : mAST.getBranch("OPTIONS").getASTS()) {
 
                 if (sAST.mesmoTipo("STAGE")) {
@@ -500,7 +518,7 @@ public class RunTime {
 
         mHeap.clear();
         mErros.clear();
-        mStages.clear();
+        mGlobalStages.clear();
 
 
         Estrutural mEstrutural = new Estrutural();

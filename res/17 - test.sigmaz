@@ -108,7 +108,7 @@ act operando ( geral : num ) {
 			}
 			
 		}
-		all ( inteiro ( cc ) ) -> {
+		daz ( inteiro ( cc ) ) -> {
 			extrem ( 0 , 5 ) -> {
 				auxiliar = 55555;
 			}

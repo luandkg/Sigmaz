@@ -66,9 +66,9 @@ public class AST_Corpo {
 
                 AST_When mAST = new AST_When(mCompiler);
                 mAST.init(ASTPai);
-            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("all")){
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("daz")){
 
-                AST_All mAST = new AST_All(mCompiler);
+                AST_Daz mAST = new AST_Daz(mCompiler);
                 mAST.init(ASTPai);
 
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("cancel")){
@@ -84,6 +84,7 @@ public class AST_Corpo {
 
                 AST_Exception mAST = new AST_Exception(mCompiler);
                 mAST.init(ASTPai);
+
 
             }else if (TokenD.getTipo()==TokenTipo.ID ){
 

@@ -89,9 +89,6 @@ public class Escopo {
         return mOO;
     }
 
-    public OO getAO() {
-        return mAO;
-    }
 
     public void guardarStruct(AST eAST) {
 
@@ -105,12 +102,6 @@ public class Escopo {
         mAO.guardar(eAST);
 
     }
-
-
-    public void ListarGlobal() {
-        mDebug.ListarGlobal();
-    }
-
 
 
 
@@ -130,8 +121,16 @@ public class Escopo {
         mDebug.ListarConstants();
     }
 
+    public void ListarStructs() {
+        mDebug.ListarStructs();
+    }
+
     public void ListarAll() {
         mDebug.ListarAll();
+    }
+
+    public void ListarStack() {
+        mDebug.ListarStack();
     }
 
     public void ListarGlobalAll() {
@@ -140,6 +139,27 @@ public class Escopo {
 
     public void ListarGlobalStack() {
         mDebug.ListarGlobalStack();
+    }
+
+
+    public void ListarGlobalStructs() {
+        mDebug.ListarGlobalStructs();
+    }
+
+    public void ListarGlobalFunctions() {
+        mDebug.ListarGlobalFunctions();
+    }
+
+    public void ListarGlobalOperations() {
+        mDebug.ListarGlobalOperations();
+    }
+
+    public void ListarGlobalActions() {
+        mDebug.ListarGlobalActions();
+    }
+
+    public void ListarGlobalStages() {
+        mDebug.ListarGlobalStages();
     }
 
     public ArrayList<Index_Function> getFunctionsCompleto() {
@@ -172,6 +192,19 @@ public class Escopo {
         return mParam;
     }
 
+    public void criarItem(String eNome,Item eItem){
+
+        Item Novo = new Item(eNome);
+        Novo.setModo(eItem.getModo());
+        Novo.setTipo(eItem.getTipo());
+        Novo.setNulo(eItem.getNulo());
+        Novo.setPrimitivo(eItem.getPrimitivo());
+        Novo.setIsEstrutura(eItem.getIsEstrutura());
+        Novo.setValor(eItem.getValor());
+        mStacks.add(Novo);
+
+
+    }
 
     public ArrayList<Item> getStacksAll() {
 
@@ -287,29 +320,8 @@ public class Escopo {
     }
 
 
-    public ArrayList<AST> getStructs_RunTime() {
-
-        ArrayList<AST> gc = new ArrayList<AST>();
-
-        for (AST fAST : mRunTime.getStructs_Definidas()) {
-            gc.add(fAST);
-        }
 
 
-        return gc;
-    }
-
-    public ArrayList<AST> getStages_RunTime() {
-
-        ArrayList<AST> gc = new ArrayList<AST>();
-
-        for (AST fAST : mRunTime.getStages_Definidas()) {
-            gc.add(fAST);
-        }
-
-
-        return gc;
-    }
 
 
     public void setCancelar(boolean eCancelar) {

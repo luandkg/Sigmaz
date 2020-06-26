@@ -55,10 +55,18 @@ public class Analisar_Function {
 
         if (ASTPai.mesmoTipo("DEF")) {
 
+            if (mAnalisador.getProibidos().contains(ASTPai.getNome())){
+                mAnalisador.getErros().add("Def : " + ASTPai.getNome() + " : Nome Proibido !");
+            }
+
             mAnalisador.getAnalisar_Outros().analisandoDefines(ASTPai);
             mAnalisador.analisarValoracao(ASTPai, mAlocadosAntes);
 
         } else if (ASTPai.mesmoTipo("MOC")) {
+
+            if (mAnalisador.getProibidos().contains(ASTPai.getNome())){
+                mAnalisador.getErros().add("Moc : " + ASTPai.getNome() + " : Nome Proibido !");
+            }
 
             mAnalisador.getAnalisar_Outros().analisandoDefines(ASTPai);
             mAnalisador.analisarValoracao(ASTPai, mAlocadosAntes);
@@ -82,7 +90,7 @@ public class Analisar_Function {
             mAnalisador.getAnalisar_When().analisar_When(ASTPai, mAlocadosAntes, true);
 
 
-        } else if (ASTPai.mesmoTipo("ALL")) {
+        } else if (ASTPai.mesmoTipo("DAZ")) {
 
             mAnalisador.getAnalisar_All().analisar_All(ASTPai, mAlocadosAntes, true);
 

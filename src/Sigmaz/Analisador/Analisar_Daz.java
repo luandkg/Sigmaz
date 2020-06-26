@@ -4,11 +4,11 @@ import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
 
-public class Analisar_All {
+public class Analisar_Daz {
 
     private Analisador mAnalisador;
 
-    public Analisar_All(Analisador eAnalisador) {
+    public Analisar_Daz(Analisador eAnalisador) {
 
         mAnalisador = eAnalisador;
 
@@ -17,7 +17,7 @@ public class Analisar_All {
     public void condicao(AST ASTPai) {
 
         if (ASTPai.getValor().length() == 0) {
-            mAnalisador.getErros().add("É necessario uma condição para ALL !");
+            mAnalisador.getErros().add("É necessario uma condição para DAZ !");
         }
 
     }
@@ -25,7 +25,7 @@ public class Analisar_All {
     public void analisar_All_Item(AST ASTPai,ArrayList<String> mAlocadosAntes, boolean dentroFunction) {
 
         if (ASTPai.getASTS().size() != 2) {
-            mAnalisador.getErros().add("Problema com a condição ALL !");
+            mAnalisador.getErros().add("Problema com a condição DAZ !");
         }
 
         for (AST mAST : ASTPai.getASTS()) {
@@ -61,7 +61,7 @@ public class Analisar_All {
 
             } else {
 
-                mAnalisador.getErros().add("Problema com a condição ALL !");
+                mAnalisador.getErros().add("Problema com a condição DAZ !");
 
             }
 
@@ -92,7 +92,7 @@ public class Analisar_All {
         }
 
         if(outros>1){
-            mAnalisador.getErros().add("Problema com ALL : So pode existir um OTHERS !");
+            mAnalisador.getErros().add("Problema com DAZ : So pode existir um OTHERS !");
         }
 
         for (AST mAST : ASTPai.getASTS()) {
@@ -121,10 +121,10 @@ public class Analisar_All {
         }
 
         if(!mExisteChoosable){
-            mAnalisador.getErros().add("Problema com ALL : Nao existe condicao !");
+            mAnalisador.getErros().add("Problema com DAZ : Nao existe condicao !");
         }
         if(!mExisteCases){
-            mAnalisador.getErros().add("Problema com ALL : Nao existem casos !");
+            mAnalisador.getErros().add("Problema com DAZ : Nao existem casos !");
         }
 
 

@@ -4,18 +4,18 @@ import Sigmaz.Lexer.Token;
 import Sigmaz.Lexer.TokenTipo;
 import Sigmaz.Utils.AST;
 
-public class AST_All {
+public class AST_Daz {
 
     private Compiler mCompiler;
 
-    public AST_All(Compiler eCompiler) {
+    public AST_Daz(Compiler eCompiler) {
         mCompiler = eCompiler;
     }
 
     public void init(AST ASTPai) {
 
 
-        AST AST_Corrente = new AST("ALL");
+        AST AST_Corrente = new AST("DAZ");
         ASTPai.getASTS().add(AST_Corrente);
 
         mCompiler.Proximo();

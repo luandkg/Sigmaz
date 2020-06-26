@@ -185,9 +185,9 @@ public class Run_Body {
                 if (mAST.getContinuar()) {
                     Continuar();
                 }
-            } else if (fAST.mesmoTipo("ALL")) {
+            } else if (fAST.mesmoTipo("DAZ")) {
 
-                Run_All mAST = new Run_All(mRunTime, mEscopo);
+                Run_Daz mAST = new Run_Daz(mRunTime, mEscopo);
 
                 mAST.init(fAST);
                 if (mAST.getCancelado()) {

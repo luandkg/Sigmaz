@@ -8,6 +8,7 @@ import Sigmaz.Utils.Documentador;
 import Sigmaz.Utils.Erro;
 import Sigmaz.Utils.GrupoDeErro;
 
+import java.io.File;
 import java.util.ArrayList;
 
 // COMPILADOR OLIMPUS
@@ -20,6 +21,11 @@ import java.util.Calendar;
 public class Sigmaz {
 
     private void geral(int eOpcao, String eArquivo, String saida) {
+
+
+        File arq = new File(saida);
+      String  mLocal = arq.getParent() + "/";
+
 
         System.out.println("################ SIGMAZ ################");
         System.out.println("");
@@ -103,7 +109,7 @@ public class Sigmaz {
 
             Analisador AnaliseC = new Analisador();
             String AI = CompilerC.getData().toString();
-            AnaliseC.init(CompilerC.getASTS());
+            AnaliseC.init(CompilerC.getASTS(),mLocal);
             String AF = CompilerC.getData().toString();
 
 

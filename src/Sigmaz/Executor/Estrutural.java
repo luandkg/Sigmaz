@@ -184,19 +184,31 @@ public class Estrutural {
             AST mWith = mAST.getBranch("WITH");
             AST mExtended = mAST.getBranch("EXTENDED");
 
-            if (mWith.mesmoValor("TRUE")) {
-                System.out.println("\t - " + mAST.getNome() + " -> " + mWith.getNome());
-            } else {
-                System.out.println("\t - " + mAST.getNome());
-            }
+
 
             if (mExtended.mesmoNome("STAGES")) {
 
                 mStruct_Stages.add(mAST);
 
+            } else if (mExtended.mesmoNome("STRUCT")) {
+
+                if (mWith.mesmoValor("TRUE")) {
+                    System.out.println("\t - " + mAST.getNome() + " -> " + mWith.getNome());
+                } else {
+                    System.out.println("\t - " + mAST.getNome());
+                }
+
+                System.out.println("\t\t - COMPLEXITY = " + mExtended.getValor());
 
 
-            } else {
+                AST mBases = mAST.getBranch("BASES");
+                System.out.println("\t\t - BASES : ");
+                for (AST bAST : mBases.getASTS()) {
+
+                    System.out.println("\t\t\t - " + bAST.getNome());
+
+                }
+
 
                 AST mInits = mAST.getBranch("INITS");
 
@@ -231,7 +243,31 @@ public class Estrutural {
         for (AST mAST : ASTPai.getASTS()) {
             if (mAST.mesmoTipo("INIT")) {
                 if (eStructnome.contentEquals(mAST.getNome())) {
-                    System.out.println("\t\t\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) ");
+
+
+                    AST AST_Call = mAST.getBranch("CALL");
+
+                    if (AST_Call.mesmoValor("TRUE")){
+
+
+                        String eArgumentos =AST_Call.getNome();
+
+                        for (AST aAST : AST_Call.getBranch("ARGUMENTS").getASTS()) {
+
+                        }
+
+                        System.out.println("\t\t\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + eArgumentos);
+
+                    }else{
+
+                        System.out.println("\t\t\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) ");
+
+
+
+                    }
+
+
+
                 }
             }
         }

@@ -40,7 +40,7 @@ Linguagem de Programação Estruturada
         - CANCEL
         
     - 2020 06 17
-        - ALL
+        - DAZ
         - VALUE : Reestruturação
         - OPERATION
         - UNIAO : Run_Function Run_Action e Run_ActionFunction
@@ -105,5 +105,9 @@ Linguagem de Programação Estruturada
         - IDENT ALL
         - VALUE TERNAL
         - REQUIRED 
+        - INCLUSAO DOS NOMES DE FUNCOES EXTERNAS NA ANALISE
             
+    - 2020 06 26
+        - REESTRUTURACAO DA HERANCA
+        - REESTRUTURACAO DE INICIALIZADORES DE HERANCA
        
