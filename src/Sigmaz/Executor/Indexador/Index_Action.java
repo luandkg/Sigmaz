@@ -27,7 +27,7 @@ public class Index_Action {
 
         for (AST aAST : mPonteiro.getBranch("ARGUMENTS").getASTS()) {
 
-            argumentar(aAST.getNome(), aAST.getValor());
+            argumentar(aAST);
 
         }
 
@@ -47,9 +47,43 @@ public class Index_Action {
     public boolean isRestrict(){  return mPonteiro.getBranch("VISIBILITY").mesmoNome("RESTRICT"); }
 
 
-    public void argumentar(String eNome, String eTipo) {
-        mNomeArgumentos.add(eNome);
-        mTipoArgumentos.add(eTipo);
+    public void argumentar(AST eArg) {
+        mNomeArgumentos.add(eArg.getNome());
+        mTipoArgumentos.add(getTipagem(eArg));
+    }
+
+    public String getTipagem(AST ASTpai) {
+
+        String mTipagem = "";
+
+
+        if (ASTpai.existeBranch("GENERIC")){
+
+            AST mGENERIC = ASTpai.getBranch("GENERIC");
+
+
+            if (mGENERIC.mesmoNome("TRUE")) {
+                mTipagem = ASTpai.getValor();
+
+
+                for (AST eTipando : mGENERIC.getASTS()) {
+                    mTipagem += "<" + eTipando.getNome() + ">";
+                }
+
+            } else {
+                mTipagem = ASTpai.getValor();
+            }
+
+        } else{
+
+            mTipagem = ASTpai.getValor();
+
+        }
+
+
+
+
+        return mTipagem;
     }
 
     public boolean mesmoNome(String eNome) {

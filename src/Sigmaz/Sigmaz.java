@@ -109,6 +109,9 @@ public class Sigmaz {
 
             Analisador AnaliseC = new Analisador();
             String AI = CompilerC.getData().toString();
+
+            AnaliseC.internalizar();
+
             AnaliseC.init(CompilerC.getASTS(),mLocal);
             String AF = CompilerC.getData().toString();
 

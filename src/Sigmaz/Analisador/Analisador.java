@@ -13,6 +13,7 @@ public class Analisador {
     private ArrayList<String> mErros;
     private ArrayList<String> mProibidos;
 
+    private ArrayList<String> mTipados;
 
     private Analisar_Function mAnalisar_Function;
     private Analisar_Action mAnalisar_Action;
@@ -42,6 +43,7 @@ public class Analisador {
 
         mErros = new ArrayList<>();
         mProibidos = new ArrayList<>();
+        mTipados = new ArrayList<>();
 
         mAnalisar_Function = new Analisar_Function(this);
         mAnalisar_Action = new Analisar_Action(this);
@@ -80,6 +82,10 @@ public class Analisador {
         mProibidos.add("when");
         mProibidos.add("all");
         mProibidos.add("step");
+
+        mTipados.add("num");
+        mTipados.add("string");
+        mTipados.add("bool");
 
     }
 
@@ -150,6 +156,11 @@ public class Analisador {
         }
 
     }
+
+    public ArrayList<String> getTipados() {
+        return mTipados;
+    }
+
 
     public ArrayList<String> getErros() {
         return mErros;
@@ -289,13 +300,27 @@ public class Analisador {
         ArrayList<String> mAlocados = copiarAlocados(mAlocadosAntes);
 
 
-        mAnalisar_Outros.inclusao(ASTPai);
+
 
         for (AST mAST : ASTPai.getASTS()) {
             if (mAST.mesmoTipo("REQUIRED")) {
 
+            } else   if (mAST.mesmoTipo("STRUCT")) {
+
+                mTipados.add(mAST.getNome());
+
+
+            } else   if (mAST.mesmoTipo("STAGES")) {
+
+                mTipados.add(mAST.getNome());
+            } else   if (mAST.mesmoTipo("CAST")) {
+
+                mTipados.add(mAST.getNome());
+
             }
         }
+
+        mAnalisar_Outros.inclusao(ASTPai);
 
         for (AST mAST : ASTPai.getASTS()) {
 

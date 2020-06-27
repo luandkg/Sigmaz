@@ -63,7 +63,9 @@ public class Run_Func {
 
                     algum = true;
 
-                    if (mIndex_Function.getPonteiro().mesmoValor(eReturne) || eReturne.contentEquals("<<ANY>>")) {
+                  //  System.out.println("Function Retorno : " + eReturne);
+
+                    if (mIndex_Function.mesmaTipagem(eReturne) || eReturne.contentEquals("<<ANY>>")) {
 
                         if (mRunTime.getErros().size() > 0) {
                             return null;
@@ -74,11 +76,12 @@ public class Run_Func {
 
                         //    mRet = mPreparadorDeArgumentos.executar_FunctionGlobal(mRunTime, mIndex_Function, mArgumentos, eReturne);
 
+
                         mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eReturne);
 
 
                     } else {
-                        mRunTime.getErros().add("Function " + ASTCorrente.getNome() + " : Retorno incompativel !");
+                        mRunTime.getErros().add("Function  " + ASTCorrente.getNome() + " : Retorno incompativel !");
                     }
 
                     break;

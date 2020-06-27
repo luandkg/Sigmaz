@@ -32,12 +32,55 @@ public class Index_Function {
 
         for (AST aAST : mPonteiro.getBranch("ARGUMENTS").getASTS()) {
 
-            argumentar(aAST.getNome(), aAST.getValor());
+            argumentar(aAST);
 
         }
 
     }
 
+    public boolean mesmaTipagem(String eTipagem) {
+
+        return getTipo().contentEquals(eTipagem);
+
+    }
+
+    public String getTipo() {
+        return getTipagem(mPonteiro);
+    }
+
+    public String getTipagem(AST ASTpai) {
+
+        String mTipagem = "";
+
+
+        if (ASTpai.existeBranch("GENERIC")){
+
+            AST mGENERIC = ASTpai.getBranch("GENERIC");
+
+
+            if (mGENERIC.mesmoNome("TRUE")) {
+                mTipagem = ASTpai.getValor();
+
+
+                for (AST eTipando : mGENERIC.getASTS()) {
+                    mTipagem += "<" + eTipando.getNome() + ">";
+                }
+
+            } else {
+                mTipagem = ASTpai.getValor();
+            }
+
+        } else{
+
+            mTipagem = ASTpai.getValor();
+
+        }
+
+
+
+
+        return mTipagem;
+    }
 
     public boolean isExtern() {
         return mPonteiro.getBranch("VISIBILITY").mesmoNome("EXTERN");
@@ -68,9 +111,9 @@ public class Index_Function {
         return mNome;
     }
 
-    public String getTipo() {
-        return mTipo;
-    }
+   // public String getTipo() {
+     //   return mTipo;
+   // }
 
     public AST getPonteiro() {
         return mPonteiro;
@@ -90,9 +133,9 @@ public class Index_Function {
     }
 
 
-    public void argumentar(String eNome, String eTipo) {
-        mNomeArgumentos.add(eNome);
-        mTipoArgumentos.add(eTipo);
+    public void argumentar(AST eArg) {
+        mNomeArgumentos.add(eArg.getNome());
+        mTipoArgumentos.add(getTipagem(eArg));
     }
 
     public String getDefinicao() {

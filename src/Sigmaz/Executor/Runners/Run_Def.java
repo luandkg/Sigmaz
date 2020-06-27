@@ -41,8 +41,13 @@ public class Run_Def {
 
         // System.out.println("Valorando  -> Def " + eAST.getNome());
 
+       // System.out.println("Pas Retorno : " + mTipagem);
+
         Run_Value mAST = new Run_Value(mRunTime, mEscopo);
         mAST.init(mValor, mTipagem);
+
+       // System.out.println("Def Retorno : " + mAST.getRetornoTipo());
+
 
 
         // System.out.println("Retornou  -> Def " + eAST.getNome() + " : " + mAST.getRetornoTipo() + " = " + mAST.getConteudo() + " -> " + mAST.getModulante());

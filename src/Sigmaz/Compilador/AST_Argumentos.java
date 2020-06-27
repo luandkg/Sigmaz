@@ -43,12 +43,26 @@ public class AST_Argumentos {
                 AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
                 ASTCorrente.setNome(TokenD.getConteudo());
 
+                AST AST_Generico = ASTCorrente.criarBranch("GENERIC");
+                AST_Generico.setNome("FALSE");
 
                 Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado Dois Pontos");
                 Token TokenC3 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado uma Tipagem");
 
-
                 ASTCorrente.setValor(TokenC3.getConteudo());
+
+                Token TokenFuturo = mCompiler.getTokenFuturo();
+                if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
+
+                    AST_Generico.setNome("TRUE");
+
+                    AST_Generic mg = new AST_Generic(mCompiler);
+                    mg.init(AST_Generico);
+
+
+                }
+
+
 
                 Token P2 = mCompiler.getTokenAvante();
 

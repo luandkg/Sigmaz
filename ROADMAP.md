@@ -113,4 +113,6 @@ Linguagem de Programação Estruturada
         - EXTERNAL
         - GENERIC EM TIPAGEM DE FUNCTIONS
         - MODEL
+        - FUNCTION RETURN GENERIC
+        - GENERIC ARGUMENTS
        

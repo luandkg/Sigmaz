@@ -63,6 +63,7 @@ public class Estagiador {
 
 
         mStruct.criarBranch("WITH").setValor("FALSE");
+        mStruct.criarBranch("MODEL").setValor("FALSE");
 
         AST AST_Stages =  mStruct.criarBranch("EXTENDED");
         AST_Stages.setNome("STAGES");

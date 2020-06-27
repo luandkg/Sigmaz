@@ -281,8 +281,16 @@ public class Run_Struct {
 
 
         if (mStructInits.getASTS().size() > 0) {
-
             Inicializador(mStructNome, ASTCorrente, BuscadorDeArgumentos);
+        } else {
+
+            if (ASTCorrente.getBranch("ARGUMENTS").getASTS().size()>0){
+                mRunTime.getErros().add("Struct " + mStructNome + " nao possui Init com argumentos !");
+
+            }
+
+           // System.out.println("Argumentos " + ASTCorrente.getBranch("ARGUMENTS").getASTS().size());
+
         }
 
 
@@ -634,7 +642,7 @@ public class Run_Struct {
 
                     algum = true;
 
-                    if (mIndex_Function.getPonteiro().mesmoValor(eRetorne) || eRetorne.contentEquals("<<ANY>>")) {
+                    if (mIndex_Function.mesmaTipagem(eRetorne) || eRetorne.contentEquals("<<ANY>>")) {
 
                         if (mRunTime.getErros().size() > 0) {
                             break;

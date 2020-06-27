@@ -28,6 +28,9 @@ public class AST_External {
            AST AST_With =  AST_Corrente.criarBranch("WITH");
             AST_With.setValor("FALSE");
 
+            AST AST_Model=  AST_Corrente.criarBranch("MODEL");
+            AST_Model.setValor("FALSE");
+
             AST AST_Stages =  AST_Corrente.criarBranch("STAGES");
             AST_Stages.setValor("FALSE");
 

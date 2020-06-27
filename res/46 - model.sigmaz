@@ -24,9 +24,8 @@ struct Contador at M_Contagem{
 
 }
 
-func oca( ) : valx >> (a) { return null; }
 
-struct valx in (T) {}
+
 
 model M_Contagem {
 

@@ -154,8 +154,18 @@ public class Analisar_Outros {
         }
 
     }
-
     public void analisandoDefines(AST ASTPai) {
+
+        if (mAnalisador.getTipados().contains(ASTPai.getValor())) {
+
+        }else{
+
+            mAnalisador.getErros().add("Tipo deconhecido x : " + ASTPai.getValor());
+        }
+
+    }
+
+    public void analisandoDefines2(AST ASTPai) {
 
         if (mPrimitivos.contains(ASTPai.getValor())) {
 
@@ -166,7 +176,7 @@ public class Analisar_Outros {
         } else if (mStages_Nomes.contains(ASTPai.getValor())) {
 
         } else {
-            mAnalisador.getErros().add("Tipo deconhecido  : " + ASTPai.getValor());
+            mAnalisador.getErros().add("Tipo deconhecido  2 : " + ASTPai.getValor());
         }
 
     }

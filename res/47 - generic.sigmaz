@@ -1,0 +1,46 @@
+
+
+call iniciar -> inicio ( );
+
+act inicio ( ) {
+
+    def a : valx >> (num) = oca();
+    def b : num = a.getX();
+
+    def c : valx >> (num) = init >> (num) valx(10);
+
+    passar(c);
+
+    def d : num = c.getX();
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+}
+
+func passar( g : valx >> (num) ) : num {
+
+    g.setX(20);
+
+    return 1;
+}
+
+
+func oca( ) : valx >> (num) {
+
+    def tmp : valx >> (num) = init >> (num) valx(10);
+    return tmp;
+
+ }
+
+struct valx in (T) {
+
+
+    init valx(a:num) { guardado = a;}
+
+    restrict :
+        define guardado : T = null;
+
+    all:
+        func getX() : T { return guardado; }
+
+        act setX(a:num) { guardado = a;}
+}
