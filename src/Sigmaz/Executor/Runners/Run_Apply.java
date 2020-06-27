@@ -129,7 +129,9 @@ public class Run_Apply {
         } else if (eInternal.mesmoValor("OBJECT")) {
 
             // mRunTime.getErros().add("STRUCT : " + mEscopoStruct.getNome());
-
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
 
             Item eItem = mEscopoStruct.init_ObjectExtern(eInternal, mEscopo, "<<ANY>>");
 

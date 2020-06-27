@@ -8,6 +8,7 @@
 
 ![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/sigmaz_02.png)
 
+![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/sigmaz_03.png)
 
 ### ARQUITETURA DA LINGUAGEM
 
@@ -19,3 +20,19 @@
     -> num       : Representação Numérica
     -> bool      : Representação Lógica
     -> string    : Representação Textual
+    
+    
+ ### IMPLEMENTAÇÕES
+ 
+    -> Ações
+    -> Funções
+    -> Operações
+    -> Casts : Re-Interpretação de Primitivos
+    -> Stages : Enumeradores
+    -> Orientação a Objeto
+    -> Escopo de Visibilidade : ALL, RESTRICT e EXTERN
+    -> Inicializadores
+    -> Herança
+    -> Polimorfismo
+    -> Genéricos
+    -> Modelos

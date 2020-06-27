@@ -101,7 +101,7 @@ public class Analisar_Action {
 
                 mParametrizando += "<" + mAST.getValor() + "> ";
 
-                mAnalisador.getAnalisar_Outros().analisandoDefines(mAST);
+                mAnalisador.getAnalisar_Outros().analisandoDefinesParam(mAST);
 
             } else {
                 mAnalisador.getErros().add("Tipo Desconhecido : " + mAST.getTipo());

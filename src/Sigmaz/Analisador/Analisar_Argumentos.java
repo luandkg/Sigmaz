@@ -24,7 +24,7 @@ public class Analisar_Argumentos {
 
                 mParametrizando += "<" + mAST.getValor() + "> ";
 
-                mAnalisador.getAnalisar_Outros().analisandoDefines(mAST);
+                mAnalisador.getAnalisar_Outros().analisandoDefinesParam(mAST);
 
             } else {
                 mAnalisador.getErros().add("Tipo Desconhecido : " + mAST.getTipo());
@@ -55,7 +55,7 @@ public class Analisar_Argumentos {
 
                 mParametragem += "<" + mAST.getValor() + "> ";
 
-                mAnalisador.getAnalisar_Outros().analisandoDefines(mAST);
+                mAnalisador.getAnalisar_Outros().analisandoDefinesParam(mAST);
 
             } else {
                 mAnalisador.getErros().add("Tipo Desconhecido : " + mAST.getTipo());

@@ -378,6 +378,9 @@ public class Run_Value {
 
         if (eInternal.mesmoValor("STRUCT_FUNCT")) {
 
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
 
             Item eItem = mEscopoStruct.init_Function(eInternal, mEscopo, "<<ANY>>");
 
@@ -416,6 +419,10 @@ public class Run_Value {
 
                     if (!eItem.getTipo().contentEquals(eRetorno)) {
                         mEscopoStruct = mRunTime.getRun_Struct(eItem.getValor());
+
+                        if (mRunTime.getErros().size() > 0) {
+                            return;
+                        }
 
                         eItem = mEscopoStruct.init_Function(sInternal, mEscopo, "<<ANY>>");
 
@@ -522,6 +529,10 @@ public class Run_Value {
 
                     if (!eItem.getTipo().contentEquals(eRetorno)) {
                      //   mEscopoExtern = mRunTime.getRun_Struct(eItem.getValor());
+
+                        if (mRunTime.getErros().size() > 0) {
+                            return;
+                        }
 
                         eItem = mEscopoExtern.init_Function_Extern(sInternal, mEscopo, "<<ANY>>");
 

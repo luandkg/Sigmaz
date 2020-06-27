@@ -4,19 +4,35 @@ call iniciar -> inicio ( );
 
 act inicio ( ) {
 
-    def a : valx >> (num) = oca();
+    def a : Valoramento >> (num) = gerar(15);
     def b : num = a.getX();
 
-    def c : valx >> (num) = init >> (num) valx(10);
+    def c : Valoramento >> (num) = init >> (num) Valoramento(10);
 
     passar(c);
 
+
     def d : num = c.getX();
+
+    def r : Ref = init Ref();
+    r.VA = c;
+
+    #trash(c);
+
+    r.VA.setX(50);
+
+    def duplo : num = r.VA.getX();
 
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
 
-func passar( g : valx >> (num) ) : num {
+act trash(a:any){
+
+    invoke __COMPILER__ -> STRUCT (a) :: REMOVE;
+
+}
+
+func passar( g : Valoramento >> (num) ) : num {
 
     g.setX(20);
 
@@ -24,23 +40,39 @@ func passar( g : valx >> (num) ) : num {
 }
 
 
-func oca( ) : valx >> (num) {
+func gerar( a: num) : Valoramento >> (num) {
 
-    def tmp : valx >> (num) = init >> (num) valx(10);
+    def tmp : Valoramento >> (num) = init >> (num) Valoramento(a);
+
     return tmp;
 
  }
 
-struct valx in (T) {
+
+struct Ref{
+
+    all :
+
+        define VA : Valoramento >> (num);
+
+}
 
 
-    init valx(a:num) { guardado = a;}
+
+struct Valoramento in (T) {
+
+    init Valoramento(a:num) { guardado = a;}
+
 
     restrict :
         define guardado : T = null;
+
+
 
     all:
         func getX() : T { return guardado; }
 
         act setX(a:num) { guardado = a;}
+
+
 }

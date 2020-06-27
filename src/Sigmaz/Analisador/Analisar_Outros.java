@@ -154,11 +154,25 @@ public class Analisar_Outros {
         }
 
     }
+
     public void analisandoDefines(AST ASTPai) {
 
         if (mAnalisador.getTipados().contains(ASTPai.getValor())) {
 
-        }else{
+        } else {
+
+            mAnalisador.getErros().add("Tipo deconhecido y : " + ASTPai.getValor());
+        }
+
+    }
+
+    public void analisandoDefinesParam(AST ASTPai) {
+
+        if (mAnalisador.getTipados().contains(ASTPai.getValor())) {
+
+        } else if (ASTPai.getValor().contentEquals("any")) {
+
+        } else {
 
             mAnalisador.getErros().add("Tipo deconhecido x : " + ASTPai.getValor());
         }
@@ -188,14 +202,13 @@ public class Analisar_Outros {
         ArrayList<AST> mEstruturas = new ArrayList<AST>();
 
 
+        for (AST Struct_AST : mTodos.getASTS()) {
 
-                for (AST Struct_AST : mTodos.getASTS()) {
+            if (Struct_AST.mesmoTipo("STRUCT")) {
+                mEstruturas.add(Struct_AST);
+            }
 
-                    if (Struct_AST.mesmoTipo("STRUCT")) {
-                        mEstruturas.add(Struct_AST);
-                    }
-
-                }
+        }
 
 
         for (AST mAST : mEstruturas) {
@@ -205,7 +218,7 @@ public class Analisar_Outros {
 
             for (AST sAST : mCorpo.getASTS()) {
 
-                if(sAST.mesmoTipo("OPERATION")){
+                if (sAST.mesmoTipo("OPERATION")) {
 
 
                     mTodos.getASTS().add(sAST);
@@ -216,8 +229,6 @@ public class Analisar_Outros {
             }
 
         }
-
-
 
 
     }
