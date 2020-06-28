@@ -22,14 +22,14 @@ act pular ( ) {
 	def t : num = somar ( 2 , 2 );
 }
 
-act alterador_Pessoa ( a : Pessoa ) {
-	def t : Pessoa = a;
+act alterador_Pessoa ( az : Pessoa ) {
+	def t : Pessoa = az;
 	
 	#def n : string = t.getNome("A").mostrar();
 	
 	#def b : string = t.nome.pular().criar(12==13);
-	def nome1 : string = a.getNome ( );
-	def nome2 : string = a.nome;
+	def nome1 : string = az.getNome ( );
+	def nome2 : string = az.nome;
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }
 func somar ( a : num , b : num ) : num {

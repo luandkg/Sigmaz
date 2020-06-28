@@ -112,12 +112,17 @@ public class Sigmaz {
 
             AnaliseC.internalizar();
 
+            System.out.println(CompilerC.getArvoreDeInstrucoes());
+
+
             AnaliseC.init(CompilerC.getASTS(),mLocal);
             String AF = CompilerC.getData().toString();
 
 
             System.out.println("\t - Iniciado : " + AI);
             System.out.println("\t - Finalizado : " + AF);
+
+
 
             System.out.println("\t - Erros : " + AnaliseC.getErros().size());
 
@@ -134,7 +139,7 @@ public class Sigmaz {
                 System.out.println("");
 
                 Documentador DC = new Documentador();
-                System.out.println(CompilerC.getArvoreDeInstrucoes());
+              //  System.out.println(CompilerC.getArvoreDeInstrucoes());
 
             } else {
 

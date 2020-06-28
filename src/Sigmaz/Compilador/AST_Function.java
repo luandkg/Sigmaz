@@ -27,32 +27,17 @@ public class AST_Function {
 
             AST AST_Arguments = AST_Corrente.criarBranch("ARGUMENTS");
 
-            AST AST_Generico = AST_Corrente.criarBranch("GENERIC");
-            AST_Generico.setNome("FALSE");
 
-            AST AST_BODY = AST_Corrente.criarBranch("BODY");
+
 
             AST_Argumentos mArgumentos = new AST_Argumentos(mCompiler);
             mArgumentos.init(AST_Arguments);
 
-            Token TokenC2= mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS,"Era esperado Dois Pontos" );
-            Token TokenC3= mCompiler.getTokenAvanteStatus(TokenTipo.ID,"Era esperado uma Tipagem" );
-
-            AST_Corrente.setValor(TokenC3.getConteudo());
+            AST_TYPE mType = new AST_TYPE(mCompiler);
+            mType.init(AST_Corrente);
 
 
-            Token TokenFuturo = mCompiler.getTokenFuturo();
-            if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
-
-                AST_Generico.setNome("TRUE");
-
-                AST_Generic mg = new AST_Generic(mCompiler);
-                mg.init(AST_Generico);
-
-
-            }
-
-
+            AST AST_BODY = AST_Corrente.criarBranch("BODY");
             AST_Corpo mCorpo = new AST_Corpo(mCompiler);
             mCorpo.init(AST_BODY);
 
@@ -80,25 +65,9 @@ public class AST_Function {
             AST_Argumentos mArgumentos = new AST_Argumentos(mCompiler);
             mArgumentos.init_Tipagem(AST_Arguments);
 
-            Token TokenC2= mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS,"Era esperado Dois Pontos" );
-            Token TokenC3= mCompiler.getTokenAvanteStatus(TokenTipo.ID,"Era esperado uma Tipagem" );
 
-            AST_Corrente.setValor(TokenC3.getConteudo());
-
-
-            AST AST_Generico = AST_Corrente.criarBranch("GENERIC");
-            AST_Generico.setNome("FALSE");
-
-            Token TokenFuturo = mCompiler.getTokenFuturo();
-            if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
-
-                AST_Generico.setNome("TRUE");
-
-                AST_Generic mg = new AST_Generic(mCompiler);
-                mg.init(AST_Generico);
-
-
-            }
+            AST_TYPE mType = new AST_TYPE(mCompiler);
+            mType.init(AST_Corrente);
 
             Token TokenP2 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado PONTO E VIRGULA !");
 

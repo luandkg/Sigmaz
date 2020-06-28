@@ -17,24 +17,29 @@ public class Run_Def {
 
     }
 
+    public String getTipagem(AST eAST){
+
+        String mTipagem = eAST.getNome();
+
+        if (eAST.mesmoValor("GENERIC")){
+
+            for (AST eTipando : eAST.getASTS()) {
+                mTipagem += "<" +getTipagem(eTipando) + ">";
+            }
+
+        }
+
+
+        return mTipagem;
+
+    }
+
     public void init(AST eAST) {
 
         AST mGENERIC = eAST.getBranch("GENERIC");
 
-        String mTipagem = "";
+        String mTipagem = getTipagem(eAST.getBranch("TYPE"));
 
-        if (mGENERIC.mesmoNome("TRUE")) {
-            mTipagem = eAST.getValor();
-
-
-            for (AST eTipando : mGENERIC.getASTS()) {
-                mTipagem += "<" + eTipando.getNome() + ">";
-            }
-
-
-        } else {
-            mTipagem = eAST.getValor();
-        }
 
         AST mValor = eAST.getBranch("VALUE");
 
@@ -61,12 +66,12 @@ public class Run_Def {
             if (mTipagem.contentEquals(mAST.getRetornoTipo())) {
                 mEscopo.criarDefinicaoNula(eAST.getNome(), mAST.getRetornoTipo());
             } else {
-                mRunTime.getErros().add("Retorno incompativel  : " + mAST.getRetornoTipo());
+                mRunTime.getErros().add("Retorno incompativel  : " + mTipagem + " x "+ mAST.getRetornoTipo());
             }
 
         } else if (mAST.getIsPrimitivo()) {
 
-            if (eAST.getValor().contentEquals(mAST.getRetornoTipo())) {
+            if (mTipagem.contentEquals(mAST.getRetornoTipo())) {
                 mEscopo.criarDefinicao(eAST.getNome(), mAST.getRetornoTipo(), mAST.getConteudo());
             } else {
 
@@ -77,6 +82,8 @@ public class Run_Def {
                 //  System.out.println("Retorno ESQ : " + eTipado);
                 // System.out.println("Retorno DIR x : " + mAST.getRetornoTipo());
 
+             //    System.out.println("CASTING : " + mAST.getRetornoTipo() + " -> " + mTipagem);
+
                 if (mEscopo.existeCast(mTipagem)) {
 
 
@@ -86,7 +93,7 @@ public class Run_Def {
                     if (res == null) {
                         mEscopo.criarDefinicaoNula(eAST.getNome(), mAST.getRetornoTipo());
                     } else {
-                        mEscopo.criarDefinicao(eAST.getNome(), eAST.getValor(), res);
+                        mEscopo.criarDefinicao(eAST.getNome(), mTipagem, res);
                     }
 
                 } else if (mEscopo.existeCast(mAST.getRetornoTipo())) {
@@ -97,12 +104,12 @@ public class Run_Def {
                     if (res == null) {
                         mEscopo.criarDefinicaoNula(eAST.getNome(), mAST.getRetornoTipo());
                     } else {
-                        mEscopo.criarDefinicao(eAST.getNome(), eAST.getValor(), res);
+                        mEscopo.criarDefinicao(eAST.getNome(), mTipagem, res);
                     }
 
                 } else {
 
-                    mRunTime.getErros().add("Retorno incompativel  : " + mAST.getRetornoTipo());
+                    mRunTime.getErros().add("Retorno incompativel  : " + mTipagem + " vx "+ mAST.getRetornoTipo());
 
 
                 }
@@ -115,12 +122,12 @@ public class Run_Def {
                 mEscopo.criarDefinicaoStruct(eAST.getNome(), mAST.getRetornoTipo(), mAST.getConteudo());
 
             } else {
-                mRunTime.getErros().add("Retorno incompativel  : " + mAST.getRetornoTipo());
+                mRunTime.getErros().add("Retorno incompativel  : " + mTipagem + " x "+ mAST.getRetornoTipo());
             }
 
         } else {
 
-            mRunTime.getErros().add("Retorno incompativel  : " + mAST.getRetornoTipo());
+            mRunTime.getErros().add("Retorno incompativel  : " + mTipagem + " x "+ mAST.getRetornoTipo());
 
         }
 

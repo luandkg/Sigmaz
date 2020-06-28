@@ -26,7 +26,7 @@ public class Analisar_Action {
             mAnalisador.analisarAlocacao(ASTPai, mAlocadosAntes);
             mAnalisador. analisarValoracao(ASTPai, mAlocadosAntes);
 
-            mAnalisador.getAnalisar_Outros().analisandoDefines(ASTPai);
+            mAnalisador.getAnalisar_Outros().analisarTipagem(ASTPai);
         } else if (ASTPai.mesmoTipo("MOC")) {
 
             if (mAnalisador.getProibidos().contains(ASTPai.getNome())){
@@ -36,7 +36,7 @@ public class Analisar_Action {
             mAnalisador.analisarAlocacao(ASTPai, mAlocadosAntes);
             mAnalisador.analisarValoracao(ASTPai, mAlocadosAntes);
 
-            mAnalisador.getAnalisar_Outros().analisandoDefines(ASTPai);
+            mAnalisador.getAnalisar_Outros().analisarTipagem(ASTPai);
         } else if (ASTPai.mesmoTipo("INVOKE")) {
         } else if (ASTPai.mesmoTipo("APPLY")) {
 
@@ -87,28 +87,7 @@ public class Analisar_Action {
         ArrayList<String> mAlocados = mAnalisador.copiarAlocados(mAlocadosAntes);
 
 
-        String mParametrizando = "";
-
-        for (AST mAST : ASTPai.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoTipo("ARGUMENT")) {
-
-
-                if (!mAlocados.contains(mAST.getNome())) {
-                    mAlocados.add(mAST.getNome());
-                } else {
-                    mAnalisador.getErros().add("Argumento Duplicado : " + mAST.getNome());
-                }
-
-                mParametrizando += "<" + mAST.getValor() + "> ";
-
-                mAnalisador.getAnalisar_Outros().analisandoDefinesParam(mAST);
-
-            } else {
-                mAnalisador.getErros().add("Tipo Desconhecido : " + mAST.getTipo());
-            }
-        }
-
-        String mParametragem = ASTPai.getNome() + " ( " + mAnalisador.getAnalisar_Argumentos().analisarArguments(ASTPai.getBranch("ARGUMENTS")) + ") ";
+        String mParametragem = ASTPai.getNome() + " ( " + mAnalisador.getAnalisar_Argumentos().analisarArguments(ASTPai.getBranch("ARGUMENTS"),mAlocados) + ") ";
 
 
         if (!mAnalisador.getActions_Nomes().contains(mParametragem)) {

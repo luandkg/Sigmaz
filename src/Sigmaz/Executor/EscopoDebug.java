@@ -148,7 +148,7 @@ public class EscopoDebug {
         System.out.println(" - FUNCTIONS : ");
         for (AST mAST : mEscopo.getGuardadosCompleto()) {
             if (mAST.mesmoTipo("FUNCTION")) {
-                System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
+                System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
             }
         }
 
@@ -214,7 +214,7 @@ public class EscopoDebug {
         System.out.println(" - FUNCTIONS : ");
         for (AST mAST : mEstrutura.getStructCompleto()) {
             if (mAST.mesmoTipo("FUNCTION")) {
-                System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
+                System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
             }
         }
 
@@ -321,6 +321,23 @@ public class EscopoDebug {
 
 
         System.out.println(" ######################### ##### ############################ ");
+
+    }
+
+    public String getTipagem(AST eAST){
+
+        String mTipagem = eAST.getNome();
+
+        if (eAST.mesmoValor("GENERIC")){
+
+            for (AST eTipando : eAST.getASTS()) {
+                mTipagem += "<" +getTipagem(eTipando) + ">";
+            }
+
+        }
+
+
+        return mTipagem;
 
     }
 

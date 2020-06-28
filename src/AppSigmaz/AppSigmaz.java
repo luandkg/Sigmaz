@@ -17,9 +17,9 @@ public class AppSigmaz {
         String mBiblioteca_Sigmad = "res/lib.sigmad";
 
 
-        Fases mFase = Fases.EXECUTAR;
+        Fases mFase = Fases.TESTES;
 
-        int ARQUIVO = 47;
+        int ARQUIVO = 46;
 
 
         if (mFase == Fases.EXECUTAR) {

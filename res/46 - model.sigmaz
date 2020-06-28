@@ -14,9 +14,9 @@ act inicio ( ) {
 
 struct Contador at M_Contagem{
 
-    mockiz Base : num = 10;
-    define Fluxo : num = 12;
-    mockiz val : vax >> (num) = 12;
+    define Base : num = 10;
+    mockiz Fluxo : num = 12;
+    define val : vax >> (num) = 12;
 
     act contar(a:num) {}
 

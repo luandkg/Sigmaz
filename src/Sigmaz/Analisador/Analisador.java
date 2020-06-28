@@ -332,7 +332,7 @@ public class Analisador {
 
                 analisarAlocacao(mAST, mAlocados);
 
-                mAnalisar_Outros.analisandoDefines(mAST);
+                mAnalisar_Outros.analisarTipagem(mAST);
                 analisarValoracao(ASTPai, mAlocadosAntes);
 
 
@@ -345,7 +345,7 @@ public class Analisador {
                 analisarAlocacao(mAST, mAlocados);
 
 
-                mAnalisar_Outros.analisandoDefines(mAST);
+                mAnalisar_Outros.analisarTipagem(mAST);
                 analisarValoracao(ASTPai, mAlocadosAntes);
 
 

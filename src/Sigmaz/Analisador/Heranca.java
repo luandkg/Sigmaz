@@ -364,7 +364,7 @@ public class Heranca {
 
                 mParametragem += "<" + mAST.getValor() + "> ";
 
-                mAnalisador.getAnalisar_Outros().analisandoDefines(mAST);
+                mAnalisador.getAnalisar_Outros().analisarTipagem(mAST);
 
 
             } else {

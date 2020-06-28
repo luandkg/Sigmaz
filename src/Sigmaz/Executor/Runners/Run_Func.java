@@ -57,13 +57,20 @@ public class Run_Func {
                     return null;
                 }
                 enc = true;
+
+               // System.out.println("\t - Func :  " +mIndex_Function.getNome() + " Ret : " + mIndex_Function.getTipo());
+
                 if (mIndex_Function.mesmoArgumentos(mArgumentos)) {
 
                     // System.out.println("\t - Executar :  " +mIndex_Function.getNome());
 
                     algum = true;
 
-                  //  System.out.println("Function Retorno : " + eReturne);
+                  // System.out.println("Function Retorno : " + eReturne);
+
+                    if (mRunTime.getErros().size() > 0) {
+                        return null;
+                    }
 
                     if (mIndex_Function.mesmaTipagem(eReturne) || eReturne.contentEquals("<<ANY>>")) {
 
@@ -71,6 +78,7 @@ public class Run_Func {
                             return null;
                         }
 
+                       // System.out.println("Function Retorno : " + eReturne);
 
                         //executar_Function(mIndex_Function, mArgumentos, eReturne);
 
@@ -199,7 +207,7 @@ public class Run_Func {
         vd.setValor(Direita.getConteudo());
         vd.setTipo(Direita.getRetornoTipo());
 
-        String mTipagem = ve.getValor() + " e " + vd.getValor();
+        String mTipagem = ve.getTipo() + " e " + vd.getTipo();
 
         //System.out.println("MATCH : " +mTipagem );
 
@@ -229,7 +237,7 @@ public class Run_Func {
 
                     algum = true;
 
-                    if (mIndex_Function.getPonteiro().mesmoValor(eReturne) || eReturne.contentEquals("<<ANY>>")) {
+                    if (mIndex_Function.getTipo().contentEquals(eReturne) || eReturne.contentEquals("<<ANY>>")) {
 
                         if (mRunTime.getErros().size() > 0) {
                             return null;

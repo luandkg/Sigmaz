@@ -41,7 +41,9 @@ public class AST_Value {
         init(ASTPai);
     }
 
-    public void match_final(AST ASTPai) {
+
+
+    public void operation_final(String eModo,AST ASTPai) {
 
         AST ASTEsquerda = ASTPai.copiar();
         ASTEsquerda.setTipo("LEFT");
@@ -52,8 +54,8 @@ public class AST_Value {
 
 
         ASTPai.setTipo("VALUE");
-        ASTPai.criarBranch("MODE").setNome("MATCH");
-        ASTPai.setValor("COMPARATOR");
+        ASTPai.criarBranch("MODE").setNome(eModo);
+        ASTPai.setValor("OPERATOR");
 
         ASTPai.getASTS().add(ASTEsquerda);
         ASTPai.getASTS().add(ASTDireita);
@@ -67,39 +69,10 @@ public class AST_Value {
 
         ASTDireita.setTipo("RIGHT");
 
-        //  arrumar(ASTEsquerda,ASTDireita);
 
     }
 
 
-
-    public void unmatch_final(AST ASTPai) {
-
-        AST ASTEsquerda = ASTPai.copiar();
-        ASTEsquerda.setTipo("LEFT");
-
-        ASTPai.limpar();
-
-        AST ASTDireita = new AST("RIGHT");
-
-
-        ASTPai.setTipo("VALUE");
-        ASTPai.criarBranch("MODE").setNome("MISMATCH");
-        ASTPai.setValor("COMPARATOR");
-
-        ASTPai.getASTS().add(ASTEsquerda);
-        ASTPai.getASTS().add(ASTDireita);
-
-        AST_Value mAST = new AST_Value(mCompiler);
-        mAST.mTerminar = mTerminar;
-        mAST.mTerminarErro = mTerminarErro;
-        mAST.initUltimo(ASTDireita);
-
-        ASTDireita.setTipo("RIGHT");
-
-        //  arrumar(ASTEsquerda,ASTDireita);
-
-    }
 
 
     public void init(AST ASTPai) {
@@ -129,9 +102,9 @@ public class AST_Value {
                 }
 
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                match_final(ASTPai);
+                operation_final("MATCH",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                unmatch_final(ASTPai);
+                operation_final("UNMATCH",ASTPai);
             } else if (TokenC2.getTipo() == mTerminar) {
 
             } else {
@@ -147,11 +120,19 @@ public class AST_Value {
             if (TokenC2.getTipo() == mTerminar) {
                 return;
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                match_final(ASTPai);
+                operation_final("MATCH",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                unmatch_final(ASTPai);
+                operation_final("UNMATCH",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.SOMADOR) {
+                operation_final("SUM",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.DIMINUIDOR) {
+                operation_final("SUB",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.MULTIPLICADOR) {
+                operation_final("MUX",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.DIVISOR) {
+                operation_final("DIV",ASTPai);
             } else {
-                System.out.println("Problema E :  " + TokenD.getConteudo());
+                System.out.println("Problema E :  " + TokenC2.getTipo() + " =" + TokenC2.getConteudo());
             }
 
         } else if (TokenD.getTipo() == TokenTipo.SETA) {
@@ -188,9 +169,9 @@ public class AST_Value {
             if (TokenC2.getTipo() == mTerminar) {
                 return;
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                match_final(ASTPai);
+                operation_final("MATCH",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                unmatch_final(ASTPai);
+                operation_final("UNMATCH",ASTPai);
             } else {
                 System.out.println("Problema E :  " + TokenC2.getConteudo());
             }
@@ -204,9 +185,9 @@ public class AST_Value {
             if (TokenC2.getTipo() == mTerminar) {
                 return;
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                match_final(ASTPai);
+                operation_final("MATCH",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                unmatch_final(ASTPai);
+                operation_final("UNMATCH",ASTPai);
             } else {
                 System.out.println("Problema F : " + TokenD.getConteudo());
             }
@@ -251,9 +232,9 @@ public class AST_Value {
                         if (TokenC4.getTipo() == mTerminar) {
                             return;
                         } else if (TokenC4.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                            match_final(ASTPai);
+                            operation_final("MATCH",ASTPai);
                         } else if (TokenC4.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                            unmatch_final(ASTPai);
+                            operation_final("UNMATCH",ASTPai);
                         } else {
                             System.out.println("Problema IZ : " + TokenC4.getConteudo());
                         }
@@ -277,9 +258,9 @@ public class AST_Value {
                 if (TokenC2.getTipo() == mTerminar) {
                     return;
                 } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                    match_final(ASTPai);
+                    operation_final("MATCH",ASTPai);
                 } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                    unmatch_final(ASTPai);
+                    operation_final("UNMATCH",ASTPai);
 
                 } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
 
@@ -298,9 +279,9 @@ public class AST_Value {
                     } else if (TokenC4.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
 
 
-                        match_final(ASTPai);
+                        operation_final("MATCH",ASTPai);
                     } else if (TokenC4.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                        unmatch_final(ASTPai);
+                        operation_final("UNMATCH",ASTPai);
                     } else {
                         System.out.println("Problema E :  " + TokenC4.getConteudo());
                     }
@@ -319,9 +300,9 @@ public class AST_Value {
                     if (TokenC3.getTipo() == mTerminar) {
                         return;
                     } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                        match_final(ASTPai);
+                        operation_final("MATCH",ASTPai);
                     } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                        unmatch_final(ASTPai);
+                        operation_final("UNMATCH",ASTPai);
                     } else {
                         System.out.println("Problema A : " + TokenC3.getConteudo());
                     }
@@ -339,9 +320,9 @@ public class AST_Value {
                     if (TokenC3.getTipo() == mTerminar) {
                         return;
                     } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                        match_final(ASTPai);
+                        operation_final("MATCH",ASTPai);
                     } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                        unmatch_final(ASTPai);
+                        operation_final("UNMATCH",ASTPai);
                     } else {
                         System.out.println("Problema A : " + TokenC3.getConteudo());
                     }
@@ -357,9 +338,9 @@ public class AST_Value {
                     if (TokenC3.getTipo() == mTerminar) {
                         return;
                     } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                        match_final(ASTPai);
+                        operation_final("MATCH",ASTPai);
                     } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                        unmatch_final(ASTPai);
+                        operation_final("UNMATCH",ASTPai);
                     } else {
                         System.out.println("Problema G : " + TokenC3.getConteudo());
                     }
@@ -646,9 +627,9 @@ public class AST_Value {
                 }
 
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                match_final(ASTPai);
+                operation_final("MATCH",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                unmatch_final(ASTPai);
+                operation_final("UNMATCH",ASTPai);
             } else if (TokenC2.getTipo() == mTerminar) {
 
             } else {
@@ -730,9 +711,9 @@ public class AST_Value {
                 if (TokenC3.getTipo() == mTerminar) {
                     return;
                 } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                    match_final(ASTPai);
+                    operation_final("MATCH",ASTPai);
                 } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                    unmatch_final(ASTPai);
+                    operation_final("UNMATCH",ASTPai);
 
                 } else {
                     System.out.println("Problema A : " + TokenC3.getConteudo());

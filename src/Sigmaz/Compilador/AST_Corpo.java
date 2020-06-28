@@ -31,12 +31,12 @@ public class AST_Corpo {
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("def")){
 
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
-                mAST.init_Def(ASTPai);
+                mAST.init("DEF",ASTPai);
 
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("moc")){
 
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
-                mAST.init_Moc(ASTPai);
+                mAST.init("MOC",ASTPai);
 
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("return")){
 

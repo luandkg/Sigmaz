@@ -301,12 +301,12 @@ public class Compiler {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 
                 AST_Alocador mAST = new AST_Alocador(this);
-                mAST.init_Mockiz(AST_Raiz, "ALL");
+                mAST.init("MOCKIZ",AST_Raiz, "ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
 
                 AST_Alocador mAST = new AST_Alocador(this);
-                mAST.init_Define(AST_Raiz, "ALL");
+                mAST.init("DEFINE",AST_Raiz, "ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("invoke")) {
 

@@ -12,62 +12,31 @@ public class AST_Operation {
         mCompiler = eCompiler;
     }
 
-    public void init(AST ASTPai,String Visibilidade) {
+    public void init(AST ASTPai, String Visibilidade) {
 
         Token TokenC = mCompiler.getTokenAvante();
 
         if (TokenC.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
 
-            AST AST_Corrente = new AST("OPERATION");
-            AST_Corrente.setNome("MATCH");
-            ASTPai.getASTS().add(AST_Corrente);
+            definir(ASTPai, Visibilidade, "MATCH");
 
-            AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
-            AST_Visibilidade.setNome(Visibilidade);
+        } else if (TokenC.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
 
-            AST AST_Arguments = AST_Corrente.criarBranch("ARGUMENTS");
+            definir(ASTPai, Visibilidade, "UNMATCH");
 
+        } else if (TokenC.getTipo() == TokenTipo.SOMADOR) {
 
-            AST AST_BODY = AST_Corrente.criarBranch("BODY");
+            definir(ASTPai, Visibilidade, "SUM");
+        } else if (TokenC.getTipo() == TokenTipo.DIMINUIDOR) {
 
-            AST_Argumentos mArgumentos = new AST_Argumentos(mCompiler);
-            mArgumentos.init(AST_Arguments);
+            definir(ASTPai, Visibilidade, "SUB");
+        } else if (TokenC.getTipo() == TokenTipo.MULTIPLICADOR) {
 
-            Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado Dois Pontos");
-            Token TokenC3 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado uma Tipagem");
+            definir(ASTPai, Visibilidade, "MUX");
+        } else if (TokenC.getTipo() == TokenTipo.DIVISOR) {
 
-            AST_Corrente.setValor(TokenC3.getConteudo());
+            definir(ASTPai, Visibilidade, "DIV");
 
-
-            AST_Corpo mCorpo = new AST_Corpo(mCompiler);
-            mCorpo.init(AST_BODY);
-
-        } else  if (TokenC.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-
-            AST AST_Corrente = new AST("OPERATION");
-            AST_Corrente.setNome("UNMATCH");
-            ASTPai.getASTS().add(AST_Corrente);
-
-            AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
-            AST_Visibilidade.setNome(Visibilidade);
-
-            AST AST_Arguments = AST_Corrente.criarBranch("ARGUMENTS");
-
-
-
-            AST AST_BODY = AST_Corrente.criarBranch("BODY");
-
-            AST_Argumentos mArgumentos = new AST_Argumentos(mCompiler);
-            mArgumentos.init(AST_Arguments);
-
-            Token TokenC2= mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS,"Era esperado Dois Pontos" );
-            Token TokenC3= mCompiler.getTokenAvanteStatus(TokenTipo.ID,"Era esperado uma Tipagem" );
-
-            AST_Corrente.setValor(TokenC3.getConteudo());
-
-
-            AST_Corpo mCorpo = new AST_Corpo(mCompiler);
-            mCorpo.init(AST_BODY);
         } else {
             mCompiler.errarCompilacao("Era esperado o operador da OPERATION !", TokenC.getInicio());
         }
@@ -75,7 +44,33 @@ public class AST_Operation {
 
     }
 
+    public void definir(AST ASTPai, String Visibilidade, String eOperator) {
 
+        AST AST_Corrente = new AST("OPERATION");
+        AST_Corrente.setNome(eOperator);
+        ASTPai.getASTS().add(AST_Corrente);
+
+        AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
+        AST_Visibilidade.setNome(Visibilidade);
+
+        AST AST_Arguments = AST_Corrente.criarBranch("ARGUMENTS");
+
+
+
+
+        AST_Argumentos mArgumentos = new AST_Argumentos(mCompiler);
+        mArgumentos.init(AST_Arguments);
+
+        AST_TYPE mType = new AST_TYPE(mCompiler);
+        mType.init(AST_Corrente);
+
+
+        AST AST_BODY = AST_Corrente.criarBranch("BODY");
+        AST_Corpo mCorpo = new AST_Corpo(mCompiler);
+        mCorpo.init(AST_BODY);
+
+
+    }
 
 
 }

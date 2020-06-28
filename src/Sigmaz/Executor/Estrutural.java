@@ -99,6 +99,23 @@ public class Estrutural {
         return mCasts;
     }
 
+    public String getTipagem(AST eAST){
+
+        String mTipagem = eAST.getNome();
+
+        if (eAST.mesmoValor("GENERIC")){
+
+            for (AST eTipando : eAST.getASTS()) {
+                mTipagem += "<" +getTipagem(eTipando) + ">";
+            }
+
+        }
+
+
+        return mTipagem;
+
+    }
+
     public void mostrar() {
 
 
@@ -114,12 +131,12 @@ public class Estrutural {
 
         System.out.println(" - DEFINES : ");
         for (AST mAST : mDefines) {
-            System.out.println("\t - " + mAST.getNome() + " : " + mAST.getValor());
+            System.out.println("\t - " + mAST.getNome() + " : " + getTipagem(mAST.getBranch("TYPE")));
         }
 
         System.out.println(" - MOCKIZES : ");
         for (AST mAST : mMockizes) {
-            System.out.println("\t - " + mAST.getNome() + " : " + mAST.getValor());
+            System.out.println("\t - " + mAST.getNome() + " : " + getTipagem(mAST.getBranch("TYPE")));
         }
 
         System.out.println(" - ACTIONS : ");
@@ -131,13 +148,13 @@ public class Estrutural {
         System.out.println(" - FUNCTIONS : ");
         for (AST mAST : mFunctions) {
 
-            System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
+            System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
 
         }
 
         System.out.println(" - OPERATIONS : ");
         for (AST mAST : mOperations) {
-            System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
+            System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
         }
 
         for (AST mStruct : mStructs) {
@@ -314,14 +331,14 @@ public class Estrutural {
         System.out.println("\t\t - FUNCTIONS : ");
         for (AST mAST : ASTPai.getASTS()) {
             if (mAST.mesmoTipo("FUNCTION")) {
-                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
+                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
             }
         }
 
         System.out.println("\t\t - OPERATIONS : ");
         for (AST mAST : ASTPai.getASTS()) {
             if (mAST.mesmoTipo("OPERATION")) {
-                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
+                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
             }
         }
     }
@@ -382,9 +399,9 @@ public class Estrutural {
                 contando += 1;
 
                 if (contando < total) {
-                    ret += mAST.getNome() + " : " + mAST.getValor() + " , ";
+                    ret += mAST.getNome() + " : " + getTipagem(mAST.getBranch("TYPE")) + " , ";
                 } else {
-                    ret += mAST.getNome() + " : " + mAST.getValor() + " ";
+                    ret += mAST.getNome() + " : " + getTipagem(mAST.getBranch("TYPE")) + " ";
                 }
             }
         }

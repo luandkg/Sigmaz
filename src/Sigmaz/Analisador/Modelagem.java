@@ -103,11 +103,11 @@ public class Modelagem {
                 Verificar_Mockiz(Struct, Parte);
             } else if (Parte.mesmoTipo("ACTION")) {
 
-                Verificar_Action(Struct, Parte);
+               Verificar_Action(Struct, Parte);
 
             } else if (Parte.mesmoTipo("FUNCTION")) {
 
-                Verificar_Function(Struct, Parte);
+               Verificar_Function(Struct, Parte);
 
             } else {
 
@@ -192,14 +192,18 @@ public class Modelagem {
         boolean enc = false;
         boolean alguma = false;
 
+
+
+        String eModelo_Parametragem = getParametragem(Modelo);
+
         for (AST DentroStruct : Struct.getBranch("BODY").getASTS()) {
 
             if (DentroStruct.mesmoTipo("ACTION")) {
                 if (DentroStruct.mesmoNome(Modelo.getNome())) {
                     enc = true;
 
-                    String eModelo_Parametragem = getParametragem(Modelo);
-                    String eStruct_Parametragem = getParametragem(DentroStruct);
+
+                    String eStruct_Parametragem = getParametragemCom(DentroStruct);
 
                     if (eModelo_Parametragem.contentEquals(eStruct_Parametragem)) {
                         alguma = true;
@@ -242,7 +246,7 @@ public class Modelagem {
 
 
                         String eModelo_Parametragem = getParametragem(Modelo);
-                        String eStruct_Parametragem = getParametragem(DentroStruct);
+                        String eStruct_Parametragem = getParametragemCom(DentroStruct);
 
                         if (eModelo_Parametragem.contentEquals(eStruct_Parametragem)) {
                             alguma = true;
@@ -270,50 +274,74 @@ public class Modelagem {
     }
 
 
-    public String getTipagem(AST ASTpai) {
 
-        String mTipagem = "";
-
-
-        if (ASTpai.existeBranch("GENERIC")){
-
-            AST mGENERIC = ASTpai.getBranch("GENERIC");
-
-
-            if (mGENERIC.mesmoNome("TRUE")) {
-                mTipagem = ASTpai.getValor();
-
-
-                for (AST eTipando : mGENERIC.getASTS()) {
-                    mTipagem += "<" + eTipando.getNome() + ">";
-                }
-
-            } else {
-                mTipagem = ASTpai.getValor();
-            }
-
-        } else{
-
-            mTipagem = ASTpai.getValor();
-
-        }
-
-
-
-
-        return mTipagem;
-    }
 
     public String getParametragem(AST ASTpai) {
         AST mArguments = ASTpai.getBranch("ARGUMENTS");
 
+
         String eParam = "";
 
         for (AST eTipando : mArguments.getASTS()) {
-            eParam += "<" + eTipando.getValor() + ">";
+            eParam += "<" + getTipagemDireta(eTipando) + ">";
         }
 
+
         return eParam;
+    }
+
+    public String getParametragemCom(AST ASTpai) {
+        AST mArguments = ASTpai.getBranch("ARGUMENTS");
+
+
+        String eParam = "";
+
+        for (AST eTipando : mArguments.getASTS()) {
+            eParam += "<" + getTipagem(eTipando) + ">";
+        }
+
+
+        return eParam;
+    }
+
+    public String getTipagem(AST eASTPai){
+
+        AST eAST = eASTPai.getBranch("TYPE");
+
+        String mTipagem =  "";
+
+        if (eAST.mesmoValor("GENERIC")){
+
+            for (AST eTipando : eAST.getASTS()) {
+                mTipagem += "<" +getTipagemDireta(eTipando) + ">";
+            }
+
+        }else if (eAST.mesmoValor("CONCRETE")){
+            mTipagem= eAST.getNome();
+        }
+
+
+        return mTipagem;
+
+    }
+
+    public String getTipagemDireta(AST eASTPai){
+
+        String mTipagem =  "";
+
+        if (eASTPai.mesmoValor("GENERIC")){
+
+            for (AST eTipando : eASTPai.getASTS()) {
+                mTipagem += "<" +getTipagemDireta(eTipando) + ">";
+            }
+
+        }else if (eASTPai.mesmoValor("CONCRETE")){
+            mTipagem= eASTPai.getNome();
+        }
+
+
+        return mTipagem;
+
     }
 
     public AST ProcurarModelo(String eNome, ArrayList<AST> mModelos) {

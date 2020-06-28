@@ -62,12 +62,12 @@ public class AST_Model {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
-                mAST.init_Define_Definicao(AST_Corrente);
+                mAST.init_Definicao("MOCKIZ",AST_Corrente);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
 
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
-                mAST.init_Mockiz_Definicao(AST_Corrente);
+                mAST.init_Definicao("DEFINE",AST_Corrente);
 
 
             } else {

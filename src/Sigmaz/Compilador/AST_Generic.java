@@ -49,6 +49,22 @@ public class AST_Generic {
                 ASTCorrente.setNome(TokenD.getConteudo());
 
 
+                ASTCorrente.setValor("CONCRETE");
+
+
+                Token TokenFuturo = mCompiler.getTokenFuturo();
+                if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
+
+                    ASTCorrente.setValor("GENERIC");
+
+                    AST_Generic mg = new AST_Generic(mCompiler);
+                    mg.init(ASTCorrente);
+
+
+                }
+
+
+
                 Token P2 = mCompiler.getTokenAvante();
 
                 if(P2.getTipo()==TokenTipo.VIRGULA) {

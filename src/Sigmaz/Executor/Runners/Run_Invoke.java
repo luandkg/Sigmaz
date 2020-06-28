@@ -45,7 +45,7 @@ public class Run_Invoke {
 
         } else if (eNome.contentEquals("casting")) {
 
-            InvokeCasting mCor = new InvokeCasting(mRunTime, mEscopo);
+            InvokeCasting mCor = new InvokeCasting(mRunTime, mEscopo,this);
             mCor.init(eAcao, eSaida, mArgumentos);
 
 

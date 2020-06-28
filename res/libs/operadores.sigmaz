@@ -1,9 +1,13 @@
 
 #OPERACOES
+
+
 mockiz PI : num = 3.14;
 mockiz ZERO : num = 0;
 mockiz TRUE : bool = true;
 mockiz FALSE : bool = false;
+
+
 func somar ( a : num , b : num ) : num {
 	def c : num;
 	invoke math -> operator_sum ( a , b ) :: c;

@@ -88,6 +88,13 @@ public class Lexer {
 				int eFim=mIndex;
 				
 				mTokens.add(new Token(TokenTipo.NUMERO,eTokenConteudo,eInicio,eFim));
+			} else 	if (charC.contentEquals("+") && charP.contentEquals("+")) {
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mIndex+=1;
+
+				mTokens.add(new Token(TokenTipo.SOMADOR,"++",eInicio,eFim) );
 			} else 	if (charC.contentEquals("+")) {
 				int eInicio =mIndex;
 				mIndex+=1;
@@ -102,7 +109,13 @@ public class Lexer {
 				mIndex+=1;
 
 				mTokens.add(new Token(TokenTipo.SETA,"->",eInicio,eFim) );
+			} else 	if (charC.contentEquals("-") && charP.contentEquals("-")) {
+				int eInicio =mIndex;
+				int eFim=mIndex;
 
+				mIndex+=1;
+
+				mTokens.add(new Token(TokenTipo.DIMINUIDOR,"++",eInicio,eFim) );
 			} else 	if (charC.contentEquals("-")) {
 				int eInicio =mIndex;
 				mIndex+=1;
@@ -111,6 +124,20 @@ public class Lexer {
 				int eFim=mIndex;
 				
 				mTokens.add(new Token(TokenTipo.NUMERO,eTokenConteudo,eInicio,eFim));
+			} else 	if (charC.contentEquals("*") && charP.contentEquals("*")) {
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mIndex+=1;
+
+				mTokens.add(new Token(TokenTipo.MULTIPLICADOR,"++",eInicio,eFim) );
+			} else 	if (charC.contentEquals("/") && charP.contentEquals("/")) {
+				int eInicio =mIndex;
+				int eFim=mIndex;
+
+				mIndex+=1;
+
+				mTokens.add(new Token(TokenTipo.DIVISOR,"++",eInicio,eFim) );
 			} else 	if (charC.contentEquals(".")) {
 				int eInicio =mIndex;
 

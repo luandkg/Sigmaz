@@ -37,13 +37,13 @@ public class AST_Cast {
                     saiu = true;
                     break;
 
-                }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("getter")){
+                } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo("getter")) {
 
-                    getter(TokenC.getConteudo(),AST_Corrente,ASTPai);
+                    getter(TokenC.getConteudo(), AST_Corrente, ASTPai);
 
-                }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("setter")){
+                } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo("setter")) {
 
-                    setter(TokenC.getConteudo(),AST_Corrente,ASTPai);
+                    setter(TokenC.getConteudo(), AST_Corrente, ASTPai);
 
                 } else {
                     mCompiler.errarCompilacao("Comando Deconhecido : " + TokenD.getConteudo(), TokenD.getInicio());
@@ -57,7 +57,7 @@ public class AST_Cast {
 
     }
 
-    public void getter(String eNome,AST ASTPai,AST ASTAvo){
+    public void getter(String eNome, AST ASTPai, AST ASTAvo) {
 
         Token TokenC = mCompiler.getTokenAvante();
 
@@ -75,44 +75,40 @@ public class AST_Cast {
             AST_Corrente.setValor(TokenC3.getConteudo());
 
 
-
             AST_Corpo mCorpo = new AST_Corpo(mCompiler);
             mCorpo.init(AST_Corrente);
-
 
 
             // CRIAR UMA FUNC TIPO_CAST ( A : GETTER ) : TIPO_CAST
             AST AST_Func_Get = new AST("FUNCTION");
 
             AST_Func_Get.setNome(eNome);
-            AST_Func_Get.setValor(eNome);
+
+            AST AST_Type = AST_Func_Get.criarBranch("TYPE");
+            AST_Type.setValor("CONCRETE");
+            AST_Type.setNome(eNome);
 
             AST AST_Visibilidade = AST_Func_Get.criarBranch("VISIBILITY");
             AST_Visibilidade.setNome("ALL");
 
-            AST AST_Func_Args =AST_Func_Get.criarBranch("ARGUMENTS");
-            AST AST_Func_Arg =AST_Func_Args.criarBranch("ARGUMENT");
+            AST AST_Func_Args = AST_Func_Get.criarBranch("ARGUMENTS");
+            AST AST_Func_Arg = AST_Func_Args.criarBranch("ARGUMENT");
             AST_Func_Arg.setNome("alfa");
-            AST_Func_Arg.setValor(TokenC3.getConteudo());
 
-            AST AST_Func_Body =AST_Func_Get.criarBranch("BODY");
-            AST AST_Func_Def =AST_Func_Body.criarBranch("DEF");
-            AST_Func_Def.setNome("beta");
-            AST_Func_Def.setValor(eNome);
+            criarTipagemConcreta(AST_Func_Arg,TokenC3.getConteudo());
 
-            AST_Func_Def.criarBranch("GENERIC").setNome("FALSE");
+            AST AST_Func_Body = AST_Func_Get.criarBranch("BODY");
 
 
-            AST AST_Func_Val =AST_Func_Def.criarBranch("VALUE");
-            AST_Func_Val.setNome("alfa");
-            AST_Func_Val.setValor("ID");
+            criarInvoke(AST_Func_Body,"alfa",TokenC3.getConteudo(),eNome);
 
-            AST AST_Func_Ret =AST_Func_Body.criarBranch("RETURN");
-            AST_Func_Ret.setNome("beta");
+
+
+            AST AST_Func_Ret = AST_Func_Body.criarBranch("RETURN");
+            AST_Func_Ret.setNome("alfa");
             AST_Func_Ret.setValor("ID");
 
             ASTAvo.getASTS().add(AST_Func_Get);
-
 
 
         } else {
@@ -121,7 +117,35 @@ public class AST_Cast {
 
     }
 
-    public void setter(String eNome,AST ASTPai, AST ASTAvo){
+    private void criarTipagemConcreta(AST ASTPai, String eTipo) {
+
+        AST ASTTipo = ASTPai.criarBranch("TYPE");
+        ASTTipo.setNome(eTipo);
+        ASTTipo.setValor("CONCRETE");
+
+    }
+
+    private void criarInvoke(AST ASTPai, String eSaida,String a1,String a2) {
+
+        AST AST_Invoke = ASTPai.criarBranch("INVOKE");
+        AST_Invoke.setNome("casting");
+        AST_Invoke.setValor("cast_type");
+
+        AST AST_Exit = AST_Invoke.criarBranch("EXIT");
+        AST_Exit.setNome(eSaida);
+
+        AST AST_Args = AST_Invoke.criarBranch("ARGUMENTS");
+
+        AST AST_A1 = AST_Args.criarBranch("ARGUMENT");
+        AST_A1.setNome(a1);
+        AST_A1.setValor("Text");
+
+        AST AST_A2 = AST_Args.criarBranch("ARGUMENT");
+        AST_A2.setNome(a2);
+        AST_A2.setValor("Text");
+    }
+
+    public void setter(String eNome, AST ASTPai, AST ASTAvo) {
 
         Token TokenC = mCompiler.getTokenAvante();
 
@@ -139,7 +163,6 @@ public class AST_Cast {
             AST_Corrente.setValor(TokenC3.getConteudo());
 
 
-
             AST_Corpo mCorpo = new AST_Corpo(mCompiler);
             mCorpo.init(AST_Corrente);
 
@@ -147,29 +170,29 @@ public class AST_Cast {
             AST AST_Func_Get = new AST("FUNCTION");
 
             AST_Func_Get.setNome(TokenC3.getConteudo());
-            AST_Func_Get.setValor(TokenC3.getConteudo());
+
+            AST AST_Type = AST_Func_Get.criarBranch("TYPE");
+            AST_Type.setValor("CONCRETE");
+            AST_Type.setNome(TokenC3.getConteudo());
 
             AST AST_Visibilidade = AST_Func_Get.criarBranch("VISIBILITY");
             AST_Visibilidade.setNome("ALL");
 
-            AST AST_Func_Args =AST_Func_Get.criarBranch("ARGUMENTS");
-            AST AST_Func_Arg =AST_Func_Args.criarBranch("ARGUMENT");
+            AST AST_Func_Args = AST_Func_Get.criarBranch("ARGUMENTS");
+            AST AST_Func_Arg = AST_Func_Args.criarBranch("ARGUMENT");
             AST_Func_Arg.setNome("alfa");
-            AST_Func_Arg.setValor(eNome);
 
-            AST AST_Func_Body =AST_Func_Get.criarBranch("BODY");
-            AST AST_Func_Def =AST_Func_Body.criarBranch("DEF");
-            AST_Func_Def.setNome("beta");
-            AST_Func_Def.setValor(TokenC3.getConteudo());
+            criarTipagemConcreta(AST_Func_Arg,eNome);
 
-            AST_Func_Def.criarBranch("GENERIC").setNome("FALSE");
 
-            AST AST_Func_Val =AST_Func_Def.criarBranch("VALUE");
-            AST_Func_Val.setNome("alfa");
-            AST_Func_Val.setValor("ID");
+            AST AST_Func_Body = AST_Func_Get.criarBranch("BODY");
 
-            AST AST_Func_Ret =AST_Func_Body.criarBranch("RETURN");
-            AST_Func_Ret.setNome("beta");
+
+
+            criarInvoke(AST_Func_Body,"alfa",eNome,TokenC3.getConteudo());
+
+            AST AST_Func_Ret = AST_Func_Body.criarBranch("RETURN");
+            AST_Func_Ret.setNome("alfa");
             AST_Func_Ret.setValor("ID");
 
             ASTAvo.getASTS().add(AST_Func_Get);

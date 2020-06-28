@@ -2,7 +2,7 @@
  
 ![Sigmaz](https://github.com/luandkg/Sigmaz/blob/master/res/logo.png)
 
-Linguagem de Programação Estruturada
+Linguagem de Programação Estruturada - Implementações
 
     - 2020 06 13
         - LEXER
@@ -115,4 +115,7 @@ Linguagem de Programação Estruturada
         - MODEL
         - FUNCTION RETURN GENERIC
         - GENERIC ARGUMENTS
+        
+    - 2020 06 28
+        - OPERADORES SUM,SUB,MUX e DIV
        

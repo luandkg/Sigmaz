@@ -123,9 +123,9 @@ public class Run_Value {
 
             init(ASTCorrente.getBranch("VALUE"), eRetorno);
 
-        } else if (ASTCorrente.mesmoValor("COMPARATOR")) {
+        } else if (ASTCorrente.mesmoValor("OPERATOR")) {
 
-            Comparador(ASTCorrente, eRetorno);
+            Operador(ASTCorrente, eRetorno);
 
         } else if (ASTCorrente.getValor().contentEquals("FUNCT")) {
 
@@ -156,7 +156,7 @@ public class Run_Value {
                 return;
             }
 
-        //    System.out.println("Mudando Para EXTERN "  + ASTCorrente.getNome());
+            //    System.out.println("Mudando Para EXTERN "  + ASTCorrente.getNome());
 
             Struct_Extern(ASTCorrente, eRetorno);
 
@@ -164,7 +164,7 @@ public class Run_Value {
 
             //   System.out.println("PROBLEMA  -> " + ASTCorrente.getValor());
 
-            mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
+            mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE  : " + ASTCorrente.getValor());
 
 
         }
@@ -201,8 +201,8 @@ public class Run_Value {
 
             if (mItem != null) {
 
-               //    System.out.println(mItem.getNome() + " E nulo :" + mItem.getNulo());
-              //  System.out.println(mItem.getNome() + " E Estrutura :" + mItem.getIsEstrutura());
+                //    System.out.println(mItem.getNome() + " E nulo :" + mItem.getNulo());
+                //  System.out.println(mItem.getNome() + " E Estrutura :" + mItem.getIsEstrutura());
 
 
                 mIsNulo = mItem.getNulo();
@@ -235,12 +235,12 @@ public class Run_Value {
 
     }
 
-    public void Comparador(AST ASTCorrente, String eRetorno) {
+    public void Operador(AST ASTCorrente, String eRetorno) {
 
-
-        //System.out.println("Valorando  -> COMPARATOR");
 
         AST eModo = ASTCorrente.getBranch("MODE");
+
+        //System.out.println("OPERATOR  -> " + eModo.getNome());
 
 
         Run_Value mRun_Esquerda = new Run_Value(mRunTime, mEscopo);
@@ -260,13 +260,27 @@ public class Run_Value {
 
         if (eModo.mesmoNome("MATCH")) {
 
-            verificarIgualdade(mRun_Esquerda, mRun_Direita, mRetornoTipo);
+            realizarOperacao("MATCH", mRun_Esquerda, mRun_Direita, mRetornoTipo);
 
+        } else if (eModo.mesmoNome("UNMATCH")) {
 
-        } else if (eModo.mesmoNome("MISMATCH")) {
+            realizarOperacao("UNMATCH", mRun_Esquerda, mRun_Direita, mRetornoTipo);
 
-            verificarDesIgualdade(mRun_Esquerda, mRun_Direita, mRetornoTipo);
+        } else if (eModo.mesmoNome("SUM")) {
 
+            realizarOperacao("SUM", mRun_Esquerda, mRun_Direita, mRetornoTipo);
+        } else if (eModo.mesmoNome("SUB")) {
+
+            realizarOperacao("SUB", mRun_Esquerda, mRun_Direita, mRetornoTipo);
+        } else if (eModo.mesmoNome("SUB")) {
+
+            realizarOperacao("SUB", mRun_Esquerda, mRun_Direita, mRetornoTipo);
+        } else if (eModo.mesmoNome("MUX")) {
+
+            realizarOperacao("MUX", mRun_Esquerda, mRun_Direita, mRetornoTipo);
+        } else if (eModo.mesmoNome("DIV")) {
+
+            realizarOperacao("DIV", mRun_Esquerda, mRun_Direita, mRetornoTipo);
 
         } else {
             mRunTime.getErros().add("Comparador Desconhecido : " + eModo.getNome());
@@ -301,27 +315,27 @@ public class Run_Value {
 
         // System.out.println("Valorando  -> FUNCT " + ASTCorrente.getNome());
 
-        Run_Value mRun_Value = new Run_Value(mRunTime,mEscopo);
-        mRun_Value.init(ASTCorrente.getBranch("CONDITION"),"bool");
+        Run_Value mRun_Value = new Run_Value(mRunTime, mEscopo);
+        mRun_Value.init(ASTCorrente.getBranch("CONDITION"), "bool");
 
         if (mRunTime.getErros().size() > 0) {
             return;
         }
 
-        if (mRun_Value.getConteudo().contentEquals("true")){
+        if (mRun_Value.getConteudo().contentEquals("true")) {
 
-            Run_Value sRun_Value = new Run_Value(mRunTime,mEscopo);
-            sRun_Value.init(ASTCorrente.getBranch("TRUE"),eRetorno);
+            Run_Value sRun_Value = new Run_Value(mRunTime, mEscopo);
+            sRun_Value.init(ASTCorrente.getBranch("TRUE"), eRetorno);
 
             this.setNulo(sRun_Value.getIsNulo());
             this.setPrimitivo(sRun_Value.getIsPrimitivo());
             this.setConteudo(sRun_Value.getConteudo());
             this.setRetornoTipo(sRun_Value.getRetornoTipo());
 
-        }else{
+        } else {
 
-            Run_Value sRun_Value = new Run_Value(mRunTime,mEscopo);
-            sRun_Value.init(ASTCorrente.getBranch("FALSE"),eRetorno);
+            Run_Value sRun_Value = new Run_Value(mRunTime, mEscopo);
+            sRun_Value.init(ASTCorrente.getBranch("FALSE"), eRetorno);
 
             this.setNulo(sRun_Value.getIsNulo());
             this.setPrimitivo(sRun_Value.getIsPrimitivo());
@@ -330,8 +344,6 @@ public class Run_Value {
 
 
         }
-
-
 
 
         //  System.out.println("FUNCT EXIT  -> " + ASTCorrente.getNome() + " -> " + this.getConteudo() + " P : " + mIsPrimitivo + " N : " + mIsNulo + " T : " + mRetornoTipo);
@@ -355,7 +367,7 @@ public class Run_Value {
 
         mIsNulo = false;
         mIsPrimitivo = false;
-        mRetornoTipo =mRun_Struct.getTipoCompleto();
+        mRetornoTipo = mRun_Struct.getTipoCompleto();
         mIsEstrutura = true;
         mConteudo = eNome;
 
@@ -470,7 +482,7 @@ public class Run_Value {
 
     public void Struct_Extern(AST ASTCorrente, String eRetorno) {
 
-         // System.out.println("STRUCT EXTERN : " + ASTCorrente.getNome());
+        // System.out.println("STRUCT EXTERN : " + ASTCorrente.getNome());
 
 
         Run_Extern mEscopoExtern = mRunTime.getRun_Extern(ASTCorrente.getNome());
@@ -489,7 +501,7 @@ public class Run_Value {
                 return;
             }
 
-           // System.out.println("Mudando Para EXTERN - STRUCT_FUNCT "  + eInternal.getNome());
+            // System.out.println("Mudando Para EXTERN - STRUCT_FUNCT "  + eInternal.getNome());
 
 
             Item eItem = mEscopoExtern.init_Function_Extern(eInternal, mEscopo, "<<ANY>>");
@@ -528,7 +540,7 @@ public class Run_Value {
                     }
 
                     if (!eItem.getTipo().contentEquals(eRetorno)) {
-                     //   mEscopoExtern = mRunTime.getRun_Struct(eItem.getValor());
+                        //   mEscopoExtern = mRunTime.getRun_Struct(eItem.getValor());
 
                         if (mRunTime.getErros().size() > 0) {
                             return;
@@ -604,41 +616,11 @@ public class Run_Value {
     }
 
 
-    public void verificarIgualdade(Run_Value mRun_Esquerda, Run_Value mRun_Direita, String eRetorno) {
+    public void realizarOperacao(String eOperacao, Run_Value mRun_Esquerda, Run_Value mRun_Direita, String eRetorno) {
 
 
         Run_Func mRun_Matchable = new Run_Func(mRunTime, mEscopo);
-        Item mItem = mRun_Matchable.init_Operation("MATCH", mRun_Esquerda, mRun_Direita, eRetorno);
-
-        if (mRunTime.getErros().size() > 0) {
-            return;
-        }
-
-
-        mIsNulo = mItem.getNulo();
-        mIsPrimitivo = mItem.getPrimitivo();
-        mConteudo = mItem.getValor();
-        mRetornoTipo = mItem.getTipo();
-
-        if (mRunTime.getErros().size() > 0) {
-            return;
-        }
-
-        if (mRetornoTipo.contentEquals("bool")) {
-            mIsPrimitivo = true;
-        } else if (mRetornoTipo.contentEquals("num")) {
-            mIsPrimitivo = true;
-        } else if (mRetornoTipo.contentEquals("string")) {
-            mIsPrimitivo = true;
-        }
-
-    }
-
-
-    public void verificarDesIgualdade(Run_Value mRun_Esquerda, Run_Value mRun_Direita, String eRetorno) {
-
-        Run_Func mRun_Matchable = new Run_Func(mRunTime, mEscopo);
-        Item mItem = mRun_Matchable.init_Operation("UNMATCH", mRun_Esquerda, mRun_Direita, eRetorno);
+        Item mItem = mRun_Matchable.init_Operation(eOperacao, mRun_Esquerda, mRun_Direita, eRetorno);
 
         if (mRunTime.getErros().size() > 0) {
             return;
@@ -662,6 +644,8 @@ public class Run_Value {
         }
 
     }
+
+
 
     public String getModulante() {
 

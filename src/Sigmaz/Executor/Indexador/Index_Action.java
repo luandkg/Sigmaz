@@ -49,41 +49,24 @@ public class Index_Action {
 
     public void argumentar(AST eArg) {
         mNomeArgumentos.add(eArg.getNome());
-        mTipoArgumentos.add(getTipagem(eArg));
+        mTipoArgumentos.add(getTipagem(eArg.getBranch("TYPE")));
     }
 
-    public String getTipagem(AST ASTpai) {
+    public String getTipagem(AST eAST){
 
-        String mTipagem = "";
+        String mTipagem = eAST.getNome();
 
+        if (eAST.mesmoValor("GENERIC")){
 
-        if (ASTpai.existeBranch("GENERIC")){
-
-            AST mGENERIC = ASTpai.getBranch("GENERIC");
-
-
-            if (mGENERIC.mesmoNome("TRUE")) {
-                mTipagem = ASTpai.getValor();
-
-
-                for (AST eTipando : mGENERIC.getASTS()) {
-                    mTipagem += "<" + eTipando.getNome() + ">";
-                }
-
-            } else {
-                mTipagem = ASTpai.getValor();
+            for (AST eTipando : eAST.getASTS()) {
+                mTipagem += "<" +getTipagem(eTipando) + ">";
             }
-
-        } else{
-
-            mTipagem = ASTpai.getValor();
 
         }
 
 
-
-
         return mTipagem;
+
     }
 
     public boolean mesmoNome(String eNome) {

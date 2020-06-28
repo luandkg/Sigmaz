@@ -22,9 +22,9 @@ public class Analisar_Argumentos {
             if (mAST.mesmoTipo("ARGUMENT")) {
 
 
-                mParametrizando += "<" + mAST.getValor() + "> ";
+                    mParametrizando += "<" + getTipagem(mAST.getBranch("TYPE")) + "> ";
 
-                mAnalisador.getAnalisar_Outros().analisandoDefinesParam(mAST);
+                   mAnalisador.getAnalisar_Outros().analisandoDefinesParam(mAST);
 
             } else {
                 mAnalisador.getErros().add("Tipo Desconhecido : " + mAST.getTipo());
@@ -53,7 +53,7 @@ public class Analisar_Argumentos {
                     mAnalisador.getErros().add("Argumento Duplicado : " + mAST.getNome());
                 }
 
-                mParametragem += "<" + mAST.getValor() + "> ";
+                mParametragem += "<" + getTipagem(mAST.getBranch("TYPE")) + "> ";
 
                 mAnalisador.getAnalisar_Outros().analisandoDefinesParam(mAST);
 
@@ -63,6 +63,25 @@ public class Analisar_Argumentos {
         }
 
         return mParametragem;
+    }
+
+    public String getTipagem(AST eAST) {
+        String mTipagem = "";
+        if (eAST != null) {
+            mTipagem = eAST.getNome();
+
+            if (eAST.mesmoValor("GENERIC")) {
+
+                for (AST eTipando : eAST.getASTS()) {
+                    mTipagem += "<" + getTipagem(eTipando) + ">";
+                }
+
+            }
+        }
+
+
+        return mTipagem;
+
     }
 
     public String analisarArguments(AST ASTPai) {
@@ -81,7 +100,7 @@ public class Analisar_Argumentos {
                     mAnalisador.getErros().add("Argumento Duplicado : " + mAST.getNome());
                 }
 
-                mParametragem += "<" + mAST.getValor() + "> ";
+                mParametragem += "<" + getTipagem(mAST.getBranch("TYPE")) + "> ";
 
 
             } else {

@@ -80,11 +80,21 @@ public class Estagiador {
 
     }
 
+    private void criarTipagemConcreta(AST ASTPai, String eTipo) {
+
+        AST ASTTipo = ASTPai.criarBranch("TYPE");
+        ASTTipo.setNome(eTipo);
+        ASTTipo.setValor("CONCRETE");
+
+    }
+
     public void criarFunction_NameOf(AST mCorpo, AST mStageDef) {
 
         AST mNome = mCorpo.criarBranch("FUNCTION");
         mNome.setNome("nameOf");
-        mNome.setValor("string");
+
+        criarTipagemConcreta(mNome,"string");
+
         mNome.criarBranch("VISIBILITY").setNome("EXTERN");
         AST mArguments = mNome.criarBranch("ARGUMENTS");
         AST mBody = mNome.criarBranch("BODY");
@@ -92,15 +102,17 @@ public class Estagiador {
 
         AST mAlfa = mArguments.criarBranch("ARGUMENT");
         mAlfa.setNome("ALFA");
-        mAlfa.setValor(mStageDef.getNome());
+
+        criarTipagemConcreta(mAlfa,mStageDef.getNome());
 
 
-        AST mDef = mBody.criarBranch("DEF");
-        mDef.criarBranch("GENERIC").setNome("FALSE");
-        mDef.setNome("BETA");
-        mDef.setValor("string");
+        AST mBeta = mBody.criarBranch("DEF");
+        mBeta.setNome("BETA");
 
-        AST mValue = mDef.criarBranch("VALUE");
+
+        criarTipagemConcreta(mBeta,"string");
+
+        AST mValue = mBeta.criarBranch("VALUE");
         mValue.setNome("Desconhecido");
         mValue.setValor("Text");
 
@@ -115,7 +127,7 @@ public class Estagiador {
 
                 AST mIf = mBody.criarBranch("IF");
                 AST mCondition = mIf.criarBranch("CONDITION");
-                mCondition.setValor("COMPARATOR");
+                mCondition.setValor("OPERATOR");
 
                 mCondition.criarBranch("MODE").setNome("MATCH");
                 AST mLeft = mCondition.criarBranch("LEFT");
@@ -152,7 +164,10 @@ public class Estagiador {
 
         AST mNome = mCorpo.criarBranch("FUNCTION");
         mNome.setNome("valueOf");
-        mNome.setValor("num");
+
+        criarTipagemConcreta(mNome,"num");
+
+
         mNome.criarBranch("VISIBILITY").setNome("EXTERN");
         AST mArguments = mNome.criarBranch("ARGUMENTS");
         AST mBody = mNome.criarBranch("BODY");
@@ -160,14 +175,17 @@ public class Estagiador {
 
         AST mAlfa = mArguments.criarBranch("ARGUMENT");
         mAlfa.setNome("ALFA");
-        mAlfa.setValor(mStageDef.getNome());
+
+        criarTipagemConcreta(mAlfa,mStageDef.getNome());
 
 
         AST mDef = mBody.criarBranch("DEF");
-        mDef.criarBranch("GENERIC").setNome("FALSE");
+
+
 
         mDef.setNome("BETA");
-        mDef.setValor("num");
+        criarTipagemConcreta(mDef,"num");
+
 
         AST mValue = mDef.criarBranch("VALUE");
         mValue.setNome("");
@@ -185,7 +203,7 @@ public class Estagiador {
 
                 AST mIf = mBody.criarBranch("IF");
                 AST mCondition = mIf.criarBranch("CONDITION");
-                mCondition.setValor("COMPARATOR");
+                mCondition.setValor("OPERATOR");
 
                 mCondition.criarBranch("MODE").setNome("MATCH");
                 AST mLeft = mCondition.criarBranch("LEFT");
@@ -225,26 +243,33 @@ public class Estagiador {
 
         AST mMATCH = mSigmaz.criarBranch("OPERATION");
         mMATCH.setNome(mOperacao);
-        mMATCH.setValor("bool");
+
+        criarTipagemConcreta(mMATCH,"bool");
 
         mMATCH.criarBranch("VISIBILITY").setNome("EXTERN");
 
         AST mArguments = mMATCH.criarBranch("ARGUMENTS");
         AST mAlfa = mArguments.criarBranch("ARGUMENT");
         mAlfa.setNome("ALFA");
-        mAlfa.setValor(mStageDef.getNome());
+
+        criarTipagemConcreta(mAlfa,mStageDef.getNome());
+
 
         AST mBeta = mArguments.criarBranch("ARGUMENT");
         mBeta.setNome("BETA");
-        mBeta.setValor(mStageDef.getNome());
+
+        criarTipagemConcreta(mBeta,mStageDef.getNome());
+
 
         AST mBody = mMATCH.criarBranch("BODY");
 
         AST mDef = mBody.criarBranch("DEF");
-        mDef.criarBranch("GENERIC").setNome("FALSE");
+
 
         mDef.setNome("GAMA");
-        mDef.setValor("bool");
+        criarTipagemConcreta(mDef,"bool");
+
+
 
         AST mValue = mDef.criarBranch("VALUE");
         mValue.setNome("");

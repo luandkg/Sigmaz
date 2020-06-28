@@ -206,7 +206,7 @@ public class Run_Struct {
         }
 
         if (mRunTime.getExterno()) {
-            // mStructCorpo.ImprimirArvoreDeInstrucoes();
+         //    mStructCorpo.ImprimirArvoreDeInstrucoes();
         }
 
 

@@ -1,19 +1,22 @@
 package Sigmaz.Executor.Invokes;
 
 import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
+import Sigmaz.Executor.Runners.Run_Invoke;
 import Sigmaz.Utils.AST;
 
 public class InvokeCasting {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private Run_Invoke mRun_Invoke;
 
-
-    public InvokeCasting(RunTime eRunTime, Escopo eEscopo) {
+    public InvokeCasting(RunTime eRunTime, Escopo eEscopo, Run_Invoke eRun_Invoke) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
+        mRun_Invoke = eRun_Invoke;
 
 
     }
@@ -54,6 +57,10 @@ public class InvokeCasting {
 
             argumentos_1num(eAcao, eSaida, ASTArgumentos);
 
+        } else if (eAcao.contentEquals("cast_type")) {
+
+            mudartipo(eAcao, eSaida, ASTArgumentos);
+
         } else {
 
             mRunTime.getErros().add("Invocacao : Acao nao encontrada ->  " + eAcao);
@@ -61,6 +68,22 @@ public class InvokeCasting {
         }
 
     }
+
+
+    public void mudartipo(String eAcao, String eSaida, AST ASTArgumentos) {
+
+        String a1 = mRun_Invoke.getString(ASTArgumentos, 1);
+        String a2 = mRun_Invoke.getString(ASTArgumentos, 2);
+
+        Item eItem = mEscopo.getItem(eSaida);
+        if (eItem.getTipo().contentEquals(a1)) {
+            eItem.setTipo(a2);
+        }else{
+            mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+        }
+
+    }
+
 
     public void argumentos_1num(String eAcao, String eSaida, AST ASTArgumentos) {
 
@@ -83,7 +106,7 @@ public class InvokeCasting {
                     p1 = mEscopo.getDefinido(eAST.getNome());
 
                     isnull = mEscopo.getDefinidoNulo(eAST.getNome());
-                   // System.out.println("Nulo :: " + isnull);
+                    // System.out.println("Nulo :: " + isnull);
 
 
                 } else if (eAST.mesmoValor("Num")) {

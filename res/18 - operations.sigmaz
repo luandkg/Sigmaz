@@ -4,12 +4,31 @@ act pular ( ) {
 	def f : num = 13;
 	def a : bool = 13 == f;
 	def v : bool = ( true !! false );
-	def t : bool = "a"!! "ab";
+	def t : bool = "a" !! "ab";
+
+	def somatorio : num = 10 -- 12;
+
+	def m1 : num = 10 ** 2;
+
+
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }
+
 func somar ( a : num , b : num ) : num {
 	def c : num;
 	invoke math -> operator_sum ( a , b ) :: c;
+	return c;
+}
+
+operation ++ ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_sum ( a , b ) :: c;
+	return c;
+}
+
+operation -- ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_sub ( a , b ) :: c;
 	return c;
 }
 
@@ -46,5 +65,12 @@ operation == ( a : string , b : string ) : bool {
 operation !! ( a : string , b : string ) : bool {
 	def c : bool;
 	invoke terminal -> operator_unmatch ( a , b ) :: c;
+	return c;
+}
+
+
+operation ** ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_mux ( a , b ) :: c;
 	return c;
 }

@@ -155,27 +155,49 @@ public class Analisar_Outros {
 
     }
 
-    public void analisandoDefines(AST ASTPai) {
 
-        if (mAnalisador.getTipados().contains(ASTPai.getValor())) {
+    public void analisarTipagem(AST ASTPai) {
 
-        } else {
+        if (ASTPai.existeBranch("TYPE")) {
 
-            mAnalisador.getErros().add("Tipo deconhecido y : " + ASTPai.getValor());
+            AST mTipo = ASTPai.getBranch("TYPE");
+
+            if (mTipo.mesmoValor("CONCRETE")) {
+
+                if (mAnalisador.getTipados().contains(mTipo.getNome())) {
+
+                } else {
+
+                    mAnalisador.getErros().add("Tipo deconhecido y : " + mTipo.getNome());
+                }
+
+            }
+
         }
+
 
     }
 
+
     public void analisandoDefinesParam(AST ASTPai) {
 
-        if (mAnalisador.getTipados().contains(ASTPai.getValor())) {
+        if (ASTPai.existeBranch("TYPE")) {
+            AST mTipo = ASTPai.getBranch("TYPE");
 
-        } else if (ASTPai.getValor().contentEquals("any")) {
+            if (mTipo.mesmoValor("CONCRETE")) {
 
-        } else {
+                if (mAnalisador.getTipados().contains(mTipo.getNome())) {
 
-            mAnalisador.getErros().add("Tipo deconhecido x : " + ASTPai.getValor());
+                } else if (mTipo.getNome().contentEquals("any")) {
+
+                } else {
+
+                    mAnalisador.getErros().add("Tipo deconhecido y : " + mTipo.getNome());
+                }
+
+            }
         }
+
 
     }
 

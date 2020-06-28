@@ -21,15 +21,34 @@ public class Run_Moc{
 
     }
 
+    public String getTipagem(AST eAST){
+
+        String mTipagem = eAST.getNome();
+
+        if (eAST.mesmoValor("GENERIC")){
+
+            for (AST eTipando : eAST.getASTS()) {
+                mTipagem += "<" +getTipagem(eTipando) + ">";
+            }
+
+        }
+
+
+        return mTipagem;
+
+    }
+
     public void init(AST eAST) {
 
 
         AST mValor = eAST.getBranch("VALUE");
 
-        String eTipado = eAST.getValor();
+
+        String mTipagem = getTipagem(eAST.getBranch("TYPE"));
+
 
         Run_Value mAST = new Run_Value(mRunTime, mEscopo);
-        mAST.init(mValor, eAST.getValor());
+        mAST.init(mValor, mTipagem);
 
         if (mRunTime.getErros().size() > 0) {
             return;
@@ -39,7 +58,7 @@ public class Run_Moc{
             mEscopo.criarConstanteNula(eAST.getNome(), mAST.getRetornoTipo());
         } else if (mAST.getIsPrimitivo()) {
 
-            if (eAST.getValor().contentEquals(mAST.getRetornoTipo())) {
+            if (mTipagem.contentEquals(mAST.getRetornoTipo())) {
                 mEscopo.criarConstante(eAST.getNome(), mAST.getRetornoTipo(), mAST.getConteudo());
             } else {
 
@@ -50,27 +69,27 @@ public class Run_Moc{
                 //  System.out.println("Retorno ESQ : " + eTipado);
                 // System.out.println("Retorno DIR x : " + mAST.getRetornoTipo());
 
-                if (mEscopo.existeCast(eTipado)) {
+                if (mEscopo.existeCast(mTipagem)) {
 
 
                     Run_Cast mCast = new Run_Cast(mRunTime, mEscopo);
-                    String res = mCast.realizarGetterCast(eTipado, mAST.getRetornoTipo(), mAST.getConteudo());
+                    String res = mCast.realizarGetterCast(mTipagem, mAST.getRetornoTipo(), mAST.getConteudo());
 
                     if (res == null) {
                         mEscopo.criarConstanteNula(eAST.getNome(), mAST.getRetornoTipo());
                     } else {
-                        mEscopo.criarConstante(eAST.getNome(), eAST.getValor(), res);
+                        mEscopo.criarConstante(eAST.getNome(), mTipagem, res);
                     }
 
                 } else if (mEscopo.existeCast(mAST.getRetornoTipo())) {
 
                     Run_Cast mCast = new Run_Cast(mRunTime, mEscopo);
-                    String res = mCast.realizarSetterCast(mAST.getRetornoTipo(), eTipado, mAST.getConteudo());
+                    String res = mCast.realizarSetterCast(mAST.getRetornoTipo(), mTipagem, mAST.getConteudo());
 
                     if (res == null) {
                         mEscopo.criarConstanteNula(eAST.getNome(), mAST.getRetornoTipo());
                     } else {
-                        mEscopo.criarConstante(eAST.getNome(), eAST.getValor(), res);
+                        mEscopo.criarConstante(eAST.getNome(), mTipagem, res);
                     }
 
                 } else {
@@ -84,7 +103,7 @@ public class Run_Moc{
         } else if (mAST.getIsStruct()) {
 
 
-            mEscopo.criarConstanteStruct(eAST.getNome(), eAST.getValor(), mAST.getConteudo());
+            mEscopo.criarConstanteStruct(eAST.getNome(), mTipagem, mAST.getConteudo());
 
         } else {
 

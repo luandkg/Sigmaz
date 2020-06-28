@@ -21,11 +21,12 @@ public class Analisar_Function {
         ArrayList<String> mAlocados = mAnalisador.copiarAlocados(mAlocadosAntes);
 
 
-        mAnalisador.getAnalisar_Outros().analisandoDefines(ASTPai);
+        mAnalisador.getAnalisar_Outros().analisarTipagem(ASTPai);
 
 
         String mParametragem = ASTPai.getNome() + " ( " + mAnalisador.getAnalisar_Argumentos().analisarArguments(ASTPai.getBranch("ARGUMENTS"), mAlocados) + ") ";
 
+      //  System.out.println(mParametragem);
 
         if (!mAnalisador.getFunctions_Nomes().contains(mParametragem)) {
             mAnalisador.getFunctions_Nomes().add(mParametragem);
@@ -59,7 +60,7 @@ public class Analisar_Function {
                 mAnalisador.getErros().add("Def : " + ASTPai.getNome() + " : Nome Proibido !");
             }
 
-            mAnalisador.getAnalisar_Outros().analisandoDefines(ASTPai);
+            mAnalisador.getAnalisar_Outros().analisarTipagem(ASTPai);
             mAnalisador.analisarValoracao(ASTPai, mAlocadosAntes);
 
         } else if (ASTPai.mesmoTipo("MOC")) {
@@ -68,7 +69,7 @@ public class Analisar_Function {
                 mAnalisador.getErros().add("Moc : " + ASTPai.getNome() + " : Nome Proibido !");
             }
 
-            mAnalisador.getAnalisar_Outros().analisandoDefines(ASTPai);
+            mAnalisador.getAnalisar_Outros().analisarTipagem(ASTPai);
             mAnalisador.analisarValoracao(ASTPai, mAlocadosAntes);
 
 

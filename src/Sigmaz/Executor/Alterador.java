@@ -49,16 +49,48 @@ public class Alterador {
 
     }
 
+    public void alterarTipoLogo(AST AST_Type) {
+        for (AItem eTipo : mAlterar) {
+            if (AST_Type.mesmoValor("CONCRETE")) {
+
+                if (AST_Type.mesmoNome(eTipo.getAbstrato())) {
+                    AST_Type.setNome(eTipo.getTipo());
+
+                }
+
+            } else if (AST_Type.mesmoValor("GENERIC")) {
+
+
+                for (AST eSub : AST_Type.getASTS()) {
+                    alterarTipoLogo(eSub);
+                }
+
+            }
+        }
+    }
+
     public void alterarTipo(AST ASTPai) {
 
         for (AItem eTipo : mAlterar) {
 
-            if (ASTPai.mesmoValor(eTipo.getAbstrato())) {
-                ASTPai.setValor(eTipo.getTipo());
+            AST AST_Type = ASTPai.getBranch("TYPE");
+
+            if (AST_Type.mesmoValor("CONCRETE")) {
+
+                if (AST_Type.mesmoNome(eTipo.getAbstrato())) {
+                    AST_Type.setNome(eTipo.getTipo());
+                    break;
+                }
+
+            } else if (AST_Type.mesmoValor("GENERIC")){
 
 
-                break;
+                for (AST eSub : AST_Type.getASTS()) {
+                    alterarTipoLogo(eSub);
+               }
+
             }
+
 
         }
 
@@ -88,8 +120,6 @@ public class Alterador {
             if (eAST.mesmoTipo("DEFINE")) {
 
                 alterarTipo(eAST);
-
-                alterar(eAST.getBranch("GENERIC"));
 
 
             } else if (eAST.mesmoTipo("MOCKIZ")) {
@@ -140,7 +170,6 @@ public class Alterador {
 
             } else if (eAST.mesmoTipo("ACTION")) {
 
-                alterarTipo(eAST);
 
                 alterar(eAST.getBranch("BODY"));
                 alterar(eAST.getBranch("ARGUMENTS"));
