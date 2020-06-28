@@ -23,7 +23,7 @@ act operando ( ) {
 }
 
 func algo ( a : num , b : string ) : num {
-	return 12;
+	return a++b ;
 }
 
 

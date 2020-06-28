@@ -105,6 +105,14 @@ public class AST_Value {
                 operation_final("MATCH",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
                 operation_final("UNMATCH",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.SOMADOR) {
+                operation_final("SUM",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.DIMINUIDOR) {
+                operation_final("SUB",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.MULTIPLICADOR) {
+                operation_final("MUX",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.DIVISOR) {
+                operation_final("DIV",ASTPai);
             } else if (TokenC2.getTipo() == mTerminar) {
 
             } else {
@@ -172,6 +180,14 @@ public class AST_Value {
                 operation_final("MATCH",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
                 operation_final("UNMATCH",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.SOMADOR) {
+                operation_final("SUM",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.DIMINUIDOR) {
+                operation_final("SUB",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.MULTIPLICADOR) {
+                operation_final("MUX",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.DIVISOR) {
+                operation_final("DIV",ASTPai);
             } else {
                 System.out.println("Problema E :  " + TokenC2.getConteudo());
             }
@@ -188,6 +204,14 @@ public class AST_Value {
                 operation_final("MATCH",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
                 operation_final("UNMATCH",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.SOMADOR) {
+                operation_final("SUM",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.DIMINUIDOR) {
+                operation_final("SUB",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.MULTIPLICADOR) {
+                operation_final("MUX",ASTPai);
+            } else if (TokenC2.getTipo() == TokenTipo.DIVISOR) {
+                operation_final("DIV",ASTPai);
             } else {
                 System.out.println("Problema F : " + TokenD.getConteudo());
             }
@@ -235,6 +259,14 @@ public class AST_Value {
                             operation_final("MATCH",ASTPai);
                         } else if (TokenC4.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
                             operation_final("UNMATCH",ASTPai);
+                        } else if (TokenC4.getTipo() == TokenTipo.SOMADOR) {
+                            operation_final("SUM",ASTPai);
+                        } else if (TokenC4.getTipo() == TokenTipo.DIMINUIDOR) {
+                            operation_final("SUB",ASTPai);
+                        } else if (TokenC4.getTipo() == TokenTipo.MULTIPLICADOR) {
+                            operation_final("MUX",ASTPai);
+                        } else if (TokenC4.getTipo() == TokenTipo.DIVISOR) {
+                            operation_final("DIV",ASTPai);
                         } else {
                             System.out.println("Problema IZ : " + TokenC4.getConteudo());
                         }
@@ -261,6 +293,14 @@ public class AST_Value {
                     operation_final("MATCH",ASTPai);
                 } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
                     operation_final("UNMATCH",ASTPai);
+                } else if (TokenC2.getTipo() == TokenTipo.SOMADOR) {
+                    operation_final("SUM",ASTPai);
+                } else if (TokenC2.getTipo() == TokenTipo.DIMINUIDOR) {
+                    operation_final("SUB",ASTPai);
+                } else if (TokenC2.getTipo() == TokenTipo.MULTIPLICADOR) {
+                    operation_final("MUX",ASTPai);
+                } else if (TokenC2.getTipo() == TokenTipo.DIVISOR) {
+                    operation_final("DIV",ASTPai);
 
                 } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
 
@@ -277,11 +317,17 @@ public class AST_Value {
                     if (TokenC4.getTipo() == mTerminar) {
                         return;
                     } else if (TokenC4.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-
-
                         operation_final("MATCH",ASTPai);
                     } else if (TokenC4.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
                         operation_final("UNMATCH",ASTPai);
+                    } else if (TokenC4.getTipo() == TokenTipo.SOMADOR) {
+                        operation_final("SUM",ASTPai);
+                    } else if (TokenC4.getTipo() == TokenTipo.DIMINUIDOR) {
+                        operation_final("SUB",ASTPai);
+                    } else if (TokenC4.getTipo() == TokenTipo.MULTIPLICADOR) {
+                        operation_final("MUX",ASTPai);
+                    } else if (TokenC4.getTipo() == TokenTipo.DIVISOR) {
+                        operation_final("DIV",ASTPai);
                     } else {
                         System.out.println("Problema E :  " + TokenC4.getConteudo());
                     }
@@ -303,6 +349,14 @@ public class AST_Value {
                         operation_final("MATCH",ASTPai);
                     } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
                         operation_final("UNMATCH",ASTPai);
+                    } else if (TokenC3.getTipo() == TokenTipo.SOMADOR) {
+                        operation_final("SUM",ASTPai);
+                    } else if (TokenC3.getTipo() == TokenTipo.DIMINUIDOR) {
+                        operation_final("SUB",ASTPai);
+                    } else if (TokenC3.getTipo() == TokenTipo.MULTIPLICADOR) {
+                        operation_final("MUX",ASTPai);
+                    } else if (TokenC3.getTipo() == TokenTipo.DIVISOR) {
+                        operation_final("DIV",ASTPai);
                     } else {
                         System.out.println("Problema A : " + TokenC3.getConteudo());
                     }
@@ -323,6 +377,14 @@ public class AST_Value {
                         operation_final("MATCH",ASTPai);
                     } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
                         operation_final("UNMATCH",ASTPai);
+                    } else if (TokenC3.getTipo() == TokenTipo.SOMADOR) {
+                        operation_final("SUM",ASTPai);
+                    } else if (TokenC3.getTipo() == TokenTipo.DIMINUIDOR) {
+                        operation_final("SUB",ASTPai);
+                    } else if (TokenC3.getTipo() == TokenTipo.MULTIPLICADOR) {
+                        operation_final("MUX",ASTPai);
+                    } else if (TokenC3.getTipo() == TokenTipo.DIVISOR) {
+                        operation_final("DIV",ASTPai);
                     } else {
                         System.out.println("Problema A : " + TokenC3.getConteudo());
                     }
@@ -341,6 +403,14 @@ public class AST_Value {
                         operation_final("MATCH",ASTPai);
                     } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
                         operation_final("UNMATCH",ASTPai);
+                    } else if (TokenC3.getTipo() == TokenTipo.SOMADOR) {
+                        operation_final("SUM",ASTPai);
+                    } else if (TokenC3.getTipo() == TokenTipo.DIMINUIDOR) {
+                        operation_final("SUB",ASTPai);
+                    } else if (TokenC3.getTipo() == TokenTipo.MULTIPLICADOR) {
+                        operation_final("MUX",ASTPai);
+                    } else if (TokenC3.getTipo() == TokenTipo.DIVISOR) {
+                        operation_final("DIV",ASTPai);
                     } else {
                         System.out.println("Problema G : " + TokenC3.getConteudo());
                     }
@@ -363,186 +433,6 @@ public class AST_Value {
 
     }
 
-
-
-    public void initArgumentandoUltimo(AST ASTPai) {
-
-
-        AST_Match_UnMatch Matcher = new AST_Match_UnMatch(mCompiler);
-
-
-        Token TokenD = mCompiler.getTokenAvante();
-
-
-        if (TokenD.getTipo() == TokenTipo.NUMERO) {
-
-            ASTPai.setNome(TokenD.getConteudo());
-            ASTPai.setValor("Num");
-
-            Token TokenC2 = mCompiler.getTokenAvante();
-
-            if (TokenC2.getTipo() == TokenTipo.VIRGULA) {
-
-            } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-
-            } else {
-                System.out.println("Problema E :  " + TokenD.getConteudo());
-            }
-
-        } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
-
-            ASTPai.setNome(TokenD.getConteudo());
-            ASTPai.setValor("Text");
-
-            Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == TokenTipo.VIRGULA) {
-
-            } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-
-            } else {
-                System.out.println("Problema F : " + TokenD.getConteudo());
-            }
-
-        } else if (TokenD.getTipo() == TokenTipo.ID) {
-
-
-            if (TokenD.mesmoConteudo("init")) {
-
-                ASTPai.setValor("INIT");
-
-                Token TokenC2 = mCompiler.getTokenAvante();
-                if (TokenC2.getTipo() == TokenTipo.ID) {
-
-                    ASTPai.setNome(TokenC2.getConteudo());
-                    Token TokenC3 = mCompiler.getTokenAvante();
-
-                    if (TokenC3.getTipo() == TokenTipo.PARENTESES_ABRE) {
-
-                        AST_Value_Argument gAST = new AST_Value_Argument(mCompiler);
-                        gAST. ReceberArgumentos(ASTPai);
-
-                        Token TokenC4 = mCompiler.getTokenAvante();
-                        if (TokenC4.getTipo() == TokenTipo.VIRGULA) {
-
-                        } else if (TokenC4.getTipo() == TokenTipo.PARENTESES_FECHA) {
-
-                        } else {
-                            System.out.println("Problema IZ : " + TokenC4.getConteudo());
-                        }
-                    } else if (TokenC2.getTipo() == TokenTipo.VIRGULA) {
-
-                    } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-
-                    } else {
-                        System.out.println("Problema IP : " + TokenC3.getConteudo());
-                    }
-
-
-                } else {
-                    System.out.println("Problema IC : " + TokenC2.getConteudo());
-                }
-
-            } else {
-
-
-                ASTPai.setNome(TokenD.getConteudo());
-                ASTPai.setValor("ID");
-
-                Token TokenC2 = mCompiler.getTokenAvante();
-                if (TokenC2.getTipo() == TokenTipo.VIRGULA) {
-
-                } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-
-                } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
-
-                    ASTPai.setValor("STAGE");
-                    Token TokenC3 = mCompiler.getTokenAvante();
-                    if (TokenC3.getTipo() == TokenTipo.ID) {
-                        ASTPai.criarBranch("STAGED").setNome(TokenC3.getConteudo());
-                    } else {
-                        System.out.println("Problema ZZ : " + TokenC3.getConteudo());
-                    }
-
-
-                    Token TokenC4 = mCompiler.getTokenAvante();
-                    if (TokenC4.getTipo() == TokenTipo.VIRGULA) {
-
-                    } else if (TokenC4.getTipo() == TokenTipo.PARENTESES_FECHA) {
-
-                    } else {
-                        System.out.println("Problema E :  " + TokenC4.getConteudo());
-                    }
-
-
-                } else if (TokenC2.getTipo() == TokenTipo.PONTO) {
-
-                    // System.out.println("Vamos pontuar o escopo 1 !");
-
-
-                    ASTPai.setValor("STRUCT");
-
-                    ReceberNovoEscopo(ASTPai);
-
-                    Token TokenC3 = mCompiler.getTokenAvante();
-                    if (TokenC2.getTipo() == TokenTipo.VIRGULA) {
-
-                    } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-
-                    } else {
-                        System.out.println("Problema A : " + TokenC3.getConteudo());
-                    }
-
-                } else if (TokenC2.getTipo() == TokenTipo.SETA) {
-
-                    // System.out.println("Vamos pontuar o escopo 1 !");
-
-
-                    ASTPai.setValor("STRUCT_EXTERN");
-
-                    ReceberNovoEscopo(ASTPai);
-
-                    Token TokenC3 = mCompiler.getTokenAvante();
-                    if (TokenC2.getTipo() == TokenTipo.VIRGULA) {
-
-                    } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-
-                    } else {
-                        System.out.println("Problema A : " + TokenC3.getConteudo());
-                    }
-
-                } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_ABRE) {
-
-                    ASTPai.setValor("FUNCT");
-
-                    AST_Value_Argument gAST = new AST_Value_Argument(mCompiler);
-                    gAST. ReceberArgumentos(ASTPai);
-
-                    Token TokenC3 = mCompiler.getTokenAvante();
-                    if (TokenC2.getTipo() == TokenTipo.VIRGULA) {
-
-                    } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-
-                    } else {
-                        System.out.println("Problema G : " + TokenC3.getConteudo());
-                    }
-
-
-                } else {
-                    System.out.println("Problema H : " + TokenD.getConteudo());
-                }
-
-            }
-
-
-        } else {
-
-            System.out.println("Valorando : " + TokenD.getConteudo());
-
-
-        }
-
-
-    }
 
 
     public void ReceberNovoEscopo(AST ASTPai) {
@@ -626,10 +516,7 @@ public class AST_Value {
                     System.out.println("Problema C : " + TokenD.getConteudo());
                 }
 
-            } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                operation_final("MATCH",ASTPai);
-            } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                operation_final("UNMATCH",ASTPai);
+
             } else if (TokenC2.getTipo() == mTerminar) {
 
             } else {
@@ -710,10 +597,6 @@ public class AST_Value {
                 Token TokenC3 = mCompiler.getTokenAvante();
                 if (TokenC3.getTipo() == mTerminar) {
                     return;
-                } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                    operation_final("MATCH",ASTPai);
-                } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                    operation_final("UNMATCH",ASTPai);
 
                 } else {
                     System.out.println("Problema A : " + TokenC3.getConteudo());
@@ -739,7 +622,26 @@ public class AST_Value {
         Token TokenD = mCompiler.getTokenAvante();
 
 
-        if (TokenD.getTipo() == TokenTipo.NUMERO) {
+        if (TokenD.getTipo() == TokenTipo.PARENTESES_ABRE) {
+
+            ASTPai.setNome("");
+            ASTPai.setValor("BLOCK");
+
+            AST_Value mAST = new AST_Value(mCompiler);
+            mAST.mTerminar = TokenTipo.PARENTESES_FECHA;
+            mAST.mTerminarErro = "Era esperado )";
+
+            mAST.init(ASTPai.criarBranch("VALUE"));
+
+            Token TokenC2 = mCompiler.getTokenAvante();
+            if (TokenC2.getTipo() == TokenTipo.VIRGULA || TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
+                return;
+
+            } else {
+                System.out.println("Problema : " + TokenD.getConteudo());
+            }
+
+        } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
 
             ASTPai.setNome(TokenD.getConteudo());
             ASTPai.setValor("Num");

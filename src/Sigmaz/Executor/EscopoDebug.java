@@ -419,9 +419,9 @@ public class EscopoDebug {
                 contando += 1;
 
                 if (contando < total) {
-                    ret += mAST.getNome() + " : " + mAST.getValor() + " , ";
+                    ret += mAST.getNome() + " : " + getTipagem(mAST.getBranch("TYPE")) + " , ";
                 } else {
-                    ret += mAST.getNome() + " : " + mAST.getValor() + " ";
+                    ret += mAST.getNome() + " : " + getTipagem(mAST.getBranch("TYPE")) + " ";
                 }
             }
         }

@@ -19,6 +19,8 @@ public class AST_Return {
         AST_Value mAST = new AST_Value(mCompiler);
         mAST.init(ASTReturn);
 
+        ASTReturn.setTipo("RETURN");
+
     }
 
 

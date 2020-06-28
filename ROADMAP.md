@@ -118,4 +118,7 @@ Linguagem de Programação Estruturada - Implementações
         
     - 2020 06 28
         - OPERADORES SUM,SUB,MUX e DIV
+        - AST_RETURN - Organizando
+        - AST_TYPE - CRIACAO
+        - AST_VALUE - REORGANIZANDO ULTIMA PARTE
        
