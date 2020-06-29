@@ -1,3 +1,3 @@
-require "anexo.sigmaz";
+import "anexo.sigmaz";
 
 call iniciar -> amontoar ( );

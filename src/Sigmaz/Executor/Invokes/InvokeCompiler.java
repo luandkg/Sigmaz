@@ -135,7 +135,7 @@ public class InvokeCompiler {
 
                     System.out.println("\n ######################### TYPES - INSTANCES ############################ ");
 
-                    for (Run_Type mRun_Struct : mRunTime.getTypes()) {
+                    for (Run_Type mRun_Struct : mRunTime.getTypes_Instances()) {
 
                         System.out.println("\t - " + mRun_Struct.getTypeNome() + " -> " + mRun_Struct.getNome());
 

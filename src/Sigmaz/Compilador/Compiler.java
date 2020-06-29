@@ -209,7 +209,7 @@ public class Compiler {
     }
 
 
-    public void requisitando(String eArquivo, ArrayList<String> eRequisitados) {
+    public void importando(String eArquivo, ArrayList<String> eRequisitados) {
         mIndex = 0;
 
         mArquivo = eArquivo;
@@ -268,9 +268,9 @@ public class Compiler {
         while (Continuar()) {
 
             Token TokenC = this.getTokenCorrente();
-            if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("require")) {
+            if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("import")) {
 
-                AST_Requisicao mAST = new AST_Requisicao(this);
+                AST_Import mAST = new AST_Import(this);
                 mAST.init(AST_Raiz);
 
                 if (mErros_Lexer.size() > 0) {
@@ -280,10 +280,10 @@ public class Compiler {
                     break;
                 }
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("required")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("require")) {
 
-                AST_Requisicao mAST = new AST_Requisicao(this);
-                mAST.inited(AST_Raiz);
+                AST_Require mAST = new AST_Require(this);
+                mAST.init(AST_Raiz);
 
                 if (mErros_Lexer.size() > 0) {
                     break;

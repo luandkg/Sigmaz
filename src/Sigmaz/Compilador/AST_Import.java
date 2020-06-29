@@ -6,11 +6,11 @@ import Sigmaz.Utils.AST;
 
 import java.io.File;
 
-public class AST_Requisicao {
+public class AST_Import {
 
     private Compiler mCompiler;
 
-    public AST_Requisicao(Compiler eCompiler) {
+    public AST_Import(Compiler eCompiler) {
         mCompiler = eCompiler;
     }
 
@@ -34,7 +34,7 @@ public class AST_Requisicao {
 
 
                     Compiler CompilerC = new Compiler();
-                    CompilerC.requisitando(mLocalRequisicao, mCompiler.getRequisitados());
+                    CompilerC.importando(mLocalRequisicao, mCompiler.getRequisitados());
 
                     mCompiler.getErros_Lexer().addAll(CompilerC.getErros_Lexer());
                     mCompiler.getErros_Compiler().addAll(CompilerC.getErros_Compiler());
@@ -48,33 +48,13 @@ public class AST_Requisicao {
 
 
             } else {
-                mCompiler.errarCompilacao("Requisicao nao encontrada : " + mLocalRequisicao, TokenC);
+                mCompiler.errarCompilacao("Importacao nao encontrada : " + mLocalRequisicao, TokenC);
             }
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o caminho de uma requisicao !", TokenC);
+            mCompiler.errarCompilacao("Era esperado o caminho de uma Importacao !", TokenC);
         }
-
-    }
-
-    public void inited(AST ASTPai) {
-
-        Token TokenC = mCompiler.getTokenAvante();
-
-        if (TokenC.getTipo() == TokenTipo.ID) {
-
-
-            AST mReq = ASTPai.criarBranch("REQUIRED");
-            mReq.setNome(TokenC.getConteudo());
-
-            Token TokenP3 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA, "Era esperado PONTO E VIRGULA !");
-
-
-        } else {
-            mCompiler.errarCompilacao("Era esperado o caminho de uma requisicao !", TokenC);
-        }
-
 
     }
 

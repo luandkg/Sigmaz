@@ -1,11 +1,9 @@
 package Sigmaz.Executor;
 
-import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Executor.Runners.*;
 import Sigmaz.Utils.AST;
 import Sigmaz.Utils.Documentador;
 import Sigmaz.Utils.Documento;
-import Sigmaz.Utils.Texto;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -19,7 +17,7 @@ public class RunTime {
 
     private ArrayList<Run_Struct> mHeap;
     private ArrayList<Run_Extern> mExtern;
-    private ArrayList<Run_Type> mTypes;
+    private ArrayList<Run_Type> mTypes_Instances;
 
 
     private ArrayList<AST> mGlobalActions;
@@ -78,7 +76,7 @@ public class RunTime {
         mGlobalStructs = new ArrayList<AST>();
 
         mHeap = new ArrayList<Run_Struct>();
-        mTypes = new ArrayList<Run_Type>();
+        mTypes_Instances = new ArrayList<Run_Type>();
         mExtern = new ArrayList<Run_Extern>();
 
         mEscopoGlobal = null;
@@ -108,7 +106,7 @@ public class RunTime {
 
         mHeap.clear();
         mExtern.clear();
-        mTypes.clear();
+        mTypes_Instances.clear();
 
         mT_Primitivos.clear();
         mT_Casts.clear();
@@ -184,8 +182,8 @@ public class RunTime {
         return mExtern;
     }
 
-    public ArrayList<Run_Type> getTypes() {
-        return mTypes;
+    public ArrayList<Run_Type> getTypes_Instances() {
+        return mTypes_Instances;
     }
 
 
@@ -224,7 +222,7 @@ public class RunTime {
     }
 
     public void adicionarType(Run_Type eEscopo) {
-        mTypes.add(eEscopo);
+        mTypes_Instances.add(eEscopo);
     }
 
 
@@ -241,9 +239,9 @@ public class RunTime {
 
     public void removerType(String eNome) {
 
-        for (Run_Type mRun_Struct : mTypes) {
+        for (Run_Type mRun_Struct : mTypes_Instances) {
             if (mRun_Struct.mesmoNome(eNome)) {
-                mTypes.remove(mRun_Struct);
+                mTypes_Instances.remove(mRun_Struct);
               //  System.out.println("Removendo Object Type : " + eNome);
                 break;
             }
@@ -278,7 +276,7 @@ public class RunTime {
         Run_Type mRet = null;
         boolean enc = false;
 
-        for (Run_Type mRun_Struct : mTypes) {
+        for (Run_Type mRun_Struct : mTypes_Instances) {
             if (mRun_Struct.mesmoNome(eNome)) {
                 mRet = mRun_Struct;
                 enc = true;
@@ -785,5 +783,10 @@ public class RunTime {
     public int getStructs() {
         return mContador_Structs;
     }
+
+    public int getTypes() {
+        return mContador_Types;
+    }
+
 
 }

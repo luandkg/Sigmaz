@@ -15,11 +15,6 @@ import java.util.ArrayList;
 public class Documentador {
 
 
-
-
-
-
-
 	public String mapaObjeto(String eArquivo) {
 
 		String saida = "";

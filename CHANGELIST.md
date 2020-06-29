@@ -9,6 +9,9 @@ Linguagem de Programação Estruturada - Alterações
         
     - 2020 06 29
         - REESTRUTURAÇÃO DO LEXER
+        - DIVISAO DA REQUISICAO
+            - AST_IMPORT 
+            - AST_REQUIRE
         
     
  

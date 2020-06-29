@@ -1,6 +1,6 @@
-require "libs/lib.sigmaz";
-require "sacola.sigmaz";
-require "pessoa.sigmaz";
+import "libs/lib.sigmaz";
+import "sacola.sigmaz";
+import "pessoa.sigmaz";
 
 call iniciar -> pular ( );
 

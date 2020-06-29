@@ -127,3 +127,4 @@ Linguagem de Programação Estruturada - Implementações
         - TYPE
         - UNIFICACAO DO RUN_FUNC
         - POSICAO E LINHA DE ERRO
+        - COMENTARIOS COM MULTIPLAS LINHAS

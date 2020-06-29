@@ -1,18 +1,17 @@
 
-require "operadores.sigmaz";
-require "terminal.sigmaz";
-require "cast.sigmaz";
-require "strings.sigmaz";
-require "pos.sigmaz";
-require "neg.sigmaz";
-require "tempo.sigmaz";
+import "operadores.sigmaz";
+import "terminal.sigmaz";
+import "cast.sigmaz";
+import "strings.sigmaz";
+import "pos.sigmaz";
+import "neg.sigmaz";
+import "tempo.sigmaz";
 
 mockiz SIGMAZ : string = "SIGMAZ 1.0";
 mockiz VERSAO : num = 1.0;
 define ALGO : string = "__ALGO__";
 
 
-#require "organismos.sigmaz";
 stages Numeros -> {
 	POSITIVO , NEGATIVO, ZERO
 }

@@ -22,9 +22,8 @@ public class Sigmaz {
 
     private void geral(int eOpcao, String eArquivo, String saida) {
 
-
         File arq = new File(saida);
-      String  mLocal = arq.getParent() + "/";
+        String  mLocal = arq.getParent() + "/";
 
 
         System.out.println("################ SIGMAZ ################");
@@ -123,7 +122,6 @@ public class Sigmaz {
             System.out.println("\t - Finalizado : " + AF);
 
 
-
             System.out.println("\t - Erros : " + AnaliseC.getErros().size());
 
 
@@ -179,11 +177,12 @@ public class Sigmaz {
                 System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
                 System.out.println("");
                 System.out.println("\t - Actions : " + RunTimeC.getActions());
-                System.out.println("\t - Casts : " + RunTimeC.getCasts());
                 System.out.println("\t - Functions : " + RunTimeC.getFunctions());
                 System.out.println("\t - Operations : " + RunTimeC.getOperations());
+                System.out.println("\t - Casts : " + RunTimeC.getCasts());
                 System.out.println("\t - Structs : " + RunTimeC.getStructs());
                 System.out.println("\t - Stages : " + RunTimeC.getStages());
+                System.out.println("\t - Types : " + RunTimeC.getTypes());
 
                 System.out.println("");
 
