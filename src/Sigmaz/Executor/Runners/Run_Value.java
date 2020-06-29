@@ -441,7 +441,7 @@ public class Run_Value {
 
         String eQualificador = mRunTime.getQualificador(mItem.getTipo());
 
-     //   System.out.println("Tipo : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
+      //  System.out.println("Tipo : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
 
         if (eQualificador.contentEquals("STRUCT")) {
 
@@ -451,6 +451,8 @@ public class Run_Value {
 
             Struct_DentroType(mItem.getValor(), ASTCorrente, eRetorno);
 
+        } else {
+            mRunTime.getErros().add("CAST nao possui operador PONTO !");
         }
 
 
@@ -470,7 +472,7 @@ public class Run_Value {
 
         if (eInternal.mesmoValor("STRUCT_OBJECT")) {
 
-          //  System.out.println("STRUCT_OBJECT TYPE : " + eInternal.getNome());
+            //  System.out.println("STRUCT_OBJECT TYPE : " + eInternal.getNome());
 
 
             Item eItem = mEscopoType.init_Object(eInternal, mEscopo, "<<ANY>>");
@@ -479,7 +481,7 @@ public class Run_Value {
                 return;
             }
 
-       //     System.out.println("STRUCT_OBJECT : " + eInternal.getNome() + " = " + eItem.getValor());
+            //    System.out.println("STRUCT_OBJECT : " + eInternal.getNome() + " = " + eItem.getValor());
 
             while (eInternal.existeBranch("INTERNAL")) {
 

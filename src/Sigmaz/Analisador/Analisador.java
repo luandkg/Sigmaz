@@ -13,10 +13,12 @@ public class Analisador {
     private ArrayList<String> mErros;
     private ArrayList<String> mProibidos;
 
+    private ArrayList<String> mPrimitivos;
     private ArrayList<String> mTipados;
 
     private Analisar_Function mAnalisar_Function;
     private Analisar_Action mAnalisar_Action;
+    private Analisar_Cast mAnalisar_Cast;
 
     private Analisar_Daz mAnalisar_Daz;
     private Analisar_When mAnalisar_When;
@@ -47,6 +49,7 @@ public class Analisador {
 
         mAnalisar_Function = new Analisar_Function(this);
         mAnalisar_Action = new Analisar_Action(this);
+        mAnalisar_Cast = new Analisar_Cast(this);
 
         mAnalisar_Daz = new Analisar_Daz(this);
         mAnalisar_When = new Analisar_When(this);
@@ -87,6 +90,15 @@ public class Analisador {
         mTipados.add("string");
         mTipados.add("bool");
 
+        mPrimitivos = new ArrayList<String>();
+        mPrimitivos.add("num");
+        mPrimitivos.add("string");
+        mPrimitivos.add("bool");
+    }
+
+
+    public ArrayList<String> getPrimitivos() {
+        return mPrimitivos;
     }
 
     public Analisar_Function getAnalisar_Function() {
@@ -300,23 +312,21 @@ public class Analisador {
         ArrayList<String> mAlocados = copiarAlocados(mAlocadosAntes);
 
 
-
-
         for (AST mAST : ASTPai.getASTS()) {
             if (mAST.mesmoTipo("REQUIRED")) {
 
-            } else   if (mAST.mesmoTipo("STRUCT")) {
+            } else if (mAST.mesmoTipo("STRUCT")) {
 
                 mTipados.add(mAST.getNome());
 
 
-            } else   if (mAST.mesmoTipo("STAGES")) {
+            } else if (mAST.mesmoTipo("STAGES")) {
 
                 mTipados.add(mAST.getNome());
-            } else   if (mAST.mesmoTipo("CAST")) {
+            } else if (mAST.mesmoTipo("CAST")) {
 
                 mTipados.add(mAST.getNome());
-            } else   if (mAST.mesmoTipo("TYPE")) {
+            } else if (mAST.mesmoTipo("TYPE")) {
 
                 mTipados.add(mAST.getNome());
 
@@ -405,6 +415,8 @@ public class Analisador {
                 if (mProibidos.contains(mAST.getNome())) {
                     mErros.add("Cast : " + mAST.getNome() + " : Nome Proibido !");
                 }
+
+                mAnalisar_Cast.init(mAST);
 
             } else if (mAST.mesmoTipo("STRUCT")) {
 

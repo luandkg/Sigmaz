@@ -43,6 +43,7 @@ act inicio ( ) {
 
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 
+    b = null;
 
     invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 
@@ -53,4 +54,5 @@ act trash(a:any){
     invoke __COMPILER__ -> OBJECT (a) :: REMOVE;
 
 }
+
 
