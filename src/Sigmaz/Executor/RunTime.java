@@ -14,19 +14,31 @@ public class RunTime {
 
     private ArrayList<AST> mASTS;
     private ArrayList<String> mErros;
-    private Primitivos mPrimitivos;
 
     private Escopo mEscopoGlobal;
 
     private ArrayList<Run_Struct> mHeap;
     private ArrayList<Run_Extern> mExtern;
+    private ArrayList<Run_Type> mTypes;
 
 
     private ArrayList<AST> mGlobalActions;
     private ArrayList<AST> mGlobalFunctions;
-    private ArrayList<Index_Function> mGlobalOperacoes;
+
+    private ArrayList<AST> mGlobalUnarios;
+
+    private ArrayList<AST> mGlobalCasts;
+    private ArrayList<AST> mGlobalTypes;
     private ArrayList<AST> mGlobalStages;
     private ArrayList<AST> mGlobalStructs;
+    private ArrayList<AST> mGlobalOperacoes;
+
+    private ArrayList<String> mT_Primitivos;
+    private ArrayList<String> mT_Casts;
+    private ArrayList<String> mT_Types;
+    private ArrayList<String> mT_Structs;
+    private ArrayList<String> mT_Stages;
+
 
     private String mLocal;
 
@@ -40,6 +52,7 @@ public class RunTime {
     private int mContador_Opertations;
     private int mContador_Structs;
     private int mContador_Stages;
+    private int mContador_Types;
 
     public RunTime() {
 
@@ -47,15 +60,25 @@ public class RunTime {
 
         mErros = new ArrayList<>();
 
-        mPrimitivos = new Primitivos();
+
+        mT_Primitivos = new ArrayList<String>();
+        mT_Casts = new ArrayList<String>();
+        mT_Types = new ArrayList<String>();
+        mT_Structs = new ArrayList<String>();
+        mT_Stages = new ArrayList<String>();
+
 
         mGlobalActions = new ArrayList<>();
         mGlobalFunctions = new ArrayList<>();
+        mGlobalOperacoes = new ArrayList<AST>();
+        mGlobalUnarios = new ArrayList<AST>();
+        mGlobalCasts = new ArrayList<AST>();
+        mGlobalTypes = new ArrayList<AST>();
         mGlobalStages = new ArrayList<AST>();
         mGlobalStructs = new ArrayList<AST>();
-        mGlobalOperacoes = new ArrayList<Index_Function>();
 
         mHeap = new ArrayList<Run_Struct>();
+        mTypes = new ArrayList<Run_Type>();
         mExtern = new ArrayList<Run_Extern>();
 
         mEscopoGlobal = null;
@@ -70,10 +93,7 @@ public class RunTime {
 
     public void limpar() {
 
-
-        //   mASTS.clear();
         mErros.clear();
-
 
         mHEAPID = 0;
 
@@ -88,13 +108,54 @@ public class RunTime {
 
         mHeap.clear();
         mExtern.clear();
+        mTypes.clear();
+
+        mT_Primitivos.clear();
+        mT_Casts.clear();
+        mT_Types.clear();
+        mT_Structs.clear();
+        mT_Stages.clear();
 
         mGlobalActions.clear();
         mGlobalFunctions.clear();
+        mGlobalOperacoes.clear();
+        mGlobalUnarios.clear();
+        mGlobalCasts.clear();
+        mGlobalTypes.clear();
         mGlobalStages.clear();
         mGlobalStructs.clear();
-        mGlobalOperacoes.clear();
 
+
+    }
+
+    public String getQualificador(String aNome) {
+        String ret = "";
+
+
+        String eNome = "";
+        int i =0;
+        int o = aNome.length();
+        while(i<o){
+            String l = String.valueOf(aNome.charAt(i));
+            if (l.contentEquals("<")){
+                break;
+            }else{eNome +=l;}
+            i+=1;
+        }
+
+        if (mT_Primitivos.contains(eNome)) {
+            ret = "PRIMITIVE";
+        } else if (mT_Casts.contains(eNome)) {
+            ret = "CAST";
+        } else if (mT_Types.contains(eNome)) {
+            ret = "TYPE";
+        } else if (mT_Structs.contains(eNome)) {
+            ret = "STRUCT";
+        } else if (mT_Stages.contains(eNome)) {
+            ret = "STAGES";
+        }
+
+        return ret;
     }
 
 
@@ -122,6 +183,11 @@ public class RunTime {
     public ArrayList<Run_Extern> getExtern() {
         return mExtern;
     }
+
+    public ArrayList<Run_Type> getTypes() {
+        return mTypes;
+    }
+
 
     public ArrayList<AST> getASTS() {
         return mASTS;
@@ -157,12 +223,28 @@ public class RunTime {
         mHeap.add(eEscopo);
     }
 
+    public void adicionarType(Run_Type eEscopo) {
+        mTypes.add(eEscopo);
+    }
+
 
     public void removerHeap(String eNome) {
 
         for (Run_Struct mRun_Struct : mHeap) {
             if (mRun_Struct.mesmoNome(eNome)) {
                 mHeap.remove(mRun_Struct);
+                break;
+            }
+        }
+
+    }
+
+    public void removerType(String eNome) {
+
+        for (Run_Type mRun_Struct : mTypes) {
+            if (mRun_Struct.mesmoNome(eNome)) {
+                mTypes.remove(mRun_Struct);
+              //  System.out.println("Removendo Object Type : " + eNome);
                 break;
             }
         }
@@ -191,6 +273,26 @@ public class RunTime {
 
     }
 
+    public Run_Type getRun_Type(String eNome) {
+
+        Run_Type mRet = null;
+        boolean enc = false;
+
+        for (Run_Type mRun_Struct : mTypes) {
+            if (mRun_Struct.mesmoNome(eNome)) {
+                mRet = mRun_Struct;
+                enc = true;
+                break;
+            }
+        }
+
+        if (!enc) {
+            mErros.add("Nao foi possivel encontrar a type : " + eNome);
+        }
+
+        return mRet;
+
+    }
 
     public Run_Extern getRun_Extern(String eNome) {
 
@@ -242,12 +344,19 @@ public class RunTime {
                         mContador_Actions += 1;
                     } else if (ASTC.mesmoTipo("OPERATION")) {
                         mContador_Opertations += 1;
+
                     } else if (ASTC.mesmoTipo("CAST")) {
                         mContador_Casts += 1;
                     } else if (ASTC.mesmoTipo("STAGES")) {
                         mContador_Stages += 1;
+
+
                     } else if (ASTC.mesmoTipo("STRUCT")) {
                         mContador_Structs += 1;
+
+                    } else if (ASTC.mesmoTipo("TYPE")) {
+                        mContador_Types += 1;
+
                     }
 
                 }
@@ -341,20 +450,34 @@ public class RunTime {
                     } else if (ASTC.mesmoTipo("OPERATION")) {
                         Global.guardar(ASTC);
 
-                        mGlobalOperacoes.add(new Index_Function(ASTC));
+                        mGlobalOperacoes.add(ASTC);
+                    } else if (ASTC.mesmoTipo("UNARY")) {
+                        Global.guardar(ASTC);
+
+                        mGlobalUnarios.add(ASTC);
 
                     } else if (ASTC.mesmoTipo("CAST")) {
                         Global.guardar(ASTC);
+                        mT_Casts.add(ASTC.getNome());
+
+                        mGlobalCasts.add(ASTC);
+
                     } else if (ASTC.mesmoTipo("STAGES")) {
 
                         Global.guardar(ASTC);
 
                         mGlobalStages.add(ASTC);
+                        mT_Stages.add(ASTC.getNome());
 
                     } else if (ASTC.mesmoTipo("STRUCT")) {
 
                         mGlobalStructs.add(ASTC);
+                        mT_Structs.add(ASTC.getNome());
 
+                    } else if (ASTC.mesmoTipo("TYPE")) {
+                        mT_Types.add(ASTC.getNome());
+
+                        mGlobalTypes.add(ASTC);
 
                     }
 
@@ -366,7 +489,7 @@ public class RunTime {
                         if (mStructBody.mesmoTipo("OPERATION") && mStructBody.getBranch("VISIBILITY").mesmoNome("EXTERN")) {
                             // System.out.println("PORRA PERDIDA");
 
-                            mGlobalOperacoes.add(new Index_Function(mStructBody));
+                            mGlobalOperacoes.add(mStructBody);
 
 
                         }
@@ -480,6 +603,15 @@ public class RunTime {
         return mGlobalFunctions;
     }
 
+    public ArrayList<AST> getGlobalCasts() {
+        return mGlobalCasts;
+    }
+
+    public ArrayList<AST> getGlobalTypes() {
+        return mGlobalTypes;
+    }
+
+
     public ArrayList<AST> getGlobalStages() {
         return mGlobalStages;
     }
@@ -488,8 +620,12 @@ public class RunTime {
         return mGlobalStructs;
     }
 
-    public ArrayList<Index_Function> getGlobalOperations() {
+    public ArrayList<AST> getGlobalOperations() {
         return mGlobalOperacoes;
+    }
+
+    public ArrayList<AST> getGlobalUnarios() {
+        return mGlobalUnarios;
     }
 
 
@@ -539,18 +675,16 @@ public class RunTime {
                         mEstrutural.guardar(ASTC);
                     } else if (ASTC.mesmoTipo("CAST")) {
                         mEstrutural.guardar(ASTC);
+                    } else if (ASTC.mesmoTipo("TYPE")) {
+                        mEstrutural.guardar(ASTC);
                     } else if (ASTC.mesmoTipo("STRUCT")) {
                         mEstrutural.guardar(ASTC);
                     } else if (ASTC.mesmoTipo("STAGES")) {
                         mEstrutural.guardar(ASTC);
                     } else if (ASTC.mesmoTipo("CALL")) {
-
                         mEstrutural.guardar(ASTC);
-
-
                     } else if (ASTC.mesmoTipo("DEFINE")) {
                         mEstrutural.guardar(ASTC);
-
                     } else if (ASTC.mesmoTipo("MOCKIZ")) {
                         mEstrutural.guardar(ASTC);
 
@@ -574,9 +708,6 @@ public class RunTime {
 
     }
 
-    public boolean isPrimitivo(String eTipo) {
-        return mPrimitivos.isPrimitivo(eTipo);
-    }
 
 
     public String getArvoreDeInstrucoes() {

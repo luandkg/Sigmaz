@@ -31,7 +31,7 @@ public class AST_InitStruct {
             AST_Call.setValor("FALSE");
 
             if (!TokenC.mesmoConteudo(NomeStruct)) {
-                mCompiler.errarCompilacao("O nome do INIT deve ser igual ao nome da Struct : " + NomeStruct + " -> INIT " + TokenC.getConteudo(), TokenC.getInicio());
+                mCompiler.errarCompilacao("O nome do INIT deve ser igual ao nome da Struct : " + NomeStruct + " -> INIT " + TokenC.getConteudo(), TokenC);
             }
 
             AST AST_Arguments = AST_Corrente.criarBranch("ARGUMENTS");
@@ -52,7 +52,7 @@ public class AST_InitStruct {
                     AST_Call.setValor("TRUE");
 
                 } else {
-                    mCompiler.errarCompilacao("Era esperado o nome do INIT da Struct Pai ", TokenP.getInicio());
+                    mCompiler.errarCompilacao("Era esperado o nome do INIT da Struct Pai ", TokenP);
                 }
 
 
@@ -69,7 +69,7 @@ public class AST_InitStruct {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome para uma INIT !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome para uma INIT !", TokenC);
         }
 
 

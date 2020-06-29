@@ -31,7 +31,7 @@ public class AST_Argumentos {
             if (TokenD.getTipo() == TokenTipo.PARENTESES_FECHA) {
 
                 if (mais) {
-                    mCompiler.errarCompilacao("Era esperado outro argumento", TokenD.getInicio());
+                    mCompiler.errarCompilacao("Era esperado outro argumento", TokenD);
                 }
 
                 saiu = true;
@@ -55,7 +55,7 @@ public class AST_Argumentos {
                     saiu = true;
                     break;
                 } else {
-                    mCompiler.errarCompilacao("Era esperado um argumento : " + P2.getConteudo(), P2.getInicio());
+                    mCompiler.errarCompilacao("Era esperado um argumento : " + P2.getConteudo(), P2);
                 }
             } else {
                 break;
@@ -63,7 +63,7 @@ public class AST_Argumentos {
         }
 
         if (!saiu) {
-            mCompiler.errarCompilacao("Era esperado fechar parenteses" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante().getInicio());
+            mCompiler.errarCompilacao("Era esperado fechar parenteses" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
         }
     }
 
@@ -86,7 +86,7 @@ public class AST_Argumentos {
             if (TokenD.getTipo() == TokenTipo.PARENTESES_FECHA) {
 
                 if (mais) {
-                    mCompiler.errarCompilacao("Era esperado outro tipo", TokenD.getInicio());
+                    mCompiler.errarCompilacao("Era esperado outro tipo", TokenD);
                 }
 
                 saiu = true;
@@ -108,7 +108,7 @@ public class AST_Argumentos {
                     saiu = true;
                     break;
                 } else {
-                    mCompiler.errarCompilacao("Era esperado um tipo : " + P2.getConteudo(), P2.getInicio());
+                    mCompiler.errarCompilacao("Era esperado um tipo : " + P2.getConteudo(), P2);
                 }
             } else {
                 break;
@@ -116,7 +116,7 @@ public class AST_Argumentos {
         }
 
         if (!saiu) {
-            mCompiler.errarCompilacao("Era esperado fechar parenteses" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante().getInicio());
+            mCompiler.errarCompilacao("Era esperado fechar parenteses" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
         }
     }
 

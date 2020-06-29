@@ -48,7 +48,7 @@ public class AST_External {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome para uma STRUCT !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome para uma STRUCT !", TokenC);
         }
 
 

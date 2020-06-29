@@ -316,6 +316,9 @@ public class Analisador {
             } else   if (mAST.mesmoTipo("CAST")) {
 
                 mTipados.add(mAST.getNome());
+            } else   if (mAST.mesmoTipo("TYPE")) {
+
+                mTipados.add(mAST.getNome());
 
             }
         }
@@ -393,6 +396,9 @@ public class Analisador {
 
                 mAnalisar_Function.analisarFunction(mAST, mAlocados);
 
+            } else if (mAST.mesmoTipo("UNARY")) {
+
+                mAnalisar_Function.analisarFunction(mAST, mAlocados);
 
             } else if (mAST.mesmoTipo("CAST")) {
 
@@ -420,6 +426,8 @@ public class Analisador {
             } else if (mAST.mesmoTipo("REQUIRED")) {
 
             } else if (mAST.mesmoTipo("MODEL")) {
+
+            } else if (mAST.mesmoTipo("TYPE")) {
 
             } else {
 

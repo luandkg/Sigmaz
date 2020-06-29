@@ -1,6 +1,6 @@
 
  
-![Sigmaz](https://github.com/luandkg/Sigmaz/blob/master/res/logo.png)
+![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/logo.png)
 
 Linguagem de Programação Estruturada - Implementações
 
@@ -121,4 +121,9 @@ Linguagem de Programação Estruturada - Implementações
         - AST_RETURN - Organizando
         - AST_TYPE - CRIACAO
         - AST_VALUE - REORGANIZANDO ULTIMA PARTE
+        - UNARY
        
+    - 2020 06 29
+        - TYPE
+        - UNIFICACAO DO RUN_FUNC
+        - POSICAO E LINHA DE ERRO

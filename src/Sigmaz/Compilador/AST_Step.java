@@ -30,7 +30,7 @@ public class AST_Step {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome da VARIAVEL !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome da VARIAVEL !", TokenC);
         }
 
 
@@ -70,7 +70,7 @@ public class AST_Step {
 
         }else{
 
-            mCompiler.errarCompilacao("Era esperado o nome da VARIAVEL !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome da VARIAVEL !", TokenC);
 
         }
     }

@@ -23,6 +23,18 @@ operation // ( a : num , b : num ) : num {
 	return c;
 }
 
+operation == ( a : num , b : num ) : bool {
+	def c : bool;
+	invoke math -> operator_equal ( a , b ) :: c;
+	return c;
+}
+
+operation == ( a : bool , b : bool ) : bool {
+	def c : bool;
+	invoke math -> operator_match ( a , b ) :: c;
+	return c;
+}
+
 call iniciar -> inicio ( );
 
 
@@ -38,6 +50,12 @@ act inicio ( ) {
 
     def e : num = acionar(10++(10++30),20++20);
 
+    def f : bool = ! true;
+
+    def g : bool = ! 10 == 10;
+
+    def h : bool = ! false == (10 == 20);
+
 
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
@@ -46,4 +64,12 @@ func acionar(a:num,b:num) : num{
 
     return a ++ b;
 
+}
+
+
+unary ! (a:bool) : bool {
+
+	invoke casting -> inverse ( a ) :: a;
+
+    return a;
 }

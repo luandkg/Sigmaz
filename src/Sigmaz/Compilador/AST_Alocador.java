@@ -38,7 +38,7 @@ public class AST_Alocador {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome da " + erro + " !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome da " + erro + " !", TokenC);
             return;
         }
 
@@ -69,7 +69,7 @@ public class AST_Alocador {
             mAST.init(AST_Valor);
         } else {
 
-            mCompiler.errarCompilacao("Era esperado o valor da " + erro + " !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o valor da " + erro + " !", TokenC);
 
         }
 
@@ -100,7 +100,7 @@ public class AST_Alocador {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome da " + erro + " !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome da " + erro + " !", TokenC);
             return;
         }
 
@@ -130,9 +130,11 @@ public class AST_Alocador {
 
             AST_Value mAST = new AST_Value(mCompiler);
             mAST.init(AST_Valor);
+
+
         } else {
 
-            mCompiler.errarCompilacao("Era esperado o valor da " + erro + " !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o valor da " + erro + " !", TokenC);
 
         }
 
@@ -161,7 +163,7 @@ public class AST_Alocador {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome da " + erro + " !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome da " + erro + " !", TokenC);
             return;
         }
 

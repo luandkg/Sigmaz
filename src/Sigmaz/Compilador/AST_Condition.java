@@ -32,7 +32,7 @@ public class AST_Condition {
         if (mCompiler.getTokenCorrente().getTipo() == TokenTipo.PARENTESES_FECHA) {
 
         }else{
-            mCompiler.errarCompilacao("Era esperado fechar paresenteses",mCompiler.getTokenCorrente().getInicio());
+            mCompiler.errarCompilacao("Era esperado fechar paresenteses",mCompiler.getTokenCorrente());
         }
 
 
@@ -64,7 +64,7 @@ public class AST_Condition {
                 if (mCompiler.getTokenCorrente().getTipo() == TokenTipo.PARENTESES_FECHA) {
 
                 } else {
-                    mCompiler.errarCompilacao("Era esperado fechar paresenteses", mCompiler.getTokenCorrente().getInicio());
+                    mCompiler.errarCompilacao("Era esperado fechar paresenteses", mCompiler.getTokenCorrente());
                 }
 
                 Token TokenSeta2 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma SETA");

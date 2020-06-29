@@ -1,13 +1,13 @@
-require "libs/operadores.sigmaz";
+
 
 call iniciar -> operando ( );
 
 #Luan
 act operando ( ) {
+
 	def a1 : num = 10;
 	def a2 : num = 10;
 	def a3 : bool = true;
-	def t1 : bool = a1 == a2;
 	def a : num = dividir ( 6 , 2 );
 	def b : num = 15;
 	def c : num = 2;
@@ -18,3 +18,22 @@ act operando ( ) {
 	def ll : bool = igual ( bl , igual ( false , false ) );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
+
+func somar ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_sum ( a , b ) :: c;
+	return c;
+}
+
+func dividir ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_div ( a , b ) :: c;
+	return c;
+}
+
+func igual ( a : bool , b : bool ) : bool {
+	def c : bool;
+	invoke math -> operator_match ( a , b ) :: c;
+	return c;
+}
+

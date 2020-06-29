@@ -219,7 +219,7 @@ public class AST_Value_Argument {
             if (TokenD.getTipo() == TokenTipo.PARENTESES_FECHA) {
 
                 if (mais) {
-                    mCompiler.errarCompilacao("Era esperado outro parametro", TokenD.getInicio());
+                    mCompiler.errarCompilacao("Era esperado outro parametro", TokenD);
                 }
 
                 saiu = true;
@@ -292,13 +292,13 @@ public class AST_Value_Argument {
                 }
 
             } else {
-                mCompiler.errarCompilacao("Era esperado um argumento : " + TokenD.getConteudo(), TokenD.getInicio());
+                mCompiler.errarCompilacao("Era esperado um argumento : " + TokenD.getConteudo(), TokenD);
                 break;
             }
         }
 
         if (!saiu) {
-            mCompiler.errarCompilacao("Era esperado fechar parenteses" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante().getInicio());
+            mCompiler.errarCompilacao("Era esperado fechar parenteses" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
         }
 
     }

@@ -43,7 +43,7 @@ public class AST_Function {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome para uma FUNCTION !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome para uma FUNCTION !", TokenC);
         }
 
 
@@ -74,7 +74,7 @@ public class AST_Function {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome para uma FUNCTION !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome para uma FUNCTION !", TokenC);
         }
 
 

@@ -23,6 +23,8 @@ public class OO {
     private ArrayList<Index_Action> mActionFunctions;
     private ArrayList<AST> mCasts;
 
+
+
     private ArrayList<Index_Action> mActionFunctions_All;
     private ArrayList<Index_Action> mActionFunctions_Restrict;
     private ArrayList<Index_Action> mActionFunctions_Extern;
@@ -187,6 +189,10 @@ public class OO {
     public ArrayList<Item> getStacks() {
         return mEscopo.getStacks();
 
+    }
+
+    public ArrayList<Index_Action> getActionsFunctions_All() {
+        return mActionFunctions_All;
     }
 
 

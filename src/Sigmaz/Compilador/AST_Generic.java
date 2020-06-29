@@ -35,7 +35,7 @@ public class AST_Generic {
 
                 if(mais){
 
-                    mCompiler.errarCompilacao("Era esperado outro tipo generico",   TokenD.getInicio());
+                    mCompiler.errarCompilacao("Era esperado outro tipo generico",   TokenD);
                 }
 
                 saiu = true;
@@ -75,18 +75,18 @@ public class AST_Generic {
                     saiu = true;
                     break;
                 }else{
-                    mCompiler.errarCompilacao("Era esperado um ) ou ,  : " + P2.getConteudo(),   P2.getInicio());
+                    mCompiler.errarCompilacao("Era esperado um ) ou ,  : " + P2.getConteudo(),   P2);
                 }
 
 
             }else{
-                mCompiler.errarCompilacao("Era esperado um argumento : " + TokenD.getConteudo(),   TokenD.getInicio());
+                mCompiler.errarCompilacao("Era esperado um argumento : " + TokenD.getConteudo(),   TokenD);
                 break;
             }
         }
 
         if (!saiu) {
-            mCompiler.errarCompilacao("Era esperado ) " + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante().getInicio());
+            mCompiler.errarCompilacao("Era esperado ) " + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
         }
 
     }

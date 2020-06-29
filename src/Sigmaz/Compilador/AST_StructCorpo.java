@@ -87,13 +87,13 @@ public class AST_StructCorpo {
             } else {
 
 
-                mCompiler.errarCompilacao("Comando Deconhecido : " + TokenC.getConteudo(), TokenC.getInicio());
+                mCompiler.errarCompilacao("Comando Deconhecido : " + TokenC.getConteudo(), TokenC);
 
             }
         }
 
         if (!saiu) {
-            mCompiler.errarCompilacao("Era esperado fechar chaves" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante().getInicio());
+            mCompiler.errarCompilacao("Era esperado fechar chaves" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
         }
     }
 
@@ -149,13 +149,13 @@ public class AST_StructCorpo {
             } else {
 
 
-                mCompiler.errarCompilacao("Comando Deconhecido : " + TokenC.getConteudo(), TokenC.getInicio());
+                mCompiler.errarCompilacao("Comando Deconhecido : " + TokenC.getConteudo(), TokenC);
 
             }
         }
 
         if (!saiu) {
-            mCompiler.errarCompilacao("Era esperado fechar chaves" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante().getInicio());
+            mCompiler.errarCompilacao("Era esperado fechar chaves" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
         }
     }
 

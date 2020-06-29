@@ -57,6 +57,12 @@ public class InvokeCasting {
 
             argumentos_1num(eAcao, eSaida, ASTArgumentos);
 
+        } else if (eAcao.contentEquals("inverse")) {
+
+
+            argumentos_1num(eAcao, eSaida, ASTArgumentos);
+
+
         } else if (eAcao.contentEquals("cast_type")) {
 
             mudartipo(eAcao, eSaida, ASTArgumentos);
@@ -212,6 +218,16 @@ public class InvokeCasting {
                     mEscopo.setDefinido(eSaida, "true");
                 } else {
                     mEscopo.setDefinido(eSaida, "false");
+                }
+
+            } else if (eAcao.contentEquals("inverse")) {
+
+                String s = String.valueOf(p1);
+
+                if (s.contentEquals("true")) {
+                    mEscopo.setDefinido(eSaida, "false");
+                } else {
+                    mEscopo.setDefinido(eSaida, "true");
                 }
 
             } else {

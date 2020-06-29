@@ -16,10 +16,11 @@ public class Estrutural {
     private ArrayList<AST> mActions;
     private ArrayList<AST> mFunctions;
     private ArrayList<AST> mOperations;
+
+    private ArrayList<AST> mTypes;
     private ArrayList<AST> mCasts;
     private ArrayList<AST> mStructs;
     private ArrayList<AST> mStages;
-
 
     public Estrutural() {
 
@@ -32,6 +33,7 @@ public class Estrutural {
         mFunctions = new ArrayList<AST>();
         mOperations = new ArrayList<AST>();
 
+        mTypes = new ArrayList<AST>();
         mCasts = new ArrayList<AST>();
         mStructs = new ArrayList<AST>();
         mStages = new ArrayList<AST>();
@@ -69,6 +71,10 @@ public class Estrutural {
         } else if (eAST.mesmoTipo("CAST")) {
 
             mCasts.add(eAST);
+
+        } else if (eAST.mesmoTipo("TYPE")) {
+
+            mTypes.add(eAST);
 
         } else if (eAST.mesmoTipo("STRUCT")) {
 
@@ -165,6 +171,14 @@ public class Estrutural {
 
 
                 }
+            }
+        }
+
+        System.out.println(" - TYPES : ");
+        for (AST mAST : mTypes) {
+            System.out.println("\t - " + mAST.getNome());
+            for (AST mGetter : mAST.getASTS()) {
+                System.out.println("\t\t - " + mGetter.getTipo() + " " + mGetter.getNome() + " : " + getTipagem( mGetter.getBranch("TYPE")));
             }
         }
 

@@ -4,11 +4,11 @@ import Sigmaz.Lexer.Token;
 import Sigmaz.Lexer.TokenTipo;
 import Sigmaz.Utils.AST;
 
-public class AST_Operation {
+public class AST_Unary {
 
     private Compiler mCompiler;
 
-    public AST_Operation(Compiler eCompiler) {
+    public AST_Unary(Compiler eCompiler) {
         mCompiler = eCompiler;
     }
 
@@ -16,29 +16,12 @@ public class AST_Operation {
 
         Token TokenC = mCompiler.getTokenAvante();
 
-        if (TokenC.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
+        if (TokenC.getTipo() == TokenTipo.NEGADOR) {
 
-            definir(ASTPai, Visibilidade, "MATCH");
-
-        } else if (TokenC.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-
-            definir(ASTPai, Visibilidade, "UNMATCH");
-
-        } else if (TokenC.getTipo() == TokenTipo.SOMADOR) {
-
-            definir(ASTPai, Visibilidade, "SUM");
-        } else if (TokenC.getTipo() == TokenTipo.DIMINUIDOR) {
-
-            definir(ASTPai, Visibilidade, "SUB");
-        } else if (TokenC.getTipo() == TokenTipo.MULTIPLICADOR) {
-
-            definir(ASTPai, Visibilidade, "MUX");
-        } else if (TokenC.getTipo() == TokenTipo.DIVISOR) {
-
-            definir(ASTPai, Visibilidade, "DIV");
+            definir(ASTPai, Visibilidade, "INVERSE");
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o operador da OPERATION !", TokenC);
+            mCompiler.errarCompilacao("Era esperado o operador da UNARY !", TokenC);
         }
 
 
@@ -46,7 +29,7 @@ public class AST_Operation {
 
     public void definir(AST ASTPai, String Visibilidade, String eOperator) {
 
-        AST AST_Corrente = new AST("OPERATION");
+        AST AST_Corrente = new AST("UNARY");
         AST_Corrente.setNome(eOperator);
         ASTPai.getASTS().add(AST_Corrente);
 

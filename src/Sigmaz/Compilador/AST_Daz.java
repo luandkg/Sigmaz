@@ -76,14 +76,14 @@ public class AST_Daz {
 
 
 
-                mCompiler.errarCompilacao("Comando Desconhecido :  " + TokenD.getConteudo(), TokenD.getInicio());
+                mCompiler.errarCompilacao("Comando Desconhecido :  " + TokenD.getConteudo(), TokenD);
                 mCompiler.pularLinha();
 
             }
         }
 
         if (!saiu) {
-            mCompiler.errarCompilacao("Era esperado fechar chaves" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante().getInicio());
+            mCompiler.errarCompilacao("Era esperado fechar chaves" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
         }
 
 

@@ -12,7 +12,9 @@ public class Lexer {
 	private String mConteudo;
 	private int mIndex;
 	private int mTamanho;
-	
+	private int mLinha;
+	private int mPosicao;
+
 	private final String ALFA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
 	private final String NUM = "0123456789";
 	private final String ALFANUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz0123456789";
@@ -24,6 +26,8 @@ public class Lexer {
 		mConteudo="";
 		mIndex=0;
 		mTamanho=0;
+		mLinha=0;
+		mPosicao=0;
 		mTokens = new ArrayList<>();
 	}
 	
@@ -40,8 +44,8 @@ public class Lexer {
 		return mConteudo.length();
 	}
 
-	private void errar(String eMensagem,int ePosicao){
-		mErros.add(new Erro(eMensagem,ePosicao));
+	private void errar(String eMensagem,int eLinha,int ePosicao){
+		mErros.add(new Erro(eMensagem,eLinha,ePosicao));
 	}
 
 	public void init(String eArquivo) {
@@ -52,6 +56,8 @@ public class Lexer {
 		mConteudo= "";
 		mIndex=0;
 		mTamanho=0;
+		mLinha=1;
+		mPosicao=0;
 		mTokens.clear();
 		
 		mErros = new ArrayList<>();
@@ -59,7 +65,7 @@ public class Lexer {
 		if(arq.exists()){
 			mConteudo= Texto.Ler(eArquivo);
 		}else{
-			errar("Arquivo nao encontrado : " +eArquivo ,0);
+			errar("Arquivo nao encontrado : " +eArquivo ,0,0);
 		}
 
 		mTamanho=mConteudo.length();
@@ -76,217 +82,227 @@ public class Lexer {
 
 			if (ALFA.contains(charC)) {
 				
-				int eInicio =mIndex;
+				int eInicio =mPosicao;
 				String eTokenConteudo = ObterID();
-				int eFim=mIndex;
+				int eFim=mPosicao;
 				
-				mTokens.add(new Token(TokenTipo.ID,eTokenConteudo,eInicio,eFim));
+				mTokens.add(new Token(TokenTipo.ID,eTokenConteudo,eInicio,eFim,mLinha));
 			} else 	if (NUM.contains(charC)) {
 				
-				int eInicio =mIndex;
+				int eInicio =mPosicao;
 				String eTokenConteudo = ObterNUM();
-				int eFim=mIndex;
+				int eFim=mPosicao;
 				
-				mTokens.add(new Token(TokenTipo.NUMERO,eTokenConteudo,eInicio,eFim));
+				mTokens.add(new Token(TokenTipo.NUMERO,eTokenConteudo,eInicio,eFim,mLinha));
 			} else 	if (charC.contentEquals("+") && charP.contentEquals("+")) {
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
 				mIndex+=1;
 
-				mTokens.add(new Token(TokenTipo.SOMADOR,"++",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.SOMADOR,"++",eInicio,eFim,mLinha) );
 			} else 	if (charC.contentEquals("+")) {
-				int eInicio =mIndex;
+				int eInicio =mPosicao;
 				mIndex+=1;
 				String eTokenConteudo ="+"+ ObterNUM();
-				int eFim=mIndex;
+				int eFim=mPosicao;
 				
-				mTokens.add(new Token(TokenTipo.NUMERO,eTokenConteudo,eInicio,eFim));
+				mTokens.add(new Token(TokenTipo.NUMERO,eTokenConteudo,eInicio,eFim,mLinha));
 			} else 	if (charC.contentEquals("-") && charP.contentEquals(">")) {
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
 				mIndex+=1;
 
-				mTokens.add(new Token(TokenTipo.SETA,"->",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.SETA,"->",eInicio,eFim,mLinha) );
 			} else 	if (charC.contentEquals("-") && charP.contentEquals("-")) {
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
 				mIndex+=1;
 
-				mTokens.add(new Token(TokenTipo.DIMINUIDOR,"++",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.DIMINUIDOR,"++",eInicio,eFim,mLinha) );
 			} else 	if (charC.contentEquals("-")) {
-				int eInicio =mIndex;
+				int eInicio =mPosicao;
 				mIndex+=1;
 
 				String eTokenConteudo ="-"+ ObterNUM();
-				int eFim=mIndex;
+				int eFim=mPosicao;
 				
-				mTokens.add(new Token(TokenTipo.NUMERO,eTokenConteudo,eInicio,eFim));
+				mTokens.add(new Token(TokenTipo.NUMERO,eTokenConteudo,eInicio,eFim,mLinha));
 			} else 	if (charC.contentEquals("*") && charP.contentEquals("*")) {
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
 				mIndex+=1;
 
-				mTokens.add(new Token(TokenTipo.MULTIPLICADOR,"++",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.MULTIPLICADOR,"++",eInicio,eFim,mLinha) );
 			} else 	if (charC.contentEquals("/") && charP.contentEquals("/")) {
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
 				mIndex+=1;
 
-				mTokens.add(new Token(TokenTipo.DIVISOR,"++",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.DIVISOR,"++",eInicio,eFim,mLinha) );
 			} else 	if (charC.contentEquals(".")) {
-				int eInicio =mIndex;
+				int eInicio =mPosicao;
 
 				String eTokenConteudo =".";
-				int eFim=mIndex;
+				int eFim=mPosicao;
 
-				mTokens.add(new Token(TokenTipo.PONTO,eTokenConteudo,eInicio,eFim));
+				mTokens.add(new Token(TokenTipo.PONTO,eTokenConteudo,eInicio,eFim,mLinha));
 
 			} else 	if (charC.contentEquals(":") && charP.contentEquals(":")) {
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
 				mIndex+=1;
 
-				mTokens.add(new Token(TokenTipo.QUAD,"::",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.QUAD,"::",eInicio,eFim,mLinha) );
 
 			} else 	if (charC.contentEquals(":")) {
 
 
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
-				mTokens.add(new Token(TokenTipo.DOISPONTOS,":",eInicio,eFim));
+				mTokens.add(new Token(TokenTipo.DOISPONTOS,":",eInicio,eFim,mLinha));
 			} else 	if (charC.contentEquals(",")) {
 
 
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
-				mTokens.add(new Token(TokenTipo.VIRGULA,",",eInicio,eFim));
+				mTokens.add(new Token(TokenTipo.VIRGULA,",",eInicio,eFim,mLinha));
 			} else 	if (charC.contentEquals("=") && charP.contentEquals("=")) {
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
 				mIndex+=1;
 
-				mTokens.add(new Token(TokenTipo.COMPARADOR_IGUALDADE,"==",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.COMPARADOR_IGUALDADE,"==",eInicio,eFim,mLinha) );
 			} else 	if (charC.contentEquals("!") && charP.contentEquals("!")) {
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
 				mIndex+=1;
 
-				mTokens.add(new Token(TokenTipo.COMPARADOR_DIFERENTE,"!!",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.COMPARADOR_DIFERENTE,"!!",eInicio,eFim,mLinha) );
+			} else 	if (charC.contentEquals("!")) {
+
+
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
+
+				mTokens.add(new Token(TokenTipo.NEGADOR,"!",eInicio,eFim,mLinha));
+
 			} else 	if (charC.contentEquals("=")) {
 
 
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
-				mTokens.add(new Token(TokenTipo.IGUAL,"=",eInicio,eFim));
+				mTokens.add(new Token(TokenTipo.IGUAL,"=",eInicio,eFim,mLinha));
 
 			} else 	if (charC.contentEquals("<") && charP.contentEquals("<")) {
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
 				mIndex+=1;
 
-				mTokens.add(new Token(TokenTipo.RECEBER,"<<",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.RECEBER,"<<",eInicio,eFim,mLinha) );
 			} else 	if (charC.contentEquals("<")) {
 
 
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
-				mTokens.add(new Token(TokenTipo.MENOR,"=",eInicio,eFim));
+				mTokens.add(new Token(TokenTipo.MENOR,"=",eInicio,eFim,mLinha));
 			} else 	if (charC.contentEquals(">") && charP.contentEquals(">")) {
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
 				mIndex+=1;
 
-				mTokens.add(new Token(TokenTipo.ENVIAR,">>",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.ENVIAR,">>",eInicio,eFim,mLinha) );
 			} else 	if (charC.contentEquals(">")) {
 
 
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
-				mTokens.add(new Token(TokenTipo.MAIOR,"=",eInicio,eFim));
+				mTokens.add(new Token(TokenTipo.MAIOR,"=",eInicio,eFim,mLinha));
 
 
 			} else 	if (charC.contentEquals("#")) {
-				int eInicio =mIndex;
+				int eInicio =mPosicao;
 				String eTokenConteudo = ObterComentario();
-				int eFim=mIndex;
+				int eFim=mPosicao;
 				
-				mTokens.add(new Token(TokenTipo.COMENTARIO,eTokenConteudo,eInicio,eFim));
+				mTokens.add(new Token(TokenTipo.COMENTARIO,eTokenConteudo,eInicio,eFim,mLinha));
 				
 			} else 	if (charC.contentEquals("\"")) {
-				int eInicio =mIndex;
+				int eInicio =mPosicao;
 				String eTokenConteudo = ObterTexto("\"");
-				int eFim=mIndex;
+				int eFim=mPosicao;
 				
-				mTokens.add(new Token(TokenTipo.TEXTO,eTokenConteudo,eInicio,eFim));
+				mTokens.add(new Token(TokenTipo.TEXTO,eTokenConteudo,eInicio,eFim,mLinha));
 			} else 	if (charC.contentEquals("'")) {
-				int eInicio =mIndex;
+				int eInicio =mPosicao;
 				String eTokenConteudo = ObterTexto("'");
-				int eFim=mIndex;
+				int eFim=mPosicao;
 				
-				mTokens.add(new Token(TokenTipo.TEXTO,eTokenConteudo,eInicio,eFim));
+				mTokens.add(new Token(TokenTipo.TEXTO,eTokenConteudo,eInicio,eFim,mLinha));
 			
 			} else 	if (charC.contentEquals("{")) {
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
-				mTokens.add(new Token(TokenTipo.CHAVE_ABRE,"{",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.CHAVE_ABRE,"{",eInicio,eFim,mLinha) );
 			} else 	if (charC.contentEquals("}")) {
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
-				mTokens.add(new Token(TokenTipo.CHAVE_FECHA,"}",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.CHAVE_FECHA,"}",eInicio,eFim,mLinha) );
 			} else 	if (charC.contentEquals(";")) {
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
-				mTokens.add(new Token(TokenTipo.PONTOVIRGULA,";",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.PONTOVIRGULA,";",eInicio,eFim,mLinha) );
 			} else 	if (charC.contentEquals("(")) {
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
-				mTokens.add(new Token(TokenTipo.PARENTESES_ABRE,"(",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.PARENTESES_ABRE,"(",eInicio,eFim,mLinha) );
 			} else 	if (charC.contentEquals(")")) {
-				int eInicio =mIndex;
-				int eFim=mIndex;
+				int eInicio =mPosicao;
+				int eFim=mPosicao;
 
-				mTokens.add(new Token(TokenTipo.PARENTESES_FECHA,")",eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.PARENTESES_FECHA,")",eInicio,eFim,mLinha) );
 			} else 	if (charC.contentEquals("@")) {
 			
-				int eInicio =mIndex;
+				int eInicio =mPosicao;
 				mIndex+=1;
 				String eTokenConteudo = ObterID();
-				int eFim=mIndex;
+				int eFim=mPosicao;
 				
-				mTokens.add(new Token(TokenTipo.ARROBA,eTokenConteudo,eInicio,eFim) );
+				mTokens.add(new Token(TokenTipo.ARROBA,eTokenConteudo,eInicio,eFim,mLinha) );
 
 
 			} else 	if (charC.contentEquals("\n")) {
+				mLinha+=1;
+				mPosicao=0;
 			} else 	if (charC.contentEquals("\t")) {
 			} else 	if (charC.contentEquals(" ")) {
 
 			} else {
 
-				errar("Lexema Desconhecido : " + charC,mIndex);
+				errar("Lexema Desconhecido : " + charC,mLinha,mPosicao);
 
 			}
 			
 			mIndex+=1;
-
+			mPosicao+=1;
 		}
 		
 		
@@ -355,7 +371,7 @@ public class Lexer {
 			}
 			
 			if (!pontuou) {
-				errar("Numerop invalido !",eIndex);
+				errar("Numerop invalido !",mLinha,mPosicao);
 			}
 		}
 		
@@ -371,6 +387,8 @@ public class Lexer {
 			String charC =String.valueOf( mConteudo.charAt(mIndex));
 
 			if (charC.contentEquals("\n")) {
+				mLinha+=1;
+				mPosicao=0;
 				break;
 			} else {
 				ret+=charC;
@@ -400,7 +418,7 @@ public class Lexer {
 		}
 
 		if(finalizado==false){
-			errar("Texto nao finalizado !",eIndex);
+			errar("Texto nao finalizado !",mLinha,mPosicao);
 
 		}
 

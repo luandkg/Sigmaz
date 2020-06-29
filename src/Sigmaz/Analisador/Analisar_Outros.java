@@ -20,6 +20,9 @@ public class Analisar_Outros {
     private ArrayList<String> mStructs_Nomes;
     private ArrayList<String> mStages_Nomes;
 
+    private ArrayList<String> mTypes_Nomes;
+
+
     public Analisar_Outros(Analisador eAnalisador) {
 
         mAnalisador = eAnalisador;
@@ -38,6 +41,8 @@ public class Analisar_Outros {
 
         mActions_Nomes = new ArrayList<String>();
         mFunctions_Nomes = new ArrayList<String>();
+
+        mTypes_Nomes = new ArrayList<String>();
 
     }
 
@@ -64,6 +69,8 @@ public class Analisar_Outros {
         mCasts_Nomes.clear();
         mStructs_Nomes.clear();
         mStages_Nomes.clear();
+
+        mTypes_Nomes.clear();
 
     }
 
@@ -115,6 +122,15 @@ public class Analisar_Outros {
 
                 unicidade(Itens, mAST.getNome());
 
+            } else if (mAST.mesmoTipo("TYPE")) {
+
+                if (!mTypes_Nomes.contains(mAST.getNome())) {
+                    mTypes_Nomes.add(mAST.getNome());
+                } else {
+                    mAnalisador.getErros().add("Type Duplicado : " + mAST.getTipo());
+                }
+
+                unicidade(Itens, mAST.getNome());
 
             }
 
@@ -210,6 +226,8 @@ public class Analisar_Outros {
         } else if (mStructs_Nomes.contains(ASTPai.getValor())) {
 
         } else if (mStages_Nomes.contains(ASTPai.getValor())) {
+
+        } else if (mTypes_Nomes.contains(ASTPai.getValor())) {
 
         } else {
             mAnalisador.getErros().add("Tipo deconhecido  2 : " + ASTPai.getValor());

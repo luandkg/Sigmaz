@@ -48,12 +48,12 @@ public class AST_Requisicao {
 
 
             } else {
-                mCompiler.errarCompilacao("Requisicao nao encontrada : " + mLocalRequisicao, TokenC.getInicio());
+                mCompiler.errarCompilacao("Requisicao nao encontrada : " + mLocalRequisicao, TokenC);
             }
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o caminho de uma requisicao !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o caminho de uma requisicao !", TokenC);
         }
 
     }
@@ -72,7 +72,7 @@ public class AST_Requisicao {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o caminho de uma requisicao !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o caminho de uma requisicao !", TokenC);
         }
 
 

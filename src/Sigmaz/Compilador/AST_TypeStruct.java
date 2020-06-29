@@ -4,11 +4,11 @@ import Sigmaz.Lexer.Token;
 import Sigmaz.Lexer.TokenTipo;
 import Sigmaz.Utils.AST;
 
-public class AST_Model {
+public class AST_TypeStruct {
 
     private Compiler mCompiler;
 
-    public AST_Model(Compiler eCompiler) {
+    public AST_TypeStruct(Compiler eCompiler) {
         mCompiler = eCompiler;
     }
 
@@ -18,22 +18,27 @@ public class AST_Model {
 
         if (TokenC.getTipo() == TokenTipo.ID) {
 
-            AST AST_Corrente = new AST("MODEL");
+            AST AST_Corrente = new AST("TYPE");
             AST_Corrente.setNome(TokenC.getConteudo());
             ASTPai.getASTS().add(AST_Corrente);
+
 
 
             corpo(AST_Corrente);
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome para uma STRUCT !", TokenC);
+            mCompiler.errarCompilacao("Era esperado o nome para uma TYPE !", TokenC);
         }
 
 
     }
 
     public void corpo(AST AST_Corrente) {
+
+
+
+        String VISIBILIDADE = "ALL";
 
 
         Token TokenD = mCompiler.getTokenAvanteStatus(TokenTipo.CHAVE_ABRE, "Era esperado abrir chaves");
@@ -49,25 +54,16 @@ public class AST_Model {
             if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
                 saiu = true;
                 break;
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
-
-                AST_Action mAST = new AST_Action(mCompiler);
-                mAST.init_Definicao(AST_Corrente);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
-
-                AST_Function mAST = new AST_Function(mCompiler);
-                mAST.init_Definicao(AST_Corrente);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
-                mAST.init_Definicao("MOCKIZ",AST_Corrente);
+                mAST.init("MOCKIZ",AST_Corrente,VISIBILIDADE);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
 
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
-                mAST.init_Definicao("DEFINE",AST_Corrente);
+                mAST.init("DEFINE",AST_Corrente,VISIBILIDADE);
 
 
             } else {
@@ -84,6 +80,5 @@ public class AST_Model {
     }
 
 
+
 }
-
-

@@ -93,7 +93,7 @@ public class AST_Struct {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome para uma STRUCT !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome para uma STRUCT !", TokenC);
         }
 
 

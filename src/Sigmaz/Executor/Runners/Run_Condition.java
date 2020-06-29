@@ -69,6 +69,12 @@ public class Run_Condition {
                         AST ouCorpo = fAST.getBranch("BODY");
                         Run_Value ouAST = new Run_Value(mRunTime, mEscopo);
                         ouAST.init(ouCondicao, "bool");
+
+                        if (mRunTime.getErros().size() > 0) {
+                            return;
+                        }
+
+
                         if (ouAST.getRetornoTipo().contentEquals("bool")) {
                             if (ouAST.getConteudo().contentEquals("true")) {
                                 sucesso = true;

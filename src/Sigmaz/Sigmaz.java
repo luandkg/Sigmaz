@@ -72,7 +72,7 @@ public class Sigmaz {
             for (GrupoDeErro eGE : CompilerC.getErros_Lexer()) {
                 System.out.println("\t\t" + eGE.getArquivo());
                 for (Erro eErro : eGE.getErros()) {
-                    System.out.println("\t\t    ->> " + eErro.getPosicao() + " : " + eErro.getMensagem());
+                    System.out.println("\t\t    ->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem());
                 }
             }
 
@@ -93,7 +93,7 @@ public class Sigmaz {
             for (GrupoDeErro eGE : CompilerC.getErros_Compiler()) {
                 System.out.println("\t\t" + eGE.getArquivo());
                 for (Erro eErro : eGE.getErros()) {
-                    System.out.println("\t\t    ->> " + eErro.getMensagem());
+                    System.out.println("\t\t    ->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem());
                 }
             }
         }

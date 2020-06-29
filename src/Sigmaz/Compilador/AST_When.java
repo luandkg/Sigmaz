@@ -73,14 +73,14 @@ public class AST_When {
 
 
 
-                mCompiler.errarCompilacao("When " + TokenD.getConteudo(), TokenD.getInicio());
+                mCompiler.errarCompilacao("When " + TokenD.getConteudo(), TokenD);
 
 
             }
         }
 
         if (!saiu) {
-            mCompiler.errarCompilacao("Era esperado fechar chaves" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante().getInicio());
+            mCompiler.errarCompilacao("Era esperado fechar chaves" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
         }
 
 

@@ -35,7 +35,7 @@ public class Carregadores {
         mArquivos.add("res/05 - function.sigmaz");
         mArquivos.add("res/06 - functions2.sigmaz");
         mArquivos.add("res/07 - mockiz.sigmaz");
-        mArquivos.add("res/08 - matches.sigmaz");
+        mArquivos.add("res/08 - operation.sigmaz");
 
         // STATEMENTS
 
@@ -91,6 +91,7 @@ public class Carregadores {
         mArquivos.add("res/46 - model.sigmaz");
         mArquivos.add("res/47 - generic.sigmaz");
         mArquivos.add("res/48 - values.sigmaz");
+        mArquivos.add("res/49 - type.sigmaz");
 
         return mArquivos;
     }

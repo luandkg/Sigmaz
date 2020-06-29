@@ -29,7 +29,7 @@ public class AST_Invoke {
             AST_Corrente.setNome(TokenC.getConteudo());
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome de uma BIBLIOTECA de INVOCACAO !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome de uma BIBLIOTECA de INVOCACAO !", TokenC);
            return;
         }
 
@@ -42,7 +42,7 @@ public class AST_Invoke {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado uma SETA ", TokenC2.getInicio());
+            mCompiler.errarCompilacao("Era esperado uma SETA ", TokenC2);
             return;
         }
 
@@ -55,7 +55,7 @@ public class AST_Invoke {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado uma FUNCAO BIBLIOTECARIA ", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado uma FUNCAO BIBLIOTECARIA ", TokenC);
             return;
         }
 
@@ -70,7 +70,7 @@ public class AST_Invoke {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado abrir paresenteses ! ", TokenC4.getInicio());
+            mCompiler.errarCompilacao("Era esperado abrir paresenteses ! ", TokenC4);
             return;
         }
 
@@ -81,7 +81,7 @@ public class AST_Invoke {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado :: ", TokenC5.getInicio());
+            mCompiler.errarCompilacao("Era esperado :: ", TokenC5);
             return;
         }
 
@@ -93,7 +93,7 @@ public class AST_Invoke {
             AST_Saida.setNome(TokenC6.getConteudo());
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome de uma SAIDA para a INVOCACAO !", TokenC6.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome de uma SAIDA para a INVOCACAO !", TokenC6);
             return;
         }
 

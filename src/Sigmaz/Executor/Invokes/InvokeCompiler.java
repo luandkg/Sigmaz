@@ -4,6 +4,7 @@ import Sigmaz.Executor.*;
 import Sigmaz.Executor.Runners.Run_Extern;
 import Sigmaz.Executor.Runners.Run_Invoke;
 import Sigmaz.Executor.Runners.Run_Struct;
+import Sigmaz.Executor.Runners.Run_Type;
 import Sigmaz.Utils.AST;
 
 public class InvokeCompiler {
@@ -52,10 +53,13 @@ public class InvokeCompiler {
 
             show_struct(eAcao, eSaida, ASTArgumentos);
 
-        } else if (eAcao.contentEquals("STRUCT")) {
+        } else if (eAcao.contentEquals("OBJECT")) {
 
-            struct(eAcao, eSaida, ASTArgumentos);
+            object(eAcao, eSaida, ASTArgumentos);
 
+        } else if (eAcao.contentEquals("TYPES")) {
+
+            types(eAcao, eSaida, ASTArgumentos);
 
         } else {
 
@@ -95,6 +99,45 @@ public class InvokeCompiler {
                         System.out.println("\t\t -  Actions : " + mRun_Struct.getActions().size());
                         System.out.println("\t\t -  Tamanho : " + mRun_Struct.getTamanho());
                         System.out.println("");
+
+                    }
+
+                    System.out.println(" ######################### ##### ############################ ");
+
+                }
+
+
+            } else {
+                mRunTime.getErros().add("Invocacao : " + eAcao + " -> Problema com saida !");
+            }
+        } else {
+            mRunTime.getErros().add("Invocacao : " + eAcao + " -> Problema com argumentos !");
+        }
+
+    }
+
+
+    public void types(String eAcao, String eSaida, AST ASTArgumentos) {
+
+        int i = 0;
+
+
+        for (AST eAST : ASTArgumentos.getASTS()) {
+            if (eAST.mesmoTipo("ARGUMENT")) {
+                i += 1;
+            }
+        }
+
+        if (i == 0) {
+            if (eSaida.contentEquals("INSTANCES")) {
+
+                if (mRunTime.getExterno()) {
+
+                    System.out.println("\n ######################### TYPES - INSTANCES ############################ ");
+
+                    for (Run_Type mRun_Struct : mRunTime.getTypes()) {
+
+                        System.out.println("\t - " + mRun_Struct.getTypeNome() + " -> " + mRun_Struct.getNome());
 
                     }
 
@@ -232,7 +275,7 @@ public class InvokeCompiler {
 
     }
 
-    public void struct(String eAcao, String eSaida, AST ASTArgumentos) {
+    public void object(String eAcao, String eSaida, AST ASTArgumentos) {
 
         int i = 0;
 
@@ -248,10 +291,26 @@ public class InvokeCompiler {
             if (eSaida.contentEquals("REMOVE")) {
 
 
+                String eTipo = mRun_Invoke.getTipo(ASTArgumentos, 1);
                 String eNome = mRun_Invoke.getQualquer(ASTArgumentos, 1);
 
+                String eQualificador = mRunTime.getQualificador(eTipo);
+
+                // System.out.println("Removendo : " + eNome + " :: " + eQualificador);
+
+                if (eQualificador.contentEquals("STRUCT")) {
+
+                    mRunTime.removerHeap(eNome);
+
+
+                } else if (eQualificador.contentEquals("TYPE")) {
+
+                    mRunTime.removerType(eNome);
+
+
+                }
+
                 //  System.out.println("Removendo : " + eNome);
-                mRunTime.removerHeap(eNome);
 
             } else {
                 mRunTime.getErros().add("Invocacao : " + eAcao + " -> Problema com saida !");

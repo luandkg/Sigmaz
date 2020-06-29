@@ -46,12 +46,12 @@ public class AST_Cast {
                     setter(TokenC.getConteudo(), AST_Corrente, ASTPai);
 
                 } else {
-                    mCompiler.errarCompilacao("Comando Deconhecido : " + TokenD.getConteudo(), TokenD.getInicio());
+                    mCompiler.errarCompilacao("Comando Deconhecido : " + TokenD.getConteudo(), TokenD);
                 }
             }
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome para uma CAST !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome para uma CAST !", TokenC);
         }
 
 
@@ -112,7 +112,7 @@ public class AST_Cast {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome da GETTER !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome da GETTER !", TokenC);
         }
 
     }
@@ -199,7 +199,7 @@ public class AST_Cast {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome da SETTER !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome da SETTER !", TokenC);
         }
 
     }

@@ -14,13 +14,13 @@ define ALGO : string = "__ALGO__";
 
 #require "organismos.sigmaz";
 stages Numeros -> {
-	POSITIVO , NEGATIVO 
+	POSITIVO , NEGATIVO, ZERO
 }
 stages Comparacao -> {
 	MAIOR , MENOR , IGUAL 
 }
 stages Logico -> {
-	TRUE , FALSE , UNKOWN 
+	TRUE , FALSE
 }
 
 

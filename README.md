@@ -1,6 +1,6 @@
 
  
-![Sigmaz](https://github.com/luandkg/Sigmaz/blob/master/res/logo.png)
+![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/logo.png)
 
   Linguagem de Programação Estruturada
 

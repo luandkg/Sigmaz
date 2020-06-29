@@ -7,16 +7,24 @@ act pular ( ) {
 	sacola1.aumentar ( 2 );
 	def t : num = sacola1.getQuantidade ( );
 	def s : num = somar ( 2 , sacola1.getQuantidade ( ) );
-	
+
+
+
 	#sacola1.tratar(3,3);
 	sacola1.mostrar_struct ( );
 	def sacola2 : Sacola = init Sacola ( );
 	sacola2.aumentar ( 2 );
+
+    sacola2.crivar(4);
+
+	 #def mm : num = sacola2.tratar(2,2);
+
 	def rr : bool = sacola1 == sacola2;
 	invoke __COMPILER__ -> SHOW_HEAP ( ) :: ALL;
-	invoke __COMPILER__ -> STRUCT ( sacola2 ) :: REMOVE;
-	
-	#sacola2.aumentar(2);
+	invoke __COMPILER__ -> OBJECT ( sacola2 ) :: REMOVE;
+
+
+
 	invoke __COMPILER__ -> SHOW_HEAP ( ) :: ALL;
 }
 
@@ -65,6 +73,12 @@ struct Sacola {
 	func someisso ( a : num , b : num ) : num {
 		return somar_inteiro ( a , b );
 	}
+
+		all :
+    	func crivar ( a : num ) : num {
+    		return somar_inteiro ( a , a );
+    	}
+
 	restrict : 
 	func tratar ( a : num , b : num ) : num {
 		return somar_inteiro ( a , b );

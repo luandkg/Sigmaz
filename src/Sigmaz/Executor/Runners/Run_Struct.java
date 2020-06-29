@@ -206,7 +206,7 @@ public class Run_Struct {
         }
 
         if (mRunTime.getExterno()) {
-         //    mStructCorpo.ImprimirArvoreDeInstrucoes();
+            //    mStructCorpo.ImprimirArvoreDeInstrucoes();
         }
 
 
@@ -284,12 +284,12 @@ public class Run_Struct {
             Inicializador(mStructNome, ASTCorrente, BuscadorDeArgumentos);
         } else {
 
-            if (ASTCorrente.getBranch("ARGUMENTS").getASTS().size()>0){
+            if (ASTCorrente.getBranch("ARGUMENTS").getASTS().size() > 0) {
                 mRunTime.getErros().add("Struct " + mStructNome + " nao possui Init com argumentos !");
 
             }
 
-           // System.out.println("Argumentos " + ASTCorrente.getBranch("ARGUMENTS").getASTS().size());
+            // System.out.println("Argumentos " + ASTCorrente.getBranch("ARGUMENTS").getASTS().size());
 
         }
 
@@ -601,248 +601,26 @@ public class Run_Struct {
 
     public Item init_Function(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
 
-        //System.out.println("Procurando FUNC " + this.getStructNome() + "." + ASTCorrente.getNome());
+        Run_Any mRun_Any = new Run_Any(mRunTime);
 
-        Item mRet = null;
+        return mRun_Any.init_Function(ASTCorrente, BuscadorDeVariaveis, mEscopo, eRetorne, mStructNome + "." + ASTCorrente.getNome(), mEscopo.getOO().getFunctions_All());
 
-        ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, BuscadorDeVariaveis, ASTCorrente.getBranch("ARGUMENTS"));
-
-        //  System.out.println("Procurando FUNC " + ASTCorrente.getNome());
-        //  System.out.println("\t - Argumentos :  " + mArgumentos.size());
-
-        boolean enc = false;
-        boolean algum = false;
-
-        // System.out.println("\t - Executando Dentro :  " +this.getNome());
-
-        //   System.out.println(" STRUCT :: "  +this.getNome());
-
-        for (Index_Function mIndex_Function : mEscopo.getOO().getFunctions_All()) {
-            // System.out.println("\t - " + mIndex_Function.getNome());
-        }
-
-        for (Index_Function mIndex_Function : mEscopo.getOO().getFunctions_All()) {
-
-            //  System.out.println("\t - Funcao :  " +mIndex_Function.getNome());
-            //  for (AST ArgumentoC : mArgumentos) {
-            //    System.out.println("\t\t - Arg :  " +ArgumentoC.getNome());
-            // }
-
-
-            if (mIndex_Function.mesmoNome(ASTCorrente.getNome())) {
-
-
-                if (mRunTime.getErros().size() > 0) {
-                    break;
-                }
-                enc = true;
-                if (mIndex_Function.mesmoArgumentos(mArgumentos)) {
-
-                    //  System.out.println("\t - Executar :  " + mIndex_Function.getNome());
-
-                    algum = true;
-
-                    if (mIndex_Function.mesmaTipagem(eRetorne) || eRetorne.contentEquals("<<ANY>>")) {
-
-                        if (mRunTime.getErros().size() > 0) {
-                            break;
-                        }
-
-
-                        mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eRetorne);
-
-                    } else {
-                        mRunTime.getErros().add("Function " + mStructNome + "." + ASTCorrente.getNome() + " : Retorno incompativel !");
-                    }
-
-                    break;
-                }
-
-
-            }
-
-        }
-
-
-        if (enc) {
-            if (!algum) {
-                mRunTime.getErros().add("Function " + mStructNome + "." + ASTCorrente.getNome() + " : Argumentos incompativeis !");
-            }
-        } else {
-            mRunTime.getErros().add("Function  " + mStructNome + "." + ASTCorrente.getNome() + " : Nao Encontrada !");
-
-            //    mRunTime.getErros().add("Escopo -> " + mEscopo.getNome());
-
-            // for (Index_Function mIndex_Function : mEscopo.getFunctionsCompleto()) {
-
-            //    System.out.println("\t - Funcao :  " + mIndex_Function.getNome());
-            //    }
-
-        }
-
-
-        return mRet;
     }
 
 
     public void init_Action(AST ASTCorrente, Escopo BuscadorDeVariaveis) {
 
-        //   System.out.println(" -->> DENTRO : " + this.getStructNome() );
-        //  System.out.println(" -->> Procurando ACTION " + this.getStructNome() + "." + ASTCorrente.getNome());
+        Run_Any mRun_Any = new Run_Any(mRunTime);
 
-        ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, BuscadorDeVariaveis, ASTCorrente.getBranch("ARGUMENTS"));
-
-        // System.out.println("\t - Action Teste :  " + ASTCorrente.getNome() + " Passando Args " + mArgumentos.size());
-
-        //  System.out.println("Procurando FUNC " + ASTCorrente.getNome());
-        //System.out.println("\t - Argumentos :  " + argumentos);
-
-        boolean enc = false;
-        boolean algum = false;
-
-        // System.out.println("\t - Executando Dentro :  " +this.getNome());
-
-
-        for (Index_Action mIndex_Function : mEscopo.getOO().getActions_All()) {
-
-            //  System.out.println("\t - Funcao :  " +mIndex_Function.getNome());
-            //  for (AST ArgumentoC : mArgumentos) {
-            //    System.out.println("\t\t - Arg :  " +ArgumentoC.getNome());
-            // }
-
-
-            if (mIndex_Function.mesmoNome(ASTCorrente.getNome())) {
-
-                //  System.out.println("\t - Action Teste :  " + mIndex_Function.getNome() + " -> " + mIndex_Function.getParametragem());
-
-                if (mRunTime.getErros().size() > 0) {
-                    break;
-                }
-                enc = true;
-                if (mIndex_Function.mesmoArgumentos(mArgumentos)) {
-
-                    // System.out.println("\t - Executar :  " + mIndex_Function.getNome());
-
-                    algum = true;
-
-
-                    if (mRunTime.getErros().size() > 0) {
-                        break;
-                    }
-
-
-                    // System.out.println("\t - Executando Dentro :  " +this.getNome());
-
-                    //  mPreparadorDeArgumentos.executar_Action(mRunTime,  mEscopo, mIndex_Function, mArgumentos);
-                    mPreparadorDeArgumentos.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
-
-
-                    break;
-                }
-
-
-            }
-
-        }
-
-
-        if (enc) {
-            if (!algum) {
-                mRunTime.getErros().add("Action " + mStructNome + "." + ASTCorrente.getNome() + " : Argumentos incompativeis !");
-            }
-        } else {
-            mRunTime.getErros().add("Action  " + mStructNome + "." + ASTCorrente.getNome() + " : Nao Encontrada !");
-
-            //    mRunTime.getErros().add("Escopo -> " + mEscopo.getNome());
-
-            // for (Index_Function mIndex_Function : mEscopo.getFunctionsCompleto()) {
-
-            //    System.out.println("\t - Funcao :  " + mIndex_Function.getNome());
-            //    }
-
-        }
-
+        mRun_Any.init_Action(ASTCorrente, BuscadorDeVariaveis, mEscopo, mStructNome + "." + ASTCorrente.getNome(), mEscopo.getOO().getActions_All());
 
     }
 
+    public void init_ActionFunction(AST ASTCorrente, Escopo BuscadorDeVariaveis) {
 
-    public void init_Init(AST ASTCorrente, Escopo BuscadorDeVariaveis) {
+        Run_Any mRun_Any = new Run_Any(mRunTime);
 
-        //   System.out.println(" -->> DENTRO : " + this.getStructNome() );
-        //  System.out.println(" -->> Procurando ACTION " + this.getStructNome() + "." + ASTCorrente.getNome());
-
-        ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, BuscadorDeVariaveis, ASTCorrente.getBranch("ARGUMENTS"));
-
-        // System.out.println("\t - Action Teste :  " + ASTCorrente.getNome() + " Passando Args " + mArgumentos.size());
-
-        //  System.out.println("Procurando FUNC " + ASTCorrente.getNome());
-        //System.out.println("\t - Argumentos :  " + argumentos);
-
-        boolean enc = false;
-        boolean algum = false;
-
-        // System.out.println("\t - Executando Dentro :  " +this.getNome());
-
-
-        for (Index_Action mIndex_Function : mEscopo.getOO().getInits()) {
-
-            //  System.out.println("\t - Funcao :  " +mIndex_Function.getNome());
-            //  for (AST ArgumentoC : mArgumentos) {
-            //    System.out.println("\t\t - Arg :  " +ArgumentoC.getNome());
-            // }
-
-
-            if (mIndex_Function.mesmoNome(ASTCorrente.getNome())) {
-
-                //  System.out.println("\t - Action Teste :  " + mIndex_Function.getNome() + " -> " + mIndex_Function.getParametragem());
-
-                if (mRunTime.getErros().size() > 0) {
-                    break;
-                }
-                enc = true;
-                if (mIndex_Function.mesmoArgumentos(mArgumentos)) {
-
-                    // System.out.println("\t - Executar :  " + mIndex_Function.getNome());
-
-                    algum = true;
-
-
-                    if (mRunTime.getErros().size() > 0) {
-                        break;
-                    }
-
-
-                    // System.out.println("\t - Executando Dentro :  " +this.getNome());
-
-                    //  mPreparadorDeArgumentos.executar_Action(mRunTime,  mEscopo, mIndex_Function, mArgumentos);
-                    mPreparadorDeArgumentos.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
-
-
-                    break;
-                }
-
-
-            }
-
-        }
-
-
-        if (enc) {
-            if (!algum) {
-                mRunTime.getErros().add("Init " + mStructNome + "." + ASTCorrente.getNome() + " : Argumentos incompativeis !");
-            }
-        } else {
-            mRunTime.getErros().add("Init  " + mStructNome + "." + ASTCorrente.getNome() + " : Nao Encontrada !");
-
-            //    mRunTime.getErros().add("Escopo -> " + mEscopo.getNome());
-
-            // for (Index_Function mIndex_Function : mEscopo.getFunctionsCompleto()) {
-
-            //    System.out.println("\t - Funcao :  " + mIndex_Function.getNome());
-            //    }
-
-        }
-
+        mRun_Any.init_Action(ASTCorrente, BuscadorDeVariaveis, mEscopo, mStructNome + "." + ASTCorrente.getNome(), mEscopo.getOO().getActionsFunctions_All());
 
     }
 

@@ -1,5 +1,4 @@
-require "libs/operadores.sigmaz";
-require "libs/terminal.sigmaz";
+
 
 call iniciar -> operando ( );
 
@@ -43,4 +42,91 @@ act operando ( ) {
 	def CC : bool = ( 10 == 12 ) == false;
 	def w : string = ( "Luan");
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+}
+
+func maior_igual ( a : num , b : num ) : bool {
+	def c1 : bool;
+	def c2 : bool;
+	def c3 : bool = false;
+	invoke math -> operator_great ( a , b ) :: c1;
+	invoke math -> operator_equal ( a , b ) :: c2;
+	if ( c1 ) -> {
+		c3 = true;
+	}
+	if ( c2 ) -> {
+		c3 = true;
+	}
+	return c3;
+}
+
+func menor ( a : num , b : num ) : bool {
+	def c : bool;
+	invoke math -> operator_less ( a , b ) :: c;
+	return c;
+}
+
+func menor_igual ( a : num , b : num ) : bool {
+	def c1 : bool;
+	def c2 : bool;
+	invoke math -> operator_less ( a , b ) :: c1;
+	invoke math -> operator_equal ( a , b ) :: c2;
+	def c3 : bool = false;
+	if ( c1 ) -> {
+		c3 = true;
+	}
+	if ( c2 ) -> {
+		c3 = true;
+	}
+	return c3;
+}
+
+func igual ( a : num , b : num ) : bool {
+	def c : bool;
+	invoke math -> operator_equal ( a , b ) :: c;
+	return c;
+}
+
+
+operation == ( a : num , b : num ) : bool {
+	def c : bool;
+	invoke math -> operator_equal ( a , b ) :: c;
+	return c;
+}
+
+operation == ( a : bool , b : bool ) : bool {
+	def c : bool;
+	invoke math -> operator_match ( a , b ) :: c;
+	return c;
+}
+
+act print ( a : string ) {
+	def b : num;
+	invoke terminal -> print ( a ) :: b;
+}
+
+act println ( a : string ) {
+	def b : num;
+	invoke terminal -> change ( ) :: b;
+	invoke terminal -> print ( a ) :: b;
+}
+
+act println ( a : string , b : string ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
+}
+
+act println ( a : string , b : num ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
+}
+
+act println ( a : string , b : bool ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
 }

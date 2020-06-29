@@ -111,7 +111,7 @@ public class Testes {
                     for (GrupoDeErro eGE : CompilerC.getErros_Compiler()) {
                         mTemp.add("\t\t" + eGE.getArquivo());
                         for (Erro eErro : eGE.getErros()) {
-                            mTemp.add("\t\t    ->> " + eErro.getMensagem());
+                            mTemp.add("\t\t    ->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem());
                         }
                     }
 
@@ -123,7 +123,7 @@ public class Testes {
                 for (GrupoDeErro eGE : CompilerC.getErros_Lexer()) {
                     mTemp.add("\t\t" + eGE.getArquivo());
                     for (Erro eErro : eGE.getErros()) {
-                        mTemp.add("\t\t    ->> " + eErro.getMensagem());
+                        mTemp.add("\t\t    ->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem());
                     }
                 }
             }

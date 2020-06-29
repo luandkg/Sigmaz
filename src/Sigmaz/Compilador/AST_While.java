@@ -30,7 +30,7 @@ public class AST_While {
         if (mCompiler.getTokenCorrente().getTipo() == TokenTipo.PARENTESES_FECHA) {
 
         }else{
-            mCompiler.errarCompilacao("Era esperado fechar paresenteses",mCompiler.getTokenCorrente().getInicio());
+            mCompiler.errarCompilacao("Era esperado fechar paresenteses",mCompiler.getTokenCorrente());
         }
 
 

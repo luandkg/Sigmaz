@@ -23,7 +23,7 @@ public class AST_Recebimentos {
             if (TokenD.getTipo() == TokenTipo.PARENTESES_FECHA) {
 
                 if(mais){
-                    mCompiler.errarCompilacao("Era esperado outro parametro",   TokenD.getInicio());
+                    mCompiler.errarCompilacao("Era esperado outro parametro",   TokenD);
                 }
 
                 saiu = true;
@@ -46,7 +46,7 @@ public class AST_Recebimentos {
                     saiu = true;
                     break;
                 }else{
-                    mCompiler.errarCompilacao("Era esperado um argumento : " + P2.getConteudo(),   P2.getInicio());
+                    mCompiler.errarCompilacao("Era esperado um argumento : " + P2.getConteudo(),   P2);
                 }
             } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
 
@@ -65,7 +65,7 @@ public class AST_Recebimentos {
                     saiu = true;
                     break;
                 }else{
-                    mCompiler.errarCompilacao("Era esperado um argumento : " + P2.getConteudo(),   P2.getInicio());
+                    mCompiler.errarCompilacao("Era esperado um argumento : " + P2.getConteudo(),   P2);
                 }
             } else if (TokenD.getTipo() == TokenTipo.ID) {
 
@@ -97,25 +97,25 @@ public class AST_Recebimentos {
                         saiu = true;
                         break;
                     }else{
-                        mCompiler.errarCompilacao("Era esperado um argumento : " + P2.getConteudo(),   P2.getInicio());
+                        mCompiler.errarCompilacao("Era esperado um argumento : " + P2.getConteudo(),   P2);
                     }
 
                 } else if(P2.getTipo()==TokenTipo.PARENTESES_FECHA){
                     saiu = true;
                     break;
                 }else{
-                    mCompiler.errarCompilacao("Era esperado um ponto e virgula ! : " + P2.getConteudo(),   P2.getInicio());
+                    mCompiler.errarCompilacao("Era esperado um ponto e virgula ! : " + P2.getConteudo(),   P2);
                 }
 
 
             }else{
-                mCompiler.errarCompilacao("Era esperado um argumento : " + TokenD.getConteudo(),   TokenD.getInicio());
+                mCompiler.errarCompilacao("Era esperado um argumento : " + TokenD.getConteudo(),   TokenD);
                 break;
             }
         }
 
         if (!saiu) {
-            mCompiler.errarCompilacao("Era esperado fechar parenteses" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante().getInicio());
+            mCompiler.errarCompilacao("Era esperado fechar parenteses" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
         }
 
     }

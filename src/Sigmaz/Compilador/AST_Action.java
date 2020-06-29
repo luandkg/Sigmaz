@@ -36,7 +36,7 @@ public class AST_Action {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome para uma ACTION !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome para uma ACTION !", TokenC);
         }
 
 
@@ -63,7 +63,7 @@ public class AST_Action {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome para uma ACTION !", TokenC.getInicio());
+            mCompiler.errarCompilacao("Era esperado o nome para uma ACTION !", TokenC);
         }
 
     }

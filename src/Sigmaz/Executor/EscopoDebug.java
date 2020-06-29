@@ -16,7 +16,7 @@ public class EscopoDebug {
 
     }
 
-    private void mapear_stack(){
+    private void mapear_stack() {
 
         System.out.println(" - PARAM : ");
         ArrayList<Item> ls_Param = new ArrayList<>();
@@ -128,8 +128,6 @@ public class EscopoDebug {
 
 
         mapear_stack();
-
-
 
 
         System.out.println(" - INITS : ");
@@ -268,17 +266,40 @@ public class EscopoDebug {
         mapear_stack();
 
         System.out.println(" - ACTIONS : ");
-        for (Index_Action mIndex_Function : mEscopo.getActionsCompleto()) {
-            System.out.println("\t - " + mIndex_Function.getDefinicao());
+        for (AST mIndex_Function : mEscopo.getRunTime().getGlobalActions()) {
+            System.out.println("\t - " + (new Index_Action(mIndex_Function)).getDefinicao());
         }
         System.out.println(" - FUNCTIONS : ");
-        for (Index_Function mIndex_Function : mEscopo.getFunctionsCompleto()) {
-            System.out.println("\t - " + mIndex_Function.getDefinicao());
+        for (AST mIndex_Function : mEscopo.getRunTime().getGlobalFunctions()) {
+            System.out.println("\t - " + (new Index_Function(mIndex_Function)).getDefinicao());
         }
 
         System.out.println(" - OPERATIONS : ");
-        for (Index_Function mIndex_Function : mEscopo.getOperationsCompleto()) {
-            System.out.println("\t - " + mIndex_Function.getDefinicao());
+        for (AST mIndex_Function : mEscopo.getRunTime().getGlobalOperations()) {
+            System.out.println("\t - " + (new Index_Function(mIndex_Function)).getDefinicao());
+        }
+
+        System.out.println(" - CASTS : ");
+        for (AST mAST : mEscopo.getRunTime().getGlobalCasts()) {
+            System.out.println("\t - " + mAST.getNome());
+            for (AST mGetter : mAST.getASTS()) {
+                if (mGetter.mesmoTipo("GETTER")) {
+                    System.out.println("\t\t - Getter : " + mGetter.getValor());
+                }
+            }
+            for (AST mGetter : mAST.getASTS()) {
+                if (mGetter.mesmoTipo("SETTER")) {
+                    System.out.println("\t\t - Setter : " + mGetter.getValor());
+                }
+            }
+        }
+
+        System.out.println(" - TYPES : ");
+        for (AST mAST : mEscopo.getRunTime().getGlobalTypes()) {
+            System.out.println("\t - " + mAST.getNome());
+            for (AST mGetter : mAST.getASTS()) {
+                System.out.println("\t\t - " + mGetter.getTipo() + " " + mGetter.getNome() + " : " + getTipagem(mGetter.getBranch("TYPE")));
+            }
         }
 
         System.out.println(" - STAGES : ");
@@ -324,14 +345,14 @@ public class EscopoDebug {
 
     }
 
-    public String getTipagem(AST eAST){
+    public String getTipagem(AST eAST) {
 
         String mTipagem = eAST.getNome();
 
-        if (eAST.mesmoValor("GENERIC")){
+        if (eAST.mesmoValor("GENERIC")) {
 
             for (AST eTipando : eAST.getASTS()) {
-                mTipagem += "<" +getTipagem(eTipando) + ">";
+                mTipagem += "<" + getTipagem(eTipando) + ">";
             }
 
         }
@@ -377,8 +398,8 @@ public class EscopoDebug {
         System.out.println(" ######################### STACK - GLOBAL OPERATIONS ############################ ");
 
 
-        for (Index_Function mAST : mEscopo.getRunTime().getGlobalOperations()) {
-            System.out.println("\t - " + mAST.getDefinicao());
+        for (AST mAST : mEscopo.getRunTime().getGlobalOperations()) {
+            System.out.println("\t - " + (new Index_Function(mAST)).getDefinicao());
         }
 
 
@@ -616,7 +637,7 @@ public class EscopoDebug {
 
         for (AST mAST : mEscopo.getRunTime().getGlobalStructs()) {
             if (mAST.mesmoTipo("STRUCT")) {
-                System.out.println("\t - " + mAST.getNome() );
+                System.out.println("\t - " + mAST.getNome());
 
             }
 

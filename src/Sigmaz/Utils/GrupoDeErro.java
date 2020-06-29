@@ -23,8 +23,8 @@ public class GrupoDeErro {
         mMensagens.add(eErro);
     }
 
-    public void adicionarErro( String eMensagem,int ePosicao){
-        mMensagens.add(new Erro(eMensagem,ePosicao));
+    public void adicionarErro( String eMensagem,int eLinha,int ePosicao){
+        mMensagens.add(new Erro(eMensagem,eLinha,ePosicao));
     }
 
 
