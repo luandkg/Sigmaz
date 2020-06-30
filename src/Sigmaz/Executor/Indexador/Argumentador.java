@@ -141,7 +141,7 @@ public class Argumentador {
 
 
         Escopo mEscopoInterno = new Escopo(mRunTime, mStructEscopo);
-        //Escopo mEscopoInterno = new Escopo(mRunTime, null);
+        mEscopoInterno.setNome(mFunction.getNome());
 
 
         passarParametros(mEscopoInterno, mFunction.getParamentos(), mArgumentos);
@@ -186,9 +186,7 @@ public class Argumentador {
 
 
         Escopo mEscopoInterno = new Escopo(mRunTime, mStructEscopo);
-        //Escopo mEscopoInterno = new Escopo(mRunTime, null);
-
-        mEscopoInterno.setNome(mStructEscopo.getNome());
+        mEscopoInterno.setNome(mFunction.getNome());
 
 
         passarParametros(mEscopoInterno, mFunction.getParamentos(), mArgumentos);

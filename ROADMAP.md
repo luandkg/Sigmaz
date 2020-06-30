@@ -128,3 +128,8 @@ Linguagem de Programação Estruturada - Implementações
         - UNIFICACAO DO RUN_FUNC
         - POSICAO E LINHA DE ERRO
         - COMENTARIOS COM MULTIPLAS LINHAS
+        
+    - 2020 06 30
+        - OPERATOR - REORGANIZAÇÃO
+        - DEBUGGER - SEPARAÇÃO
+        - AST_VALUE : CONTAINER

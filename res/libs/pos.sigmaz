@@ -8,7 +8,7 @@ cast pos {
 	
 }
 
-operation == ( a : pos , b : pos ) : bool {
+operator == ( a : pos , b : pos ) : bool {
 	def c : bool;
 	def c1 : num = num ( a );
 	def c2 : num = num ( b );
@@ -16,7 +16,7 @@ operation == ( a : pos , b : pos ) : bool {
 	return c;
 }
 
-operation !! ( a : pos , b : pos ) : bool {
+operator !! ( a : pos , b : pos ) : bool {
 	def c : bool;
 	def c1 : num = a;
 	def c2 : num = b;

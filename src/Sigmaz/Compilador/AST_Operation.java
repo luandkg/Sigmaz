@@ -46,7 +46,7 @@ public class AST_Operation {
 
     public void definir(AST ASTPai, String Visibilidade, String eOperator) {
 
-        AST AST_Corrente = new AST("OPERATION");
+        AST AST_Corrente = new AST("OPERATOR");
         AST_Corrente.setNome(eOperator);
         ASTPai.getASTS().add(AST_Corrente);
 

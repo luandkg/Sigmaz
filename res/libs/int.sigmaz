@@ -1,0 +1,141 @@
+cast int {
+	getter a : num -> {
+    	invoke casting -> cast_integer ( a ) :: a;
+		return a;
+	}
+	setter b : num -> {
+	    invoke casting -> cast_integer ( b ) :: b;
+		return b;
+	}
+
+}
+
+func somar ( a : int , b : int ) : int {
+
+    def c1 : num = null;
+
+    def a1 : num = a;
+    def b1 : num = b;
+
+    invoke math -> operator_sum ( a1 , b1 ) :: c1;
+
+	def c : int = c1;
+
+	return c;
+}
+
+func subtrair ( a : int ,b : int ) : int {
+    def c1 : num = null;
+
+    def a1 : num = a;
+    def b1 : num = b;
+
+    invoke math -> operator_sub ( a1 , b1 ) :: c1;
+
+	def c : int = c1;
+
+	return c;
+}
+
+func multiplicar ( a : int , b : int ) : int {
+    def c1 : num = null;
+
+    def a1 : num = a;
+    def b1 : num = b;
+
+    invoke math -> operator_mux ( a1 , b1 ) :: c1;
+
+	def c : int = c1;
+
+	return c;
+}
+
+func dividir ( a : int , b : int ) : int {
+    def c1 : num = null;
+
+    def a1 : num = a;
+    def b1 : num = b;
+
+    invoke math -> operator_div ( a1 , b1 ) :: c1;
+
+	def c : int = c1;
+
+	return c;
+}
+
+operator ++ ( a : int , b : int ) : int {
+
+    def c1 : num = null;
+
+    def a1 : num = a;
+    def b1 : num = b;
+
+    invoke math -> operator_sum ( a1 , b1 ) :: c1;
+
+	def c : int = c1;
+
+	return c;
+}
+
+operator -- ( a : int ,b : int ) : int {
+    def c1 : num = null;
+
+    def a1 : num = a;
+    def b1 : num = b;
+
+    invoke math -> operator_sub ( a1 , b1 ) :: c1;
+
+	def c : int = c1;
+
+	return c;
+}
+
+operator ** ( a : int , b : int ) : int {
+    def c1 : num = null;
+
+    def a1 : num = a;
+    def b1 : num = b;
+
+    invoke math -> operator_mux ( a1 , b1 ) :: c1;
+
+	def c : int = c1;
+
+	return c;
+}
+
+operator // ( a : int , b : int ) : int {
+    def c1 : num = null;
+
+    def a1 : num = a;
+    def b1 : num = b;
+
+    invoke math -> operator_div ( a1 , b1 ) :: c1;
+
+	def c : int = c1;
+
+	return c;
+}
+
+operator == ( a : int , b : int ) : bool {
+	def c : bool;
+	def c1 : num = a;
+	def c2 : num = b;
+	invoke math -> operator_equal ( c1 , c2 ) :: c;
+	return c;
+}
+
+operator !! ( a : int , b : int ) : bool {
+	def c : bool;
+	def c1 : num = a;
+	def c2 : num = b;
+	invoke math -> operator_not ( c1 , c2 ) :: c;
+	return c;
+}
+
+
+director ! (a:int) : int {
+
+	def b : int = a ** int((-1));
+
+    return b;
+}

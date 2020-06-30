@@ -23,13 +23,14 @@ public class RunTime {
     private ArrayList<AST> mGlobalActions;
     private ArrayList<AST> mGlobalFunctions;
 
-    private ArrayList<AST> mGlobalUnarios;
 
     private ArrayList<AST> mGlobalCasts;
     private ArrayList<AST> mGlobalTypes;
     private ArrayList<AST> mGlobalStages;
     private ArrayList<AST> mGlobalStructs;
+
     private ArrayList<AST> mGlobalOperacoes;
+    private ArrayList<AST> mGlobalDirectors;
 
     private ArrayList<String> mT_Primitivos;
     private ArrayList<String> mT_Casts;
@@ -69,7 +70,7 @@ public class RunTime {
         mGlobalActions = new ArrayList<>();
         mGlobalFunctions = new ArrayList<>();
         mGlobalOperacoes = new ArrayList<AST>();
-        mGlobalUnarios = new ArrayList<AST>();
+        mGlobalDirectors = new ArrayList<AST>();
         mGlobalCasts = new ArrayList<AST>();
         mGlobalTypes = new ArrayList<AST>();
         mGlobalStages = new ArrayList<AST>();
@@ -117,7 +118,7 @@ public class RunTime {
         mGlobalActions.clear();
         mGlobalFunctions.clear();
         mGlobalOperacoes.clear();
-        mGlobalUnarios.clear();
+        mGlobalDirectors.clear();
         mGlobalCasts.clear();
         mGlobalTypes.clear();
         mGlobalStages.clear();
@@ -340,7 +341,7 @@ public class RunTime {
                         mContador_Functions += 1;
                     } else if (ASTC.mesmoTipo("ACTION")) {
                         mContador_Actions += 1;
-                    } else if (ASTC.mesmoTipo("OPERATION")) {
+                    } else if (ASTC.mesmoTipo("OPERATOR")) {
                         mContador_Opertations += 1;
 
                     } else if (ASTC.mesmoTipo("CAST")) {
@@ -445,14 +446,14 @@ public class RunTime {
 
                         mGlobalActions.add(ASTC);
 
-                    } else if (ASTC.mesmoTipo("OPERATION")) {
+                    } else if (ASTC.mesmoTipo("OPERATOR")) {
                         Global.guardar(ASTC);
 
                         mGlobalOperacoes.add(ASTC);
-                    } else if (ASTC.mesmoTipo("UNARY")) {
+                    } else if (ASTC.mesmoTipo("DIRECTOR")) {
                         Global.guardar(ASTC);
 
-                        mGlobalUnarios.add(ASTC);
+                        mGlobalDirectors.add(ASTC);
 
                     } else if (ASTC.mesmoTipo("CAST")) {
                         Global.guardar(ASTC);
@@ -484,7 +485,7 @@ public class RunTime {
 
                 for (AST mStruct : mGlobalStructs) {
                     for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
-                        if (mStructBody.mesmoTipo("OPERATION") && mStructBody.getBranch("VISIBILITY").mesmoNome("EXTERN")) {
+                        if (mStructBody.mesmoTipo("OPERATOR") && mStructBody.getBranch("VISIBILITY").mesmoNome("EXTERN")) {
                             // System.out.println("PORRA PERDIDA");
 
                             mGlobalOperacoes.add(mStructBody);
@@ -622,8 +623,8 @@ public class RunTime {
         return mGlobalOperacoes;
     }
 
-    public ArrayList<AST> getGlobalUnarios() {
-        return mGlobalUnarios;
+    public ArrayList<AST> getGlobalDirectors() {
+        return mGlobalDirectors;
     }
 
 

@@ -112,21 +112,19 @@ public class Run_Func {
 
                     algum = true;
 
-                    if (mIndex_Function.getTipo().contentEquals(eReturne) || eReturne.contentEquals("<<ANY>>")) {
+                 //   if (mIndex_Function.getTipo().contentEquals(eReturne) || eReturne.contentEquals("<<ANY>>")) {
 
                         if (mRunTime.getErros().size() > 0) {
                             return null;
                         }
 
 
-                        //  executar_Function(mIndex_Function, mArgumentos, eReturne);
-
                         mItem = mPreparadorDeArgumentos.executar_FunctionGlobal(mRunTime, mIndex_Function, mArgumentos, eReturne);
 
 
-                    } else {
-                        mRunTime.getErros().add("Operation " + eNome + " : Retorno incompativel !");
-                    }
+                  //  } else {
+                  //      mRunTime.getErros().add("Operation " + eNome + " : Retorno incompativel !");
+                  //  }
 
                     break;
                 }
@@ -168,7 +166,7 @@ public class Run_Func {
 
     }
 
-    public Item init_Unario(String eNome, Run_Value Esquerda,  String eReturne) {
+    public Item init_Director(String eNome, Run_Value Esquerda,  String eReturne) {
 
         Item mItem = null;
 
@@ -199,7 +197,7 @@ public class Run_Func {
 
 
 
-        for (AST mAST : mRunTime.getGlobalUnarios()) {
+        for (AST mAST : mRunTime.getGlobalDirectors()) {
 
             Index_Function mIndex_Function = new Index_Function(mAST);
 
@@ -217,7 +215,7 @@ public class Run_Func {
 
                     algum = true;
 
-                    if (mIndex_Function.getTipo().contentEquals(eReturne) || eReturne.contentEquals("<<ANY>>")) {
+                  //  if (mIndex_Function.getTipo().contentEquals(eReturne) || eReturne.contentEquals("<<ANY>>")) {
 
                         if (mRunTime.getErros().size() > 0) {
                             return null;
@@ -229,9 +227,9 @@ public class Run_Func {
                         mItem = mPreparadorDeArgumentos.executar_FunctionGlobal(mRunTime, mIndex_Function, mArgumentos, eReturne);
 
 
-                    } else {
-                        mRunTime.getErros().add("Unary " + eNome + " : Retorno incompativel !");
-                    }
+                   // } else {
+                   //     mRunTime.getErros().add("Director " + eNome + " : Retorno incompativel !");
+                   // }
 
                     break;
                 }
@@ -244,7 +242,7 @@ public class Run_Func {
 
         if (enc) {
             if (!algum) {
-                mRunTime.getErros().add("Unary " + eNome + " : Argumentos incompativeis : " + mTipagem);
+                mRunTime.getErros().add("Director " + eNome + " : Argumentos incompativeis : " + mTipagem);
             }
         } else {
 
@@ -266,7 +264,7 @@ public class Run_Func {
             }
 
 
-            mRunTime.getErros().add("Unary  " + eNome + " -> " + mTipando + " : Nao Encontrada !");
+            mRunTime.getErros().add("Director  " + eNome + " -> " + mTipando + " : Nao Encontrada !");
         }
 
         return mItem;

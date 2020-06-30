@@ -19,6 +19,7 @@ public class OO {
 
     private ArrayList<Index_Action> mActions;
     private ArrayList<Index_Function> mFunctions;
+    private ArrayList<Index_Function> mDirectors;
     private ArrayList<Index_Function> mOperations;
     private ArrayList<Index_Action> mActionFunctions;
     private ArrayList<AST> mCasts;
@@ -42,6 +43,10 @@ public class OO {
     private ArrayList<Index_Function> mOperations_Restrict;
     private ArrayList<Index_Function> mOperations_Extern;
 
+    private ArrayList<Index_Function> mDirectors_All;
+    private ArrayList<Index_Function> mDirectors_Restrict;
+    private ArrayList<Index_Function> mDirectors_Extern;
+
     public OO(Escopo eEscopo,RunTime eRunTime) {
 
         mEscopo = eEscopo;
@@ -56,6 +61,7 @@ public class OO {
         mActions = new ArrayList<Index_Action>();
         mActionFunctions = new ArrayList<Index_Action>();
         mFunctions = new ArrayList<Index_Function>();
+        mDirectors = new ArrayList<Index_Function>();
         mOperations = new ArrayList<Index_Function>();
         mCasts = new ArrayList<AST>();
 
@@ -70,6 +76,10 @@ public class OO {
         mFunctions_All = new ArrayList<Index_Function>();
         mFunctions_Restrict = new ArrayList<Index_Function>();
         mFunctions_Extern = new ArrayList<Index_Function>();
+
+        mDirectors_All = new ArrayList<Index_Function>();
+        mDirectors_Restrict = new ArrayList<Index_Function>();
+        mDirectors_Extern = new ArrayList<Index_Function>();
 
         mOperations_All = new ArrayList<Index_Function>();
         mOperations_Restrict = new ArrayList<Index_Function>();
@@ -144,7 +154,7 @@ public class OO {
             }
 
 
-        } else if (eAST.mesmoTipo("OPERATION")) {
+        } else if (eAST.mesmoTipo("OPERATOR")) {
 
             Index_Function mFunc = new Index_Function(eAST);
 
@@ -163,7 +173,25 @@ public class OO {
                 mOperations_Restrict.add(mFunc);
 
             }
+        } else if (eAST.mesmoTipo("DIRECTOR")) {
 
+            Index_Function mFunc = new Index_Function(eAST);
+
+            if (mFunc.isExtern()) {
+
+                mDirectors_Extern.add(mFunc);
+                mDirectors.add(mFunc);
+
+            } else if (mFunc.isAll()) {
+
+                mDirectors.add(mFunc);
+                mDirectors_All.add(mFunc);
+
+            } else if (mFunc.isRestrict()) {
+
+                mDirectors_Restrict.add(mFunc);
+
+            }
         } else if (eAST.mesmoTipo("CAST")) {
 
             mCasts.add(eAST);
@@ -238,6 +266,10 @@ public class OO {
         return mActions_Restrict;
     }
 
+    public ArrayList<Index_Function> getDirectors() {
+        return mDirectors;
+    }
+
 
     public ArrayList<Index_Function> getOperations() {
         return mOperations;
@@ -304,6 +336,23 @@ public class OO {
 
         if (getEscopo().getEscopoAnterior() != null) {
             for (Index_Action mIndex_Function : getEscopo().getEscopoAnterior().getActionFunctionsCompleto()) {
+                gc.add(mIndex_Function);
+            }
+        }
+
+        return gc;
+    }
+
+    public ArrayList<Index_Function> getDirectorsCompleto() {
+
+        ArrayList<Index_Function> gc = new ArrayList<Index_Function>();
+
+        for (Index_Function mIndex_Function : getDirectors()) {
+            gc.add(mIndex_Function);
+        }
+
+        if (getEscopo().getEscopoAnterior() != null) {
+            for (Index_Function mIndex_Function : getEscopo().getEscopoAnterior().getDirectorsCompleto()) {
                 gc.add(mIndex_Function);
             }
         }

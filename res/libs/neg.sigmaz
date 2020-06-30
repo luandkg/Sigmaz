@@ -14,15 +14,15 @@ cast neg {
 	
 }
 
-operation == ( a : neg , b : neg ) : bool {
+operator == ( a : neg , b : neg ) : bool {
 	def c : bool;
-	def c1 : num = num ( a );
-	def c2 : num = num ( b );
+	def c1 : num = a;
+	def c2 : num = b;
 	invoke math -> operator_equal ( c1 , c2 ) :: c;
 	return c;
 }
 
-operation !! ( a : neg , b : neg ) : bool {
+operator !! ( a : neg , b : neg ) : bool {
 	def c : bool;
 	def c1 : num = a;
 	def c2 : num = b;

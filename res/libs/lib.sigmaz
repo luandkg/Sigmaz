@@ -5,6 +5,8 @@ import "cast.sigmaz";
 import "strings.sigmaz";
 import "pos.sigmaz";
 import "neg.sigmaz";
+import "int.sigmaz";
+
 import "tempo.sigmaz";
 
 mockiz SIGMAZ : string = "SIGMAZ 1.0";
@@ -27,5 +29,12 @@ act trash(a:any){
 
     invoke __COMPILER__ -> STRUCT (a) :: REMOVE;
 
+}
+
+director ! (a:bool) : bool {
+
+	invoke casting -> inverse ( a ) :: a;
+
+    return a;
 }
 

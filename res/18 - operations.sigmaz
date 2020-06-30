@@ -20,56 +20,56 @@ func somar ( a : num , b : num ) : num {
 	return c;
 }
 
-operation ++ ( a : num , b : num ) : num {
+operator ++ ( a : num , b : num ) : num {
 	def c : num;
 	invoke math -> operator_sum ( a , b ) :: c;
 	return c;
 }
 
-operation -- ( a : num , b : num ) : num {
+operator -- ( a : num , b : num ) : num {
 	def c : num;
 	invoke math -> operator_sub ( a , b ) :: c;
 	return c;
 }
 
-operation == ( a : num , b : num ) : bool {
+operator == ( a : num , b : num ) : bool {
 	def c : bool;
 	invoke math -> operator_equal ( a , b ) :: c;
 	return c;
 }
 
-operation !! ( a : num , b : num ) : bool {
+operator !! ( a : num , b : num ) : bool {
 	def c : bool;
 	invoke math -> operator_not ( a , b ) :: c;
 	return c;
 }
 
-operation == ( a : bool , b : bool ) : bool {
+operator == ( a : bool , b : bool ) : bool {
 	def c : bool;
 	invoke math -> operator_match ( a , b ) :: c;
 	return c;
 }
 
-operation !! ( a : bool , b : bool ) : bool {
+operator !! ( a : bool , b : bool ) : bool {
 	def c : bool;
 	invoke math -> operator_unmatch ( a , b ) :: c;
 	return c;
 }
 
-operation == ( a : string , b : string ) : bool {
+operator == ( a : string , b : string ) : bool {
 	def c : bool;
 	invoke terminal -> operator_match ( a , b ) :: c;
 	return c;
 }
 
-operation !! ( a : string , b : string ) : bool {
+operator !! ( a : string , b : string ) : bool {
 	def c : bool;
 	invoke terminal -> operator_unmatch ( a , b ) :: c;
 	return c;
 }
 
 
-operation ** ( a : num , b : num ) : num {
+operator ** ( a : num , b : num ) : num {
 	def c : num;
 	invoke math -> operator_mux ( a , b ) :: c;
 	return c;

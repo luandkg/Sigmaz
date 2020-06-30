@@ -241,7 +241,7 @@ public class Estagiador {
     public void criarOperador(AST mSigmaz, AST mStageDef, String mOperacao, String mInvocacao) {
 
 
-        AST mMATCH = mSigmaz.criarBranch("OPERATION");
+        AST mMATCH = mSigmaz.criarBranch("OPERATOR");
         mMATCH.setNome(mOperacao);
 
         criarTipagemConcreta(mMATCH,"bool");

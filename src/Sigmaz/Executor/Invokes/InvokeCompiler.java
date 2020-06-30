@@ -341,7 +341,7 @@ public class InvokeCompiler {
 
             if (eSaida.contentEquals("ALL")) {
                 if (mRunTime.getExterno()) {
-                    mEscopo.ListarAll();
+                    mEscopo.ListarLocalAll();
                 }
 
             } else if (eSaida.contentEquals("STACK")) {
@@ -438,7 +438,7 @@ public class InvokeCompiler {
             } else if (eSaida.contentEquals("STRUCTS")) {
 
                 if (mRunTime.getExterno()) {
-                    mEscopo.ListarGlobalStructs();
+                    mEscopo.ListarStructs();
                 }
             } else if (eSaida.contentEquals("COUNT")) {
 

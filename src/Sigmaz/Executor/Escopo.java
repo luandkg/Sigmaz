@@ -1,6 +1,6 @@
 package Sigmaz.Executor;
 
-import Sigmaz.Compilador.AST_Value;
+import Sigmaz.Executor.Debuggers.EscopoDebug;
 import Sigmaz.Executor.Indexador.Index_Action;
 import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Utils.AST;
@@ -125,8 +125,8 @@ public class Escopo {
         mDebug.ListarStructs();
     }
 
-    public void ListarAll() {
-        mDebug.ListarAll();
+    public void ListarLocalAll() {
+        mDebug.ListarLocalAll();
     }
 
     public void ListarStack() {
@@ -141,10 +141,6 @@ public class Escopo {
         mDebug.ListarGlobalStack();
     }
 
-
-    public void ListarGlobalStructs() {
-        mDebug.ListarGlobalStructs();
-    }
 
     public void ListarGlobalFunctions() {
         mDebug.ListarGlobalFunctions();
@@ -173,6 +169,10 @@ public class Escopo {
 
     public ArrayList<Index_Action> getActionFunctionsCompleto() {
         return mAO.getActionFunctionsCompleto();
+    }
+
+    public ArrayList<Index_Function> getDirectorsCompleto() {
+        return mAO.getDirectorsCompleto();
     }
 
     public ArrayList<Index_Function> getOperationsCompleto() {

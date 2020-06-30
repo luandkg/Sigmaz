@@ -158,6 +158,10 @@ public class Run_Value {
 
             Struct_Extern(ASTCorrente, eRetorno);
 
+        } else if (ASTCorrente.getValor().contentEquals("CONTAINER")) {
+
+            init(ASTCorrente.getBranch("VALUE"),eRetorno);
+
         } else {
 
             //   System.out.println("PROBLEMA  -> " + ASTCorrente.getValor());
@@ -306,7 +310,7 @@ public class Run_Value {
 
         if (eModo.mesmoNome("INVERSE")) {
 
-            realizarUnario("INVERSE", mRun_Esquerda, mRetornoTipo);
+            realizarDirector("INVERSE", mRun_Esquerda, mRetornoTipo);
 
 
         } else {
@@ -808,11 +812,11 @@ public class Run_Value {
 
     }
 
-    public void realizarUnario(String eOperacao, Run_Value mRun_Esquerda, String eRetorno) {
+    public void realizarDirector(String eOperacao, Run_Value mRun_Esquerda, String eRetorno) {
 
 
         Run_Func mRun_Matchable = new Run_Func(mRunTime, mEscopo);
-        Item mItem = mRun_Matchable.init_Unario(eOperacao, mRun_Esquerda, eRetorno);
+        Item mItem = mRun_Matchable.init_Director(eOperacao, mRun_Esquerda, eRetorno);
 
         if (mRunTime.getErros().size() > 0) {
             return;

@@ -12,6 +12,11 @@ Linguagem de Programação Estruturada - Alterações
         - DIVISAO DA REQUISICAO
             - AST_IMPORT 
             - AST_REQUIRE
+            
+            
+    - 2020 06 30
+        - UNARY para DIRECTOR
+        - OPERATION para OPERATOR
         
     
  

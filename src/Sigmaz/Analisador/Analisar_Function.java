@@ -56,6 +56,8 @@ public class Analisar_Function {
 
         if (ASTPai.mesmoTipo("DEF")) {
 
+            mAlocadosAntes.add(ASTPai.getNome());
+
             if (mAnalisador.getProibidos().contains(ASTPai.getNome())){
                 mAnalisador.getErros().add("Def : " + ASTPai.getNome() + " : Nome Proibido !");
             }
@@ -64,6 +66,8 @@ public class Analisar_Function {
             mAnalisador.analisarValoracao(ASTPai, mAlocadosAntes);
 
         } else if (ASTPai.mesmoTipo("MOC")) {
+
+            mAlocadosAntes.add(ASTPai.getNome());
 
             if (mAnalisador.getProibidos().contains(ASTPai.getNome())){
                 mAnalisador.getErros().add("Moc : " + ASTPai.getNome() + " : Nome Proibido !");

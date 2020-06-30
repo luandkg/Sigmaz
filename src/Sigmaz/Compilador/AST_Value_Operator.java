@@ -37,4 +37,28 @@ public class AST_Value_Operator {
 
     }
 
+    public void final_argumento_parenteses(String eTipo,AST ASTPai) {
+
+        AST ASTEsquerda = ASTPai.copiar();
+        ASTEsquerda.setTipo("LEFT");
+
+        ASTPai.limpar();
+
+        AST ASTDireita = new AST("RIGHT");
+
+
+        ASTPai.setTipo("VALUE");
+        ASTPai.criarBranch("MODE").setNome(eTipo);
+        ASTPai.setValor("OPERATOR");
+
+        ASTPai.getASTS().add(ASTEsquerda);
+        ASTPai.getASTS().add(ASTDireita);
+
+        AST_Value mAST = new AST_Value(mCompiler);
+        mAST.initUltimoArgumentoParenteses(ASTDireita);
+
+        ASTDireita.setTipo("RIGHT");
+
+    }
+
 }

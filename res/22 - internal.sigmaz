@@ -37,7 +37,7 @@ act pular ( ) {
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }
 
-operation == ( a : num , b : num ) : bool {
+operator == ( a : num , b : num ) : bool {
 	def c : bool;
 	invoke math -> operator_equal ( a , b ) :: c;
 	return c;

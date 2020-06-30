@@ -322,14 +322,14 @@ public class Compiler {
                 AST_Invoke mAST = new AST_Invoke(this);
                 mAST.init(AST_Raiz);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operation")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operator")) {
 
                 AST_Operation mAST = new AST_Operation(this);
                 mAST.init(AST_Raiz, "ALL");
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("unary")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("director")) {
 
-                AST_Unary mAST = new AST_Unary(this);
+                AST_Director mAST = new AST_Director(this);
                 mAST.init(AST_Raiz, "ALL");
 
 

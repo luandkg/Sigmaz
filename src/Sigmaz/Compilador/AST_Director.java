@@ -4,11 +4,11 @@ import Sigmaz.Lexer.Token;
 import Sigmaz.Lexer.TokenTipo;
 import Sigmaz.Utils.AST;
 
-public class AST_Unary {
+public class AST_Director {
 
     private Compiler mCompiler;
 
-    public AST_Unary(Compiler eCompiler) {
+    public AST_Director(Compiler eCompiler) {
         mCompiler = eCompiler;
     }
 
@@ -29,7 +29,7 @@ public class AST_Unary {
 
     public void definir(AST ASTPai, String Visibilidade, String eOperator) {
 
-        AST AST_Corrente = new AST("UNARY");
+        AST AST_Corrente = new AST("DIRECTOR");
         AST_Corrente.setNome(eOperator);
         ASTPai.getASTS().add(AST_Corrente);
 

@@ -14,14 +14,14 @@ act operando ( ) {
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
 
-operation ++ ( a : num , b : num ) : num {
+operator ++ ( a : num , b : num ) : num {
 	def c : num;
 	invoke math -> operator_sum ( a , b ) :: c;
 	return c;
 }
 
 
-operation == ( a : num , b : num ) : bool {
+operator == ( a : num , b : num ) : bool {
 	def c : bool;
 	invoke math -> operator_equal ( a , b ) :: c;
 	return c;

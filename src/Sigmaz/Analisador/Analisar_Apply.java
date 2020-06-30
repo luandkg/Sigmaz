@@ -62,8 +62,9 @@ public class Analisar_Apply {
             } else {
 
                 if (!mAlocadosAntes.contains(mValue.getNome())) {
+                    mAnalisador.getErros().add(mAlocadosAntes.toString());
 
-                    mAnalisador.getErros().add("Variavel nao existente : " + mValue.getNome());
+                    mAnalisador.getErros().add("Variavel nao existente  : " + mValue.getNome());
                 }
 
             }

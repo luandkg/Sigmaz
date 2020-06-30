@@ -65,7 +65,7 @@ public class Run_Any {
 
                     algum = true;
 
-                    if (mIndex_Function.mesmaTipagem(eRetorne) || eRetorne.contentEquals("<<ANY>>")) {
+                    //if (mIndex_Function.mesmaTipagem(eRetorne) || eRetorne.contentEquals("<<ANY>>")) {
 
                         if (mRunTime.getErros().size() > 0) {
                             break;
@@ -74,9 +74,9 @@ public class Run_Any {
 
                         mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eRetorne);
 
-                    } else {
-                        mRunTime.getErros().add("Function " + eMensagem + " : Retorno incompativel !");
-                    }
+                  //  } else {
+                   //     mRunTime.getErros().add("Function " + eMensagem + " : Retorno incompativel !");
+                  //  }
 
                     break;
                 }

@@ -4,12 +4,12 @@ import Sigmaz.Lexer.Token;
 import Sigmaz.Lexer.TokenTipo;
 import Sigmaz.Utils.AST;
 
-public class AST_Value_Argument {
+public class AST_Value_Parenteses {
 
     private Compiler mCompiler;
 
 
-    public AST_Value_Argument(Compiler eCompiler) {
+    public AST_Value_Parenteses(Compiler eCompiler) {
         mCompiler = eCompiler;
     }
 
@@ -26,20 +26,20 @@ public class AST_Value_Argument {
             ASTPai.setValor("Num");
 
             Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA || TokenC2.getTipo() == TokenTipo.VIRGULA) {
+            if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA ) {
                 return;
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                Matcher.final_argumento("MATCH",ASTPai);
+                Matcher.final_argumento_parenteses("MATCH",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                Matcher.final_argumento("UNMATCH",ASTPai);
+                Matcher.final_argumento_parenteses("UNMATCH",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.SOMADOR) {
-                Matcher.final_argumento("SUM",ASTPai);
+                Matcher.final_argumento_parenteses("SUM",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.DIMINUIDOR) {
-                Matcher.final_argumento("SUB",ASTPai);
+                Matcher.final_argumento_parenteses("SUB",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.MULTIPLICADOR) {
-                Matcher.final_argumento("MUX",ASTPai);
+                Matcher.final_argumento_parenteses("MUX",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.DIVISOR) {
-                Matcher.final_argumento("DIV",ASTPai);
+                Matcher.final_argumento_parenteses("DIV",ASTPai);
             } else {
                 System.out.println("Problema : " + TokenD.getConteudo());
             }
@@ -50,20 +50,20 @@ public class AST_Value_Argument {
             ASTPai.setValor("Text");
 
             Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA || TokenC2.getTipo() == TokenTipo.VIRGULA) {
+            if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA ) {
                 return;
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                Matcher.final_argumento("MATCH",ASTPai);
+                Matcher.final_argumento_parenteses("MATCH",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                Matcher.final_argumento("UNMATCH",ASTPai);
+                Matcher.final_argumento_parenteses("UNMATCH",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.SOMADOR) {
-                Matcher.final_argumento("SUM",ASTPai);
+                Matcher.final_argumento_parenteses("SUM",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.DIMINUIDOR) {
-                Matcher.final_argumento("SUB",ASTPai);
+                Matcher.final_argumento_parenteses("SUB",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.MULTIPLICADOR) {
-                Matcher.final_argumento("MUX",ASTPai);
+                Matcher.final_argumento_parenteses("MUX",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.DIVISOR) {
-                Matcher.final_argumento("DIV",ASTPai);
+                Matcher.final_argumento_parenteses("DIV",ASTPai);
             } else {
                 System.out.println("Problema : " + TokenD.getConteudo());
             }
@@ -74,7 +74,7 @@ public class AST_Value_Argument {
             ASTPai.setValor("ID");
 
             Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA || TokenC2.getTipo() == TokenTipo.VIRGULA) {
+            if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA ) {
                 return;
             } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
 
@@ -88,20 +88,20 @@ public class AST_Value_Argument {
 
 
                 Token TokenC4 = mCompiler.getTokenAvante();
-                if (TokenC4.getTipo() == TokenTipo.PARENTESES_FECHA || TokenC4.getTipo() == TokenTipo.VIRGULA) {
+                if (TokenC4.getTipo() == TokenTipo.PARENTESES_FECHA ) {
                     return;
                 } else if (TokenC4.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                    Matcher.final_argumento("MATCH",ASTPai);
+                    Matcher.final_argumento_parenteses("MATCH",ASTPai);
                 } else if (TokenC4.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                    Matcher.final_argumento("UNMATCH",ASTPai);
+                    Matcher.final_argumento_parenteses("UNMATCH",ASTPai);
                 } else if (TokenC4.getTipo() == TokenTipo.SOMADOR) {
-                    Matcher.final_argumento("SUM",ASTPai);
+                    Matcher.final_argumento_parenteses("SUM",ASTPai);
                 } else if (TokenC4.getTipo() == TokenTipo.DIMINUIDOR) {
-                    Matcher.final_argumento("SUB",ASTPai);
+                    Matcher.final_argumento_parenteses("SUB",ASTPai);
                 } else if (TokenC4.getTipo() == TokenTipo.MULTIPLICADOR) {
-                    Matcher.final_argumento("MUX",ASTPai);
+                    Matcher.final_argumento_parenteses("MUX",ASTPai);
                 } else if (TokenC4.getTipo() == TokenTipo.DIVISOR) {
-                    Matcher.final_argumento("DIV",ASTPai);
+                    Matcher.final_argumento_parenteses("DIV",ASTPai);
                 } else {
                     System.out.println("Problema E :  " + TokenC4.getConteudo());
                 }
@@ -132,20 +132,20 @@ public class AST_Value_Argument {
                 ReceberNovoEscopo(ASTPai);
 
                 Token TokenC3 = mCompiler.getTokenAvante();
-                if (TokenC3.getTipo() == TokenTipo.PARENTESES_FECHA || TokenC3.getTipo() == TokenTipo.VIRGULA) {
+                if (TokenC3.getTipo() == TokenTipo.PARENTESES_FECHA ) {
                     return;
                 } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                    Matcher.final_argumento("MATCH",ASTPai);
+                    Matcher.final_argumento_parenteses("MATCH",ASTPai);
                 } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                    Matcher.final_argumento("UNMATCH",ASTPai);
+                    Matcher.final_argumento_parenteses("UNMATCH",ASTPai);
                 } else if (TokenC3.getTipo() == TokenTipo.SOMADOR) {
-                    Matcher.final_argumento("SUM",ASTPai);
+                    Matcher.final_argumento_parenteses("SUM",ASTPai);
                 } else if (TokenC3.getTipo() == TokenTipo.DIMINUIDOR) {
-                    Matcher.final_argumento("SUB",ASTPai);
+                    Matcher.final_argumento_parenteses("SUB",ASTPai);
                 } else if (TokenC3.getTipo() == TokenTipo.MULTIPLICADOR) {
-                    Matcher.final_argumento("MUX",ASTPai);
+                    Matcher.final_argumento_parenteses("MUX",ASTPai);
                 } else if (TokenC3.getTipo() == TokenTipo.DIVISOR) {
-                    Matcher.final_argumento("DIV",ASTPai);
+                    Matcher.final_argumento_parenteses("DIV",ASTPai);
 
                 } else {
                     System.out.println("Problema A : " + TokenC3.getConteudo());
@@ -161,36 +161,36 @@ public class AST_Value_Argument {
                 ReceberNovoEscopo(ASTPai);
 
                 Token TokenC3 = mCompiler.getTokenAvante();
-                if (TokenC3.getTipo() == TokenTipo.PARENTESES_FECHA || TokenC3.getTipo() == TokenTipo.VIRGULA) {
+                if (TokenC3.getTipo() == TokenTipo.PARENTESES_FECHA ) {
                     return;
                 } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                    Matcher.final_argumento("MATCH",ASTPai);
+                    Matcher.final_argumento_parenteses("MATCH",ASTPai);
                 } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                    Matcher.final_argumento("UNMATCH",ASTPai);
+                    Matcher.final_argumento_parenteses("UNMATCH",ASTPai);
                 } else if (TokenC3.getTipo() == TokenTipo.SOMADOR) {
-                    Matcher.final_argumento("SUM",ASTPai);
+                    Matcher.final_argumento_parenteses("SUM",ASTPai);
                 } else if (TokenC3.getTipo() == TokenTipo.DIMINUIDOR) {
-                    Matcher.final_argumento("SUB",ASTPai);
+                    Matcher.final_argumento_parenteses("SUB",ASTPai);
                 } else if (TokenC3.getTipo() == TokenTipo.MULTIPLICADOR) {
-                    Matcher.final_argumento("MUX",ASTPai);
+                    Matcher.final_argumento_parenteses("MUX",ASTPai);
                 } else if (TokenC3.getTipo() == TokenTipo.DIVISOR) {
-                    Matcher.final_argumento("DIV",ASTPai);
+                    Matcher.final_argumento_parenteses("DIV",ASTPai);
                 } else {
                     System.out.println("Problema A : " + TokenC3.getConteudo());
                 }
 
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                Matcher.final_argumento("MATCH",ASTPai);
+                Matcher.final_argumento_parenteses("MATCH",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                Matcher.final_argumento("UNMATCH",ASTPai);
+                Matcher.final_argumento_parenteses("UNMATCH",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.SOMADOR) {
-                Matcher.final_argumento("SUM",ASTPai);
+                Matcher.final_argumento_parenteses("SUM",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.DIMINUIDOR) {
-                Matcher.final_argumento("SUB",ASTPai);
+                Matcher.final_argumento_parenteses("SUB",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.MULTIPLICADOR) {
-                Matcher.final_argumento("MUX",ASTPai);
+                Matcher.final_argumento_parenteses("MUX",ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.DIVISOR) {
-                Matcher.final_argumento("DIV",ASTPai);
+                Matcher.final_argumento_parenteses("DIV",ASTPai);
             } else {
                 System.out.println("Problema : " + TokenD.getConteudo());
             }
@@ -290,33 +290,6 @@ public class AST_Value_Argument {
                     saiu = true;
                     break;
                 }
-
-            } else if (TokenD.getTipo() == TokenTipo.PARENTESES_ABRE) {
-
-                mais = false;
-
-
-                AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
-                ASTCorrente.setValor("CONTAINER");
-
-                AST ASTV= ASTCorrente.criarBranch("VALUE");
-
-
-                AST_Value_Parenteses mAST = new AST_Value_Parenteses(mCompiler);
-                mAST.initArgumento(ASTV);
-                ASTV.setTipo("VALUE");
-
-
-                Token P2 = mCompiler.getTokenAvante();
-
-                if (P2.getTipo() == TokenTipo.VIRGULA) {
-                    mais = true;
-                } else if (P2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                    saiu = true;
-                    break;
-                }
-
-
 
             } else {
                 mCompiler.errarCompilacao("Era esperado um argumento : " + TokenD.getConteudo(), TokenD);

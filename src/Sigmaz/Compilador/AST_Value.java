@@ -760,5 +760,106 @@ public class AST_Value {
 
     }
 
+    public void initUltimoArgumentoParenteses(AST ASTPai) {
+
+        Token TokenD = mCompiler.getTokenAvante();
+
+
+        if (TokenD.getTipo() == TokenTipo.PARENTESES_ABRE) {
+
+            ASTPai.setNome("");
+            ASTPai.setValor("BLOCK");
+
+            AST_Value mAST = new AST_Value(mCompiler);
+            mAST.mTerminar = TokenTipo.PARENTESES_FECHA;
+            mAST.mTerminarErro = "Era esperado )";
+
+            mAST.init(ASTPai.criarBranch("VALUE"));
+
+            Token TokenC2 = mCompiler.getTokenAvante();
+            if (  TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
+                return;
+
+            } else {
+                System.out.println("Problema : " + TokenD.getConteudo());
+            }
+
+        } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
+
+            ASTPai.setNome(TokenD.getConteudo());
+            ASTPai.setValor("Num");
+
+            Token TokenC2 = mCompiler.getTokenAvante();
+            if ( TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
+                return;
+
+            } else {
+                System.out.println("Problema : " + TokenD.getConteudo());
+            }
+
+        } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
+
+            ASTPai.setNome(TokenD.getConteudo());
+            ASTPai.setValor("Text");
+
+            Token TokenC2 = mCompiler.getTokenAvante();
+            if ( TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
+                return;
+            } else {
+                System.out.println("Problema : " + TokenD.getConteudo());
+            }
+
+        } else if (TokenD.getTipo() == TokenTipo.ID) {
+
+            ASTPai.setNome(TokenD.getConteudo());
+            ASTPai.setValor("ID");
+
+            Token TokenC2 = mCompiler.getTokenAvante();
+            if ( TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
+                return;
+            } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_ABRE) {
+
+                ASTPai.setValor("FUNCT");
+
+                AST_Value_Argument gAST = new AST_Value_Argument(mCompiler);
+                gAST.ReceberArgumentos(ASTPai);
+
+                Token TokenC3 = mCompiler.getTokenAvante();
+                if ( TokenC3.getTipo() == TokenTipo.PARENTESES_FECHA) {
+                    return;
+                } else {
+                    System.out.println("Problema x2 : " + TokenC3.getConteudo());
+                }
+
+            } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
+
+                ASTPai.setValor("STAGE");
+                Token TokenC3 = mCompiler.getTokenAvante();
+                if (TokenC3.getTipo() == TokenTipo.ID) {
+                    ASTPai.criarBranch("STAGED").setNome(TokenC3.getConteudo());
+                } else {
+                    System.out.println("Problema ZZ : " + TokenC3.getConteudo());
+                }
+
+                Token TokenC4 = mCompiler.getTokenAvante();
+                if (TokenC4.getTipo() == mTerminar) {
+                    return;
+                } else {
+                    System.out.println("Problema EE :  " + TokenC4.getConteudo());
+                }
+
+            } else {
+                System.out.println("Problema : " + TokenD.getConteudo());
+            }
+
+        } else {
+
+            System.out.println("Valorando : " + TokenD.getConteudo());
+
+
+        }
+
+
+    }
 
 }

@@ -293,7 +293,7 @@ public class Analisador {
         if (!mAlocadosAntes.contains(ASTPai.getNome())) {
             mAlocadosAntes.add(ASTPai.getNome());
         } else {
-            mErros.add("Definicao Duplicada : " + ASTPai.getNome());
+          //  mErros.add("Definicao Duplicada : " + ASTPai.getNome());
         }
     }
 
@@ -402,11 +402,11 @@ public class Analisador {
                 }
 
 
-            } else if (mAST.mesmoTipo("OPERATION")) {
+            } else if (mAST.mesmoTipo("OPERATOR")) {
 
                 mAnalisar_Function.analisarFunction(mAST, mAlocados);
 
-            } else if (mAST.mesmoTipo("UNARY")) {
+            } else if (mAST.mesmoTipo("DIRECTOR")) {
 
                 mAnalisar_Function.analisarFunction(mAST, mAlocados);
 

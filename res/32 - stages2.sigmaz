@@ -22,13 +22,13 @@ stages CORES -> not {
 	AMARELO , VERMELHO , AZUL , BRANCO 
 }
 
-operation == ( a : CORES , b : CORES ) : bool {
+operator == ( a : CORES , b : CORES ) : bool {
 	def c : bool;
 	invoke stages -> match ( a , b ) :: c;
 	return c;
 }
 
-operation !! ( a : CORES , b : CORES ) : bool {
+operator !! ( a : CORES , b : CORES ) : bool {
 	def c : bool;
 	invoke stages -> unmatch ( a , b ) :: c;
 	return c;
