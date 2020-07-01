@@ -1,0 +1,17 @@
+
+
+call iniciar -> inicio ( );
+
+
+act inicio ( ) {
+
+    def a : bool = false;
+    def b : string = "";
+
+    try a with b -> {
+        def g : num =0;
+    }
+
+
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+}

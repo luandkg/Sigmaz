@@ -70,6 +70,8 @@ public class Analisar_Action {
             mAnalisador.getAnalisar_Step().analisarStep(ASTPai, mAlocadosAntes, false);
         } else if (ASTPai.mesmoTipo("STEPDEF")) {
             mAnalisador.getAnalisar_Step().analisarStepDef(ASTPai, mAlocadosAntes, false);
+        } else if (ASTPai.mesmoTipo("TRY")) {
+            mAnalisador.getAnalisar_Try().init(ASTPai, mAlocadosAntes, false);
         } else if (ASTPai.mesmoTipo("CANCEL")) {
             if (!laco) {
                 mAnalisador.getErros().add("CANCEL so pode existir dentro de um laco !");

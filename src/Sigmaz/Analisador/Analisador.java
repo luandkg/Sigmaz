@@ -29,6 +29,7 @@ public class Analisador {
     private Analisar_Apply mAnalisar_Apply;
     private Analisar_Execute mAnalisar_Execute;
     private Analisar_Stage mAnalisar_Stage;
+    private Analisar_Try mAnalisar_Try;
 
     private Analisar_Outros mAnalisar_Outros;
 
@@ -60,6 +61,7 @@ public class Analisador {
         mAnalisar_Apply = new Analisar_Apply(this);
         mAnalisar_Execute = new Analisar_Execute(this);
         mAnalisar_Stage = new Analisar_Stage(this);
+        mAnalisar_Try = new Analisar_Try(this);
 
         mAnalisar_Outros = new Analisar_Outros(this);
 
@@ -146,6 +148,9 @@ public class Analisador {
         return mAnalisar_Outros;
     }
 
+    public Analisar_Try getAnalisar_Try() {
+        return mAnalisar_Try;
+    }
 
     public void externarlizar() {
         mExterno = true;

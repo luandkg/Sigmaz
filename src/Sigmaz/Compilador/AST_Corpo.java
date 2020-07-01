@@ -71,6 +71,11 @@ public class AST_Corpo {
                 AST_Daz mAST = new AST_Daz(mCompiler);
                 mAST.init(ASTPai);
 
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("try")){
+
+                AST_Try mAST = new AST_Try(mCompiler);
+                mAST.init(ASTPai);
+
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("cancel")){
 
                 AST mCancel = ASTPai.criarBranch("CANCEL");

@@ -11,3 +11,5 @@ act inicio ( ) {
 	def DataTempo_Externo : string = TempoData -> getDataTempo_Formatado ( );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
+
+ 

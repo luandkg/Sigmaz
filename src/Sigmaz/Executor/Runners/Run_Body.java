@@ -213,16 +213,22 @@ public class Run_Body {
                 mConteudo = mAST.getConteudo();
                 mRetornoTipo = mAST.getRetornoTipo();
 
-
-            } else if (fAST.mesmoTipo("CANCEL")) {
-                Cancelar();
-            } else if (fAST.mesmoTipo("CONTINUE")) {
-                Continuar();
             } else if (fAST.mesmoTipo("EXECUTE")) {
 
 
                 Run_Execute mAST = new Run_Execute(mRunTime, mEscopo);
                 mAST.init(fAST);
+            } else if (fAST.mesmoTipo("TRY")) {
+
+
+                Run_Try mAST = new Run_Try(mRunTime, mEscopo);
+                mAST.init(fAST);
+
+            } else if (fAST.mesmoTipo("CANCEL")) {
+                Cancelar();
+            } else if (fAST.mesmoTipo("CONTINUE")) {
+                Continuar();
+
 
             } else if (fAST.mesmoTipo("EXCEPTION")) {
 
