@@ -1,6 +1,6 @@
 
  
-![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/logo.png)
+![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/logotipo.png)
 
 Linguagem de Programação Estruturada - Implementações
 
@@ -133,3 +133,4 @@ Linguagem de Programação Estruturada - Implementações
         - OPERATOR - REORGANIZAÇÃO
         - DEBUGGER - SEPARAÇÃO
         - AST_VALUE : CONTAINER
+        - AST_TRY

@@ -1,6 +1,6 @@
 
  
-![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/logo.png)
+![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/logotipo.png)
 
 Linguagem de Programação Estruturada - Alterações
 
