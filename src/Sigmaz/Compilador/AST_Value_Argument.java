@@ -73,7 +73,11 @@ public class AST_Value_Argument {
             ASTPai.setNome(TokenD.getConteudo());
             ASTPai.setValor("ID");
 
+
             Token TokenC2 = mCompiler.getTokenAvante();
+
+
+
             if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA || TokenC2.getTipo() == TokenTipo.VIRGULA) {
                 return;
             } else if (TokenC2.getTipo() == TokenTipo.QUAD) {

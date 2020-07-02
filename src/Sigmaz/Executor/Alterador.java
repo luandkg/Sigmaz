@@ -7,13 +7,13 @@ import java.util.ArrayList;
 public class Alterador {
 
     private ArrayList<AItem> mAlterar;
-    private ArrayList<String> mAbstratos;
+    private ArrayList<AST> mAbstratos;
 
     public class AItem {
         private String mAbstrato;
-        private String mTipo;
+        private AST mTipo;
 
-        public AItem(String eAbstrato, String eTipo) {
+        public AItem(String eAbstrato, AST eTipo) {
             mAbstrato = eAbstrato;
             mTipo = eTipo;
         }
@@ -22,7 +22,7 @@ public class Alterador {
             return mAbstrato;
         }
 
-        public String getTipo() {
+        public AST getTipo() {
             return mTipo;
         }
 
@@ -35,65 +35,27 @@ public class Alterador {
     public Alterador() {
 
         mAlterar = new ArrayList<AItem>();
-        mAbstratos = new ArrayList<String>();
+        mAbstratos = new ArrayList<AST>();
     }
 
     public ArrayList<AItem> getAlteracoes() {
         return mAlterar;
     }
 
-    public void adicionar(String eAbstrato, String eTipo) {
+    public void adicionar(String eAbstrato, AST eTipo) {
 
         mAlterar.add(new AItem(eAbstrato, eTipo));
         mAbstratos.add(eTipo);
 
     }
 
-    public void alterarTipoLogo(AST AST_Type) {
-        for (AItem eTipo : mAlterar) {
-            if (AST_Type.mesmoValor("CONCRETE")) {
 
-                if (AST_Type.mesmoNome(eTipo.getAbstrato())) {
-                    AST_Type.setNome(eTipo.getTipo());
-
-                }
-
-            } else if (AST_Type.mesmoValor("GENERIC")) {
-
-
-                for (AST eSub : AST_Type.getASTS()) {
-                    alterarTipoLogo(eSub);
-                }
-
-            }
-        }
-    }
 
     public void alterarTipo(AST ASTPai) {
 
-        for (AItem eTipo : mAlterar) {
+        AST AST_Type = ASTPai.getBranch("TYPE");
 
-            AST AST_Type = ASTPai.getBranch("TYPE");
-
-            if (AST_Type.mesmoValor("CONCRETE")) {
-
-                if (AST_Type.mesmoNome(eTipo.getAbstrato())) {
-                    AST_Type.setNome(eTipo.getTipo());
-                    break;
-                }
-
-            } else if (AST_Type.mesmoValor("GENERIC")){
-
-
-                for (AST eSub : AST_Type.getASTS()) {
-                    alterarTipoLogo(eSub);
-               }
-
-            }
-
-
-        }
-
+        alterarTipoDeType(AST_Type);
 
     }
 
@@ -101,11 +63,19 @@ public class Alterador {
 
         for (AItem eTipo : mAlterar) {
 
-            if (ASTPai.mesmoNome(eTipo.getAbstrato())) {
-                ASTPai.setNome(eTipo.getTipo());
-
-
-                break;
+            if (ASTPai.mesmoValor("CONCRETE")) {
+                if (ASTPai.mesmoNome(eTipo.getAbstrato())) {
+                    if (eTipo.getTipo().existeBranch("TYPE")){
+                        ASTPai.espelhar(eTipo.getTipo().getBranch("TYPE"));
+                    }else{
+                        ASTPai.espelhar(eTipo.getTipo());
+                    }
+                    break;
+                }
+            }else if(ASTPai.mesmoValor("GENERIC")){
+                for (AST eSub : ASTPai.getASTS()) {
+                    alterarTipoDeType(eSub);
+                }
             }
 
         }
@@ -121,26 +91,59 @@ public class Alterador {
 
                 alterarTipo(eAST);
 
+                if (eAST.existeBranch("VALUE")){
+                    if (eAST.getBranch("VALUE").mesmoValor("INIT")){
+                        alterar(eAST.getBranch("VALUE"));
+                    }
+                }
 
             } else if (eAST.mesmoTipo("MOCKIZ")) {
 
                 alterarTipo(eAST);
 
+                if (eAST.existeBranch("VALUE")){
+                    if (eAST.getBranch("VALUE").mesmoValor("INIT")){
+                        alterar(eAST.getBranch("VALUE"));
+                    }
+                }
+
             } else if (eAST.mesmoTipo("DEF")) {
 
                 alterarTipo(eAST);
+
+                if (eAST.existeBranch("VALUE")){
+                    if (eAST.getBranch("VALUE").mesmoValor("INIT")){
+                        alterar(eAST.getBranch("VALUE"));
+                    }
+                }
 
             } else if (eAST.mesmoTipo("MOC")) {
 
                 alterarTipo(eAST);
 
+                if (eAST.existeBranch("VALUE")){
+                    if (eAST.getBranch("VALUE").mesmoValor("INIT")){
+                        alterar(eAST.getBranch("VALUE"));
+                    }
+                }
+
             } else if (eAST.mesmoTipo("TYPE")) {
 
                 alterarTipoDeType(eAST);
 
+            } else if (eAST.mesmoTipo("BODY")) {
+
+                alterar(eAST);
+            } else if (eAST.mesmoTipo("OTHER")) {
+
+                alterar(eAST);
+            } else if (eAST.mesmoTipo("OTHERS")) {
+
+                alterar(eAST);
             } else if (eAST.mesmoTipo("IF")) {
 
-                alterar(eAST.getBranch("BODY"));
+                alterar(eAST);
+
 
             } else if (eAST.mesmoTipo("CONDITION")) {
 

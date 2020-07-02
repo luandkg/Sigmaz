@@ -6,18 +6,25 @@ import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.Erro;
 import Sigmaz.Utils.GrupoDeErro;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class Testes {
+public class SigmazTestes {
 
     private ArrayList<String> mArquivos;
+    private String mSaida;
 
-    public Testes() {
+    public SigmazTestes() {
 
         mArquivos = new ArrayList<String>();
+        mSaida="Compiled.sigmad";
 
+    }
 
+    public void setSaida(String eSaida){
+        mSaida=eSaida;
     }
 
     public void adicionar(String eArquivo) {
@@ -27,13 +34,11 @@ public class Testes {
     public void init() {
 
 
-        System.out.println("################ CSIGMAZ - EM LOTE ################");
-
-
-        String saida = "res/compilado.sigmad";
+        System.out.println("################ SIGMAZ - TESTES UNITARIOS ################");
 
 
         String DDI = getData();
+        long start = System.currentTimeMillis();
 
         System.out.println("");
         System.out.println(" - AUTOR	: LUAN FREITAS");
@@ -47,6 +52,9 @@ public class Testes {
         //  ArrayList<String> mSaidas = new ArrayList<String>();
         int Contador = 1;
 
+        int mQuantidade = mArquivos.size();
+        int mSucesso = 0;
+        int mProblema = 0;
 
         for (String Arquivo : mArquivos) {
 
@@ -71,12 +79,12 @@ public class Testes {
 
                     if (AnaliseC.getErros().size() == 0) {
 
-                        CompilerC.Compilar(saida);
+                        CompilerC.Compilar(mSaida);
                         RunTime RunTimeC = new RunTime();
 
                         RunTimeC.internalizar();
 
-                        RunTimeC.init(saida);
+                        RunTimeC.init(mSaida);
 
 
                         //  System.out.println("################ " + Arquivo + " ################");
@@ -135,26 +143,23 @@ public class Testes {
             }
 
             if (passou) {
-                // mSaidas.add(" Arquivo : " + Contador + " -> " + Arquivo + " : SUCESSO ");
                 System.out.println(" Arquivo : " + sContador + " -> " + Arquivo + " : SUCESSO ");
-
+                mSucesso+=1;
             } else {
 
-
                 System.out.println(" Arquivo : " + sContador + " -> " + Arquivo + " : FALHOU -> " + parou);
-
-                //  mSaidas.add(" Arquivo : " + Contador + " -> " + Arquivo + " : FALHOU -> " + parou);
                 for (String Tempando : mTemp) {
-                    //mSaidas.add(Tempando);
                     System.out.println(Tempando);
                 }
+                mProblema+=1;
+
             }
 
             Contador += 1;
         }
 
         String DDF = getData();
-
+        long end = System.currentTimeMillis();
 
         System.out.println("");
 
@@ -162,12 +167,26 @@ public class Testes {
         System.out.println(" - FIM  	: " + DDF);
         System.out.println("");
 
-        //for (String Saindo : mSaidas) {
+        float sec = (end - start) / 1000F;
+
+        System.out.println(" - TEMPO  	: " + sec + " segundos");
+        System.out.println("");
 
 
-        //    System.out.println(Saindo);
 
-        //  }
+        NumberFormat formatarFloat= new DecimalFormat("0.00");
+
+        if (mQuantidade>0){
+
+            float s = ((float)mSucesso/(float)mQuantidade)*100.0f;
+            float f =( (float)mProblema/(float)mQuantidade)*100.0f;
+
+            System.out.println(" - TESTES  	: " + mQuantidade + " -> 100.00 % ");
+            System.out.println("\t - SUCESSO  : " + mSucesso + " -> " +  formatarFloat.format(s).replace(",", ".") + " % ");
+            System.out.println("\t - FALHOU  	: " + mProblema+ " -> " + formatarFloat.format(f).replace(",", ".")+ " % ");
+
+        }
+
 
 
     }

@@ -5,50 +5,15 @@ define GERAL : Item >> ( num ) = null;
 
 act inicio ( ) {
 	def ig : Lista >> ( num ) = init >> ( num ) Lista ( );
-	ig.add ( 10 );
-	ig.add ( 10 );
-	ig.add ( 10 );
-	def a : num = ig.getQuantidade ( );
+	ig.adicionar ( 10 );
+	ig.adicionar ( 20 );
+
+		def a : num = ig.getQuantidade ( );
+    	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	ig.adicionar ( 30 );
+
+	def b : num = ig.getQuantidade ( );
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-}
 
-struct Lista in ( T ) {
-	restrict : 
-	define mRaiz : Item >> ( T ) = null;
-	define mQuantidade : num = 0;
-	all : 
-	func getQuantidade ( ) : num {
-		return mQuantidade;
-	}
-
-	act add ( novo : T ) {
-		if ( isNull ( mRaiz ) ) -> {
-			mRaiz = init >> ( T ) Item ( );
-			mRaiz.setValor ( novo );
-			mQuantidade = somar_inteiro ( mQuantidade , 1 );
-		}others {
-			mQuantidade = somar_inteiro ( mQuantidade , 1 );
-		}
-		
-	}
-	
-}
-
-struct Item in ( T ) {
-	restrict : 
-	define mValor : T = null;
-	define mProximo : Item >> ( T ) = null;
-	all : 
-	func getValor ( ) : T {
-		return mValor;
-	}
-
-	act setValor ( eValor : T ) {
-		mValor = eValor;
-	}
-	
-}
-
-struct Normal {
-	
+	ig.listar();
 }

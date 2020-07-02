@@ -139,3 +139,4 @@ Linguagem de Programação Estruturada - Implementações
     - 2020 06 02
         - TRY : 3 OPCOES
         - REFERENCIAMENTO EM ARGUMENTO
+        - SYNTAX HIGHTLIGHT - INTELLJ

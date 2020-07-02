@@ -325,10 +325,13 @@ public class AST_Value {
             } else {
 
 
+
                 ASTPai.setNome(TokenD.getConteudo());
                 ASTPai.setValor("ID");
 
                 Token TokenC2 = mCompiler.getTokenAvante();
+
+
                 if (TokenC2.getTipo() == mTerminar) {
                     return;
                 } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
@@ -479,6 +482,8 @@ public class AST_Value {
     public void ReceberNovoEscopo(AST ASTPai) {
 
         Token TokenD = mCompiler.getTokenAvante();
+
+
         if (TokenD.getTipo() == TokenTipo.ID) {
 
             AST mASTSub = ASTPai.criarBranch("INTERNAL");

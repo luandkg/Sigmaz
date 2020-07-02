@@ -1,0 +1,19 @@
+struct Item in ( T ) {
+	restrict :
+	    define mGuardar : Item >> ( T ) = null;
+	all:
+	    act guardar(eGuardar : T) {mGuardar = eGuardar;}
+}
+
+call iniciar -> inicio ( );
+
+
+act inicio ( ) {
+
+    def G : Item >> ( Item >> ( num) ) = init >> ( Item >> (num) ) Item();
+
+   # G.guardar(12);
+
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+
+}

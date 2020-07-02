@@ -156,7 +156,7 @@ public class Run_Struct {
         int initContagem = 0;
 
         for (AST ASTC : init_Generic.getASTS()) {
-            initTipagem += "<" + ASTC.getNome() + ">";
+            initTipagem += "<" + getTipagem(ASTC) + ">";
             initContagem += 1;
         }
 
@@ -180,7 +180,10 @@ public class Run_Struct {
                 int i = 0;
                 for (AST eSub : mStructGeneric.getASTS()) {
 
-                    mAlterador.adicionar(eSub.getNome(), init_Generic.getASTS().get(i).getNome());
+                    mAlterador.adicionar(eSub.getNome(), init_Generic.getASTS().get(i).copiar());
+
+                 //   System.out.println("Alterando " + eSub.getNome() + " -> " + getTipagem( init_Generic.getASTS().get(i)) );
+                 //   init_Generic.getBranch("TYPE").ImprimirArvoreDeInstrucoes();
 
                     i += 1;
                 }
@@ -188,6 +191,7 @@ public class Run_Struct {
 
                 mAlterador.alterar(mStructCorpo);
                 mAlterador.alterar(mStructInits);
+
 
 
             } else {
@@ -206,7 +210,12 @@ public class Run_Struct {
         }
 
         if (mRunTime.getExterno()) {
-            //    mStructCorpo.ImprimirArvoreDeInstrucoes();
+          //  System.out.println("########################### GENERIC ############################");
+
+          //  mStructCorpo.ImprimirArvoreDeInstrucoes();
+
+          //  System.out.println("########################### ####### ############################");
+
         }
 
 
@@ -308,6 +317,23 @@ public class Run_Struct {
 
         }
         return ls;
+
+    }
+
+    public String getTipagem(AST eAST){
+
+        String mTipagem = eAST.getNome();
+
+        if (eAST.mesmoValor("GENERIC")){
+
+            for (AST eTipando : eAST.getASTS()) {
+                mTipagem += "<" +getTipagem(eTipando) + ">";
+            }
+
+        }
+
+
+        return mTipagem;
 
     }
 

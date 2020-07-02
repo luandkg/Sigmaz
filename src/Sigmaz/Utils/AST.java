@@ -107,11 +107,22 @@ public class AST {
 
     }
 
+    public void espelhar(AST espelho){
+        //try {
+            this.setNome(espelho.getNome());
+            this.setValor(espelho.getValor());
+            this.getASTS().clear();
+            this.getASTS().addAll(espelho.getASTS());
+       // } catch (Exception e) {
+
+       // }
+
+    }
 
 
     public void ImprimirArvoreDeInstrucoes() {
 
-        System.out.println(this.getTipo() + " -> " + this.getNome());
+        System.out.println(this.getTipo() + " -> " + this.getNome()+ " : " + this.getValor());
 
         String eTab = "   ";
 

@@ -96,6 +96,7 @@ public class Carregadores {
         mArquivos.add("res/51 - integer.sigmaz");
         mArquivos.add("res/52 - try.sigmaz");
         mArquivos.add("res/53 - ref.sigmaz");
+        mArquivos.add("res/54 - generic.sigmaz");
 
         return mArquivos;
     }

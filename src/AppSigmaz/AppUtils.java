@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class AppUtils {
 
 
-    public static void EXECUTAR(int eIndice, ArrayList<String> mArquivos) {
+    public static void EXECUTAR(int eIndice, ArrayList<String> mArquivos,String eCompilado) {
 
 
         int iContando = 0;
@@ -20,11 +20,10 @@ public class AppUtils {
 
                 enc = true;
 
-                String saida = "res/Sigmaz.sigmad";
 
                 Sigmaz SigmazC = new Sigmaz();
 
-                SigmazC.init(mArquivo, saida);
+                SigmazC.init(mArquivo, eCompilado);
 
                 break;
             }
@@ -37,7 +36,7 @@ public class AppUtils {
 
     }
 
-    public static void MONTAR_BIBLIOTECA(String eArquivo,String eSaida){
+    public static void MONTAR_BIBLIOTECA(String eArquivo, String eSaida) {
 
         Sigmaz SigmazC = new Sigmaz();
 
@@ -102,18 +101,17 @@ public class AppUtils {
 
     }
 
-    public static void TESTE_GERAL(ArrayList<String> mArquivos) {
+    public static void TESTE_GERAL(ArrayList<String> mArquivos,String eCompilado) {
 
         System.out.println("");
 
-        Testes mTestes = new Testes();
-
+        SigmazTestes mSigmazTestes = new SigmazTestes();
+        mSigmazTestes.setSaida(eCompilado);
         for (String mArquivo : mArquivos) {
-            mTestes.adicionar(mArquivo);
+            mSigmazTestes.adicionar(mArquivo);
         }
 
-
-        mTestes.init();
+        mSigmazTestes.init();
 
     }
 
@@ -144,7 +142,7 @@ public class AppUtils {
 
     }
 
-    public static void IDENTAR_LOTE(String eNome,ArrayList<String> mArquivos) {
+    public static void IDENTAR_LOTE(String eNome, ArrayList<String> mArquivos) {
 
         System.out.println("");
         System.out.println("################ IDENTADOR - " + eNome + " ################");
