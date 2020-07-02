@@ -510,6 +510,14 @@ public class AST_Value {
                     mASTSub.setValor("STRUCT");
 
                     ReceberNovoEscopo(mASTSub);
+
+                    if (mASTSub.existeBranch("ARGUMENTS")){
+                        if ( mASTSub.mesmoValor("STRUCT")){
+                            mASTSub.setValor("STRUCT_FUNCT");
+                        }
+                    }
+
+
                 } else {
                     mCompiler.voltar();
                 }

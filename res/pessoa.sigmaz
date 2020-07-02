@@ -22,7 +22,7 @@ struct Pessoa{
     }
 
     act sacola_aumentar(){
-        sacola.aumentar(1);
+        #sacola.aumentar(1);
     }
 
     act mostrar()  {

@@ -79,8 +79,8 @@ public class AST_Comando {
 
                 ASTCorrente.setValor("STRUCT");
 
-
-                ReceberNovoEscopo(ASTCorrente);
+                AST_Value mA = new AST_Value(mCompiler) ;
+                mA.ReceberNovoEscopo(ASTCorrente);
 
                 Token P3 = mCompiler.getTokenAvante();
 
@@ -118,7 +118,8 @@ public class AST_Comando {
                 ASTCorrente.setValor("STRUCT_EXTERN");
 
 
-                ReceberNovoEscopo(ASTCorrente);
+                AST_Value mA = new AST_Value(mCompiler) ;
+                mA.ReceberNovoEscopo(ASTCorrente);
 
                 Token P3 = mCompiler.getTokenAvante();
 
@@ -158,7 +159,8 @@ public class AST_Comando {
 
                 ASTCorrente.setValor("FUNCT");
 
-                ReceberArgumentos(ASTCorrente);
+                AST_Value_Argument mAVA = new AST_Value_Argument(mCompiler);
+                mAVA.ReceberArgumentos(ASTCorrente);
 
                 Token P3 = mCompiler.getTokenAvante();
 
@@ -200,183 +202,8 @@ public class AST_Comando {
 
     }
 
-    public void ReceberNovoEscopo(AST ASTPai) {
 
-        Token TokenD = mCompiler.getTokenAvante();
-        if (TokenD.getTipo() == TokenTipo.ID) {
 
-            AST mASTSub = ASTPai.criarBranch("INTERNAL");
-            mASTSub.setNome(TokenD.getConteudo());
-
-            mGuardeASTSub = mASTSub;
-
-            mASTSub.setValor("OBJECT");
-
-            Token TokenF = mCompiler.getTokenAvante();
-            if (TokenF.getTipo() == TokenTipo.PARENTESES_ABRE) {
-
-                mASTSub.setValor("STRUCT_FUNCT");
-
-
-                ReceberArgumentos(mASTSub);
-
-                Token TokenF2 = mCompiler.getTokenAvante();
-
-
-                if (TokenF2.getTipo() == TokenTipo.PONTO) {
-
-
-                    mASTSub.setValor("STRUCT");
-
-                    ReceberNovoEscopo(mASTSub);
-
-
-                } else {
-                    mCompiler.voltar();
-                }
-
-
-            } else if (TokenF.getTipo() == TokenTipo.PONTO) {
-
-
-                mASTSub.setValor("STRUCT_OBJECT");
-
-                ReceberNovoEscopo(mASTSub);
-
-            } else {
-                mCompiler.voltar();
-            }
-
-
-        } else {
-            System.out.println("Era esperado um ID : " + TokenD.getConteudo());
-        }
-
-    }
-
-    public void ReceberArgumentos(AST ASTAvo) {
-
-        AST ASTPai = ASTAvo.criarBranch("ARGUMENTS");
-
-
-        boolean saiu = false;
-        boolean mais = false;
-
-        while (mCompiler.Continuar()) {
-            Token TokenD = mCompiler.getTokenAvante();
-            if (TokenD.getTipo() == TokenTipo.PARENTESES_FECHA) {
-
-                if (mais) {
-                    mCompiler.errarCompilacao("Era esperado outro parametro", TokenD);
-                }
-
-                saiu = true;
-                break;
-            } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
-
-                mais = false;
-
-
-                AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
-
-                AST_Value_Argument mAST = new AST_Value_Argument(mCompiler);
-                mCompiler.voltar();
-                mAST.initArgumento(ASTCorrente);
-                ASTCorrente.setTipo("ARGUMENT");
-
-                Token P2 = mCompiler.getTokenCorrente();
-
-
-                if (P2.getTipo() == TokenTipo.VIRGULA) {
-                    mais = true;
-                } else if (P2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                    saiu = true;
-                    break;
-                }
-
-
-            } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
-
-                mais = false;
-
-
-                AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
-
-                AST_Value_Argument mAST = new AST_Value_Argument(mCompiler);
-                mCompiler.voltar();
-
-                mAST.initArgumento(ASTCorrente);
-                ASTCorrente.setTipo("ARGUMENT");
-
-                Token P2 = mCompiler.getTokenCorrente();
-                if (P2.getTipo() == TokenTipo.VIRGULA) {
-                    mais = true;
-                } else if (P2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                    saiu = true;
-                    break;
-                }
-
-            } else if (TokenD.getTipo() == TokenTipo.ID) {
-
-
-                mais = false;
-
-
-                AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
-
-                mCompiler.voltar();
-
-                AST_Value_Argument mAST = new AST_Value_Argument(mCompiler);
-                mAST.initArgumento(ASTCorrente);
-
-                ASTCorrente.setTipo("ARGUMENT");
-
-                Token P2 = mCompiler.getTokenCorrente();
-                if (P2.getTipo() == TokenTipo.VIRGULA) {
-                    mais = true;
-                } else if (P2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                    saiu = true;
-                    break;
-                }
-
-            } else if (TokenD.getTipo() == TokenTipo.PARENTESES_ABRE) {
-
-                mais = false;
-
-
-                AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
-                ASTCorrente.setValor("CONTAINER");
-
-                AST ASTV= ASTCorrente.criarBranch("VALUE");
-
-
-                AST_Value_Parenteses mAST = new AST_Value_Parenteses(mCompiler);
-                mAST.initArgumento(ASTV);
-                ASTV.setTipo("VALUE");
-
-
-                Token P2 = mCompiler.getTokenAvante();
-
-                if (P2.getTipo() == TokenTipo.VIRGULA) {
-                    mais = true;
-                } else if (P2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                    saiu = true;
-                    break;
-                }
-
-
-
-            } else {
-                mCompiler.errarCompilacao("Era esperado um argumento : " + TokenD.getConteudo(), TokenD);
-                break;
-            }
-        }
-
-        if (!saiu) {
-            mCompiler.errarCompilacao("Era esperado fechar parenteses" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
-        }
-
-    }
 
 
 }

@@ -97,7 +97,7 @@ public class Run_Apply {
 
             mEscopoStruct.init_Action(eInternal, mEscopo);
 
-        } else if (eInternal.mesmoValor("OBJECT")) {
+        } else if (eInternal.mesmoValor("STRUCT_OBJECT")) {
 
             // mRunTime.getErros().add("STRUCT : " + mEscopoStruct.getNome());
 
@@ -133,7 +133,7 @@ public class Run_Apply {
             return;
         }
 
-        if (eInternal.mesmoValor("OBJECT")) {
+        if (eInternal.mesmoValor("STRUCT_OBJECT")) {
 
             // mRunTime.getErros().add("STRUCT : " + mEscopoStruct.getNome());
 
@@ -184,7 +184,7 @@ public class Run_Apply {
 
             //   mEscopoStruct.init_Action(eInternal, mEscopo);
 
-        } else if (eInternal.mesmoValor("OBJECT")) {
+        } else if (eInternal.mesmoValor("STRUCT_OBJECT")) {
 
             // mRunTime.getErros().add("STRUCT : " + mEscopoStruct.getNome());
             if (mRunTime.getErros().size() > 0) {
