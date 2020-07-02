@@ -19,6 +19,9 @@ public class Run_Value {
 
     private String mRetornoTipo;
 
+    private boolean mIsReferenciavel;
+    private Item mReferencia;
+
     public Run_Value(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
@@ -31,6 +34,8 @@ public class Run_Value {
         mConteudo = null;
         mRetornoTipo = null;
 
+        mIsReferenciavel=false;
+        mReferencia=null;
     }
 
 
@@ -71,6 +76,12 @@ public class Run_Value {
         mConteudo = eConteudo;
     }
 
+    public boolean getIsReferenciavel() {
+        return mIsReferenciavel;
+    }
+    public Item getReferencia() {
+        return mReferencia;
+    }
 
     public void init(AST ASTCorrente, String eRetorno) {
 
@@ -79,14 +90,11 @@ public class Run_Value {
 
         if (ASTCorrente.mesmoValor("NULL")) {
 
-            //  System.out.println("Valorando  -> NULL");
-
             mIsNulo = true;
             mRetornoTipo = eRetorno;
 
         } else if (ASTCorrente.mesmoValor("Text")) {
 
-            //    System.out.println("Valorando  -> " + ASTCorrente.getNome());
 
             mIsNulo = false;
             mIsPrimitivo = true;
@@ -95,7 +103,6 @@ public class Run_Value {
 
         } else if (ASTCorrente.mesmoValor("Num")) {
 
-            //   System.out.println("Valorando  -> " + ASTCorrente.getNome());
 
             mIsNulo = false;
             mIsPrimitivo = true;
@@ -154,17 +161,14 @@ public class Run_Value {
                 return;
             }
 
-            //    System.out.println("Mudando Para EXTERN "  + ASTCorrente.getNome());
-
             Struct_Extern(ASTCorrente, eRetorno);
 
         } else if (ASTCorrente.getValor().contentEquals("CONTAINER")) {
 
-            init(ASTCorrente.getBranch("VALUE"),eRetorno);
+            init(ASTCorrente.getBranch("VALUE"), eRetorno);
 
         } else {
 
-            //   System.out.println("PROBLEMA  -> " + ASTCorrente.getValor());
 
             mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE  : " + ASTCorrente.getValor());
 
@@ -215,6 +219,8 @@ public class Run_Value {
                 mIsPrimitivo = mItem.getPrimitivo();
                 mIsEstrutura = mItem.getIsEstrutura();
 
+                mIsReferenciavel = true;
+                mReferencia = mItem;
 
                 if (mRetornoTipo.contentEquals("bool")) {
                     mIsPrimitivo = true;
@@ -445,7 +451,7 @@ public class Run_Value {
 
         String eQualificador = mRunTime.getQualificador(mItem.getTipo());
 
-      //  System.out.println("Tipo : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
+        //  System.out.println("Tipo : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
 
         if (eQualificador.contentEquals("STRUCT")) {
 

@@ -102,6 +102,7 @@ public class Estagiador {
 
         AST mAlfa = mArguments.criarBranch("ARGUMENT");
         mAlfa.setNome("ALFA");
+        mAlfa.setValor("VALUE");
 
         criarTipagemConcreta(mAlfa,mStageDef.getNome());
 
@@ -175,6 +176,7 @@ public class Estagiador {
 
         AST mAlfa = mArguments.criarBranch("ARGUMENT");
         mAlfa.setNome("ALFA");
+        mAlfa.setValor("VALUE");
 
         criarTipagemConcreta(mAlfa,mStageDef.getNome());
 
@@ -251,12 +253,14 @@ public class Estagiador {
         AST mArguments = mMATCH.criarBranch("ARGUMENTS");
         AST mAlfa = mArguments.criarBranch("ARGUMENT");
         mAlfa.setNome("ALFA");
+        mAlfa.setValor("VALUE");
 
         criarTipagemConcreta(mAlfa,mStageDef.getNome());
 
 
         AST mBeta = mArguments.criarBranch("ARGUMENT");
         mBeta.setNome("BETA");
+        mBeta.setValor("VALUE");
 
         criarTipagemConcreta(mBeta,mStageDef.getNome());
 

@@ -18,13 +18,46 @@ public class AST_Try {
         AST AST_Corrente = new AST("TRY");
         ASTPai.getASTS().add(AST_Corrente);
 
-        Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado a variavel logica de tentativa");
-        Token TokenC3 = mCompiler.getTokenAvanteIDStatus("with", "Era esperado with");
-        Token TokenC4= mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado a variavel de destino da mensagem de erro");
-        Token TokenC5= mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado ->");
+        AST LOGIC = AST_Corrente.criarBranch("LOGIC");
+        AST MESSAGE = AST_Corrente.criarBranch("MESSAGE");
 
-        AST_Corrente.criarBranch("LOGIC").setNome(TokenC2.getConteudo());
-        AST_Corrente.criarBranch("MESSAGE").setNome(TokenC4.getConteudo());
+        LOGIC.setNome("FALSE");
+        MESSAGE.setNome("FALSE");
+
+        Token TokenFuturo = mCompiler.getTokenFuturo();
+        if (TokenFuturo.getTipo() == TokenTipo.ID) {
+
+            LOGIC.setNome("TRUE");
+            Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado a variavel logica de tentativa");
+
+            LOGIC.setValor(TokenC2.getConteudo());
+
+            Token TokenFuturo2 = mCompiler.getTokenFuturo();
+            if (TokenFuturo2.getTipo() == TokenTipo.ID) {
+
+                MESSAGE.setNome("TRUE");
+                Token TokenC3 = mCompiler.getTokenAvanteIDStatus("with", "Era esperado with");
+                Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado a variavel de destino da mensagem de erro");
+
+                MESSAGE.setValor(TokenC4.getConteudo());
+            } else if (TokenFuturo.getTipo() == TokenTipo.SETA) {
+                mCompiler.Proximo();
+            }
+
+
+            Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado ->");
+
+
+
+
+
+
+        } else if (TokenFuturo.getTipo() == TokenTipo.SETA) {
+            mCompiler.Proximo();
+        } else {
+            mCompiler.errarCompilacao("Era esperado uma variavel logica ou ->", TokenFuturo);
+        }
+
 
         AST_Corpo cAST = new AST_Corpo(mCompiler);
         cAST.init(AST_Corrente.criarBranch("BODY"));

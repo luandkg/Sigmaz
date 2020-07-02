@@ -81,12 +81,8 @@ public class InvokeCasting {
         String a1 = mRun_Invoke.getString(ASTArgumentos, 1);
         String a2 = mRun_Invoke.getString(ASTArgumentos, 2);
 
-        Item eItem = mEscopo.getItem(eSaida);
-        if (eItem.getTipo().contentEquals(a1)) {
-            eItem.setTipo(a2);
-        }else{
-            mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
-        }
+        mEscopo.alterarTipo(eSaida,a1,a2);
+
 
     }
 

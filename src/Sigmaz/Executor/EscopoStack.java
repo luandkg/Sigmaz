@@ -134,7 +134,7 @@ public class EscopoStack {
         }
     }
 
-    public void criarParametroNulo(String eNome, String eTipo, String eValor) {
+    public void criarParametroNulo(String eNome, String eTipo) {
 
         boolean enc = existeAqui(eNome, mEscopo.getParametros());
 
@@ -144,7 +144,7 @@ public class EscopoStack {
             Item Novo = new Item(eNome);
             Novo.setModo(0);
             Novo.setTipo(eTipo);
-            Novo.setValor(eValor);
+            Novo.setValor("");
             Novo.setNulo(true);
 
             mEscopo.getParametros().add(Novo);
@@ -188,7 +188,7 @@ public class EscopoStack {
         }
     }
 
-    public void criarParametroStructNulo(String eNome, String eTipo, String eRef) {
+    public void criarParametroStructNulo(String eNome, String eTipo) {
 
         boolean enc = existeAqui(eNome, mEscopo.getParametros());
 
@@ -202,7 +202,7 @@ public class EscopoStack {
             Novo.setNulo(true);
             Novo.setIsEstrutura(true);
             Novo.setPrimitivo(false);
-            Novo.setValor(eRef);
+            Novo.setValor("");
 
             //   System.out.println("\t - Passando Parametro Struct : " + eRef );
 
@@ -220,9 +220,39 @@ public class EscopoStack {
             mItem.setValor(eValor);
             mItem.setNulo(false);
             //System.out.println("Aplicando Valor em : " + eNome + " -->> " + eValor);
+
+            if (mItem.getIsReferenciavel()) {
+                if (mItem.getReferencia().getModo() == 0) {
+                    mItem.getReferencia().setValor(eValor);
+                    mItem.getReferencia().setNulo(false);
+                } else {
+                    mRunTime.getErros().add("A constante referenciada nao pode ser alterada : " + mItem.getReferencia().getNome());
+                }
+            }
+
         } else {
             mRunTime.getErros().add("A constante nao pode ser alterada : " + eNome);
         }
+
+    }
+
+    public void alterarTipo(String eNome, String eTipoAtual, String eTipoNovo) {
+
+
+        Item mItem = getItem(eNome);
+        if (mItem.getTipo().contentEquals(eTipoAtual)) {
+            mItem.setTipo(eTipoNovo);
+            if (mItem.getIsReferenciavel()) {
+
+                mItem.getReferencia().setTipo(eTipoNovo);
+
+            }
+        } else {
+            mRunTime.getErros().add("Nao foi possivel alterar o tipo : " + mItem.getNome());
+        }
+
+        //System.out.println("Aplicando Valor em : " + eNome + " -->> " + eValor);
+
 
     }
 
@@ -237,7 +267,16 @@ public class EscopoStack {
         if (mItem.getModo() == 0) {
             mItem.setValor(eValor);
             mItem.setNulo(false);
-            //System.out.println("Aplicando Valor em : " + eNome + " -->> " + eValor);
+
+            if (mItem.getIsReferenciavel()) {
+                if (mItem.getReferencia().getModo() == 0) {
+                    mItem.getReferencia().setValor(eValor);
+                    mItem.getReferencia().setNulo(false);
+                } else {
+                    mRunTime.getErros().add("A constante referenciada nao pode ser alterada : " + mItem.getReferencia().getNome());
+                }
+            }
+
         } else {
             mRunTime.getErros().add("A constante nao pode ser alterada : " + eNome);
         }
@@ -250,7 +289,16 @@ public class EscopoStack {
         if (mItem.getModo() == 0) {
             mItem.setValor("");
             mItem.setNulo(true);
-            //System.out.println("Aplicando Valor em : " + eNome + " -->> " + eValor);
+
+            if (mItem.getIsReferenciavel()) {
+                if (mItem.getReferencia().getModo() == 0) {
+                    mItem.getReferencia().setValor("");
+                    mItem.getReferencia().setNulo(true);
+                } else {
+                    mRunTime.getErros().add("A constante referenciada nao pode ser alterada : " + mItem.getReferencia().getNome());
+                }
+            }
+
         } else {
             mRunTime.getErros().add("A constante nao pode ser alterada : " + eNome);
         }
@@ -330,8 +378,8 @@ public class EscopoStack {
         if (t == null) {
             return false;
         } else {
-         //   System.out.println("Nulo " + eNome + " : " + t.getNulo());
-          //  System.out.println("Valor " + eNome + " : " + t.getValor());
+            //   System.out.println("Nulo " + eNome + " : " + t.getNulo());
+            //  System.out.println("Valor " + eNome + " : " + t.getValor());
 
             return t.getNulo();
         }

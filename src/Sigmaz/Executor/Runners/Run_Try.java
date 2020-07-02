@@ -24,26 +24,47 @@ public class Run_Try {
 
         AST mCorpo = eAST.getBranch("BODY");
 
-        Item eLogic = mEscopo.getItem(eAST.getBranch("LOGIC").getNome());
-        Item eMensagem = mEscopo.getItem(eAST.getBranch("MESSAGE").getNome());
+        boolean L = false;
+        boolean M = false;
+
+        Item eLogic = null;
+
+        if (eAST.getBranch("LOGIC").mesmoNome("TRUE")) {
+            L = true;
+            eLogic = mEscopo.getItem(eAST.getBranch("LOGIC").getValor());
+        }
+
+        Item eMensagem = null;
+        if (eAST.getBranch("MESSAGE").mesmoNome("TRUE")) {
+            M = true;
+            eMensagem = mEscopo.getItem(eAST.getBranch("MESSAGE").getValor());
+        }
+
 
         if (mRunTime.getErros().size() > 0) {
             return;
         }
 
-        if (!eLogic.getTipo().contentEquals("bool")){
-            mRunTime.getErros().add("A variavel logica precisa ser do tipo bool !");
+        if(L){
+            if (!eLogic.getTipo().contentEquals("bool")) {
+                mRunTime.getErros().add("A variavel logica precisa ser do tipo bool !");
+            }
         }
-        if (!eMensagem.getTipo().contentEquals("string")){
-            mRunTime.getErros().add("A variavel logica precisa ser do tipo string !");
+
+        if(M){
+            if (!eMensagem.getTipo().contentEquals("string")) {
+                mRunTime.getErros().add("A variavel logica precisa ser do tipo string !");
+            }
         }
+
 
         if (mRunTime.getErros().size() > 0) {
             return;
         }
 
-        eLogic.setValor("false");
-        eMensagem.setValor("ok");
+        if(L){ eLogic.setValor("false");}
+        if(M){ eMensagem.setValor("ok");}
+
 
         Escopo EscopoInterno = new Escopo(mRunTime, mEscopo);
 
@@ -53,8 +74,11 @@ public class Run_Try {
 
         if (mRunTime.getErros().size() > 0) {
 
-            eLogic.setValor("true");
-            eMensagem.setValor(mRunTime.getErros().get(0));
+
+
+
+            if(L){ eLogic.setValor("true");}
+            if(M){ eMensagem.setValor(mRunTime.getErros().get(0));}
 
             mRunTime.getErros().clear();
 

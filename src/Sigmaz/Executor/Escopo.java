@@ -65,9 +65,9 @@ public class Escopo {
         mContinuar = false;
 
 
-        mAO = new OO(this,mRunTime);
+        mAO = new OO(this, mRunTime);
 
-        mOO = new OO(this,mRunTime);
+        mOO = new OO(this, mRunTime);
 
         mEstrutura = false;
 
@@ -102,7 +102,6 @@ public class Escopo {
         mAO.guardar(eAST);
 
     }
-
 
 
     public void ListarActions() {
@@ -192,7 +191,98 @@ public class Escopo {
         return mParam;
     }
 
-    public void criarItem(String eNome,Item eItem){
+    public void passarParametroByValue(String eNome, Item eItem) {
+
+        if (eItem.getIsEstrutura()) {
+
+            if (eItem.getNulo()) {
+                this.criarParametroStructNulo(eNome, eItem.getTipo());
+            } else {
+                this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor());
+            }
+
+
+        } else {
+
+            if (eItem.getNulo()) {
+                this.criarParametroNulo(eNome, eItem.getTipo());
+            } else {
+                this.criarParametro(eNome, eItem.getTipo(), eItem.getValor());
+            }
+
+
+        }
+
+    }
+
+    public void passarParametroByRef(String eNome, Item eItem) {
+
+//        System.out.println("Ref :: " + eNome + " de " + eItem.getReferencia().getNome());
+        if (!eItem.getIsReferenciavel()) {
+            mRunTime.getErros().add("Nao foi possivel referenciar : " + eNome);
+            return;
+        }
+
+        if (eItem.getIsEstrutura()) {
+
+            if (eItem.getNulo()) {
+                if (eItem.getIsReferenciavel()) {
+                    this.criarParametroStructNulo(eNome, eItem.getTipo());
+                } else {
+                    this.criarParametroStructNulo(eNome, eItem.getTipo());
+                }
+            } else {
+                if (eItem.getIsReferenciavel()) {
+                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor());
+                } else {
+                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor());
+                }
+            }
+
+        } else {
+
+            if (eItem.getNulo()) {
+                if (eItem.getIsReferenciavel()) {
+                    this.criarParametroNulo(eNome, eItem.getTipo());
+                } else {
+                    this.criarParametroNulo(eNome, eItem.getTipo());
+                }
+            } else {
+                if (eItem.getIsReferenciavel()) {
+                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor());
+                } else {
+                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor());
+                }
+            }
+
+
+        }
+
+        this.referenciar(eNome, eItem.getReferencia());
+
+    }
+
+    public void referenciar(String eNome, Item eItem) {
+
+        boolean enc = false;
+
+        for (Item i : getParametros()) {
+            if (i.getNome().contentEquals(eNome)) {
+                enc = true;
+
+                i.setReferencia(eItem);
+                i.setIsReferenciavel(true);
+
+                break;
+            }
+        }
+
+        if (!enc) {
+            mRunTime.getErros().add("Nao foi possivel referenciar : " + eNome);
+        }
+    }
+
+    public void criarItem(String eNome, Item eItem) {
 
         Item Novo = new Item(eNome);
         Novo.setModo(eItem.getModo());
@@ -206,7 +296,11 @@ public class Escopo {
 
     }
 
-    public ArrayList<Item> getStacksAll() {
+    public void alterarTipo(String eNome, String eTipoAtual, String eTipoNovo) {
+        mEscopoStack.alterarTipo(eNome,eTipoAtual,eTipoNovo);
+    }
+
+        public ArrayList<Item> getStacksAll() {
 
         ArrayList<Item> gc = new ArrayList<Item>();
 
@@ -320,10 +414,6 @@ public class Escopo {
     }
 
 
-
-
-
-
     public void setCancelar(boolean eCancelar) {
         mCancelar = eCancelar;
     }
@@ -366,16 +456,16 @@ public class Escopo {
         mEscopoStack.criarParametro(eNome, eTipo, eValor);
     }
 
-    public void criarParametroNulo(String eNome, String eTipo, String eValor) {
-        mEscopoStack.criarParametroNulo(eNome, eTipo, eValor);
+    public void criarParametroNulo(String eNome, String eTipo) {
+        mEscopoStack.criarParametroNulo(eNome, eTipo);
     }
 
-    public void criarParametroStructNulo(String eNome, String eTipo,  String eRef) {
-        mEscopoStack.criarParametroStructNulo(eNome, eTipo,  eRef);
+    public void criarParametroStructNulo(String eNome, String eTipo) {
+        mEscopoStack.criarParametroStructNulo(eNome, eTipo);
     }
 
-    public void criarParametroStruct(String eNome, String eTipo,  String eRef) {
-        mEscopoStack.criarParametroStruct(eNome, eTipo,  eRef);
+    public void criarParametroStruct(String eNome, String eTipo, String eRef) {
+        mEscopoStack.criarParametroStruct(eNome, eTipo, eRef);
     }
 
     public void criarDefinicao(String eNome, String eTipo, String eValor) {
@@ -389,11 +479,11 @@ public class Escopo {
 
 
     public void criarDefinicaoStruct(String eNome, String eTipo, String eRef) {
-        mEscopoStack.criarDefinicaoStruct(eNome, eTipo,  eRef);
+        mEscopoStack.criarDefinicaoStruct(eNome, eTipo, eRef);
     }
 
-    public void criarConstanteStruct(String eNome, String eTipo,  String eRef) {
-        mEscopoStack.criarConstanteStruct(eNome, eTipo,  eRef);
+    public void criarConstanteStruct(String eNome, String eTipo, String eRef) {
+        mEscopoStack.criarConstanteStruct(eNome, eTipo, eRef);
     }
 
     public void setDefinido(String eNome, String eValor) {
@@ -450,6 +540,4 @@ public class Escopo {
     }
 
 
-
-
-    }
+}

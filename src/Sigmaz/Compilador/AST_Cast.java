@@ -94,6 +94,7 @@ public class AST_Cast {
             AST AST_Func_Args = AST_Func_Get.criarBranch("ARGUMENTS");
             AST AST_Func_Arg = AST_Func_Args.criarBranch("ARGUMENT");
             AST_Func_Arg.setNome("alfa");
+            AST_Func_Arg.setValor("VALUE");
 
             criarTipagemConcreta(AST_Func_Arg,TokenC3.getConteudo());
 
@@ -181,6 +182,7 @@ public class AST_Cast {
             AST AST_Func_Args = AST_Func_Get.criarBranch("ARGUMENTS");
             AST AST_Func_Arg = AST_Func_Args.criarBranch("ARGUMENT");
             AST_Func_Arg.setNome("alfa");
+            AST_Func_Arg.setValor("VALUE");
 
             criarTipagemConcreta(AST_Func_Arg,eNome);
 

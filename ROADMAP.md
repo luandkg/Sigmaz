@@ -134,3 +134,8 @@ Linguagem de Programação Estruturada - Implementações
         - DEBUGGER - SEPARAÇÃO
         - AST_VALUE : CONTAINER
         - AST_TRY
+        
+        
+    - 2020 06 02
+        - TRY : 3 OPCOES
+        - REFERENCIAMENTO EM ARGUMENTO

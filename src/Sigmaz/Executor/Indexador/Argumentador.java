@@ -9,10 +9,10 @@ import java.util.ArrayList;
 
 public class Argumentador {
 
-    public boolean mesmoArgumentos(ArrayList<String> mTipoArgumentos,ArrayList<Item> eArgumentos) {
+    public boolean mesmoArgumentos(ArrayList<String> mTipoArgumentos, ArrayList<Item> eArgumentos) {
         boolean ret = false;
 
-      //  System.out.println("\t - Inicio da Checagem :  " + mTipoArgumentos.size() + " e " + eArgumentos.size());
+        //  System.out.println("\t - Inicio da Checagem :  " + mTipoArgumentos.size() + " e " + eArgumentos.size());
 
 
         if (eArgumentos.size() == mTipoArgumentos.size()) {
@@ -21,16 +21,16 @@ public class Argumentador {
             for (Item mArgumentos : eArgumentos) {
 
 
-                if (mArgumentos.getTipo().contentEquals(mTipoArgumentos.get(i))){
+                if (mArgumentos.getTipo().contentEquals(mTipoArgumentos.get(i))) {
                     v += 1;
-                }else{
-                    if (mTipoArgumentos.get(i).contentEquals("any")){
+                } else {
+                    if (mTipoArgumentos.get(i).contentEquals("any")) {
                         v += 1;
                     }
                 }
 
 
-               //System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
+                //System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
 
                 i += 1;
 
@@ -39,7 +39,7 @@ public class Argumentador {
 
 
             if (v == i) {
-                ret=true;
+                ret = true;
             }
 
             //  System.out.println("\t - Contagem Tipo :  " + i + " e " + v + " -> " + ret);
@@ -56,32 +56,32 @@ public class Argumentador {
         for (AST a : ASTCorrente.getASTS()) {
             if (a.mesmoTipo("ARGUMENT")) {
 
-                // AST v = new AST("VALUE");
-
 
                 Run_Value mAST = new Run_Value(mRunTime, mBuscadorDeVariaveis);
                 mAST.init(a, "<<ANY>>");
 
-                //  System.out.println("\t - Recebendo Parametro : " + " -> " + mAST.getRetornoTipo() + " :: " + mAST.getIsStruct());
-                if (mAST.getIsStruct()) {
-                    //     System.out.println("\t - --> " + mAST.getObjeto());
-                }
+             //   System.out.println("\t - Recebendo Parametro  " + a.getValor() + " : " + " -> " + mAST.getRetornoTipo() + " :: " + mAST.getIsStruct());
+
+               // if (mAST.getIsReferenciavel()) {
+              //      System.out.println("\t Ref Anterior : " + mAST.getReferencia().getNome());
+              //  }
+
 
                 Item v = new Item("");
-
                 v.setModo(0);
                 v.setNulo(mAST.getIsNulo());
                 v.setPrimitivo(mAST.getIsPrimitivo());
                 v.setIsEstrutura(mAST.getIsStruct());
-
                 v.setTipo(mAST.getRetornoTipo());
-
                 v.setValor(mAST.getConteudo());
 
+                if (mAST.getIsReferenciavel()) {
+                    v.setIsReferenciavel(true);
+                    v.setReferencia(mAST.getReferencia());
+                }
 
                 mArgumentos.add(v);
 
-                //  System.out.println(" ARG : " + mAST.getConteudo());
 
             }
 
@@ -91,7 +91,7 @@ public class Argumentador {
 
     }
 
-    public void passarParametros(Escopo mEscopoInterno, ArrayList<String> eParametrosNomes, ArrayList<Item> mArgumentos) {
+    public void passarParametros(Escopo mEscopoInterno, ArrayList<String> eParametrosNomes, ArrayList<String> eParametrosModos, ArrayList<Item> mArgumentos) {
 
         if (eParametrosNomes.size() > 0) {
 
@@ -99,30 +99,19 @@ public class Argumentador {
 
                 // System.out.println("\t - Passando Parametro : " + eParametrosNomes.get(argC) + " -> " + mArgumentos.get(argC).getTipo() + " :: " + mArgumentos.get(argC).getValor());
 
-               // System.out.println("Passando : " + eParametrosNomes.get(argC) + " Est : " + mArgumentos.get(argC).getIsEstrutura() + " -> " +mArgumentos.get(argC).getNulo());
+                // System.out.println("Passando : " + eParametrosNomes.get(argC) + " Est : " + mArgumentos.get(argC).getIsEstrutura() + " -> " +mArgumentos.get(argC).getNulo());
 
-                if (mArgumentos.get(argC).getIsEstrutura()) {
+                //  System.out.println("\t - Passando Parametro : " + eParametrosNomes.get(argC) + " " + eParametrosModos.get(argC) + " -> " + mArgumentos.get(argC).getTipo() + " :: " + mArgumentos.get(argC).getValor());
 
-
-                    if (mArgumentos.get(argC).getNulo()){
-                        mEscopoInterno.criarParametroStructNulo(eParametrosNomes.get(argC), mArgumentos.get(argC).getTipo(),  mArgumentos.get(argC).getValor());
-                    }else{
-                        mEscopoInterno.criarParametroStruct(eParametrosNomes.get(argC), mArgumentos.get(argC).getTipo(),  mArgumentos.get(argC).getValor());
-                    }
-
-
-                    //   System.out.println("\t - Passando Parametro Struct : " + eParametrosNomes.get(argC) + " -> " + mArgumentos.get(argC).getTipo() + " :: " );
-
+                if (eParametrosModos.get(argC).contentEquals("VALUE")) {
+                    mEscopoInterno.passarParametroByValue(eParametrosNomes.get(argC), mArgumentos.get(argC));
+                } else if (eParametrosModos.get(argC).contentEquals("REF")) {
+                    mEscopoInterno.passarParametroByRef(eParametrosNomes.get(argC), mArgumentos.get(argC));
                 } else {
-
-                    if (mArgumentos.get(argC).getNulo()){
-                        mEscopoInterno.criarParametroNulo(eParametrosNomes.get(argC), mArgumentos.get(argC).getTipo(), mArgumentos.get(argC).getValor());
-                    }else{
-                        mEscopoInterno.criarParametro(eParametrosNomes.get(argC), mArgumentos.get(argC).getTipo(), mArgumentos.get(argC).getValor());
-                    }
-
-
+                    mEscopoInterno.getRunTime().getErros().add("Passagem de parametro desconhcida : " + eParametrosModos.get(argC));
+                    return;
                 }
+
 
             }
 
@@ -144,7 +133,7 @@ public class Argumentador {
         mEscopoInterno.setNome(mFunction.getNome());
 
 
-        passarParametros(mEscopoInterno, mFunction.getParamentos(), mArgumentos);
+        passarParametros(mEscopoInterno, mFunction.getParamentos(), mFunction.getParamentosModos(), mArgumentos);
 
         AST mASTBody = mFunction.getPonteiro().getBranch("BODY");
 
@@ -189,7 +178,7 @@ public class Argumentador {
         mEscopoInterno.setNome(mFunction.getNome());
 
 
-        passarParametros(mEscopoInterno, mFunction.getParamentos(), mArgumentos);
+        passarParametros(mEscopoInterno, mFunction.getParamentos(), mFunction.getParamentosModos(), mArgumentos);
 
 
         //  mEscopoInterno.ListarAll();

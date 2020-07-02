@@ -12,6 +12,18 @@ act inicio ( ) {
         def g : num =0;
     }
 
+    invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+
+    def c : bool = false;
+    try c -> {
+        def g : num = "oi";
+    }
+
+    invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+
+    try -> {
+        def g : num = "oi";
+    }
 
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 }

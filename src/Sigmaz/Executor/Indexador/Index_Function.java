@@ -11,6 +11,7 @@ public class Index_Function {
 
     private ArrayList<String> mNomeArgumentos;
     private ArrayList<String> mTipoArgumentos;
+    private ArrayList<String> mModoArgumentos;
 
     private String mTipo;
     private AST mPonteiro;
@@ -27,6 +28,7 @@ public class Index_Function {
 
         mNomeArgumentos = new ArrayList<String>();
         mTipoArgumentos = new ArrayList<String>();
+        mModoArgumentos = new ArrayList<String>();
 
         mArgumentador = new Argumentador();
 
@@ -56,11 +58,7 @@ public class Index_Function {
 
     }
 
-    public boolean mesmaTipagem(String eTipagem) {
 
-        return getTipo().contentEquals(eTipagem);
-
-    }
 
     public String getTipo() {
         return getTipagem(mPonteiro.getBranch("TYPE"));
@@ -97,9 +95,6 @@ public class Index_Function {
         return mNome;
     }
 
-   // public String getTipo() {
-     //   return mTipo;
-   // }
 
     public AST getPonteiro() {
         return mPonteiro;
@@ -114,13 +109,20 @@ public class Index_Function {
         return mNomeArgumentos;
     }
 
+    public ArrayList<String> getParamentosModos() {
+        return mModoArgumentos;
+    }
+
     public boolean mesmoArgumentos(ArrayList<Item> eArgumentos) {
         return mArgumentador.mesmoArgumentos(mTipoArgumentos, eArgumentos);
     }
 
 
     public void argumentar(AST eArg) {
+
         mNomeArgumentos.add(eArg.getNome());
+        mModoArgumentos.add(eArg.getValor());
+
         mTipoArgumentos.add(getTipagem(eArg.getBranch("TYPE")));
     }
 

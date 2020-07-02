@@ -41,7 +41,21 @@ public class AST_Argumentos {
                 mais = false;
 
                 AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
-                ASTCorrente.setNome(TokenD.getConteudo());
+
+
+
+                if (TokenD.mesmoConteudo("ref")){
+                    ASTCorrente.setValor("REF");
+
+                    Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro");
+                    ASTCorrente.setNome(TokenC4.getConteudo());
+
+                }else{
+                    ASTCorrente.setValor("VALUE");
+                    ASTCorrente.setNome(TokenD.getConteudo());
+                }
+
+
 
                 AST_TYPE mType = new AST_TYPE(mCompiler);
                 mType.init(ASTCorrente);

@@ -11,6 +11,9 @@ public class Item {
 
     private String mValor;
 
+    private boolean mIsReferenciavel;
+    private Item mReferencia;
+
 
     public Item(String eNome) {
         this.mNome = eNome;
@@ -20,6 +23,9 @@ public class Item {
         mNulo = false;
         mPrimitivo=true;
         mEstrutura=false;
+
+        mIsReferenciavel=false;
+        mReferencia=null;
     }
 
     public void setNome(String eNome) {
@@ -79,6 +85,20 @@ public class Item {
         return mEstrutura;
     }
 
+
+    public boolean getIsReferenciavel() {
+        return mIsReferenciavel;
+    }
+    public void setIsReferenciavel(boolean eIsReferenciavel) {
+        mIsReferenciavel = eIsReferenciavel;
+    }
+
+    public Item getReferencia() {
+        return mReferencia;
+    }
+    public void setReferencia(Item eReferencia) {
+        mReferencia = eReferencia;
+    }
 
 
 }

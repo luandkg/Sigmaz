@@ -11,6 +11,7 @@ public class Index_Action {
 
     private ArrayList<String> mNomeArgumentos;
     private ArrayList<String> mTipoArgumentos;
+    private ArrayList<String> mModoArgumentos;
 
     private AST mPonteiro;
     private Argumentador mArgumentador;
@@ -22,6 +23,7 @@ public class Index_Action {
 
         mNomeArgumentos = new ArrayList<String>();
         mTipoArgumentos = new ArrayList<String>();
+        mModoArgumentos = new ArrayList<String>();
 
         mArgumentador = new Argumentador();
 
@@ -46,9 +48,14 @@ public class Index_Action {
     public boolean isAll(){  return mPonteiro.getBranch("VISIBILITY").mesmoNome("ALL"); }
     public boolean isRestrict(){  return mPonteiro.getBranch("VISIBILITY").mesmoNome("RESTRICT"); }
 
+    public ArrayList<String> getParamentosModos() {
+        return mModoArgumentos;
+    }
 
     public void argumentar(AST eArg) {
         mNomeArgumentos.add(eArg.getNome());
+        mModoArgumentos.add(eArg.getValor());
+
         mTipoArgumentos.add(getTipagem(eArg.getBranch("TYPE")));
     }
 
