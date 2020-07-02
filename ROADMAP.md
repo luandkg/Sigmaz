@@ -136,7 +136,9 @@ Linguagem de Programação Estruturada - Implementações
         - AST_TRY
         
         
-    - 2020 06 02
+    - 2020 07 02
         - TRY : 3 OPCOES
         - REFERENCIAMENTO EM ARGUMENTO
         - SYNTAX HIGHTLIGHT - INTELLJ
+        - AST_CALL : AUTO REFER
+        - AST_ARGUMENT INIT

@@ -537,10 +537,17 @@ public class RunTime {
                     if (ASTC.mesmoTipo("CALL")) {
 
 
-                        AST mSending = ASTC.getBranch("SENDING");
+                        if (ASTC.mesmoValor("REFER")){
+                            AST mSending = ASTC.getBranch("SENDING");
+                            Run_Func mAST = new Run_Func(this, Global);
+                            mAST.init_ActionFunction(mSending);
+                        }else{
 
-                        Run_Func mAST = new Run_Func(this, Global);
-                        mAST.init_Action(mSending);
+                            Run_Body mAST = new Run_Body(this, Global);
+                            mAST.init(ASTC.getBranch("BODY"));
+
+                        }
+
 
                     }
 

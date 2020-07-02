@@ -1,4 +1,5 @@
-call iniciar -> pular ( );
+
+
 
 struct Bloco {
 
@@ -6,6 +7,7 @@ struct Bloco {
         define Proximo : Caixa = null;
 
         act setValor(a:num) {valor = a;}
+        act setProximo(c:Caixa) {Proximo = c;}
      restrict:
         define valor : num = 0;
 
@@ -20,7 +22,10 @@ struct Caixa {
 
 }
 
-act pular ( ) {
+#call iniciar -> criv ( );
+#func criv() : num { return 0; }
+
+call iniciar -> {
 
     def P1 : Bloco = init Bloco();
     P1.setValor(2);
@@ -28,9 +33,14 @@ act pular ( ) {
     def P2 : Caixa = init Caixa();
     P2.gravar(5);
 
-    P1.Proximo = P2;
+    #P1.Proximo = P2;
+
+    #P1.setProximo(P2);
+
+    P1.setProximo(init Caixa());
 
     P1.Proximo.gravar(4);
 
+    invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 
 }

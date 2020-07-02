@@ -132,7 +132,11 @@ public class Estrutural {
 
             AST mSending = mAST.getBranch("SENDING");
 
-            System.out.println("\t - " + mAST.getNome() + " -> " + mSending.getNome());
+            if (mAST.mesmoValor("REFER")){
+                System.out.println("\t - " + mAST.getNome() + " : REFER " + " -> " + mSending.getNome());
+            }else{
+                System.out.println("\t - " + mAST.getNome() + " : AUTO ");
+            }
         }
 
         System.out.println(" - DEFINES : ");

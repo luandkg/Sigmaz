@@ -25,18 +25,37 @@ public class AST_Call {
             AST AST_SENDING = AST_Corrente.criarBranch("SENDING");
             AST AST_Argumentos = AST_SENDING.criarBranch("ARGUMENTS");
 
+            AST AST_Corpo = AST_Corrente.criarBranch("BODY");
+
 
             Token TokenP = mCompiler.getTokenAvanteStatus(TokenTipo.SETA,"Era esperado uma SETA !");
 
 
-            Token TokenP2 = mCompiler.getTokenAvanteStatus(TokenTipo.ID,"Era esperado o nome de uma ACTION ou FUNCTION !");
-            AST_SENDING.setNome(TokenP2.getConteudo());
+            Token TokenFuturo = mCompiler.getTokenFuturo();
+            if (TokenFuturo.getTipo() == TokenTipo.CHAVE_ABRE ) {
+
+                AST_Corrente.setValor("AUTO");
+
+                AST_Corpo mAST = new AST_Corpo(mCompiler);
+                mAST.init(AST_Corpo);
+
+
+            }else{
+
+                AST_Corrente.setValor("REFER");
+
+                Token TokenP2 = mCompiler.getTokenAvanteStatus(TokenTipo.ID,"Era esperado o nome de uma ACTION ou FUNCTION !");
+                AST_SENDING.setNome(TokenP2.getConteudo());
 
 
 
-            recebendoParametros(AST_Argumentos);
+                recebendoParametros(AST_Argumentos);
 
-            Token TokenP3 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado PONTO E VIRGULA !");
+                Token TokenP3 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado PONTO E VIRGULA !");
+            }
+
+
+
 
 
         } else {

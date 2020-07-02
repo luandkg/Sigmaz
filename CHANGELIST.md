@@ -18,6 +18,10 @@ Linguagem de Programação Estruturada - Alterações
         - UNARY para DIRECTOR
         - OPERATION para OPERATOR
         
+        
+    - 2020 07 02
+        - AST_CALL : AUTO
+        
     
  
   
