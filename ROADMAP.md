@@ -141,4 +141,5 @@ Linguagem de Programação Estruturada - Implementações
         - REFERENCIAMENTO EM ARGUMENTO
         - SYNTAX HIGHTLIGHT - INTELLJ
         - AST_CALL : AUTO REFER
-        - AST_ARGUMENT INIT
+        - AST_ARGUMENT STRUCT
+        - AST_ARGUMENT TYPE

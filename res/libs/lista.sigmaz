@@ -29,6 +29,53 @@ struct Lista in ( T ) {
 
 	}
 
+	act remover(a : T) {
+
+                println("Remover : ",a);
+
+        if ( isNull ( mPrimeiro )  ) -> {} others {
+
+            def mAnterior : Item >> ( T ) = null;
+            def mCorrente : Item >> ( T ) = mPrimeiro;
+
+            def mIndice : num = 0;
+            def mUltimoIndice : num = subtrair_inteiro ( mQuantidade , 1 );
+
+            while(isNull ( mCorrente ) == false) -> {
+                if (mCorrente.getValor() == a) -> {
+
+                println("Removendo : ",a);
+
+                   if(mIndice == 0) -> {
+
+                        if(mQuantidade == 1) -> { mPrimeiro = null; mUltimo = null; } others {    mPrimeiro = mPrimeiro.getProximo(); }
+
+                   } other (mIndice == mUltimoIndice) -> {
+                        mAnterior.setProximo(null);
+                        mUltimo = mAnterior;
+                   } others {
+                        mAnterior.setProximo( mCorrente.getProximo());
+                   }
+
+                   mQuantidade = subtrair_inteiro ( mQuantidade , 1 );
+                   trash(mCorrente);
+                   cancel;
+
+                }
+                #println("Passando Por : ",mCorrente.getValor());
+
+                mAnterior = mCorrente;
+                mCorrente = mCorrente.getProximo();
+
+                mIndice = somar_inteiro ( mIndice , 1 );
+
+            }
+
+
+        }
+
+	}
+
 	act listar() {
 
 	    if ( isNull ( mPrimeiro ) == false ) -> {
@@ -36,7 +83,7 @@ struct Lista in ( T ) {
              def mCorrente : Item >> ( T ) = mPrimeiro;
 
              while (isNull(mCorrente) == false) -> {
-                 println("Valor : ",mCorrente.getValor());
+                 println(" - Valor : ",mCorrente.getValor());
                  mCorrente = mCorrente.getProximo();
              }
 	    }

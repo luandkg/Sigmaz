@@ -60,6 +60,9 @@ public class InvokeCompiler {
         } else if (eAcao.contentEquals("TYPES")) {
 
             types(eAcao, eSaida, ASTArgumentos);
+        } else if (eAcao.contentEquals("HEAP")) {
+
+            heap(eAcao, eSaida, ASTArgumentos);
 
         } else {
 
@@ -116,6 +119,43 @@ public class InvokeCompiler {
 
     }
 
+    public void heap(String eAcao, String eSaida, AST ASTArgumentos) {
+
+        int i = 0;
+
+
+        for (AST eAST : ASTArgumentos.getASTS()) {
+            if (eAST.mesmoTipo("ARGUMENT")) {
+                i += 1;
+            }
+        }
+
+        if (i == 0) {
+            if (eSaida.contentEquals("ALL")) {
+
+                if (mRunTime.getExterno()) {
+
+                    System.out.println("\n ######################### SIGMAZ - HEAP ############################ ");
+
+                    for (Run_Struct mRun_Struct : mRunTime.getHeap()) {
+
+                        System.out.println("\t -  Struct : " + mRun_Struct.getNome());
+
+                    }
+
+                    System.out.println(" ######################### ##### ############################ ");
+
+                }
+
+
+            } else {
+                mRunTime.getErros().add("Invocacao : " + eAcao + " -> Problema com saida !");
+            }
+        } else {
+            mRunTime.getErros().add("Invocacao : " + eAcao + " -> Problema com argumentos !");
+        }
+
+    }
 
     public void types(String eAcao, String eSaida, AST ASTArgumentos) {
 

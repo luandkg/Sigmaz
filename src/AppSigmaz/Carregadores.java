@@ -97,7 +97,7 @@ public class Carregadores {
         mArquivos.add("res/52 - try.sigmaz");
         mArquivos.add("res/53 - ref.sigmaz");
         mArquivos.add("res/54 - generic.sigmaz");
-        mArquivos.add("res/55 - ooobject.sigmaz");
+        mArquivos.add("res/55 - typestruct.sigmaz");
 
         return mArquivos;
     }

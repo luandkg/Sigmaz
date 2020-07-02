@@ -26,11 +26,13 @@ public class Argumentador {
                 } else {
                     if (mTipoArgumentos.get(i).contentEquals("any")) {
                         v += 1;
+                    }else if (mArgumentos.getTipo().contentEquals("<<ANY>>")) {
+                        v += 1;
                     }
                 }
 
 
-                //System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
+           //     System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
 
                 i += 1;
 

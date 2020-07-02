@@ -28,7 +28,7 @@ stages Logico -> {
 
 act trash(a:any){
 
-    invoke __COMPILER__ -> STRUCT (a) :: REMOVE;
+    invoke __COMPILER__ -> OBJECT (a) :: REMOVE;
 
 }
 

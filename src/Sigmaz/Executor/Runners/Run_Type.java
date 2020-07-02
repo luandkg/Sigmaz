@@ -17,10 +17,12 @@ public class Run_Type {
 
     private String mStructNome;
     private AST mStructCorpo;
+    private String mTipoCompleto;
 
     public Run_Type(RunTime eRunTime) {
 
         mRunTime = eRunTime;
+        mTipoCompleto = "";
 
     }
 
@@ -40,7 +42,13 @@ public class Run_Type {
         return mStructNome;
     }
 
-    public Escopo getEscopo(){return mEscopo;}
+    public Escopo getEscopo() {
+        return mEscopo;
+    }
+
+    public String getTipoCompleto() {
+        return mTipoCompleto;
+    }
 
     public void init(String eNome, AST ASTCorrente, Escopo BuscadorDeArgumentos) {
 
@@ -78,7 +86,7 @@ public class Run_Type {
 
                     enc = true;
                     mAST_Struct = ASTC;
-
+                    mTipoCompleto = mStructNome;
                 }
             }
 

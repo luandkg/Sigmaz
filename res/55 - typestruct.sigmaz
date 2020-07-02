@@ -6,8 +6,12 @@ struct Bloco {
     all:
         define Proximo : Caixa = null;
 
+        define PNumeral : Numeral = null;
+
         act setValor(a:num) {valor = a;}
         act setProximo(c:Caixa) {Proximo = c;}
+        act setPNumeral(c:Numeral) {PNumeral = c;}
+
      restrict:
         define valor : num = 0;
 
@@ -19,6 +23,13 @@ struct Caixa {
         act gravar(a:num) {valor = a;}
      restrict:
         define valor : num = 0;
+
+}
+
+type Numeral {
+
+    define A : num = 0;
+    define B : num = 0;
 
 }
 
@@ -40,6 +51,14 @@ call iniciar -> {
     P1.setProximo(init Caixa());
 
     P1.Proximo.gravar(4);
+
+   # def N : Numeral = start Numeral { A = 4; B = 5; };
+
+   # P1.setPNumeral(N);
+
+    P1.setPNumeral(start Numeral { A = 4; B = 5; });
+
+    def na : num = P1.PNumeral.A;
 
     invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 

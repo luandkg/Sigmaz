@@ -81,6 +81,26 @@ public class AST_Value_Argument {
                 }
 
                 return;
+            } else if (TokenD.mesmoConteudo("start")) {
+
+
+                ASTPai.setValor("START");
+
+                Token TokenC2 = mCompiler.getTokenAvante();
+                if (TokenC2.getTipo() == TokenTipo.ID) {
+
+                    ASTPai.setNome(TokenC2.getConteudo());
+
+
+                    AST_Start mAST = new AST_Start(mCompiler);
+                    mAST.init(ASTPai);
+
+                    ParteFinal(ASTPai);
+
+                } else {
+                    System.out.println("Problema IC : " + TokenC2.getConteudo());
+                }
+                return;
             }
 
 

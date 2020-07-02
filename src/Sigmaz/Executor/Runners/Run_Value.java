@@ -34,8 +34,8 @@ public class Run_Value {
         mConteudo = null;
         mRetornoTipo = null;
 
-        mIsReferenciavel=false;
-        mReferencia=null;
+        mIsReferenciavel = false;
+        mReferencia = null;
     }
 
 
@@ -79,6 +79,7 @@ public class Run_Value {
     public boolean getIsReferenciavel() {
         return mIsReferenciavel;
     }
+
     public Item getReferencia() {
         return mReferencia;
     }
@@ -433,7 +434,7 @@ public class Run_Value {
 
         mIsNulo = false;
         mIsPrimitivo = false;
-        mRetornoTipo = eRetorno;
+        mRetornoTipo = mRun_Type.getTipoCompleto();
         mIsEstrutura = true;
         mConteudo = eNome;
 
@@ -558,6 +559,8 @@ public class Run_Value {
 
     public void Struct_DentroStruct(String eLocal, AST ASTCorrente, String eRetorno) {
 
+        String eQualificador = "STRUCT";
+
         Run_Struct mEscopoStruct = mRunTime.getRun_Struct(eLocal);
 
         AST eInternal = ASTCorrente.getBranch("INTERNAL");
@@ -585,7 +588,7 @@ public class Run_Value {
 
         } else if (eInternal.mesmoValor("STRUCT_OBJECT")) {
 
-            //      System.out.println("STRUCT_OBJECT : " + mEscopoStruct.getNome());
+            //   System.out.println("STRUCT_OBJECT : " + mEscopoStruct.getNome());
 
             Item eItem = mEscopoStruct.init_Object(eInternal, mEscopo, "<<ANY>>");
 
@@ -630,6 +633,55 @@ public class Run_Value {
                     this.setRetornoTipo(eItem.getTipo());
 
                 } else if (sInternal.mesmoValor("STRUCT_OBJECT")) {
+
+                    // System.out.println("Estou passando aqui...");
+
+                    //System.out.println("STRUCT OBJECT : " +eInternal.getNome() );
+
+                    if (mRunTime.getErros().size() > 0) {
+                        return;
+                    }
+
+                    if (mEscopoStruct == null) {
+                        mRunTime.getErros().add("Estrutura" + " " + ASTCorrente.getNome() + " : Nula !");
+                        return;
+                    }
+
+                    eItem = mEscopoStruct.init_Object(eInternal, mEscopo, "<<ANY>>");
+
+                    //  System.out.println("STRUCT OBJECT REF : " +mItem.getValor() );
+
+                    // System.out.println("STRUCT OBJECT II : " +mEscopoStruct.getNome() );
+                    // System.out.println("STRUCT OBJECT III : " +eItem.getValor() );
+                    if (eItem == null) {
+                        return;
+                    }
+
+                    eQualificador = mRunTime.getQualificador(eItem.getTipo());
+
+                    if (eQualificador.contentEquals("STRUCT")) {
+
+                        mEscopoStruct = mRunTime.getRun_Struct(eItem.getValor());
+
+                    } else if (eQualificador.contentEquals("TYPE")) {
+
+                        // mEscopoStruct = mRunTime.getRun_Struct(eItem.getValor());
+
+                        //System.out.println("Mudando para Type...");
+                        Run_Type mRun_Type = mRunTime.getRun_Type(eItem.getValor());
+
+                        eItem = mRun_Type.init_Object(sInternal, mEscopo, "<<ANY>>");
+
+                        eInternal = sInternal;
+
+                    } else {
+                        mRunTime.getErros().add("CAST nao possui operador PONTO !");
+                    }
+
+
+                    //  System.out.println("STRUCT OBJECT III : " +mEscopoStruct.getNome() );
+
+                    // System.out.println("STRUCT OBJECT  : " +mEscopoStruct.getNome() );
 
                 }
             }
