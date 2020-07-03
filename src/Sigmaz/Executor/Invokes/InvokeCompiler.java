@@ -480,6 +480,12 @@ public class InvokeCompiler {
                 if (mRunTime.getExterno()) {
                     mEscopo.ListarStructs();
                 }
+            } else if (eSaida.contentEquals("PACKAGES")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.ListarPackages();
+                }
+
             } else if (eSaida.contentEquals("COUNT")) {
 
                 if (mRunTime.getExterno()) {

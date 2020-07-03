@@ -15,7 +15,8 @@ public class Estrutural {
 
     private ArrayList<AST> mActions;
     private ArrayList<AST> mFunctions;
-    private ArrayList<AST> mOperations;
+    private ArrayList<AST> mDirectors;
+    private ArrayList<AST> mOperators;
 
     private ArrayList<AST> mTypes;
     private ArrayList<AST> mCasts;
@@ -31,7 +32,8 @@ public class Estrutural {
 
         mActions = new ArrayList<AST>();
         mFunctions = new ArrayList<AST>();
-        mOperations = new ArrayList<AST>();
+        mDirectors = new ArrayList<AST>();
+        mOperators = new ArrayList<AST>();
 
         mTypes = new ArrayList<AST>();
         mCasts = new ArrayList<AST>();
@@ -63,10 +65,13 @@ public class Estrutural {
 
             mFunctions.add(eAST);
 
+        } else if (eAST.mesmoTipo("DIRECTOR")) {
 
-        } else if (eAST.mesmoTipo("OPERATION")) {
+            mDirectors.add(eAST);
 
-            mOperations.add(eAST);
+        } else if (eAST.mesmoTipo("OPERATOR")) {
+
+            mOperators.add(eAST);
 
         } else if (eAST.mesmoTipo("CAST")) {
 
@@ -97,8 +102,12 @@ public class Estrutural {
         return mActions;
     }
 
-    public ArrayList<AST> getOperations() {
-        return mOperations;
+    public ArrayList<AST> getDirectors() {
+        return mDirectors;
+    }
+
+    public ArrayList<AST> getOperators() {
+        return mOperators;
     }
 
     public ArrayList<AST> getCasts() {
@@ -162,8 +171,13 @@ public class Estrutural {
 
         }
 
-        System.out.println(" - OPERATIONS : ");
-        for (AST mAST : mOperations) {
+        System.out.println(" - DIRECTORS : ");
+        for (AST mAST : mDirectors) {
+            System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
+        }
+
+        System.out.println(" - OPERATORS : ");
+        for (AST mAST : mOperators) {
             System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
         }
 

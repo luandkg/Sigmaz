@@ -291,6 +291,15 @@ public class Compiler {
                 if (mErros_Compiler.size() > 0) {
                     break;
                 }
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("package")) {
+
+                AST_Package mAST = new AST_Package(this);
+                mAST.init(AST_Raiz);
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("using")) {
+
+                AST_Using mAST = new AST_Using(this);
+                mAST.init(AST_Raiz);
+
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
 

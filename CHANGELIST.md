@@ -22,6 +22,9 @@ Linguagem de Programação Estruturada - Alterações
     - 2020 07 02
         - AST_CALL : AUTO
         
+    - 2020 07 03
+        - INIT STRUCT GLOBAL
+        - START TYPE GLOBAL
     
  
   

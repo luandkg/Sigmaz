@@ -275,6 +275,22 @@ public class EscopoDebug {
 
     }
 
+
+    public void ListarPackages() {
+
+
+        System.out.println(" #########################  PACKAGES ############################ ");
+
+
+        for (AST mAST : mEscopo.getRunTime().getGlobalPackages()) {
+            System.out.println("\t - " + mAST.getNome());
+        }
+
+
+        System.out.println(" ######################### ##### ############################ ");
+
+    }
+
     public String getTipagem(AST eAST) {
 
         String mTipagem = eAST.getNome();

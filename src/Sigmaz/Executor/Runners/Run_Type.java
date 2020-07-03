@@ -81,7 +81,12 @@ public class Run_Type {
                 mEscopo.guardar(ASTC);
             } else if (ASTC.mesmoTipo("CAST")) {
                 mEscopo.guardar(ASTC);
-            } else if (ASTC.mesmoTipo("TYPE")) {
+            }
+
+        }
+
+        for (AST ASTC : mRunTime.getGlobalTypes()) {
+            if (ASTC.mesmoTipo("TYPE")) {
                 if (ASTC.mesmoNome(mStructNome)) {
 
                     enc = true;
@@ -89,8 +94,9 @@ public class Run_Type {
                     mTipoCompleto = mStructNome;
                 }
             }
-
         }
+
+
 
         if (!enc) {
             mRunTime.getErros().add("Type " + mStructNome + " : Nao Encontrada !");

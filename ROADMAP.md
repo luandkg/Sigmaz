@@ -143,3 +143,8 @@ Linguagem de Programação Estruturada - Implementações
         - AST_CALL : AUTO REFER
         - AST_ARGUMENT STRUCT
         - AST_ARGUMENT TYPE
+        
+      2020 07 03
+        - AST_PACKAGE
+        - AST_USING
+        - EXPORTAR CONTEUDO PARA GLOBAL COM USING

@@ -1,42 +1,32 @@
-
-import "operadores.sigmaz";
+mockiz SIGMAZ : string = "SIGMAZ 1.0";
+mockiz VERSAO : num = 1.0;
+import "constant.sigmaz";
+import "operators.sigmaz";
+import "functions.sigmaz";
+import "comparators.sigmaz";
 import "terminal.sigmaz";
 import "cast.sigmaz";
 import "strings.sigmaz";
 import "pos.sigmaz";
 import "neg.sigmaz";
 import "int.sigmaz";
-
 import "tempo.sigmaz";
 import "lista.sigmaz";
 import "iterador.sigmaz";
-
-mockiz SIGMAZ : string = "SIGMAZ 1.0";
-mockiz VERSAO : num = 1.0;
-define ALGO : string = "__ALGO__";
-
-
 stages Numeros -> {
-	POSITIVO , NEGATIVO, ZERO
+	POSITIVO , NEGATIVO , ZERO 
 }
 stages Comparacao -> {
 	MAIOR , MENOR , IGUAL 
 }
 stages Logico -> {
-	TRUE , FALSE
+	TRUE , FALSE 
 }
 
-
-act trash(a:any){
-
-    invoke __COMPILER__ -> OBJECT (a) :: REMOVE;
-
+act trash ( a : any ) {
+	invoke __COMPILER__ -> OBJECT ( a ) :: REMOVE;
 }
-
-director ! (a:bool) : bool {
-
+director ! ( a : bool ) : bool {
 	invoke casting -> inverse ( a ) :: a;
-
-    return a;
+	return a;
 }
-

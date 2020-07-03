@@ -109,7 +109,14 @@ public class Run_Struct {
                 mEscopo.guardar(ASTC);
             } else if (ASTC.mesmoTipo("CAST")) {
                 mEscopo.guardar(ASTC);
-            } else if (ASTC.mesmoTipo("STRUCT")) {
+
+            }
+
+        }
+
+        for (AST ASTC : mRunTime.getGlobalStructs()) {
+
+            if (ASTC.mesmoTipo("STRUCT")) {
                 if (ASTC.mesmoNome(mStructNome)) {
 
                     mStructGeneric = ASTC.getBranch("GENERIC");
@@ -129,8 +136,8 @@ public class Run_Struct {
 
 
                 }
-            }
 
+            }
         }
 
         if (!enc) {

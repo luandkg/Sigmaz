@@ -1,0 +1,13 @@
+
+#       CONSTANTES
+mockiz ZERO : num = 0;
+mockiz PI : num = 3.1415926535;
+mockiz EULER : num = 2.71828;
+mockiz AUREO : num = 1.61803;
+mockiz RAIZ2 : num = 1.41421;
+mockiz MAIS_UM : num = +1;
+mockiz MENOS_UM : num = -1;
+mockiz BASE_2 : num = 2;
+mockiz BASE_10 : num = 10;
+mockiz TRUE : bool = true;
+mockiz FALSE : bool = false;

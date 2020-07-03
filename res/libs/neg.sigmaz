@@ -13,7 +13,6 @@ cast neg {
 	}
 	
 }
-
 operator == ( a : neg , b : neg ) : bool {
 	def c : bool;
 	def c1 : num = a;
@@ -21,7 +20,6 @@ operator == ( a : neg , b : neg ) : bool {
 	invoke math -> operator_equal ( c1 , c2 ) :: c;
 	return c;
 }
-
 operator !! ( a : neg , b : neg ) : bool {
 	def c : bool;
 	def c1 : num = a;

@@ -7,7 +7,6 @@ cast pos {
 	}
 	
 }
-
 operator == ( a : pos , b : pos ) : bool {
 	def c : bool;
 	def c1 : num = num ( a );
@@ -15,7 +14,6 @@ operator == ( a : pos , b : pos ) : bool {
 	invoke math -> operator_equal ( c1 , c2 ) :: c;
 	return c;
 }
-
 operator !! ( a : pos , b : pos ) : bool {
 	def c : bool;
 	def c1 : num = a;

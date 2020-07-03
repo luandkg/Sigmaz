@@ -15,7 +15,7 @@ public class AppSigmaz {
 
         Fases mFase = Fases.EXECUTAR;
 
-        int ARQUIVO = 43;
+        int ARQUIVO = 57;
 
         switch (mFase) {
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos,mCompilado);

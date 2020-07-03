@@ -446,6 +446,10 @@ public class Analisador {
 
             } else if (mAST.mesmoTipo("TYPE")) {
 
+            } else if (mAST.mesmoTipo("PACKAGE")) {
+
+            } else if (mAST.mesmoTipo("USING")) {
+
             } else {
 
                 mErros.add("AST x : " + mAST.getTipo());

@@ -11,11 +11,16 @@ public class Carregadores {
         mArquivos.add("res/libs/cast.sigmaz");
         mArquivos.add("res/libs/lib.sigmaz");
         mArquivos.add("res/libs/neg.sigmaz");
-        mArquivos.add("res/libs/operadores.sigmaz");
+        mArquivos.add("res/libs/operators.sigmaz");
         mArquivos.add("res/libs/pos.sigmaz");
         mArquivos.add("res/libs/strings.sigmaz");
         mArquivos.add("res/libs/tempo.sigmaz");
         mArquivos.add("res/libs/terminal.sigmaz");
+        mArquivos.add("res/libs/int.sigmaz");
+        mArquivos.add("res/libs/functions.sigmaz");
+        mArquivos.add("res/libs/constant.sigmaz");
+        mArquivos.add("res/libs/iterador.sigmaz");
+        mArquivos.add("res/libs/lista.sigmaz");
 
 
         return mArquivos;
@@ -98,6 +103,8 @@ public class Carregadores {
         mArquivos.add("res/53 - ref.sigmaz");
         mArquivos.add("res/54 - generic.sigmaz");
         mArquivos.add("res/55 - typestruct.sigmaz");
+        mArquivos.add("res/56 - and.sigmaz");
+        mArquivos.add("res/57 - package.sigmaz");
 
         return mArquivos;
     }

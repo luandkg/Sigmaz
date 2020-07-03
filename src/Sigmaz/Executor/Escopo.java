@@ -123,7 +123,9 @@ public class Escopo {
     public void ListarStructs() {
         mDebug.ListarStructs();
     }
-
+    public void ListarPackages() {
+        mDebug.ListarPackages();
+    }
     public void ListarLocalAll() {
         mDebug.ListarLocalAll();
     }

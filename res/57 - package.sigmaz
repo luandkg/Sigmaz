@@ -1,0 +1,55 @@
+
+package Estruturas {
+
+    stages MODOS -> {CLARO, ESCURO, ESTRANHO}
+
+}
+
+package Blocos {
+
+    stages MODOS -> {CLARO,DOIS, TRES, QUATRO}
+
+    act Blocar(a:num,b:num) {
+
+        println(" -->> Valor A : ",a);
+
+    }
+
+    struct BGeral {
+
+        init BGeral(a:num){
+            _a = a;
+        }
+        restrict :
+            define _a : num = 0;
+        all:
+            func getA() : num {return _a;}
+    }
+}
+
+#using Estruturas;
+using Blocos;
+
+call iniciar -> {
+
+    invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: PACKAGES;
+    invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
+
+    def m : MODOS = MODOS::CLARO;
+
+    Blocar(3,2);
+    Blocar(5,1);
+
+    def bg : BGeral = init BGeral(15);
+    def bga : num = bg.getA();
+
+    invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+
+}
+
+act println ( a : string , b : num ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
+}

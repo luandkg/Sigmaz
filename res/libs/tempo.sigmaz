@@ -8,9 +8,6 @@ func getData ( ) : Data {
 }
 
 # Comentario dfgfdg func 
-
-
-
 func getTempo_Formatado ( ) : string {
 	def mHora : num = 0;
 	def mMinuto : num = 0;
