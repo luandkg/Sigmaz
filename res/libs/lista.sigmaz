@@ -91,6 +91,55 @@ struct Lista in ( T ) {
 
 	}
 
+	act limpar(){
+
+		    if ( isNull ( mPrimeiro ) == false ) -> {
+                 def mCorrente : Item >> ( T ) = mPrimeiro;
+                 def mAnterior : Item >> ( T ) = mPrimeiro;
+                 while (isNull(mCorrente) == false) -> {
+                     mAnterior=mCorrente;
+                     mCorrente = mCorrente.getProximo();
+                     trash(mAnterior);
+                 }
+                 trash(mAnterior);
+    	    }
+
+    	    mPrimeiro = null;
+    	    mUltimo=null;
+
+	}
+
+	func getValor(indice : num) : T {
+
+	    def ret : num = null;
+
+	    if (maior_igual(indice,0))->{
+
+            def contando : num = 0;
+            def enc : bool = false;
+
+             if ( isNull ( mPrimeiro ) == false ) -> {
+              def mCorrente : Item >> ( T ) = mPrimeiro;
+              while (isNull(mCorrente) == false) -> {
+
+                if(contando == indice) -> { ret = mCorrente.getValor(); enc=true; }
+
+                contando = somar_inteiro(contando,1);
+                mCorrente = mCorrente.getProximo();
+              }
+
+             }
+
+             if(enc==false)-> { exception "Indice invalido !";}
+
+	    } others {
+	        exception "Indice invalido !";
+	    }
+
+	    return ret;
+
+	}
+
 }
 
 struct Item in ( T ) {

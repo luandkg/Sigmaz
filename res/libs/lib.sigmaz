@@ -9,6 +9,7 @@ import "int.sigmaz";
 
 import "tempo.sigmaz";
 import "lista.sigmaz";
+import "iterador.sigmaz";
 
 mockiz SIGMAZ : string = "SIGMAZ 1.0";
 mockiz VERSAO : num = 1.0;

@@ -24,6 +24,32 @@ func somar ( a : int , b : int ) : int {
 	return c;
 }
 
+func somar ( a : int , b : num ) : int {
+
+    def c1 : num = null;
+
+    def a1 : num = a;
+
+    invoke math -> operator_sum ( a1 , b ) :: c1;
+
+	def c : int = c1;
+
+	return c;
+}
+
+func somar ( a : num , b : int ) : int {
+
+    def c1 : num = null;
+
+    def b1 : num = b;
+
+    invoke math -> operator_sum ( a , b1 ) :: c1;
+
+	def c : int = c1;
+
+	return c;
+}
+
 func subtrair ( a : int ,b : int ) : int {
     def c1 : num = null;
 
@@ -138,4 +164,37 @@ director ! (a:int) : int {
 	def b : int = a ** int((-1));
 
     return b;
+}
+
+
+
+
+func menor ( a : int , b : int ) : bool {
+	def c : bool;
+
+	def a1 : num = a;
+	def b1 : num = b;
+
+	invoke math -> operator_less ( a1 , b1 ) :: c;
+	return c;
+}
+
+
+func maior_igual ( a : int , b : int ) : bool {
+	def c1 : bool;
+	def c2 : bool;
+	def c3 : bool = false;
+
+	def a1 : num = a;
+    	def b1 : num = b;
+
+	invoke math -> operator_great ( a1 , b1 ) :: c1;
+	invoke math -> operator_equal ( a1 , b1 ) :: c2;
+	if ( c1 ) -> {
+		c3 = true;
+	}
+	if ( c2 ) -> {
+		c3 = true;
+	}
+	return c3;
 }

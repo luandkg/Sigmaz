@@ -188,9 +188,8 @@ public class Run_Struct {
                     i += 1;
                 }
 
-
-                mAlterador.alterar(mStructCorpo);
                 mAlterador.alterar(mStructInits);
+                mAlterador.alterar(mStructCorpo);
 
 
 
@@ -210,11 +209,11 @@ public class Run_Struct {
         }
 
         if (mRunTime.getExterno()) {
+
           //  System.out.println("########################### GENERIC ############################");
-
+          //  mStructInits.ImprimirArvoreDeInstrucoes();
           //  mStructCorpo.ImprimirArvoreDeInstrucoes();
-
-          //  System.out.println("########################### ####### ############################");
+         //   System.out.println("########################### ####### ############################");
 
         }
 

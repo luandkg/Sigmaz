@@ -6,6 +6,7 @@ SIGMAZ - BIBLIOTECA
 
     - 2020 07 02
         - LISTA : adicionar, quantidade, remover, listar
+        - ITERADOR : iniciar, continuar, proximo, getIndice, getValor
         
 
         

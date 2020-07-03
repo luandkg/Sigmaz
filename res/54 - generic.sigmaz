@@ -1,9 +1,9 @@
 struct Item in ( T ) {
 	restrict :
-	    define mGuardar : Item >> ( T ) = null;
+	    define mGuardar : T = null;
 	    define mNivel : T;
 	all:
-	    act guardar(eGuardar : Item >> (T)) {mGuardar = eGuardar;}
+	    act guardar(eGuardar : T) {mGuardar = eGuardar;}
 
 	    act nivelar(eNivel : T) {mNivel = eNivel;}
 
