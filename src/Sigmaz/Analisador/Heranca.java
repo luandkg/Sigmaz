@@ -21,7 +21,6 @@ public class Heranca {
     public void init(ArrayList<AST> mTodos) {
 
         ArrayList<AST> mEstruturas = new ArrayList<AST>();
-        ArrayList<AST> mEstruturasComHeranca = new ArrayList<AST>();
 
         for (AST mAST : mTodos) {
 
@@ -31,6 +30,20 @@ public class Heranca {
 
                     if (Struct_AST.mesmoTipo("STRUCT")) {
                         mEstruturas.add(Struct_AST);
+
+                    } else if (Struct_AST.mesmoTipo("PACKAGE")) {
+
+                        ArrayList<AST> mPackageEstruturas = new ArrayList<AST>();
+
+                        for (AST PackageStruct : Struct_AST.getASTS()) {
+                            if (PackageStruct.mesmoTipo("STRUCT")) {
+                                mPackageEstruturas.add(PackageStruct);
+                            }
+                        }
+
+                        init_estruturas(mPackageEstruturas);
+
+
                     }
 
                 }
@@ -38,12 +51,23 @@ public class Heranca {
             }
         }
 
+        init_estruturas(mEstruturas);
+
+    }
+
+    public void init_estruturas(ArrayList<AST> mEstruturas) {
+
+        ArrayList<AST> mEstruturasComHeranca = new ArrayList<AST>();
+
 
         int c = mEstruturas.size();
         int v = 0;
 
 
         for (AST Struct_AST : mEstruturas) {
+
+          //  System.out.println("Estruturando : " + Struct_AST.getNome());
+
             AST AST_With = Struct_AST.getBranch("WITH");
 
             if (AST_With.mesmoValor("TRUE")) {
@@ -139,7 +163,6 @@ public class Heranca {
         for (String mDepende : mDependencias) {
             Super.getBranch("BASES").criarBranch("BASE").setNome(mDepende);
         }
-
 
 
     }

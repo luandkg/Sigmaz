@@ -124,7 +124,7 @@ public class Lexer {
 
                 mIndex += 1;
 
-                mTokens.add(new Token(TokenTipo.DIMINUIDOR, "++", eInicio, eFim, mLinha));
+                mTokens.add(new Token(TokenTipo.DIMINUIDOR, "--", eInicio, eFim, mLinha));
             } else if (charC.contentEquals("-")) {
                 int eInicio = mPosicao;
                 mIndex += 1;
@@ -139,14 +139,14 @@ public class Lexer {
 
                 mIndex += 1;
 
-                mTokens.add(new Token(TokenTipo.MULTIPLICADOR, "++", eInicio, eFim, mLinha));
+                mTokens.add(new Token(TokenTipo.MULTIPLICADOR, "**", eInicio, eFim, mLinha));
             } else if (charC.contentEquals("/") && charP.contentEquals("/")) {
                 int eInicio = mPosicao;
                 int eFim = mPosicao;
 
                 mIndex += 1;
 
-                mTokens.add(new Token(TokenTipo.DIVISOR, "++", eInicio, eFim, mLinha));
+                mTokens.add(new Token(TokenTipo.DIVISOR, "//", eInicio, eFim, mLinha));
             } else if (charC.contentEquals(".")) {
                 int eInicio = mPosicao;
 

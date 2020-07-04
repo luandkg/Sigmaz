@@ -22,6 +22,8 @@ public class Estrutural {
     private ArrayList<AST> mCasts;
     private ArrayList<AST> mStructs;
     private ArrayList<AST> mStages;
+    private ArrayList<AST> mPackages;
+
 
     public Estrutural() {
 
@@ -39,6 +41,7 @@ public class Estrutural {
         mCasts = new ArrayList<AST>();
         mStructs = new ArrayList<AST>();
         mStages = new ArrayList<AST>();
+        mPackages = new ArrayList<AST>();
 
     }
 
@@ -88,6 +91,9 @@ public class Estrutural {
 
             mStages.add(eAST);
 
+        } else if (eAST.mesmoTipo("PACKAGE")) {
+
+            mPackages.add(eAST);
 
         }
 
@@ -114,14 +120,19 @@ public class Estrutural {
         return mCasts;
     }
 
-    public String getTipagem(AST eAST){
+    public ArrayList<AST> getPackages() {
+        return mPackages;
+    }
+
+
+    public String getTipagem(AST eAST) {
 
         String mTipagem = eAST.getNome();
 
-        if (eAST.mesmoValor("GENERIC")){
+        if (eAST.mesmoValor("GENERIC")) {
 
             for (AST eTipando : eAST.getASTS()) {
-                mTipagem += "<" +getTipagem(eTipando) + ">";
+                mTipagem += "<" + getTipagem(eTipando) + ">";
             }
 
         }
@@ -141,9 +152,9 @@ public class Estrutural {
 
             AST mSending = mAST.getBranch("SENDING");
 
-            if (mAST.mesmoValor("REFER")){
+            if (mAST.mesmoValor("REFER")) {
                 System.out.println("\t - " + mAST.getNome() + " : REFER " + " -> " + mSending.getNome());
-            }else{
+            } else {
                 System.out.println("\t - " + mAST.getNome() + " : AUTO ");
             }
         }
@@ -196,7 +207,7 @@ public class Estrutural {
         for (AST mAST : mTypes) {
             System.out.println("\t - " + mAST.getNome());
             for (AST mGetter : mAST.getASTS()) {
-                System.out.println("\t\t - " + mGetter.getTipo() + " " + mGetter.getNome() + " : " + getTipagem( mGetter.getBranch("TYPE")));
+                System.out.println("\t\t - " + mGetter.getTipo() + " " + mGetter.getNome() + " : " + getTipagem(mGetter.getBranch("TYPE")));
             }
         }
 
@@ -225,74 +236,15 @@ public class Estrutural {
 
         }
 
-        ArrayList<AST> mStruct_Stages = new ArrayList<AST>();
-        ArrayList<AST> mStruct_External = new ArrayList<AST>();
+        listarStructGeral("", mStructs);
 
-        System.out.println(" - STRUCTS : ");
-        for (AST mAST : mStructs) {
-
-            AST mWith = mAST.getBranch("WITH");
-            AST mExtended = mAST.getBranch("EXTENDED");
-
-
-
-            if (mExtended.mesmoNome("STAGES")) {
-
-                mStruct_Stages.add(mAST);
-
-            } else if (mExtended.mesmoNome("EXTERNAL")) {
-
-                mStruct_External.add(mAST);
-
-            } else if (mExtended.mesmoNome("STRUCT")) {
-
-                if (mWith.mesmoValor("TRUE")) {
-                    System.out.println("\t - " + mAST.getNome() + " -> " + mWith.getNome());
-                } else {
-                    System.out.println("\t - " + mAST.getNome());
-                }
-
-                System.out.println("\t\t - COMPLEXITY = " + mExtended.getValor());
-
-
-                AST mBases = mAST.getBranch("BASES");
-                System.out.println("\t\t - BASES : ");
-                for (AST bAST : mBases.getASTS()) {
-
-                    System.out.println("\t\t\t - " + bAST.getNome());
-
-                }
-
-
-                AST mInits = mAST.getBranch("INITS");
-
-                listarInits(mAST.getNome(), mInits);
-
-                AST mCorpo = mAST.getBranch("BODY");
-
-                listarStruct(mCorpo);
-
-
-            }
-
-        }
-
-        System.out.println(" - STRUCTS STAGES : ");
-        for (AST mAST : mStruct_Stages) {
+        System.out.println(" - PACKAGES : ");
+        for (AST mAST : mPackages) {
 
             System.out.println("\t - " + mAST.getNome());
 
-            AST mCorpo = mAST.getBranch("BODY");
-            listarExtern(mCorpo);
-        }
+            listarPackage(mAST);
 
-        System.out.println(" - STRUCTS EXTERNAL : ");
-        for (AST mAST : mStruct_External) {
-
-            System.out.println("\t - " + mAST.getNome());
-
-            AST mCorpo = mAST.getBranch("BODY");
-            listarStruct(mCorpo);
         }
 
 
@@ -300,9 +252,89 @@ public class Estrutural {
 
     }
 
-    public void listarInits(String eStructnome, AST ASTPai) {
 
-        System.out.println("\t\t - INITS : ");
+    public void listarStructGeral(String ePrefixo, ArrayList<AST> mGeralStructs) {
+
+
+        ArrayList<AST> mStruct_Stages = new ArrayList<AST>();
+        ArrayList<AST> mStruct_External = new ArrayList<AST>();
+
+        System.out.println(ePrefixo + " - STRUCTS : ");
+        for (AST mAST : mGeralStructs) {
+            if (mAST.mesmoTipo("STRUCT")) {
+
+
+                AST mWith = mAST.getBranch("WITH");
+                AST mExtended = mAST.getBranch("EXTENDED");
+
+
+                if (mExtended.mesmoNome("STAGES")) {
+
+                    mStruct_Stages.add(mAST);
+
+                } else if (mExtended.mesmoNome("EXTERNAL")) {
+
+                    mStruct_External.add(mAST);
+
+                } else if (mExtended.mesmoNome("STRUCT")) {
+
+                    if (mWith.mesmoValor("TRUE")) {
+                        System.out.println(ePrefixo + "\t - " + mAST.getNome() + " -> " + mWith.getNome());
+                    } else {
+                        System.out.println(ePrefixo + "\t - " + mAST.getNome());
+                    }
+
+                    System.out.println(ePrefixo + "\t\t - COMPLEXITY = " + mExtended.getValor());
+
+
+                    AST mBases = mAST.getBranch("BASES");
+                    System.out.println(ePrefixo + "\t\t - BASES : ");
+                    for (AST bAST : mBases.getASTS()) {
+
+                        System.out.println(ePrefixo + "\t\t\t - " + bAST.getNome());
+
+                    }
+
+
+                    AST mInits = mAST.getBranch("INITS");
+
+                    listarInits(ePrefixo, mAST.getNome(), mInits);
+
+                    AST mCorpo = mAST.getBranch("BODY");
+
+                    listarStruct(ePrefixo, mCorpo);
+
+
+                }
+            }
+        }
+
+        System.out.println(ePrefixo + " - STRUCTS STAGES : ");
+        for (AST mAST : mStruct_Stages) {
+
+            System.out.println(ePrefixo + "\t - " + mAST.getNome());
+
+            AST mCorpo = mAST.getBranch("BODY");
+
+            listarStages(ePrefixo, mCorpo);
+        }
+
+        System.out.println(ePrefixo + " - STRUCTS EXTERNAL : ");
+        for (AST mAST : mStruct_External) {
+
+            System.out.println(ePrefixo + "\t - " + mAST.getNome());
+
+            AST mCorpo = mAST.getBranch("BODY");
+            listarStruct(ePrefixo, mCorpo);
+        }
+
+
+    }
+
+
+    public void listarInits(String ePrefixo, String eStructnome, AST ASTPai) {
+
+        System.out.println(ePrefixo + "\t\t - INITS : ");
         for (AST mAST : ASTPai.getASTS()) {
             if (mAST.mesmoTipo("INIT")) {
                 if (eStructnome.contentEquals(mAST.getNome())) {
@@ -310,25 +342,23 @@ public class Estrutural {
 
                     AST AST_Call = mAST.getBranch("CALL");
 
-                    if (AST_Call.mesmoValor("TRUE")){
+                    if (AST_Call.mesmoValor("TRUE")) {
 
 
-                        String eArgumentos =AST_Call.getNome();
+                        String eArgumentos = AST_Call.getNome();
 
                         for (AST aAST : AST_Call.getBranch("ARGUMENTS").getASTS()) {
 
                         }
 
-                        System.out.println("\t\t\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + eArgumentos);
+                        System.out.println(ePrefixo + "\t\t\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + eArgumentos);
 
-                    }else{
+                    } else {
 
-                        System.out.println("\t\t\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) ");
-
+                        System.out.println(ePrefixo + "\t\t\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) ");
 
 
                     }
-
 
 
                 }
@@ -337,74 +367,95 @@ public class Estrutural {
 
     }
 
-    public void listarStruct(AST ASTPai) {
+    public void listarStruct(String ePrefixo, AST ASTPai) {
 
-        System.out.println("\t\t - DEFINES : ");
+        System.out.println(ePrefixo + "\t\t - DEFINES : ");
         for (AST mAST : ASTPai.getASTS()) {
             if (mAST.mesmoTipo("DEFINE")) {
-                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " : " + mAST.getValor());
+                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " : " + getTipagem( mAST.getBranch("TYPE")));
             }
         }
 
-        System.out.println("\t\t - MOCKIZES : ");
+        System.out.println(ePrefixo + "\t\t - MOCKIZES : ");
         for (AST mAST : ASTPai.getASTS()) {
             if (mAST.mesmoTipo("MOCKIZ")) {
-                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " : " + mAST.getValor());
+                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " : " + getTipagem( mAST.getBranch("TYPE")));
             }
         }
 
-        System.out.println("\t\t - ACTIONS : ");
+        System.out.println(ePrefixo + "\t\t - ACTIONS : ");
         for (AST mAST : ASTPai.getASTS()) {
             if (mAST.mesmoTipo("ACTION")) {
-                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) ");
+                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) ");
             }
 
         }
-        System.out.println("\t\t - FUNCTIONS : ");
+        System.out.println(ePrefixo + "\t\t - FUNCTIONS : ");
         for (AST mAST : ASTPai.getASTS()) {
             if (mAST.mesmoTipo("FUNCTION")) {
-                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
+                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
             }
         }
 
-        System.out.println("\t\t - OPERATIONS : ");
+        System.out.println(ePrefixo + "\t\t - DIRECTORS : ");
         for (AST mAST : ASTPai.getASTS()) {
-            if (mAST.mesmoTipo("OPERATION")) {
-                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
+            if (mAST.mesmoTipo("DIRECTOR")) {
+                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
+            }
+        }
+
+        System.out.println(ePrefixo + "\t\t - OPERATORS : ");
+        for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("OPERATOR")) {
+                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
             }
         }
     }
 
-    public void listarExtern(AST ASTPai) {
+    public void listarExtern(String ePrefixo, AST ASTPai) {
 
-        System.out.println("\t\t - FUNCTIONS : ");
+        System.out.println(ePrefixo + "\t\t - ACTIONS : ");
         for (AST mAST : ASTPai.getASTS()) {
-            if (mAST.mesmoTipo("FUNCTION")) {
-                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
+            if (mAST.mesmoTipo("ACTION")) {
+                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + ")");
             }
         }
 
-        System.out.println("\t\t - OPERATIONS : ");
+        System.out.println(ePrefixo + "\t\t - FUNCTIONS : ");
         for (AST mAST : ASTPai.getASTS()) {
-            if (mAST.mesmoTipo("OPERATION")) {
-                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
+            if (mAST.mesmoTipo("FUNCTION")) {
+                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
+            }
+        }
+
+        System.out.println(ePrefixo + "\t\t - DIRECTORS : ");
+        for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("DIRECTOR")) {
+                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
+            }
+        }
+
+        System.out.println(ePrefixo + "\t\t - OPERATORS : ");
+        for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("OPERATOR")) {
+                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
             }
         }
     }
 
-    public void listarStages(AST ASTPai) {
+    public void listarStages(String ePrefixo,AST ASTPai) {
 
-        System.out.println("\t\t - FUNCTIONS : ");
+        System.out.println(ePrefixo + "\t\t - FUNCTIONS : ");
         for (AST mAST : ASTPai.getASTS()) {
             if (mAST.mesmoTipo("FUNCTION")) {
-                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
+                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
             }
         }
 
-        System.out.println("\t\t - OPERATIONS : ");
+        System.out.println(ePrefixo +"\t\t - OPERATORS : ");
         for (AST mAST : ASTPai.getASTS()) {
-            if (mAST.mesmoTipo("OPERATION")) {
-                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
+            if (mAST.mesmoTipo("OPERATOR")) {
+                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
             }
         }
     }
@@ -440,5 +491,91 @@ public class Estrutural {
 
         return ret;
     }
+
+    public void listarPackage(AST ASTPai) {
+
+        System.out.println("\t\t - DEFINES : ");
+        for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("DEFINE")) {
+                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " : " + mAST.getValor());
+            }
+        }
+
+        System.out.println("\t\t - MOCKIZES : ");
+        for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("MOCKIZ")) {
+                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " : " + mAST.getValor());
+            }
+        }
+
+        System.out.println("\t\t - ACTIONS : ");
+        for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("ACTION")) {
+                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) ");
+            }
+
+        }
+        System.out.println("\t\t - FUNCTIONS : ");
+        for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("FUNCTION")) {
+                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
+            }
+        }
+
+        System.out.println("\t\t - OPERATIONS : ");
+        for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("OPERATION")) {
+                System.out.println("\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
+            }
+        }
+
+
+        System.out.println("\t\t - TYPES : ");
+        for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("TYPE")) {
+                System.out.println("\t\t\t - " + mAST.getNome());
+                for (AST mGetter : mAST.getASTS()) {
+                    System.out.println("\t\t\t\t - " + mGetter.getTipo() + " " + mGetter.getNome() + " : " + getTipagem(mGetter.getBranch("TYPE")));
+                }
+            }
+
+        }
+
+        System.out.println("\t\t - CASTS : ");
+        for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("CAST")) {
+                System.out.println("\t\t\t - " + mAST.getNome());
+                for (AST mGetter : mAST.getASTS()) {
+                    if (mGetter.mesmoTipo("GETTER")) {
+                        System.out.println("\t\t\t\t - Getter : " + mGetter.getValor());
+                    }
+                }
+                for (AST mGetter : mAST.getASTS()) {
+                    if (mGetter.mesmoTipo("SETTER")) {
+                        System.out.println("\t\t\t\t - Setter : " + mGetter.getValor());
+                    }
+                }
+            }
+
+        }
+
+        System.out.println("\t\t - STAGES : ");
+        for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("STAGES")) {
+                System.out.println("\t\t\t - " + mAST.getNome());
+
+                for (AST AST_STAGE : mAST.getBranch("OPTIONS").getASTS()) {
+                    System.out.println("\t\t\t\t - " + AST_STAGE.getNome());
+                }
+            }
+
+
+        }
+
+
+        listarStructGeral("\t\t", ASTPai.getASTS());
+
+    }
+
 
 }

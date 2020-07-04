@@ -1,11 +1,20 @@
 
-package Estruturas {
 
-    stages MODOS -> {CLARO, ESCURO, ESTRANHO}
+package Terminal {
+
+    act println ( a : string , b : num ) {
+	    def c : num;
+	    invoke terminal -> change ( ) :: c;
+	    invoke terminal -> print ( a ) :: c;
+	    invoke terminal -> print ( b ) :: c;
+    }
 
 }
 
+
 package Blocos {
+
+    using Terminal;
 
     stages MODOS -> {CLARO,DOIS, TRES, QUATRO}
 
@@ -15,7 +24,12 @@ package Blocos {
 
     }
 
-    struct BGeral {
+    struct XACC {
+        all:
+            mockiz XAT : num = 12;
+    }
+
+    struct BGeral with XACC {
 
         init BGeral(a:num){
             _a = a;
@@ -25,15 +39,21 @@ package Blocos {
         all:
             func getA() : num {return _a;}
     }
+
+    external BRUTAL {
+        act FORCAR() {}
+    }
 }
 
-#using Estruturas;
 using Blocos;
+
 
 call iniciar -> {
 
     invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: PACKAGES;
     invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
+
+    println(" -->> Valorando : ",50);
 
     def m : MODOS = MODOS::CLARO;
 
@@ -47,9 +67,3 @@ call iniciar -> {
 
 }
 
-act println ( a : string , b : num ) {
-	def c : num;
-	invoke terminal -> change ( ) :: c;
-	invoke terminal -> print ( a ) :: c;
-	invoke terminal -> print ( b ) :: c;
-}

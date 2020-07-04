@@ -1,6 +1,8 @@
 package Sigmaz.Analisador;
 
+import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.RunTime;
+import Sigmaz.Executor.Runners.Run_Extern;
 import Sigmaz.Utils.AST;
 
 import java.io.File;
@@ -16,6 +18,9 @@ public class Analisador {
     private ArrayList<String> mPrimitivos;
     private ArrayList<String> mTipados;
 
+    private Analisar_Global mAnalisar_Global;
+
+
     private Analisar_Function mAnalisar_Function;
     private Analisar_Action mAnalisar_Action;
     private Analisar_Cast mAnalisar_Cast;
@@ -30,6 +35,9 @@ public class Analisador {
     private Analisar_Execute mAnalisar_Execute;
     private Analisar_Stage mAnalisar_Stage;
     private Analisar_Try mAnalisar_Try;
+    private Analisar_Struct mAnalisar_Struct;
+
+    private Analisar_Package mAnalisar_Package;
 
     private Analisar_Outros mAnalisar_Outros;
 
@@ -39,6 +47,7 @@ public class Analisador {
 
     private boolean mExterno;
 
+
     public Analisador() {
 
         mASTS = new ArrayList<>();
@@ -47,6 +56,9 @@ public class Analisador {
         mErros = new ArrayList<>();
         mProibidos = new ArrayList<>();
         mTipados = new ArrayList<>();
+
+
+        mAnalisar_Global = new Analisar_Global(this);
 
         mAnalisar_Function = new Analisar_Function(this);
         mAnalisar_Action = new Analisar_Action(this);
@@ -62,6 +74,8 @@ public class Analisador {
         mAnalisar_Execute = new Analisar_Execute(this);
         mAnalisar_Stage = new Analisar_Stage(this);
         mAnalisar_Try = new Analisar_Try(this);
+        mAnalisar_Struct = new Analisar_Struct(this);
+        mAnalisar_Package = new Analisar_Package(this);
 
         mAnalisar_Outros = new Analisar_Outros(this);
 
@@ -96,12 +110,19 @@ public class Analisador {
         mPrimitivos.add("num");
         mPrimitivos.add("string");
         mPrimitivos.add("bool");
+
+
     }
 
 
     public ArrayList<String> getPrimitivos() {
         return mPrimitivos;
     }
+
+    public Analisar_Global getAnalisar_Global() {
+        return mAnalisar_Global;
+    }
+
 
     public Analisar_Function getAnalisar_Function() {
         return mAnalisar_Function;
@@ -111,6 +132,13 @@ public class Analisador {
         return mAnalisar_Action;
     }
 
+    public Analisar_Cast getAnalisar_Cast() {
+        return mAnalisar_Cast;
+    }
+
+    public Analisar_Stage getAnalisar_Stage() {
+        return mAnalisar_Stage;
+    }
 
     public Analisar_Daz getAnalisar_All() {
         return mAnalisar_Daz;
@@ -152,6 +180,14 @@ public class Analisador {
         return mAnalisar_Try;
     }
 
+    public Analisar_Struct getAnalisar_Struct() {
+        return mAnalisar_Struct;
+    }
+
+    public Analisar_Package getAnalisar_Package() {
+        return mAnalisar_Package;
+    }
+
     public void externarlizar() {
         mExterno = true;
     }
@@ -190,6 +226,19 @@ public class Analisador {
     public ArrayList<String> getFunctions_Nomes() {
         return mAnalisar_Outros.getFunctions_Nomes();
     }
+
+    public ArrayList<String> getFunctions_ApenasNomes() {
+        return mAnalisar_Outros.getFunctions_ApenasNomes();
+    }
+
+    public ArrayList<String> getActions_ApenasNomes() {
+        return mAnalisar_Outros.getActions_ApenasNomes();
+    }
+
+    public ArrayList<AST> getPackages() {
+        return mAnalisar_Package.getPackages();
+    }
+
 
     public void init(ArrayList<AST> eASTs, String mLocal) {
         mASTS = eASTs;
@@ -238,6 +287,7 @@ public class Analisador {
 
                             String mParametragem = ASTR.getNome();
 
+                            this.getAnalisar_Function().incluirNome(ASTR);
 
                             if (!this.getFunctions_Nomes().contains(mParametragem)) {
                                 this.getFunctions_Nomes().add(mParametragem);
@@ -263,7 +313,7 @@ public class Analisador {
 
             if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
 
-                analisarGlobal(ASTCGlobal, mAlocados);
+                getAnalisar_Global().analisarGlobal(ASTCGlobal, mAlocados);
 
             } else {
 
@@ -298,7 +348,7 @@ public class Analisador {
         if (!mAlocadosAntes.contains(ASTPai.getNome())) {
             mAlocadosAntes.add(ASTPai.getNome());
         } else {
-          //  mErros.add("Definicao Duplicada : " + ASTPai.getNome());
+            //  mErros.add("Definicao Duplicada : " + ASTPai.getNome());
         }
     }
 
@@ -310,159 +360,6 @@ public class Analisador {
 
     public ArrayList<String> getProibidos() {
         return mProibidos;
-    }
-
-    public void analisarGlobal(AST ASTPai, ArrayList<String> mAlocadosAntes) {
-
-        ArrayList<String> mAlocados = copiarAlocados(mAlocadosAntes);
-
-
-        for (AST mAST : ASTPai.getASTS()) {
-            if (mAST.mesmoTipo("REQUIRED")) {
-
-            } else if (mAST.mesmoTipo("STRUCT")) {
-
-                mTipados.add(mAST.getNome());
-
-
-            } else if (mAST.mesmoTipo("STAGES")) {
-
-                mTipados.add(mAST.getNome());
-            } else if (mAST.mesmoTipo("CAST")) {
-
-                mTipados.add(mAST.getNome());
-            } else if (mAST.mesmoTipo("TYPE")) {
-
-                mTipados.add(mAST.getNome());
-
-            }
-        }
-
-        mAnalisar_Outros.inclusao(ASTPai);
-
-        for (AST mAST : ASTPai.getASTS()) {
-
-            if (mAST.mesmoTipo("DEFINE")) {
-
-                if (mProibidos.contains(mAST.getNome())) {
-                    mErros.add("Define : " + mAST.getNome() + " : Nome Proibido !");
-                }
-
-                analisarAlocacao(mAST, mAlocados);
-
-                mAnalisar_Outros.analisarTipagem(mAST);
-                analisarValoracao(ASTPai, mAlocadosAntes);
-
-
-            } else if (mAST.mesmoTipo("MOCKIZ")) {
-
-                if (mProibidos.contains(mAST.getNome())) {
-                    mErros.add("Mockiz : " + mAST.getNome() + " : Nome Proibido !");
-                }
-
-                analisarAlocacao(mAST, mAlocados);
-
-
-                mAnalisar_Outros.analisarTipagem(mAST);
-                analisarValoracao(ASTPai, mAlocadosAntes);
-
-
-            }
-
-        }
-
-
-        for (AST mAST : ASTPai.getASTS()) {
-
-            if (mAST.mesmoTipo("ACTION")) {
-
-                if (mProibidos.contains(mAST.getNome())) {
-                    mErros.add("Action : " + mAST.getNome() + " : Nome Proibido !");
-                }
-
-                mAnalisar_Action.analisarAction(mAST, mAlocados);
-
-            } else if (mAST.mesmoTipo("FUNCTION")) {
-
-                if (mProibidos.contains(mAST.getNome())) {
-                    mErros.add("Function : " + mAST.getNome() + " : Nome Proibido !");
-                }
-
-                mAnalisar_Function.analisarFunction(mAST, mAlocados);
-
-            } else if (mAST.mesmoTipo("CALL")) {
-            } else if (mAST.mesmoTipo("INVOKE")) {
-
-            } else if (mAST.mesmoTipo("DEFINE")) {
-
-                if (mProibidos.contains(mAST.getNome())) {
-                    mErros.add("Define : " + mAST.getNome() + " : Nome Proibido !");
-                }
-
-
-            } else if (mAST.mesmoTipo("MOCKIZ")) {
-
-                if (mProibidos.contains(mAST.getNome())) {
-                    mErros.add("Mockiz : " + mAST.getNome() + " : Nome Proibido !");
-                }
-
-
-            } else if (mAST.mesmoTipo("OPERATOR")) {
-
-                mAnalisar_Function.analisarFunction(mAST, mAlocados);
-
-            } else if (mAST.mesmoTipo("DIRECTOR")) {
-
-                mAnalisar_Function.analisarFunction(mAST, mAlocados);
-
-            } else if (mAST.mesmoTipo("CAST")) {
-
-                if (mProibidos.contains(mAST.getNome())) {
-                    mErros.add("Cast : " + mAST.getNome() + " : Nome Proibido !");
-                }
-
-                mAnalisar_Cast.init(mAST);
-
-            } else if (mAST.mesmoTipo("STRUCT")) {
-
-                if (mProibidos.contains(mAST.getNome())) {
-                    mErros.add("Struct : " + mAST.getNome() + " : Nome Proibido !");
-                }
-
-                Analisar_Struct mAnalisar_Struct = new Analisar_Struct(this);
-                mAnalisar_Struct.init_Struct(mAST, mAlocados);
-
-            } else if (mAST.mesmoTipo("STAGES")) {
-
-                if (mProibidos.contains(mAST.getNome())) {
-                    mErros.add("Stage : " + mAST.getNome() + " : Nome Proibido !");
-                }
-
-                mAnalisar_Stage.analisar(mAST);
-
-            } else if (mAST.mesmoTipo("REQUIRED")) {
-
-            } else if (mAST.mesmoTipo("MODEL")) {
-
-            } else if (mAST.mesmoTipo("TYPE")) {
-
-            } else if (mAST.mesmoTipo("PACKAGE")) {
-
-            } else if (mAST.mesmoTipo("USING")) {
-
-            } else {
-
-                mErros.add("AST x : " + mAST.getTipo());
-
-
-            }
-
-
-        }
-
-
-        mAnalisar_Outros.exportarOperadores(ASTPai);
-
     }
 
 

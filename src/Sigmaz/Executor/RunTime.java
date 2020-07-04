@@ -620,107 +620,119 @@ public class RunTime {
 
     }
 
+    ArrayList<String> mUsados = new ArrayList<String>();
 
     public void Usar(String eNome, Escopo Global) {
 
-        boolean enc = false;
-
-        for (AST ASTPackage : mGlobalPackages) {
-
-            if (ASTPackage.mesmoNome(eNome)) {
-
-                ArrayList<AST> mPackageStructs = new ArrayList<>();
-
-                for (AST ASTC : ASTPackage.getASTS()) {
+        if (!mUsados.contains(eNome)) {
 
 
-                    if (ASTC.mesmoTipo("FUNCTION")) {
-                        Global.guardar(ASTC);
+            boolean enc = false;
 
-                        mGlobalFunctions.add(ASTC);
+            for (AST ASTPackage : mGlobalPackages) {
 
-                    } else if (ASTC.mesmoTipo("ACTION")) {
-                        Global.guardar(ASTC);
+                if (ASTPackage.mesmoNome(eNome)) {
 
-                        mGlobalActions.add(ASTC);
+                    ArrayList<AST> mPackageStructs = new ArrayList<>();
 
-                    } else if (ASTC.mesmoTipo("OPERATOR")) {
-                        Global.guardar(ASTC);
-
-                        mGlobalOperacoes.add(ASTC);
-                    } else if (ASTC.mesmoTipo("DIRECTOR")) {
-                        Global.guardar(ASTC);
-
-                        mGlobalDirectors.add(ASTC);
-
-                    } else if (ASTC.mesmoTipo("CAST")) {
-                        Global.guardar(ASTC);
-                        mT_Casts.add(ASTC.getNome());
-
-                        mGlobalCasts.add(ASTC);
-
-                    } else if (ASTC.mesmoTipo("STAGES")) {
-
-                        Global.guardar(ASTC);
-
-                        mGlobalStages.add(ASTC);
-                        mT_Stages.add(ASTC.getNome());
-
-                    } else if (ASTC.mesmoTipo("STRUCT")) {
-
-                        mGlobalStructs.add(ASTC);
-                        mT_Structs.add(ASTC.getNome());
-
-                        mPackageStructs.add(ASTC);
-
-                    } else if (ASTC.mesmoTipo("TYPE")) {
-                        mT_Types.add(ASTC.getNome());
-
-                        mGlobalTypes.add(ASTC);
-                    } else if (ASTC.mesmoTipo("PACKAGE")) {
-                        mT_Types.add(ASTC.getNome());
-
-                        mGlobalPackages.add(ASTC);
-
-                    }
-
-                }
-
-                for (AST mStruct : mPackageStructs) {
-                    for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
-                        if (mStructBody.mesmoTipo("OPERATOR") && mStructBody.getBranch("VISIBILITY").mesmoNome("EXTERN")) {
-                            // System.out.println("PORRA PERDIDA");
-
-                            mGlobalOperacoes.add(mStructBody);
-
-
+                    for (AST ASTC : ASTPackage.getASTS()) {
+                        if (ASTC.mesmoTipo("USING")) {
+                            Usar(ASTC.getNome(),Global);
                         }
                     }
+
+                    for (AST ASTC : ASTPackage.getASTS()) {
+
+
+                        if (ASTC.mesmoTipo("FUNCTION")) {
+                            Global.guardar(ASTC);
+
+                            mGlobalFunctions.add(ASTC);
+
+                        } else if (ASTC.mesmoTipo("ACTION")) {
+                            Global.guardar(ASTC);
+
+                            mGlobalActions.add(ASTC);
+
+                        } else if (ASTC.mesmoTipo("OPERATOR")) {
+                            Global.guardar(ASTC);
+
+                            mGlobalOperacoes.add(ASTC);
+                        } else if (ASTC.mesmoTipo("DIRECTOR")) {
+                            Global.guardar(ASTC);
+
+                            mGlobalDirectors.add(ASTC);
+
+                        } else if (ASTC.mesmoTipo("CAST")) {
+                            Global.guardar(ASTC);
+                            mT_Casts.add(ASTC.getNome());
+
+                            mGlobalCasts.add(ASTC);
+
+                        } else if (ASTC.mesmoTipo("STAGES")) {
+
+                            Global.guardar(ASTC);
+
+                            mGlobalStages.add(ASTC);
+                            mT_Stages.add(ASTC.getNome());
+
+                        } else if (ASTC.mesmoTipo("STRUCT")) {
+
+                            mGlobalStructs.add(ASTC);
+                            mT_Structs.add(ASTC.getNome());
+
+                            mPackageStructs.add(ASTC);
+
+                        } else if (ASTC.mesmoTipo("TYPE")) {
+                            mT_Types.add(ASTC.getNome());
+
+                            mGlobalTypes.add(ASTC);
+                        } else if (ASTC.mesmoTipo("PACKAGE")) {
+                            mT_Types.add(ASTC.getNome());
+
+                            mGlobalPackages.add(ASTC);
+
+                        }
+
+                    }
+
+                    for (AST mStruct : mPackageStructs) {
+                        for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
+                            if (mStructBody.mesmoTipo("OPERATOR") && mStructBody.getBranch("VISIBILITY").mesmoNome("EXTERN")) {
+                                // System.out.println("PORRA PERDIDA");
+
+                                mGlobalOperacoes.add(mStructBody);
+
+
+                            }
+                        }
+                    }
+
+                    ArrayList<Run_Extern> mPackageExtern = new ArrayList<Run_Extern>();
+
+                    for (AST mStruct : mPackageStructs) {
+                        Run_Extern mRE = new Run_Extern(this);
+                        mRE.init(mStruct);
+                        mPackageExtern.add(mRE);
+                    }
+
+                    for (Run_Extern mRE : mPackageExtern) {
+                        mRE.run();
+                        mExtern.add(mRE);
+                    }
+
+                    enc = true;
+                    break;
                 }
 
-                ArrayList<Run_Extern> mPackageExtern = new ArrayList<Run_Extern>();
-
-                for (AST mStruct : mPackageStructs) {
-                    Run_Extern mRE = new Run_Extern(this);
-                    mRE.init(mStruct);
-                    mPackageExtern.add(mRE);
-                }
-
-                for (Run_Extern mRE : mPackageExtern) {
-                    mRE.run();
-                }
-
-                enc = true;
-                break;
             }
 
+            if (!enc) {
+                getErros().add("Package " + eNome + " : Nao encontrado !");
+            }
+
+            mUsados.add(eNome);
         }
-
-        if (!enc) {
-            getErros().add("Package " + eNome + " : Nao encontrado !");
-        }
-
-
     }
 
     public ArrayList<AST> getGlobalActions() {
@@ -821,7 +833,8 @@ public class RunTime {
                         mEstrutural.guardar(ASTC);
                     } else if (ASTC.mesmoTipo("MOCKIZ")) {
                         mEstrutural.guardar(ASTC);
-
+                    } else if (ASTC.mesmoTipo("PACKAGE")) {
+                        mEstrutural.guardar(ASTC);
                     }
 
                 }

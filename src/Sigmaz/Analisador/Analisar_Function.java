@@ -15,7 +15,13 @@ public class Analisar_Function {
 
     }
 
-    public void analisarFunction(AST ASTPai, ArrayList<String> mAlocadosAntes) {
+    public void incluirNome(AST ASTPai) {
+        if (!mAnalisador.getFunctions_ApenasNomes().contains(ASTPai.getNome())) {
+            mAnalisador.getFunctions_ApenasNomes().add(ASTPai.getNome());
+        }
+    }
+
+        public void analisarFunction(AST ASTPai, ArrayList<String> mAlocadosAntes) {
 
 
         ArrayList<String> mAlocados = mAnalisador.copiarAlocados(mAlocadosAntes);
@@ -26,13 +32,16 @@ public class Analisar_Function {
 
         String mParametragem = ASTPai.getNome() + " ( " + mAnalisador.getAnalisar_Argumentos().analisarArguments(ASTPai.getBranch("ARGUMENTS"), mAlocados) + ") ";
 
-      //  System.out.println(mParametragem);
+        //  System.out.println(mParametragem);
+
+
 
         if (!mAnalisador.getFunctions_Nomes().contains(mParametragem)) {
             mAnalisador.getFunctions_Nomes().add(mParametragem);
         } else {
             mAnalisador.getErros().add("Function Duplicada : " + mParametragem);
         }
+
 
 
         boolean retornou = false;
@@ -58,7 +67,7 @@ public class Analisar_Function {
 
             mAlocadosAntes.add(ASTPai.getNome());
 
-            if (mAnalisador.getProibidos().contains(ASTPai.getNome())){
+            if (mAnalisador.getProibidos().contains(ASTPai.getNome())) {
                 mAnalisador.getErros().add("Def : " + ASTPai.getNome() + " : Nome Proibido !");
             }
 
@@ -69,7 +78,7 @@ public class Analisar_Function {
 
             mAlocadosAntes.add(ASTPai.getNome());
 
-            if (mAnalisador.getProibidos().contains(ASTPai.getNome())){
+            if (mAnalisador.getProibidos().contains(ASTPai.getNome())) {
                 mAnalisador.getErros().add("Moc : " + ASTPai.getNome() + " : Nome Proibido !");
             }
 

@@ -15,6 +15,13 @@ public class Analisar_Action {
     }
 
 
+    public void incluirNome(AST ASTPai) {
+        if (!mAnalisador.getActions_ApenasNomes().contains(ASTPai.getNome())) {
+            mAnalisador.getActions_ApenasNomes().add(ASTPai.getNome());
+        }
+    }
+
+
     public void analisarDentroAction(AST ASTPai, ArrayList<String> mAlocadosAntes, boolean laco) {
 
         if (ASTPai.mesmoTipo("DEF")) {

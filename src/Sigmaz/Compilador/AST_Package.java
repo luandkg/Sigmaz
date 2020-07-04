@@ -51,6 +51,11 @@ public class AST_Package {
             if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
                 saiu = true;
                 break;
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("using")) {
+
+                AST_Using mAST = new AST_Using(mCompiler);
+                mAST.init(AST_Raiz);
+
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
 
                 AST_Action mAST = new AST_Action(mCompiler);

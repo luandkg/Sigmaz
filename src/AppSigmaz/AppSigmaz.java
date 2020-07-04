@@ -13,11 +13,10 @@ public class AppSigmaz {
         String mBiblioteca_Fonte = "res/libs/lib.sigmaz";
         String mBiblioteca_Sigmad = "res/lib.sigmad";
 
-        Fases mFase = Fases.EXECUTAR;
 
         int ARQUIVO = 57;
 
-        switch (mFase) {
+        switch (Fases.EXECUTAR) {
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos,mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
             case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);

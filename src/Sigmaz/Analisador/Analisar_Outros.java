@@ -10,11 +10,13 @@ public class Analisar_Outros {
 
     private ArrayList<String> mPrimitivos;
 
-    private ArrayList<String> mFunctions;
+
+
+    private ArrayList<String> mActions_Nomes;
+    private ArrayList<String> mActions_ApenasNomes;
 
     private ArrayList<String> mFunctions_Nomes;
-    private ArrayList<String> mActions_Nomes;
-
+    private ArrayList<String> mFunctions_ApenasNomes;
 
     private ArrayList<String> mCasts_Nomes;
     private ArrayList<String> mStructs_Nomes;
@@ -34,29 +36,37 @@ public class Analisar_Outros {
         mPrimitivos.add("num");
         mPrimitivos.add("any");
 
-        mFunctions = new ArrayList<String>();
         mCasts_Nomes = new ArrayList<String>();
         mStructs_Nomes = new ArrayList<String>();
         mStages_Nomes = new ArrayList<String>();
 
         mActions_Nomes = new ArrayList<String>();
+        mActions_ApenasNomes = new ArrayList<String>();
+
         mFunctions_Nomes = new ArrayList<String>();
+        mFunctions_ApenasNomes = new ArrayList<String>();
 
         mTypes_Nomes = new ArrayList<String>();
 
     }
 
 
-    public ArrayList<String> getFunctions() {
-        return mFunctions;
-    }
 
     public ArrayList<String> getActions_Nomes() {
         return mActions_Nomes;
     }
 
+    public ArrayList<String> getActions_ApenasNomes() {
+        return mActions_ApenasNomes;
+    }
+
+
     public ArrayList<String> getFunctions_Nomes() {
         return mFunctions_Nomes;
+    }
+
+    public ArrayList<String> getFunctions_ApenasNomes() {
+        return mFunctions_ApenasNomes;
     }
 
     public void limpar() {
@@ -64,7 +74,9 @@ public class Analisar_Outros {
         mActions_Nomes.clear();
         mFunctions_Nomes.clear();
 
-        mFunctions.clear();
+        mActions_ApenasNomes.clear();
+        mFunctions_ApenasNomes.clear();
+
 
         mCasts_Nomes.clear();
         mStructs_Nomes.clear();

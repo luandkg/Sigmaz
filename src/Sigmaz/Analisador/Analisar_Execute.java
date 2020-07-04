@@ -15,9 +15,9 @@ public class Analisar_Execute {
     public void analisar_Execute(AST ASTPai) {
 
 
-        if (mAnalisador.getActions_Nomes().contains(ASTPai.getNome()) && ASTPai.mesmoValor("FUNCT")) {
+        if (mAnalisador.getActions_ApenasNomes().contains(ASTPai.getNome()) && ASTPai.mesmoValor("FUNCT")) {
 
-        } else if (mAnalisador.getFunctions_Nomes().contains(ASTPai.getNome()) && ASTPai.mesmoValor("FUNCT")) {
+        } else if (mAnalisador.getFunctions_ApenasNomes().contains(ASTPai.getNome()) && ASTPai.mesmoValor("FUNCT")) {
 
         } else if (ASTPai.mesmoValor("STRUCT")) {
 

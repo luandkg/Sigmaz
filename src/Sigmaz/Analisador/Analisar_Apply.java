@@ -26,7 +26,7 @@ public class Analisar_Apply {
 
                 if (!mAlocadosAntes.contains(mSETTABLE.getNome())) {
 
-                  //  mAnalisador.getErros().add("Variavel nao existente : " + mSETTABLE.getNome());
+                    //  mAnalisador.getErros().add("Variavel nao existente : " + mSETTABLE.getNome());
                 }
 
 
@@ -72,14 +72,14 @@ public class Analisar_Apply {
         } else if (mValue.mesmoValor("FUNCT")) {
 
 
-            if (!mAnalisador.getFunctions_Nomes().contains(mValue.getNome())) {
+            if (!mAnalisador.getFunctions_ApenasNomes().contains(mValue.getNome())) {
 
                 mAnalisador.getErros().add("Funcao nao existente : " + mValue.getNome());
 
             }
 
             for (AST mAST : mValue.getASTS()) {
-                if (mAST.mesmoTipo("ARGUMENT") &&mAST.mesmoValor("FUNCT") ) {
+                if (mAST.mesmoTipo("ARGUMENT") && mAST.mesmoValor("FUNCT")) {
 
                     valore(mAST, mAlocadosAntes);
 
@@ -87,10 +87,29 @@ public class Analisar_Apply {
                 }
             }
 
+        } else if (mValue.mesmoValor("TERNAL")) {
+
+
+            valore(mValue.getBranch("CONDITION"), mAlocadosAntes);
+            if (mValue.existeBranch("TRUE")) {
+                valore(mValue.getBranch("TRUE"), mAlocadosAntes);
+            }
+            if (mValue.existeBranch("FALSE")) {
+                valore(mValue.getBranch("FALSE"), mAlocadosAntes);
+            }
+        } else if (mValue.mesmoValor("Num")) {
+
+        } else if (mValue.mesmoValor("Text")) {
+
+        } else if (mValue.mesmoValor("OPERATOR")) {
+
+        } else if (mValue.mesmoValor("INIT")) {
+
+        } else if (mValue.mesmoValor("STRUCT_EXTERN")) {
 
         } else {
 
-            // mAnalisador.getErros().add("Verificando Apply : " +mValue.getNome() + " : " + mValue.getValor() );
+            //mAnalisador.getErros().add("Verificando Apply : " +mValue.getNome() + " : " + mValue.getValor() );
 
 
         }

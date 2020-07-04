@@ -21,6 +21,7 @@ public class Carregadores {
         mArquivos.add("res/libs/constant.sigmaz");
         mArquivos.add("res/libs/iterador.sigmaz");
         mArquivos.add("res/libs/lista.sigmaz");
+        mArquivos.add("res/libs/pacote_tempo.sigmaz");
 
 
         return mArquivos;

@@ -148,3 +148,6 @@ Linguagem de Programação Estruturada - Implementações
         - AST_PACKAGE
         - AST_USING
         - EXPORTAR CONTEUDO PARA GLOBAL COM USING
+        
+    - 2020 07 04
+        - ANALISAR USING
