@@ -1,4 +1,4 @@
-package Sigmaz.Utils.LuanDKG;
+package OAVersion.LuanDKG;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ public class SalvamentoReduzido {
         return e;
     }
 
-    private void Identificadores(ITexto ITextoC,  ArrayList<Identificador> mIdentificadores) {
+    private void Identificadores(ITexto ITextoC, ArrayList<Identificador> mIdentificadores) {
 
         for (Identificador IdentificadorC : mIdentificadores) {
 
@@ -24,7 +24,7 @@ public class SalvamentoReduzido {
 
     }
 
-    private void Listas(ITexto ITextoC,  ArrayList<Lista> mListas) {
+    private void Listas(ITexto ITextoC, ArrayList<Lista> mListas) {
 
         for (Lista ListaC : mListas) {
 
@@ -50,7 +50,7 @@ public class SalvamentoReduzido {
 
     }
 
-    private void Comentarios(ITexto ITextoC,  ArrayList<Comentario> mComentarios) {
+    private void Comentarios(ITexto ITextoC, ArrayList<Comentario> mComentarios) {
 
         for (Comentario ComentarioC : mComentarios) {
 
@@ -141,12 +141,10 @@ public class SalvamentoReduzido {
 
                 Pacote_Listar(ITextoC, PacoteC.getPacotes());
 
-                ITextoC.Adicionar(" } ");
-
-
             }
 
 
+            ITextoC.Adicionar(" } ");
 
         }
 

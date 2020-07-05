@@ -13,10 +13,13 @@ public class AppSigmaz {
         String mBiblioteca_Fonte = "res/libs/lib.sigmaz";
         String mBiblioteca_Sigmad = "res/lib.sigmad";
 
+        OAVersion.OAVersion.init("Sigmaz.oa");
+
+      //  OAVersion.OAVersion.release("Sigmaz.oa");
 
         int ARQUIVO = 51;
 
-        switch (Fases.TESTES) {
+        switch (Fases.EXECUTAR) {
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos,mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
             case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);

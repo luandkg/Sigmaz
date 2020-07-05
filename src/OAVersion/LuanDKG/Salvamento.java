@@ -1,4 +1,4 @@
-package Sigmaz.Utils.LuanDKG;
+package OAVersion.LuanDKG;
 
 import java.util.ArrayList;
 
@@ -133,6 +133,20 @@ public class Salvamento {
 					&& PacoteC.getIdentificadores().size() == 0 && PacoteC.getObjetos().size() == 0) {
 
 				ITextoC.AdicionarLinha(ePrefixo + "PACOTE " + Codifica(PacoteC.getNome()) + " { } ");
+			} else 	if (PacoteC.getPacotes().size() == 0 && PacoteC.getListas().size() == 0
+					 && PacoteC.getObjetos().size() == 0 && PacoteC.getLinear()) {
+
+
+				String eLinha = "";
+
+				for (Identificador IdentificadorC : PacoteC.getIdentificadores()) {
+
+					eLinha +=" " + "ID " + Codifica(IdentificadorC.getNome()) + " = " + "\"" + Codifica(IdentificadorC.getValor()) + "\"";
+
+				}
+
+
+				ITextoC.AdicionarLinha(ePrefixo + "PACOTE " + Codifica(PacoteC.getNome()) + " { " + eLinha + " } "  );
 
 			} else {
 
@@ -150,8 +164,8 @@ public class Salvamento {
 				Pacote_Listar(ITextoC, ePrefixo + "   ", PacoteC.getPacotes());
 
 				ITextoC.AdicionarLinha(ePrefixo + " } ");
-
 			}
+
 
 
 		}
