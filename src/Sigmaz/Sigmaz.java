@@ -109,7 +109,6 @@ public class Sigmaz {
             Analisador AnaliseC = new Analisador();
             String AI = CompilerC.getData().toString();
 
-            AnaliseC.internalizar();
 
             System.out.println(CompilerC.getArvoreDeInstrucoes());
 
@@ -132,11 +131,13 @@ public class Sigmaz {
                     System.out.println("\t\t" + Erro);
                 }
 
-                System.out.println("");
-                System.out.println("################ AST - COM DEFEITOS ################");
-                System.out.println("");
+             AnaliseC.MostrarMensagens();
 
-                Documentador DC = new Documentador();
+              //  System.out.println("");
+               // System.out.println("################ AST - COM DEFEITOS ################");
+              //  System.out.println("");
+
+              //  Documentador DC = new Documentador();
               //  System.out.println(CompilerC.getArvoreDeInstrucoes());
 
             } else {

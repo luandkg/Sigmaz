@@ -52,6 +52,17 @@ public class Escopo {
         return mRunTime;
     }
 
+    public boolean possuiStruct(String eNome){
+        boolean ret = false;
+
+        for(AST eAST : getStructs()){
+            if (eAST.mesmoNome(eNome)){
+                ret=true;
+                break;
+            }
+        }
+        return ret;
+    }
 
     public Escopo(RunTime eRunTime, Escopo eEscopoAnterior) {
 
@@ -89,6 +100,22 @@ public class Escopo {
         return mOO;
     }
 
+    public OO getAO() {
+        return mAO;
+    }
+
+    public void referenciarEscopo(AST mEscopo) {
+
+        //System.out.println(" \t * Recebendo Pacote  " + mEscopo.getNome());
+
+
+        for (AST eAST : mEscopo.getASTS()) {
+           // System.out.println(" \t\t - " + eAST.getTipo() + " :  " + eAST.getNome());
+            guardar(eAST);
+        }
+
+
+    }
 
     public void guardarStruct(AST eAST) {
 
@@ -123,9 +150,11 @@ public class Escopo {
     public void ListarStructs() {
         mDebug.ListarStructs();
     }
+
     public void ListarPackages() {
         mDebug.ListarPackages();
     }
+
     public void ListarLocalAll() {
         mDebug.ListarLocalAll();
     }
@@ -299,10 +328,10 @@ public class Escopo {
     }
 
     public void alterarTipo(String eNome, String eTipoAtual, String eTipoNovo) {
-        mEscopoStack.alterarTipo(eNome,eTipoAtual,eTipoNovo);
+        mEscopoStack.alterarTipo(eNome, eTipoAtual, eTipoNovo);
     }
 
-        public ArrayList<Item> getStacksAll() {
+    public ArrayList<Item> getStacksAll() {
 
         ArrayList<Item> gc = new ArrayList<Item>();
 
@@ -396,23 +425,16 @@ public class Escopo {
         return gc;
     }
 
-    public ArrayList<AST> getStructCompleto() {
+    public ArrayList<AST> getStages() {
+        return mAO.getStages();
+    }
 
-        ArrayList<AST> gc = new ArrayList<AST>();
+    public ArrayList<AST> getStructs() {
+        return mAO.getStructs();
+    }
 
-        if (this.mEscopoAnterior != null) {
-
-            for (AST fAST : mEscopoAnterior.getStruct()) {
-                gc.add(fAST);
-            }
-        }
-
-        for (AST fAST : getStruct()) {
-            gc.add(fAST);
-        }
-
-
-        return gc;
+    public ArrayList<AST> getTypes() {
+        return mAO.getTypes();
     }
 
 
@@ -541,5 +563,69 @@ public class Escopo {
         return ret;
     }
 
+    public boolean existeStage(String eStage) {
+        boolean enc = false;
+
+      //   System.out.println(this.getNome() + " -> Stages : " + mAO.getStages().size() );
+
+        for (AST mAST : mAO.getStages()) {
+            for (AST sAST : mAST.getBranch("OPTIONS").getASTS()) {
+
+                if (sAST.mesmoTipo("STAGE")) {
+                    String tmp = mAST.getNome() + "::" + sAST.getNome();
+                    if (tmp.contentEquals(eStage)) {
+                        enc = true;
+                        break;
+                    }
+                }
+
+
+            }
+        }
+
+        return enc;
+    }
+
+
+    public String getQualificador(String aNome) {
+        String ret = "";
+
+
+        String eNome = "";
+        int i = 0;
+        int o = aNome.length();
+        while (i < o) {
+            String l = String.valueOf(aNome.charAt(i));
+            if (l.contentEquals("<")) {
+                break;
+            } else {
+                eNome += l;
+            }
+            i += 1;
+        }
+
+        ret = "PRIMITIVE";
+
+        for (AST eAST : getGuardadosCompleto()) {
+
+            if (eAST.mesmoTipo("CAST") && eAST.mesmoNome(eNome)) {
+                ret = "CAST";
+                break;
+            } else if (eAST.mesmoTipo("STAGES") && eAST.mesmoNome(eNome)) {
+                ret = "STAGES";
+                break;
+            } else if (eAST.mesmoTipo("TYPE") && eAST.mesmoNome(eNome)) {
+                ret = "TYPE";
+                break;
+            } else if (eAST.mesmoTipo("STRUCT") && eAST.mesmoNome(eNome)) {
+                ret = "STRUCT";
+                break;
+            }
+
+        }
+
+        return ret;
+
+    }
 
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Heranca {
 
     private Analisador mAnalisador;
+   // private Analisador_Bloco mAnalisador_Bloco;
 
     private boolean mExterno;
 
@@ -14,6 +15,7 @@ public class Heranca {
 
         mAnalisador = eAnalisador;
         mExterno = true;
+      //  mAnalisador_Bloco=eAnalisador_Bloco;
 
     }
 
@@ -387,7 +389,7 @@ public class Heranca {
 
                 mParametragem += "<" + mAST.getValor() + "> ";
 
-                mAnalisador.getAnalisar_Outros().analisarTipagem(mAST);
+              //  mAnalisador_Bloco.getAnalisar_Outros().analisarTipagem(mAST);
 
 
             } else {

@@ -7,10 +7,12 @@ import java.util.ArrayList;
 public class Analisar_Argumentos {
 
     private Analisador mAnalisador;
+    private Analisador_Bloco mAnalisador_Bloco;
 
-    public Analisar_Argumentos(Analisador eAnalisador) {
+    public Analisar_Argumentos(Analisador eAnalisador,Analisador_Bloco eAnalisador_Bloco) {
 
         mAnalisador = eAnalisador;
+        mAnalisador_Bloco=eAnalisador_Bloco;
 
     }
 
@@ -24,7 +26,7 @@ public class Analisar_Argumentos {
 
                     mParametrizando += "<" + getTipagem(mAST.getBranch("TYPE")) + "> ";
 
-                   mAnalisador.getAnalisar_Outros().analisandoDefinesParam(mAST);
+                mAnalisador_Bloco.getAnalisar_Outros().analisandoDefinesParam(mAST);
 
             } else {
                 mAnalisador.getErros().add("Tipo Desconhecido : " + mAST.getTipo());
@@ -55,7 +57,7 @@ public class Analisar_Argumentos {
 
                 mParametragem += "<" + getTipagem(mAST.getBranch("TYPE")) + "> ";
 
-                mAnalisador.getAnalisar_Outros().analisandoDefinesParam(mAST);
+                mAnalisador_Bloco.getAnalisar_Outros().analisandoDefinesParam(mAST);
 
             } else {
                 mAnalisador.getErros().add("Tipo Desconhecido : " + mAST.getTipo());

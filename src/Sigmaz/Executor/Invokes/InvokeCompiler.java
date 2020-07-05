@@ -297,7 +297,7 @@ public class InvokeCompiler {
                 if (mRunTime.getExterno()) {
 
                     Run_Struct mRun = mRunTime.getRun_Struct(a);
-                    mRun.getEscopo().getDebug().mostrar_Struct(mRun.getEscopo());
+
 
                 }
 
@@ -334,7 +334,7 @@ public class InvokeCompiler {
                 String eTipo = mRun_Invoke.getTipo(ASTArgumentos, 1);
                 String eNome = mRun_Invoke.getQualquer(ASTArgumentos, 1);
 
-                String eQualificador = mRunTime.getQualificador(eTipo);
+                String eQualificador = mEscopo.getQualificador(eTipo);
 
                 // System.out.println("Removendo : " + eNome + " :: " + eQualificador);
 

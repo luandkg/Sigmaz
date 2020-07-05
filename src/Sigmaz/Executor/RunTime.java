@@ -18,6 +18,7 @@ public class RunTime {
     private ArrayList<Run_Struct> mHeap;
     private ArrayList<Run_Extern> mExtern;
     private ArrayList<Run_Type> mTypes_Instances;
+    private ArrayList<Escopo> mPacotes;
 
 
     private ArrayList<AST> mGlobalActions;
@@ -60,6 +61,7 @@ public class RunTime {
 
         mErros = new ArrayList<>();
 
+        mPacotes = new ArrayList<Escopo>();
 
         mT_Primitivos = new ArrayList<String>();
         mT_Casts = new ArrayList<String>();
@@ -117,6 +119,8 @@ public class RunTime {
         mT_Structs.clear();
         mT_Stages.clear();
 
+        mPacotes.clear();
+
         mGlobalActions.clear();
         mGlobalFunctions.clear();
         mGlobalOperacoes.clear();
@@ -128,38 +132,6 @@ public class RunTime {
         mGlobalPackages.clear();
 
 
-    }
-
-    public String getQualificador(String aNome) {
-        String ret = "";
-
-
-        String eNome = "";
-        int i = 0;
-        int o = aNome.length();
-        while (i < o) {
-            String l = String.valueOf(aNome.charAt(i));
-            if (l.contentEquals("<")) {
-                break;
-            } else {
-                eNome += l;
-            }
-            i += 1;
-        }
-
-        if (mT_Primitivos.contains(eNome)) {
-            ret = "PRIMITIVE";
-        } else if (mT_Casts.contains(eNome)) {
-            ret = "CAST";
-        } else if (mT_Types.contains(eNome)) {
-            ret = "TYPE";
-        } else if (mT_Structs.contains(eNome)) {
-            ret = "STRUCT";
-        } else if (mT_Stages.contains(eNome)) {
-            ret = "STAGES";
-        }
-
-        return ret;
     }
 
 
@@ -312,7 +284,7 @@ public class RunTime {
         }
 
         if (!enc) {
-            mErros.add("Nao foi possivel encontrar a struct : " + eNome);
+            mErros.add("Nao foi possivel encontrar a struct extern : " + eNome);
         }
 
         return mRet;
@@ -475,10 +447,15 @@ public class RunTime {
 
                     } else if (ASTC.mesmoTipo("STRUCT")) {
 
+                        Global.guardar(ASTC);
+
                         mGlobalStructs.add(ASTC);
                         mT_Structs.add(ASTC.getNome());
 
                     } else if (ASTC.mesmoTipo("TYPE")) {
+
+                        Global.guardar(ASTC);
+
                         mT_Types.add(ASTC.getNome());
 
                         mGlobalTypes.add(ASTC);
@@ -487,10 +464,14 @@ public class RunTime {
 
                         mGlobalPackages.add(ASTC);
 
+                        initPackage(ASTC);
+
+
                     }
 
                 }
 
+                ReferenciasInternas();
 
                 for (AST mStruct : mGlobalStructs) {
                     for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
@@ -507,7 +488,7 @@ public class RunTime {
 
                 for (AST mStruct : mGlobalStructs) {
                     Run_Extern mRE = new Run_Extern(this);
-                    mRE.init(mStruct);
+                    mRE.init(mStruct, ASTCGlobal);
                     mExtern.add(mRE);
                 }
 
@@ -515,11 +496,15 @@ public class RunTime {
                     mRE.run();
                 }
 
+                ArrayList<String> mUsados = new ArrayList<String>();
+
                 // USAR PACKAGES
                 for (AST ASTC : ASTCGlobal.getASTS()) {
                     if (ASTC.mesmoTipo("USING")) {
 
-                        Usar(ASTC.getNome(), Global);
+                        //  Usar(ASTC.getNome(), Global);
+
+                        Referenciar(ASTC.getNome(), Global,mUsados);
 
                     }
                 }
@@ -590,6 +575,104 @@ public class RunTime {
 
     }
 
+    public void ReferenciasInternas() {
+
+        for (Escopo EscopoC : mPacotes) {
+
+            AST ASTPacote = getPacote(EscopoC.getNome());
+            ArrayList<String> mUsados = new ArrayList<String>();
+
+            for (AST ASTC : ASTPacote.getASTS()) {
+                if (ASTC.mesmoTipo("USING")) {
+                    Referenciar(ASTC.getNome(), EscopoC,mUsados);
+                }
+            }
+
+        }
+
+    }
+
+    public AST getPacote(String eNome) {
+        AST ret = null;
+
+        for (AST ASTC : mGlobalPackages) {
+            if (ASTC.mesmoNome(eNome)) {
+                ret = ASTC;
+                break;
+            }
+        }
+        return ret;
+    }
+
+    public void initPackage(AST ASTPai) {
+
+        Escopo EscopoPacote = new Escopo(this, null);
+
+        EscopoPacote.setNome(ASTPai.getNome());
+
+
+       // System.out.println(" -->> Iniciando Pacote : " + ASTPai.getNome());
+
+        ArrayList<AST> mPackageStructs = new ArrayList<AST>();
+
+        for (AST ASTC : ASTPai.getASTS()) {
+
+
+            if (ASTC.mesmoTipo("FUNCTION")) {
+                EscopoPacote.guardar(ASTC);
+
+
+            } else if (ASTC.mesmoTipo("ACTION")) {
+                EscopoPacote.guardar(ASTC);
+
+
+            } else if (ASTC.mesmoTipo("OPERATOR")) {
+                EscopoPacote.guardar(ASTC);
+
+            } else if (ASTC.mesmoTipo("DIRECTOR")) {
+                EscopoPacote.guardar(ASTC);
+
+
+            } else if (ASTC.mesmoTipo("CAST")) {
+                EscopoPacote.guardar(ASTC);
+
+
+            } else if (ASTC.mesmoTipo("STAGES")) {
+
+                EscopoPacote.guardar(ASTC);
+
+
+            } else if (ASTC.mesmoTipo("STRUCT")) {
+                EscopoPacote.guardar(ASTC);
+
+                mPackageStructs.add(ASTC);
+
+            } else if (ASTC.mesmoTipo("TYPE")) {
+                EscopoPacote.guardar(ASTC);
+
+            }
+
+
+        }
+
+        ArrayList<Run_Extern> mPackageExterns = new ArrayList<Run_Extern>();
+
+        for (AST mStruct : mPackageStructs) {
+            Run_Extern mRE = new Run_Extern(this);
+            mRE.init(mStruct, ASTPai);
+            mPackageExterns.add(mRE);
+        }
+
+        for (Run_Extern mRE : mPackageExterns) {
+            mRE.run();
+            mExtern.add(mRE);
+        }
+
+
+        mPacotes.add(EscopoPacote);
+    }
+
+
     public AST getBranch(String eTipo) {
         AST mRet = null;
 
@@ -603,123 +686,24 @@ public class RunTime {
         return mRet;
     }
 
-    public void AlocarStages(AST eAST, Escopo mEscopo) {
 
 
-        int i = 0;
 
-        for (AST AST_STAGE : eAST.getBranch("OPTIONS").getASTS()) {
-
-            if (AST_STAGE.mesmoTipo("STAGE")) {
-                mEscopo.criarDefinicao(eAST.getNome() + "::" + AST_STAGE.getNome(), eAST.getNome(), String.valueOf(i));
-                i += 1;
-            }
-
-
-        }
-
-    }
-
-    ArrayList<String> mUsados = new ArrayList<String>();
-
-    public void Usar(String eNome, Escopo Global) {
+    public void Referenciar(String eNome, Escopo EscopoDono,ArrayList<String> mUsados) {
 
         if (!mUsados.contains(eNome)) {
 
-
+            mUsados.add(eNome);
             boolean enc = false;
 
-            for (AST ASTPackage : mGlobalPackages) {
+            for (Escopo ASTPackage : mPacotes) {
 
-                if (ASTPackage.mesmoNome(eNome)) {
+                if (ASTPackage.getNome().contentEquals(eNome)) {
 
-                    ArrayList<AST> mPackageStructs = new ArrayList<>();
+                    //System.out.println(" -->> Referenciando Pacote  " + eNome + " para " + EscopoDono.getNome());
 
-                    for (AST ASTC : ASTPackage.getASTS()) {
-                        if (ASTC.mesmoTipo("USING")) {
-                            Usar(ASTC.getNome(),Global);
-                        }
-                    }
+                    EscopoDono.referenciarEscopo( getPacote(eNome) );
 
-                    for (AST ASTC : ASTPackage.getASTS()) {
-
-
-                        if (ASTC.mesmoTipo("FUNCTION")) {
-                            Global.guardar(ASTC);
-
-                            mGlobalFunctions.add(ASTC);
-
-                        } else if (ASTC.mesmoTipo("ACTION")) {
-                            Global.guardar(ASTC);
-
-                            mGlobalActions.add(ASTC);
-
-                        } else if (ASTC.mesmoTipo("OPERATOR")) {
-                            Global.guardar(ASTC);
-
-                            mGlobalOperacoes.add(ASTC);
-                        } else if (ASTC.mesmoTipo("DIRECTOR")) {
-                            Global.guardar(ASTC);
-
-                            mGlobalDirectors.add(ASTC);
-
-                        } else if (ASTC.mesmoTipo("CAST")) {
-                            Global.guardar(ASTC);
-                            mT_Casts.add(ASTC.getNome());
-
-                            mGlobalCasts.add(ASTC);
-
-                        } else if (ASTC.mesmoTipo("STAGES")) {
-
-                            Global.guardar(ASTC);
-
-                            mGlobalStages.add(ASTC);
-                            mT_Stages.add(ASTC.getNome());
-
-                        } else if (ASTC.mesmoTipo("STRUCT")) {
-
-                            mGlobalStructs.add(ASTC);
-                            mT_Structs.add(ASTC.getNome());
-
-                            mPackageStructs.add(ASTC);
-
-                        } else if (ASTC.mesmoTipo("TYPE")) {
-                            mT_Types.add(ASTC.getNome());
-
-                            mGlobalTypes.add(ASTC);
-                        } else if (ASTC.mesmoTipo("PACKAGE")) {
-                            mT_Types.add(ASTC.getNome());
-
-                            mGlobalPackages.add(ASTC);
-
-                        }
-
-                    }
-
-                    for (AST mStruct : mPackageStructs) {
-                        for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
-                            if (mStructBody.mesmoTipo("OPERATOR") && mStructBody.getBranch("VISIBILITY").mesmoNome("EXTERN")) {
-                                // System.out.println("PORRA PERDIDA");
-
-                                mGlobalOperacoes.add(mStructBody);
-
-
-                            }
-                        }
-                    }
-
-                    ArrayList<Run_Extern> mPackageExtern = new ArrayList<Run_Extern>();
-
-                    for (AST mStruct : mPackageStructs) {
-                        Run_Extern mRE = new Run_Extern(this);
-                        mRE.init(mStruct);
-                        mPackageExtern.add(mRE);
-                    }
-
-                    for (Run_Extern mRE : mPackageExtern) {
-                        mRE.run();
-                        mExtern.add(mRE);
-                    }
 
                     enc = true;
                     break;
@@ -728,12 +712,16 @@ public class RunTime {
             }
 
             if (!enc) {
-                getErros().add("Package " + eNome + " : Nao encontrado !");
+                mErros.add("Pacote " + eNome + " : nao encontrado !");
             }
 
-            mUsados.add(eNome);
+        } else {
+            mErros.add("Pacote " + eNome + " : ja esta sendo usado !");
         }
+
     }
+
+
 
     public ArrayList<AST> getGlobalActions() {
         return mGlobalActions;
@@ -772,27 +760,6 @@ public class RunTime {
         return mGlobalDirectors;
     }
 
-
-    public boolean existeStage(String eStage) {
-        boolean enc = false;
-
-        for (AST mAST : mGlobalStages) {
-            for (AST sAST : mAST.getBranch("OPTIONS").getASTS()) {
-
-                if (sAST.mesmoTipo("STAGE")) {
-                    String tmp = mAST.getNome() + "::" + sAST.getNome();
-                    if (tmp.contentEquals(eStage)) {
-                        enc = true;
-                        break;
-                    }
-                }
-
-
-            }
-        }
-
-        return enc;
-    }
 
     public void estrutura() {
 

@@ -58,7 +58,7 @@ public class Run_Apply {
             return;
         }
 
-        String eQualificador = mRunTime.getQualificador(mItem.getTipo());
+        String eQualificador = mEscopo.getQualificador(mItem.getTipo());
 
        // System.out.println("Tipo : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
 

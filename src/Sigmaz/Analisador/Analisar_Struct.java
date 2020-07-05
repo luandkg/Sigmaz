@@ -8,11 +8,13 @@ public class Analisar_Struct {
 
     private Analisador mAnalisador;
     private Analisar_Argumentos mAnalisar_Argumentos;
+    private Analisador_Bloco mAnalisador_Bloco;
 
-    public Analisar_Struct(Analisador eAnalisador) {
+    public Analisar_Struct(Analisador eAnalisador,Analisador_Bloco eAnalisador_Bloco) {
 
         mAnalisador = eAnalisador;
-        mAnalisar_Argumentos = new Analisar_Argumentos(mAnalisador);
+        mAnalisar_Argumentos = new Analisar_Argumentos(mAnalisador,eAnalisador_Bloco);
+        mAnalisador_Bloco=eAnalisador_Bloco;
 
     }
 

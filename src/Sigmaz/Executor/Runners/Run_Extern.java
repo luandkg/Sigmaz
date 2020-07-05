@@ -52,7 +52,7 @@ public class Run_Extern {
         return mNome.contentEquals(eNome);
     }
 
-    public void init(AST ASTPai) {
+    public void init(AST ASTPai,AST ASTAvo) {
 
         CA = 0;
         CF = 0;
@@ -78,14 +78,17 @@ public class Run_Extern {
                 mEscopo.guardar(ASTC);
             } else if (ASTC.mesmoTipo("OPERATION")) {
                 mEscopo.guardar(ASTC);
-            } else if (ASTC.mesmoTipo("CAST")) {
+            }  else if (ASTC.mesmoTipo("CAST")) {
                 mEscopo.guardar(ASTC);
             } else if(ASTC.mesmoTipo("STAGES")){
-
-
-                mRunTime.AlocarStages(ASTC,mEscopo);
-
+                mEscopo.guardar(ASTC);
             }
+
+        }
+
+        for (AST ASTC : mRunTime.getSigmaz().getASTS()) {
+
+
 
         }
 

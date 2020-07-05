@@ -44,6 +44,8 @@ public class Run_Condition {
 
             if (mAST.getConteudo().contentEquals("true")) {
 
+             //   System.out.println(" --> CONDICIONAR : Escopo Pai : " + mEscopo.getNome() + " -> Structs : " +mEscopo.getStructs().size() );
+
                 Escopo EscopoInterno = new Escopo(mRunTime, mEscopo);
                 EscopoInterno.setNome("Condicionate");
 

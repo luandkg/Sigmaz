@@ -16,70 +16,37 @@ public class Analisador {
     private ArrayList<String> mProibidos;
 
     private ArrayList<String> mPrimitivos;
-    private ArrayList<String> mTipados;
 
     private Analisar_Global mAnalisar_Global;
 
-
-    private Analisar_Function mAnalisar_Function;
-    private Analisar_Action mAnalisar_Action;
-    private Analisar_Cast mAnalisar_Cast;
-
-    private Analisar_Daz mAnalisar_Daz;
-    private Analisar_When mAnalisar_When;
-    private Analisar_Step mAnalisar_Step;
-    private Analisar_Condition mAnalisar_Condition;
-    private Analisar_While mAnalisar_While;
-    private Analisar_Argumentos mAnalisar_Argumentos;
-    private Analisar_Apply mAnalisar_Apply;
-    private Analisar_Execute mAnalisar_Execute;
-    private Analisar_Stage mAnalisar_Stage;
-    private Analisar_Try mAnalisar_Try;
-    private Analisar_Struct mAnalisar_Struct;
-
     private Analisar_Package mAnalisar_Package;
 
-    private Analisar_Outros mAnalisar_Outros;
 
-    private Heranca mHeranca;
     private Estagiador mEstagiador;
     private Modelagem mModelagem;
 
     private boolean mExterno;
 
+    private ArrayList<String> eMensagens;
+    private ArrayList<AST> mPacotes;
 
     public Analisador() {
 
         mASTS = new ArrayList<>();
 
+        eMensagens = new ArrayList<String>();
 
         mErros = new ArrayList<>();
         mProibidos = new ArrayList<>();
-        mTipados = new ArrayList<>();
 
 
         mAnalisar_Global = new Analisar_Global(this);
 
-        mAnalisar_Function = new Analisar_Function(this);
-        mAnalisar_Action = new Analisar_Action(this);
-        mAnalisar_Cast = new Analisar_Cast(this);
+        mPacotes = new ArrayList<AST>();
 
-        mAnalisar_Daz = new Analisar_Daz(this);
-        mAnalisar_When = new Analisar_When(this);
-        mAnalisar_Step = new Analisar_Step(this);
-        mAnalisar_Condition = new Analisar_Condition(this);
-        mAnalisar_While = new Analisar_While(this);
-        mAnalisar_Argumentos = new Analisar_Argumentos(this);
-        mAnalisar_Apply = new Analisar_Apply(this);
-        mAnalisar_Execute = new Analisar_Execute(this);
-        mAnalisar_Stage = new Analisar_Stage(this);
-        mAnalisar_Try = new Analisar_Try(this);
-        mAnalisar_Struct = new Analisar_Struct(this);
         mAnalisar_Package = new Analisar_Package(this);
 
-        mAnalisar_Outros = new Analisar_Outros(this);
 
-        mHeranca = new Heranca(this);
         mModelagem = new Modelagem(this);
         mEstagiador = new Estagiador(this);
 
@@ -102,9 +69,7 @@ public class Analisador {
         mProibidos.add("all");
         mProibidos.add("step");
 
-        mTipados.add("num");
-        mTipados.add("string");
-        mTipados.add("bool");
+
 
         mPrimitivos = new ArrayList<String>();
         mPrimitivos.add("num");
@@ -124,116 +89,26 @@ public class Analisador {
     }
 
 
-    public Analisar_Function getAnalisar_Function() {
-        return mAnalisar_Function;
-    }
-
-    public Analisar_Action getAnalisar_Action() {
-        return mAnalisar_Action;
-    }
-
-    public Analisar_Cast getAnalisar_Cast() {
-        return mAnalisar_Cast;
-    }
-
-    public Analisar_Stage getAnalisar_Stage() {
-        return mAnalisar_Stage;
-    }
-
-    public Analisar_Daz getAnalisar_All() {
-        return mAnalisar_Daz;
-    }
-
-    public Analisar_When getAnalisar_When() {
-        return mAnalisar_When;
-    }
-
-    public Analisar_Step getAnalisar_Step() {
-        return mAnalisar_Step;
-    }
-
-    public Analisar_Condition getAnalisar_Condition() {
-        return mAnalisar_Condition;
-    }
-
-    public Analisar_While getAnalisar_While() {
-        return mAnalisar_While;
-    }
-
-    public Analisar_Argumentos getAnalisar_Argumentos() {
-        return mAnalisar_Argumentos;
-    }
-
-    public Analisar_Apply getAnalisar_Apply() {
-        return mAnalisar_Apply;
-    }
-
-    public Analisar_Execute getAnalisar_Execute() {
-        return mAnalisar_Execute;
-    }
-
-    public Analisar_Outros getAnalisar_Outros() {
-        return mAnalisar_Outros;
-    }
-
-    public Analisar_Try getAnalisar_Try() {
-        return mAnalisar_Try;
-    }
-
-    public Analisar_Struct getAnalisar_Struct() {
-        return mAnalisar_Struct;
-    }
-
     public Analisar_Package getAnalisar_Package() {
         return mAnalisar_Package;
     }
 
-    public void externarlizar() {
-        mExterno = true;
-    }
-
-    public void internalizar() {
-        mExterno = false;
-    }
-
-    public boolean getExterno() {
-        return mExterno;
-    }
 
     public void mensagem(String eMensagem) {
-
-        if (mExterno) {
-
-            System.out.println(eMensagem);
-
-        }
-
+        eMensagens.add(eMensagem);
     }
 
-    public ArrayList<String> getTipados() {
-        return mTipados;
+    public ArrayList<String> getMensagens() {
+        return eMensagens;
     }
+
+
 
 
     public ArrayList<String> getErros() {
         return mErros;
     }
 
-    public ArrayList<String> getActions_Nomes() {
-        return mAnalisar_Outros.getActions_Nomes();
-    }
-
-    public ArrayList<String> getFunctions_Nomes() {
-        return mAnalisar_Outros.getFunctions_Nomes();
-    }
-
-    public ArrayList<String> getFunctions_ApenasNomes() {
-        return mAnalisar_Outros.getFunctions_ApenasNomes();
-    }
-
-    public ArrayList<String> getActions_ApenasNomes() {
-        return mAnalisar_Outros.getActions_ApenasNomes();
-    }
 
     public ArrayList<AST> getPackages() {
         return mAnalisar_Package.getPackages();
@@ -243,10 +118,11 @@ public class Analisador {
     public void init(ArrayList<AST> eASTs, String mLocal) {
         mASTS = eASTs;
         mErros.clear();
+        mPacotes.clear();
 
-        getAnalisar_Outros().limpar();
+        //  getAnalisar_Outros().limpar();
 
-        ArrayList<String> mAlocados = new ArrayList<String>();
+
 
 
         // IMPORTANDO BIBLIOTECAS EXTERNAS
@@ -268,6 +144,8 @@ public class Analisador {
             }
         }
 
+        ArrayList<AST> mReqAST = new ArrayList<AST>();
+
         for (String mReq : mRequiscoes) {
 
             File arq = new File(mReq);
@@ -280,23 +158,9 @@ public class Analisador {
                 try {
                     RunTimeC.init(mReq);
 
-                    for (AST ASTR : RunTimeC.getBranch("SIGMAZ").getASTS()) {
+                    mReqAST.add(RunTimeC.getBranch("SIGMAZ"));
 
 
-                        if (ASTR.mesmoTipo("FUNCTION")) {
-
-                            String mParametragem = ASTR.getNome();
-
-                            this.getAnalisar_Function().incluirNome(ASTR);
-
-                            if (!this.getFunctions_Nomes().contains(mParametragem)) {
-                                this.getFunctions_Nomes().add(mParametragem);
-                            } else {
-
-                            }
-
-                        }
-                    }
 
                 } catch (Exception e) {
                     mErros.add("Library " + mReq + " : Problema ao carregar !");
@@ -313,7 +177,22 @@ public class Analisador {
 
             if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
 
-                getAnalisar_Global().analisarGlobal(ASTCGlobal, mAlocados);
+
+                for (AST mAST : ASTCGlobal.getASTS()) {
+                    if (mAST.mesmoTipo("PACKAGE")) {
+                        mensagem("Sigmaz Package :  " + mAST.getNome());
+                        mPacotes.add(mAST);
+                    }
+                }
+
+                for (AST mAST : mPacotes) {
+
+                    getAnalisar_Global().analisarGlobal(mAST,mReqAST);
+
+                }
+
+
+                getAnalisar_Global().analisarGlobal(ASTCGlobal,mReqAST);
 
             } else {
 
@@ -323,12 +202,23 @@ public class Analisador {
 
         }
 
-
+        Heranca mHeranca = new Heranca(this);
         mHeranca.init(mASTS);
+
 
         mModelagem.init(mASTS);
 
         mEstagiador.init(mASTS);
+
+    }
+
+    public void MostrarMensagens(){
+
+        System.out.println("\n\t MENSAGENS DE ANALISE : ");
+
+        for (String Erro : getMensagens()) {
+            System.out.println("\t\t" + Erro);
+        }
 
     }
 
@@ -352,15 +242,13 @@ public class Analisador {
         }
     }
 
-    public void analisarValoracao(AST ASTPai, ArrayList<String> mAlocadosAntes) {
-
-        mAnalisar_Apply.analisar_valorizar(ASTPai, mAlocadosAntes);
-
-    }
 
     public ArrayList<String> getProibidos() {
         return mProibidos;
     }
 
+    public ArrayList<AST> getPacotes() {
+        return mPacotes;
+    }
 
 }

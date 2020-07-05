@@ -35,19 +35,21 @@ public class Run_Execute {
 
             //   System.out.println("Execuntando em  : " + ASTCorrente.getNome());
 
-            String eQualificador = mRunTime.getQualificador(mItem.getTipo());
+            if (ASTCorrente.mesmoNome("this")){
+
+            }else{
+                String eQualificador = mEscopo.getQualificador(mItem.getTipo());
+                if (eQualificador.contentEquals("STRUCT")) {
+
+                } else {
+                    mRunTime.getErros().add("Apenas struct possuem ACTIONS !");
+                    return;
+
+                }
+            }
+
 
             // System.out.println("Tipo : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
-
-
-            if (eQualificador.contentEquals("STRUCT")) {
-
-
-            } else {
-                mRunTime.getErros().add("Apenas struct possuem ACTIONS !");
-                return;
-
-            }
 
 
             struct_chamada(ASTCorrente,mItem);

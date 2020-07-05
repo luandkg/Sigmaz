@@ -417,10 +417,10 @@ public class Run_Value {
         long HEAPID = mRunTime.getHEAPID();
         String eNome = "<Type::" + eRetorno + ":" + HEAPID + ">";
 
-        if (mRunTime.getQualificador(eRetorno).contentEquals("STRUCT")) {
+        if (mEscopo.getQualificador(eRetorno).contentEquals("STRUCT")) {
             mRunTime.getErros().add("Era esperado um TYPE e nao STRUCT !");
             return;
-        } else if (mRunTime.getQualificador(eRetorno).contentEquals("TYPE")) {
+        } else if (mEscopo.getQualificador(eRetorno).contentEquals("TYPE")) {
 
         }
 
@@ -450,7 +450,7 @@ public class Run_Value {
             return;
         }
 
-        String eQualificador = mRunTime.getQualificador(mItem.getTipo());
+        String eQualificador = mEscopo.getQualificador(mItem.getTipo());
 
         //  System.out.println("Tipo : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
 
@@ -657,7 +657,7 @@ public class Run_Value {
                         return;
                     }
 
-                    eQualificador = mRunTime.getQualificador(eItem.getTipo());
+                    eQualificador = mEscopo.getQualificador(eItem.getTipo());
 
                     if (eQualificador.contentEquals("STRUCT")) {
 
@@ -819,7 +819,7 @@ public class Run_Value {
 
         AST mFilho = ASTCorrente.getBranch("STAGED");
 
-        if (mRunTime.existeStage(ASTCorrente.getNome() + "::" + mFilho.getNome())) {
+        if (mEscopo.existeStage(ASTCorrente.getNome() + "::" + mFilho.getNome())) {
 
         } else {
             mRunTime.getErros().add("Stage Deconhecido : " + ASTCorrente.getNome() + "::" + mFilho.getNome());

@@ -8,18 +8,15 @@ public class Analisar_Function {
 
 
     private Analisador mAnalisador;
+    private Analisador_Bloco mAnalisador_Bloco;
 
-    public Analisar_Function(Analisador eAnalisador) {
+    public Analisar_Function(Analisador eAnalisador,Analisador_Bloco eAnalisador_Bloco) {
 
         mAnalisador = eAnalisador;
+        mAnalisador_Bloco=eAnalisador_Bloco;
 
     }
 
-    public void incluirNome(AST ASTPai) {
-        if (!mAnalisador.getFunctions_ApenasNomes().contains(ASTPai.getNome())) {
-            mAnalisador.getFunctions_ApenasNomes().add(ASTPai.getNome());
-        }
-    }
 
         public void analisarFunction(AST ASTPai, ArrayList<String> mAlocadosAntes) {
 
@@ -27,20 +24,13 @@ public class Analisar_Function {
         ArrayList<String> mAlocados = mAnalisador.copiarAlocados(mAlocadosAntes);
 
 
-        mAnalisador.getAnalisar_Outros().analisarTipagem(ASTPai);
+            mAnalisador_Bloco.getAnalisar_Outros().analisarTipagem(ASTPai);
 
 
-        String mParametragem = ASTPai.getNome() + " ( " + mAnalisador.getAnalisar_Argumentos().analisarArguments(ASTPai.getBranch("ARGUMENTS"), mAlocados) + ") ";
+        String mParametragem = ASTPai.getNome() + " ( " + mAnalisador_Bloco.getAnalisar_Argumentos().analisarArguments(ASTPai.getBranch("ARGUMENTS"), mAlocados) + ") ";
 
         //  System.out.println(mParametragem);
 
-
-
-        if (!mAnalisador.getFunctions_Nomes().contains(mParametragem)) {
-            mAnalisador.getFunctions_Nomes().add(mParametragem);
-        } else {
-            mAnalisador.getErros().add("Function Duplicada : " + mParametragem);
-        }
 
 
 
@@ -71,8 +61,8 @@ public class Analisar_Function {
                 mAnalisador.getErros().add("Def : " + ASTPai.getNome() + " : Nome Proibido !");
             }
 
-            mAnalisador.getAnalisar_Outros().analisarTipagem(ASTPai);
-            mAnalisador.analisarValoracao(ASTPai, mAlocadosAntes);
+            mAnalisador_Bloco.getAnalisar_Outros().analisarTipagem(ASTPai);
+            mAnalisador_Bloco.analisarValoracao(ASTPai, mAlocadosAntes);
 
         } else if (ASTPai.mesmoTipo("MOC")) {
 
@@ -82,8 +72,8 @@ public class Analisar_Function {
                 mAnalisador.getErros().add("Moc : " + ASTPai.getNome() + " : Nome Proibido !");
             }
 
-            mAnalisador.getAnalisar_Outros().analisarTipagem(ASTPai);
-            mAnalisador.analisarValoracao(ASTPai, mAlocadosAntes);
+            mAnalisador_Bloco.getAnalisar_Outros().analisarTipagem(ASTPai);
+            mAnalisador_Bloco.analisarValoracao(ASTPai, mAlocadosAntes);
 
 
         } else if (ASTPai.mesmoTipo("INVOKE")) {
@@ -92,32 +82,32 @@ public class Analisar_Function {
             retornou = true;
         } else if (ASTPai.mesmoTipo("APPLY")) {
 
-            mAnalisador.getAnalisar_Apply().analisar_Apply(ASTPai, mAlocadosAntes);
+            mAnalisador_Bloco.getAnalisar_Apply().analisar_Apply(ASTPai, mAlocadosAntes);
 
 
         } else if (ASTPai.mesmoTipo("EXECUTE")) {
 
-            mAnalisador.getAnalisar_Execute().analisar_Execute(ASTPai);
+            mAnalisador_Bloco.getAnalisar_Execute().analisar_Execute(ASTPai);
 
         } else if (ASTPai.mesmoTipo("WHEN")) {
 
-            mAnalisador.getAnalisar_When().analisar_When(ASTPai, mAlocadosAntes, true);
+            mAnalisador_Bloco.getAnalisar_When().analisar_When(ASTPai, mAlocadosAntes, true);
 
 
         } else if (ASTPai.mesmoTipo("DAZ")) {
 
-            mAnalisador.getAnalisar_All().analisar_All(ASTPai, mAlocadosAntes, true);
+            mAnalisador_Bloco.getAnalisar_All().analisar_All(ASTPai, mAlocadosAntes, true);
 
         } else if (ASTPai.mesmoTipo("IF")) {
-            mAnalisador.getAnalisar_Condition().analisarCondicao(ASTPai, mAlocadosAntes, true, laco);
+            mAnalisador_Bloco.getAnalisar_Condition().analisarCondicao(ASTPai, mAlocadosAntes, true, laco);
         } else if (ASTPai.mesmoTipo("WHILE")) {
-            mAnalisador.getAnalisar_While().analisarWhile(ASTPai, mAlocadosAntes, true);
+            mAnalisador_Bloco.getAnalisar_While().analisarWhile(ASTPai, mAlocadosAntes, true);
         } else if (ASTPai.mesmoTipo("STEP")) {
-            mAnalisador.getAnalisar_Step().analisarStep(ASTPai, mAlocadosAntes, true);
+            mAnalisador_Bloco.getAnalisar_Step().analisarStep(ASTPai, mAlocadosAntes, true);
         } else if (ASTPai.mesmoTipo("STEPDEF")) {
-            mAnalisador.getAnalisar_Step().analisarStepDef(ASTPai, mAlocadosAntes, true);
+            mAnalisador_Bloco.getAnalisar_Step().analisarStepDef(ASTPai, mAlocadosAntes, true);
         } else if (ASTPai.mesmoTipo("TRY")) {
-            mAnalisador.getAnalisar_Try().init(ASTPai, mAlocadosAntes, true);
+            mAnalisador_Bloco.getAnalisar_Try().init(ASTPai, mAlocadosAntes, true);
         } else if (ASTPai.mesmoTipo("CANCEL")) {
             if (!laco) {
                 mAnalisador.getErros().add("CANCEL so pode existir dentro de um laco !");

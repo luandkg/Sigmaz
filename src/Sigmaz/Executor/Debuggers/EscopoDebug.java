@@ -163,78 +163,13 @@ public class EscopoDebug {
             return;
         } else {
 
-            mostrar_Struct(mEstrutura);
+
 
         }
 
 
     }
 
-    public void mostrar_Struct(Escopo mEstrutura) {
-
-        System.out.println("\n ######################### STRUCT - " + mEstrutura.getNomeStruct() + " ############################ ");
-
-
-        System.out.println(" - DEFINES : ");
-        for (AST mAST : mEstrutura.getStructCompleto()) {
-            if (mAST.mesmoTipo("DEFINE")) {
-                System.out.println("\t - " + mAST.getNome() + " : " + mAST.getValor());
-            }
-        }
-        System.out.println(" - MOCKIZES : ");
-        for (AST mAST : mEstrutura.getStructCompleto()) {
-            if (mAST.mesmoTipo("MOCKIZ")) {
-                System.out.println("\t - " + mAST.getNome() + " : " + mAST.getValor());
-            }
-        }
-
-
-        System.out.println(" - ACTIONS : ");
-        for (AST mAST : mEstrutura.getStructCompleto()) {
-            if (mAST.mesmoTipo("ACTION")) {
-                System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) ");
-            }
-        }
-        System.out.println(" - FUNCTIONS : ");
-        for (AST mAST : mEstrutura.getStructCompleto()) {
-            if (mAST.mesmoTipo("FUNCTION")) {
-                System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
-            }
-        }
-
-        System.out.println(" - OPERATIONS : ");
-        for (AST mAST : mEstrutura.getStructCompleto()) {
-            if (mAST.mesmoTipo("OPERATION")) {
-                System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
-            }
-        }
-
-        System.out.println(" - CASTS : ");
-        for (AST mIndex_Function : mEscopo.getCastsCompleto()) {
-            System.out.println("\t - " + mIndex_Function.getNome());
-        }
-
-        System.out.println(" - TYPES : ");
-        for (AST mAST : mEscopo.getRunTime().getGlobalTypes()) {
-            System.out.println("\t - " + mAST.getNome());
-            for (AST mGetter : mAST.getASTS()) {
-                System.out.println("\t\t - " + mGetter.getTipo() + " " + mGetter.getNome() + " : " + getTipagem(mGetter.getBranch("TYPE")));
-            }
-        }
-
-        System.out.println(" - STAGES : ");
-        for (AST mAST : mEscopo.getRunTime().getGlobalStages()) {
-            System.out.println("\t - " + mAST.getNome());
-        }
-
-        System.out.println(" - STRUCTS : ");
-        for (AST mAST : mEscopo.getRunTime().getGlobalStructs()) {
-            System.out.println("\t - " + mAST.getNome());
-        }
-
-
-        System.out.println(" ######################### ##### ############################ ");
-    }
 
     public void mostrarItem(Item eItem) {
 

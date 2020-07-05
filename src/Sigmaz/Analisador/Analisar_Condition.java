@@ -8,10 +8,12 @@ public class Analisar_Condition {
 
 
     private Analisador mAnalisador;
+    private Analisador_Bloco mAnalisador_Bloco;
 
-    public Analisar_Condition(Analisador eAnalisador) {
+    public Analisar_Condition(Analisador eAnalisador,Analisador_Bloco eAnalisador_Bloco) {
 
         mAnalisador = eAnalisador;
+        mAnalisador_Bloco=eAnalisador_Bloco;
 
     }
 
@@ -41,11 +43,11 @@ public class Analisar_Condition {
 
                 if (dentroFunction) {
                     for (AST sAST : mAST.getBranch("BODY").getASTS()) {
-                        mAnalisador.getAnalisar_Function().analisarDentroFunction(sAST,mAlocados,laco);
+                        mAnalisador_Bloco.getAnalisar_Function().analisarDentroFunction(sAST,mAlocados,laco);
                     }
                 } else {
                     for (AST sAST : mAST.getBranch("BODY").getASTS()) {
-                        mAnalisador.getAnalisar_Action().analisarDentroAction(sAST,mAlocados,laco);
+                        mAnalisador_Bloco.getAnalisar_Action().analisarDentroAction(sAST,mAlocados,laco);
                     }
                 }
 
@@ -57,11 +59,11 @@ public class Analisar_Condition {
 
                 if (dentroFunction) {
                     for (AST sAST : mAST.getASTS()) {
-                        mAnalisador.getAnalisar_Function().analisarDentroFunction(sAST,mAlocados,laco);
+                        mAnalisador_Bloco.getAnalisar_Function().analisarDentroFunction(sAST,mAlocados,laco);
                     }
                 } else {
                     for (AST sAST : mAST.getASTS()) {
-                        mAnalisador.getAnalisar_Action().analisarDentroAction(sAST,mAlocados,laco);
+                        mAnalisador_Bloco.getAnalisar_Action().analisarDentroAction(sAST,mAlocados,laco);
                     }
                 }
 
@@ -71,11 +73,11 @@ public class Analisar_Condition {
 
                 if (dentroFunction) {
                     for (AST sAST : mAST.getASTS()) {
-                        mAnalisador.getAnalisar_Function().analisarDentroFunction(sAST,mAlocados,laco);
+                        mAnalisador_Bloco.getAnalisar_Function().analisarDentroFunction(sAST,mAlocados,laco);
                     }
                 } else {
                     for (AST sAST : mAST.getASTS()) {
-                        mAnalisador.getAnalisar_Action().analisarDentroAction(sAST,mAlocados,laco);
+                        mAnalisador_Bloco.getAnalisar_Action().analisarDentroAction(sAST,mAlocados,laco);
                     }
                 }
             }

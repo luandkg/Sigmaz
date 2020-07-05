@@ -151,3 +151,9 @@ Linguagem de Programação Estruturada - Implementações
         
     - 2020 07 04
         - ANALISAR USING
+        
+        
+    - 2020 07 05
+        - REFERENCIAMENTO DE PACOTES
+        - ANALISE DO REFERENCIAMENTO DE PACOTES
+        - ANALISE DO ESCOPO DE PACOTES

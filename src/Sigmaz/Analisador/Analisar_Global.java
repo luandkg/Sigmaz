@@ -14,41 +14,37 @@ public class Analisar_Global {
 
     }
 
-    public void analisarGlobal(AST ASTPai, ArrayList<String> mAlocadosAntes) {
+    public void analisarGlobal(AST ASTPai,ArrayList<AST> mReqAST) {
 
-        ArrayList<String> mAlocados = mAnalisador.copiarAlocados(mAlocadosAntes);
+        Analisador_Bloco mAnalisador_Bloco = new Analisador_Bloco(mAnalisador);
 
-
-        for (AST mAST : ASTPai.getASTS()) {
-            if (mAST.mesmoTipo("REQUIRED")) {
-
-            } else if (mAST.mesmoTipo("FUNCTION")) {
-
-                mAnalisador.getAnalisar_Function().incluirNome(mAST);
+        ArrayList<String> mAlocados = new ArrayList<String>();
+      //  ArrayList<String> mAlocados = mAnalisador.copiarAlocados(mAlocadosAntes);
 
 
-            } else if (mAST.mesmoTipo("STRUCT")) {
+        for (AST mReq : mReqAST) {
+            mAnalisador_Bloco.getAnalisar_Outros().inclusao(mReq);
+        }
 
-                mAnalisador.getTipados().add(mAST.getNome());
 
 
-            } else if (mAST.mesmoTipo("STAGES")) {
+        // USAR PACKAGES
+        for (AST ASTC : ASTPai.getASTS()) {
+            if (ASTC.mesmoTipo("USING")) {
+                mAnalisador.mensagem("Global using " + ASTC.getNome());
 
-                mAnalisador.getTipados().add(mAST.getNome());
-            } else if (mAST.mesmoTipo("CAST")) {
-
-                mAnalisador.getTipados().add(mAST.getNome());
-            } else if (mAST.mesmoTipo("TYPE")) {
-
-                mAnalisador.getTipados().add(mAST.getNome());
-            } else if (mAST.mesmoTipo("PACKAGE")) {
-
-                mAnalisador.getAnalisar_Package().getPackages().add(mAST);
+                Usar(mAnalisador_Bloco, ASTC.getNome());
 
             }
         }
 
-        mAnalisador.getAnalisar_Outros().inclusao(ASTPai);
+
+        mAnalisador_Bloco.getAnalisar_Outros().inclusao(ASTPai);
+
+
+        //mAnalisador.mensagem("Global Actions : " + mAnalisador_Bloco.getAnalisar_Outros().getActions_ApenasNomes().toString());
+        mAnalisador.mensagem("Global Functions : " + mAnalisador_Bloco.getAnalisar_Outros().getFunctions_ApenasNomes().toString());
+
 
         for (AST mAST : ASTPai.getASTS()) {
 
@@ -60,8 +56,8 @@ public class Analisar_Global {
 
                 mAnalisador.analisarAlocacao(mAST, mAlocados);
 
-                mAnalisador.getAnalisar_Outros().analisarTipagem(mAST);
-                mAnalisador.analisarValoracao(ASTPai, mAlocadosAntes);
+                mAnalisador_Bloco.getAnalisar_Outros().analisarTipagem(mAST);
+                mAnalisador_Bloco.analisarValoracao(ASTPai, mAlocados);
 
 
             } else if (mAST.mesmoTipo("MOCKIZ")) {
@@ -73,21 +69,12 @@ public class Analisar_Global {
                 mAnalisador.analisarAlocacao(mAST, mAlocados);
 
 
-                mAnalisador.getAnalisar_Outros().analisarTipagem(mAST);
-                mAnalisador.analisarValoracao(ASTPai, mAlocadosAntes);
+                mAnalisador_Bloco.getAnalisar_Outros().analisarTipagem(mAST);
+                mAnalisador_Bloco.analisarValoracao(ASTPai, mAlocados);
 
 
             }
 
-        }
-
-        // USAR PACKAGES
-        for (AST ASTC : ASTPai.getASTS()) {
-            if (ASTC.mesmoTipo("USING")) {
-
-                mAnalisador.getAnalisar_Package().Usar(ASTC.getNome(), mAlocados);
-
-            }
         }
 
 
@@ -99,7 +86,7 @@ public class Analisar_Global {
                     mAnalisador.getErros().add("Action : " + mAST.getNome() + " : Nome Proibido !");
                 }
 
-                mAnalisador.getAnalisar_Action().analisarAction(mAST, mAlocados);
+                mAnalisador_Bloco.getAnalisar_Action().analisarAction(mAST, mAlocados);
 
             } else if (mAST.mesmoTipo("FUNCTION")) {
 
@@ -107,7 +94,7 @@ public class Analisar_Global {
                     mAnalisador.getErros().add("Function : " + mAST.getNome() + " : Nome Proibido !");
                 }
 
-                mAnalisador.getAnalisar_Function().analisarFunction(mAST, mAlocados);
+                mAnalisador_Bloco.getAnalisar_Function().analisarFunction(mAST, mAlocados);
 
             } else if (mAST.mesmoTipo("CALL")) {
             } else if (mAST.mesmoTipo("INVOKE")) {
@@ -128,11 +115,11 @@ public class Analisar_Global {
 
             } else if (mAST.mesmoTipo("OPERATOR")) {
 
-                mAnalisador.getAnalisar_Function().analisarFunction(mAST, mAlocados);
+                mAnalisador_Bloco.getAnalisar_Function().analisarFunction(mAST, mAlocados);
 
             } else if (mAST.mesmoTipo("DIRECTOR")) {
 
-                mAnalisador.getAnalisar_Function().analisarFunction(mAST, mAlocados);
+                mAnalisador_Bloco.getAnalisar_Function().analisarFunction(mAST, mAlocados);
 
             } else if (mAST.mesmoTipo("CAST")) {
 
@@ -140,7 +127,7 @@ public class Analisar_Global {
                     mAnalisador.getErros().add("Cast : " + mAST.getNome() + " : Nome Proibido !");
                 }
 
-                mAnalisador.getAnalisar_Cast().init(mAST);
+                mAnalisador_Bloco.getAnalisar_Cast().init(mAST);
 
             } else if (mAST.mesmoTipo("STRUCT")) {
 
@@ -148,7 +135,7 @@ public class Analisar_Global {
                     mAnalisador.getErros().add("Struct : " + mAST.getNome() + " : Nome Proibido !");
                 }
 
-                mAnalisador.getAnalisar_Struct().init_Struct(mAST, mAlocados);
+                mAnalisador_Bloco.getAnalisar_Struct().init_Struct(mAST, mAlocados);
 
             } else if (mAST.mesmoTipo("STAGES")) {
 
@@ -156,7 +143,7 @@ public class Analisar_Global {
                     mAnalisador.getErros().add("Stage : " + mAST.getNome() + " : Nome Proibido !");
                 }
 
-                mAnalisador.getAnalisar_Stage().analisar(mAST);
+                mAnalisador_Bloco.getAnalisar_Stage().analisar(mAST);
 
             } else if (mAST.mesmoTipo("REQUIRED")) {
 
@@ -179,7 +166,37 @@ public class Analisar_Global {
         }
 
 
-        mAnalisador.getAnalisar_Outros().exportarOperadores(ASTPai);
+        mAnalisador_Bloco.getAnalisar_Outros().exportarOperadores(ASTPai);
+
 
     }
+
+    public void Usar(Analisador_Bloco eAnalisador_Bloco, String eNome) {
+
+
+        boolean enc = false;
+
+
+        for (AST ASTPackage : mAnalisador.getPacotes()) {
+
+            if (ASTPackage.mesmoNome(eNome)) {
+
+                ArrayList<AST> mPackageStructs = new ArrayList<>();
+
+                eAnalisador_Bloco.getAnalisar_Outros().inclusao(ASTPackage);
+
+
+                enc = true;
+                break;
+            }
+
+        }
+
+        if (!enc) {
+            mAnalisador.getErros().add("Package " + eNome + " : Nao encontrado !");
+        }
+
+
+    }
+
 }

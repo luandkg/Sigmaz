@@ -175,6 +175,8 @@ public class Argumentador {
         //   System.out.println(" -->> ACTION CALL : " + mFunction.getNome() );
         //  System.out.println("\t - Escopo : " + mStructEscopo.getNome() );
 
+      //  System.out.println(mStructEscopo.getNome() + " -> Structs : " + mStructEscopo.getStructs().size() );
+
 
         Escopo mEscopoInterno = new Escopo(mRunTime, mStructEscopo);
         mEscopoInterno.setNome(mFunction.getNome());

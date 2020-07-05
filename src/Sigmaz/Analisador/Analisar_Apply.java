@@ -7,10 +7,12 @@ import java.util.ArrayList;
 public class Analisar_Apply {
 
     private Analisador mAnalisador;
+    private Analisador_Bloco mAnalisador_Bloco;
 
-    public Analisar_Apply(Analisador eAnalisador) {
+    public Analisar_Apply(Analisador eAnalisador,Analisador_Bloco eAnalisador_Bloco) {
 
         mAnalisador = eAnalisador;
+        mAnalisador_Bloco=eAnalisador_Bloco;
 
     }
 
@@ -72,7 +74,9 @@ public class Analisar_Apply {
         } else if (mValue.mesmoValor("FUNCT")) {
 
 
-            if (!mAnalisador.getFunctions_ApenasNomes().contains(mValue.getNome())) {
+            if (!mAnalisador_Bloco.getAnalisar_Outros().getFunctions_ApenasNomes().contains(mValue.getNome())) {
+
+                mAnalisador.getErros().add("Global Functions : " + mAnalisador_Bloco.getAnalisar_Outros().getFunctions_ApenasNomes().toString());
 
                 mAnalisador.getErros().add("Funcao nao existente : " + mValue.getNome());
 

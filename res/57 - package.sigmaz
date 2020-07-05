@@ -46,6 +46,7 @@ package Blocos {
 }
 
 using Blocos;
+using Terminal;
 
 
 call iniciar -> {
@@ -55,12 +56,17 @@ call iniciar -> {
 
     println(" -->> Valorando : ",50);
 
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+
     def m : MODOS = MODOS::CLARO;
 
     Blocar(3,2);
     Blocar(5,1);
 
     def bg : BGeral = init BGeral(15);
+
+     Blocar(7,1);
+
     def bga : num = bg.getA();
 
     invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;

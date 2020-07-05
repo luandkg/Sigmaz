@@ -73,7 +73,6 @@ public class SigmazTestes {
 
 
                     Analisador AnaliseC = new Analisador();
-                    AnaliseC.internalizar();
 
                     AnaliseC.init(CompilerC.getASTS(),"res/");
 

@@ -25,6 +25,11 @@ Linguagem de Programação Estruturada - Alterações
     - 2020 07 03
         - INIT STRUCT GLOBAL
         - START TYPE GLOBAL
+        
+        
+    - 2020 07 05
+        - REESTRUTURAÇÃO DO SISTEMA DE ANALISE
+        - ANALISADOR_BLOCO
     
  
   

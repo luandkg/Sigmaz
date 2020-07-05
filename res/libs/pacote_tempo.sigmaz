@@ -1,4 +1,7 @@
 package Tempo {
+
+    using castings;
+
 	func getTempo ( ) : Tempo {
 		def a : Tempo = init Tempo ( );
 		return a;

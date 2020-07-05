@@ -1,0 +1,73 @@
+package castings {
+
+
+func num_to_string ( a : num , b : num ) : string {
+	def c : string;
+	invoke casting -> cast_fns ( a , b ) :: c;
+	return c;
+}
+func num_to_string ( a : num ) : string {
+	def c : string;
+	invoke casting -> cast_ns ( a ) :: c;
+	return c;
+}
+func bool_to_string ( a : bool ) : string {
+	def c : string;
+	invoke casting -> cast_bs ( a ) :: c;
+	return c;
+}
+func string_to_bool ( a : string ) : bool {
+	def c : bool;
+	invoke casting -> cast_sb ( a ) :: c;
+	return c;
+}
+func inteiro ( a : num ) : num {
+	def c : num;
+	invoke casting -> cast_integer ( a ) :: c;
+	return c;
+}
+func decimal ( a : num ) : num {
+	def c : num;
+	invoke casting -> cast_decimal ( a ) :: c;
+	return c;
+}
+func isNull ( ObjetoNulo : any ) : bool {
+	def c : bool;
+	invoke casting -> cast_isnull ( ObjetoNulo ) :: c;
+	return c;
+}
+
+func string_length ( a : string ) : num {
+	def c : num;
+	invoke __UTILS__ -> string_length ( a ) :: c;
+	return c;
+}
+func string_append ( a : string , b : string ) : string {
+	def ret : string;
+	invoke __UTILS__ -> string_append ( a , b ) :: ret;
+	return ret;
+}
+func string_append ( a : string , b : string , c : string ) : string {
+	def ret : string;
+	invoke __UTILS__ -> string_append ( a , b ) :: ret;
+	invoke __UTILS__ -> string_append ( ret , c ) :: ret;
+	return ret;
+}
+func string_append ( a : string , b : string , c : string , d : string ) : string {
+	def ret : string;
+	invoke __UTILS__ -> string_append ( a , b ) :: ret;
+	invoke __UTILS__ -> string_append ( ret , c ) :: ret;
+	invoke __UTILS__ -> string_append ( ret , d ) :: ret;
+	return ret;
+}
+func string_append ( a : string , b : string , c : string , d : string , e : string ) : string {
+	def ret : string;
+	invoke __UTILS__ -> string_append ( a , b ) :: ret;
+	invoke __UTILS__ -> string_append ( ret , c ) :: ret;
+	invoke __UTILS__ -> string_append ( ret , d ) :: ret;
+	invoke __UTILS__ -> string_append ( ret , e ) :: ret;
+	return ret;
+}
+
+
+}

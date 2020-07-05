@@ -7,10 +7,12 @@ import java.util.ArrayList;
 public class Analisar_When {
 
     private Analisador mAnalisador;
+    private Analisador_Bloco mAnalisador_Bloco;
 
-    public Analisar_When(Analisador eAnalisador) {
+    public Analisar_When(Analisador eAnalisador,Analisador_Bloco eAnalisador_Bloco) {
 
         mAnalisador = eAnalisador;
+        mAnalisador_Bloco=eAnalisador_Bloco;
 
     }
 

@@ -114,7 +114,9 @@ public class Run_Struct {
 
         }
 
-        for (AST ASTC : mRunTime.getGlobalStructs()) {
+     //   System.out.println(BuscadorDeArgumentos.getNome() + " -> Structs : " + BuscadorDeArgumentos.getStructs().size() );
+
+        for (AST ASTC : BuscadorDeArgumentos.getStructs()) {
 
             if (ASTC.mesmoTipo("STRUCT")) {
                 if (ASTC.mesmoNome(mStructNome)) {
@@ -648,11 +650,14 @@ public class Run_Struct {
 
     }
 
-    public void init_ActionFunction(AST ASTCorrente, Escopo BuscadorDeVariaveis) {
+    public void init_ActionFunction(AST ASTCorrente, Escopo BuscadorDeArgumentos) {
+
+      //  System.out.println(BuscadorDeArgumentos.getNome() + " AF -> Structs : " + BuscadorDeArgumentos.getStructs().size() );
+
 
         Run_Any mRun_Any = new Run_Any(mRunTime);
 
-        mRun_Any.init_Action(ASTCorrente, BuscadorDeVariaveis, mEscopo, mStructNome + "." + ASTCorrente.getNome(), mEscopo.getOO().getActionsFunctions_All());
+        mRun_Any.init_Action(ASTCorrente, BuscadorDeArgumentos, mEscopo, mStructNome + "." + ASTCorrente.getNome(), mEscopo.getOO().getActionsFunctions_All());
 
     }
 

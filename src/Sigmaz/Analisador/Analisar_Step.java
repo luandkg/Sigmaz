@@ -7,10 +7,12 @@ import java.util.ArrayList;
 public class Analisar_Step {
 
     private Analisador mAnalisador;
+    private Analisador_Bloco mAnalisador_Bloco;
 
-    public Analisar_Step(Analisador eAnalisador) {
+    public Analisar_Step(Analisador eAnalisador,Analisador_Bloco eAnalisador_Bloco) {
 
         mAnalisador = eAnalisador;
+        mAnalisador_Bloco=eAnalisador_Bloco;
 
     }
 
@@ -43,11 +45,11 @@ public class Analisar_Step {
 
         if (dentroFunction) {
             for (AST sAST : ASTPai.getBranch("BODY").getASTS()) {
-                mAnalisador.getAnalisar_Function().analisarDentroFunction(sAST,mAlocados,true);
+                mAnalisador_Bloco.getAnalisar_Function().analisarDentroFunction(sAST,mAlocados,true);
             }
         } else {
             for (AST sAST : ASTPai.getBranch("BODY").getASTS()) {
-                mAnalisador.getAnalisar_Action().analisarDentroAction(sAST,mAlocados,true);
+                mAnalisador_Bloco.getAnalisar_Action().analisarDentroAction(sAST,mAlocados,true);
             }
         }
 

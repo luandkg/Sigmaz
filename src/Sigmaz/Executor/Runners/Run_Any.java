@@ -22,7 +22,7 @@ public class Run_Any {
 
     }
 
-    public Item init_Function(AST ASTCorrente, Escopo BuscadorDeVariaveis, Escopo mEscopo, String eRetorne,String eMensagem,ArrayList<Index_Function> eFunctions) {
+    public Item init_Function(AST ASTCorrente, Escopo BuscadorDeVariaveis, Escopo mEscopo, String eRetorne, String eMensagem, ArrayList<Index_Function> eFunctions) {
 
         //System.out.println("Procurando FUNC " + this.getStructNome() + "." + ASTCorrente.getNome());
 
@@ -67,16 +67,16 @@ public class Run_Any {
 
                     //if (mIndex_Function.mesmaTipagem(eRetorne) || eRetorne.contentEquals("<<ANY>>")) {
 
-                        if (mRunTime.getErros().size() > 0) {
-                            break;
-                        }
+                    if (mRunTime.getErros().size() > 0) {
+                        break;
+                    }
 
 
-                        mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eRetorne);
+                    mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eRetorne);
 
-                  //  } else {
-                   //     mRunTime.getErros().add("Function " + eMensagem + " : Retorno incompativel !");
-                  //  }
+                    //  } else {
+                    //     mRunTime.getErros().add("Function " + eMensagem + " : Retorno incompativel !");
+                    //  }
 
                     break;
                 }
@@ -89,7 +89,7 @@ public class Run_Any {
 
         if (enc) {
             if (!algum) {
-                mRunTime.getErros().add("Function " + eMensagem+ " : Argumentos incompativeis !");
+                mRunTime.getErros().add("Function " + eMensagem + " : Argumentos incompativeis !");
             }
         } else {
             mRunTime.getErros().add("Function  " + eMensagem + " : Nao Encontrada !");
@@ -108,7 +108,7 @@ public class Run_Any {
     }
 
 
-    public void init_Action(AST ASTCorrente, Escopo BuscadorDeVariaveis,Escopo mEscopo,String eMensagem,ArrayList<Index_Action> eActions) {
+    public void init_Action(AST ASTCorrente, Escopo BuscadorDeVariaveis, Escopo mEscopo, String eMensagem, ArrayList<Index_Action> eActions) {
 
         //   System.out.println(" -->> DENTRO : " + this.getStructNome() );
         //  System.out.println(" -->> Procurando ACTION " + this.getStructNome() + "." + ASTCorrente.getNome());
@@ -157,6 +157,16 @@ public class Run_Any {
                     // System.out.println("\t - Executando Dentro :  " +this.getNome());
 
                     //  mPreparadorDeArgumentos.executar_Action(mRunTime,  mEscopo, mIndex_Function, mArgumentos);
+
+                    for (AST eAST : BuscadorDeVariaveis.getStructs()) {
+                        if (!mEscopo.possuiStruct(eAST.getNome())){
+                            mEscopo.guardar(eAST);
+                        }
+                    }
+
+                 //   System.out.println(mEscopo.getNome() + " EA -> Structs : " + mEscopo.getStructs().size());
+
+
                     mPreparadorDeArgumentos.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
 
 

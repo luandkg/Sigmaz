@@ -5,10 +5,12 @@ import Sigmaz.Utils.AST;
 public class Analisar_Cast {
 
     private Analisador mAnalisador;
+    private Analisador_Bloco mAnalisador_Bloco;
 
-    public Analisar_Cast(Analisador eAnalisador) {
+    public Analisar_Cast(Analisador eAnalisador,Analisador_Bloco eAnalisador_Bloco) {
 
         mAnalisador = eAnalisador;
+        mAnalisador_Bloco=eAnalisador_Bloco;
 
     }
 

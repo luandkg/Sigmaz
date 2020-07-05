@@ -7,16 +7,13 @@ import java.util.ArrayList;
 public class Analisar_Outros {
 
     private Analisador mAnalisador;
+    private Analisador_Bloco mAnalisador_Bloco;
 
     private ArrayList<String> mPrimitivos;
 
 
 
-    private ArrayList<String> mActions_Nomes;
-    private ArrayList<String> mActions_ApenasNomes;
 
-    private ArrayList<String> mFunctions_Nomes;
-    private ArrayList<String> mFunctions_ApenasNomes;
 
     private ArrayList<String> mCasts_Nomes;
     private ArrayList<String> mStructs_Nomes;
@@ -24,10 +21,16 @@ public class Analisar_Outros {
 
     private ArrayList<String> mTypes_Nomes;
 
+    private ArrayList<String> mActions_Nomes;
+    private ArrayList<String> mActions_ApenasNomes;
 
-    public Analisar_Outros(Analisador eAnalisador) {
+    private ArrayList<String> mFunctions_Nomes;
+    private ArrayList<String> mFunctions_ApenasNomes;
+
+    public Analisar_Outros(Analisador eAnalisador,Analisador_Bloco eAnalisador_Bloco) {
 
         mAnalisador = eAnalisador;
+        mAnalisador_Bloco=eAnalisador_Bloco;
 
         mPrimitivos = new ArrayList<>();
 
@@ -52,13 +55,6 @@ public class Analisar_Outros {
 
 
 
-    public ArrayList<String> getActions_Nomes() {
-        return mActions_Nomes;
-    }
-
-    public ArrayList<String> getActions_ApenasNomes() {
-        return mActions_ApenasNomes;
-    }
 
 
     public ArrayList<String> getFunctions_Nomes() {
@@ -71,10 +67,11 @@ public class Analisar_Outros {
 
     public void limpar() {
 
-        mActions_Nomes.clear();
-        mFunctions_Nomes.clear();
 
+        mActions_Nomes.clear();
         mActions_ApenasNomes.clear();
+
+        mFunctions_Nomes.clear();
         mFunctions_ApenasNomes.clear();
 
 
@@ -94,20 +91,36 @@ public class Analisar_Outros {
 
             if (mAST.mesmoTipo("FUNCTION")) {
 
+                mAnalisador.mensagem("  -- Function " + mAST.getNome());
+
                 mFunctions_Nomes.add(mAST.getNome());
 
-                unicidade(Itens, mAnalisador.getAnalisar_Argumentos().getDefinicao(mAST));
+                if (!mFunctions_ApenasNomes.contains(mAST.getNome())){
+                    mFunctions_ApenasNomes.add(mAST.getNome());
+                }
+
+                unicidade(Itens, mAnalisador_Bloco.getAnalisar_Argumentos().getDefinicao(mAST));
 
             } else if (mAST.mesmoTipo("ACTION")) {
 
+                mAnalisador.mensagem("  -- Action " + mAST.getNome());
+
                 mActions_Nomes.add(mAST.getNome());
 
-                unicidade(Itens, mAnalisador.getAnalisar_Argumentos().getDefinicao(mAST));
+                if (!mActions_ApenasNomes.contains(mAST.getNome())){
+                    mActions_ApenasNomes.add(mAST.getNome());
+                }
+
+                unicidade(Itens, mAnalisador_Bloco.getAnalisar_Argumentos().getDefinicao(mAST));
 
             } else if (mAST.mesmoTipo("CAST")) {
 
+                mAnalisador_Bloco.getTipados().add(mAST.getNome());
+
                 if (!mCasts_Nomes.contains(mAST.getNome())) {
                     mCasts_Nomes.add(mAST.getNome());
+
+
                 } else {
                     mAnalisador.getErros().add("Cast Duplicado : " + mAST.getTipo());
                 }
@@ -116,15 +129,28 @@ public class Analisar_Outros {
 
             } else if (mAST.mesmoTipo("STRUCT")) {
 
-                if (!mStructs_Nomes.contains(mAST.getNome())) {
-                    mStructs_Nomes.add(mAST.getNome());
-                } else {
-                    mAnalisador.getErros().add("Struct Duplicado : " + mAST.getTipo());
+                AST AST_Stages = mAST.getBranch("EXTENDED");
+                 if (AST_Stages.mesmoNome("STAGES")){
+
+                }else{
+
+                    mAnalisador_Bloco.getTipados().add(mAST.getNome());
+
+                    if (!mStructs_Nomes.contains(mAST.getNome())) {
+                        mStructs_Nomes.add(mAST.getNome());
+                    } else {
+                        mAnalisador.getErros().add("Struct Duplicado : " + mAST.getTipo());
+                    }
+
+                    unicidade(Itens, mAST.getNome());
+
                 }
 
-                unicidade(Itens, mAST.getNome());
+
 
             } else if (mAST.mesmoTipo("STAGES")) {
+
+                mAnalisador_Bloco.getTipados().add(mAST.getNome());
 
                 if (!mStages_Nomes.contains(mAST.getNome())) {
                     mStages_Nomes.add(mAST.getNome());
@@ -135,6 +161,8 @@ public class Analisar_Outros {
                 unicidade(Itens, mAST.getNome());
 
             } else if (mAST.mesmoTipo("TYPE")) {
+
+                mAnalisador_Bloco.getTipados().add(mAST.getNome());
 
                 if (!mTypes_Nomes.contains(mAST.getNome())) {
                     mTypes_Nomes.add(mAST.getNome());
@@ -192,7 +220,7 @@ public class Analisar_Outros {
 
             if (mTipo.mesmoValor("CONCRETE")) {
 
-                if (mAnalisador.getTipados().contains(mTipo.getNome())) {
+                if (mAnalisador_Bloco.getTipados().contains(mTipo.getNome())) {
 
                 } else {
 
@@ -214,7 +242,7 @@ public class Analisar_Outros {
 
             if (mTipo.mesmoValor("CONCRETE")) {
 
-                if (mAnalisador.getTipados().contains(mTipo.getNome())) {
+                if (mAnalisador_Bloco.getTipados().contains(mTipo.getNome())) {
 
                 } else if (mTipo.getNome().contentEquals("any")) {
 
@@ -288,5 +316,14 @@ public class Analisar_Outros {
     public String getModo(AST eAST) {
         return eAST.getBranch("VISIBILITY").getNome();
     }
+
+    public ArrayList<String> getActions_Nomes() {
+        return mActions_Nomes;
+    }
+
+    public ArrayList<String> getActions_ApenasNomes() {
+        return mActions_ApenasNomes;
+    }
+
 
 }

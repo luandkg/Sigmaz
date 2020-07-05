@@ -22,8 +22,11 @@ public class OO {
     private ArrayList<Index_Function> mDirectors;
     private ArrayList<Index_Function> mOperations;
     private ArrayList<Index_Action> mActionFunctions;
-    private ArrayList<AST> mCasts;
 
+    private ArrayList<AST> mCasts;
+    private ArrayList<AST> mStages;
+    private ArrayList<AST> mTypes;
+    private ArrayList<AST> mStructs;
 
 
     private ArrayList<Index_Action> mActionFunctions_All;
@@ -63,7 +66,12 @@ public class OO {
         mFunctions = new ArrayList<Index_Function>();
         mDirectors = new ArrayList<Index_Function>();
         mOperations = new ArrayList<Index_Function>();
+
         mCasts = new ArrayList<AST>();
+        mStages= new ArrayList<AST>();
+        mTypes= new ArrayList<AST>();
+        mStructs= new ArrayList<AST>();
+
 
         mActionFunctions_All = new ArrayList<Index_Action>();
         mActionFunctions_Restrict = new ArrayList<Index_Action>();
@@ -203,7 +211,35 @@ public class OO {
 
         } else if (eAST.mesmoTipo("STAGES")) {
 
-            mRunTime.AlocarStages(eAST,mEscopo);
+            mStages.add(eAST);
+
+          //  System.out.println("Alocando Stage : " + eAST.getNome());
+
+            AlocarStages(eAST,mEscopo);
+
+        } else if (eAST.mesmoTipo("TYPE")) {
+
+            mTypes.add(eAST);
+
+        } else if (eAST.mesmoTipo("STRUCT")) {
+
+            mStructs.add(eAST);
+
+        }
+
+    }
+
+    public void AlocarStages(AST eAST, Escopo mEscopo) {
+
+
+        int i = 0;
+
+        for (AST AST_STAGE : eAST.getBranch("OPTIONS").getASTS()) {
+
+            if (AST_STAGE.mesmoTipo("STAGE")) {
+                mEscopo.criarDefinicao(eAST.getNome() + "::" + AST_STAGE.getNome(), eAST.getNome(), String.valueOf(i));
+                i += 1;
+            }
 
 
         }
@@ -416,6 +452,57 @@ public class OO {
         return eAST.getBranch("VISIBILITY").getNome();
     }
 
+
+    public ArrayList<AST> getTypes() {
+
+        ArrayList<AST> gca = new ArrayList<AST>();
+
+        for (AST mIndex_Function : mTypes) {
+            gca.add(mIndex_Function);
+        }
+
+        if (getEscopo().getEscopoAnterior() != null) {
+            for (AST mIndex_Function : getEscopo().getEscopoAnterior().getTypes()) {
+                gca.add(mIndex_Function);
+            }
+        }
+
+        return gca;
+    }
+
+    public ArrayList<AST> getStructs() {
+
+        ArrayList<AST> gca = new ArrayList<AST>();
+
+        for (AST mIndex_Function : mStructs) {
+            gca.add(mIndex_Function);
+        }
+
+        if (getEscopo().getEscopoAnterior() != null) {
+            for (AST mIndex_Function : getEscopo().getEscopoAnterior().getStructs()) {
+                gca.add(mIndex_Function);
+            }
+        }
+
+        return gca;
+    }
+
+    public ArrayList<AST> getStages() {
+
+        ArrayList<AST> gca = new ArrayList<AST>();
+
+        for (AST mIndex_Function : mStages) {
+            gca.add(mIndex_Function);
+        }
+
+        if (getEscopo().getEscopoAnterior() != null) {
+            for (AST mIndex_Function : getEscopo().getEscopoAnterior().getStages()) {
+                gca.add(mIndex_Function);
+            }
+        }
+
+        return gca;
+    }
 
 
 }

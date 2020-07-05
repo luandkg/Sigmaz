@@ -7,10 +7,12 @@ import java.util.ArrayList;
 public class Analisar_Stage {
 
     private Analisador mAnalisador;
+    private Analisador_Bloco mAnalisador_Bloco;
 
-    public Analisar_Stage(Analisador eAnalisador) {
+    public Analisar_Stage(Analisador eAnalisador,Analisador_Bloco eAnalisador_Bloco) {
 
         mAnalisador = eAnalisador;
+        mAnalisador_Bloco=eAnalisador_Bloco;
 
     }
 
