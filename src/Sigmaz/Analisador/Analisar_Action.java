@@ -93,6 +93,7 @@ public class Analisar_Action {
                 mAnalisador.getErros().add("CONTINUE so pode existir dentro de um laco !");
             }
         } else if (ASTPai.mesmoTipo("EXCEPTION")) {
+        } else if (ASTPai.mesmoTipo("EACH")) {
 
         } else {
             mAnalisador.getErros().add("AST : " + ASTPai.getTipo());

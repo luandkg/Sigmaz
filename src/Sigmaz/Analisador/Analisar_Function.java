@@ -118,6 +118,8 @@ public class Analisar_Function {
             }
         } else if (ASTPai.mesmoTipo("EXCEPTION")) {
 
+        } else if (ASTPai.mesmoTipo("EACH")) {
+
         } else {
             mAnalisador.getErros().add("AST : " + ASTPai.getTipo());
         }

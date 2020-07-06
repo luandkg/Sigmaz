@@ -144,3 +144,8 @@
 2020 07 05  -->>  Sistema de Versionamento
 2020 07 05  -->>  Sistema de Organização de Implementações
 2020 07 05  -->>  AST_Refer
+
+
+2020 07 06  -->>  Herança Entre Pacotes
+2020 07 06  -->>  Unificação de Pacotes com mesmo nome
+2020 07 06  -->>  Implementando AST_Each

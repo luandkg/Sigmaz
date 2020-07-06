@@ -21,9 +21,9 @@ public class AppSigmaz {
         String mBiblioteca_Sigmad = "res/lib.sigmad";
 
 
-        int ARQUIVO = 51;
+        int ARQUIVO = 61;
 
-        switch (Fases.TESTES) {
+        switch (Fases.EXECUTAR) {
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
             case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);

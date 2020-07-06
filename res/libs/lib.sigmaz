@@ -10,13 +10,10 @@ import "strings.sigmaz";
 import "pos.sigmaz";
 import "neg.sigmaz";
 import "int.sigmaz";
-#import "tempo.sigmaz";
-import "lista.sigmaz";
-import "iterador.sigmaz";
-
+import "lista/lista.sigmaz";
+import "lista/iterador.sigmaz";
 import "castings.sigmaz";
 import "pacote_tempo.sigmaz";
-
 stages Numeros -> {
 	POSITIVO , NEGATIVO , ZERO 
 }

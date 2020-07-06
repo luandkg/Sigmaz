@@ -3,6 +3,8 @@ package AppSigmaz;
 import Sigmaz.Sigmaz;
 import Sigmaz.Utils.Identador;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public class AppUtils {
@@ -30,7 +32,7 @@ public class AppUtils {
         }
 
         if (!enc) {
-            System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
+            System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
         }
 
 
@@ -147,6 +149,8 @@ public class AppUtils {
         System.out.println("");
         System.out.println("################ IDENTADOR - " + eNome + " ################");
 
+        long start = System.currentTimeMillis();
+
         Identador mIdentador = new Identador();
         String DDI = mIdentador.getData();
 
@@ -161,6 +165,10 @@ public class AppUtils {
 
         int Contador = 1;
 
+        int mQuantidade = mArquivos.size();
+        int mSucesso = 0;
+        int mProblema = 0;
+
         for (String mArquivo : mArquivos) {
 
             String sContador = String.valueOf(Contador);
@@ -173,14 +181,41 @@ public class AppUtils {
 
             if (t) {
                 System.out.println(" Arquivo : " + sContador + " -> " + mArquivo + " : SUCESSO ");
+                mSucesso+=1;
+
             } else {
                 System.out.println(" Arquivo : " + sContador + " -> " + mArquivo + " : FALHOU ");
+                mProblema+=1;
+
             }
 
             Contador += 1;
 
         }
 
+        long end = System.currentTimeMillis();
+
+        float sec = (end - start) / 1000F;
+
+        System.out.println("");
+
+        System.out.println(" - TEMPO  	: " + sec + " segundos");
+        System.out.println("");
+
+
+
+        NumberFormat formatarFloat= new DecimalFormat("0.00");
+
+        if (mQuantidade>0){
+
+            float s = ((float)mSucesso/(float)mQuantidade)*100.0f;
+            float f =( (float)mProblema/(float)mQuantidade)*100.0f;
+
+            System.out.println(" - TESTES  	: " + mQuantidade + " -> 100.00 % ");
+            System.out.println("\t - SUCESSO  : " + mSucesso + " -> " +  formatarFloat.format(s).replace(",", ".") + " % ");
+            System.out.println("\t - FALHOU  	: " + mProblema+ " -> " + formatarFloat.format(f).replace(",", ".")+ " % ");
+
+        }
 
     }
 

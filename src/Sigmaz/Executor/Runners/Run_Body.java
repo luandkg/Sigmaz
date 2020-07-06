@@ -224,6 +224,12 @@ public class Run_Body {
                 Run_Try mAST = new Run_Try(mRunTime, mEscopo);
                 mAST.init(fAST);
 
+            } else if (fAST.mesmoTipo("EACH")) {
+
+
+                Run_Each mAST = new Run_Each(mRunTime, mEscopo);
+                mAST.init(fAST);
+
             } else if (fAST.mesmoTipo("CANCEL")) {
                 Cancelar();
             } else if (fAST.mesmoTipo("CONTINUE")) {

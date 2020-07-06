@@ -18,11 +18,7 @@ public class AST_Package {
 
         if (TokenC.getTipo() == TokenTipo.ID) {
 
-            AST AST_Corrente = new AST("PACKAGE");
-            AST_Corrente.setNome(TokenC.getConteudo());
-            ASTPai.getASTS().add(AST_Corrente);
-
-
+            AST AST_Corrente = getPackage(ASTPai, TokenC.getConteudo());
 
             corpo(AST_Corrente);
 
@@ -32,6 +28,29 @@ public class AST_Package {
         }
 
 
+    }
+
+
+    public AST getPackage(AST ASTPai, String eNome) {
+
+        AST AST_Corrente = null;
+        boolean enc = false;
+
+        for (AST eAST : ASTPai.getASTS()) {
+            if (eAST.mesmoTipo("PACKAGE") && eAST.mesmoNome(eNome)) {
+                AST_Corrente = eAST;
+                enc = true;
+                break;
+            }
+        }
+
+        if (!enc) {
+            AST_Corrente = new AST("PACKAGE");
+            AST_Corrente.setNome(eNome);
+            ASTPai.getASTS().add(AST_Corrente);
+        }
+
+        return AST_Corrente;
     }
 
 
@@ -68,12 +87,12 @@ public class AST_Package {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
-                mAST.init("MOCKIZ",AST_Raiz, "ALL");
+                mAST.init("MOCKIZ", AST_Raiz, "ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
 
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
-                mAST.init("DEFINE",AST_Raiz, "ALL");
+                mAST.init("DEFINE", AST_Raiz, "ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operator")) {
 

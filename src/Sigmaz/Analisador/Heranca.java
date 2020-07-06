@@ -7,15 +7,10 @@ import java.util.ArrayList;
 public class Heranca {
 
     private Analisador mAnalisador;
-   // private Analisador_Bloco mAnalisador_Bloco;
-
-    private boolean mExterno;
 
     public Heranca(Analisador eAnalisador) {
 
         mAnalisador = eAnalisador;
-        mExterno = true;
-      //  mAnalisador_Bloco=eAnalisador_Bloco;
 
     }
 
@@ -28,24 +23,58 @@ public class Heranca {
 
             if (mAST.mesmoTipo("SIGMAZ")) {
 
+                ArrayList<AST> mPacotes = new ArrayList<AST>();
+
+                for (AST Struct_AST : mAST.getASTS()) {
+                    if (Struct_AST.mesmoTipo("PACKAGE")) {
+                        mPacotes.add(Struct_AST);
+                    }
+                }
+
+                analisarPacotes(mPacotes);
+
+                for (AST Struct_AST : mPacotes) {
+
+                    ArrayList<AST> mPackageEstruturas = new ArrayList<AST>();
+                    ArrayList<AST> mPackageStructs = new ArrayList<AST>();
+                    ArrayList<AST> mStruct_Referenciadas = new ArrayList<AST>();
+
+                    for (AST PackageStruct : Struct_AST.getASTS()) {
+                        if (PackageStruct.mesmoTipo("STRUCT")) {
+                            mPackageStructs.add(PackageStruct);
+                        }
+                    }
+
+                    mStruct_Referenciadas = referenciarStructs(mPacotes,Struct_AST);
+
+
+                    for (AST PackageStruct : mPackageStructs) {
+                        if (PackageStruct.mesmoTipo("STRUCT")) {
+                            mPackageEstruturas.add(PackageStruct);
+                        }
+                    }
+
+                    init_estruturas(mPackageEstruturas, mStruct_Referenciadas);
+
+                }
+
+                ArrayList<AST> mPackageStructs = new ArrayList<AST>();
+                ArrayList<AST> mPackageStructs_refer = new ArrayList<AST>();
+
                 for (AST Struct_AST : mAST.getASTS()) {
 
                     if (Struct_AST.mesmoTipo("STRUCT")) {
+                        mPackageStructs.add(Struct_AST);
+                    }
+
+                }
+
+                mPackageStructs_refer = referenciarStructs(mPacotes,mAST);
+
+                for (AST Struct_AST : mPackageStructs) {
+
+                    if (Struct_AST.mesmoTipo("STRUCT")) {
                         mEstruturas.add(Struct_AST);
-
-                    } else if (Struct_AST.mesmoTipo("PACKAGE")) {
-
-                        ArrayList<AST> mPackageEstruturas = new ArrayList<AST>();
-
-                        for (AST PackageStruct : Struct_AST.getASTS()) {
-                            if (PackageStruct.mesmoTipo("STRUCT")) {
-                                mPackageEstruturas.add(PackageStruct);
-                            }
-                        }
-
-                        init_estruturas(mPackageEstruturas);
-
-
                     }
 
                 }
@@ -53,11 +82,142 @@ public class Heranca {
             }
         }
 
-        init_estruturas(mEstruturas);
+        ArrayList<AST> mStruct_Referenciadas = new ArrayList<AST>();
+
+        init_estruturas(mEstruturas, mStruct_Referenciadas);
 
     }
 
-    public void init_estruturas(ArrayList<AST> mEstruturas) {
+    public class PacoteRefer {
+        public int Complexidade = 0;
+        public AST Pacote = null;
+    }
+
+    public void analisarPacotes(ArrayList<AST> mPacotes) {
+
+        ArrayList<PacoteRefer> Ref_Pacotes = new ArrayList<PacoteRefer>();
+
+        for (AST ASTC : mPacotes) {
+
+
+            PacoteRefer RP = new PacoteRefer();
+            RP.Complexidade = pacoteContagemRefer(mPacotes, ASTC.getNome());
+            RP.Pacote = ASTC;
+            Ref_Pacotes.add(RP);
+
+            if (RP.Complexidade < 0) {
+                mAnalisador.getErros().add("Pacote " + RP.Pacote.getNome() + " : Possui problemas de referencias !");
+                return;
+            }
+
+        }
+
+        while (Ref_Pacotes.size() > 0) {
+            PacoteRefer menor = getMenor(Ref_Pacotes);
+
+            mAnalisador.mensagem("PACKAGE : " + menor.Pacote.getNome() + " -->> " + menor.Complexidade);
+
+            Ref_Pacotes.remove(menor);
+        }
+
+    }
+
+    public PacoteRefer getMenor(ArrayList<PacoteRefer> Ref_Pacotes) {
+        PacoteRefer menor = null;
+
+        if (Ref_Pacotes.size() > 0) {
+            menor = Ref_Pacotes.get(0);
+
+            for (PacoteRefer RP : Ref_Pacotes) {
+                if (RP.Complexidade < menor.Complexidade) {
+                    menor = RP;
+                }
+            }
+        }
+
+
+        return menor;
+    }
+
+    public ArrayList<AST> referenciarStructs(ArrayList<AST> mPacotes, AST Pacote) {
+
+        ArrayList<AST> mStruct_Referenciadas = new ArrayList<AST>();
+
+        for (AST PackageStruct : Pacote.getASTS()) {
+            if (PackageStruct.mesmoTipo("REFER")) {
+                referPacote(mPacotes, PackageStruct.getNome(), mStruct_Referenciadas);
+            }
+        }
+
+        return mStruct_Referenciadas;
+
+    }
+
+    public boolean existeRefer(ArrayList<AST> mPacotes, String eNome) {
+        boolean enc = false;
+
+        for (AST ASTC : mPacotes) {
+            if (ASTC.mesmoNome(eNome)) {
+                enc = true;
+                break;
+            }
+        }
+        return enc;
+    }
+
+    public int pacoteContagemRefer(ArrayList<AST> mPacotes, String eNome) {
+        int enc = -1;
+
+        for (AST ASTC : mPacotes) {
+            if (ASTC.mesmoNome(eNome)) {
+                enc = 0;
+
+                for (AST PackageStruct : ASTC.getASTS()) {
+                    if (PackageStruct.mesmoTipo("REFER")) {
+
+
+                        int tmp = pacoteContagemRefer(mPacotes, PackageStruct.getNome());
+                        if (tmp == -1) {
+                            return -1;
+                        } else {
+                            enc += 1 + tmp;
+                        }
+                    }
+                }
+
+
+                break;
+            }
+        }
+        return enc;
+    }
+
+    public void referPacote(ArrayList<AST> mPacotes, String eNome, ArrayList<AST> mRefPacotes) {
+
+        boolean enc = false;
+
+        for (AST ASTC : mPacotes) {
+            if (ASTC.mesmoNome(eNome)) {
+
+
+                for (AST Sub : ASTC.getASTS()) {
+                    if (Sub.mesmoTipo("STRUCT")) {
+                        mRefPacotes.add(Sub);
+                    }
+
+                }
+
+                enc = true;
+                break;
+            }
+        }
+
+        if (!enc) {
+            mAnalisador.getErros().add("Package " + eNome + " : Nao encontrado !");
+        }
+    }
+
+    public void init_estruturas(ArrayList<AST> mEstruturas, ArrayList<AST> mEstruturasReferenciadas) {
 
         ArrayList<AST> mEstruturasComHeranca = new ArrayList<AST>();
 
@@ -68,7 +228,7 @@ public class Heranca {
 
         for (AST Struct_AST : mEstruturas) {
 
-          //  System.out.println("Estruturando : " + Struct_AST.getNome());
+            //  System.out.println("Estruturando : " + Struct_AST.getNome());
 
             AST AST_With = Struct_AST.getBranch("WITH");
 
@@ -77,7 +237,7 @@ public class Heranca {
                 String Struct_Base = Struct_AST.getBranch("WITH").getNome();
 
                 ArrayList<String> mDependencias = new ArrayList<String>();
-                boolean normalizavel = getNormalizavel(Struct_Base, mEstruturas, mDependencias);
+                boolean normalizavel = getNormalizavel(Struct_Base, mEstruturas, mDependencias, mEstruturasReferenciadas);
 
                 if (normalizavel) {
 
@@ -103,7 +263,7 @@ public class Heranca {
 
         if (c == v) {
 
-            herdar(mEstruturas, mEstruturasComHeranca);
+            herdar(mEstruturas, mEstruturasComHeranca, mEstruturasReferenciadas);
 
         } else {
 
@@ -115,7 +275,7 @@ public class Heranca {
     }
 
 
-    public void herdar(ArrayList<AST> mEstruturas, ArrayList<AST> mEstruturasComHeranca) {
+    public void herdar(ArrayList<AST> mEstruturas, ArrayList<AST> mEstruturasComHeranca, ArrayList<AST> mEstruturasReferenciadas) {
 
 
         for (AST Struct_AST : mEstruturasComHeranca) {
@@ -124,18 +284,18 @@ public class Heranca {
 
             ArrayList<String> mDependencias = new ArrayList<String>();
 
-            boolean normalizavel = getNormalizavel(Struct_Base, mEstruturas, mDependencias);
+            boolean normalizavel = getNormalizavel(Struct_Base, mEstruturas, mDependencias, mEstruturasReferenciadas);
 
-            Realizar_Heranca(Struct_AST.getNome(), mDependencias, mEstruturas);
+            Realizar_Heranca(Struct_AST.getNome(), mDependencias, mEstruturas,mEstruturasReferenciadas);
 
         }
 
     }
 
 
-    public void Realizar_Heranca(String Struct_Nome, ArrayList<String> mDependencias, ArrayList<AST> mEstruturas) {
+    public void Realizar_Heranca(String Struct_Nome, ArrayList<String> mDependencias, ArrayList<AST> mEstruturas,ArrayList<AST> mEstruturasReferenciadas) {
 
-        AST Super = ProcurarStruct(Struct_Nome, mEstruturas);
+        AST Super = ProcurarStruct(Struct_Nome, mEstruturas,mEstruturasReferenciadas);
 
         String eBase = Super.getBranch("WITH").getNome();
 
@@ -149,7 +309,7 @@ public class Heranca {
         mAnalisador.mensagem("Realizando Heranca : " + Struct_Nome + " -> " + eBase);
         for (String mDepende : mDependencias) {
 
-            AST Base = ProcurarStruct(mDepende, mEstruturas);
+            AST Base = ProcurarStruct(mDepende, mEstruturas,mEstruturasReferenciadas);
 
             if (Base.getBranch("WITH").mesmoValor("TRUE")) {
                 mAnalisador.mensagem("\t\t - Precisa de : " + mDepende + " -> " + Base.getBranch("WITH").getNome());
@@ -159,7 +319,7 @@ public class Heranca {
         }
 
 
-        DependencieAgora("", Struct_Nome, eBase, mEstruturas);
+        DependencieAgora("", Struct_Nome, eBase, mEstruturas,mEstruturasReferenciadas);
 
 
         for (String mDepende : mDependencias) {
@@ -169,23 +329,51 @@ public class Heranca {
 
     }
 
-    public AST ProcurarStruct(String eNome, ArrayList<AST> mEstruturas) {
+    public AST ProcurarStruct(String eNome, ArrayList<AST> mEstruturas,ArrayList<AST> mEstruturasReferenciadas) {
         AST mRet = null;
+        boolean enc = false;
+
         for (AST Procurando : mEstruturas) {
             if (Procurando.mesmoNome(eNome)) {
                 mRet = Procurando;
+                enc=true;
+                break;
+            }
+        }
+
+        if(!enc){
+            for (AST Procurando : mEstruturasReferenciadas) {
+                if (Procurando.mesmoNome(eNome)) {
+                    mRet = Procurando;
+                    enc=true;
+                    break;
+                }
             }
         }
         return mRet;
     }
 
-    public AST MontarBase(String ePref, String eBaseNome, ArrayList<AST> mEstruturas) {
-        AST copia = ProcurarStruct(eBaseNome, mEstruturas).copiar();
+
+    public boolean estanoRefer(String eNome,ArrayList<AST> mEstruturasReferenciadas){
+        boolean enc = false;
+
+        for (AST Procurando : mEstruturasReferenciadas) {
+            if (Procurando.mesmoNome(eNome)) {
+                enc=true;
+                break;
+            }
+        }
+        return enc;
+    }
+
+
+    public AST MontarBase(String ePref, String eBaseNome, ArrayList<AST> mEstruturas,ArrayList<AST> mEstruturasReferenciadas) {
+        AST copia = ProcurarStruct(eBaseNome, mEstruturas,mEstruturasReferenciadas).copiar();
 
 
         if (copia.getBranch("WITH").mesmoValor("TRUE")) {
 
-            DependencieAgora(ePref + "\t", eBaseNome, copia.getBranch("WITH").getNome(), mEstruturas);
+            DependencieAgora(ePref + "\t", eBaseNome, copia.getBranch("WITH").getNome(), mEstruturas,mEstruturasReferenciadas);
 
         } else {
 
@@ -200,16 +388,16 @@ public class Heranca {
         return copia;
     }
 
-    public void DependencieAgora(String ePref, String eStructNome, String eBaseNome, ArrayList<AST> mEstruturas) {
+    public void DependencieAgora(String ePref, String eStructNome, String eBaseNome, ArrayList<AST> mEstruturas,ArrayList<AST> mEstruturasReferenciadas) {
 
 
-        AST Base = MontarBase(ePref, eBaseNome, mEstruturas);
+        AST Base = MontarBase(ePref, eBaseNome, mEstruturas,mEstruturasReferenciadas);
 
 
         mAnalisador.mensagem(ePref + "--------------------------------------------------");
 
 
-        AST Super = ProcurarStruct(eStructNome, mEstruturas);
+        AST Super = ProcurarStruct(eStructNome, mEstruturas,mEstruturasReferenciadas);
 
         AST Base_Inits = Base.getBranch("INITS");
         AST Super_Inits = Super.getBranch("INITS");
@@ -327,7 +515,7 @@ public class Heranca {
     }
 
 
-    public boolean getNormalizavel(String eNome, ArrayList<AST> mEstruturas, ArrayList<String> mDependencias) {
+    public boolean getNormalizavel(String eNome, ArrayList<AST> mEstruturas, ArrayList<String> mDependencias, ArrayList<AST> mAnteriores) {
 
 
         boolean enc = false;
@@ -348,6 +536,15 @@ public class Heranca {
             }
         }
 
+        if (!enc) {
+            for (AST Struct_AST : mAnteriores) {
+                if (Struct_AST.mesmoNome(eNome)) {
+                    enc = true;
+                }
+            }
+
+        }
+
         if (enc) {
 
             if (mDependencias.contains(eNome)) {
@@ -357,7 +554,7 @@ public class Heranca {
 
                 if (mais) {
 
-                    return getNormalizavel(eProximo, mEstruturas, mDependencias);
+                    return getNormalizavel(eProximo, mEstruturas, mDependencias, mAnteriores);
                 } else {
 
                     return true;
@@ -366,56 +563,11 @@ public class Heranca {
             }
 
         } else {
+            mAnalisador.mensagem("Struct " + eNome + " : Nao encontrada !");
             return false;
         }
 
     }
 
 
-    public String getAssinatura(AST ASTPai) {
-
-        ArrayList<String> mNomes = new ArrayList<String>();
-
-        String mParametragem = "";
-
-        for (AST mAST : ASTPai.getASTS()) {
-            if (mAST.mesmoTipo("ARGUMENT")) {
-
-                if (!mNomes.contains(mAST.getNome())) {
-                    mNomes.add(mAST.getNome());
-                } else {
-                    mAnalisador.getErros().add("Argumento Init Duplicado : " + mAST.getNome());
-                }
-
-                mParametragem += "<" + mAST.getValor() + "> ";
-
-              //  mAnalisador_Bloco.getAnalisar_Outros().analisarTipagem(mAST);
-
-
-            } else {
-                mAnalisador.getErros().add("Tipo Desconhecido : " + mAST.getTipo());
-            }
-        }
-
-        return mParametragem;
-    }
-
-    public int getContagemAssinatura(AST ASTPai) {
-
-        int i = 0;
-
-
-        for (AST mAST : ASTPai.getASTS()) {
-            if (mAST.mesmoTipo("ARGUMENT")) {
-
-                i += 1;
-
-
-            } else {
-                mAnalisador.getErros().add("Tipo Desconhecido : " + mAST.getTipo());
-            }
-        }
-
-        return i;
-    }
 }

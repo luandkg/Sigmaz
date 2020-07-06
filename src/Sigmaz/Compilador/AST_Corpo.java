@@ -75,6 +75,10 @@ public class AST_Corpo {
 
                 AST_Try mAST = new AST_Try(mCompiler);
                 mAST.init(ASTPai);
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("each")){
+
+                AST_Each mAST = new AST_Each(mCompiler);
+                mAST.init(ASTPai);
 
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("cancel")){
 

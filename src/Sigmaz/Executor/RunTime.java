@@ -604,6 +604,23 @@ public class RunTime {
         return ret;
     }
 
+    public String getTipagem(AST eAST){
+
+        String mTipagem = eAST.getNome();
+
+        if (eAST.mesmoValor("GENERIC")){
+
+            for (AST eTipando : eAST.getASTS()) {
+                mTipagem += "<" +getTipagem(eTipando) + ">";
+            }
+
+        }
+
+
+        return mTipagem;
+
+    }
+
     public void initPackage(AST ASTPai) {
 
         Escopo EscopoPacote = new Escopo(this, null);

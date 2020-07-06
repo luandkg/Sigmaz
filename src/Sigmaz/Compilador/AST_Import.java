@@ -40,9 +40,18 @@ public class AST_Import {
                     mCompiler.getErros_Compiler().addAll(CompilerC.getErros_Compiler());
 
                     for (AST ASTCorrente : CompilerC.getAST("SIGMAZ").getASTS()) {
-                        ASTPai.getASTS().add(ASTCorrente);
-                    }
+                        if (ASTCorrente.mesmoTipo("PACKAGE")){
 
+                            AST AST_Corrente = getPackage(ASTPai,ASTCorrente.getNome());
+
+                            for (AST ASTP : ASTCorrente.getASTS()) {
+                                AST_Corrente.getASTS().add(ASTP);
+                            }
+                        }else{
+                            ASTPai.getASTS().add(ASTCorrente);
+                        }
+
+                    }
 
                 }
 
@@ -56,6 +65,28 @@ public class AST_Import {
             mCompiler.errarCompilacao("Era esperado o caminho de uma Importacao !", TokenC);
         }
 
+    }
+
+    public AST getPackage(AST ASTPai, String eNome) {
+
+        AST AST_Corrente = null;
+        boolean enc = false;
+
+        for (AST eAST : ASTPai.getASTS()) {
+            if (eAST.mesmoTipo("PACKAGE") && eAST.mesmoNome(eNome)) {
+                AST_Corrente = eAST;
+                enc = true;
+                break;
+            }
+        }
+
+        if (!enc) {
+            AST_Corrente = new AST("PACKAGE");
+            AST_Corrente.setNome(eNome);
+            ASTPai.getASTS().add(AST_Corrente);
+        }
+
+        return AST_Corrente;
     }
 
 }

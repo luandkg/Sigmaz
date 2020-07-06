@@ -1,0 +1,24 @@
+import "libs/lib.sigmaz";
+
+call iniciar -> inicio ( );
+
+refer Lista;
+
+act inicio ( ) {
+
+	def ListaNumerica : Lista >> ( num ) = init >> ( num ) Lista ( );
+
+	ListaNumerica.adicionar ( 10 );
+	ListaNumerica.adicionar ( 20 );
+	ListaNumerica.adicionar ( 30 );
+	ListaNumerica.adicionar ( 40 );
+	ListaNumerica.adicionar ( 50 );
+
+
+    each a : num :: (ListaNumerica) -> {
+        println ( "-> ", a );
+    }
+
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	#invoke __COMPILER__ -> HEAP ( ) :: ALL;
+}

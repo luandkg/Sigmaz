@@ -1,6 +1,436 @@
-import "libs/lib.sigmaz";
+
 
 call iniciar -> inicio ( );
+
+act println ( a : string , b : num ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
+}
+
+func isNull ( ObjetoNulo : any ) : bool {
+	def c : bool;
+	invoke casting -> cast_isnull ( ObjetoNulo ) :: c;
+	return c;
+}
+
+func somar_inteiro ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_sum ( a , b ) :: c;
+	invoke casting -> cast_integer ( c ) :: c;
+	return c;
+}
+func subtrair_inteiro ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_sub ( a , b ) :: c;
+	invoke casting -> cast_integer ( c ) :: c;
+	return c;
+}
+operator == ( a : bool , b : bool ) : bool {
+	def c : bool;
+	invoke math -> operator_match ( a , b ) :: c;
+	return c;
+}
+operator == ( a : num , b : num ) : bool {
+	def c : bool;
+	invoke math -> operator_equal ( a , b ) :: c;
+	return c;
+}
+act trash ( a : any ) {
+	invoke __COMPILER__ -> OBJECT ( a ) :: REMOVE;
+}
+cast int {
+	getter a : num -> {
+		invoke casting -> cast_integer ( a ) :: a;
+		return a;
+	}
+	setter b : num -> {
+		invoke casting -> cast_integer ( b ) :: b;
+		return b;
+	}
+
+}
+func somar ( a : int , b : int ) : int {
+	def c1 : num = null;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_sum ( a1 , b1 ) :: c1;
+	def c : int = c1;
+	return c;
+}
+func somar ( a : int , b : num ) : int {
+	def c1 : num = null;
+	def a1 : num = a;
+	invoke math -> operator_sum ( a1 , b ) :: c1;
+	def c : int = c1;
+	return c;
+}
+func somar ( a : num , b : int ) : int {
+	def c1 : num = null;
+	def b1 : num = b;
+	invoke math -> operator_sum ( a , b1 ) :: c1;
+	def c : int = c1;
+	return c;
+}
+func subtrair ( a : int , b : int ) : int {
+	def c1 : num = null;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_sub ( a1 , b1 ) :: c1;
+	def c : int = c1;
+	return c;
+}
+func multiplicar ( a : int , b : int ) : int {
+	def c1 : num = null;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_mux ( a1 , b1 ) :: c1;
+	def c : int = c1;
+	return c;
+}
+func dividir ( a : int , b : int ) : int {
+	def c1 : num = null;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_div ( a1 , b1 ) :: c1;
+	def c : int = c1;
+	return c;
+}
+operator ++ ( a : int , b : int ) : int {
+	def c1 : num = null;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_sum ( a1 , b1 ) :: c1;
+	def c : int = c1;
+	return c;
+}
+operator -- ( a : int , b : int ) : int {
+	def c1 : num = null;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_sub ( a1 , b1 ) :: c1;
+	def c : int = c1;
+	return c;
+}
+operator ** ( a : int , b : int ) : int {
+	def c1 : num = null;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_mux ( a1 , b1 ) :: c1;
+	def c : int = c1;
+	return c;
+}
+operator // ( a : int , b : int ) : int {
+	def c1 : num = null;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_div ( a1 , b1 ) :: c1;
+	def c : int = c1;
+	return c;
+}
+operator == ( a : int , b : int ) : bool {
+	def c : bool;
+	def c1 : num = a;
+	def c2 : num = b;
+	invoke math -> operator_equal ( c1 , c2 ) :: c;
+	return c;
+}
+operator !! ( a : int , b : int ) : bool {
+	def c : bool;
+	def c1 : num = a;
+	def c2 : num = b;
+	invoke math -> operator_not ( c1 , c2 ) :: c;
+	return c;
+}
+director ! ( a : int ) : int {
+	def b : int = a ++ int ( ( -1 ) );
+	return b;
+}
+func menor ( a : int , b : int ) : bool {
+	def c : bool;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_less ( a1 , b1 ) :: c;
+	return c;
+}
+func maior ( a : int , b : int ) : bool {
+	def c : bool;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_great ( a1 , b1 ) :: c;
+	return c;
+}
+func menor_igual ( a : int , b : int ) : bool {
+	def c1 : bool = false;
+	def c2 : bool = false;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_less ( a1 , b1 ) :: c1;
+	invoke math -> operator_equal ( a1 , b1 ) :: c2;
+	return operador_ou ( c1 , c2 );
+}
+func maior_igual ( a : int , b : int ) : bool {
+	def c1 : bool = false;
+	def c2 : bool = false;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_great ( a1 , b1 ) :: c1;
+	invoke math -> operator_equal ( a1 , b1 ) :: c2;
+	return operador_ou ( c1 , c2 );
+}
+func igual ( a : int , b : int ) : bool {
+	def a1 : num = a;
+	def b1 : num = b;
+	def c : bool;
+	invoke math -> operator_equal ( a1 , b1 ) :: c;
+	return c;
+}
+func diferente ( a : int , b : int ) : bool {
+	def a1 : num = a;
+	def b1 : num = b;
+	def c : bool;
+	invoke math -> operator_not ( a1 , b1 ) :: c;
+	return c;
+}
+
+func operador_e ( a : bool , b : bool ) : bool {
+	def c : bool = false;
+	if(a==true) -> {
+	    if(b==true) -> {c = true;}
+	}
+	return c;
+}
+
+func operador_ou ( a : bool , b : bool ) : bool {
+	def c : bool = false;
+	if(a==true) -> {c = true;}
+	if(b==true) -> {c = true;}
+	return c;
+}
+func maior_igual ( a : num , b : num ) : bool {
+
+	def c1 : bool = false;
+	def c2 : bool = false;
+
+	invoke math -> operator_great ( a , b ) :: c1;
+	invoke math -> operator_equal ( a , b ) :: c2;
+
+	return operador_ou(c1,c2);
+}
+
+struct Lista in ( T ) {
+	restrict :
+	define mPrimeiro : Item >> ( T ) = null;
+	define mUltimo : Item >> ( T ) = null;
+	define mQuantidade : num = 0;
+	all :
+	func getQuantidade ( ) : num {
+		return mQuantidade;
+	}
+
+	act adicionar ( novo : T ) {
+		if ( isNull ( mPrimeiro ) ) -> {
+			mPrimeiro = init >> ( T ) Item ( );
+			mPrimeiro.setValor ( novo );
+			mUltimo = mPrimeiro;
+			mQuantidade = 1;
+		}others {
+			def mCorrente : Item >> ( T ) = init >> ( T ) Item ( );
+			mCorrente.setValor ( novo );
+			mUltimo.setProximo ( mCorrente );
+			mUltimo = mCorrente;
+			mQuantidade = somar_inteiro ( mQuantidade , 1 );
+		}
+
+	}
+
+	act remover ( a : T ) {
+		println ( "Remover : ", a );
+		if ( isNull ( mPrimeiro ) ) -> {
+
+		}others {
+			def mAnterior : Item >> ( T ) = null;
+			def mCorrente : Item >> ( T ) = mPrimeiro;
+			def mIndice : num = 0;
+			def mUltimoIndice : num = subtrair_inteiro ( mQuantidade , 1 );
+			while ( isNull ( mCorrente ) == false ) -> {
+				if ( mCorrente.getValor ( ) == a ) -> {
+					println ( "Removendo : ", a );
+					if ( mIndice == 0 ) -> {
+						if ( mQuantidade == 1 ) -> {
+							mPrimeiro = null;
+							mUltimo = null;
+						}others {
+							mPrimeiro = mPrimeiro.getProximo ( );
+						}
+
+					}other ( mIndice == mUltimoIndice ) -> {
+						mAnterior.setProximo ( null );
+						mUltimo = mAnterior;
+					}others {
+						mAnterior.setProximo ( mCorrente.getProximo ( ) );
+					}
+					mQuantidade = subtrair_inteiro ( mQuantidade , 1 );
+					trash ( mCorrente );
+					cancel;
+				}
+
+				#println("Passando Por : ",mCorrente.getValor());
+				mAnterior = mCorrente;
+				mCorrente = mCorrente.getProximo ( );
+				mIndice = somar_inteiro ( mIndice , 1 );
+			}
+
+		}
+
+	}
+
+	act listar ( ) {
+		if ( isNull ( mPrimeiro ) == false ) -> {
+			def mCorrente : Item >> ( T ) = mPrimeiro;
+			while ( isNull ( mCorrente ) == false ) -> {
+				println ( " - Valor : ", mCorrente.getValor ( ) );
+				mCorrente = mCorrente.getProximo ( );
+			}
+
+		}
+
+	}
+
+	act limpar ( ) {
+		if ( isNull ( mPrimeiro ) == false ) -> {
+			def mCorrente : Item >> ( T ) = mPrimeiro;
+			def mAnterior : Item >> ( T ) = mPrimeiro;
+			while ( isNull ( mCorrente ) == false ) -> {
+				mAnterior = mCorrente;
+				mCorrente = mCorrente.getProximo ( );
+				trash ( mAnterior );
+			}
+			trash ( mAnterior );
+		}
+		mPrimeiro = null;
+		mUltimo = null;
+	}
+	func getValor ( indice : num ) : T {
+		def ret : num = null;
+		if ( maior_igual ( indice , 0 ) ) -> {
+			def contando : num = 0;
+			def enc : bool = false;
+			if ( isNull ( mPrimeiro ) == false ) -> {
+				def mCorrente : Item >> ( T ) = mPrimeiro;
+				while ( isNull ( mCorrente ) == false ) -> {
+					if ( contando == indice ) -> {
+						ret = mCorrente.getValor ( );
+						enc = true;
+					}
+					contando = somar_inteiro ( contando , 1 );
+					mCorrente = mCorrente.getProximo ( );
+				}
+
+			}
+			if ( enc == false ) -> {
+				exception "Indice invalido !";
+			}
+
+		}others {
+			exception "Indice invalido !";
+		}
+		return ret;
+	}
+
+}
+
+struct Item in ( T ) {
+	restrict :
+	define mValor : T = null;
+	define mProximo : Item >> ( T ) = null;
+	all :
+	func getValor ( ) : T {
+		return mValor;
+	}
+
+	act setValor ( eValor : T ) {
+		mValor = eValor;
+	}
+	func getProximo ( ) : Item >> ( T ) {
+		return mProximo;
+	}
+
+	act setProximo ( eProximo : Item >> ( T ) ) {
+		mProximo = eProximo;
+	}
+	func getProximo ( ) : Item >> ( T ) {
+		return mProximo;
+	}
+
+}
+
+struct Iterador in ( T ) {
+	init Iterador ( eLista : T ) {
+		mLista = eLista;
+		mIndex = 0;
+		mTamanho = 0;
+		mIniciado = false;
+		mTerminou = false;
+	}
+	restrict :
+	define mLista : T = null;
+	define mIndex : int = 0;
+	define mTamanho : int = 0;
+	define mIniciado : bool = false;
+	define mTerminou : bool = false;
+	all :
+	act iniciar ( ) {
+		mIndex = 0;
+		mTamanho = mLista.getQuantidade ( );
+		mIniciado = true;
+		mTerminou = false;
+	}
+
+	act proximo ( ) {
+		if ( mIniciado ) -> {
+			if ( mTerminou == false ) -> {
+				if ( menor ( mIndex , mTamanho ) ) -> {
+					mIndex = somar ( mIndex , 1 );
+				}others {
+					mTerminou = true;
+				}
+
+			}
+
+		}
+
+	}
+	func continuar ( ) : bool {
+		def ret : bool = false;
+		if ( mIniciado ) -> {
+			if ( maior_igual ( mIndex , mTamanho ) ) -> {
+				mTerminou = true;
+			}others {
+				ret = true;
+			}
+
+		}others {
+			ret = false;
+		}
+		return ret;
+	}
+	func getIndex ( ) : int {
+		if ( mIniciado ) -> {
+
+		}others {
+			exception "O iterador nao foi iniciado !";
+		}
+		return mIndex;
+	}
+	func getValor ( ) : T {
+		def ii : num = getIndex ( );
+		return mLista.getValor ( ii );
+	}
+
+}
+
 
 act inicio ( ) {
 
@@ -81,7 +511,6 @@ act inicio ( ) {
 
 
 
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-
-	invoke __COMPILER__ -> HEAP ( ) :: ALL;
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	#invoke __COMPILER__ -> HEAP ( ) :: ALL;
 }
