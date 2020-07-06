@@ -4,11 +4,11 @@ import Sigmaz.Lexer.Token;
 import Sigmaz.Lexer.TokenTipo;
 import Sigmaz.Utils.AST;
 
-public class AST_Using {
+public class AST_Refer {
 
     private Compiler mCompiler;
 
-    public AST_Using(Compiler eCompiler) {
+    public AST_Refer(Compiler eCompiler) {
         mCompiler = eCompiler;
     }
 
@@ -18,7 +18,7 @@ public class AST_Using {
 
         if (TokenC.getTipo() == TokenTipo.ID) {
 
-            AST AST_Corrente = new AST("USING");
+            AST AST_Corrente = new AST("REFER");
             AST_Corrente.setNome(TokenC.getConteudo());
             ASTPai.getASTS().add(AST_Corrente);
 
@@ -27,7 +27,7 @@ public class AST_Using {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome para uma USING !", TokenC);
+            mCompiler.errarCompilacao("Era esperado o nome para uma REFER !", TokenC);
         }
 
 

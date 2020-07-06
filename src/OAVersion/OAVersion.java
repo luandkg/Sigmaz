@@ -1,6 +1,5 @@
 package OAVersion;
 
-import OAVersion.LuanDKG.Identificador;
 import OAVersion.LuanDKG.LuanDKG;
 import OAVersion.LuanDKG.Pacote;
 
@@ -9,13 +8,31 @@ import java.util.Calendar;
 
 public class OAVersion {
 
-    public static void init(String eArquivo) {
+    private String mArquivo;
+
+    public OAVersion(String eArquivo) {
+        mArquivo = eArquivo;
+    }
+
+
+    public enum Modos {INIT, RELEASE}
+
+    public void init(Modos eModo) {
+        if (eModo == Modos.INIT) {
+            initing();
+        } else if (eModo == Modos.RELEASE) {
+            releasing();
+        }
+    }
+
+
+    private void initing() {
 
         LuanDKG arquivo = new LuanDKG();
-        File arq = new File(eArquivo);
+        File arq = new File(mArquivo);
 
         if (arq.exists()) {
-            arquivo.Abrir(eArquivo);
+            arquivo.Abrir(mArquivo);
         }
 
         Pacote OA = arquivo.UnicoPacote("OAVersion");
@@ -25,6 +42,10 @@ public class OAVersion {
         String v = OA.Identifique("Version").getValor();
 
         v = string_num(v, 1);
+
+        String f = OA.Identifique("Factor").getValor();
+
+        f = string_num(f, 1);
 
         String Hoje = getData();
 
@@ -70,6 +91,10 @@ public class OAVersion {
 
         Branch.Identifique("Count").setValor(String.valueOf(ci));
 
+        Pacote Releases = OA.UnicoPacote("Releases");
+        for (Pacote P : Releases.getPacotes()) {
+            P.salvarLinear();
+        }
 
         int Trabalhos = Branches.getPacotes().size();
 
@@ -81,17 +106,18 @@ public class OAVersion {
         OA.Identifique("Full").setValor(Full);
         OA.Identifique("Mode").setValor(".");
         OA.Identifique("Release").setValor(".");
+        OA.Identifique("Factor").setValor(f);
 
-        arquivo.Salvar(eArquivo);
+        arquivo.Salvar(mArquivo);
     }
 
-    public static void release(String eArquivo) {
+    public void releasing() {
 
         LuanDKG arquivo = new LuanDKG();
-        File arq = new File(eArquivo);
+        File arq = new File(mArquivo);
 
         if (arq.exists()) {
-            arquivo.Abrir(eArquivo);
+            arquivo.Abrir(mArquivo);
         }
 
         Pacote OA = arquivo.UnicoPacote("OAVersion");
@@ -105,25 +131,31 @@ public class OAVersion {
 
         String C = R.Identifique("Count").getValor();
 
+        String f = OA.Identifique("Factor").getValor();
+        int fi = get_string_num(f, 0);
+
+
         int ci = get_string_num(C, 0) + 1;
 
-        R.Identifique("Count").setValor(String.valueOf(ci));
-
-
-        String RString = OA.Identifique("Full").getValor() + " R" + ci;
-
-        Pacote V = R.PacoteComAtributoUnico("Version", "Full", RString);
-
-        V.Identifique("Release").setValor(String.valueOf(ci));
-
-        for (Pacote PacoteC : R.getPacotes()) {
-            PacoteC.salvarLinear();
+        if (ci==1){
+            fi+=1;
         }
+
+        String RString = OA.Identifique("Full").getValor() + " R" + fi + " : " + ci;
+
+        R.Identifique("Count").setValor(String.valueOf(ci));
+        R.Identifique("Release").setValor(RString);
+
 
         OA.Identifique("Mode").setValor("Release");
         OA.Identifique("Release").setValor(RString);
+        OA.Identifique("Factor").setValor(String.valueOf(fi));
 
-        arquivo.Salvar(eArquivo);
+        for (Pacote P : Releases.getPacotes()) {
+            P.salvarLinear();
+        }
+
+        arquivo.Salvar(mArquivo);
     }
 
 

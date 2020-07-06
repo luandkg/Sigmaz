@@ -500,7 +500,7 @@ public class RunTime {
 
                 // USAR PACKAGES
                 for (AST ASTC : ASTCGlobal.getASTS()) {
-                    if (ASTC.mesmoTipo("USING")) {
+                    if (ASTC.mesmoTipo("REFER")) {
 
                         //  Usar(ASTC.getNome(), Global);
 
@@ -583,7 +583,7 @@ public class RunTime {
             ArrayList<String> mUsados = new ArrayList<String>();
 
             for (AST ASTC : ASTPacote.getASTS()) {
-                if (ASTC.mesmoTipo("USING")) {
+                if (ASTC.mesmoTipo("REFER")) {
                     Referenciar(ASTC.getNome(), EscopoC,mUsados);
                 }
             }

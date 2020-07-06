@@ -2,7 +2,7 @@ import "libs/lib.sigmaz";
 
 call iniciar -> inicio ( );
 
-using Tempo;
+refer Tempo;
 
 act inicio ( ) {
 

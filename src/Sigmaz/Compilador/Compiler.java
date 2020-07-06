@@ -295,9 +295,9 @@ public class Compiler {
 
                 AST_Package mAST = new AST_Package(this);
                 mAST.init(AST_Raiz);
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("using")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("refer")) {
 
-                AST_Using mAST = new AST_Using(this);
+                AST_Refer mAST = new AST_Refer(this);
                 mAST.init(AST_Raiz);
 
 

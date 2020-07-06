@@ -1,10 +1,17 @@
 package AppSigmaz;
 
+import OAVersion.OAVersion;
+import OAVersion.OARoadmap;
+
 import java.util.ArrayList;
 
 public class AppSigmaz {
 
     public static void main(String[] args) {
+
+
+        AUTO();
+
 
         ArrayList<String> mArquivos = Carregadores.Carregar_Arquivos();
         ArrayList<String> mBibliotecas = Carregadores.Carregar_Bibliotecas();
@@ -13,18 +20,15 @@ public class AppSigmaz {
         String mBiblioteca_Fonte = "res/libs/lib.sigmaz";
         String mBiblioteca_Sigmad = "res/lib.sigmad";
 
-        OAVersion.OAVersion.init("Sigmaz.oa");
-
-      //  OAVersion.OAVersion.release("Sigmaz.oa");
 
         int ARQUIVO = 51;
 
-        switch (Fases.EXECUTAR) {
-            case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos,mCompilado);
+        switch (Fases.TESTES) {
+            case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
             case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);
             case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos);
-            case TESTES -> AppUtils.TESTE_GERAL(mArquivos,mCompilado);
+            case TESTES -> AppUtils.TESTE_GERAL(mArquivos, mCompilado);
             case IDENTAR_TUDO -> AppUtils.IDENTAR_LOTE("ARQUIVOS", mArquivos);
             case IDENTAR_BIBLIOTECAS -> AppUtils.IDENTAR_LOTE("BIBLIOTECAS", mBibliotecas);
             case MONTAR_BIBLIOTECAS -> AppUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad);
@@ -34,4 +38,13 @@ public class AppSigmaz {
 
     }
 
+    public static void AUTO() {
+
+        OAVersion OA = new OAVersion("Sigmaz.oa");
+        OA.init(OAVersion.Modos.INIT);
+
+        OARoadmap oar = new OARoadmap("Roadmap.oa");
+        oar.receber("res/roadmap/Roadmap.txt");
+
+    }
 }

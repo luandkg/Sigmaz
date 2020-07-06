@@ -30,8 +30,8 @@ public class Analisar_Global {
 
         // USAR PACKAGES
         for (AST ASTC : ASTPai.getASTS()) {
-            if (ASTC.mesmoTipo("USING")) {
-                mAnalisador.mensagem("Global using " + ASTC.getNome());
+            if (ASTC.mesmoTipo("REFER")) {
+                mAnalisador.mensagem("Global refering " + ASTC.getNome());
 
                 Usar(mAnalisador_Bloco, ASTC.getNome());
 
@@ -153,7 +153,7 @@ public class Analisar_Global {
 
             } else if (mAST.mesmoTipo("PACKAGE")) {
 
-            } else if (mAST.mesmoTipo("USING")) {
+            } else if (mAST.mesmoTipo("REFER")) {
 
             } else {
 

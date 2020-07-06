@@ -1,6 +1,6 @@
 package Tempo {
 
-    using castings;
+    refer castings;
 
 	func getTempo ( ) : Tempo {
 		def a : Tempo = init Tempo ( );

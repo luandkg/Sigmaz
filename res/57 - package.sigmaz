@@ -14,7 +14,7 @@ package Terminal {
 
 package Blocos {
 
-    using Terminal;
+    refer Terminal;
 
     stages MODOS -> {CLARO,DOIS, TRES, QUATRO}
 
@@ -45,8 +45,8 @@ package Blocos {
     }
 }
 
-using Blocos;
-using Terminal;
+refer Blocos;
+refer Terminal;
 
 
 call iniciar -> {
