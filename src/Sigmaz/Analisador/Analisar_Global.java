@@ -135,7 +135,12 @@ public class Analisar_Global {
                     mAnalisador.getErros().add("Struct : " + mAST.getNome() + " : Nome Proibido !");
                 }
 
-                mAnalisador_Bloco.getAnalisar_Struct().init_Struct(mAST, mAlocados);
+                AST AST_EXTENDED = mAST.getBranch("EXTENDED");
+                if (AST_EXTENDED.mesmoNome("STRUCT")){
+                    mAnalisador_Bloco.getAnalisar_Struct().init_Struct(mAST, mAlocados);
+                }
+
+
 
             } else if (mAST.mesmoTipo("STAGES")) {
 
@@ -164,6 +169,7 @@ public class Analisar_Global {
 
 
         }
+
 
 
         mAnalisador_Bloco.getAnalisar_Outros().exportarOperadores(ASTPai);

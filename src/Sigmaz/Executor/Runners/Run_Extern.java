@@ -14,9 +14,12 @@ public class Run_Extern {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+
+    private String mPacote;
     private String mNome;
+
     private Argumentador mPreparadorDeArgumentos;
-    private  AST mStructCorpo;
+    private AST mStructCorpo;
 
     private int CA;
     private int CF;
@@ -44,15 +47,24 @@ public class Run_Extern {
         mNome = eNome;
     }
 
+    public String getPacote() {
+        return mPacote;
+    }
+
     public String getNome() {
         return mNome;
     }
+
+    public String getNomeCompleto() {
+        return mPacote + "<>" + mNome;
+    }
+
 
     public boolean mesmoNome(String eNome) {
         return mNome.contentEquals(eNome);
     }
 
-    public void init(AST ASTPai,AST ASTAvo) {
+    public void init(String ePacote, String eNome, AST ASTPai, AST ASTAvo) {
 
         CA = 0;
         CF = 0;
@@ -60,12 +72,13 @@ public class Run_Extern {
         CD = 0;
 
 
-        mNome = ASTPai.getNome();
+        mPacote = ePacote;
+        mNome = eNome;
 
         // System.out.println("Externalizando : " + mNome);
 
         mEscopo = new Escopo(mRunTime, null);
-        mEscopo.setNome(ASTPai.getNome());
+        mEscopo.setNome(mNome);
         mEscopo.setEstrutura(true);
 
 
@@ -78,21 +91,16 @@ public class Run_Extern {
                 mEscopo.guardar(ASTC);
             } else if (ASTC.mesmoTipo("OPERATION")) {
                 mEscopo.guardar(ASTC);
-            }  else if (ASTC.mesmoTipo("CAST")) {
+            } else if (ASTC.mesmoTipo("CAST")) {
                 mEscopo.guardar(ASTC);
-            } else if(ASTC.mesmoTipo("STAGES")){
+            } else if (ASTC.mesmoTipo("STRUCT")) {
                 mEscopo.guardar(ASTC);
             }
 
         }
 
-        for (AST ASTC : mRunTime.getSigmaz().getASTS()) {
 
-
-
-        }
-
-         mStructCorpo = ASTPai.getBranch("BODY");
+        mStructCorpo = ASTPai.getBranch("BODY");
 
         for (AST ASTC : mStructCorpo.getASTS()) {
 
@@ -114,10 +122,15 @@ public class Run_Extern {
         }
 
 
-
-
     }
 
+    public void externalizar(ArrayList<Run_Extern> GlobalExtern) {
+
+        for (Run_Extern mRE : GlobalExtern) {
+            mEscopo.externalizarStructGeral(mRE.getNome());
+        }
+
+    }
 
     public void run() {
 
@@ -306,99 +319,6 @@ public class Run_Extern {
         return CA + CF + CD + CM;
     }
 
-
-    public void mostrar() {
-
-        System.out.println(" ######################### EXTERN - " + mNome + " ############################ ");
-
-
-        ArrayList<Item> ls_Defines = new ArrayList<>();
-        ArrayList<Item> ls_Constants = new ArrayList<>();
-
-        int defines_nulos = 0;
-        int defines_validos = 0;
-
-        for (Item i : mEscopo.getStacks()) {
-            if (mDesseExtern.contains(i.getNome())){
-                if (i.getModo() == 0) {
-                    ls_Defines.add(i);
-
-                    if (i.getNulo()) {
-                        defines_nulos += 1;
-                    } else {
-                        defines_validos += 1;
-                    }
-
-                } else if (i.getModo() == 1) {
-                    ls_Constants.add(i);
-                }
-            }
-
-
-        }
-
-        System.out.println(" - DEFINES : ");
-
-
-        System.out.println("\t - NAO NULOS : ");
-
-        for (Item i : ls_Defines) {
-            if (i.getNulo() == false) {
-                mEscopo.getDebug().mostrarItem(i);
-
-            }
-        }
-
-
-        System.out.println("\t - NULOS : ");
-        for (Item i : ls_Defines) {
-
-            if (i.getNulo()) {
-                mEscopo.getDebug().mostrarItem(i);
-
-            }
-        }
-
-        System.out.println(" - CONSTANTS : ");
-
-
-        System.out.println("\t - NAO NULOS : ");
-
-        for (Item i : ls_Constants) {
-            if (i.getNulo() == false) {
-                mEscopo.getDebug().mostrarItem(i);
-
-            }
-        }
-
-
-        System.out.println("\t - NULOS : ");
-        for (Item i : ls_Constants) {
-
-            if (i.getNulo()) {
-                mEscopo.getDebug().mostrarItem(i);
-
-            }
-        }
-
-        System.out.println(" - ACTIONS : ");
-        for (Index_Action mIndex_Function : mEscopo.getOO().getActions_Extern()) {
-            if (mIndex_Function.isExtern()) {
-                System.out.println("\t - " + mIndex_Function.getDefinicao());
-
-            }
-        }
-        System.out.println(" - FUNCTIONS : ");
-        for (Index_Function mIndex_Function : mEscopo.getOO().getFunctions_Extern()) {
-            if (mIndex_Function.isExtern()) {
-                System.out.println("\t - " + mIndex_Function.getDefinicao());
-
-            }
-
-        }
-
-
-    }
 
 
 }

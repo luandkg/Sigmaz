@@ -3,6 +3,7 @@ package Sigmaz.Executor;
 import Sigmaz.Executor.Debuggers.EscopoDebug;
 import Sigmaz.Executor.Indexador.Index_Action;
 import Sigmaz.Executor.Indexador.Index_Function;
+import Sigmaz.Executor.Runners.Run_Extern;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
@@ -30,6 +31,8 @@ public class Escopo {
     private OO mOO;
     private OO mAO;
 
+    private ArrayList<Run_Extern> mExternos;
+
 
     public void setNome(String eNome) {
         mNome = eNome;
@@ -52,12 +55,13 @@ public class Escopo {
         return mRunTime;
     }
 
-    public boolean possuiStruct(String eNome){
+
+    public boolean possuiStruct(String eNome) {
         boolean ret = false;
 
-        for(AST eAST : getStructs()){
-            if (eAST.mesmoNome(eNome)){
-                ret=true;
+        for (AST eAST : getStructs()) {
+            if (eAST.mesmoNome(eNome)) {
+                ret = true;
                 break;
             }
         }
@@ -86,6 +90,8 @@ public class Escopo {
         mDebug = new EscopoDebug(this);
         mEscopoStack = new EscopoStack(mRunTime, this);
 
+        mExternos = new ArrayList<Run_Extern>();
+
     }
 
     public Escopo getEscopoAnterior() {
@@ -110,12 +116,91 @@ public class Escopo {
 
 
         for (AST eAST : mEscopo.getASTS()) {
-           // System.out.println(" \t\t - " + eAST.getTipo() + " :  " + eAST.getNome());
+            // System.out.println(" \t\t - " + eAST.getTipo() + " :  " + eAST.getNome());
             guardar(eAST);
         }
 
 
     }
+
+    public void externalizarStruct(String ePacote, String eExterno) {
+
+        for (Run_Extern eAST : mRunTime.getExtern()) {
+
+            if (eAST.getPacote().contentEquals(ePacote)) {
+               // System.out.println("\t - Receber Externo : " + eAST.getNomeCompleto() + " de " + ePacote);
+                mExternos.add(eAST);
+            }
+
+        }
+
+    }
+
+
+
+    public void externalizarDireto(Run_Extern eAST) {
+        mExternos.add(eAST);
+    }
+
+    public void externalizarStructGeral(String eExterno) {
+
+        for (Run_Extern eAST : mRunTime.getExtern()) {
+
+            if (eAST.getNome().contentEquals(eExterno)) {
+             //   System.out.println("\t - Receber Externo Geral : " + eAST.getNomeCompleto());
+                mExternos.add(eAST);
+            }
+
+
+        }
+
+    }
+
+    public ArrayList<Run_Extern> getExtern() {
+        ArrayList<Run_Extern> mRet = new ArrayList<Run_Extern>();
+        for (Run_Extern mRE : mExternos) {
+            mRet.add(mRE);
+        }
+
+        if (mEscopoAnterior != null) {
+            for (Run_Extern mRE : mEscopoAnterior.getExtern()) {
+                mRet.add(mRE);
+            }
+        }
+
+        return mRet;
+    }
+
+    public Run_Extern getRun_Extern(String eNome) {
+
+        Run_Extern mRet = null;
+        boolean enc = false;
+
+      //  System.out.println("Procurar Extern " + eNome + " em " + this.getNome());
+
+      //  System.out.println("Extens " + getExtern().size());
+
+        for (Run_Extern mRun_Struct : getExtern()) {
+
+
+            if (mRun_Struct.mesmoNome(eNome)) {
+                mRet = mRun_Struct;
+                enc = true;
+                break;
+            }
+
+        }
+
+
+
+        if (!enc) {
+            mRunTime.getErros().add("Nao foi possivel encontrar a struct extern : " + eNome);
+        }
+
+        return mRet;
+
+    }
+
 
     public void guardarStruct(AST eAST) {
 
@@ -569,7 +654,7 @@ public class Escopo {
       //   System.out.println(this.getNome() + " -> Stages : " + mAO.getStages().size() );
 
         for (AST mAST : mAO.getStages()) {
-            for (AST sAST : mAST.getBranch("OPTIONS").getASTS()) {
+            for (AST sAST : mAST.getBranch("STAGES").getASTS()) {
 
                 if (sAST.mesmoTipo("STAGE")) {
                     String tmp = mAST.getNome() + "::" + sAST.getNome();

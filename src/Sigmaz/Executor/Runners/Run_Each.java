@@ -3,6 +3,7 @@ package Sigmaz.Executor.Runners;
 import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
+import Sigmaz.Utils.AST_Implementador;
 
 public class Run_Each {
 
@@ -23,11 +24,60 @@ public class Run_Each {
         return mEscopo.getCancelar();
     }
 
+    public String getTipo(String eTipo) {
+        String mTipo = "";
+
+        int i = 0;
+        int o = eTipo.length();
+
+        while (i < o) {
+            String l = eTipo.charAt(i) + "";
+            if (l.contentEquals("<")) {
+                break;
+            } else {
+                mTipo += l;
+            }
+            i += 1;
+        }
+
+        return mTipo;
+    }
+
+    public String getSubTipo(String eTipo) {
+        String mTipo = "";
+
+        int i = 0;
+        int o = eTipo.length() - 1;
+
+        boolean pegar = false;
+
+        while (i < o) {
+            String l = eTipo.charAt(i) + "";
+            if (l.contentEquals("<")) {
+                pegar = true;
+                i += 1;
+                break;
+            }
+            i += 1;
+        }
+
+        if (pegar) {
+
+            while (i < o) {
+                String l = eTipo.charAt(i) + "";
+                mTipo += l;
+                i += 1;
+            }
+
+        }
+
+        return mTipo;
+    }
 
     public void init(AST ASTCorrente) {
 
 
-        Escopo EachEscopo = new Escopo(mRunTime,mEscopo);
+        Escopo EachEscopo = new Escopo(mRunTime, mEscopo);
 
         AST mDef = ASTCorrente.getBranch("DEF");
         AST mType = ASTCorrente.getBranch("TYPE");
@@ -41,9 +91,29 @@ public class Run_Each {
         mAST.init(mList, "<<ANY>>");
 
 
-      //  System.out.println("Def : " + mDef.getNome());
-     //   System.out.println("Tipo : " + mTipagem);
-     //   System.out.println("Lista : " + mAST.getConteudo());
+        //System.out.println("Lista Tipo : " + mAST.getRetornoTipo());
+        //System.out.println("Lista Tipo Ref : " + getTipo(mAST.getRetornoTipo()));
+        //  System.out.println("Lista Tipo Sub : " + getSubTipo(mAST.getRetornoTipo()));
+
+        if (getTipo(mAST.getRetornoTipo()).contentEquals("Lista")) {
+
+        } else {
+            mRunTime.getErros().add("O Iterable do Each precisa ser do tipo : Lista");
+            return;
+        }
+
+        if (mTipagem.contentEquals(getSubTipo(mAST.getRetornoTipo()))) {
+
+        } else {
+            mRunTime.getErros().add("O Tipo da variavel do Iterable nao e compativel : " + mTipagem + " vs " + getSubTipo(mAST.getRetornoTipo()));
+            return;
+        }
+
+        if (mAST.getIsNulo()) {
+            mRunTime.getErros().add("O Iterable nao poder ser nulo !");
+            return;
+        }
+
 
         long HEAPID = mRunTime.getHEAPID();
         String eNome = "<Struct::" + "Iterador<Lista<" + mTipagem + ">>" + ":" + HEAPID + ">";
@@ -60,7 +130,7 @@ public class Run_Each {
         eArg.setTipo("ARGUMENT");
         eArgs.getASTS().add(eArg);
 
-      //  eArgs.ImprimirArvoreDeInstrucoes();
+        //  eArgs.ImprimirArvoreDeInstrucoes();
 
         Run_Struct mRun_Struct = new Run_Struct(mRunTime);
         mRun_Struct.setNome(eNome);
@@ -73,24 +143,20 @@ public class Run_Each {
 
         EachEscopo.criarDefinicao(eNomeEach, "Iterador<Lista<" + mTipagem + ">>", eNome);
 
-      //  System.out.println(eNomeEach + " -->> PRONTA ");
+        //  System.out.println(eNomeEach + " -->> PRONTA ");
+        AST_Implementador ASTC = new AST_Implementador();
 
-        AST mExecute = new AST("EXECUTE");
-        mExecute.setNome(eNomeEach);
-        mExecute.setValor("STRUCT");
-        AST mInternal = mExecute.criarBranch("INTERNAL");
-        mInternal.setNome("iniciar");
-        mInternal.setValor("STRUCT_FUNCT");
-        mInternal.criarBranch("ARGUMENTS");
+
+        AST mExecute = ASTC.criar_ExecuteFunction(eNomeEach, "iniciar");
+
 
         Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
         mASTExecute.init(mExecute);
 
-      //  System.out.println(eNomeEach + " -->> INICIAR ");
+        //  System.out.println(eNomeEach + " -->> INICIAR ");
 
 
-        AST mWhile = new AST("WHILE");
-        AST mCondition = mWhile.criarBranch("CONDITION");
+        AST mCondition = new AST("CONDITION");
         mCondition.setNome(eNomeEach);
         mCondition.setValor("STRUCT");
         AST mInternalCondition = mCondition.criarBranch("INTERNAL");
@@ -99,43 +165,28 @@ public class Run_Each {
         mInternalCondition.criarBranch("ARGUMENTS");
 
 
+        AST mBody2 = new AST("BODY");
+
+
+        AST mDefWhile = ASTC.criar_Def(mDef.getNome(),mType);
+
+        mDefWhile.getASTS().add(ASTC.criar_ValueStructFunction(eNomeEach,"getValor"));
 
 
 
-
-
-        AST mBody2 = mWhile.criarBranch("BODY");
-
-
-        AST mDefWhile = mBody2.criarBranch("DEF");
-        mDefWhile.setNome(mDef.getNome());
-        mDefWhile.getASTS().add(mType);
-        AST mVal = mDefWhile.criarBranch("VALUE");
-        mVal.setNome(eNomeEach);
-        mVal.setValor("STRUCT");
-        AST mInternalVal = mVal.criarBranch("INTERNAL");
-        mInternalVal.setNome("getValor");
-        mInternalVal.setValor("STRUCT_FUNCT");
-        mInternalVal.criarBranch("ARGUMENTS");
-
+        mBody2.getASTS().add(mDefWhile);
 
         mBody2.getASTS().addAll(mBody.getASTS());
 
 
-        AST mExecute2 = mBody2.criarBranch("EXECUTE");
-        mExecute2.setNome(eNomeEach);
-        mExecute2.setValor("STRUCT");
-        AST mInternal2 = mExecute2.criarBranch("INTERNAL");
-        mInternal2.setNome("proximo");
-        mInternal2.setValor("STRUCT_FUNCT");
-        mInternal2.criarBranch("ARGUMENTS");
+        mBody2.getASTS().add(ASTC.criar_ExecuteFunction(eNomeEach, "proximo"));
 
 
-   //     mWhile.ImprimirArvoreDeInstrucoes();
+        //     mWhile.ImprimirArvoreDeInstrucoes();
 
-        initWhile(mWhile,EachEscopo);
+        initEach(mCondition, mBody2, EachEscopo);
 
-       // System.out.println(eNomeEach + " -->> PROXIMO ");
+        // System.out.println(eNomeEach + " -->> PROXIMO ");
 
 
         mRunTime.removerHeap(eNome);
@@ -143,11 +194,8 @@ public class Run_Each {
 
     }
 
-    public void initWhile(AST ASTCorrente,Escopo EachEscopo) {
+    public void initEach(AST mCondicao, AST mCorpo, Escopo EachEscopo) {
 
-
-        AST mCondicao = ASTCorrente.getBranch("CONDITION");
-        AST mCorpo = ASTCorrente.getBranch("BODY");
 
         Run_Value mAST = new Run_Value(mRunTime, EachEscopo);
         mAST.init(mCondicao, "bool");
@@ -162,7 +210,7 @@ public class Run_Each {
 
                 int w = 0;
 
-                while(mAST.getConteudo().contentEquals("true")){
+                while (mAST.getConteudo().contentEquals("true")) {
 
                     Escopo EscopoInterno = new Escopo(mRunTime, EachEscopo);
                     EscopoInterno.setNome("While");
@@ -170,22 +218,22 @@ public class Run_Each {
                     Run_Body cAST = new Run_Body(mRunTime, EscopoInterno);
                     cAST.init(mCorpo);
 
-                    if(cAST.getCancelado()){
+                    if (cAST.getCancelado()) {
                         break;
                     }
-                    if(cAST.getContinuar()){
+                    if (cAST.getContinuar()) {
 
                     }
                     if (mRunTime.getErros().size() > 0) {
                         return;
                     }
 
-                    w+=1;
+                    w += 1;
 
                     mAST = new Run_Value(mRunTime, EachEscopo);
                     mAST.init(mCondicao, "bool");
 
-                    if( mRunTime.getErros().size()>0){
+                    if (mRunTime.getErros().size() > 0) {
                         break;
                     }
 
@@ -199,7 +247,6 @@ public class Run_Each {
         }
 
     }
-
 
 
 }

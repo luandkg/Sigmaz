@@ -129,6 +129,8 @@ public class Analisar_Outros {
 
             } else if (mAST.mesmoTipo("STRUCT")) {
 
+                mAnalisador_Bloco.getTipados().add(mAST.getNome());
+
                 AST AST_Stages = mAST.getBranch("EXTENDED");
                  if (AST_Stages.mesmoNome("STAGES")){
 
@@ -224,7 +226,7 @@ public class Analisar_Outros {
 
                 } else {
 
-                    mAnalisador.getErros().add("Tipo deconhecido y : " + mTipo.getNome());
+                    mAnalisador.getErros().add("Tipo deconhecido y3 : " + mTipo.getNome());
                 }
 
             }
@@ -248,7 +250,7 @@ public class Analisar_Outros {
 
                 } else {
 
-                    mAnalisador.getErros().add("Tipo deconhecido y : " + mTipo.getNome());
+                    mAnalisador.getErros().add("Tipo deconhecido y2 : " + mTipo.getNome());
                 }
 
             }

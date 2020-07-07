@@ -29,21 +29,26 @@ public class Estagiador {
 
                 for (AST Struct_AST : mSigmaz.getASTS()) {
 
-                    if (Struct_AST.mesmoTipo("STAGES")) {
+                    if (Struct_AST.mesmoTipo("STRUCT")) {
 
-                        if (Struct_AST.getBranch("DEFINED").mesmoNome("TRUE")) {
-                            mStages.add(Struct_AST);
+                        if (Struct_AST.getBranch("EXTENDED").mesmoNome("STAGES")) {
+                            if (Struct_AST.getBranch("DEFINED").mesmoNome("TRUE")) {
+                                mStages.add(Struct_AST);
+                            }
                         }
+
 
                     } else if (Struct_AST.mesmoTipo("PACKAGE")) {
 
                         ArrayList<AST> mPackageEstruturas = new ArrayList<AST>();
 
                         for (AST PackageStruct : Struct_AST.getASTS()) {
-                            if (PackageStruct.mesmoTipo("STAGES")) {
+                            if (PackageStruct.mesmoTipo("STRUCT")) {
 
+                                if (PackageStruct.getBranch("EXTENDED").mesmoNome("STAGES")) {
+                                    mPackageEstruturas.add(PackageStruct);
 
-                                mPackageEstruturas.add(PackageStruct);
+                                }
 
 
                             }
@@ -77,18 +82,8 @@ public class Estagiador {
 
     public void criarStructExtern(AST mSigmaz, AST mStageDef) {
 
-        AST mStruct = mSigmaz.criarBranch("STRUCT");
-        mStruct.setNome(mStageDef.getNome());
 
-
-        mStruct.criarBranch("WITH").setValor("FALSE");
-        mStruct.criarBranch("MODEL").setValor("FALSE");
-
-        AST AST_Stages = mStruct.criarBranch("EXTENDED");
-        AST_Stages.setNome("STAGES");
-
-        mStruct.criarBranch("INITS");
-        AST mCorpo = mStruct.criarBranch("BODY");
+        AST mCorpo = mStageDef.getBranch("BODY");
 
         criarFunction_NameOf(mCorpo, mStageDef);
         criarFunction_ValueOf(mCorpo, mStageDef);
@@ -137,7 +132,7 @@ public class Estagiador {
         mValue.setValor("Text");
 
 
-        for (AST AST_STAGE : mStageDef.getBranch("OPTIONS").getASTS()) {
+        for (AST AST_STAGE : mStageDef.getBranch("STAGES").getASTS()) {
 
             if (AST_STAGE.mesmoTipo("STAGE")) {
 
@@ -213,7 +208,7 @@ public class Estagiador {
 
         int resposta = 0;
 
-        for (AST AST_STAGE : mStageDef.getBranch("OPTIONS").getASTS()) {
+        for (AST AST_STAGE : mStageDef.getBranch("STAGES").getASTS()) {
 
             if (AST_STAGE.mesmoTipo("STAGE")) {
 

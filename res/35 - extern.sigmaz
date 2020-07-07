@@ -69,5 +69,4 @@ act pular ( ) {
 	def tt : num = Sacola -> CRINNAR ( 5 , 1 );
 	def MGE : num = Sacola -> TGU;
 	Sacola -> BKA = 12;
-	invoke __COMPILER__ -> UNIQUE_EXTERN ( Sacola ) :: ALL;
 }

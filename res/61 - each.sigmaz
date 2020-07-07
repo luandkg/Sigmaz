@@ -15,8 +15,11 @@ act inicio ( ) {
 	ListaNumerica.adicionar ( 50 );
 
 
+
+
     each a : num :: (ListaNumerica) -> {
         println ( "-> ", a );
+        #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
     }
 
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;

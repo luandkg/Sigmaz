@@ -710,7 +710,7 @@ public class Run_Value {
         // System.out.println("STRUCT EXTERN : " + ASTCorrente.getNome());
 
 
-        Run_Extern mEscopoExtern = mRunTime.getRun_Extern(ASTCorrente.getNome());
+        Run_Extern mEscopoExtern = mEscopo.getRun_Extern(ASTCorrente.getNome());
 
         if (mRunTime.getErros().size() > 0) {
             return;

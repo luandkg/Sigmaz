@@ -16,14 +16,27 @@ public class AST_Stages {
     public void init(AST ASTAvo) {
 
 
-        AST ASTPai = ASTAvo.criarBranch("STAGES");
+        AST ASTPai = ASTAvo.criarBranch("STRUCT");
+
+
+        AST AST_With =  ASTPai.criarBranch("WITH");
+        AST_With.setValor("FALSE");
+
+        AST AST_Model =  ASTPai.criarBranch("MODEL");
+        AST_Model.setValor("FALSE");
+
+
+        AST mExtended = ASTPai.criarBranch("EXTENDED");
+        mExtended.setNome("STAGES");
+
 
 
         AST AST_DEFINED = ASTPai.criarBranch("DEFINED");
         AST_DEFINED.setNome("TRUE");
 
+        AST AST_Opcoes = ASTPai.criarBranch("STAGES");
 
-        AST AST_Opcoes = ASTPai.criarBranch("OPTIONS");
+        AST AST_Corpo = ASTPai.criarBranch("BODY");
 
 
         Token TokenN = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome do STAGES !");

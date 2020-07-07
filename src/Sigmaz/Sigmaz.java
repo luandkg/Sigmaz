@@ -177,15 +177,6 @@ public class Sigmaz {
 
                 System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
                 System.out.println("");
-                System.out.println("\t - Actions : " + RunTimeC.getActions());
-                System.out.println("\t - Functions : " + RunTimeC.getFunctions());
-                System.out.println("\t - Operations : " + RunTimeC.getOperations());
-                System.out.println("\t - Casts : " + RunTimeC.getCasts());
-                System.out.println("\t - Structs : " + RunTimeC.getStructs());
-                System.out.println("\t - Stages : " + RunTimeC.getStages());
-                System.out.println("\t - Types : " + RunTimeC.getTypes());
-
-                System.out.println("");
 
 
                 System.out.println(RunTimeC.getArvoreDeInstrucoes());

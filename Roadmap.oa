@@ -130,12 +130,12 @@
 2020 07 02  -->>  Ast_argument Type
         
 
-2020 07 03  -->>  Ast_package
-2020 07 03  -->>  Ast_using
-2020 07 03  -->>  Exportar Conteudo Para Global Com Using
+2020 07 03  -->>  Ast_Package
+2020 07 03  -->>  Ast_Refer
+2020 07 03  -->>  Exportar Conteudo Para Global Com Refer
         
 
-2020 07 04  -->>  Analisar Using
+2020 07 04  -->>  Analisar Refer
 
 
 2020 07 05  -->>  Referenciamento De Pacotes
@@ -149,3 +149,5 @@
 2020 07 06  -->>  Herança Entre Pacotes
 2020 07 06  -->>  Unificação de Pacotes com mesmo nome
 2020 07 06  -->>  Implementando AST_Each
+2020 07 06  -->>  Externalização de Struct de Pacotes
+2020 07 06  -->>  Transformação do AST_STAGES -> AST_STRUCT com EXTENDED STAGES

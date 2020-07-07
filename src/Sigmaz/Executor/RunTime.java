@@ -16,7 +16,7 @@ public class RunTime {
     private Escopo mEscopoGlobal;
 
     private ArrayList<Run_Struct> mHeap;
-    private ArrayList<Run_Extern> mExtern;
+   private ArrayList<Run_Extern> mExtern;
     private ArrayList<Run_Type> mTypes_Instances;
     private ArrayList<Escopo> mPacotes;
 
@@ -47,13 +47,7 @@ public class RunTime {
 
     private boolean mExterno;
 
-    private int mContador_Actions;
-    private int mContador_Casts;
-    private int mContador_Functions;
-    private int mContador_Opertations;
-    private int mContador_Structs;
-    private int mContador_Stages;
-    private int mContador_Types;
+
 
     public RunTime() {
 
@@ -101,16 +95,11 @@ public class RunTime {
         mHEAPID = 0;
 
 
-        mContador_Actions = 0;
-        mContador_Casts = 0;
-        mContador_Functions = 0;
-        mContador_Opertations = 0;
-        mContador_Structs = 0;
-        mContador_Stages = 0;
+
 
 
         mHeap.clear();
-        mExtern.clear();
+       // mExtern.clear();
         mTypes_Instances.clear();
 
         mT_Primitivos.clear();
@@ -156,7 +145,7 @@ public class RunTime {
         return mHeap;
     }
 
-    public ArrayList<Run_Extern> getExtern() {
+   public ArrayList<Run_Extern> getExtern() {
         return mExtern;
     }
 
@@ -184,8 +173,22 @@ public class RunTime {
 
         mASTS = DC.Decompilar(eArquivo);
 
-        contagem();
 
+
+    }
+
+    public String getArvoreDeInstrucoes(){
+
+        Documentador DC = new Documentador();
+
+        String ret = "";
+
+        for (AST eAST : getASTS()) {
+
+            ret+=eAST.ImprimirArvoreDeInstrucoes();
+        }
+
+            return ret;
 
     }
 
@@ -270,26 +273,7 @@ public class RunTime {
 
     }
 
-    public Run_Extern getRun_Extern(String eNome) {
 
-        Run_Extern mRet = null;
-        boolean enc = false;
-
-        for (Run_Extern mRun_Struct : mExtern) {
-            if (mRun_Struct.mesmoNome(eNome)) {
-                mRet = mRun_Struct;
-                enc = true;
-                break;
-            }
-        }
-
-        if (!enc) {
-            mErros.add("Nao foi possivel encontrar a struct extern : " + eNome);
-        }
-
-        return mRet;
-
-    }
 
 
     public AST getSigmaz() {
@@ -305,41 +289,7 @@ public class RunTime {
     }
 
 
-    public void contagem() {
 
-        for (AST ASTCGlobal : mASTS) {
-
-            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
-
-                for (AST ASTC : ASTCGlobal.getASTS()) {
-
-
-                    if (ASTC.mesmoTipo("FUNCTION")) {
-                        mContador_Functions += 1;
-                    } else if (ASTC.mesmoTipo("ACTION")) {
-                        mContador_Actions += 1;
-                    } else if (ASTC.mesmoTipo("OPERATOR")) {
-                        mContador_Opertations += 1;
-
-                    } else if (ASTC.mesmoTipo("CAST")) {
-                        mContador_Casts += 1;
-                    } else if (ASTC.mesmoTipo("STAGES")) {
-                        mContador_Stages += 1;
-
-
-                    } else if (ASTC.mesmoTipo("STRUCT")) {
-                        mContador_Structs += 1;
-
-                    } else if (ASTC.mesmoTipo("TYPE")) {
-                        mContador_Types += 1;
-
-                    }
-
-                }
-            }
-        }
-
-    }
 
 
     public void run() {
@@ -485,16 +435,24 @@ public class RunTime {
                     }
                 }
 
-
+                ArrayList<Run_Extern> GlobalExtern = new ArrayList<Run_Extern>();
                 for (AST mStruct : mGlobalStructs) {
                     Run_Extern mRE = new Run_Extern(this);
-                    mRE.init(mStruct, ASTCGlobal);
+                    mRE.init("",mStruct.getNome(),mStruct, ASTCGlobal);
                     mExtern.add(mRE);
+                    GlobalExtern.add(mRE);
+
+                    Global.externalizarStructGeral(mRE.getNome());
                 }
 
-                for (Run_Extern mRE : mExtern) {
+                for (Run_Extern mRE : GlobalExtern) {
+
+                    mRE.externalizar(GlobalExtern);
+
                     mRE.run();
                 }
+
+
 
                 ArrayList<String> mUsados = new ArrayList<String>();
 
@@ -504,7 +462,8 @@ public class RunTime {
 
                         //  Usar(ASTC.getNome(), Global);
 
-                        Referenciar(ASTC.getNome(), Global,mUsados);
+                        Referenciar(ASTC.getNome(), Global, mUsados);
+                        Externalizar(ASTC, Global);
 
                     }
                 }
@@ -584,7 +543,7 @@ public class RunTime {
 
             for (AST ASTC : ASTPacote.getASTS()) {
                 if (ASTC.mesmoTipo("REFER")) {
-                    Referenciar(ASTC.getNome(), EscopoC,mUsados);
+                    Referenciar(ASTC.getNome(), EscopoC, mUsados);
                 }
             }
 
@@ -604,14 +563,14 @@ public class RunTime {
         return ret;
     }
 
-    public String getTipagem(AST eAST){
+    public String getTipagem(AST eAST) {
 
         String mTipagem = eAST.getNome();
 
-        if (eAST.mesmoValor("GENERIC")){
+        if (eAST.mesmoValor("GENERIC")) {
 
             for (AST eTipando : eAST.getASTS()) {
-                mTipagem += "<" +getTipagem(eTipando) + ">";
+                mTipagem += "<" + getTipagem(eTipando) + ">";
             }
 
         }
@@ -628,7 +587,7 @@ public class RunTime {
         EscopoPacote.setNome(ASTPai.getNome());
 
 
-       // System.out.println(" -->> Iniciando Pacote : " + ASTPai.getNome());
+        // System.out.println(" -->> Iniciando Pacote : " + ASTPai.getNome());
 
         ArrayList<AST> mPackageStructs = new ArrayList<AST>();
 
@@ -676,7 +635,7 @@ public class RunTime {
 
         for (AST mStruct : mPackageStructs) {
             Run_Extern mRE = new Run_Extern(this);
-            mRE.init(mStruct, ASTPai);
+            mRE.init( ASTPai.getNome() ,  mStruct.getNome(),mStruct, ASTPai);
             mPackageExterns.add(mRE);
         }
 
@@ -703,10 +662,24 @@ public class RunTime {
         return mRet;
     }
 
+    public void Externalizar(AST ePacote, Escopo EscopoDono) {
+
+        //System.out.println("Externalizador " + EscopoDono.getNome() + " : " + ePacote.getNome());
+
+        for (AST eStruct : getPacote(ePacote.getNome()).getASTS()) {
+
+            if (eStruct.mesmoTipo("STRUCT")){
+            //    System.out.println("Externalizar " + eStruct.getNome() + " para " + EscopoDono.getNome());
+                EscopoDono.externalizarStruct(ePacote.getNome(),eStruct.getNome());
+            }
+
+        }
+
+    }
 
 
 
-    public void Referenciar(String eNome, Escopo EscopoDono,ArrayList<String> mUsados) {
+    public void Referenciar(String eNome, Escopo EscopoDono, ArrayList<String> mUsados) {
 
         if (!mUsados.contains(eNome)) {
 
@@ -719,7 +692,7 @@ public class RunTime {
 
                     //System.out.println(" -->> Referenciando Pacote  " + eNome + " para " + EscopoDono.getNome());
 
-                    EscopoDono.referenciarEscopo( getPacote(eNome) );
+                    EscopoDono.referenciarEscopo(getPacote(eNome));
 
 
                     enc = true;
@@ -737,7 +710,6 @@ public class RunTime {
         }
 
     }
-
 
 
     public ArrayList<AST> getGlobalActions() {
@@ -840,46 +812,7 @@ public class RunTime {
     }
 
 
-    public String getArvoreDeInstrucoes() {
 
-        Documento DocumentoC = new Documento();
-
-        DocumentoC.adicionarLinha("");
-
-        for (AST a : getASTS()) {
-
-            if (a.getValor().length() > 0) {
-                DocumentoC.adicionarLinha(" " + a.getTipo() + " -> " + a.getNome() + " : " + a.getValor());
-            } else {
-                DocumentoC.adicionarLinha(" " + a.getTipo() + " -> " + a.getNome());
-            }
-
-            SubArvoreDeInstrucoes("   ", a, DocumentoC);
-
-        }
-
-        DocumentoC.adicionarLinha("");
-
-        return DocumentoC.getConteudo();
-    }
-
-    private void SubArvoreDeInstrucoes(String ePref, AST ASTC, Documento DocumentoC) {
-
-        for (AST a : ASTC.getASTS()) {
-
-            if (a.getValor().length() > 0) {
-                DocumentoC.adicionarLinha(ePref + a.getTipo() + " -> " + a.getNome() + " : " + a.getValor());
-
-            } else {
-                DocumentoC.adicionarLinha(ePref + a.getTipo() + " -> " + a.getNome());
-
-            }
-
-            SubArvoreDeInstrucoes(ePref + "   ", a, DocumentoC);
-
-        }
-
-    }
 
     public int getInstrucoes() {
 
@@ -892,33 +825,8 @@ public class RunTime {
         return ret;
     }
 
-    public int getActions() {
-        return mContador_Actions;
-    }
 
-    public int getCasts() {
-        return mContador_Casts;
-    }
 
-    public int getFunctions() {
-        return mContador_Functions;
-    }
-
-    public int getOperations() {
-        return mContador_Opertations;
-    }
-
-    public int getStages() {
-        return mContador_Stages;
-    }
-
-    public int getStructs() {
-        return mContador_Structs;
-    }
-
-    public int getTypes() {
-        return mContador_Types;
-    }
 
 
 }

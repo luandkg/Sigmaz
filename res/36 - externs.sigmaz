@@ -23,10 +23,9 @@ act inicio ( ) {
 	def valor : num = Pessoa -> publico;
 	def P1 : Pessoa = init Pessoa ( );
 	invoke __COMPILER__ -> UNIQUE_STRUCT ( P1 ) :: ALL;
-	invoke __COMPILER__ -> UNIQUE_EXTERN ( Pessoa ) :: ALL;
+
 	Pessoa -> publico = 2;
 	Pessoa -> tipo = Tipos :: ZETA;
-	invoke __COMPILER__ -> UNIQUE_EXTERN ( Pessoa ) :: ALL;
 }
 func somar_inteiro ( a : num , b : num ) : num {
 	def c : num;

@@ -120,32 +120,38 @@ public class AST {
     }
 
 
-    public void ImprimirArvoreDeInstrucoes() {
+    public String ImprimirArvoreDeInstrucoes() {
 
-        System.out.println(this.getTipo() + " -> " + this.getNome()+ " : " + this.getValor());
+        String eRet = "";
+
+        eRet += "\n" + this.getTipo() + " -> " + this.getNome()+ " : " + this.getValor();
 
         String eTab = "   ";
 
         for (AST a : getASTS()) {
 
-            System.out.println(eTab+  a.getTipo() + " -> " + a.getNome() + " : " + a.getValor());
+            eRet += "\n" + eTab+  a.getTipo() + " -> " + a.getNome() + " : " + a.getValor();
 
-            ImprimirSubArvoreDeInstrucoes(eTab+ "   " , a);
+            eRet += ImprimirSubArvoreDeInstrucoes(eTab+ "   " , a);
 
         }
 
+        return eRet;
     }
 
-    private void ImprimirSubArvoreDeInstrucoes(String ePref, AST ASTC) {
+    private String ImprimirSubArvoreDeInstrucoes(String ePref, AST ASTC) {
+
+        String eRet = "";
 
         for (AST a : ASTC.getASTS()) {
 
-            System.out.println(ePref + a.getTipo() + " -> " + a.getNome()+ " : " + a.getValor());
+            eRet += "\n" + ePref + a.getTipo() + " -> " + a.getNome()+ " : " + a.getValor();
 
-            ImprimirSubArvoreDeInstrucoes(ePref + "   ", a);
+            eRet +=  ImprimirSubArvoreDeInstrucoes(ePref + "   ", a);
 
         }
 
+        return eRet;
     }
 
 

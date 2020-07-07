@@ -28,7 +28,6 @@ public class Run_Struct {
     public Run_Struct(RunTime eRunTime) {
 
         mRunTime = eRunTime;
-        //  mEscopo = eEscopo;
 
         mNome = "";
         mStructNome = "";
@@ -113,6 +112,15 @@ public class Run_Struct {
             }
 
         }
+
+
+        // EXTERNALIZAR
+        for (Run_Extern ASTC : BuscadorDeArgumentos.getExtern()) {
+            mEscopo.externalizarDireto(ASTC);
+        }
+
+
+
 
      //   System.out.println(BuscadorDeArgumentos.getNome() + " -> Structs : " + BuscadorDeArgumentos.getStructs().size() );
 

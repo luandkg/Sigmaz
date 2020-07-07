@@ -71,16 +71,26 @@ public class Local {
             }
         }
 
+
         System.out.println(" - STAGES : ");
-        for (AST mAST : getEscopo().getRunTime().getGlobalStages()) {
-            System.out.println("\t - " + mAST.getNome());
+        for (AST mAST : getEscopo().getRunTime().getGlobalStructs()) {
+            if (mAST.getBranch("EXTENDED").mesmoNome("STAGES")){
+                System.out.println("\t - " + mAST.getNome());
+            }
         }
 
         System.out.println(" - STRUCTS : ");
         for (AST mAST : getEscopo().getRunTime().getGlobalStructs()) {
-            System.out.println("\t - " + mAST.getNome());
+            if (mAST.getBranch("EXTENDED").mesmoNome("STRUCT")){
+                System.out.println("\t - " + mAST.getNome());
+            }
         }
-
+        System.out.println(" - EXTERNALS : ");
+        for (AST mAST : getEscopo().getRunTime().getGlobalStructs()) {
+            if (mAST.getBranch("EXTENDED").mesmoNome("EXTERNAL")){
+                System.out.println("\t - " + mAST.getNome());
+            }
+        }
 
         System.out.println(" ######################### ##### ############################ ");
 

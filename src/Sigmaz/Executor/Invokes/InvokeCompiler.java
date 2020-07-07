@@ -40,9 +40,6 @@ public class InvokeCompiler {
 
             show_extern(eAcao, eSaida, ASTArgumentos);
 
-        } else if (eAcao.contentEquals("UNIQUE_EXTERN")) {
-
-            show_unique_extern(eAcao, eSaida, ASTArgumentos);
 
         } else if (eAcao.contentEquals("UNIQUE_STRUCT")) {
 
@@ -513,49 +510,5 @@ public class InvokeCompiler {
 
     }
 
-    public void show_unique_extern(String eAcao, String eSaida, AST ASTArgumentos) {
-
-        int i = 0;
-
-        String eNome = "";
-
-        for (AST eAST : ASTArgumentos.getASTS()) {
-            if (eAST.mesmoTipo("ARGUMENT")) {
-                i += 1;
-                eNome = eAST.getNome();
-            }
-        }
-
-
-        if (i == 1) {
-            if (eSaida.contentEquals("ALL")) {
-
-                if (mRunTime.getExterno()) {
-
-
-                    Run_Extern mRun_Struct = mRunTime.getRun_Extern(eNome);
-
-                    if (mRunTime.getErros().size()>0) {
-                      return;
-                    }
-
-
-                    mRun_Struct.mostrar();
-
-
-
-                }
-
-
-            } else {
-                mRunTime.getErros().add("Invocacao : " + eAcao + " -> Problema com saida !");
-            }
-
-
-        } else {
-            mRunTime.getErros().add("Invocacao : " + eAcao + " -> Problema com argumentos !");
-        }
-
-    }
 
 }

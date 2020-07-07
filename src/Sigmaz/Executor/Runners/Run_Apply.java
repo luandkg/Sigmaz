@@ -166,7 +166,7 @@ public class Run_Apply {
             return;
         }
 
-        Run_Extern mEscopoStruct = mRunTime.getRun_Extern(mSettable.getNome());
+        Run_Extern mEscopoStruct = mEscopo.getRun_Extern(mSettable.getNome());
 
 
         AST eInternal = mSettable.getBranch("INTERNAL");

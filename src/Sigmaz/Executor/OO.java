@@ -209,13 +209,7 @@ public class OO {
             Index_Action mAct = new Index_Action(eAST);
             mInits.add(mAct);
 
-        } else if (eAST.mesmoTipo("STAGES")) {
 
-            mStages.add(eAST);
-
-          //  System.out.println("Alocando Stage : " + eAST.getNome());
-
-            AlocarStages(eAST,mEscopo);
 
         } else if (eAST.mesmoTipo("TYPE")) {
 
@@ -223,7 +217,13 @@ public class OO {
 
         } else if (eAST.mesmoTipo("STRUCT")) {
 
-            mStructs.add(eAST);
+            if (eAST.getBranch("EXTENDED").mesmoNome("STAGES")){
+                mStages.add(eAST);
+
+                AlocarStages(eAST,mEscopo);
+            }else{
+                mStructs.add(eAST);
+            }
 
         }
 
@@ -234,7 +234,7 @@ public class OO {
 
         int i = 0;
 
-        for (AST AST_STAGE : eAST.getBranch("OPTIONS").getASTS()) {
+        for (AST AST_STAGE : eAST.getBranch("STAGES").getASTS()) {
 
             if (AST_STAGE.mesmoTipo("STAGE")) {
                 mEscopo.criarDefinicao(eAST.getNome() + "::" + AST_STAGE.getNome(), eAST.getNome(), String.valueOf(i));
