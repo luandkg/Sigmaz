@@ -122,10 +122,64 @@ public class OAVersion {
 
         Pacote OA = arquivo.UnicoPacote("OAVersion");
 
+        Pacote Branches = OA.UnicoPacote("Branches");
         Pacote Releases = OA.UnicoPacote("Releases");
 
 
         String Hoje = getData();
+
+        String v = OA.Identifique("Version").getValor();
+
+        v = string_num(v, 1);
+
+        String b = OA.Identifique("Branch").getValor();
+        Pacote Branch = null;
+
+
+        int bi = 1;
+
+        if (b.length() == 0) {
+            Branch = Branches.PacoteComAtributoUnico("Branch", "Date", Hoje);
+
+            Branch.Identifique("Start").setValor(getDataHora());
+            Branch.Identifique("Update").setValor(".");
+            Branch.Identifique("End").setValor(".");
+            Branch.Identifique("Status").setValor("BLUE");
+
+        } else {
+
+            Branch = Branches.PacoteComAtributoUnico("Branch", "Date", b);
+
+            if (b.contentEquals(Hoje)) {
+                Branch.Identifique("Update").setValor(getDataHora());
+
+                String C = Branch.Identifique("Count").getValor();
+                bi = get_string_num(C, 1) ;
+
+
+            } else {
+                Branch.Identifique("End").setValor(getDataHora());
+                Branch.Identifique("Status").setValor("RED");
+
+                Branch = Branches.PacoteComAtributoUnico("Branch", "Date", Hoje);
+                Branch.Identifique("Start").setValor(getDataHora());
+                Branch.Identifique("Update").setValor(".");
+                Branch.Identifique("End").setValor(".");
+                Branch.Identifique("Status").setValor("BLUE");
+
+            }
+
+        }
+
+        Branch.Identifique("Count").setValor(String.valueOf(bi));
+
+        int Trabalhos = Branches.getPacotes().size();
+        String Full = v + "." + min3(Trabalhos) + "." + bi;
+
+        OA.Identifique("Branch").setValor(Hoje);
+        OA.Identifique("Works").setValor(String.valueOf(Trabalhos));
+        OA.Identifique("Full").setValor(Full);
+
 
         Pacote R = Releases.PacoteComAtributoUnico("Release", "Date", Hoje);
 
