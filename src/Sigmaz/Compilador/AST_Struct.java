@@ -39,6 +39,8 @@ public class AST_Struct {
 
             AST mBases = AST_Corrente.criarBranch("BASES");
 
+            AST mRefers = AST_Corrente.criarBranch("REFERS");
+
 
             AST AST_Inits =  AST_Corrente.criarBranch("INITS");
 

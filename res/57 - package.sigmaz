@@ -1,11 +1,13 @@
 package Terminal {
-	act println ( a : string , b : num ) {
+
+    struct Terminal{
+	extern: act println ( a : string , b : num ) {
 		def c : num;
 		invoke terminal -> change ( ) :: c;
 		invoke terminal -> print ( a ) :: c;
 		invoke terminal -> print ( b ) :: c;
 	}
-	
+	}
 }
 package Blocos {
 	refer Terminal;
@@ -13,9 +15,7 @@ package Blocos {
 		CLARO , DOIS , TRES , QUATRO 
 	}
 
-	act Blocar ( a : num , b : num ) {
-		println ( " -->> Valor A : ", a );
-	}
+
 
 	struct XACC {
 		all : 
@@ -34,6 +34,12 @@ package Blocos {
 		}
 		
 	}
+        struct Blocos{
+		extern: act Blocar ( a : num , b : num ) {
+    		Terminal->println ( " -->> Valor A : ", a );
+    	}
+}
+
 	external BRUTAL {
 		act FORCAR ( ) {
 			
@@ -48,13 +54,22 @@ refer Terminal;
 call iniciar -> {
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: PACKAGES;
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
-	println ( " -->> Valorando : ", 50 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: EXTERNS;
+
+	Terminal->println ( " -->> Valorando : ", 50 );
+
+
 	def m : MODOS = MODOS :: CLARO;
-	Blocar ( 3 , 2 );
-	Blocar ( 5 , 1 );
+	Blocos->Blocar ( 3 , 2 );
+
+
+
+
+	Blocos->Blocar ( 5 , 1 );
 	def bg : BGeral = init BGeral ( 15 );
-	Blocar ( 7 , 1 );
+	Blocos->Blocar ( 7 , 1 );
 	def bga : num = bg.getA ( );
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 }

@@ -1,6 +1,6 @@
 package castings {
 
-
+struct Castings{
 func num_to_string ( a : num , b : num ) : string {
 	def c : string;
 	invoke casting -> cast_fns ( a , b ) :: c;
@@ -69,5 +69,6 @@ func string_append ( a : string , b : string , c : string , d : string , e : str
 	return ret;
 }
 
+}
 
 }

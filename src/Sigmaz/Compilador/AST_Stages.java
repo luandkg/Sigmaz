@@ -29,12 +29,14 @@ public class AST_Stages {
         AST mExtended = ASTPai.criarBranch("EXTENDED");
         mExtended.setNome("STAGES");
 
+        AST mRefers = ASTPai.criarBranch("REFERS");
 
 
         AST AST_DEFINED = ASTPai.criarBranch("DEFINED");
         AST_DEFINED.setNome("TRUE");
 
         AST AST_Opcoes = ASTPai.criarBranch("STAGES");
+
 
         AST AST_Corpo = ASTPai.criarBranch("BODY");
 

@@ -120,11 +120,19 @@ public class Run_Struct {
         }
 
 
+        //   System.out.println(BuscadorDeArgumentos.getNome() + " -> Structs : " + BuscadorDeArgumentos.getStructs().size() );
 
+       // System.out.println("ESCOPO :: " + mEscopo.getNome());
+      //  for (String eRefer : BuscadorDeArgumentos.getRefers()) {
 
-     //   System.out.println(BuscadorDeArgumentos.getNome() + " -> Structs : " + BuscadorDeArgumentos.getStructs().size() );
+         //   System.out.println( "\t   PAST REFER -->> " + eRefer);
 
-        for (AST ASTC : BuscadorDeArgumentos.getStructs()) {
+     //   }
+     //   for (AST ASTC : mRunTime.getStructsContexto(BuscadorDeArgumentos.getRefers())) {
+      //      System.out.println( "\t   STRUCT -->> " + ASTC.getNome());
+     //  }
+
+        for (AST ASTC : mRunTime.getStructsContexto(BuscadorDeArgumentos.getRefers())) {
 
             if (ASTC.mesmoTipo("STRUCT")) {
                 if (ASTC.mesmoNome(mStructNome)) {
@@ -183,6 +191,22 @@ public class Run_Struct {
         //   System.out.println("\t - Abstrata : " + init_Generic.getNome());
         //    System.out.println("\t - Tipagem : " + initTipagem);
 
+        AST mRefers = mAST_Struct.getBranch("REFERS");
+        for (AST ASTC : mRefers.getASTS()) {
+            String eRefer = ASTC.getNome();
+
+      //      System.out.println( mEscopo.getNome() +  "   REFER -->> " + eRefer);
+
+            mEscopo.adicionarRefer(eRefer);
+            for (AST mDentro : mRunTime.getPacote(eRefer).getASTS()) {
+
+            //    System.out.println("\t\t\t -> Recebendo " + mDentro.getNome());
+                mEscopo.guardar(mDentro);
+
+            }
+        }
+
+
         mStructCorpo = mAST_Struct.getBranch("BODY").copiar();
         mStructInits = mAST_Struct.getBranch("INITS").copiar();
 
@@ -206,15 +230,14 @@ public class Run_Struct {
 
                     mAlterador.adicionar(eSub.getNome(), init_Generic.getASTS().get(i).copiar());
 
-                 //   System.out.println("Alterando " + eSub.getNome() + " -> " + getTipagem( init_Generic.getASTS().get(i)) );
-                 //   init_Generic.getBranch("TYPE").ImprimirArvoreDeInstrucoes();
+                    //   System.out.println("Alterando " + eSub.getNome() + " -> " + getTipagem( init_Generic.getASTS().get(i)) );
+                    //   init_Generic.getBranch("TYPE").ImprimirArvoreDeInstrucoes();
 
                     i += 1;
                 }
 
                 mAlterador.alterar(mStructInits);
                 mAlterador.alterar(mStructCorpo);
-
 
 
             } else {
@@ -234,10 +257,10 @@ public class Run_Struct {
 
         if (mRunTime.getExterno()) {
 
-          //  System.out.println("########################### GENERIC ############################");
-          //  mStructInits.ImprimirArvoreDeInstrucoes();
-          //  mStructCorpo.ImprimirArvoreDeInstrucoes();
-         //   System.out.println("########################### ####### ############################");
+            //  System.out.println("########################### GENERIC ############################");
+            //  mStructInits.ImprimirArvoreDeInstrucoes();
+            //  mStructCorpo.ImprimirArvoreDeInstrucoes();
+            //   System.out.println("########################### ####### ############################");
 
         }
 
@@ -343,14 +366,14 @@ public class Run_Struct {
 
     }
 
-    public String getTipagem(AST eAST){
+    public String getTipagem(AST eAST) {
 
         String mTipagem = eAST.getNome();
 
-        if (eAST.mesmoValor("GENERIC")){
+        if (eAST.mesmoValor("GENERIC")) {
 
             for (AST eTipando : eAST.getASTS()) {
-                mTipagem += "<" +getTipagem(eTipando) + ">";
+                mTipagem += "<" + getTipagem(eTipando) + ">";
             }
 
         }
@@ -667,7 +690,7 @@ public class Run_Struct {
 
     public void init_ActionFunction(AST ASTCorrente, Escopo BuscadorDeArgumentos) {
 
-      //  System.out.println(BuscadorDeArgumentos.getNome() + " AF -> Structs : " + BuscadorDeArgumentos.getStructs().size() );
+        //  System.out.println(BuscadorDeArgumentos.getNome() + " AF -> Structs : " + BuscadorDeArgumentos.getStructs().size() );
 
 
         Run_Any mRun_Any = new Run_Any(mRunTime);

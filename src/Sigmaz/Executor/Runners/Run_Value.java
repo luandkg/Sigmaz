@@ -391,15 +391,18 @@ public class Run_Value {
 
     public void Init(AST ASTCorrente, String eRetorno) {
 
-        //  mRunTime.getErros().add("Vamos Struct - " + eRetorno);
+        //System.out.println("Vamos Struct 1 - " + mRunTime.getErros().size());
+
         long HEAPID = mRunTime.getHEAPID();
         String eNome = "<Struct::" + eRetorno + ":" + HEAPID + ">";
+
 
 
         Run_Struct mRun_Struct = new Run_Struct(mRunTime);
         mRun_Struct.setNome(eNome);
         mRun_Struct.init(eRetorno, ASTCorrente, mEscopo);
 
+       // System.out.println("Vamos Struct 2 - " + mRunTime.getErros().size());
 
         mRunTime.adicionarHeap(mRun_Struct);
 

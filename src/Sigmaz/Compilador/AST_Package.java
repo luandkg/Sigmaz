@@ -75,34 +75,34 @@ public class AST_Package {
                 AST_Refer mAST = new AST_Refer(mCompiler);
                 mAST.init(AST_Raiz);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
+            //} else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
 
-                AST_Action mAST = new AST_Action(mCompiler);
-                mAST.init(AST_Raiz, "ALL");
+             //   AST_Action mAST = new AST_Action(mCompiler);
+             //   mAST.init(AST_Raiz, "ALL");
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
+          //  } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
 
-                AST_Function mAST = new AST_Function(mCompiler);
-                mAST.init(AST_Raiz, "ALL");
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
+           //     AST_Function mAST = new AST_Function(mCompiler);
+           //     mAST.init(AST_Raiz, "ALL");
+         //   } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 
-                AST_Alocador mAST = new AST_Alocador(mCompiler);
-                mAST.init("MOCKIZ", AST_Raiz, "ALL");
+           //     AST_Alocador mAST = new AST_Alocador(mCompiler);
+           //     mAST.init("MOCKIZ", AST_Raiz, "ALL");
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
+           // } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
 
-                AST_Alocador mAST = new AST_Alocador(mCompiler);
-                mAST.init("DEFINE", AST_Raiz, "ALL");
+           //     AST_Alocador mAST = new AST_Alocador(mCompiler);
+           //     mAST.init("DEFINE", AST_Raiz, "ALL");
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operator")) {
+         //   } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operator")) {
 
-                AST_Operation mAST = new AST_Operation(mCompiler);
-                mAST.init(AST_Raiz, "ALL");
+          //      AST_Operation mAST = new AST_Operation(mCompiler);
+          //      mAST.init(AST_Raiz, "ALL");
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("director")) {
+         //   } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("director")) {
 
-                AST_Director mAST = new AST_Director(mCompiler);
-                mAST.init(AST_Raiz, "ALL");
+         //       AST_Director mAST = new AST_Director(mCompiler);
+          //      mAST.init(AST_Raiz, "ALL");
 
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("cast")) {

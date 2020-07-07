@@ -509,8 +509,19 @@ public class EscopoDebug {
 
         System.out.println(" ######################### LOCAL : STRUCTS - " + mEscopo.getNome() + " ############################ ");
 
+           for (AST ASTC : mEscopo.getRunTime().getStructsContexto(mEscopo.getRefers())) {
 
-        listar_Structs();
+
+                   if (ASTC.getBranch("EXTENDED").mesmoNome("STRUCT")) {
+                       System.out.println("\t - " + ASTC.getNome());
+                   }
+
+
+
+
+          }
+
+
 
 
         System.out.println(" ######################### ##### ############################ ");

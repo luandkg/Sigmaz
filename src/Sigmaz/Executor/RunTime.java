@@ -18,7 +18,6 @@ public class RunTime {
     private ArrayList<Run_Struct> mHeap;
     private ArrayList<Run_Extern> mExtern;
     private ArrayList<Run_Type> mTypes_Instances;
-    private ArrayList<AST> mPacotes;
 
 
     private ArrayList<AST> mGlobalActions;
@@ -30,7 +29,6 @@ public class RunTime {
     private ArrayList<AST> mGlobalStages;
     private ArrayList<AST> mGlobalStructs;
     private ArrayList<AST> mGlobalPackages;
-    private ArrayList<AST> mGlobalPackages_Originais;
 
     private ArrayList<AST> mGlobalOperacoes;
     private ArrayList<AST> mGlobalDirectors;
@@ -55,7 +53,6 @@ public class RunTime {
 
         mErros = new ArrayList<>();
 
-        mPacotes = new ArrayList<AST>();
 
         mT_Primitivos = new ArrayList<String>();
         mT_Casts = new ArrayList<String>();
@@ -73,7 +70,6 @@ public class RunTime {
         mGlobalStages = new ArrayList<AST>();
         mGlobalStructs = new ArrayList<AST>();
         mGlobalPackages = new ArrayList<AST>();
-        mGlobalPackages_Originais = new ArrayList<AST>();
 
         mHeap = new ArrayList<Run_Struct>();
         mTypes_Instances = new ArrayList<Run_Type>();
@@ -97,7 +93,6 @@ public class RunTime {
 
 
         mHeap.clear();
-        // mExtern.clear();
         mTypes_Instances.clear();
 
         mT_Primitivos.clear();
@@ -106,7 +101,6 @@ public class RunTime {
         mT_Structs.clear();
         mT_Stages.clear();
 
-        mPacotes.clear();
 
         mGlobalActions.clear();
         mGlobalFunctions.clear();
@@ -117,7 +111,6 @@ public class RunTime {
         mGlobalStages.clear();
         mGlobalStructs.clear();
         mGlobalPackages.clear();
-        mGlobalPackages_Originais.clear();
 
 
     }
@@ -285,110 +278,6 @@ public class RunTime {
     }
 
 
-    public void run() {
-
-        limpar();
-
-
-        Escopo Global = new Escopo(this, null);
-        Global.setNome("GLOBAL");
-
-        mEscopoGlobal = Global;
-
-        ArrayList<String> mRequiscoes = new ArrayList<>();
-
-
-        for (AST ASTCGlobal : mASTS) {
-            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
-
-                for (AST ASTC : ASTCGlobal.getASTS()) {
-                    if (ASTC.mesmoTipo("REQUIRED")) {
-
-                        String mReq = mLocal + ASTC.getNome() + ".sigmad";
-                        mRequiscoes.add(mReq);
-
-
-                    }
-
-                }
-
-            }
-        }
-
-        // IMPORTANDO BIBLIOTECAS EXTERNAS
-
-        for (String mReq : mRequiscoes) {
-
-            File arq = new File(mReq);
-
-            if (arq.exists()) {
-
-
-                RunTime RunTimeC = new RunTime();
-
-                try {
-                    RunTimeC.init(mReq);
-
-                    for (AST ASTR : RunTimeC.getBranch("SIGMAZ").getASTS()) {
-
-                        this.getBranch("SIGMAZ").getASTS().add(ASTR);
-
-                    }
-
-
-                } catch (Exception e) {
-                    mErros.add("Library " + mReq + " : Problema ao carregar !");
-                }
-
-            } else {
-                mErros.add("Library " + mReq + " : Nao Encontrado !");
-            }
-
-        }
-
-        // INICIANDO EXECUCAO
-
-        boolean enc = false;
-        AST ASTSigmaz = null;
-
-        for (AST ASTCGlobal : mASTS) {
-
-            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
-
-                ASTSigmaz = ASTCGlobal;
-                enc = true;
-
-                for (AST ASTC : ASTCGlobal.getASTS()) {
-                    if (ASTC.mesmoTipo("PACKAGE")) {
-                        mT_Types.add(ASTC.getNome());
-
-                        mGlobalPackages.add(ASTC);
-                        mGlobalPackages_Originais.add(ASTC.copiar());
-
-                    }
-
-                }
-
-
-            }
-
-
-        }
-
-        if (enc) {
-            runSigmaz(ASTSigmaz.copiar(), Global);
-
-          //  System.out.println(ASTSigmaz.ImprimirArvoreDeInstrucoes());
-
-        }
-
-        if (mASTS.size() == 0) {
-            mErros.add("Sigmaz Vazio !");
-        }
-
-
-    }
-
     public void indexar(AST ASTCGlobal, Escopo Global) {
 
         for (AST ASTC : ASTCGlobal.getASTS()) {
@@ -452,114 +341,106 @@ public class RunTime {
 
     }
 
-    public void runSigmaz(AST ASTCGlobal, Escopo Global) {
+    public void requerer(){
 
-        for (AST mPackage : mGlobalPackages) {
-            referenciando(mPackage);
-
-
-        }
+        ArrayList<String> mRequiscoes = new ArrayList<>();
 
 
-        for (AST mStruct : mGlobalStructs) {
-            for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
-                if (mStructBody.mesmoTipo("OPERATOR") && mStructBody.getBranch("VISIBILITY").mesmoNome("EXTERN")) {
-                    // System.out.println("PORRA PERDIDA");
+        for (AST ASTCGlobal : mASTS) {
+            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
 
-                    mGlobalOperacoes.add(mStructBody);
+                for (AST ASTC : ASTCGlobal.getASTS()) {
+                    if (ASTC.mesmoTipo("REQUIRED")) {
 
-
-                }
-            }
-        }
-
-        ArrayList<Run_Extern> GlobalExtern = new ArrayList<Run_Extern>();
-        for (AST mStruct : mGlobalStructs) {
-
-            //   System.out.println("GLOBAL Externalizar " +mStruct.getNome() );
-
-            Run_Extern mRE = new Run_Extern(this);
-            mRE.init("", mStruct.getNome(), mStruct, ASTCGlobal);
-            mExtern.add(mRE);
-            GlobalExtern.add(mRE);
-
-            Global.externalizarStructGeral(mRE.getNome());
-        }
-
-        for (Run_Extern mRE : GlobalExtern) {
-
-            mRE.externalizar(GlobalExtern);
-
-            mRE.run();
-        }
+                        String mReq = mLocal + ASTC.getNome() + ".sigmad";
+                        mRequiscoes.add(mReq);
 
 
-        ArrayList<String> mUsados = new ArrayList<String>();
-
-        referenciando(ASTCGlobal);
-
-        indexar(ASTCGlobal, Global);
-
-
-        for (AST ASTC : ASTCGlobal.getASTS()) {
-
-            if (this.getErros().size() > 0) {
-                return;
-            }
-
-            if (ASTC.mesmoTipo("DEFINE")) {
-
-                Run_Def mAST = new Run_Def(this, Global);
-                mAST.init(ASTC);
-
-
-            } else if (ASTC.mesmoTipo("MOCKIZ")) {
-
-
-                Run_Moc mAST = new Run_Moc(this, Global);
-                mAST.init(ASTC);
-
-            } else if (ASTC.mesmoTipo("INVOKE")) {
-
-                Run_Invoke mAST = new Run_Invoke(this, Global);
-                mAST.init(ASTC);
-
-            }
-
-        }
-
-        for (AST ASTC : ASTCGlobal.getASTS()) {
-
-            if (ASTC.mesmoTipo("CALL")) {
-
-
-                if (ASTC.mesmoValor("REFER")) {
-                    AST mSending = ASTC.getBranch("SENDING");
-                    Run_Func mAST = new Run_Func(this, Global);
-                    mAST.init_ActionFunction(mSending);
-                } else {
-
-                    Run_Body mAST = new Run_Body(this, Global);
-                    mAST.init(ASTC.getBranch("BODY"));
+                    }
 
                 }
 
-
             }
+        }
+
+        // IMPORTANDO BIBLIOTECAS EXTERNAS
+
+        for (String mReq : mRequiscoes) {
+
+            File arq = new File(mReq);
+
+            if (arq.exists()) {
 
 
-            if (mErros.size() > 0) {
-                break;
+                RunTime RunTimeC = new RunTime();
+
+                try {
+                    RunTimeC.init(mReq);
+
+                    for (AST ASTR : RunTimeC.getBranch("SIGMAZ").getASTS()) {
+
+                        this.getBranch("SIGMAZ").getASTS().add(ASTR);
+
+                    }
+
+
+                } catch (Exception e) {
+                    mErros.add("Library " + mReq + " : Problema ao carregar !");
+                }
+
+            } else {
+                mErros.add("Library " + mReq + " : Nao Encontrado !");
             }
 
         }
+
 
     }
+
+    public void run() {
+
+        limpar();
+
+        requerer();
+
+        boolean enc = false;
+        AST ASTSigmaz = null;
+
+        for (AST ASTCGlobal : mASTS) {
+
+            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
+
+                ASTSigmaz = ASTCGlobal;
+                enc = true;
+
+            }
+
+
+        }
+
+        if (enc) {
+
+            Escopo Global = new Escopo(this, null);
+            Global.setNome("GLOBAL");
+
+            mEscopoGlobal = Global;
+
+            Run eRun = new Run(this);
+            eRun.runSigmaz(ASTSigmaz, Global);
+
+        }else {
+            mErros.add("Sigmaz Vazio !");
+        }
+
+
+    }
+
+
 
     public boolean existePacote(String eNome) {
         boolean ret = false;
 
-        for (AST ASTC : mGlobalPackages_Originais) {
+        for (AST ASTC : mGlobalPackages) {
             if (ASTC.mesmoNome(eNome)) {
                 ret = true;
                 break;
@@ -571,7 +452,7 @@ public class RunTime {
     public AST getPacote(String eNome) {
         AST ret = null;
 
-        for (AST ASTC : mGlobalPackages_Originais) {
+        for (AST ASTC : mGlobalPackages) {
             if (ASTC.mesmoNome(eNome)) {
                 ret = ASTC;
                 break;
@@ -597,36 +478,32 @@ public class RunTime {
 
     }
 
-    public void referenciando(AST ASTPai) {
+    public ArrayList<AST> getStructsContexto(ArrayList<String> mPacotes) {
+        ArrayList<AST> ret = new ArrayList<AST>();
 
-
-        ArrayList<String> mUsados = new ArrayList<String>();
-        ArrayList<String> mRefers = new ArrayList<String>();
-
-        for (AST ASTC : ASTPai.getASTS()) {
-            if (ASTC.mesmoTipo("REFER")) {
-
-                String Referencia = ASTC.getNome();
-                mRefers.add(Referencia);
-
-
-            }
+        for (AST eAST : mGlobalStructs) {
+             ret.add(eAST);
         }
 
-        for (String Referencia : mRefers) {
-            System.out.println(" -->> Referenciado Pacote : " + Referencia);
+        for (String Referencia : mPacotes) {
 
             if (existePacote(Referencia)) {
+
                 for (AST eAST : getPacote(Referencia).getASTS()) {
-                    System.out.println(" \t\t - " + eAST.getTipo() + " :  " + eAST.getNome());
-                    ASTPai.getASTS().add(eAST);
+                    if (eAST.mesmoTipo("STRUCT")) {
+                      //  System.out.println(" \t\t - " + eAST.getTipo() + " :  " + eAST.getNome());
+                        ret.add(eAST);
+                    }
                 }
+
             } else {
-                mErros.add("PACKAGE " + Referencia + " : Nao encontrado !");
+                mErros.add("PACKAGE  " + Referencia + " : Nao encontrado !");
             }
+
         }
 
-        mPacotes.add(ASTPai);
+
+        return ret;
     }
 
 
@@ -681,6 +558,19 @@ public class RunTime {
         return mGlobalDirectors;
     }
 
+
+    public ArrayList<String> getRefers(String eNome) {
+
+        ArrayList<String> mRet = new ArrayList<String>();
+        for (AST PKG : getGlobalPackages()) {
+            for (AST Sub : PKG.getASTS()) {
+                if (Sub.mesmoTipo("REFER")) {
+                    mRet.add(Sub.getNome());
+                }
+            }
+        }
+        return mRet;
+    }
 
     public void estrutura() {
 

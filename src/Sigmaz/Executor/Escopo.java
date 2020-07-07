@@ -122,7 +122,11 @@ public class Escopo {
         mRet.addAll(mRefers);
 
         if (this.mEscopoAnterior != null) {
-            mRet.addAll(mEscopoAnterior.getRefers());
+            for (String r : mEscopoAnterior.getRefers()) {
+              if (!mRet.contains(r)){
+                  mRet.add(r);
+              }
+            }
         }
 
 

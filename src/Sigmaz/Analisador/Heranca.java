@@ -45,7 +45,7 @@ public class Heranca {
                         }
                     }
 
-                    mStruct_Referenciadas = referenciarStructs(mPacotes,Struct_AST);
+                    mStruct_Referenciadas = referenciarStructs(mPacotes, Struct_AST);
 
 
                     for (AST PackageStruct : mPackageStructs) {
@@ -69,7 +69,7 @@ public class Heranca {
 
                 }
 
-                mPackageStructs_refer = referenciarStructs(mPacotes,mAST);
+                mPackageStructs_refer = referenciarStructs(mPacotes, mAST);
 
                 for (AST Struct_AST : mPackageStructs) {
 
@@ -99,9 +99,10 @@ public class Heranca {
 
         for (AST ASTC : mPacotes) {
 
+            ArrayList<String> usados = new ArrayList<String>();
 
             PacoteRefer RP = new PacoteRefer();
-            RP.Complexidade = pacoteContagemRefer(mPacotes, ASTC.getNome());
+            RP.Complexidade = pacoteContagemRefer(mPacotes, ASTC.getNome(), usados);
             RP.Pacote = ASTC;
             Ref_Pacotes.add(RP);
 
@@ -165,28 +166,34 @@ public class Heranca {
         return enc;
     }
 
-    public int pacoteContagemRefer(ArrayList<AST> mPacotes, String eNome) {
+    public int pacoteContagemRefer(ArrayList<AST> mPacotes, String eNome, ArrayList<String> mUsados) {
         int enc = -1;
 
         for (AST ASTC : mPacotes) {
+
+
             if (ASTC.mesmoNome(eNome)) {
                 enc = 0;
+                if (!mUsados.contains(eNome)) {
+                    mUsados.add(eNome);
 
-                for (AST PackageStruct : ASTC.getASTS()) {
-                    if (PackageStruct.mesmoTipo("REFER")) {
+
+                    for (AST PackageStruct : ASTC.getASTS()) {
+                        if (PackageStruct.mesmoTipo("REFER")) {
 
 
-                        int tmp = pacoteContagemRefer(mPacotes, PackageStruct.getNome());
-                        if (tmp == -1) {
-                            return -1;
-                        } else {
-                            enc += 1 + tmp;
+                            int tmp = pacoteContagemRefer(mPacotes, PackageStruct.getNome(), mUsados);
+                            if (tmp == -1) {
+                                return -1;
+                            } else {
+                                enc += 1 + tmp;
+                            }
                         }
                     }
+
+
+                    break;
                 }
-
-
-                break;
             }
         }
         return enc;
@@ -286,16 +293,16 @@ public class Heranca {
 
             boolean normalizavel = getNormalizavel(Struct_Base, mEstruturas, mDependencias, mEstruturasReferenciadas);
 
-            Realizar_Heranca(Struct_AST.getNome(), mDependencias, mEstruturas,mEstruturasReferenciadas);
+            Realizar_Heranca(Struct_AST.getNome(), mDependencias, mEstruturas, mEstruturasReferenciadas);
 
         }
 
     }
 
 
-    public void Realizar_Heranca(String Struct_Nome, ArrayList<String> mDependencias, ArrayList<AST> mEstruturas,ArrayList<AST> mEstruturasReferenciadas) {
+    public void Realizar_Heranca(String Struct_Nome, ArrayList<String> mDependencias, ArrayList<AST> mEstruturas, ArrayList<AST> mEstruturasReferenciadas) {
 
-        AST Super = ProcurarStruct(Struct_Nome, mEstruturas,mEstruturasReferenciadas);
+        AST Super = ProcurarStruct(Struct_Nome, mEstruturas, mEstruturasReferenciadas);
 
         String eBase = Super.getBranch("WITH").getNome();
 
@@ -309,7 +316,7 @@ public class Heranca {
         mAnalisador.mensagem("Realizando Heranca : " + Struct_Nome + " -> " + eBase);
         for (String mDepende : mDependencias) {
 
-            AST Base = ProcurarStruct(mDepende, mEstruturas,mEstruturasReferenciadas);
+            AST Base = ProcurarStruct(mDepende, mEstruturas, mEstruturasReferenciadas);
 
             if (Base.getBranch("WITH").mesmoValor("TRUE")) {
                 mAnalisador.mensagem("\t\t - Precisa de : " + mDepende + " -> " + Base.getBranch("WITH").getNome());
@@ -319,7 +326,7 @@ public class Heranca {
         }
 
 
-        DependencieAgora("", Struct_Nome, eBase, mEstruturas,mEstruturasReferenciadas);
+        DependencieAgora("", Struct_Nome, eBase, mEstruturas, mEstruturasReferenciadas);
 
 
         for (String mDepende : mDependencias) {
@@ -329,23 +336,23 @@ public class Heranca {
 
     }
 
-    public AST ProcurarStruct(String eNome, ArrayList<AST> mEstruturas,ArrayList<AST> mEstruturasReferenciadas) {
+    public AST ProcurarStruct(String eNome, ArrayList<AST> mEstruturas, ArrayList<AST> mEstruturasReferenciadas) {
         AST mRet = null;
         boolean enc = false;
 
         for (AST Procurando : mEstruturas) {
             if (Procurando.mesmoNome(eNome)) {
                 mRet = Procurando;
-                enc=true;
+                enc = true;
                 break;
             }
         }
 
-        if(!enc){
+        if (!enc) {
             for (AST Procurando : mEstruturasReferenciadas) {
                 if (Procurando.mesmoNome(eNome)) {
                     mRet = Procurando;
-                    enc=true;
+                    enc = true;
                     break;
                 }
             }
@@ -354,12 +361,12 @@ public class Heranca {
     }
 
 
-    public boolean estanoRefer(String eNome,ArrayList<AST> mEstruturasReferenciadas){
+    public boolean estanoRefer(String eNome, ArrayList<AST> mEstruturasReferenciadas) {
         boolean enc = false;
 
         for (AST Procurando : mEstruturasReferenciadas) {
             if (Procurando.mesmoNome(eNome)) {
-                enc=true;
+                enc = true;
                 break;
             }
         }
@@ -367,13 +374,13 @@ public class Heranca {
     }
 
 
-    public AST MontarBase(String ePref, String eBaseNome, ArrayList<AST> mEstruturas,ArrayList<AST> mEstruturasReferenciadas) {
-        AST copia = ProcurarStruct(eBaseNome, mEstruturas,mEstruturasReferenciadas).copiar();
+    public AST MontarBase(String ePref, String eBaseNome, ArrayList<AST> mEstruturas, ArrayList<AST> mEstruturasReferenciadas) {
+        AST copia = ProcurarStruct(eBaseNome, mEstruturas, mEstruturasReferenciadas).copiar();
 
 
         if (copia.getBranch("WITH").mesmoValor("TRUE")) {
 
-            DependencieAgora(ePref + "\t", eBaseNome, copia.getBranch("WITH").getNome(), mEstruturas,mEstruturasReferenciadas);
+            DependencieAgora(ePref + "\t", eBaseNome, copia.getBranch("WITH").getNome(), mEstruturas, mEstruturasReferenciadas);
 
         } else {
 
@@ -388,16 +395,16 @@ public class Heranca {
         return copia;
     }
 
-    public void DependencieAgora(String ePref, String eStructNome, String eBaseNome, ArrayList<AST> mEstruturas,ArrayList<AST> mEstruturasReferenciadas) {
+    public void DependencieAgora(String ePref, String eStructNome, String eBaseNome, ArrayList<AST> mEstruturas, ArrayList<AST> mEstruturasReferenciadas) {
 
 
-        AST Base = MontarBase(ePref, eBaseNome, mEstruturas,mEstruturasReferenciadas);
+        AST Base = MontarBase(ePref, eBaseNome, mEstruturas, mEstruturasReferenciadas);
 
 
         mAnalisador.mensagem(ePref + "--------------------------------------------------");
 
 
-        AST Super = ProcurarStruct(eStructNome, mEstruturas,mEstruturasReferenciadas);
+        AST Super = ProcurarStruct(eStructNome, mEstruturas, mEstruturasReferenciadas);
 
         AST Base_Inits = Base.getBranch("INITS");
         AST Super_Inits = Super.getBranch("INITS");

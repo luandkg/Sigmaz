@@ -1,8 +1,17 @@
 
 package MAIS {
 
-    act maisoque(){
+    #refer Objetos;
 
+    struct Mais{
+        all:
+         act mostraral(){
+                invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+                invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
+                invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STRUCTS;
+
+                #def e : Esconder = init Esconder("a");
+            }
     }
 
 }
@@ -22,7 +31,7 @@ package Objetos {
             act esconder(a:string){}
 
             act mostrarStruct(){
-            			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+            	invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
             }
 
 
@@ -38,7 +47,7 @@ package Objetos {
             act listar(){}
             func quantidade():num {}
             act mostrarStruct(){
-            			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+            		invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
             }
     }
 
@@ -52,18 +61,26 @@ package Objetos {
             act listar(){}
             func quantidade():num {}
             act mostrarStruct(){
-            			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+            		invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
             }
+             act mostrarAcumulador(){
+                    #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+                    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
+                    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STRUCTS;
+                    invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
+
+                    def m : Mais = init Mais();
+                    m.mostraral();
+                    # def a : Cristal = init Cristal();
+             }
+
+
+
 
     }
 
-    act refes(){
-        maisoque();
-    	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
-    }
-    act mostrar(){
-        invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
-    }
+
+
 
 }
 
@@ -71,19 +88,20 @@ call iniciar -> inicio ( );
 
 refer Objetos;
 
+struct Cristal {
+
+}
+
 act inicio ( ) {
 
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
-
-    mostrar();
 
     def Sacola1 : Sacola = init  Sacola ( "Caneta" );
 
-    Sacola1.mostrarStruct();
+   # Sacola1.mostrarStruct();
 
 	def Acumulador1 : Acumulador >> ( num ) = init >> ( num ) Acumulador ( 12);
 
-    Acumulador1.mostrarStruct();
+   # Acumulador1.mostrarStruct();
 
     def c : Acumulador >> ( num ) = Acumulador1.this;
     c.guardar(2);
@@ -92,8 +110,12 @@ act inicio ( ) {
 
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
-    refes();
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STRUCTS;
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
 
+    Acumulador1.mostrarAcumulador();
+
+    #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 
 
 }

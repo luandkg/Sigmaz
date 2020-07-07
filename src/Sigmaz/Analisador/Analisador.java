@@ -70,7 +70,6 @@ public class Analisador {
         mProibidos.add("step");
 
 
-
         mPrimitivos = new ArrayList<String>();
         mPrimitivos.add("num");
         mPrimitivos.add("string");
@@ -103,8 +102,6 @@ public class Analisador {
     }
 
 
-
-
     public ArrayList<String> getErros() {
         return mErros;
     }
@@ -121,8 +118,6 @@ public class Analisador {
         mPacotes.clear();
 
         //  getAnalisar_Outros().limpar();
-
-
 
 
         // IMPORTANDO BIBLIOTECAS EXTERNAS
@@ -161,7 +156,6 @@ public class Analisador {
                     mReqAST.add(RunTimeC.getBranch("SIGMAZ"));
 
 
-
                 } catch (Exception e) {
                     mErros.add("Library " + mReq + " : Problema ao carregar !");
                 }
@@ -187,12 +181,12 @@ public class Analisador {
 
                 for (AST mAST : mPacotes) {
 
-                    getAnalisar_Global().analisarGlobal(mAST,mReqAST);
+                    getAnalisar_Global().analisarGlobal(mAST, mReqAST);
 
                 }
 
 
-                getAnalisar_Global().analisarGlobal(ASTCGlobal,mReqAST);
+                getAnalisar_Global().analisarGlobal(ASTCGlobal, mReqAST);
 
             } else {
 
@@ -210,9 +204,12 @@ public class Analisador {
 
         mEstagiador.init(mASTS);
 
+        Referenciador mReferenciador = new Referenciador(this);
+        mReferenciador.init(mASTS);
+
     }
 
-    public void MostrarMensagens(){
+    public void MostrarMensagens() {
 
         System.out.println("\n\t MENSAGENS DE ANALISE : ");
 
