@@ -25,69 +25,42 @@ public class Global {
         System.out.println(" #########################  GLOBAL " + mEscopoDebug.getNome() + " ############################ ");
 
 
-        mEscopoDebug.mapear_stack();
+        getEscopo().getRunTime().getEscopoGlobal().getDebug().mapear_stack();
+
 
         System.out.println(" - ACTIONS : ");
-        for (AST mIndex_Function : getEscopo().getRunTime().getGlobalActions()) {
-            System.out.println("\t - " + (new Index_Action(mIndex_Function)).getDefinicao());
-        }
+        getEscopo().getRunTime().getEscopoGlobal().getDebug().listar_Actions();
+
         System.out.println(" - FUNCTIONS : ");
-        for (AST mIndex_Function : getEscopo().getRunTime().getGlobalFunctions()) {
-            System.out.println("\t - " + (new Index_Function(mIndex_Function)).getDefinicao());
-        }
+        getEscopo().getRunTime().getEscopoGlobal().getDebug().listar_Functions();
+
 
         System.out.println(" - DIRECTORS : ");
-        for (AST mIndex_Function : getEscopo().getRunTime().getGlobalDirectors()) {
-            System.out.println("\t - " + (new Index_Function(mIndex_Function)).getDefinicao());
-        }
+        getEscopo().getRunTime().getEscopoGlobal().getDebug().listar_Directors();
+
 
         System.out.println(" - OPERATORS : ");
-        for (AST mIndex_Function : getEscopo().getRunTime().getGlobalOperations()) {
-            System.out.println("\t - " + (new Index_Function(mIndex_Function)).getDefinicao());
-        }
+        getEscopo().getRunTime().getEscopoGlobal().getDebug().listar_Operators();
+
 
         System.out.println(" - CASTS : ");
-        for (AST mAST : getEscopo().getRunTime().getGlobalCasts()) {
-            System.out.println("\t - " + mAST.getNome());
-            for (AST mGetter : mAST.getASTS()) {
-                if (mGetter.mesmoTipo("GETTER")) {
-                    System.out.println("\t\t - Getter : " + mGetter.getValor());
-                }
-            }
-            for (AST mGetter : mAST.getASTS()) {
-                if (mGetter.mesmoTipo("SETTER")) {
-                    System.out.println("\t\t - Setter : " + mGetter.getValor());
-                }
-            }
-        }
+        getEscopo().getRunTime().getEscopoGlobal().getDebug().listar_Casts();
+
 
         System.out.println(" - TYPES : ");
-        for (AST mAST : getEscopo().getRunTime().getGlobalTypes()) {
-            System.out.println("\t - " + mAST.getNome());
-            for (AST mGetter : mAST.getASTS()) {
-                System.out.println("\t\t - " + mGetter.getTipo() + " " + mGetter.getNome() + " : " + mEscopoDebug.getTipagem(mGetter.getBranch("TYPE")));
-            }
-        }
+        getEscopo().getRunTime().getEscopoGlobal().getDebug().listar_Types();
+
 
         System.out.println(" - STAGES : ");
-        for (AST mAST : getEscopo().getRunTime().getGlobalStructs()) {
-            if (mAST.getBranch("EXTENDED").mesmoNome("STAGES")){
-                System.out.println("\t - " + mAST.getNome());
-            }
-        }
+        getEscopo().getRunTime().getEscopoGlobal().getDebug().listar_Stages();
+
 
         System.out.println(" - STRUCTS : ");
-        for (AST mAST : getEscopo().getRunTime().getGlobalStructs()) {
-            if (mAST.getBranch("EXTENDED").mesmoNome("STRUCT")){
-                System.out.println("\t - " + mAST.getNome());
-            }
-        }
+        getEscopo().getRunTime().getEscopoGlobal().getDebug().listar_Structs();
+
         System.out.println(" - EXTERNALS : ");
-        for (AST mAST : getEscopo().getRunTime().getGlobalStructs()) {
-            if (mAST.getBranch("EXTENDED").mesmoNome("EXTERNAL")){
-                System.out.println("\t - " + mAST.getNome());
-            }
-        }
+        getEscopo().getRunTime().getEscopoGlobal().getDebug().listar_Externals();
+
 
 
         System.out.println(" ######################### ##### ############################ ");
@@ -100,7 +73,7 @@ public class Global {
         System.out.println(" ######################### STACK - GLOBAL STACK ############################ ");
 
 
-        mEscopoDebug.mapear_stack();
+        getEscopo().getRunTime().getEscopoGlobal().getDebug().mapear_stack();
 
 
         System.out.println(" ######################### ##### ############################ ");

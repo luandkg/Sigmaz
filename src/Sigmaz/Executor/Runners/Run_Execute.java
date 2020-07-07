@@ -38,6 +38,9 @@ public class Run_Execute {
             if (ASTCorrente.mesmoNome("this")){
 
             }else{
+                if (mRunTime.getErros().size() > 0) {
+                    return;
+                }
                 String eQualificador = mEscopo.getQualificador(mItem.getTipo());
                 if (eQualificador.contentEquals("STRUCT")) {
 

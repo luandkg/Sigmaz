@@ -32,6 +32,7 @@ public class Escopo {
     private OO mAO;
 
     private ArrayList<Run_Extern> mExternos;
+    private ArrayList<String> mRefers;
 
 
     public void setNome(String eNome) {
@@ -89,6 +90,7 @@ public class Escopo {
         mRunTime = eRunTime;
         mDebug = new EscopoDebug(this);
         mEscopoStack = new EscopoStack(mRunTime, this);
+        mRefers = new ArrayList<String>();
 
         mExternos = new ArrayList<Run_Extern>();
 
@@ -110,32 +112,37 @@ public class Escopo {
         return mAO;
     }
 
-    public void referenciarEscopo(AST mEscopo) {
+    public void adicionarRefer(String eRefer) {
+        mRefers.add(eRefer);
+    }
 
-        //System.out.println(" \t * Recebendo Pacote  " + mEscopo.getNome());
+    public ArrayList<String> getRefers() {
 
+        ArrayList<String> mRet = new ArrayList<String>();
+        mRet.addAll(mRefers);
 
-        for (AST eAST : mEscopo.getASTS()) {
-            // System.out.println(" \t\t - " + eAST.getTipo() + " :  " + eAST.getNome());
-            guardar(eAST);
+        if (this.mEscopoAnterior != null) {
+            mRet.addAll(mEscopoAnterior.getRefers());
         }
 
 
+        return mRet;
     }
 
-    public void externalizarStruct(String ePacote, String eExterno) {
+    public void externalizarStruct(String eCom) {
 
         for (Run_Extern eAST : mRunTime.getExtern()) {
+            if (eAST.getNomeCompleto().contentEquals(eCom)) {
+                // System.out.println("\t -  " + this.getNome() + " Receber Externo : " + eAST.getNomeCompleto() + " de " + eCom);
 
-            if (eAST.getPacote().contentEquals(ePacote)) {
-               // System.out.println("\t - Receber Externo : " + eAST.getNomeCompleto() + " de " + ePacote);
                 mExternos.add(eAST);
+
             }
+
 
         }
 
     }
-
 
 
     public void externalizarDireto(Run_Extern eAST) {
@@ -147,7 +154,7 @@ public class Escopo {
         for (Run_Extern eAST : mRunTime.getExtern()) {
 
             if (eAST.getNome().contentEquals(eExterno)) {
-             //   System.out.println("\t - Receber Externo Geral : " + eAST.getNomeCompleto());
+                //   System.out.println("\t - Receber Externo Geral : " + eAST.getNomeCompleto());
                 mExternos.add(eAST);
             }
 
@@ -176,9 +183,9 @@ public class Escopo {
         Run_Extern mRet = null;
         boolean enc = false;
 
-      //  System.out.println("Procurar Extern " + eNome + " em " + this.getNome());
+        //  System.out.println("Procurar Extern " + eNome + " em " + this.getNome());
 
-      //  System.out.println("Extens " + getExtern().size());
+        //  System.out.println("Extens " + getExtern().size());
 
         for (Run_Extern mRun_Struct : getExtern()) {
 
@@ -190,7 +197,6 @@ public class Escopo {
             }
 
         }
-
 
 
         if (!enc) {
@@ -215,63 +221,6 @@ public class Escopo {
 
     }
 
-
-    public void ListarActions() {
-        mDebug.ListarActions();
-    }
-
-    public void ListarFunctions() {
-        mDebug.ListarFunctions();
-    }
-
-    public void ListarDefines() {
-        mDebug.ListarDefines();
-    }
-
-    public void ListarConstants() {
-        mDebug.ListarConstants();
-    }
-
-    public void ListarStructs() {
-        mDebug.ListarStructs();
-    }
-
-    public void ListarPackages() {
-        mDebug.ListarPackages();
-    }
-
-    public void ListarLocalAll() {
-        mDebug.ListarLocalAll();
-    }
-
-    public void ListarStack() {
-        mDebug.ListarStack();
-    }
-
-    public void ListarGlobalAll() {
-        mDebug.ListarGlobalAll();
-    }
-
-    public void ListarGlobalStack() {
-        mDebug.ListarGlobalStack();
-    }
-
-
-    public void ListarGlobalFunctions() {
-        mDebug.ListarGlobalFunctions();
-    }
-
-    public void ListarGlobalOperations() {
-        mDebug.ListarGlobalOperations();
-    }
-
-    public void ListarGlobalActions() {
-        mDebug.ListarGlobalActions();
-    }
-
-    public void ListarGlobalStages() {
-        mDebug.ListarGlobalStages();
-    }
 
     public ArrayList<Index_Function> getFunctionsCompleto() {
         return mAO.getFunctionsCompleto();
@@ -651,7 +600,7 @@ public class Escopo {
     public boolean existeStage(String eStage) {
         boolean enc = false;
 
-      //   System.out.println(this.getNome() + " -> Stages : " + mAO.getStages().size() );
+        //   System.out.println(this.getNome() + " -> Stages : " + mAO.getStages().size() );
 
         for (AST mAST : mAO.getStages()) {
             for (AST sAST : mAST.getBranch("STAGES").getASTS()) {

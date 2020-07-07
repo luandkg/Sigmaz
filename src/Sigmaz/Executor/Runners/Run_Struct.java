@@ -187,6 +187,13 @@ public class Run_Struct {
         mStructInits = mAST_Struct.getBranch("INITS").copiar();
 
 
+        AST mBase = mAST_Struct.getBranch("BASES");
+
+        for (AST ASTC : mBase.getASTS()) {
+            mEscopo.guardarStruct(ASTC);
+        }
+
+
         if (init_Generic.mesmoNome("TRUE") && mStructGeneric.mesmoNome("TRUE")) {
 
 
@@ -302,7 +309,7 @@ public class Run_Struct {
 
         }
 
-        mEscopo.criarConstanteStruct("this", mStructNome, mNome);
+        mEscopo.criarConstanteStruct("this", mTipoCompleto, mNome);
 
 
         if (mStructInits.getASTS().size() > 0) {

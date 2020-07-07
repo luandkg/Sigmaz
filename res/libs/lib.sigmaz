@@ -31,3 +31,9 @@ director ! ( a : bool ) : bool {
 	invoke casting -> inverse ( a ) :: a;
 	return a;
 }
+
+func typeof( a: any) : string {
+    def ret : string = "";
+    invoke casting -> typeof ( a ) :: ret;
+    return ret;
+}

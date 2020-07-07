@@ -1,0 +1,99 @@
+
+package MAIS {
+
+    act maisoque(){
+
+    }
+
+}
+
+package Objetos {
+
+    refer MAIS;
+
+    struct Esconder {
+
+        init Esconder(a:string){}
+
+        restrict:
+            define escondido : string = null;
+
+        all:
+            act esconder(a:string){}
+
+            act mostrarStruct(){
+            			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+            }
+
+
+    }
+
+    struct Sacola with Esconder {
+
+        init Sacola(a:string) -> Esconder(a) {}
+        init Sacola(a:string,b:string) -> Esconder(a) {}
+
+        all:
+            act guardar(a:string){}
+            act listar(){}
+            func quantidade():num {}
+            act mostrarStruct(){
+            			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+            }
+    }
+
+    struct Acumulador in (T) {
+
+        init Acumulador(a:T){}
+        init Acumulador(a:T,b:T){}
+
+        all:
+            act guardar(a:T){}
+            act listar(){}
+            func quantidade():num {}
+            act mostrarStruct(){
+            			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+            }
+
+    }
+
+    act refes(){
+        maisoque();
+    	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
+    }
+    act mostrar(){
+        invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+    }
+
+}
+
+call iniciar -> inicio ( );
+
+refer Objetos;
+
+act inicio ( ) {
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+
+    mostrar();
+
+    def Sacola1 : Sacola = init  Sacola ( "Caneta" );
+
+    Sacola1.mostrarStruct();
+
+	def Acumulador1 : Acumulador >> ( num ) = init >> ( num ) Acumulador ( 12);
+
+    Acumulador1.mostrarStruct();
+
+    def c : Acumulador >> ( num ) = Acumulador1.this;
+    c.guardar(2);
+
+	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
+    refes();
+
+
+
+}

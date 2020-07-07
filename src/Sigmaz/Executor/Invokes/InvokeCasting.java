@@ -67,6 +67,10 @@ public class InvokeCasting {
 
             mudartipo(eAcao, eSaida, ASTArgumentos);
 
+        } else if (eAcao.contentEquals("typeof")) {
+
+            typeof(eAcao, eSaida, ASTArgumentos);
+
         } else {
 
             mRunTime.getErros().add("Invocacao : Acao nao encontrada ->  " + eAcao);
@@ -81,7 +85,44 @@ public class InvokeCasting {
         String a1 = mRun_Invoke.getString(ASTArgumentos, 1);
         String a2 = mRun_Invoke.getString(ASTArgumentos, 2);
 
-        mEscopo.alterarTipo(eSaida,a1,a2);
+        mEscopo.alterarTipo(eSaida, a1, a2);
+
+
+    }
+
+    public void typeof(String eAcao, String eSaida, AST ASTArgumentos) {
+
+        String tipo = "";
+
+        for (AST eAST : ASTArgumentos.getASTS()) {
+
+            if (eAST.mesmoTipo("ARGUMENT")) {
+                if (eAST.mesmoValor("ID")) {
+
+                    if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
+                        tipo = "bool";
+
+                    } else {
+                        tipo = mEscopo.getDefinidoTipo(eAST.getNome());
+                        if (tipo.contentEquals("<<ANY>>")) {
+                            tipo = "null";
+                        }
+                    }
+
+
+                } else if (eAST.mesmoValor("Num")) {
+                    tipo = "num";
+                } else if (eAST.mesmoValor("Text")) {
+                    tipo = "string";
+                    break;
+                }
+
+
+            }
+        }
+
+
+        mEscopo.setDefinido(eSaida, tipo);
 
 
     }
@@ -105,9 +146,17 @@ public class InvokeCasting {
 
                 if (eAST.mesmoValor("ID")) {
 
-                    p1 = mEscopo.getDefinido(eAST.getNome());
+                    if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
+                        isnull = false;
+                    } else {
 
-                    isnull = mEscopo.getDefinidoNulo(eAST.getNome());
+                        p1 = mEscopo.getDefinido(eAST.getNome());
+
+                        isnull = mEscopo.getDefinidoNulo(eAST.getNome());
+
+                    }
+
+
                     // System.out.println("Nulo :: " + isnull);
 
 

@@ -35,7 +35,7 @@ public class AST_StructCorpo {
                 break;
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("init")) {
 
-                AST_InitStruct mAST = new AST_InitStruct(mCompiler);
+                AST_StructInit mAST = new AST_StructInit(mCompiler);
                 mAST.init(AST_Inits, NomeStruct,VISIBILIDADE);
 
 

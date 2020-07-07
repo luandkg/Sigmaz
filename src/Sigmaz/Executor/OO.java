@@ -16,6 +16,7 @@ public class OO {
     private ArrayList<AST> mStructGuardados;
 
     private ArrayList<Index_Action> mInits;
+    private ArrayList<AST> mBases;
 
     private ArrayList<Index_Action> mActions;
     private ArrayList<Index_Function> mFunctions;
@@ -50,7 +51,7 @@ public class OO {
     private ArrayList<Index_Function> mDirectors_Restrict;
     private ArrayList<Index_Function> mDirectors_Extern;
 
-    public OO(Escopo eEscopo,RunTime eRunTime) {
+    public OO(Escopo eEscopo, RunTime eRunTime) {
 
         mEscopo = eEscopo;
         mRunTime = eRunTime;
@@ -60,6 +61,7 @@ public class OO {
         mStructGuardados = new ArrayList<>();
 
         mInits = new ArrayList<Index_Action>();
+        mBases = new ArrayList<AST>();
 
         mActions = new ArrayList<Index_Action>();
         mActionFunctions = new ArrayList<Index_Action>();
@@ -68,9 +70,9 @@ public class OO {
         mOperations = new ArrayList<Index_Function>();
 
         mCasts = new ArrayList<AST>();
-        mStages= new ArrayList<AST>();
-        mTypes= new ArrayList<AST>();
-        mStructs= new ArrayList<AST>();
+        mStages = new ArrayList<AST>();
+        mTypes = new ArrayList<AST>();
+        mStructs = new ArrayList<AST>();
 
 
         mActionFunctions_All = new ArrayList<Index_Action>();
@@ -98,7 +100,6 @@ public class OO {
     public Escopo getEscopo() {
         return mEscopo;
     }
-
 
 
     public void guardar(AST eAST) {
@@ -210,21 +211,23 @@ public class OO {
             mInits.add(mAct);
 
 
-
         } else if (eAST.mesmoTipo("TYPE")) {
 
             mTypes.add(eAST);
 
         } else if (eAST.mesmoTipo("STRUCT")) {
 
-            if (eAST.getBranch("EXTENDED").mesmoNome("STAGES")){
+            if (eAST.getBranch("EXTENDED").mesmoNome("STAGES")) {
                 mStages.add(eAST);
 
-                AlocarStages(eAST,mEscopo);
-            }else{
+                AlocarStages(eAST, mEscopo);
+            } else {
                 mStructs.add(eAST);
             }
-
+        } else if (eAST.mesmoTipo("BASE")) {
+            mBases.add(eAST);
+        } else if (eAST.mesmoTipo("REFER")) {
+            mEscopo.adicionarRefer(eAST.getNome());
         }
 
     }
@@ -253,7 +256,10 @@ public class OO {
 
     public ArrayList<Item> getStacks() {
         return mEscopo.getStacks();
+    }
 
+    public ArrayList<AST> getBases() {
+        return mBases;
     }
 
     public ArrayList<Index_Action> getActionsFunctions_All() {

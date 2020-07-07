@@ -12,12 +12,10 @@ public class Run_Invoke {
     private RunTime mRunTime;
     private Escopo mEscopo;
 
-
     public Run_Invoke(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
-
 
     }
 
@@ -163,14 +161,11 @@ public class Run_Invoke {
 
             if (eAST.mesmoTipo("ARGUMENT")) {
 
-                //System.out.println(" \t - Argumento : " + eAST.getNome() + " : " + eAST.getValor());
-
-
                 if (eAST.mesmoValor("ID")) {
                     String eRet = "";
 
                     if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
-                        eRet = eAST.getNome();
+                        eRet = "bool";
                     } else {
                         eRet = mEscopo.getDefinidoTipo(eAST.getNome());
                     }
@@ -184,16 +179,16 @@ public class Run_Invoke {
 
                 } else if (eAST.mesmoValor("Num")) {
                     if (i == 0) {
-                        p1 = eAST.getNome();
+                        p1 = "num";
                     } else {
-                        p2 = eAST.getNome();
+                        p2 ="num";
                     }
                 } else if (eAST.mesmoValor("Text")) {
 
                     if (i == 0) {
-                        p1 = eAST.getNome();
+                        p1 = "string";
                     } else {
-                        p2 = eAST.getNome();
+                        p2 = "string";
                     }
 
                 }
@@ -312,7 +307,7 @@ public class Run_Invoke {
 
 
                 } else if (eAST.mesmoValor("Num")) {
-                    mRunTime.getErros().add("Invocacao : Ação inconsistente -> Era esperado um bool");
+                    mRunTime.getErros().add("Invocacao : Ação inconsistente -> Era esperado um string");
 
                 } else if (eAST.mesmoValor("Text")) {
 
@@ -358,7 +353,7 @@ public class Run_Invoke {
                     String eRet = "";
 
                     if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
-                        eRet = eAST.getNome();
+                        mRunTime.getErros().add("Invocacao : Ação inconsistente -> Era esperado um num");
                     } else {
 
                         if (mEscopo.getDefinidoTipo(eAST.getNome()).contentEquals("num")) {

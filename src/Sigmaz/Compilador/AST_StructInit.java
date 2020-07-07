@@ -4,11 +4,11 @@ import Sigmaz.Lexer.Token;
 import Sigmaz.Lexer.TokenTipo;
 import Sigmaz.Utils.AST;
 
-public class AST_InitStruct {
+public class AST_StructInit {
 
     private Compiler mCompiler;
 
-    public AST_InitStruct(Compiler eCompiler) {
+    public AST_StructInit(Compiler eCompiler) {
         mCompiler = eCompiler;
     }
 

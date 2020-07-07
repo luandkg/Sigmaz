@@ -14,11 +14,13 @@ act inicio ( ) {
 		println ( "-> ", a );
 		
 		#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-		
 	}
-	
+
+
+
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 	
 	#invoke __COMPILER__ -> HEAP ( ) :: ALL;
-	
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
 }

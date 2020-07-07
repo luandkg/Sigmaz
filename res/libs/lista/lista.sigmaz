@@ -118,7 +118,10 @@ package Lista {
 			}
 			return ret;
 		}
-		
+
+		act mostrarStruct(){
+			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+		}
 	}
 
 	struct Item in ( T ) {
@@ -145,5 +148,6 @@ package Lista {
 		}
 		
 	}
-	
+
+
 }

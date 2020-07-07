@@ -4,6 +4,8 @@ import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.Indexador.Index_Action;
 import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Executor.Item;
+import Sigmaz.Executor.Runners.Run_Extern;
+import Sigmaz.Executor.Runners.Run_Struct;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
@@ -44,7 +46,7 @@ public class EscopoDebug {
         mLocal.ListarLocalAll();
     }
 
-        public void mapear_stack() {
+    public void mapear_stack() {
 
         System.out.println(" - PARAM : ");
         ArrayList<Item> ls_Param = new ArrayList<>();
@@ -149,24 +151,52 @@ public class EscopoDebug {
     }
 
 
-
-
     public void ListarStruct() {
 
-        Escopo mEstrutura = mEscopo.getEstruturador();
+        Escopo mEstrutura = mEscopo;
 
-        if (mEstrutura == null) {
-
-            System.out.println("\n ######################### STRUCT - NULL ############################ ");
-            System.out.println(" ######################### ##### ############################ ");
-
-            return;
-        } else {
+        Item eThis = mEscopo.getItem("this");
 
 
+        System.out.println(" ######################### STRUCT - " + mEscopo.getNome() + " ############################ ");
+        System.out.println("");
+
+        System.out.println(" - HEAP : " + eThis.getValor());
+        System.out.println(" - TYPE : " + eThis.getTipo());
+
+        Run_Struct mRun = mEscopo.getRunTime().getRun_Struct(eThis.getValor());
+
+        mRun.getEscopo().getDebug().ListarStructAll();
+
+    }
+
+    public void ListarStructAll() {
+
+        mapear_stack();
+
+        System.out.println(" - INITS : ");
+        for (Index_Action mAST : getEscopo().getOO().getInits()) {
+
+            if (mAST.getPonteiro().getBranch("CALL").mesmoValor("TRUE")){
+                System.out.println("\t - " + mAST.getDefinicao() + " -> " + mAST.getPonteiro().getBranch("CALL").getNome());
+            }else{
+                System.out.println("\t - " + mAST.getDefinicao());
+            }
 
         }
+        System.out.println(" - BASES : ");
+        for (AST mAST : getEscopo().getOO().getBases()) {
+            System.out.println("\t - " + mAST.getNome());
+        }
 
+        System.out.println(" - ACTIONS : ");
+        for (Index_Action mAST : getEscopo().getOO().getActions_All()) {
+            System.out.println("\t - " + mAST.getDefinicao());
+        }
+        System.out.println(" - FUNCTIONS : ");
+        for (Index_Function mAST : getEscopo().getOO().getFunctions_All()) {
+            System.out.println("\t - " + mAST.getDefinicao());
+        }
 
     }
 
@@ -195,36 +225,40 @@ public class EscopoDebug {
     }
 
 
-    public void ListarStructs() {
+    public void ListarGlobalPackages() {
 
 
-        System.out.println(" #########################  STRUCTS ############################ ");
+        System.out.println(" #########################  GLOBAL - PACKAGES ############################ ");
 
-
-        for (AST mAST : mEscopo.getRunTime().getGlobalStructs()) {
-            System.out.println("\t - " + mAST.getNome());
-        }
+        mEscopo.getRunTime().getEscopoGlobal().getDebug().listar_Packages();
 
 
         System.out.println(" ######################### ##### ############################ ");
 
     }
 
-
-    public void ListarPackages() {
-
-
-        System.out.println(" #########################  PACKAGES ############################ ");
+    public void ListarGlobalExterns() {
 
 
-        for (AST mAST : mEscopo.getRunTime().getGlobalPackages()) {
-            System.out.println("\t - " + mAST.getNome());
-        }
+        System.out.println(" #########################  GLOBAL - EXTERNS ############################ ");
 
+        mEscopo.getRunTime().getEscopoGlobal().getDebug().listar_Externs();
 
         System.out.println(" ######################### ##### ############################ ");
 
     }
+
+    public void ListarGlobalRefers() {
+
+
+        System.out.println(" #########################  GLOBAL - REFERS ############################ ");
+
+        mEscopo.getRunTime().getEscopoGlobal().getDebug().listar_Refers();
+
+        System.out.println(" ######################### ##### ############################ ");
+
+    }
+
 
     public String getTipagem(AST eAST) {
 
@@ -246,13 +280,9 @@ public class EscopoDebug {
     public void ListarGlobalStages() {
 
 
-        System.out.println(" ######################### STACK - GLOBAL STAGES ############################ ");
+        System.out.println(" #########################  GLOBAL - STAGES ############################ ");
 
-
-        for (AST mAST : mEscopo.getRunTime().getGlobalStages()) {
-            System.out.println("\t - " + mAST.getNome());
-        }
-
+        mEscopo.getRunTime().getEscopoGlobal().getDebug().listar_Stages();
 
         System.out.println(" ######################### ##### ############################ ");
 
@@ -261,27 +291,24 @@ public class EscopoDebug {
     public void ListarGlobalFunctions() {
 
 
-        System.out.println(" ######################### STACK - GLOBAL FUNCTIONS ############################ ");
+        System.out.println(" ######################### GLOBAL - FUNCTIONS ############################ ");
 
 
-        for (AST mAST : mEscopo.getRunTime().getGlobalFunctions()) {
-            System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + mAST.getValor());
-        }
+        mEscopo.getRunTime().getEscopoGlobal().getDebug().listar_Functions();
 
 
         System.out.println(" ######################### ##### ############################ ");
 
     }
 
+
     public void ListarGlobalOperations() {
 
 
-        System.out.println(" ######################### STACK - GLOBAL OPERATIONS ############################ ");
+        System.out.println(" #########################  GLOBAL - OPERATIONS ############################ ");
 
 
-        for (AST mAST : mEscopo.getRunTime().getGlobalOperations()) {
-            System.out.println("\t - " + (new Index_Function(mAST)).getDefinicao());
-        }
+        mEscopo.getRunTime().getEscopoGlobal().getDebug().listar_Operators();
 
 
         System.out.println(" ######################### ##### ############################ ");
@@ -291,12 +318,21 @@ public class EscopoDebug {
     public void ListarGlobalActions() {
 
 
-        System.out.println(" ######################### STACK - GLOBAL ACTIONS ############################ ");
+        System.out.println(" ######################### GLOBAL - ACTIONS ############################ ");
+
+        mEscopo.getRunTime().getEscopoGlobal().getDebug().listar_Actions();
+
+        System.out.println(" ######################### ##### ############################ ");
+
+    }
+
+    public void ListarGlobalStructs() {
 
 
-        for (AST mAST : mEscopo.getRunTime().getGlobalActions()) {
-            System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " )");
-        }
+        System.out.println(" ######################### GLOBAL - STRUCTS ############################ ");
+
+
+        mEscopo.getRunTime().getEscopoGlobal().getDebug().listar_Structs();
 
 
         System.out.println(" ######################### ##### ############################ ");
@@ -432,40 +468,212 @@ public class EscopoDebug {
     }
 
 
+    public void ListarFunctions() {
+
+        System.out.println(" ######################### FUNCTIONS - " + mEscopo.getNome() + " ############################ ");
+
+        listar_Functions();
+
+        System.out.println(" ######################### ##### ############################ ");
+
+    }
+
     public void ListarActions() {
 
 
-        System.out.println(" ######################### ACTIONS - " + mEscopo.getNome() + " ############################ ");
+        System.out.println(" ######################### LOCAL : ACTIONS - " + mEscopo.getNome() + " ############################ ");
 
 
-        for (AST mAST : mEscopo.getGuardadosCompleto()) {
+        listar_Actions();
+
+
+        System.out.println(" ######################### ##### ############################ ");
+
+    }
+
+    public void ListarStages() {
+
+
+        System.out.println(" ######################### LOCAL : STAGES - " + mEscopo.getNome() + " ############################ ");
+
+
+        listar_Stages();
+
+
+        System.out.println(" ######################### ##### ############################ ");
+
+    }
+
+    public void ListarStructs() {
+
+
+        System.out.println(" ######################### LOCAL : STRUCTS - " + mEscopo.getNome() + " ############################ ");
+
+
+        listar_Structs();
+
+
+        System.out.println(" ######################### ##### ############################ ");
+
+    }
+
+    public void ListarPackages() {
+
+
+        System.out.println(" ######################### LOCAL : PACKAGES - " + mEscopo.getNome() + " ############################ ");
+
+
+        listar_Packages();
+
+
+        System.out.println(" ######################### ##### ############################ ");
+
+    }
+
+    public void ListarExterns() {
+
+
+        System.out.println(" ######################### LOCAL : EXTERNS - " + mEscopo.getNome() + " ############################ ");
+
+
+        listar_Externs();
+
+
+        System.out.println(" ######################### ##### ############################ ");
+
+    }
+
+    public void ListarRefers() {
+
+
+        System.out.println(" ######################### LOCAL : REFERS - " + mEscopo.getNome() + " ############################ ");
+
+
+        listar_Refers();
+
+
+        System.out.println(" ######################### ##### ############################ ");
+
+    }
+
+    public String getStages(AST eAST) {
+
+        int i = 0;
+        int o = eAST.getASTS().size();
+
+        String ret = " -> { ";
+
+        for (AST mAST : eAST.getASTS()) {
+            i += 1;
+            if (i == o) {
+                ret += mAST.getNome();
+            } else {
+                ret += mAST.getNome() + ",";
+
+            }
+        }
+
+        return ret + " }";
+    }
+
+    public void listar_Actions() {
+        for (AST mAST : getEscopo().getGuardadosCompleto()) {
             if (mAST.mesmoTipo("ACTION")) {
                 System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) ");
             }
         }
-
-        System.out.println(" ######################### ##### ############################ ");
-
     }
 
-    public void ListarFunctions() {
-
-
-        System.out.println(" ######################### FUNCTIONS - " + mEscopo.getNome() + " ############################ ");
-
-
-        for (AST mAST : mEscopo.getGuardadosCompleto()) {
+    public void listar_Functions() {
+        for (AST mAST : getEscopo().getGuardadosCompleto()) {
             if (mAST.mesmoTipo("FUNCTION")) {
-                System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) ");
-
+                System.out.println("\t - " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
             }
+        }
+    }
 
+    public void listar_Directors() {
+        for (Index_Function mIndex_Function : getEscopo().getDirectorsCompleto()) {
+            System.out.println("\t - " + mIndex_Function.getDefinicao());
+        }
+    }
+
+    public void listar_Operators() {
+        for (Index_Function mIndex_Function : getEscopo().getOperationsCompleto()) {
+            System.out.println("\t - " + mIndex_Function.getDefinicao());
+        }
+    }
+
+
+    public void listar_Casts() {
+        for (AST mAST : getEscopo().getRunTime().getGlobalCasts()) {
+            System.out.println("\t - " + mAST.getNome());
+            for (AST mGetter : mAST.getASTS()) {
+                if (mGetter.mesmoTipo("GETTER")) {
+                    System.out.println("\t\t - Getter : " + mGetter.getValor());
+                }
+            }
+            for (AST mGetter : mAST.getASTS()) {
+                if (mGetter.mesmoTipo("SETTER")) {
+                    System.out.println("\t\t - Setter : " + mGetter.getValor());
+                }
+            }
         }
 
-        System.out.println(" ######################### ##### ############################ ");
+    }
+
+    public void listar_Types() {
+
+        for (AST mAST : getEscopo().getRunTime().getGlobalTypes()) {
+            System.out.println("\t - " + mAST.getNome());
+            for (AST mGetter : mAST.getASTS()) {
+                System.out.println("\t\t - " + mGetter.getTipo() + " " + mGetter.getNome() + " : " + getTipagem(mGetter.getBranch("TYPE")));
+            }
+        }
 
     }
 
+    public void listar_Stages() {
 
+        for (AST mAST : getEscopo().getStages()) {
+            if (mAST.getBranch("EXTENDED").mesmoNome("STAGES")) {
+                System.out.println("\t - " + mAST.getNome() + getStages(mAST.getBranch("STAGES")));
+            }
+        }
 
+    }
+
+    public void listar_Structs() {
+        for (AST mAST : getEscopo().getStructs()) {
+            if (mAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
+                System.out.println("\t - " + mAST.getNome());
+            }
+        }
+    }
+
+    public void listar_Externals() {
+        for (AST mAST : getEscopo().getRunTime().getGlobalStructs()) {
+            if (mAST.getBranch("EXTENDED").mesmoNome("EXTERNAL")) {
+                System.out.println("\t - " + mAST.getNome());
+            }
+        }
+    }
+
+    public void listar_Packages() {
+        for (AST mAST : mEscopo.getRunTime().getGlobalPackages()) {
+            System.out.println("\t - " + mAST.getNome());
+        }
+    }
+
+    public void listar_Externs() {
+        for (Run_Extern mAST : mEscopo.getExtern()) {
+            System.out.println("\t - " + mAST.getNomeCompleto());
+        }
+    }
+
+    public void listar_Refers() {
+        for (String mAST : mEscopo.getRefers()) {
+            System.out.println("\t - " + mAST);
+        }
+    }
 }
