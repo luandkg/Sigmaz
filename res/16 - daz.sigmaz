@@ -3,10 +3,8 @@ import "libs/lib.sigmaz";
 call iniciar -> operando ( );
 
 act operando ( ) {
-
 	def x : num = 10;
 	def resposta : string = "";
-
 	daz ( x ) -> {
 		inside ( 0 , 10 ) -> {
 			resposta = "Entre 0 e 10";

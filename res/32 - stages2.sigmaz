@@ -10,15 +10,10 @@ act varios_estagios ( ) {
 	def t4 : bool = CORES :: AZUL !! CORES :: AZUL;
 	def q1 : string = qualcor ( CORES :: AMARELO );
 	def q2 : string = qualcor ( CORES :: VERMELHO );
-
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
-
-
 	def d1 : bool = DIAS :: SEGUNDA == DIAS :: SEGUNDA;
-
 	def n1 : string = DIAS -> nameOf ( DIAS :: TERCA );
 	def v1 : num = DIAS -> valueOf ( DIAS :: TERCA );
-
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
 stages DIAS -> {
@@ -27,13 +22,11 @@ stages DIAS -> {
 stages CORES -> not {
 	AMARELO , VERMELHO , AZUL , BRANCO 
 }
-
 operator == ( a : CORES , b : CORES ) : bool {
 	def c : bool;
 	invoke stages -> match ( a , b ) :: c;
 	return c;
 }
-
 operator !! ( a : CORES , b : CORES ) : bool {
 	def c : bool;
 	invoke stages -> unmatch ( a , b ) :: c;

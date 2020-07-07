@@ -39,7 +39,6 @@ func maior ( a : num , b : num ) : bool {
 	invoke math -> operator_great ( a , b ) :: c;
 	return c;
 }
-
 operator == ( a : pos , b : pos ) : bool {
 	def c : bool;
 	def c1 : num = a;
@@ -47,7 +46,6 @@ operator == ( a : pos , b : pos ) : bool {
 	invoke math -> operator_equal ( c1 , c2 ) :: c;
 	return c;
 }
-
 operator !! ( a : pos , b : pos ) : bool {
 	def c : bool;
 	def c1 : num = a;
@@ -55,7 +53,6 @@ operator !! ( a : pos , b : pos ) : bool {
 	invoke math -> operator_not ( c1 , c2 ) :: c;
 	return c;
 }
-
 operator == ( a : num , b : num ) : bool {
 	def c : bool;
 	invoke math -> operator_equal ( a , b ) :: c;

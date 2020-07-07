@@ -1,5 +1,3 @@
-
-
 call iniciar -> inicio ( );
 
 act println ( a : string , b : num ) {
@@ -8,13 +6,11 @@ act println ( a : string , b : num ) {
 	invoke terminal -> print ( a ) :: c;
 	invoke terminal -> print ( b ) :: c;
 }
-
 func isNull ( ObjetoNulo : any ) : bool {
 	def c : bool;
 	invoke casting -> cast_isnull ( ObjetoNulo ) :: c;
 	return c;
 }
-
 func somar_inteiro ( a : num , b : num ) : num {
 	def c : num;
 	invoke math -> operator_sum ( a , b ) :: c;
@@ -37,6 +33,7 @@ operator == ( a : num , b : num ) : bool {
 	invoke math -> operator_equal ( a , b ) :: c;
 	return c;
 }
+
 act trash ( a : any ) {
 	invoke __COMPILER__ -> OBJECT ( a ) :: REMOVE;
 }
@@ -49,7 +46,7 @@ cast int {
 		invoke casting -> cast_integer ( b ) :: b;
 		return b;
 	}
-
+	
 }
 func somar ( a : int , b : int ) : int {
 	def c1 : num = null;
@@ -193,38 +190,40 @@ func diferente ( a : int , b : int ) : bool {
 	invoke math -> operator_not ( a1 , b1 ) :: c;
 	return c;
 }
-
 func operador_e ( a : bool , b : bool ) : bool {
 	def c : bool = false;
-	if(a==true) -> {
-	    if(b==true) -> {c = true;}
+	if ( a == true ) -> {
+		if ( b == true ) -> {
+			c = true;
+		}
+		
 	}
 	return c;
 }
-
 func operador_ou ( a : bool , b : bool ) : bool {
 	def c : bool = false;
-	if(a==true) -> {c = true;}
-	if(b==true) -> {c = true;}
+	if ( a == true ) -> {
+		c = true;
+	}
+	if ( b == true ) -> {
+		c = true;
+	}
 	return c;
 }
 func maior_igual ( a : num , b : num ) : bool {
-
 	def c1 : bool = false;
 	def c2 : bool = false;
-
 	invoke math -> operator_great ( a , b ) :: c1;
 	invoke math -> operator_equal ( a , b ) :: c2;
-
-	return operador_ou(c1,c2);
+	return operador_ou ( c1 , c2 );
 }
 
 struct Lista in ( T ) {
-	restrict :
+	restrict : 
 	define mPrimeiro : Item >> ( T ) = null;
 	define mUltimo : Item >> ( T ) = null;
 	define mQuantidade : num = 0;
-	all :
+	all : 
 	func getQuantidade ( ) : num {
 		return mQuantidade;
 	}
@@ -242,13 +241,13 @@ struct Lista in ( T ) {
 			mUltimo = mCorrente;
 			mQuantidade = somar_inteiro ( mQuantidade , 1 );
 		}
-
+		
 	}
 
 	act remover ( a : T ) {
 		println ( "Remover : ", a );
 		if ( isNull ( mPrimeiro ) ) -> {
-
+			
 		}others {
 			def mAnterior : Item >> ( T ) = null;
 			def mCorrente : Item >> ( T ) = mPrimeiro;
@@ -264,7 +263,7 @@ struct Lista in ( T ) {
 						}others {
 							mPrimeiro = mPrimeiro.getProximo ( );
 						}
-
+						
 					}other ( mIndice == mUltimoIndice ) -> {
 						mAnterior.setProximo ( null );
 						mUltimo = mAnterior;
@@ -275,15 +274,15 @@ struct Lista in ( T ) {
 					trash ( mCorrente );
 					cancel;
 				}
-
+				
 				#println("Passando Por : ",mCorrente.getValor());
 				mAnterior = mCorrente;
 				mCorrente = mCorrente.getProximo ( );
 				mIndice = somar_inteiro ( mIndice , 1 );
 			}
-
+			
 		}
-
+		
 	}
 
 	act listar ( ) {
@@ -293,9 +292,9 @@ struct Lista in ( T ) {
 				println ( " - Valor : ", mCorrente.getValor ( ) );
 				mCorrente = mCorrente.getProximo ( );
 			}
-
+			
 		}
-
+		
 	}
 
 	act limpar ( ) {
@@ -327,25 +326,25 @@ struct Lista in ( T ) {
 					contando = somar_inteiro ( contando , 1 );
 					mCorrente = mCorrente.getProximo ( );
 				}
-
+				
 			}
 			if ( enc == false ) -> {
 				exception "Indice invalido !";
 			}
-
+			
 		}others {
 			exception "Indice invalido !";
 		}
 		return ret;
 	}
-
+	
 }
 
 struct Item in ( T ) {
-	restrict :
+	restrict : 
 	define mValor : T = null;
 	define mProximo : Item >> ( T ) = null;
-	all :
+	all : 
 	func getValor ( ) : T {
 		return mValor;
 	}
@@ -363,7 +362,7 @@ struct Item in ( T ) {
 	func getProximo ( ) : Item >> ( T ) {
 		return mProximo;
 	}
-
+	
 }
 
 struct Iterador in ( T ) {
@@ -374,13 +373,13 @@ struct Iterador in ( T ) {
 		mIniciado = false;
 		mTerminou = false;
 	}
-	restrict :
+	restrict : 
 	define mLista : T = null;
 	define mIndex : int = 0;
 	define mTamanho : int = 0;
 	define mIniciado : bool = false;
 	define mTerminou : bool = false;
-	all :
+	all : 
 	act iniciar ( ) {
 		mIndex = 0;
 		mTamanho = mLista.getQuantidade ( );
@@ -396,11 +395,11 @@ struct Iterador in ( T ) {
 				}others {
 					mTerminou = true;
 				}
-
+				
 			}
-
+			
 		}
-
+		
 	}
 	func continuar ( ) : bool {
 		def ret : bool = false;
@@ -410,7 +409,7 @@ struct Iterador in ( T ) {
 			}others {
 				ret = true;
 			}
-
+			
 		}others {
 			ret = false;
 		}
@@ -418,7 +417,7 @@ struct Iterador in ( T ) {
 	}
 	func getIndex ( ) : int {
 		if ( mIniciado ) -> {
-
+			
 		}others {
 			exception "O iterador nao foi iniciado !";
 		}
@@ -428,29 +427,21 @@ struct Iterador in ( T ) {
 		def ii : num = getIndex ( );
 		return mLista.getValor ( ii );
 	}
-
+	
 }
 
-
 act inicio ( ) {
-
 	def ig : Lista >> ( num ) = init >> ( num ) Lista ( );
 	ig.adicionar ( 10 );
 	ig.adicionar ( 20 );
-
 	def a : num = ig.getQuantidade ( );
-
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-
 	ig.adicionar ( 30 );
 	ig.adicionar ( 40 );
 	ig.adicionar ( 50 );
 	ig.adicionar ( 60 );
-
 	def b : num = ig.getQuantidade ( );
-
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-
 	ig.listar ( );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
 	ig.remover ( 10 );
@@ -482,35 +473,26 @@ act inicio ( ) {
 	ig.adicionar ( 3 );
 	ig.listar ( );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
-
-    ig.limpar();
-    ig.listar ( );
+	ig.limpar ( );
+	ig.listar ( );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
-
 	ig.adicionar ( 32 );
 	ig.listar ( );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
-
 	ig.adicionar ( 40 );
 	ig.adicionar ( 12 );
 	ig.adicionar ( 60 );
 	ig.adicionar ( 87 );
 	ig.adicionar ( 90 );
-
-
-    def iterar : Iterador >> ( Lista >> (num) ) = init >> (  Lista >> (num) ) Iterador ( ig );
-
-    iterar.iniciar();
-
-    while (iterar.continuar()) -> {
-
-	    println ( "-> ", iterar.getValor ( ) );
-
-        iterar.proximo();
-    }
-
-
-
+	def iterar : Iterador >> ( Lista >> ( num ) ) = init >> ( Lista >> ( num ) ) Iterador ( ig );
+	iterar.iniciar ( );
+	while ( iterar.continuar ( ) ) -> {
+		println ( "-> ", iterar.getValor ( ) );
+		iterar.proximo ( );
+	}
+	
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	
 	#invoke __COMPILER__ -> HEAP ( ) :: ALL;
+	
 }

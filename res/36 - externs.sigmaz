@@ -23,7 +23,6 @@ act inicio ( ) {
 	def valor : num = Pessoa -> publico;
 	def P1 : Pessoa = init Pessoa ( );
 	invoke __COMPILER__ -> UNIQUE_STRUCT ( P1 ) :: ALL;
-
 	Pessoa -> publico = 2;
 	Pessoa -> tipo = Tipos :: ZETA;
 }

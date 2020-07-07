@@ -1,57 +1,48 @@
-
-
-
 call iniciar -> {
-
-
-    def v1 : bool = maior_igual(10,30);
-    def v2 : bool = maior_igual(10,10);
-    def v3 : bool = maior_igual(30,10);
-
-    def e_1 : bool = operador_e(true,true);
-    def e_2 : bool = operador_e(true,false);
-    def e_3 : bool = operador_e(false,true);
-    def e_4 : bool = operador_e(false,false);
-
-    def ou_1 : bool = operador_ou(true,true);
-    def ou_2 : bool = operador_ou(true,false);
-    def ou_3 : bool = operador_ou(false,true);
-    def ou_4 : bool = operador_ou(false,false);
-
-    invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-
+	def v1 : bool = maior_igual ( 10 , 30 );
+	def v2 : bool = maior_igual ( 10 , 10 );
+	def v3 : bool = maior_igual ( 30 , 10 );
+	def e_1 : bool = operador_e ( true , true );
+	def e_2 : bool = operador_e ( true , false );
+	def e_3 : bool = operador_e ( false , true );
+	def e_4 : bool = operador_e ( false , false );
+	def ou_1 : bool = operador_ou ( true , true );
+	def ou_2 : bool = operador_ou ( true , false );
+	def ou_3 : bool = operador_ou ( false , true );
+	def ou_4 : bool = operador_ou ( false , false );
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 }
-
 operator == ( a : bool , b : bool ) : bool {
 	def c : bool;
 	invoke math -> operator_match ( a , b ) :: c;
 	return c;
 }
-
 func operador_e ( a : bool , b : bool ) : bool {
 	def c : bool = false;
-	if(a==true) -> {
-	    if(b==true) -> {c = true;}
+	if ( a == true ) -> {
+		if ( b == true ) -> {
+			c = true;
+		}
+		
 	}
 	return c;
 }
-
 func operador_ou ( a : bool , b : bool ) : bool {
 	def c : bool = false;
-	if(a==true) -> {c = true;}
-	if(b==true) -> {c = true;}
+	if ( a == true ) -> {
+		c = true;
+	}
+	if ( b == true ) -> {
+		c = true;
+	}
 	return c;
 }
-
 func maior_igual ( a : num , b : num ) : bool {
-
 	def c1 : bool = false;
 	def c2 : bool = false;
-
 	invoke math -> operator_great ( a , b ) :: c1;
 	invoke math -> operator_equal ( a , b ) :: c2;
-
-	return operador_ou(c1,c2);
+	return operador_ou ( c1 , c2 );
 }
 
 act println ( a : string , b : bool ) {

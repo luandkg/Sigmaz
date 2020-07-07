@@ -16,14 +16,13 @@ act pular ( ) {
 	def igual : bool = p1.getIdade ( ) == p2.getIdade ( );
 	def sacola1 : Sacola = init Sacola ( );
 	p1.sacola = sacola1;
+	
 	#p1.sacola.aumentar ( 2 );
 	p1.sacola.mostrar ( );
 	p1.mostrar ( );
 	sacola1.aumentar ( 2 );
 	p1.sacola_aumentar ( );
-
 	p1.sacola.aumentar ( 3 );
-
 	def gg : num = p1.sacola.quantidade ( );
 	p1.mostrar_detalhes ( );
 	

@@ -2,17 +2,11 @@ import "libs/lib.sigmaz";
 
 call iniciar -> inicio ( );
 
-
 act inicio ( ) {
-
 	def a : int = 12.5;
-    def b : int = 3.72;
-
-    def c : int = dividir(a,b);
-    def d : int = 12 ++ 8.5;
-
-    def g : int = ! d;
-
-
+	def b : int = 3.72;
+	def c : int = dividir ( a , b );
+	def d : int = 12 ++ 8.5;
+	def g : int = ! d;
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 }

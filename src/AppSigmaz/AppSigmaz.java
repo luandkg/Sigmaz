@@ -41,7 +41,7 @@ public class AppSigmaz {
     public static void AUTO() {
 
         OAVersion OA = new OAVersion("Sigmaz.oa");
-        OA.init(OAVersion.Modos.INIT);
+        OA.init(OAVersion.Modos.RELEASE);
 
         OARoadmap oar = new OARoadmap("Roadmap.oa");
         oar.receber("res/roadmap/Roadmap.txt");

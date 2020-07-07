@@ -1,29 +1,22 @@
-
-
 call iniciar -> inicio ( );
-
 define A : num = 10;
 
 act inicio ( ) {
-
-    def valor : num = 1;
-
-    def T : num = COISAS->CG(5);
-
+	def valor : num = 1;
+	def T : num = COISAS -> CG ( 5 );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
-
-stages DIAS -> { SEGUNDA , TERCA }
-
-stages JOGOS -> not { PRIMEIRA , SEGUNDA }
-
-external COISAS {
-
-    define CAZ : num = 10;
-    mockiz TREZ : num = 3;
-
-    func CG(a:num) : num {return a;}
-
-
+stages DIAS -> {
+	SEGUNDA , TERCA 
 }
-
+stages JOGOS -> not {
+	PRIMEIRA , SEGUNDA 
+}
+external COISAS {
+	define CAZ : num = 10;
+	mockiz TREZ : num = 3;
+	func CG ( a : num ) : num {
+		return a;
+	}
+	
+}

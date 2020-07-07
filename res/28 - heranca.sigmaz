@@ -5,19 +5,15 @@ act vamos_herdar ( ) {
 	a1.setIdade ( 12 );
 	a1.setQualidade ( "Lindo");
 	a1.mostrar ( );
-
-    def f : Fungo = init Fungo(12);
-
-    def g : num = f.Quantidade;
-
+	def f : Fungo = init Fungo ( 12 );
+	def g : num = f.Quantidade;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
 }
 
 struct Qualidade {
 	define qualidade : string = "";
 
-    act setQualidade ( a : string ) {
+act setQualidade ( a : string ) {
 		qualidade = a;
 	}
 	func getQualidade ( ) : string {
@@ -31,38 +27,52 @@ struct Celula {
 }
 
 struct Celulas {
-
-	init Celulas (q : num) { Quantidade = q;}
-
-	all :
-	    define Quantidade : num = 0;
+	init Celulas ( q : num ) {
+		Quantidade = q;
+	}
+	all : 
+	define Quantidade : num = 0;
 }
 
 struct Multicelular with Celulas {
-	init Multicelular (q : num) -> Celulas(q) {}
+	init Multicelular ( q : num ) -> Celulas ( q ) {
+		
+	}
+	
 }
 
 struct Bacteria with Celula {
-	init Bacteria () { }
+	init Bacteria ( ) {
+		
+	}
+	
 }
 
 struct Fungo with Multicelular {
-	init Fungo (fungo_quantidade:num) -> Multicelular(fungo_quantidade) {}
+	init Fungo ( fungo_quantidade : num ) -> Multicelular ( fungo_quantidade ) {
+		
+	}
+	
 }
 
 struct Cocos with Bacteria {
-	init Cocos () -> Bacteria() {}
+	init Cocos ( ) -> Bacteria ( ) {
+		
+	}
+	
 }
 
 struct EstreptoCocos with Bacteria {
-	init EstreptoCocos () -> Bacteria() {}
+	init EstreptoCocos ( ) -> Bacteria ( ) {
+		
+	}
+	
 }
 
 struct Animal with Qualidade {
-
 	define idade : num = 0;
 
-    act setIdade ( a : num ) {
+act setIdade ( a : num ) {
 		idade = a;
 	}
 
@@ -106,18 +116,19 @@ struct Animal with Qualidade {
 	
 }
 
-
 struct Base {
-
-    init Base (a : num) { }
-    all :
-        define SAL : num = 0;
-        define BOC : num = 12;
-        mockiz VEZ : num = 15;
+	init Base ( a : num ) {
+		
+	}
+	all : 
+	define SAL : num = 0;
+	define BOC : num = 12;
+	mockiz VEZ : num = 15;
 }
 
 struct ItemBase with Base {
-
-    init ItemBase () -> Base (a) {  }
-
+	init ItemBase ( ) -> Base ( a ) {
+		
+	}
+	
 }

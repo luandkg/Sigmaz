@@ -405,7 +405,7 @@ public class Lexer {
     }
 
     public String ObterComentarioGrande() {
-        String ret = String.valueOf(mConteudo.charAt(mIndex));
+        String ret = "##";
 
         mIndex += 2;
 
@@ -417,6 +417,7 @@ public class Lexer {
                 charP = String.valueOf(mConteudo.charAt(mIndex + 1));
                 if (charC.contentEquals("#") && charP.contentEquals("#")) {
                     mIndex += 1;
+                    ret += "##";
                     break;
                 } else {
                     ret += charC;

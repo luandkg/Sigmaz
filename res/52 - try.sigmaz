@@ -1,29 +1,19 @@
-
-
 call iniciar -> inicio ( );
 
-
 act inicio ( ) {
-
-    def a : bool = false;
-    def b : string = "";
-
-    try a with b -> {
-        def g : num =0;
-    }
-
-    invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-
-    def c : bool = false;
-    try c -> {
-        def g : num = "oi";
-    }
-
-    invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-
-    try -> {
-        def g : num = "oi";
-    }
-
+	def a : bool = false;
+	def b : string = "";
+	try a with b -> {
+		def g : num = 0;
+	}
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	def c : bool = false;
+	try c -> {
+		def g : num = "oi";
+	}
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	try -> {
+		def g : num = "oi";
+	}
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 }

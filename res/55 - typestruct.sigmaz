@@ -1,65 +1,59 @@
-
-
-
 struct Bloco {
+	all : 
+	define Proximo : Caixa = null;
+	define PNumeral : Numeral = null;
 
-    all:
-        define Proximo : Caixa = null;
+act setValor ( a : num ) {
+		valor = a;
+	}
 
-        define PNumeral : Numeral = null;
+	act setProximo ( c : Caixa ) {
+		Proximo = c;
+	}
 
-        act setValor(a:num) {valor = a;}
-        act setProximo(c:Caixa) {Proximo = c;}
-        act setPNumeral(c:Numeral) {PNumeral = c;}
-
-     restrict:
-        define valor : num = 0;
-
+	act setPNumeral ( c : Numeral ) {
+		PNumeral = c;
+	}
+	restrict : 
+	define valor : num = 0;
 }
 
 struct Caixa {
-
-    all:
-        act gravar(a:num) {valor = a;}
-     restrict:
-        define valor : num = 0;
-
+	all : 
+	act gravar ( a : num ) {
+		valor = a;
+	}
+	restrict : 
+	define valor : num = 0;
 }
-
 type Numeral {
-
-    define A : num = 0;
-    define B : num = 0;
-
+	define A : num = 0;
+	define B : num = 0;
 }
 
 #call iniciar -> criv ( );
+
 #func criv() : num { return 0; }
-
 call iniciar -> {
-
-    def P1 : Bloco = init Bloco();
-    P1.setValor(2);
-
-    def P2 : Caixa = init Caixa();
-    P2.gravar(5);
-
-    #P1.Proximo = P2;
-
-    #P1.setProximo(P2);
-
-    P1.setProximo(init Caixa());
-
-    P1.Proximo.gravar(4);
-
-   # def N : Numeral = start Numeral { A = 4; B = 5; };
-
-   # P1.setPNumeral(N);
-
-    P1.setPNumeral(start Numeral { A = 4; B = 5; });
-
-    def na : num = P1.PNumeral.A;
-
-    invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-
+	def P1 : Bloco = init Bloco ( );
+	P1.setValor ( 2 );
+	def P2 : Caixa = init Caixa ( );
+	P2.gravar ( 5 );
+	
+	#P1.Proximo = P2;
+	
+	#P1.setProximo(P2);
+	P1.setProximo ( init Caixa ( ) );
+	P1.Proximo.gravar ( 4 );
+	
+	# def N : Numeral = start Numeral { A = 4; B = 5; };
+	
+	# P1.setPNumeral(N);
+	P1.setPNumeral ( start Numeral {
+		A = 4;
+		B = 5;
+	}
+	);
+	def na : num = P1.PNumeral.A;
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 }

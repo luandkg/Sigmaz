@@ -1,33 +1,32 @@
 struct Item in ( T ) {
-	restrict :
-	    define mGuardar : T = null;
-	    define mNivel : T;
-	all:
-	    act guardar(eGuardar : T) {mGuardar = eGuardar;}
+	restrict : 
+	define mGuardar : T = null;
+	define mNivel : T;
+	all : 
+	act guardar ( eGuardar : T ) {
+		mGuardar = eGuardar;
+	}
 
-	    act nivelar(eNivel : T) {mNivel = eNivel;}
+	act nivelar ( eNivel : T ) {
+		mNivel = eNivel;
+	}
+	func passar ( ) : T {
+		return mGuardar;
+	}
 
-	    func passar() : T { return mGuardar;}
-
-	    act cortar(a:num){
-	        	def b : num;
-            	invoke terminal -> print ( a ) :: b;
-	    }
+	act cortar ( a : num ) {
+		def b : num;
+		invoke terminal -> print ( a ) :: b;
+	}
+	
 }
-
 call iniciar -> inicio ( );
 
-
 act inicio ( ) {
-
-    def G : Item >> ( Item >> ( num) ) = init >> ( Item >> (num) ) Item();
-
-    def sa : Item >> (num) = init >> (num) Item ();
-    sa.nivelar(2);
-
-    G.guardar(sa);
-    G.passar().cortar(5);
-
+	def G : Item >> ( Item >> ( num ) ) = init >> ( Item >> ( num ) ) Item ( );
+	def sa : Item >> ( num ) = init >> ( num ) Item ( );
+	sa.nivelar ( 2 );
+	G.guardar ( sa );
+	G.passar ( ).cortar ( 5 );
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-
 }

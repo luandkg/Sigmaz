@@ -1,50 +1,36 @@
-
 refer COISAS;
 refer ESTRELAS;
 
 call iniciar -> {
-
-
-    def mID1 : num = Pessoa->ID();
-    def mID2 : num = Pessoa->ID();
-
-    def mLuz : num = Sol->Luminosidade();
-
+	def mID1 : num = Pessoa -> ID ( );
+	def mID2 : num = Pessoa -> ID ( );
+	def mLuz : num = Sol -> Luminosidade ( );
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-
 }
-
-package ESTRELAS{
-
-struct Sol {
-
-extern:
-    define mLuz : num = 12;
-     func Luminosidade() : num {
-                return mLuz ;
-            }
+package ESTRELAS {
+	struct Sol {
+		extern : 
+		define mLuz : num = 12;
+		func Luminosidade ( ) : num {
+			return mLuz;
+		}
+		
+	}
+	
 }
-
-}
-
-
 package COISAS {
-
-    struct Pessoa {
-
-    extern:
-        define mID : num = 0;
-    extern :
-        func ID() : num {
-            mID = somar_inteiro(mID,1);
-            return mID ;
-        }
-
-    }
-
-
+	struct Pessoa {
+		extern : 
+		define mID : num = 0;
+		extern : 
+		func ID ( ) : num {
+			mID = somar_inteiro ( mID , 1 );
+			return mID;
+		}
+		
+	}
+	
 }
-
 func somar_inteiro ( a : num , b : num ) : num {
 	def c : num;
 	invoke math -> operator_sum ( a , b ) :: c;

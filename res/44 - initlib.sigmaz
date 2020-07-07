@@ -1,17 +1,10 @@
-
 require lib;
 
 call iniciar -> inicio ( );
 
 act inicio ( ) {
-
-    def valor : num = 1;
-
-    def ternal : num = -> (maior(valor,2)) :: (+1) not (-1);
-
-    def ale : num = inteiro(aleatorio(0,100));
-
-
+	def valor : num = 1;
+	def ternal : num = -> ( maior ( valor , 2 ) ) :: ( +1 ) not ( -1 );
+	def ale : num = inteiro ( aleatorio ( 0 , 100 ) );
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ACTIONS;
 }
-

@@ -1,5 +1,3 @@
-
-
 call iniciar -> operando ( );
 
 act operando ( ) {
@@ -19,7 +17,6 @@ act operando ( ) {
 	# invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
 	
 }
-
 func somar ( a : num , b : num ) : num {
 	def c : num;
 	invoke math -> operator_sum ( a , b ) :: c;
@@ -32,19 +29,16 @@ act println ( a : string , b : num ) {
 	invoke terminal -> print ( a ) :: c;
 	invoke terminal -> print ( b ) :: c;
 }
-
 func menor ( a : num , b : num ) : bool {
 	def c : bool;
 	invoke math -> operator_less ( a , b ) :: c;
 	return c;
 }
-
 func inteiro ( a : num ) : num {
 	def c : num;
 	invoke casting -> cast_integer ( a ) :: c;
 	return c;
 }
-
 func decimal ( a : num ) : num {
 	def c : num;
 	invoke casting -> cast_decimal ( a ) :: c;

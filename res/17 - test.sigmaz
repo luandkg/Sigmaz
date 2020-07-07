@@ -25,7 +25,6 @@ act println ( a : string , b : num ) {
 	invoke terminal -> print ( a ) :: c;
 	invoke terminal -> print ( b ) :: c;
 }
-
 operator == ( a : num , b : num ) : bool {
 	def c : bool;
 	invoke math -> operator_equal ( a , b ) :: c;

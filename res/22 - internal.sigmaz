@@ -36,7 +36,6 @@ act pular ( ) {
 	def igual : bool = p1.getIdade ( ) == p2.getIdade ( );
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }
-
 operator == ( a : num , b : num ) : bool {
 	def c : bool;
 	invoke math -> operator_equal ( a , b ) :: c;

@@ -1,5 +1,3 @@
-
-
 call iniciar -> operando ( );
 
 act operando ( ) {
@@ -43,7 +41,6 @@ act operando ( ) {
 	def w : string = ( "Luan");
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
-
 func maior_igual ( a : num , b : num ) : bool {
 	def c1 : bool;
 	def c2 : bool;
@@ -58,13 +55,11 @@ func maior_igual ( a : num , b : num ) : bool {
 	}
 	return c3;
 }
-
 func menor ( a : num , b : num ) : bool {
 	def c : bool;
 	invoke math -> operator_less ( a , b ) :: c;
 	return c;
 }
-
 func menor_igual ( a : num , b : num ) : bool {
 	def c1 : bool;
 	def c2 : bool;
@@ -79,20 +74,16 @@ func menor_igual ( a : num , b : num ) : bool {
 	}
 	return c3;
 }
-
 func igual ( a : num , b : num ) : bool {
 	def c : bool;
 	invoke math -> operator_equal ( a , b ) :: c;
 	return c;
 }
-
-
 operator == ( a : num , b : num ) : bool {
 	def c : bool;
 	invoke math -> operator_equal ( a , b ) :: c;
 	return c;
 }
-
 operator == ( a : bool , b : bool ) : bool {
 	def c : bool;
 	invoke math -> operator_match ( a , b ) :: c;

@@ -4,8 +4,8 @@
       ID Branch = "6/7/2020"
       ID Works = "2"
       ID Full = "1.2.312"
-      ID Mode = "."
-      ID Release = "."
+      ID Mode = "Release"
+      ID Release = "1.2.312 R2 : 8"
       ID Factor = "2"
       PACOTE Branches
        {
@@ -31,6 +31,6 @@
       PACOTE Releases
        {
          PACOTE Release {  ID Date = "5/7/2020" ID Count = "9" ID Release = "1.1.36 R1 : 9" } 
-         PACOTE Release {  ID Date = "6/7/2020" ID Count = "1" ID Release = "1.2.82 R2 : 1" } 
+         PACOTE Release {  ID Date = "6/7/2020" ID Count = "8" ID Release = "1.2.312 R2 : 8" } 
        } 
     } 

@@ -1,78 +1,50 @@
-
-
 call iniciar -> inicio ( );
 
 act inicio ( ) {
-
-    def a : Valoramento >> (num) = gerar(15);
-    def b : num = a.getX();
-
-    def c : Valoramento >> (num) = init >> (num) Valoramento(10);
-
-    passar(c);
-
-
-    def d : num = c.getX();
-
-    def r : Ref = init Ref();
-    r.VA = c;
-
-    #trash(c);
-
-    r.VA.setX(50);
-
-    def duplo : num = r.VA.getX();
-
+	def a : Valoramento >> ( num ) = gerar ( 15 );
+	def b : num = a.getX ( );
+	def c : Valoramento >> ( num ) = init >> ( num ) Valoramento ( 10 );
+	passar ( c );
+	def d : num = c.getX ( );
+	def r : Ref = init Ref ( );
+	r.VA = c;
+	
+	#trash(c);
+	r.VA.setX ( 50 );
+	def duplo : num = r.VA.getX ( );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
 
-act trash(a:any){
-
-    invoke __COMPILER__ -> STRUCT (a) :: REMOVE;
-
+act trash ( a : any ) {
+	invoke __COMPILER__ -> STRUCT ( a ) :: REMOVE;
+}
+func passar ( g : Valoramento >> ( num ) ) : num {
+	g.setX ( 20 );
+	return 1;
+}
+func gerar ( a : num ) : Valoramento >> ( num ) {
+	def tmp : Valoramento >> ( num ) = init >> ( num ) Valoramento ( a );
+	return tmp;
 }
 
-func passar( g : Valoramento >> (num) ) : num {
-
-    g.setX(20);
-
-    return 1;
+struct Ref {
+	all : 
+	define VA : Valoramento >> ( num );
 }
 
+struct Valoramento in ( T ) {
+	init Valoramento ( a : num ) {
+		guardado = a;
+	}
+	restrict : 
+	define guardado : T = null;
+	all : 
+	func getX ( ) : T {
+		return guardado;
+	}
 
-func gerar( a: num) : Valoramento >> (num) {
-
-    def tmp : Valoramento >> (num) = init >> (num) Valoramento(a);
-
-    return tmp;
-
- }
-
-
-struct Ref{
-
-    all :
-
-        define VA : Valoramento >> (num);
-
-}
-
-
-
-struct Valoramento in (T) {
-
-    init Valoramento(a:num) { guardado = a;}
-
-
-    restrict :
-        define guardado : T = null;
-
-
-
-    all:
-        func getX() : T { return guardado; }
-
-        act setX(a:num) { guardado = a;}
-
-
+	act setX ( a : num ) {
+		guardado = a;
+	}
+	
 }

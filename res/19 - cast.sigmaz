@@ -8,15 +8,13 @@ cast pos {
 	}
 	
 }
-
 operator == ( a : pos , b : pos ) : bool {
 	def c : bool;
-	def c1 : num =  a;
-	def c2 : num =  b ;
+	def c1 : num = a;
+	def c2 : num = b;
 	invoke math -> operator_equal ( c1 , c2 ) :: c;
 	return c;
 }
-
 operator !! ( a : pos , b : pos ) : bool {
 	def c : bool;
 	def c1 : num = a;
@@ -24,37 +22,21 @@ operator !! ( a : pos , b : pos ) : bool {
 	invoke math -> operator_not ( c1 , c2 ) :: c;
 	return c;
 }
-
-func retornar(a:num) : string {
-
-	invoke casting -> cast_type ( "num","string" ) :: a;
-
-    return a;
-
+func retornar ( a : num ) : string {
+	invoke casting -> cast_type ( "num", "string") :: a;
+	return a;
 }
 
 act pular ( ) {
-
-    def aa : string = retornar(12);
-
-
+	def aa : string = retornar ( 12 );
 	def f : pos = 13;
-
-
 	def v : num = f;
-
 	def g : pos = f;
-
-    def m : num = 100;
-
+	def m : num = 100;
 	def igual : bool = f == g;
-
 	def diferente : bool = f !! g;
-
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
-
-	def p1 : num = num(f);
-	def p2 : pos = pos(12);
-
+	def p1 : num = num ( f );
+	def p2 : pos = pos ( 12 );
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }

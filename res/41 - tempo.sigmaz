@@ -1,11 +1,9 @@
 import "libs/lib.sigmaz";
 
 call iniciar -> inicio ( );
-
 refer Tempo;
 
 act inicio ( ) {
-
 	def Tempo : string = getTempo_Formatado ( );
 	def Data : string = getData_Formatado ( );
 	def TempoData : string = getTempoData_Formatado ( );
@@ -14,5 +12,3 @@ act inicio ( ) {
 	def DataTempo_Externo : string = TempoData -> getDataTempo_Formatado ( );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
-
- 

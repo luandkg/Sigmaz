@@ -1,75 +1,60 @@
-
-
 package Terminal {
-
-    act println ( a : string , b : num ) {
-	    def c : num;
-	    invoke terminal -> change ( ) :: c;
-	    invoke terminal -> print ( a ) :: c;
-	    invoke terminal -> print ( b ) :: c;
-    }
-
+	act println ( a : string , b : num ) {
+		def c : num;
+		invoke terminal -> change ( ) :: c;
+		invoke terminal -> print ( a ) :: c;
+		invoke terminal -> print ( b ) :: c;
+	}
+	
 }
-
-
 package Blocos {
+	refer Terminal;
+	stages MODOS -> {
+		CLARO , DOIS , TRES , QUATRO 
+	}
 
-    refer Terminal;
+	act Blocar ( a : num , b : num ) {
+		println ( " -->> Valor A : ", a );
+	}
 
-    stages MODOS -> {CLARO,DOIS, TRES, QUATRO}
+	struct XACC {
+		all : 
+		mockiz XAT : num = 12;
+	}
 
-    act Blocar(a:num,b:num) {
-
-        println(" -->> Valor A : ",a);
-
-    }
-
-    struct XACC {
-        all:
-            mockiz XAT : num = 12;
-    }
-
-    struct BGeral with XACC {
-
-        init BGeral(a:num){
-            _a = a;
-        }
-        restrict :
-            define _a : num = 0;
-        all:
-            func getA() : num {return _a;}
-    }
-
-    external BRUTAL {
-        act FORCAR() {}
-    }
+	struct BGeral with XACC {
+		init BGeral ( a : num ) {
+			_a = a;
+		}
+		restrict : 
+		define _a : num = 0;
+		all : 
+		func getA ( ) : num {
+			return _a;
+		}
+		
+	}
+	external BRUTAL {
+		act FORCAR ( ) {
+			
+		}
+		
+	}
+	
 }
-
 refer Blocos;
 refer Terminal;
 
-
 call iniciar -> {
-
-    invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: PACKAGES;
-    invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
-
-    println(" -->> Valorando : ",50);
-
-    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
-
-    def m : MODOS = MODOS::CLARO;
-
-    Blocar(3,2);
-    Blocar(5,1);
-
-    def bg : BGeral = init BGeral(15);
-
-     Blocar(7,1);
-
-    def bga : num = bg.getA();
-
-    invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: PACKAGES;
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
+	println ( " -->> Valorando : ", 50 );
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	def m : MODOS = MODOS :: CLARO;
+	Blocar ( 3 , 2 );
+	Blocar ( 5 , 1 );
+	def bg : BGeral = init BGeral ( 15 );
+	Blocar ( 7 , 1 );
+	def bga : num = bg.getA ( );
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 }
-

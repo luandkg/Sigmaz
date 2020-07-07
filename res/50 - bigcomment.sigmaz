@@ -1,26 +1,14 @@
-
 call iniciar -> inicio ( );
 
-
 act inicio ( ) {
-
-
-    # Comentario Pequeno
-
-    ## comentario
+	
+	# Comentario Pequeno
+	
+	## comentario
             com
                 muitas
                         linhas
     ##
-
-
-
-    def a : num = 10;
-
-    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
-
-
+	def a : num = 10;
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
-
-
-
