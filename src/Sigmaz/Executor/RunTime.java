@@ -593,6 +593,9 @@ public class RunTime {
 
             if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
 
+
+                 colocarGlobal(DocumentoC, ASTCGlobal);
+
                 for (AST ASTC : ASTCGlobal.getASTS()) {
 
 
@@ -608,16 +611,11 @@ public class RunTime {
 
                     } else if (ASTC.mesmoTipo("TYPE")) {
 
+                        colocarType(DocumentoC, "SIGMAZ", ASTC);
+
                     } else if (ASTC.mesmoTipo("STRUCT")) {
 
-                        DocumentoC.adicionarLinha("class " + ASTC.getNome() + ") <<(S,Green) >> {");
-                        DocumentoC.adicionarLinha("+Div()");
-                        DocumentoC.adicionarLinha("-Id");
-                        DocumentoC.adicionarLinha("+Somar()");
-                        DocumentoC.adicionarLinha("}");
-
-
-                    } else if (ASTC.mesmoTipo("STAGES")) {
+                            colocarStruct(DocumentoC, "SIGMAZ", ASTC);
 
                     } else if (ASTC.mesmoTipo("CALL")) {
 
@@ -631,22 +629,7 @@ public class RunTime {
 
                             if (Sub.mesmoTipo("STRUCT")) {
 
-                                DocumentoC.adicionarLinha("class " + ASTC.getNome() + "." + Sub.getNome() + " <<(S,Green) >> {");
-                                DocumentoC.adicionarLinha("+Div()");
-                                DocumentoC.adicionarLinha("-Id");
-
-                                for (AST Sub2 : Sub.getBranch("BODY").getASTS()) {
-
-                                    if (Sub2.mesmoTipo("ACTION")){
-                                        DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + "()");
-                                    }
-                                    if (Sub2.mesmoTipo("FUNCTION")){
-                                        DocumentoC.adicionarLinha("-" + Sub2.getNome() + "()");
-                                    }
-                                }
-
-
-                                DocumentoC.adicionarLinha("}");
+                           //     colocarStruct(DocumentoC, ASTC.getNome(), Sub);
 
                             }
 
@@ -668,6 +651,158 @@ public class RunTime {
 
         Texto.Escrever(eLocal, DocumentoC.getConteudo());
 
+
+    }
+
+
+    public void colocarGlobal(Documento DocumentoC, AST Sub) {
+
+        DocumentoC.adicionarLinha("class SIGMAZ.SIGMAZ <<(S,Red) >> {");
+
+
+        for (AST Sub2 : Sub.getASTS()) {
+
+            if (Sub2.mesmoTipo("DEFINE")) {
+                DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + " : " + getTipagem(Sub2.getBranch("TYPE")));
+            }
+            if (Sub2.mesmoTipo("MOCKIZ")) {
+                DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + " : " + getTipagem(Sub2.getBranch("TYPE")));
+            }
+
+        }
+
+
+        for (AST Sub2 : Sub.getASTS()) {
+
+            if (Sub2.mesmoTipo("ACTION")) {
+                DocumentoC.adicionarLinha("#" + Sub2.getNome() + " (" + getParametragem(Sub2) + ")");
+            }
+
+        }
+        for (AST Sub2 : Sub.getASTS()) {
+
+            if (Sub2.mesmoTipo("FUNCTION")) {
+                DocumentoC.adicionarLinha("+" + Sub2.getNome() + " (" + getParametragem(Sub2) + ") : " + getTipagem(Sub2.getBranch("TYPE")));
+            }
+        }
+
+        for (AST Sub2 : Sub.getASTS()) {
+
+            if (Sub2.mesmoTipo("OPERATOR")) {
+                DocumentoC.adicionarLinha("~" + Sub2.getNome() + " (" + getParametragem(Sub2) + ") : " + getTipagem(Sub2.getBranch("TYPE")));
+            }
+        }
+
+        DocumentoC.adicionarLinha("}");
+
+
+    }
+
+    public String getParametragem(AST eAST) {
+        String ret = "";
+
+        int total = eAST.getBranch("ARGUMENTS").getASTS().size();
+
+        if (total > 0) {
+
+
+            for (int ii = 0; ii < total; ii++) {
+                AST eArg = eAST.getBranch("ARGUMENTS").getASTS().get(ii);
+
+                if (ii < total - 1) {
+                    ret += eArg.getNome() + " : " + getTipagem(eArg.getBranch("TYPE")) + " , ";
+                } else {
+                    ret += eArg.getNome() + " : " + getTipagem(eArg.getBranch("TYPE")) + "";
+                }
+
+            }
+
+        } else {
+            ret = " ";
+
+        }
+
+
+        return ret;
+    }
+
+    public void colocarType(Documento DocumentoC, String ePacote, AST Sub) {
+        DocumentoC.adicionarLinha("class " + ePacote + "." + Sub.getNome() + " <<(S,Blue) >> {");
+
+        for (AST Sub2 : Sub.getASTS()) {
+
+            if (Sub2.mesmoTipo("DEFINE")) {
+                DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + " : " + getTipagem(Sub2.getBranch("TYPE")));
+            }
+            if (Sub2.mesmoTipo("MOCKIZ")) {
+                DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + " : " + getTipagem(Sub2.getBranch("TYPE")));
+            }
+
+        }
+        DocumentoC.adicionarLinha("}");
+
+    }
+
+
+    public void colocarStruct(Documento DocumentoC, String ePacote, AST Sub) {
+
+        if (Sub.getBranch("EXTENDED").mesmoNome("STAGES")) {
+            DocumentoC.adicionarLinha("class " + ePacote + "." + Sub.getNome() + " <<(S,Orange) >> {");
+
+            for (AST Sub2 : Sub.getBranch("STAGES").getASTS()) {
+                DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + "");
+            }
+
+        } else if (Sub.getBranch("EXTENDED").mesmoNome("TYPE")) {
+            DocumentoC.adicionarLinha("class " + ePacote + "." + Sub.getNome() + " <<(S,Blue) >> {");
+        } else {
+            DocumentoC.adicionarLinha("class " + ePacote + "." + Sub.getNome() + " <<(S,Green) >> {");
+        }
+
+
+        if (Sub.existeBranch("INITS")) {
+            for (AST Sub2 : Sub.getBranch("INITS").getASTS()) {
+                if (Sub2.mesmoNome(Sub.getNome())) {
+                    DocumentoC.adicionarLinha("~" + Sub2.getNome() + " (" + getParametragem(Sub2) + ")");
+                }
+            }
+        }
+
+        for (AST Sub2 : Sub.getBranch("BODY").getASTS()) {
+
+            if (Sub2.mesmoTipo("DEFINE")) {
+                DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + " : " + getTipagem(Sub2.getBranch("TYPE")));
+            }
+            if (Sub2.mesmoTipo("MOCKIZ")) {
+                DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + " : " + getTipagem(Sub2.getBranch("TYPE")));
+            }
+
+        }
+
+        for (AST Sub2 : Sub.getBranch("BODY").getASTS()) {
+
+            if (Sub2.mesmoTipo("ACTION")) {
+                DocumentoC.adicionarLinha("#" + Sub2.getNome() + " (" + getParametragem(Sub2) + ")");
+            }
+
+        }
+        for (AST Sub2 : Sub.getBranch("BODY").getASTS()) {
+
+
+            if (Sub2.mesmoTipo("FUNCTION")) {
+                DocumentoC.adicionarLinha("+" + Sub2.getNome() + " (" + getParametragem(Sub2) + ") : " + getTipagem(Sub2.getBranch("TYPE")));
+            }
+        }
+
+        for (AST Sub2 : Sub.getBranch("BODY").getASTS()) {
+
+            if (Sub2.mesmoTipo("OPERATOR")) {
+                DocumentoC.adicionarLinha("~" + Sub2.getNome() + " (" + getParametragem(Sub2) + ") : " + getTipagem(Sub2.getBranch("TYPE")));
+            }
+        }
+
+
+        DocumentoC.adicionarLinha("}");
 
     }
 

@@ -37,3 +37,9 @@ func typeof( a: any) : string {
     invoke casting -> typeof ( a ) :: ret;
     return ret;
 }
+
+
+type Tipado {
+    define Nome : string = "";
+    define Valor : string = "";
+}

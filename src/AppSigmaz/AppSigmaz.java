@@ -25,16 +25,17 @@ public class AppSigmaz {
 
         int ARQUIVO = 57;
 
-        switch (Fases.GRAFICO) {
+        switch (Fases.GRAFICO_BIBLIOTECA) {
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
             case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);
             case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos,mCompilado);
-            case GRAFICO -> AppUtils.GRAFICO(ARQUIVO, mArquivos,mCompilado,mGrafico);
             case TESTES -> AppUtils.TESTE_GERAL(mArquivos, mCompilado);
             case IDENTAR_TUDO -> AppUtils.IDENTAR_LOTE("ARQUIVOS", mArquivos);
             case IDENTAR_BIBLIOTECAS -> AppUtils.IDENTAR_LOTE("BIBLIOTECAS", mBibliotecas);
             case MONTAR_BIBLIOTECAS -> AppUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad);
+            case GRAFICO -> AppUtils.GRAFICO(ARQUIVO, mArquivos,mCompilado,mGrafico);
+            case GRAFICO_BIBLIOTECA -> AppUtils.GRAFICO_BIBLIOTECA(mBiblioteca_Fonte,mBiblioteca_Sigmad,mGrafico);
             default -> System.out.println("\t - Fases : Desconhecida !");
         }
 

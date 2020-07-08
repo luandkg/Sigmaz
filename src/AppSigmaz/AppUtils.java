@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class AppUtils {
 
 
-    public static void EXECUTAR(int eIndice, ArrayList<String> mArquivos,String eCompilado) {
+    public static void EXECUTAR(int eIndice, ArrayList<String> mArquivos, String eCompilado) {
 
 
         int iContando = 0;
@@ -74,7 +74,7 @@ public class AppUtils {
     }
 
 
-    public static void ESTRUTURAL(int eIndice, ArrayList<String> mArquivos,String eSaida) {
+    public static void ESTRUTURAL(int eIndice, ArrayList<String> mArquivos, String eSaida) {
 
 
         int iContando = 0;
@@ -103,7 +103,7 @@ public class AppUtils {
     }
 
 
-    public static void GRAFICO(int eIndice, ArrayList<String> mArquivos,String eSaida,String eGrafico) {
+    public static void GRAFICO(int eIndice, ArrayList<String> mArquivos, String eSaida, String eGrafico) {
 
 
         int iContando = 0;
@@ -116,7 +116,7 @@ public class AppUtils {
                 enc = true;
 
                 Sigmaz SigmazC = new Sigmaz();
-                SigmazC.grafico(mArquivo,eSaida, eGrafico);
+                SigmazC.grafico(mArquivo, eSaida, eGrafico);
 
                 break;
             }
@@ -129,7 +129,16 @@ public class AppUtils {
 
     }
 
-    public static void TESTE_GERAL(ArrayList<String> mArquivos,String eCompilado) {
+    public static void GRAFICO_BIBLIOTECA(String eFonte, String eSaida, String eGrafico) {
+
+
+        Sigmaz SigmazC = new Sigmaz();
+        SigmazC.grafico(eFonte, eSaida, eGrafico);
+
+
+    }
+
+    public static void TESTE_GERAL(ArrayList<String> mArquivos, String eCompilado) {
 
         System.out.println("");
 
@@ -207,11 +216,11 @@ public class AppUtils {
 
             if (t) {
                 System.out.println(" Arquivo : " + sContador + " -> " + mArquivo + " : SUCESSO ");
-                mSucesso+=1;
+                mSucesso += 1;
 
             } else {
                 System.out.println(" Arquivo : " + sContador + " -> " + mArquivo + " : FALHOU ");
-                mProblema+=1;
+                mProblema += 1;
 
             }
 
@@ -229,17 +238,16 @@ public class AppUtils {
         System.out.println("");
 
 
+        NumberFormat formatarFloat = new DecimalFormat("0.00");
 
-        NumberFormat formatarFloat= new DecimalFormat("0.00");
+        if (mQuantidade > 0) {
 
-        if (mQuantidade>0){
-
-            float s = ((float)mSucesso/(float)mQuantidade)*100.0f;
-            float f =( (float)mProblema/(float)mQuantidade)*100.0f;
+            float s = ((float) mSucesso / (float) mQuantidade) * 100.0f;
+            float f = ((float) mProblema / (float) mQuantidade) * 100.0f;
 
             System.out.println(" - TESTES  	: " + mQuantidade + " -> 100.00 % ");
-            System.out.println("\t - SUCESSO  : " + mSucesso + " -> " +  formatarFloat.format(s).replace(",", ".") + " % ");
-            System.out.println("\t - FALHOU  	: " + mProblema+ " -> " + formatarFloat.format(f).replace(",", ".")+ " % ");
+            System.out.println("\t - SUCESSO  : " + mSucesso + " -> " + formatarFloat.format(s).replace(",", ".") + " % ");
+            System.out.println("\t - FALHOU  	: " + mProblema + " -> " + formatarFloat.format(f).replace(",", ".") + " % ");
 
         }
 

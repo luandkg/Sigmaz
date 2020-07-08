@@ -6,34 +6,137 @@ HeaderBackgroundColor White
  }
 skinparam stereotypeCBackgroundColor White
 skinparam minClassWidth 200
-class Terminal.Terminal <<(S,Green) >> {
-+Div()
--Id
-<img:https://i.stack.imgur.com/p76Bx.gif>println()
+class SIGMAZ.SIGMAZ <<(S,Red) >> {
+<img:https://i.stack.imgur.com/p76Bx.gif>SIGMAZ : string
+<img:https://i.stack.imgur.com/p76Bx.gif>VERSAO : num
+<img:https://i.stack.imgur.com/p76Bx.gif>ZERO : num
+<img:https://i.stack.imgur.com/p76Bx.gif>PI : num
+<img:https://i.stack.imgur.com/p76Bx.gif>EULER : num
+<img:https://i.stack.imgur.com/p76Bx.gif>AUREO : num
+<img:https://i.stack.imgur.com/p76Bx.gif>RAIZ2 : num
+<img:https://i.stack.imgur.com/p76Bx.gif>MAIS_UM : num
+<img:https://i.stack.imgur.com/p76Bx.gif>MENOS_UM : num
+<img:https://i.stack.imgur.com/p76Bx.gif>BASE_2 : num
+<img:https://i.stack.imgur.com/p76Bx.gif>BASE_10 : num
+<img:https://i.stack.imgur.com/p76Bx.gif>TRUE : bool
+<img:https://i.stack.imgur.com/p76Bx.gif>FALSE : bool
+#print (a : string)
+#print (a : num)
+#print (a : bool)
+#println (a : string)
+#println (a : num)
+#println (a : bool)
+#println (a : string , b : string)
+#println (a : string , b : num)
+#println (a : string , b : bool)
+#println (a : num , b : string)
+#println (a : num , b : num)
+#println (a : num , b : bool)
+#println (a : bool , b : string)
+#println (a : bool , b : num)
+#println (a : bool , b : bool)
+#trash (a : any)
++somar (a : num , b : num) : num
++somar_inteiro (a : num , b : num) : num
++subtrair (a : num , b : num) : num
++subtrair_inteiro (a : num , b : num) : num
++multiplicar (a : num , b : num) : num
++multiplicar_inteiro (a : num , b : num) : num
++dividir (a : num , b : num) : num
++dividir_inteiro (a : num , b : num) : num
++resto (a : num , b : num) : num
++resto_inteiro (a : num , b : num) : num
++aleatorio (a : num , b : num) : num
++igual (a : num , b : num) : bool
++diferente (a : num , b : num) : bool
++menor (a : num , b : num) : bool
++maior (a : num , b : num) : bool
++operador_e (a : bool , b : bool) : bool
++operador_ou (a : bool , b : bool) : bool
++maior_igual (a : num , b : num) : bool
++menor_igual (a : num , b : num) : bool
++igual (a : bool , b : bool) : bool
++diferente (a : bool , b : bool) : bool
++num_to_string (a : num , b : num) : string
++num_to_string (a : num) : string
++bool_to_string (a : bool) : string
++string_to_bool (a : string) : bool
++inteiro (a : num) : num
++decimal (a : num) : num
++isNull (ObjetoNulo : any) : bool
++string_length (a : string) : num
++string_append (a : string , b : string) : string
++string_append (a : string , b : string , c : string) : string
++string_append (a : string , b : string , c : string , d : string) : string
++string_append (a : string , b : string , c : string , d : string , e : string) : string
++pos (alfa : num) : pos
++num (alfa : pos) : num
++neg (alfa : num) : neg
++num (alfa : neg) : num
++int (alfa : num) : int
++num (alfa : int) : num
++somar (a : int , b : int) : int
++somar (a : int , b : num) : int
++somar (a : num , b : int) : int
++subtrair (a : int , b : int) : int
++multiplicar (a : int , b : int) : int
++dividir (a : int , b : int) : int
++menor (a : int , b : int) : bool
++maior (a : int , b : int) : bool
++menor_igual (a : int , b : int) : bool
++maior_igual (a : int , b : int) : bool
++igual (a : int , b : int) : bool
++diferente (a : int , b : int) : bool
++typeof (a : any) : string
+~MATCH (a : num , b : num) : bool
+~UNMATCH (a : num , b : num) : bool
+~MATCH (a : bool , b : bool) : bool
+~UNMATCH (a : bool , b : bool) : bool
+~MATCH (a : string , b : string) : bool
+~UNMATCH (a : string , b : string) : bool
+~SUM (a : num , b : num) : num
+~SUB (a : num , b : num) : num
+~MUX (a : num , b : num) : num
+~DIV (a : num , b : num) : num
+~MATCH (a : pos , b : pos) : bool
+~UNMATCH (a : pos , b : pos) : bool
+~MATCH (a : neg , b : neg) : bool
+~UNMATCH (a : neg , b : neg) : bool
+~SUM (a : int , b : int) : int
+~SUB (a : int , b : int) : int
+~MUX (a : int , b : int) : int
+~DIV (a : int , b : int) : int
+~MATCH (a : int , b : int) : bool
+~UNMATCH (a : int , b : int) : bool
 }
-class Blocos.MODOS <<(S,Green) >> {
-+Div()
--Id
--nameOf()
--valueOf()
+class SIGMAZ.Numeros <<(S,Orange) >> {
+<img:https://i.stack.imgur.com/p76Bx.gif>POSITIVO
+<img:https://i.stack.imgur.com/p76Bx.gif>NEGATIVO
+<img:https://i.stack.imgur.com/p76Bx.gif>ZERO
++nameOf (ALFA : Numeros) : string
++valueOf (ALFA : Numeros) : num
+~MATCH (ALFA : Numeros , BETA : Numeros) : bool
+~UNMATCH (ALFA : Numeros , BETA : Numeros) : bool
 }
-class Blocos.XACC <<(S,Green) >> {
-+Div()
--Id
+class SIGMAZ.Comparacao <<(S,Orange) >> {
+<img:https://i.stack.imgur.com/p76Bx.gif>MAIOR
+<img:https://i.stack.imgur.com/p76Bx.gif>MENOR
+<img:https://i.stack.imgur.com/p76Bx.gif>IGUAL
++nameOf (ALFA : Comparacao) : string
++valueOf (ALFA : Comparacao) : num
+~MATCH (ALFA : Comparacao , BETA : Comparacao) : bool
+~UNMATCH (ALFA : Comparacao , BETA : Comparacao) : bool
 }
-class Blocos.BGeral <<(S,Green) >> {
-+Div()
--Id
--getA()
+class SIGMAZ.Logico <<(S,Orange) >> {
+<img:https://i.stack.imgur.com/p76Bx.gif>TRUE
+<img:https://i.stack.imgur.com/p76Bx.gif>FALSE
++nameOf (ALFA : Logico) : string
++valueOf (ALFA : Logico) : num
+~MATCH (ALFA : Logico , BETA : Logico) : bool
+~UNMATCH (ALFA : Logico , BETA : Logico) : bool
 }
-class Blocos.Blocos <<(S,Green) >> {
-+Div()
--Id
-<img:https://i.stack.imgur.com/p76Bx.gif>Blocar()
-}
-class Blocos.BRUTAL <<(S,Green) >> {
-+Div()
--Id
-<img:https://i.stack.imgur.com/p76Bx.gif>FORCAR()
+class SIGMAZ.Tipado <<(S,Blue) >> {
+<img:https://i.stack.imgur.com/p76Bx.gif>Nome : string
+<img:https://i.stack.imgur.com/p76Bx.gif>Valor : string
 }
 @enduml
