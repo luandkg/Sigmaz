@@ -20,10 +20,12 @@ import java.util.Calendar;
 
 public class Sigmaz {
 
-    private void geral(int eOpcao, String eArquivo, String saida) {
+    private boolean geral(String eArquivo, String saida) {
+
+        boolean ret = false;
 
         File arq = new File(saida);
-        String  mLocal = arq.getParent() + "/";
+        String mLocal = arq.getParent() + "/";
 
 
         System.out.println("################ SIGMAZ ################");
@@ -113,7 +115,7 @@ public class Sigmaz {
             System.out.println(CompilerC.getArvoreDeInstrucoes());
 
 
-            AnaliseC.init(CompilerC.getASTS(),mLocal);
+            AnaliseC.init(CompilerC.getASTS(), mLocal);
             String AF = CompilerC.getData().toString();
 
 
@@ -131,14 +133,14 @@ public class Sigmaz {
                     System.out.println("\t\t" + Erro);
                 }
 
-             AnaliseC.MostrarMensagens();
+                AnaliseC.MostrarMensagens();
 
-              //  System.out.println("");
-               // System.out.println("################ AST - COM DEFEITOS ################");
-              //  System.out.println("");
+                //  System.out.println("");
+                // System.out.println("################ AST - COM DEFEITOS ################");
+                //  System.out.println("");
 
-              //  Documentador DC = new Documentador();
-              //  System.out.println(CompilerC.getArvoreDeInstrucoes());
+                //  Documentador DC = new Documentador();
+                //  System.out.println(CompilerC.getArvoreDeInstrucoes());
 
             } else {
 
@@ -163,64 +165,7 @@ public class Sigmaz {
                 System.out.println("");
 
 
-                System.out.println("");
-                System.out.println("################ RUNTIME ################");
-                System.out.println("");
-                System.out.println("\t - Executando : " + saida);
-                System.out.println("");
-
-                RunTime RunTimeC = new RunTime();
-                String DI = CompilerC.getData().toString();
-
-
-                RunTimeC.init(saida);
-
-                System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
-                System.out.println("");
-
-
-                System.out.println(RunTimeC.getArvoreDeInstrucoes());
-
-                System.out.println("");
-                System.out.println("----------------------------------------------");
-                System.out.println("");
-
-                if (eOpcao == 1) {
-
-                    RunTimeC.run();
-
-                } else if (eOpcao == 2) {
-
-                    RunTimeC.estrutura();
-
-                } else {
-
-                    System.out.println("\t - Opcao : Desconhecida ");
-
-                }
-
-
-                System.out.println("");
-                System.out.println("----------------------------------------------");
-                System.out.println("");
-
-                String DF = CompilerC.getData().toString();
-
-                System.out.println("\t - Iniciado : " + DI);
-                System.out.println("\t - Finalizado : " + DF);
-
-                System.out.println("\t - Erros : " + RunTimeC.getErros().size());
-
-                if (RunTimeC.getErros().size() > 0) {
-                    System.out.println("\n\t ERROS DE EXECUCAO : ");
-
-                    for (String Erro : RunTimeC.getErros()) {
-                        System.out.println("\t\t" + Erro);
-                    }
-                }
-
-                System.out.println("");
-                System.out.println("----------------------------------------------");
+                ret = true;
 
 
             }
@@ -231,25 +176,183 @@ public class Sigmaz {
 
         }
 
+        return ret;
     }
 
 
     public void init(String eArquivo, String saida) {
 
 
-        geral(1, eArquivo, saida);
+        if (geral(eArquivo, saida)) {
+
+
+            System.out.println("");
+            System.out.println("################ RUNTIME ################");
+            System.out.println("");
+            System.out.println("\t - Executando : " + saida);
+            System.out.println("");
+
+            RunTime RunTimeC = new RunTime();
+            String DI = RunTimeC.getData().toString();
+
+
+            RunTimeC.init(saida);
+
+            System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
+            System.out.println("");
+
+
+            System.out.println(RunTimeC.getArvoreDeInstrucoes());
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("");
+
+            RunTimeC.run();
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("");
+
+            String DF = RunTimeC.getData().toString();
+
+            System.out.println("\t - Iniciado : " + DI);
+            System.out.println("\t - Finalizado : " + DF);
+
+            System.out.println("\t - Erros : " + RunTimeC.getErros().size());
+
+            if (RunTimeC.getErros().size() > 0) {
+                System.out.println("\n\t ERROS DE EXECUCAO : ");
+
+                for (String Erro : RunTimeC.getErros()) {
+                    System.out.println("\t\t" + Erro);
+                }
+            }
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+
+
+        }
 
     }
 
 
     public void estrutural(String eArquivo, String saida) {
 
-        geral(2, eArquivo, saida);
+
+        if (geral(eArquivo, saida)) {
+
+
+            System.out.println("");
+            System.out.println("################ RUNTIME ################");
+            System.out.println("");
+            System.out.println("\t - Executando : " + saida);
+            System.out.println("");
+
+            RunTime RunTimeC = new RunTime();
+            String DI = RunTimeC.getData().toString();
+
+
+            RunTimeC.init(saida);
+
+            System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
+            System.out.println("");
+
+
+            System.out.println(RunTimeC.getArvoreDeInstrucoes());
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("");
+
+            RunTimeC.estrutura();
+
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("");
+
+            String DF = RunTimeC.getData().toString();
+
+            System.out.println("\t - Iniciado : " + DI);
+            System.out.println("\t - Finalizado : " + DF);
+
+            System.out.println("\t - Erros : " + RunTimeC.getErros().size());
+
+            if (RunTimeC.getErros().size() > 0) {
+                System.out.println("\n\t ERROS DE EXECUCAO : ");
+
+                for (String Erro : RunTimeC.getErros()) {
+                    System.out.println("\t\t" + Erro);
+                }
+            }
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+
+
+        }
+
+    }
+
+    public void grafico(String eArquivo, String saida, String eGrafico) {
+
+        if (geral(eArquivo, saida)) {
+
+
+            System.out.println("");
+            System.out.println("################ RUNTIME ################");
+            System.out.println("");
+            System.out.println("\t - Executando : " + saida);
+            System.out.println("");
+
+            RunTime RunTimeC = new RunTime();
+            String DI = RunTimeC.getData().toString();
+
+
+            RunTimeC.init(saida);
+
+            System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
+            System.out.println("");
+
+
+            System.out.println(RunTimeC.getArvoreDeInstrucoes());
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("");
+
+            RunTimeC.grafico(eGrafico);
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("");
+
+            String DF = RunTimeC.getData().toString();
+
+            System.out.println("\t - Iniciado : " + DI);
+            System.out.println("\t - Finalizado : " + DF);
+
+            System.out.println("\t - Erros : " + RunTimeC.getErros().size());
+
+            if (RunTimeC.getErros().size() > 0) {
+                System.out.println("\n\t ERROS DE EXECUCAO : ");
+
+                for (String Erro : RunTimeC.getErros()) {
+                    System.out.println("\t\t" + Erro);
+                }
+            }
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+
+
+        }
 
     }
 
     public void initDependencia(String eArquivo) {
-
 
 
         Compiler CompilerC = new Compiler();
@@ -263,7 +366,6 @@ public class Sigmaz {
         if (CompilerC.getErros_Lexer().size() == 0 && CompilerC.getErros_Compiler().size() == 0) {
 
 
-
             ArrayList<String> mDep = new ArrayList<>();
 
 
@@ -271,7 +373,7 @@ public class Sigmaz {
 
 
             for (String Req : CompilerC.getRequisitados()) {
-                Req = Req.replace("\\","/");
+                Req = Req.replace("\\", "/");
                 if (!mDep.contains(Req)) {
                     mDep.add(Req);
                 }
@@ -282,7 +384,7 @@ public class Sigmaz {
                 System.out.println("\t\t - " + Req);
             }
 
-        }else{
+        } else {
 
             System.out.println("\n\t - ERROS DE PROCESSAMENTO ");
 

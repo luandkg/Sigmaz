@@ -4,9 +4,11 @@ import Sigmaz.Executor.Runners.*;
 import Sigmaz.Utils.AST;
 import Sigmaz.Utils.Documentador;
 import Sigmaz.Utils.Documento;
+import Sigmaz.Utils.Texto;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class RunTime {
 
@@ -341,7 +343,7 @@ public class RunTime {
 
     }
 
-    public void requerer(){
+    public void requerer() {
 
         ArrayList<String> mRequiscoes = new ArrayList<>();
 
@@ -428,13 +430,12 @@ public class RunTime {
             Run eRun = new Run(this);
             eRun.runSigmaz(ASTSigmaz, Global);
 
-        }else {
+        } else {
             mErros.add("Sigmaz Vazio !");
         }
 
 
     }
-
 
 
     public boolean existePacote(String eNome) {
@@ -482,7 +483,7 @@ public class RunTime {
         ArrayList<AST> ret = new ArrayList<AST>();
 
         for (AST eAST : mGlobalStructs) {
-             ret.add(eAST);
+            ret.add(eAST);
         }
 
         for (String Referencia : mPacotes) {
@@ -491,7 +492,7 @@ public class RunTime {
 
                 for (AST eAST : getPacote(Referencia).getASTS()) {
                     if (eAST.mesmoTipo("STRUCT")) {
-                      //  System.out.println(" \t\t - " + eAST.getTipo() + " :  " + eAST.getNome());
+                        //  System.out.println(" \t\t - " + eAST.getTipo() + " :  " + eAST.getNome());
                         ret.add(eAST);
                     }
                 }
@@ -572,15 +573,109 @@ public class RunTime {
         return mRet;
     }
 
+    public void grafico(String eLocal) {
+
+        limpar();
+
+
+        Documento DocumentoC = new Documento();
+
+        DocumentoC.adicionarLinha("@startuml");
+        DocumentoC.adicionarLinha("skinparam class {");
+        DocumentoC.adicionarLinha("BackgroundColor White");
+        DocumentoC.adicionarLinha("BorderColor Black");
+        DocumentoC.adicionarLinha("HeaderBackgroundColor White");
+        DocumentoC.adicionarLinha(" }");
+        DocumentoC.adicionarLinha("skinparam stereotypeCBackgroundColor White");
+        DocumentoC.adicionarLinha("skinparam minClassWidth 200");
+
+        for (AST ASTCGlobal : mASTS) {
+
+            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
+
+                for (AST ASTC : ASTCGlobal.getASTS()) {
+
+
+                    if (ASTC.mesmoTipo("FUNCTION")) {
+
+                    } else if (ASTC.mesmoTipo("ACTION")) {
+
+                    } else if (ASTC.mesmoTipo("DIRECTOR")) {
+
+                    } else if (ASTC.mesmoTipo("OPERATOR")) {
+
+                    } else if (ASTC.mesmoTipo("CAST")) {
+
+                    } else if (ASTC.mesmoTipo("TYPE")) {
+
+                    } else if (ASTC.mesmoTipo("STRUCT")) {
+
+                        DocumentoC.adicionarLinha("class " + ASTC.getNome() + ") <<(S,Green) >> {");
+                        DocumentoC.adicionarLinha("+Div()");
+                        DocumentoC.adicionarLinha("-Id");
+                        DocumentoC.adicionarLinha("+Somar()");
+                        DocumentoC.adicionarLinha("}");
+
+
+                    } else if (ASTC.mesmoTipo("STAGES")) {
+
+                    } else if (ASTC.mesmoTipo("CALL")) {
+
+                    } else if (ASTC.mesmoTipo("DEFINE")) {
+
+                    } else if (ASTC.mesmoTipo("MOCKIZ")) {
+
+                    } else if (ASTC.mesmoTipo("PACKAGE")) {
+
+                        for (AST Sub : ASTC.getASTS()) {
+
+                            if (Sub.mesmoTipo("STRUCT")) {
+
+                                DocumentoC.adicionarLinha("class " + ASTC.getNome() + "." + Sub.getNome() + " <<(S,Green) >> {");
+                                DocumentoC.adicionarLinha("+Div()");
+                                DocumentoC.adicionarLinha("-Id");
+
+                                for (AST Sub2 : Sub.getBranch("BODY").getASTS()) {
+
+                                    if (Sub2.mesmoTipo("ACTION")){
+                                        DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + "()");
+                                    }
+                                    if (Sub2.mesmoTipo("FUNCTION")){
+                                        DocumentoC.adicionarLinha("-" + Sub2.getNome() + "()");
+                                    }
+                                }
+
+
+                                DocumentoC.adicionarLinha("}");
+
+                            }
+
+
+                        }
+
+
+                    }
+
+                }
+
+
+            }
+        }
+
+
+        DocumentoC.adicionarLinha("@enduml");
+
+
+        Texto.Escrever(eLocal, DocumentoC.getConteudo());
+
+
+    }
+
     public void estrutura() {
 
-        mHeap.clear();
-        mErros.clear();
-        mGlobalStages.clear();
-
+        limpar();
 
         Estrutural mEstrutural = new Estrutural();
-
 
         for (AST ASTCGlobal : mASTS) {
 
@@ -643,6 +738,22 @@ public class RunTime {
         }
 
         return ret;
+    }
+
+    public String getData() {
+
+        Calendar c = Calendar.getInstance();
+
+        int dia = c.get(Calendar.DAY_OF_MONTH);
+        int mes = c.get(Calendar.MONTH) + 1;
+        int ano = c.get(Calendar.YEAR);
+
+        int hora = c.get(Calendar.HOUR);
+        int minutos = c.get(Calendar.MINUTE);
+        int segundos = c.get(Calendar.SECOND);
+
+        return dia + "/" + mes + "/" + ano + " " + hora + ":" + minutos + ":" + segundos;
+
     }
 
 

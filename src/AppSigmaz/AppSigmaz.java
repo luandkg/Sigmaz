@@ -20,14 +20,17 @@ public class AppSigmaz {
         String mBiblioteca_Fonte = "res/libs/lib.sigmaz";
         String mBiblioteca_Sigmad = "res/lib.sigmad";
 
+        String mGrafico = "res/diagramas/grafico.txt";
+
 
         int ARQUIVO = 57;
 
-        switch (Fases.EXECUTAR) {
+        switch (Fases.GRAFICO) {
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
             case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);
-            case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos);
+            case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos,mCompilado);
+            case GRAFICO -> AppUtils.GRAFICO(ARQUIVO, mArquivos,mCompilado,mGrafico);
             case TESTES -> AppUtils.TESTE_GERAL(mArquivos, mCompilado);
             case IDENTAR_TUDO -> AppUtils.IDENTAR_LOTE("ARQUIVOS", mArquivos);
             case IDENTAR_BIBLIOTECAS -> AppUtils.IDENTAR_LOTE("BIBLIOTECAS", mBibliotecas);

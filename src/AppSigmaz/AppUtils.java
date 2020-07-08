@@ -74,7 +74,7 @@ public class AppUtils {
     }
 
 
-    public static void ESTRUTURAL(int eIndice, ArrayList<String> mArquivos) {
+    public static void ESTRUTURAL(int eIndice, ArrayList<String> mArquivos,String eSaida) {
 
 
         int iContando = 0;
@@ -86,11 +86,37 @@ public class AppUtils {
 
                 enc = true;
 
-                String saida = "res/Sigmaz.sigmad";
 
                 Sigmaz SigmazC = new Sigmaz();
 
-                SigmazC.estrutural(mArquivo, saida);
+                SigmazC.estrutural(mArquivo, eSaida);
+
+                break;
+            }
+        }
+
+        if (!enc) {
+            System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+    }
+
+
+    public static void GRAFICO(int eIndice, ArrayList<String> mArquivos,String eSaida,String eGrafico) {
+
+
+        int iContando = 0;
+        boolean enc = false;
+
+        for (String mArquivo : mArquivos) {
+            iContando += 1;
+            if (iContando == eIndice) {
+
+                enc = true;
+
+                Sigmaz SigmazC = new Sigmaz();
+                SigmazC.grafico(mArquivo,eSaida, eGrafico);
 
                 break;
             }

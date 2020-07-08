@@ -1,0 +1,39 @@
+@startuml
+skinparam class {
+BackgroundColor White
+BorderColor Black
+HeaderBackgroundColor White
+ }
+skinparam stereotypeCBackgroundColor White
+skinparam minClassWidth 200
+class Terminal.Terminal <<(S,Green) >> {
++Div()
+-Id
+<img:https://i.stack.imgur.com/p76Bx.gif>println()
+}
+class Blocos.MODOS <<(S,Green) >> {
++Div()
+-Id
+-nameOf()
+-valueOf()
+}
+class Blocos.XACC <<(S,Green) >> {
++Div()
+-Id
+}
+class Blocos.BGeral <<(S,Green) >> {
++Div()
+-Id
+-getA()
+}
+class Blocos.Blocos <<(S,Green) >> {
++Div()
+-Id
+<img:https://i.stack.imgur.com/p76Bx.gif>Blocar()
+}
+class Blocos.BRUTAL <<(S,Green) >> {
++Div()
+-Id
+<img:https://i.stack.imgur.com/p76Bx.gif>FORCAR()
+}
+@enduml
