@@ -151,7 +151,12 @@
 2020 07 06  -->>  Implementando AST_Each
 2020 07 06  -->>  Externalização de Struct de Pacotes
 2020 07 06  -->>  Transformação do AST_STAGES -> AST_STRUCT com EXTENDED STAGES
+
+
 2020 07 07  -->>  Reorganizando Refer
 2020 07 07  -->>  AOVersion bug no Release
+
+
 2020 07 08  -->>  Intelsense
 2020 07 08  -->>  Extern Struct de Packages
+2020 07 08  -->>  Obter por Contexto - Usando Refer

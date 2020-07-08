@@ -34,6 +34,8 @@ public class Intellisense {
     BufferedImage IMG_OPERATOR_ALL = null;
     BufferedImage IMG_DIRECTOR_ALL = null;
 
+    BufferedImage IMG_INIT = null;
+
     BufferedImage IMG_STAGE = null;
     BufferedImage IMG_GETTER = null;
     BufferedImage IMG_SETTER= null;
@@ -63,6 +65,8 @@ public class Intellisense {
 
             IMG_OPERATOR_ALL = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\operator.png"));
             IMG_DIRECTOR_ALL = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\director.png"));
+
+            IMG_INIT = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\init.png"));
 
             IMG_STAGE = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\stage.png"));
             IMG_GETTER = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\getter.png"));
@@ -182,8 +186,12 @@ public class Intellisense {
             eBarra = new Color(124, 179, 66);
 
             for (AST Sub2 : eTudo.getBranch("INITS").getASTS()) {
-                c += 1;
+                if (Sub2.mesmoNome(eTudo.getNome())){
+                    c += 1;
+                }
+
             }
+
         } else if (eTudo.getBranch("EXTENDED").mesmoNome("EXTERNAL")) {
 
             eBarra = new Color(255, 235, 59);
@@ -237,6 +245,36 @@ public class Intellisense {
             colocarGlobalStages(h1, mais, g, eTudo.getBranch("BODY"));
 
         } else {
+
+            Utils mUtils = new Utils();
+
+            for (AST Sub2 : eTudo.getBranch("INITS").getASTS()) {
+
+                if (Sub2.mesmoTipo("INIT")) {
+
+                    if (Sub2.mesmoNome(eTudo.getNome())){
+
+
+                        String eConteudo = mUtils.getAction(Sub2);
+
+                        g.setColor(Color.BLACK);
+                        leftString(g, new Rectangle(30, h1 + mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), IMG_INIT);
+
+                        mais += 30;
+
+
+                    }
+
+
+                }
+
+            }
+
+
+            g.setColor(Color.BLACK);
+            g.fillRect(0, h1 + mais + 50, eLargura, 15);
+
+            mais += 50;
 
 
             g.setColor(Color.BLACK);

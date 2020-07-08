@@ -32,7 +32,7 @@ struct Qualidade {
 
 struct Animal with Qualidade {
 	
-	# PROBLEMA COM FUNCOES NA REPASSAGEM
+
 	init Animal ( v2 : string , i : num ) -> Qualidade ( v2 , i ) {
 		
 	}

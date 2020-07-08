@@ -21,9 +21,9 @@ public class AppSigmaz {
         String mUML = "res/uml/uml.txt";
         String mIntellisense = "res/intellisenses/";
 
-        int ARQUIVO = 42;
+        int ARQUIVO = 30;
 
-        switch (Fases.TESTES) {
+        switch (Fases.INTELLISENSE_BIBLIOTECA) {
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
             case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);
@@ -43,7 +43,7 @@ public class AppSigmaz {
     public static void AUTO() {
 
         OAVersion OA = new OAVersion("Sigmaz.oa");
-        OA.init(OAVersion.Modos.RELEASE);
+        OA.init(OAVersion.Modos.INIT);
 
         OARoadmap oar = new OARoadmap("Roadmap.oa");
         oar.receber("res/roadmap/Roadmap.txt");
