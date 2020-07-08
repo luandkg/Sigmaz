@@ -51,11 +51,16 @@ public class Run_Def {
         Run_Value mAST = new Run_Value(mRunTime, mEscopo);
         mAST.init(mValor, mTipagem);
 
-       // System.out.println("Def Retorno : " + mAST.getRetornoTipo());
+     //  System.out.println("Def Retorno : " + mAST.getRetornoTipo());
 
 
+if (mAST.getIsNulo()){
+  //  System.out.println("Retornou  -> Def " + eAST.getNome() + " : " + mAST.getRetornoTipo() + " = NULL -> " + mAST.getModulante());
+}else{
+   // System.out.println("Retornou  -> Def " + eAST.getNome() + " : " + mAST.getRetornoTipo() + " = " + mAST.getConteudo() + " -> " + mAST.getModulante());
+}
 
-        // System.out.println("Retornou  -> Def " + eAST.getNome() + " : " + mAST.getRetornoTipo() + " = " + mAST.getConteudo() + " -> " + mAST.getModulante());
+
 
         if (mRunTime.getErros().size() > 0) {
             return;
@@ -66,8 +71,7 @@ public class Run_Def {
             if (mTipagem.contentEquals(mAST.getRetornoTipo())) {
                 mEscopo.criarDefinicaoNula(eAST.getNome(), mAST.getRetornoTipo());
             } else {
-                mRunTime.getErros().add("Retorno incompativel  : " + mTipagem + " x "+ mAST.getRetornoTipo());
-            }
+                mRunTime.getErros().add("Retorno incompativel  c : " + mTipagem + " x "+ mAST.getRetornoTipo()); }
 
         } else if (mAST.getIsPrimitivo()) {
 
@@ -127,7 +131,7 @@ public class Run_Def {
 
         } else {
 
-            mRunTime.getErros().add("Retorno incompativel  : " + mTipagem + " x "+ mAST.getRetornoTipo());
+            mRunTime.getErros().add("Retorno incompativel  f : " + mTipagem + " x "+ mAST.getRetornoTipo());
 
         }
 

@@ -200,6 +200,8 @@ public class Run_Value {
 
             // System.out.println("ANULANDO INIT  -> " + ASTCorrente.getNome());
 
+          //  System.out.println("RETORNO  -> " + eRetorno);
+
             mIsNulo = true;
             mRetornoTipo = eRetorno;
 
@@ -578,7 +580,7 @@ public class Run_Value {
                 return;
             }
 
-            Item eItem = mEscopoStruct.init_Function(eInternal, mEscopo, "<<ANY>>");
+            Item eItem = mEscopoStruct.init_Function(eInternal, mEscopo, eRetorno);
 
             if (mRunTime.getErros().size() > 0) {
                 return;
@@ -859,6 +861,8 @@ public class Run_Value {
     public void realizarOperacao(String eOperacao, Run_Value mRun_Esquerda, Run_Value mRun_Direita, String eRetorno) {
 
 
+       // System.out.println("Realizando Operacao : " + eOperacao + " :: " + eRetorno);
+
         Run_Func mRun_Matchable = new Run_Func(mRunTime, mEscopo);
         Item mItem = mRun_Matchable.init_Operation(eOperacao, mRun_Esquerda, mRun_Direita, eRetorno);
 
@@ -870,6 +874,9 @@ public class Run_Value {
         mIsPrimitivo = mItem.getPrimitivo();
         mConteudo = mItem.getValor();
         mRetornoTipo = mItem.getTipo();
+
+      // System.out.println("Realizado Operacao : " + eOperacao + " :: " + mRetornoTipo);
+
 
         if (mRunTime.getErros().size() > 0) {
             return;

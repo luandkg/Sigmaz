@@ -147,6 +147,10 @@ public class Argumentador {
         Saida.setValor(mAST.getConteudo());
         Saida.setTipo(mAST.getRetornoTipo());
 
+        if (Saida.getNulo()){
+            Saida.setTipo(eReturne);
+        }
+
         //  System.out.println( mFunction.getNome() + "  Retornando -> " + mAST.getConteudo() + " :: " +mAST.getRetornoTipo() );
 
 

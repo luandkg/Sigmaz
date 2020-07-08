@@ -1,144 +1,147 @@
-
 package MAIS {
+	
+	#refer Objetos;
+	type Q3 {
+		define a : num = 0;
+		define b : num = 0;
+	}
 
-    #refer Objetos;
-
-    type Q3{
-
-        define a : num = 0;
-        define b : num = 0;
-
-    }
-
-    struct Mais{
-        all:
-         act mostraral(){
-                invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
-                invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
-                invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STRUCTS;
-
-                #def e : Esconder = init Esconder("a");
-            }
-    }
-
+	struct Mais {
+		all : 
+		act mostraral ( ) {
+			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
+			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STRUCTS;
+			
+			#def e : Esconder = init Esconder("a");
+			
+		}
+		
+	}
+	
 }
-
 package Objetos {
+	refer MAIS;
 
-    refer MAIS;
+struct Esconder {
+		init Esconder ( a : string ) {
+			
+		}
+		restrict : 
+		define escondido : string = null;
+		all : 
+		act esconder ( a : string ) {
+			
+		}
 
+		act mostrarStruct ( ) {
+			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+		}
+		
+	}
 
+	struct Sacola with Esconder {
+		init Sacola ( a : string ) -> Esconder ( a ) {
+			
+		}
+		init Sacola ( a : string , b : string ) -> Esconder ( a ) {
+			
+		}
+		all : 
+		act guardar ( a : string ) {
+			
+		}
 
-    struct Esconder {
+		act listar ( ) {
+			
+		}
+		func quantidade ( ) : num {
+			
+		}
 
-        init Esconder(a:string){}
+		act mostrarStruct ( ) {
+			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+		}
+		
+	}
 
-        restrict:
-            define escondido : string = null;
+	struct Acumulador in ( T ) {
+		init Acumulador ( a : T ) {
+			
+		}
+		init Acumulador ( a : T , b : T ) {
+			
+		}
+		all : 
+		act guardar ( a : T ) {
+			
+		}
 
-        all:
-            act esconder(a:string){}
+		act listar ( ) {
+			
+		}
+		func quantidade ( ) : num {
+			
+		}
 
-            act mostrarStruct(){
-            	invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
-            }
+		act mostrarStruct ( ) {
+			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+		}
 
-
-    }
-
-    struct Sacola with Esconder {
-
-        init Sacola(a:string) -> Esconder(a) {}
-        init Sacola(a:string,b:string) -> Esconder(a) {}
-
-        all:
-            act guardar(a:string){}
-            act listar(){}
-            func quantidade():num {}
-            act mostrarStruct(){
-            		invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
-            }
-    }
-
-    struct Acumulador in (T) {
-
-        init Acumulador(a:T){}
-        init Acumulador(a:T,b:T){}
-
-        all:
-            act guardar(a:T){}
-            act listar(){}
-            func quantidade():num {}
-            act mostrarStruct(){
-            		invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
-            }
-             act mostrarAcumulador(){
-                    #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
-                    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
-                    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STRUCTS;
-                    invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
-
-                    def qa : Q3 = start Q3 { a=10;b=12; };
-
-                    def m : Mais = init Mais();
-                    m.mostraral();
-                    # def a : Cristal = init Cristal();
-             }
-
-
-
-
-    }
-
-
-
-
+		act mostrarAcumulador ( ) {
+			
+			#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
+			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STRUCTS;
+			invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
+			def qa : Q3 = start Q3 {
+				a = 10;
+				b = 12;
+			}
+			;
+			def m : Mais = init Mais ( );
+			m.mostraral ( );
+			
+			# def a : Cristal = init Cristal();
+			
+		}
+		
+	}
+	
 }
-
 call iniciar -> inicio ( );
-
 refer Objetos;
 
 struct Cristal {
-
+	
 }
-
 type Q2 {
-
-    define a : num = 0;
-    define b : num = 0;
-    mockiz c : num = 15;
-
+	define a : num = 0;
+	define b : num = 0;
+	mockiz c : num = 15;
 }
 
 act inicio ( ) {
-
-
-
-    def Sacola1 : Sacola = init  Sacola ( "Caneta" );
-
-   # Sacola1.mostrarStruct();
-
-	def Acumulador1 : Acumulador >> ( num ) = init >> ( num ) Acumulador ( 12);
-
-   # Acumulador1.mostrarStruct();
-
-    def c : Acumulador >> ( num ) = Acumulador1.this;
-    c.guardar(2);
-
+	def Sacola1 : Sacola = init Sacola ( "Caneta");
+	
+	# Sacola1.mostrarStruct();
+	def Acumulador1 : Acumulador >> ( num ) = init >> ( num ) Acumulador ( 12 );
+	
+	# Acumulador1.mostrarStruct();
+	def c : Acumulador >> ( num ) = Acumulador1.this;
+	c.guardar ( 2 );
+	
 	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
+	
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STRUCTS;
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
-
-    Acumulador1.mostrarAcumulador();
-
-
-    def qa : Q2 = start Q2 { a=10;b=12; };
-
-
-    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
+	Acumulador1.mostrarAcumulador ( );
+	def qa : Q2 = start Q2 {
+		a = 10;
+		b = 12;
+	}
+	;
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }

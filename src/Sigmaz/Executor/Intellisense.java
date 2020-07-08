@@ -35,6 +35,8 @@ public class Intellisense {
     BufferedImage IMG_DIRECTOR_ALL = null;
 
     BufferedImage IMG_STAGE = null;
+    BufferedImage IMG_GETTER = null;
+    BufferedImage IMG_SETTER= null;
 
     int eLargura = 800;
 
@@ -63,6 +65,8 @@ public class Intellisense {
             IMG_DIRECTOR_ALL = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\director.png"));
 
             IMG_STAGE = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\stage.png"));
+            IMG_GETTER = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\getter.png"));
+            IMG_SETTER = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\setter.png"));
 
         } catch (IOException e) {
         }
@@ -85,6 +89,7 @@ public class Intellisense {
                         for (AST Sub3 : Pacote.getASTS()) {
 
                             if (Sub3.mesmoTipo("TYPE")) {
+
                                 sigmaz_type(eLocal, Pacote.getNome() + "." + Sub3.getNome(), Sub3);
 
                             } else if (Sub3.mesmoTipo("STRUCT")) {
@@ -96,9 +101,17 @@ public class Intellisense {
 
                         }
                     } else if (Pacote.mesmoTipo("STRUCT")) {
+
                         sigmaz_estrutura(eLocal, "GLOBAL SIGMAZ - " + Pacote.getNome(), Pacote);
+
                     } else if (Pacote.mesmoTipo("TYPE")) {
+
                         sigmaz_type(eLocal, "GLOBAL SIGMAZ - " + Pacote.getNome(), Pacote);
+
+                    } else if (Pacote.mesmoTipo("CAST")) {
+
+                        sigmaz_cast(eLocal, "GLOBAL SIGMAZ - " + Pacote.getNome(), Pacote);
+
                     }
                 }
             }
@@ -252,7 +265,6 @@ public class Intellisense {
         Color eBarra = Color.BLUE;
 
 
-
         int h = 200 + ((getContagem(eTudo) + c) * 30) + 200;
 
 
@@ -309,6 +321,79 @@ public class Intellisense {
 
     }
 
+    public void sigmaz_cast(String eLocal, String eTitulo, AST eTudo) {
+
+
+        int w = eLargura;
+
+        int c = 0;
+
+        Color eBarra = new Color(255,235,59);
+
+        int h = 200 + ((getContagem(eTudo) + c) * 30) + 200;
+
+
+        BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = img.getGraphics();
+
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, w, h);
+
+
+        g.setColor(eBarra);
+        g.fillRect(0, 0, w, 100);
+
+
+        g.setColor(Color.BLACK);
+        centerString(g, new Rectangle(0, 0, w, 100), eTitulo, new Font("TimesRoman", Font.BOLD, 50));
+
+        int h1 = 110;
+        int mais = 0;
+
+
+        g.setColor(Color.BLACK);
+
+
+        Utils mUtils = new Utils();
+
+
+        for (AST Sub2 : eTudo.getASTS()) {
+
+            if (Sub2.mesmoTipo("GETTER")) {
+                String eConteudo = "GETTER " + Sub2.getValor();
+
+                g.setColor(Color.BLACK);
+                leftString(g, new Rectangle(30, h1 + mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), IMG_GETTER);
+
+                mais += 30;
+
+            }
+
+        }
+
+        for (AST Sub2 : eTudo.getASTS()) {
+
+            if (Sub2.mesmoTipo("SETTER")) {
+                String eConteudo = "SETTER " + Sub2.getValor();
+
+                g.setColor(Color.BLACK);
+                leftString(g, new Rectangle(30, h1 + mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), IMG_SETTER);
+
+                mais += 30;
+
+            }
+
+        }
+
+
+        try {
+            File outputfile = new File(eLocal + eTitulo + ".png");
+            ImageIO.write(img, "png", outputfile);
+        } catch (IOException e) {
+
+        }
+
+    }
 
     public int getContagem(AST Sub) {
         int r = 1;
@@ -325,6 +410,10 @@ public class Intellisense {
             } else if (Sub2.mesmoTipo("DEFINE")) {
                 r += 1;
             } else if (Sub2.mesmoTipo("MOCKIZ")) {
+                r += 1;
+            } else if (Sub2.mesmoTipo("GETTER")) {
+                r += 1;
+            } else if (Sub2.mesmoTipo("SETTER")) {
                 r += 1;
             }
         }
@@ -350,7 +439,6 @@ public class Intellisense {
 
 
     public void colocarGlobal(int h1, int mais, Graphics g, AST Sub) {
-
 
 
         Utils mUtils = new Utils();

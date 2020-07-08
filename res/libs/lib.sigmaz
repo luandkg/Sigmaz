@@ -31,29 +31,41 @@ director ! ( a : bool ) : bool {
 	invoke casting -> inverse ( a ) :: a;
 	return a;
 }
-
-func typeof( a: any) : string {
-    def ret : string = "";
-    invoke casting -> typeof ( a ) :: ret;
-    return ret;
+func typeof ( a : any ) : string {
+	def ret : string = "";
+	invoke casting -> typeof ( a ) :: ret;
+	return ret;
 }
-
-
 type Tipado {
-    define Nome : string = "";
-    define Valor : string = "";
+	define A : num = 0;
+	define B : num = 0;
+}
+operator ++ ( a : Tipado , b : Tipado ) : Tipado {
+	return start Tipado {
+		A = somar_inteiro ( a.A , b.A );
+		B = somar_inteiro ( a.B , b.B );
+	};
 }
 
-struct TesteGeral{
+struct TesteGeral {
+	all : 
+	define A : string = "";
+	
+	#operator ++ (a:Tipado,b:Tipado) : Tipado { return start Tipado {A=somar_inteiro(a.A,b.A); B = somar_inteiro(a.B,b.B);}; }
+	restrict : 
+	define B : string = "";
+	
+	#implicit:
+	
+	#   define C : num = 0;
+	extern : 
+	define C : num = 0;
 
-all:
-    define A : string = "";
-
-    restrict:
-    define B : string = "";
-
-    extern:
-        define C : string = "";
-
-
+act AumentarC ( ) {
+		TesteGeral -> C = somar_inteiro ( TesteGeral -> C , 1 );
+	}
+	func ObterC ( ) : num {
+		return TesteGeral -> C;
+	}
+	
 }

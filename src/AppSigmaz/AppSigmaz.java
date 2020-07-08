@@ -18,13 +18,12 @@ public class AppSigmaz {
         String mBiblioteca_Fonte = "res/libs/lib.sigmaz";
         String mBiblioteca_Sigmad = "res/lib.sigmad";
 
-       // String mGrafico = "res/diagramas/grafico.txt";
+        String mUML = "res/uml/uml.txt";
         String mIntellisense = "res/intellisenses/";
 
+        int ARQUIVO = 42;
 
-        int ARQUIVO = 35;
-
-        switch (Fases.INTELLISENSE_BIBLIOTECA) {
+        switch (Fases.TESTES) {
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
             case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);

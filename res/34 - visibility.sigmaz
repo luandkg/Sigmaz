@@ -55,7 +55,7 @@ struct Sacola {
 	}
 	all : 
 	extern : 
-	operation == ( a : Sacola , b : Sacola ) : bool {
+	operator == ( a : Sacola , b : Sacola ) : bool {
 		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 		def t : bool = a.itens == b.itens;
 		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;

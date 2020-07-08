@@ -15,13 +15,8 @@ struct Pessoa {
 }
 
 act pular ( ) {
-
-
-
 	def P1 : Pessoa = init Pessoa ( );
-
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
-
 	alterador_Pessoa ( P1 );
 	P1.nome = "Alice";
 	P1.mostrar ( );

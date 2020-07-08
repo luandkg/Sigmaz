@@ -22,6 +22,8 @@ public class Analisar_Execute {
 
         } else if (ASTPai.mesmoValor("STRUCT")) {
 
+        } else if (ASTPai.mesmoValor("STRUCT_EXTERN")) {
+
         } else {
           //  mAnalisador.getErros().add(mAnalisador_Bloco.getAnalisar_Outros().getActions_ApenasNomes().toString());
 

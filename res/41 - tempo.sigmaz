@@ -4,10 +4,10 @@ call iniciar -> inicio ( );
 refer Tempo;
 
 act inicio ( ) {
-	def Tempo : string = Tempo->getTempo_Formatado ( );
-	def Data : string = Tempo->getData_Formatado ( );
-	def TempoData : string = Tempo->getTempoData_Formatado ( );
-	def DataTempo : string = Tempo->getDataTempo_Formatado ( );
+	def Tempo : string = Tempo -> getTempo_Formatado ( );
+	def Data : string = Tempo -> getData_Formatado ( );
+	def TempoData : string = Tempo -> getTempoData_Formatado ( );
+	def DataTempo : string = Tempo -> getDataTempo_Formatado ( );
 	def TempoData_Externo : string = TempoData -> getTempoData_Formatado ( );
 	def DataTempo_Externo : string = TempoData -> getDataTempo_Formatado ( );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;

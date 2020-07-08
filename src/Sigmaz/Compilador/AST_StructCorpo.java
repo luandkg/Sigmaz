@@ -59,10 +59,10 @@ public class AST_StructCorpo {
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
                 mAST.init("DEFINE",AST_Corpo,VISIBILIDADE);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operation")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operator")) {
 
                 AST_Operation mAST = new AST_Operation(mCompiler);
-                mAST.init(AST_Corpo,VISIBILIDADE);
+                mAST.init(AST_Corpo);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("all")) {
 
@@ -140,10 +140,10 @@ public class AST_StructCorpo {
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
                 mAST.init("DEFINE",AST_Corpo,VISIBILIDADE);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operation")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operator")) {
 
                 AST_Operation mAST = new AST_Operation(mCompiler);
-                mAST.init(AST_Corpo,VISIBILIDADE);
+                mAST.init(AST_Corpo);
 
 
             } else {

@@ -14,13 +14,26 @@ act inicio ( ) {
 		println ( "-> ", a );
 		
 		#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+		
 	}
-
-
-
+	TesteGeral -> AumentarC ( );
+	def t : num = TesteGeral -> ObterC ( );
+	def t1 : Tipado = start Tipado {
+		A = 10;
+		B = 12;
+	}
+	;
+	def t2 : Tipado = start Tipado {
+		A = -10;
+		B = 8;
+	}
+	;
+	def t3 : Tipado = t1 ++ t2;
+	def t3_A : num = t3.A;
+	def t3_B : num = t3.B;
+	
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 	
 	#invoke __COMPILER__ -> HEAP ( ) :: ALL;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
 }

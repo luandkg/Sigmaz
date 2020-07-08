@@ -12,30 +12,31 @@ public class AST_Operation {
         mCompiler = eCompiler;
     }
 
-    public void init(AST ASTPai, String Visibilidade) {
+    //public void init(AST ASTPai, String Visibilidade) {
+    public void init(AST ASTPai) {
 
         Token TokenC = mCompiler.getTokenAvante();
 
         if (TokenC.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
 
-            definir(ASTPai, Visibilidade, "MATCH");
+            definir(ASTPai, "MATCH");
 
         } else if (TokenC.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
 
-            definir(ASTPai, Visibilidade, "UNMATCH");
+            definir(ASTPai, "UNMATCH");
 
         } else if (TokenC.getTipo() == TokenTipo.SOMADOR) {
 
-            definir(ASTPai, Visibilidade, "SUM");
+            definir(ASTPai, "SUM");
         } else if (TokenC.getTipo() == TokenTipo.DIMINUIDOR) {
 
-            definir(ASTPai, Visibilidade, "SUB");
+            definir(ASTPai, "SUB");
         } else if (TokenC.getTipo() == TokenTipo.MULTIPLICADOR) {
 
-            definir(ASTPai, Visibilidade, "MUX");
+            definir(ASTPai, "MUX");
         } else if (TokenC.getTipo() == TokenTipo.DIVISOR) {
 
-            definir(ASTPai, Visibilidade, "DIV");
+            definir(ASTPai, "DIV");
 
         } else {
             mCompiler.errarCompilacao("Era esperado o operador da OPERATION !", TokenC);
@@ -44,14 +45,16 @@ public class AST_Operation {
 
     }
 
-    public void definir(AST ASTPai, String Visibilidade, String eOperator) {
+    public void definir(AST ASTPai,  String eOperator) {
+
+    //public void definir(AST ASTPai, String Visibilidade, String eOperator) {
 
         AST AST_Corrente = new AST("OPERATOR");
         AST_Corrente.setNome(eOperator);
         ASTPai.getASTS().add(AST_Corrente);
 
         AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
-        AST_Visibilidade.setNome(Visibilidade);
+      //  AST_Visibilidade.setNome(Visibilidade);
 
         AST AST_Arguments = AST_Corrente.criarBranch("ARGUMENTS");
 

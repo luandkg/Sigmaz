@@ -94,7 +94,9 @@ public class Run_Func {
         boolean algum = false;
 
 
-        for (AST mAST : mRunTime.getGlobalOperations()) {
+        for (AST mAST : mRunTime.getOperatorsContexto(mEscopo.getRefers())) {
+
+       // for (AST mAST : mRunTime.getGlobalOperations()) {
 
             Index_Function mIndex_Function = new Index_Function(mAST);
 

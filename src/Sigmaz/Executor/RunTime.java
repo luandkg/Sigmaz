@@ -532,22 +532,22 @@ public class RunTime {
         }
 
         for (AST eAST : mCasts) {
-            if (eAST.mesmoNome(eNome)){
-                ret="CAST";
+            if (eAST.mesmoNome(eNome)) {
+                ret = "CAST";
                 break;
             }
         }
 
         for (AST eAST : mTipos) {
-            if (eAST.mesmoNome(eNome)){
-                ret="TYPE";
+            if (eAST.mesmoNome(eNome)) {
+                ret = "TYPE";
                 break;
             }
         }
 
         for (AST eAST : mStructs) {
-            if (eAST.mesmoNome(eNome)){
-                ret="STRUCT";
+            if (eAST.mesmoNome(eNome)) {
+                ret = "STRUCT";
                 break;
             }
         }
@@ -634,6 +634,58 @@ public class RunTime {
                         ret.add(rAST);
                     }
                 }
+            } else {
+                mErros.add("PACKAGE  " + Referencia + " : Nao encontrado !");
+            }
+
+        }
+
+
+        return ret;
+    }
+
+
+    public ArrayList<AST> getOperatorsContexto(ArrayList<String> mPacotes) {
+        ArrayList<AST> ret = new ArrayList<AST>();
+
+        for (AST eAST : mGlobalOperacoes) {
+            if (eAST.mesmoTipo("OPERATOR")) {
+                ret.add(eAST);
+            }
+        }
+
+
+
+        for (AST mStruct : getGlobalStructs()) {
+            for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
+                if (mStructBody.mesmoTipo("OPERATOR")) {
+
+                    ret.add(mStructBody);
+
+                }
+            }
+        }
+
+        for (String Referencia : mPacotes) {
+
+            if (existePacote(Referencia)) {
+
+                for (AST eAST : getPacote(Referencia).getASTS()) {
+                    if (eAST.mesmoTipo("STRUCT")) {
+
+
+                        for (AST mStructBody : eAST.getBranch("BODY").getASTS()) {
+                            if (mStructBody.mesmoTipo("OPERATOR")) {
+
+                                ret.add(mStructBody);
+
+
+                            }
+                        }
+
+                    }
+                }
+
             } else {
                 mErros.add("PACKAGE  " + Referencia + " : Nao encontrado !");
             }

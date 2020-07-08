@@ -1,26 +1,22 @@
 import "libs/lib.sigmaz";
 
 call iniciar -> inicio ( );
-
 refer Lista;
-
 define GX : num = 10;
 
 act inicio ( ) {
-
 	def ListaNumerica : Lista >> ( num ) = init >> ( num ) Lista ( );
-
-	def t : string = typeof(ListaNumerica);
-	def t2 : string = typeof(12);
-	def t3 : string = typeof(false);
-	def t4 : string = typeof(null);
-	def t5 : string = typeof("Oi");
-
-    ListaNumerica.mostrarStruct();
-
+	def t : string = typeof ( ListaNumerica );
+	def t2 : string = typeof ( 12 );
+	def t3 : string = typeof ( false );
+	def t4 : string = typeof ( null );
+	def t5 : string = typeof ( "Oi");
+	ListaNumerica.mostrarStruct ( );
+	
 	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
+	
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	
 	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
-
+	
 }

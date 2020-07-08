@@ -41,7 +41,7 @@ act aumentar ( g : num ) {
 	}
 	all : 
 	extern : 
-	operation == ( a : Sacola , b : Sacola ) : bool {
+	operator == ( a : Sacola , b : Sacola ) : bool {
 		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 		def t : bool = a.itens == b.itens;
 		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
@@ -68,5 +68,7 @@ act pular ( ) {
 	def sacola1 : Sacola = init Sacola ( );
 	def tt : num = Sacola -> CRINNAR ( 5 , 1 );
 	def MGE : num = Sacola -> TGU;
+	
 	#Sacola -> BKA = 12;
+	
 }

@@ -38,7 +38,7 @@ public class Run {
                         Run_Extern mRE = new Run_Extern(mRunTime);
                         mRE.init(ASTC.getNome(), eAST.getNome(), eAST, ASTCGlobal);
 
-                    //    System.out.println(" EXTERN " + mRE.getNomeCompleto());
+                        //    System.out.println(" EXTERN " + mRE.getNomeCompleto());
 
                         mRunTime.getExtern().add(mRE);
                     }
@@ -53,7 +53,7 @@ public class Run {
                 mRE.init("", ASTC.getNome(), ASTC, ASTCGlobal);
                 mRunTime.getExtern().add(mRE);
 
-              //  System.out.println(" EXTERN " + mRE.getNomeCompleto());
+                //  System.out.println(" EXTERN " + mRE.getNomeCompleto());
 
                 Global.externalizar(mRE.getNomeCompleto());
 
@@ -93,24 +93,11 @@ public class Run {
 
 
         for (Run_Extern RE : mRunTime.getExtern()) {
-          //  System.out.println("RE -->> " + RE.getNomeCompleto());
+            //  System.out.println("RE -->> " + RE.getNomeCompleto());
             RE.run();
         }
 
-        for (
-                AST mStruct : mRunTime.getGlobalStructs()) {
 
-            //  System.out.println(mStruct.getNome() + " --> ");
-
-            for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
-                if (mStructBody.mesmoTipo("OPERATOR") && mStructBody.getBranch("VISIBILITY").mesmoNome("EXTERN")) {
-
-                    mRunTime.getGlobalOperations().add(mStructBody);
-                    Global.guardar(mStructBody);
-
-                }
-            }
-        }
 
 
         for (

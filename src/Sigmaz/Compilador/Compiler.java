@@ -334,7 +334,7 @@ public class Compiler {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operator")) {
 
                 AST_Operation mAST = new AST_Operation(this);
-                mAST.init(AST_Raiz, "ALL");
+                mAST.init(AST_Raiz);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("director")) {
 

@@ -32,6 +32,8 @@ public class Index_Function {
 
         mArgumentador = new Argumentador();
 
+       // System.out.println(mPonteiro.ImprimirArvoreDeInstrucoes());
+
         for (AST aAST : mPonteiro.getBranch("ARGUMENTS").getASTS()) {
 
             argumentar(aAST);
