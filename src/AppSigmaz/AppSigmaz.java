@@ -9,9 +9,7 @@ public class AppSigmaz {
 
     public static void main(String[] args) {
 
-
         AUTO();
-
 
         ArrayList<String> mArquivos = Carregadores.Carregar_Arquivos();
         ArrayList<String> mBibliotecas = Carregadores.Carregar_Bibliotecas();

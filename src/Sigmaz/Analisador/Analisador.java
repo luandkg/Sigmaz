@@ -4,6 +4,7 @@ import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Executor.Runners.Run_Extern;
 import Sigmaz.Utils.AST;
+import Sigmaz.Utils.Tempo;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -246,6 +247,10 @@ public class Analisador {
 
     public ArrayList<AST> getPacotes() {
         return mPacotes;
+    }
+
+    public String getData() {
+        return Tempo.getData();
     }
 
 }

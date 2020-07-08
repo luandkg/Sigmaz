@@ -5,6 +5,7 @@ import Sigmaz.Compilador.Compiler;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.Erro;
 import Sigmaz.Utils.GrupoDeErro;
+import Sigmaz.Utils.Tempo;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -191,19 +192,7 @@ public class SigmazTestes {
     }
 
     public String getData() {
-
-        Calendar c = Calendar.getInstance();
-
-        int dia = c.get(Calendar.DAY_OF_MONTH);
-        int mes = c.get(Calendar.MONTH) + 1;
-        int ano = c.get(Calendar.YEAR);
-
-        int hora = c.get(Calendar.HOUR);
-        int minutos = c.get(Calendar.MINUTE);
-        int segundos = c.get(Calendar.SECOND);
-
-        return dia + "/" + mes + "/" + ano + " " + hora + ":" + minutos + ":" + segundos;
-
+        return Tempo.getData();
     }
 
 }

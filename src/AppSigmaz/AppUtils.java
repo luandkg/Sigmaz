@@ -179,6 +179,7 @@ public class AppUtils {
 
         SigmazTestes mSigmazTestes = new SigmazTestes();
         mSigmazTestes.setSaida(eCompilado);
+
         for (String mArquivo : mArquivos) {
             mSigmazTestes.adicionar(mArquivo);
         }

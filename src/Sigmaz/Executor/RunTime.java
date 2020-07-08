@@ -1,10 +1,7 @@
 package Sigmaz.Executor;
 
 import Sigmaz.Executor.Runners.*;
-import Sigmaz.Utils.AST;
-import Sigmaz.Utils.Documentador;
-import Sigmaz.Utils.Documento;
-import Sigmaz.Utils.Texto;
+import Sigmaz.Utils.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -802,17 +799,8 @@ public class RunTime {
 
     public String getData() {
 
-        Calendar c = Calendar.getInstance();
+        return Tempo.getData();
 
-        int dia = c.get(Calendar.DAY_OF_MONTH);
-        int mes = c.get(Calendar.MONTH) + 1;
-        int ano = c.get(Calendar.YEAR);
-
-        int hora = c.get(Calendar.HOUR);
-        int minutos = c.get(Calendar.MINUTE);
-        int segundos = c.get(Calendar.SECOND);
-
-        return dia + "/" + mes + "/" + ano + " " + hora + ":" + minutos + ":" + segundos;
 
     }
 
