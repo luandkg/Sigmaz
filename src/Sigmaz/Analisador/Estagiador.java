@@ -88,6 +88,8 @@ public class Estagiador {
         criarFunction_NameOf(mCorpo, mStageDef);
         criarFunction_ValueOf(mCorpo, mStageDef);
 
+     //   System.out.println("Criar operadores para " + mStageDef.getNome());
+
         criarOperador(mCorpo, mStageDef, "MATCH", "match");
         criarOperador(mCorpo, mStageDef, "UNMATCH", "unmatch");
 
@@ -258,6 +260,8 @@ public class Estagiador {
 
         AST mMATCH = mSigmaz.criarBranch("OPERATOR");
         mMATCH.setNome(mOperacao);
+
+        //System.out.println(" Operador " + mOperacao);
 
         criarTipagemConcreta(mMATCH, "bool");
 

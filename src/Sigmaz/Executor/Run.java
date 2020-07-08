@@ -19,7 +19,8 @@ public class Run {
 
         ArrayList<String> mRefers = new ArrayList<String>();
 
-        ArrayList<AST> mGlobalPackages =  new ArrayList<AST>();
+        ArrayList<AST> mGlobalPackages = new ArrayList<AST>();
+
 
         for (AST ASTC : ASTCGlobal.getASTS()) {
             if (ASTC.mesmoTipo("REFER")) {
@@ -27,21 +28,58 @@ public class Run {
                 String Referencia = ASTC.getNome();
                 mRefers.add(Referencia);
 
-            }else if (ASTC.mesmoTipo("PACKAGE")) {
+            } else if (ASTC.mesmoTipo("PACKAGE")) {
                 mGlobalPackages.add(ASTC);
+
+                for (AST eAST : ASTC.getASTS()) {
+                    if (eAST.mesmoTipo("STRUCT")) {
+                        // ASTCGlobal.getASTS().add(eAST);
+
+                        Run_Extern mRE = new Run_Extern(mRunTime);
+                        mRE.init(ASTC.getNome(), eAST.getNome(), eAST, ASTCGlobal);
+
+                    //    System.out.println(" EXTERN " + mRE.getNomeCompleto());
+
+                        mRunTime.getExtern().add(mRE);
+                    }
+
+                }
+
+
+            } else if (ASTC.mesmoTipo("STRUCT")) {
+
+
+                Run_Extern mRE = new Run_Extern(mRunTime);
+                mRE.init("", ASTC.getNome(), ASTC, ASTCGlobal);
+                mRunTime.getExtern().add(mRE);
+
+              //  System.out.println(" EXTERN " + mRE.getNomeCompleto());
+
+                Global.externalizar(mRE.getNomeCompleto());
+
+
             }
         }
 
-        for (String Referencia : mRefers) {
+        for (
+                String Referencia : mRefers) {
 
             Global.adicionarRefer(Referencia);
 
-            if (existePacote(Referencia,mGlobalPackages)) {
-                for (AST eAST : getPacote(Referencia,mGlobalPackages).getASTS()) {
+            if (existePacote(Referencia, mGlobalPackages)) {
+                for (AST eAST : getPacote(Referencia, mGlobalPackages).getASTS()) {
+
+
                     if (eAST.mesmoTipo("STRUCT")) {
 
+
+                        Global.externalizar(Referencia + "<>" + eAST.getNome());
+
+                    } else if (eAST.mesmoTipo("TYPE")) {
                         ASTCGlobal.getASTS().add(eAST);
                     }
+
+
                 }
             } else {
                 mRunTime.getErros().add("PACKAGE  " + Referencia + " : Nao encontrado !");
@@ -51,31 +89,18 @@ public class Run {
         }
 
         mRunTime.indexar(ASTCGlobal, Global);
+// Global.externalizarStructGeral(mRE.getNome());
 
 
-        ArrayList<Run_Extern> GlobalExtern = new ArrayList<Run_Extern>();
-        for (AST mStruct : mRunTime.getGlobalStructs()) {
-
-            Run_Extern mRE = new Run_Extern(mRunTime);
-            mRE.init("", mStruct.getNome(), mStruct, ASTCGlobal);
-            GlobalExtern.add(mRE);
-            mRunTime.getExtern().add(mRE);
-
-            Global.externalizarStructGeral(mRE.getNome());
+        for (Run_Extern RE : mRunTime.getExtern()) {
+          //  System.out.println("RE -->> " + RE.getNomeCompleto());
+            RE.run();
         }
 
-        for (Run_Extern mRE : GlobalExtern) {
+        for (
+                AST mStruct : mRunTime.getGlobalStructs()) {
 
-         //   System.out.println(" EXTERN " +mRE.getNome() );
-
-            mRE.externalizar(GlobalExtern);
-
-            mRE.run();
-        }
-
-        for (AST mStruct : mRunTime.getGlobalStructs()) {
-
-          //  System.out.println(mStruct.getNome() + " --> ");
+            //  System.out.println(mStruct.getNome() + " --> ");
 
             for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
                 if (mStructBody.mesmoTipo("OPERATOR") && mStructBody.getBranch("VISIBILITY").mesmoNome("EXTERN")) {
@@ -88,9 +113,10 @@ public class Run {
         }
 
 
-        for (AST ASTC : ASTCGlobal.getASTS()) {
+        for (
+                AST ASTC : ASTCGlobal.getASTS()) {
 
-            if (   mRunTime.getErros().size() > 0) {
+            if (mRunTime.getErros().size() > 0) {
                 return;
             }
 
@@ -115,7 +141,8 @@ public class Run {
 
         }
 
-        for (AST ASTC : ASTCGlobal.getASTS()) {
+        for (
+                AST ASTC : ASTCGlobal.getASTS()) {
 
             if (ASTC.mesmoTipo("CALL")) {
 
@@ -135,7 +162,7 @@ public class Run {
             }
 
 
-            if (   mRunTime.getErros().size() > 0) {
+            if (mRunTime.getErros().size() > 0) {
                 break;
             }
 

@@ -331,7 +331,7 @@ public class InvokeCompiler {
                 String eTipo = mRun_Invoke.getTipo(ASTArgumentos, 1);
                 String eNome = mRun_Invoke.getQualquer(ASTArgumentos, 1);
 
-                String eQualificador = mEscopo.getQualificador(eTipo);
+                String eQualificador = mRunTime.getQualificador(eTipo,mEscopo.getRefers());
 
                 // System.out.println("Removendo : " + eNome + " :: " + eQualificador);
 

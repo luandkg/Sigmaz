@@ -20,12 +20,13 @@ public class AppSigmaz {
         String mBiblioteca_Fonte = "res/libs/lib.sigmaz";
         String mBiblioteca_Sigmad = "res/lib.sigmad";
 
-        String mGrafico = "res/diagramas/grafico.txt";
+       // String mGrafico = "res/diagramas/grafico.txt";
+        String mIntellisense = "res/intellisenses/";
 
 
-        int ARQUIVO = 57;
+        int ARQUIVO = 35;
 
-        switch (Fases.GRAFICO_BIBLIOTECA) {
+        switch (Fases.INTELLISENSE_BIBLIOTECA) {
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
             case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);
@@ -34,8 +35,8 @@ public class AppSigmaz {
             case IDENTAR_TUDO -> AppUtils.IDENTAR_LOTE("ARQUIVOS", mArquivos);
             case IDENTAR_BIBLIOTECAS -> AppUtils.IDENTAR_LOTE("BIBLIOTECAS", mBibliotecas);
             case MONTAR_BIBLIOTECAS -> AppUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad);
-            case GRAFICO -> AppUtils.GRAFICO(ARQUIVO, mArquivos,mCompilado,mGrafico);
-            case GRAFICO_BIBLIOTECA -> AppUtils.GRAFICO_BIBLIOTECA(mBiblioteca_Fonte,mBiblioteca_Sigmad,mGrafico);
+            case INTELLISENSE -> AppUtils.INTELISENSE(ARQUIVO, mArquivos,mCompilado,mIntellisense);
+            case INTELLISENSE_BIBLIOTECA -> AppUtils.INTELISENSE_BIBLIOTECA(mBiblioteca_Fonte,mBiblioteca_Sigmad,mIntellisense);
             default -> System.out.println("\t - Fases : Desconhecida !");
         }
 

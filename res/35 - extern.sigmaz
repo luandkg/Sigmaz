@@ -68,5 +68,5 @@ act pular ( ) {
 	def sacola1 : Sacola = init Sacola ( );
 	def tt : num = Sacola -> CRINNAR ( 5 , 1 );
 	def MGE : num = Sacola -> TGU;
-	Sacola -> BKA = 12;
+	#Sacola -> BKA = 12;
 }

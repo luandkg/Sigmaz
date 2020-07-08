@@ -10,7 +10,9 @@ package Terminal {
 	}
 }
 package Blocos {
+
 	refer Terminal;
+
 	stages MODOS -> {
 		CLARO , DOIS , TRES , QUATRO 
 	}
@@ -36,6 +38,8 @@ package Blocos {
 	}
         struct Blocos{
 		extern: act Blocar ( a : num , b : num ) {
+
+		    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: EXTERNS;
     		Terminal->println ( " -->> Valor A : ", a );
     	}
 }
@@ -48,23 +52,35 @@ package Blocos {
 	}
 	
 }
+
+
+struct Crivar{
+
+
+}
+
+
+
 refer Blocos;
 refer Terminal;
 
 call iniciar -> {
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: PACKAGES;
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: PACKAGES;
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
 
-    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: EXTERNS;
+    #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: EXTERNS;
 
-	Terminal->println ( " -->> Valorando : ", 50 );
+	Terminal->println ( " -->> Valorando : ", 12 );
 
 
-	def m : MODOS = MODOS :: CLARO;
+	def m : MODOS = MODOS :: QUATRO;
+
+	Terminal->println ( " -->> Valorando : ", 30 );
+
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+
 	Blocos->Blocar ( 3 , 2 );
-
-
 
 
 	Blocos->Blocar ( 5 , 1 );

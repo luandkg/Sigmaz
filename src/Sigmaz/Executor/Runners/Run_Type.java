@@ -85,7 +85,7 @@ public class Run_Type {
 
         }
 
-        for (AST ASTC : mRunTime.getGlobalTypes()) {
+        for (AST ASTC : mRunTime.getTypesContexto(BuscadorDeArgumentos.getRefers())) {
             if (ASTC.mesmoTipo("TYPE")) {
                 if (ASTC.mesmoNome(mStructNome)) {
 

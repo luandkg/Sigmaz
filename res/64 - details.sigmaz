@@ -3,6 +3,13 @@ package MAIS {
 
     #refer Objetos;
 
+    type Q3{
+
+        define a : num = 0;
+        define b : num = 0;
+
+    }
+
     struct Mais{
         all:
          act mostraral(){
@@ -19,6 +26,8 @@ package MAIS {
 package Objetos {
 
     refer MAIS;
+
+
 
     struct Esconder {
 
@@ -69,6 +78,8 @@ package Objetos {
                     invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STRUCTS;
                     invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
 
+                    def qa : Q3 = start Q3 { a=10;b=12; };
+
                     def m : Mais = init Mais();
                     m.mostraral();
                     # def a : Cristal = init Cristal();
@@ -92,7 +103,16 @@ struct Cristal {
 
 }
 
+type Q2 {
+
+    define a : num = 0;
+    define b : num = 0;
+    mockiz c : num = 15;
+
+}
+
 act inicio ( ) {
+
 
 
     def Sacola1 : Sacola = init  Sacola ( "Caneta" );
@@ -115,7 +135,10 @@ act inicio ( ) {
 
     Acumulador1.mostrarAcumulador();
 
-    #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 
+    def qa : Q2 = start Q2 { a=10;b=12; };
+
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
 }

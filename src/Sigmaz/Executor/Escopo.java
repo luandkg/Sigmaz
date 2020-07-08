@@ -123,9 +123,9 @@ public class Escopo {
 
         if (this.mEscopoAnterior != null) {
             for (String r : mEscopoAnterior.getRefers()) {
-              if (!mRet.contains(r)){
-                  mRet.add(r);
-              }
+                if (!mRet.contains(r)) {
+                    mRet.add(r);
+                }
             }
         }
 
@@ -148,6 +148,18 @@ public class Escopo {
 
     }
 
+    public void externalizar(String eNomeCompleto) {
+
+        for (Run_Extern eAST : mRunTime.getExtern()) {
+
+            if (eAST.getNomeCompleto().contentEquals(eNomeCompleto)) {
+             //   System.out.println("\t - Receber Externo Geral : " + eAST.getNomeCompleto());
+                mExternos.add(eAST);
+            }
+
+        }
+
+    }
 
     public void externalizarDireto(Run_Extern eAST) {
         mExternos.add(eAST);
@@ -182,34 +194,7 @@ public class Escopo {
         return mRet;
     }
 
-    public Run_Extern getRun_Extern(String eNome) {
 
-        Run_Extern mRet = null;
-        boolean enc = false;
-
-        //  System.out.println("Procurar Extern " + eNome + " em " + this.getNome());
-
-        //  System.out.println("Extens " + getExtern().size());
-
-        for (Run_Extern mRun_Struct : getExtern()) {
-
-
-            if (mRun_Struct.mesmoNome(eNome)) {
-                mRet = mRun_Struct;
-                enc = true;
-                break;
-            }
-
-        }
-
-
-        if (!enc) {
-            mRunTime.getErros().add("Nao foi possivel encontrar a struct extern : " + eNome);
-        }
-
-        return mRet;
-
-    }
 
 
     public void guardarStruct(AST eAST) {
@@ -604,10 +589,13 @@ public class Escopo {
     public boolean existeStage(String eStage) {
         boolean enc = false;
 
-        //   System.out.println(this.getNome() + " -> Stages : " + mAO.getStages().size() );
+      //  System.out.println(this.getNome() + " -> Stages : " + mRunTime.getStructsContexto(this.getRefers()).size());
 
-        for (AST mAST : mAO.getStages()) {
+        for (AST mAST : mRunTime.getStructsContexto(this.getRefers())) {
+          //  System.out.println(" -->> " + mAST.getNome());
+
             for (AST sAST : mAST.getBranch("STAGES").getASTS()) {
+              //  System.out.println("\t :: " + sAST.getNome());
 
                 if (sAST.mesmoTipo("STAGE")) {
                     String tmp = mAST.getNome() + "::" + sAST.getNome();
@@ -624,46 +612,38 @@ public class Escopo {
         return enc;
     }
 
+    public Item obterStage(String eStage) {
+        Item retStage = new Item("ret");
 
-    public String getQualificador(String aNome) {
-        String ret = "";
+        retStage.setNulo(true);
 
+      //  System.out.println(this.getNome() + " -> Stages : " + mRunTime.getStructsContexto(this.getRefers()).size());
 
-        String eNome = "";
-        int i = 0;
-        int o = aNome.length();
-        while (i < o) {
-            String l = String.valueOf(aNome.charAt(i));
-            if (l.contentEquals("<")) {
-                break;
-            } else {
-                eNome += l;
+        for (AST mAST : mRunTime.getStructsContexto(this.getRefers())) {
+           // System.out.println(" -->> " + mAST.getNome());
+
+            int i = 0;
+
+            for (AST sAST : mAST.getBranch("STAGES").getASTS()) {
+              //  System.out.println("\t :: " + sAST.getNome());
+
+                if (sAST.mesmoTipo("STAGE")) {
+                    String tmp = mAST.getNome() + "::" + sAST.getNome();
+                    if (tmp.contentEquals(eStage)) {
+
+                        retStage.setNulo(false);
+                        retStage.setValor(String.valueOf(i));
+                        retStage.setTipo(mAST.getNome());
+                        break;
+                    }
+                }
+
+                i += 1;
             }
-            i += 1;
         }
 
-        ret = "PRIMITIVE";
-
-        for (AST eAST : getGuardadosCompleto()) {
-
-            if (eAST.mesmoTipo("CAST") && eAST.mesmoNome(eNome)) {
-                ret = "CAST";
-                break;
-            } else if (eAST.mesmoTipo("STAGES") && eAST.mesmoNome(eNome)) {
-                ret = "STAGES";
-                break;
-            } else if (eAST.mesmoTipo("TYPE") && eAST.mesmoNome(eNome)) {
-                ret = "TYPE";
-                break;
-            } else if (eAST.mesmoTipo("STRUCT") && eAST.mesmoNome(eNome)) {
-                ret = "STRUCT";
-                break;
-            }
-
-        }
-
-        return ret;
-
+        return retStage;
     }
+
 
 }

@@ -88,6 +88,7 @@ public class Run_Value {
 
         mRetornoTipo = eRetorno;
 
+        //  System.out.println("INIT VALUE " + ASTCorrente.getNome());
 
         if (ASTCorrente.mesmoValor("NULL")) {
 
@@ -157,6 +158,8 @@ public class Run_Value {
             Struct(ASTCorrente, eRetorno);
 
         } else if (ASTCorrente.getValor().contentEquals("STRUCT_EXTERN")) {
+
+           // System.out.println("GET EXTERN : " + ASTCorrente.getNome());
 
             if (mRunTime.getErros().size() > 0) {
                 return;
@@ -397,12 +400,11 @@ public class Run_Value {
         String eNome = "<Struct::" + eRetorno + ":" + HEAPID + ">";
 
 
-
         Run_Struct mRun_Struct = new Run_Struct(mRunTime);
         mRun_Struct.setNome(eNome);
         mRun_Struct.init(eRetorno, ASTCorrente, mEscopo);
 
-       // System.out.println("Vamos Struct 2 - " + mRunTime.getErros().size());
+        // System.out.println("Vamos Struct 2 - " + mRunTime.getErros().size());
 
         mRunTime.adicionarHeap(mRun_Struct);
 
@@ -420,10 +422,12 @@ public class Run_Value {
         long HEAPID = mRunTime.getHEAPID();
         String eNome = "<Type::" + eRetorno + ":" + HEAPID + ">";
 
-        if (mEscopo.getQualificador(eRetorno).contentEquals("STRUCT")) {
+        String eQualificador = mRunTime.getQualificador(eRetorno,mEscopo.getRefers());
+
+        if (eQualificador.contentEquals("STRUCT")) {
             mRunTime.getErros().add("Era esperado um TYPE e nao STRUCT !");
             return;
-        } else if (mEscopo.getQualificador(eRetorno).contentEquals("TYPE")) {
+        } else if (eQualificador.contentEquals("TYPE")) {
 
         }
 
@@ -453,7 +457,7 @@ public class Run_Value {
             return;
         }
 
-        String eQualificador = mEscopo.getQualificador(mItem.getTipo());
+        String eQualificador = mRunTime.getQualificador(mItem.getTipo(),mEscopo.getRefers());
 
         //  System.out.println("Tipo : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
 
@@ -660,7 +664,8 @@ public class Run_Value {
                         return;
                     }
 
-                    eQualificador = mEscopo.getQualificador(eItem.getTipo());
+                     eQualificador = mRunTime.getQualificador(eItem.getTipo(),mEscopo.getRefers());
+
 
                     if (eQualificador.contentEquals("STRUCT")) {
 
@@ -710,10 +715,16 @@ public class Run_Value {
 
     public void Struct_Extern(AST ASTCorrente, String eRetorno) {
 
-        // System.out.println("STRUCT EXTERN : " + ASTCorrente.getNome());
+      //  System.out.println(" STRUCT CALL -> EXTERN : " + ASTCorrente.getNome());
 
+        Run_Extern mEscopoExtern = null;
+        for (Run_Extern mRun_Struct : mRunTime.getRunExternContexto(mEscopo.getRefers())) {
+            if (mRun_Struct.getNome().contentEquals(ASTCorrente.getNome())) {
+                mEscopoExtern = mRun_Struct;
+                break;
+            }
+        }
 
-        Run_Extern mEscopoExtern = mEscopo.getRun_Extern(ASTCorrente.getNome());
 
         if (mRunTime.getErros().size() > 0) {
             return;
@@ -749,7 +760,7 @@ public class Run_Value {
 
         } else if (eInternal.mesmoValor("STRUCT_OBJECT")) {
 
-            //      System.out.println("STRUCT_OBJECT : " + mEscopoStruct.getNome());
+               // System.out.println("STRUCT_OBJECT : " + eInternal.getNome());
 
             Item eItem = mEscopoExtern.init_ObjectExtern(eInternal, mEscopo, "<<ANY>>");
 
@@ -824,22 +835,23 @@ public class Run_Value {
 
         if (mEscopo.existeStage(ASTCorrente.getNome() + "::" + mFilho.getNome())) {
 
+            Item eItem = mEscopo.obterStage(ASTCorrente.getNome() + "::" + mFilho.getNome());
+
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+
+
+            this.setNulo(eItem.getNulo());
+            this.setPrimitivo(eItem.getPrimitivo());
+            this.setConteudo(eItem.getValor());
+            this.setRetornoTipo(eItem.getTipo());
+
         } else {
             mRunTime.getErros().add("Stage Deconhecido : " + ASTCorrente.getNome() + "::" + mFilho.getNome());
             return;
         }
 
-        Item eItem = mEscopo.getItem(ASTCorrente.getNome() + "::" + mFilho.getNome());
-
-        if (mRunTime.getErros().size() > 0) {
-            return;
-        }
-
-
-        this.setNulo(eItem.getNulo());
-        this.setPrimitivo(eItem.getPrimitivo());
-        this.setConteudo(eItem.getValor());
-        this.setRetornoTipo(eItem.getTipo());
 
     }
 

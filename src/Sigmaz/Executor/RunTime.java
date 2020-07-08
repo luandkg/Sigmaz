@@ -479,6 +479,87 @@ public class RunTime {
 
     }
 
+    public String getQualificador(String aNome, ArrayList<String> mPacotes) {
+
+
+        String ret = "";
+
+
+        String eNome = "";
+        int i = 0;
+        int o = aNome.length();
+        while (i < o) {
+            String l = String.valueOf(aNome.charAt(i));
+            if (l.contentEquals("<")) {
+                break;
+            } else {
+                eNome += l;
+            }
+            i += 1;
+        }
+
+        ret = "PRIMITIVE";
+
+        ArrayList<AST> mCasts = new ArrayList<AST>();
+        ArrayList<AST> mTipos = new ArrayList<AST>();
+        ArrayList<AST> mStructs = new ArrayList<AST>();
+
+        for (AST eAST : mGlobalCasts) {
+            mCasts.add(eAST);
+        }
+        for (AST eAST : mGlobalTypes) {
+            mTipos.add(eAST);
+        }
+        for (AST eAST : mGlobalStructs) {
+            mStructs.add(eAST);
+        }
+
+        for (String Referencia : mPacotes) {
+
+            if (existePacote(Referencia)) {
+
+                for (AST eAST : getPacote(Referencia).getASTS()) {
+                    if (eAST.mesmoTipo("CAST")) {
+                        mCasts.add(eAST);
+                    } else if (eAST.mesmoTipo("TYPE")) {
+                        mTipos.add(eAST);
+                    } else if (eAST.mesmoTipo("STRUCT")) {
+                        mStructs.add(eAST);
+                    }
+                }
+
+            } else {
+                mErros.add("PACKAGE  " + Referencia + " : Nao encontrado !");
+            }
+
+        }
+
+        for (AST eAST : mCasts) {
+            if (eAST.mesmoNome(eNome)){
+                ret="CAST";
+                break;
+            }
+        }
+
+        for (AST eAST : mTipos) {
+            if (eAST.mesmoNome(eNome)){
+                ret="TYPE";
+                break;
+            }
+        }
+
+        for (AST eAST : mStructs) {
+            if (eAST.mesmoNome(eNome)){
+                ret="STRUCT";
+                break;
+            }
+        }
+
+
+        return ret;
+    }
+
+
     public ArrayList<AST> getStructsContexto(ArrayList<String> mPacotes) {
         ArrayList<AST> ret = new ArrayList<AST>();
 
@@ -494,6 +575,7 @@ public class RunTime {
                     if (eAST.mesmoTipo("STRUCT")) {
                         //  System.out.println(" \t\t - " + eAST.getTipo() + " :  " + eAST.getNome());
                         ret.add(eAST);
+
                     }
                 }
 
@@ -507,6 +589,63 @@ public class RunTime {
         return ret;
     }
 
+    public ArrayList<AST> getTypesContexto(ArrayList<String> mPacotes) {
+        ArrayList<AST> ret = new ArrayList<AST>();
+
+        for (AST eAST : mGlobalTypes) {
+            ret.add(eAST);
+        }
+
+        for (String Referencia : mPacotes) {
+
+            if (existePacote(Referencia)) {
+
+                for (AST eAST : getPacote(Referencia).getASTS()) {
+                    if (eAST.mesmoTipo("TYPE")) {
+                        //  System.out.println(" \t\t - " + eAST.getTipo() + " :  " + eAST.getNome());
+                        ret.add(eAST);
+
+                    }
+                }
+
+            } else {
+                mErros.add("PACKAGE  " + Referencia + " : Nao encontrado !");
+            }
+
+        }
+
+
+        return ret;
+    }
+
+
+    public ArrayList<Run_Extern> getRunExternContexto(ArrayList<String> mPacotes) {
+        ArrayList<Run_Extern> ret = new ArrayList<Run_Extern>();
+
+        for (Run_Extern eAST : mExtern) {
+            if (eAST.getPacote().contentEquals("")) {
+                ret.add(eAST);
+            }
+        }
+
+        for (String Referencia : mPacotes) {
+
+            if (existePacote(Referencia)) {
+
+                for (Run_Extern rAST : mExtern) {
+                    if (rAST.getPacote().contentEquals(Referencia)) {
+                        ret.add(rAST);
+                    }
+                }
+            } else {
+                mErros.add("PACKAGE  " + Referencia + " : Nao encontrado !");
+            }
+
+        }
+
+
+        return ret;
+    }
 
     public AST getBranch(String eTipo) {
         AST mRet = null;
@@ -573,238 +712,24 @@ public class RunTime {
         return mRet;
     }
 
-    public void grafico(String eLocal) {
+    public void intellisense(String eLocal) {
 
         limpar();
 
-
-        Documento DocumentoC = new Documento();
-
-        DocumentoC.adicionarLinha("@startuml");
-        DocumentoC.adicionarLinha("skinparam class {");
-        DocumentoC.adicionarLinha("BackgroundColor White");
-        DocumentoC.adicionarLinha("BorderColor Black");
-        DocumentoC.adicionarLinha("HeaderBackgroundColor White");
-        DocumentoC.adicionarLinha(" }");
-        DocumentoC.adicionarLinha("skinparam stereotypeCBackgroundColor White");
-        DocumentoC.adicionarLinha("skinparam minClassWidth 200");
-
-        for (AST ASTCGlobal : mASTS) {
-
-            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
-
-
-                 colocarGlobal(DocumentoC, ASTCGlobal);
-
-                for (AST ASTC : ASTCGlobal.getASTS()) {
-
-
-                    if (ASTC.mesmoTipo("FUNCTION")) {
-
-                    } else if (ASTC.mesmoTipo("ACTION")) {
-
-                    } else if (ASTC.mesmoTipo("DIRECTOR")) {
-
-                    } else if (ASTC.mesmoTipo("OPERATOR")) {
-
-                    } else if (ASTC.mesmoTipo("CAST")) {
-
-                    } else if (ASTC.mesmoTipo("TYPE")) {
-
-                        colocarType(DocumentoC, "SIGMAZ", ASTC);
-
-                    } else if (ASTC.mesmoTipo("STRUCT")) {
-
-                            colocarStruct(DocumentoC, "SIGMAZ", ASTC);
-
-                    } else if (ASTC.mesmoTipo("CALL")) {
-
-                    } else if (ASTC.mesmoTipo("DEFINE")) {
-
-                    } else if (ASTC.mesmoTipo("MOCKIZ")) {
-
-                    } else if (ASTC.mesmoTipo("PACKAGE")) {
-
-                        for (AST Sub : ASTC.getASTS()) {
-
-                            if (Sub.mesmoTipo("STRUCT")) {
-
-                           //     colocarStruct(DocumentoC, ASTC.getNome(), Sub);
-
-                            }
-
-
-                        }
-
-
-                    }
-
-                }
-
-
-            }
-        }
-
-
-        DocumentoC.adicionarLinha("@enduml");
-
-
-        Texto.Escrever(eLocal, DocumentoC.getConteudo());
-
+        Intellisense IntellisenseC = new Intellisense();
+        IntellisenseC.run(mASTS, eLocal);
 
     }
 
+    public void uml(String eLocal) {
 
-    public void colocarGlobal(Documento DocumentoC, AST Sub) {
+        limpar();
 
-        DocumentoC.adicionarLinha("class SIGMAZ.SIGMAZ <<(S,Red) >> {");
-
-
-        for (AST Sub2 : Sub.getASTS()) {
-
-            if (Sub2.mesmoTipo("DEFINE")) {
-                DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + " : " + getTipagem(Sub2.getBranch("TYPE")));
-            }
-            if (Sub2.mesmoTipo("MOCKIZ")) {
-                DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + " : " + getTipagem(Sub2.getBranch("TYPE")));
-            }
-
-        }
-
-
-        for (AST Sub2 : Sub.getASTS()) {
-
-            if (Sub2.mesmoTipo("ACTION")) {
-                DocumentoC.adicionarLinha("#" + Sub2.getNome() + " (" + getParametragem(Sub2) + ")");
-            }
-
-        }
-        for (AST Sub2 : Sub.getASTS()) {
-
-            if (Sub2.mesmoTipo("FUNCTION")) {
-                DocumentoC.adicionarLinha("+" + Sub2.getNome() + " (" + getParametragem(Sub2) + ") : " + getTipagem(Sub2.getBranch("TYPE")));
-            }
-        }
-
-        for (AST Sub2 : Sub.getASTS()) {
-
-            if (Sub2.mesmoTipo("OPERATOR")) {
-                DocumentoC.adicionarLinha("~" + Sub2.getNome() + " (" + getParametragem(Sub2) + ") : " + getTipagem(Sub2.getBranch("TYPE")));
-            }
-        }
-
-        DocumentoC.adicionarLinha("}");
-
+        UML UMLC = new UML();
+        UMLC.run(mASTS, eLocal);
 
     }
 
-    public String getParametragem(AST eAST) {
-        String ret = "";
-
-        int total = eAST.getBranch("ARGUMENTS").getASTS().size();
-
-        if (total > 0) {
-
-
-            for (int ii = 0; ii < total; ii++) {
-                AST eArg = eAST.getBranch("ARGUMENTS").getASTS().get(ii);
-
-                if (ii < total - 1) {
-                    ret += eArg.getNome() + " : " + getTipagem(eArg.getBranch("TYPE")) + " , ";
-                } else {
-                    ret += eArg.getNome() + " : " + getTipagem(eArg.getBranch("TYPE")) + "";
-                }
-
-            }
-
-        } else {
-            ret = " ";
-
-        }
-
-
-        return ret;
-    }
-
-    public void colocarType(Documento DocumentoC, String ePacote, AST Sub) {
-        DocumentoC.adicionarLinha("class " + ePacote + "." + Sub.getNome() + " <<(S,Blue) >> {");
-
-        for (AST Sub2 : Sub.getASTS()) {
-
-            if (Sub2.mesmoTipo("DEFINE")) {
-                DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + " : " + getTipagem(Sub2.getBranch("TYPE")));
-            }
-            if (Sub2.mesmoTipo("MOCKIZ")) {
-                DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + " : " + getTipagem(Sub2.getBranch("TYPE")));
-            }
-
-        }
-        DocumentoC.adicionarLinha("}");
-
-    }
-
-
-    public void colocarStruct(Documento DocumentoC, String ePacote, AST Sub) {
-
-        if (Sub.getBranch("EXTENDED").mesmoNome("STAGES")) {
-            DocumentoC.adicionarLinha("class " + ePacote + "." + Sub.getNome() + " <<(S,Orange) >> {");
-
-            for (AST Sub2 : Sub.getBranch("STAGES").getASTS()) {
-                DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + "");
-            }
-
-        } else if (Sub.getBranch("EXTENDED").mesmoNome("TYPE")) {
-            DocumentoC.adicionarLinha("class " + ePacote + "." + Sub.getNome() + " <<(S,Blue) >> {");
-        } else {
-            DocumentoC.adicionarLinha("class " + ePacote + "." + Sub.getNome() + " <<(S,Green) >> {");
-        }
-
-
-        if (Sub.existeBranch("INITS")) {
-            for (AST Sub2 : Sub.getBranch("INITS").getASTS()) {
-                if (Sub2.mesmoNome(Sub.getNome())) {
-                    DocumentoC.adicionarLinha("~" + Sub2.getNome() + " (" + getParametragem(Sub2) + ")");
-                }
-            }
-        }
-
-        for (AST Sub2 : Sub.getBranch("BODY").getASTS()) {
-
-            if (Sub2.mesmoTipo("DEFINE")) {
-                DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + " : " + getTipagem(Sub2.getBranch("TYPE")));
-            }
-            if (Sub2.mesmoTipo("MOCKIZ")) {
-                DocumentoC.adicionarLinha("<img:https://i.stack.imgur.com/p76Bx.gif>" + Sub2.getNome() + " : " + getTipagem(Sub2.getBranch("TYPE")));
-            }
-
-        }
-
-        for (AST Sub2 : Sub.getBranch("BODY").getASTS()) {
-
-            if (Sub2.mesmoTipo("ACTION")) {
-                DocumentoC.adicionarLinha("#" + Sub2.getNome() + " (" + getParametragem(Sub2) + ")");
-            }
-
-        }
-        for (AST Sub2 : Sub.getBranch("BODY").getASTS()) {
-
-
-            if (Sub2.mesmoTipo("FUNCTION")) {
-                DocumentoC.adicionarLinha("+" + Sub2.getNome() + " (" + getParametragem(Sub2) + ") : " + getTipagem(Sub2.getBranch("TYPE")));
-            }
-        }
-
-        for (AST Sub2 : Sub.getBranch("BODY").getASTS()) {
-
-            if (Sub2.mesmoTipo("OPERATOR")) {
-                DocumentoC.adicionarLinha("~" + Sub2.getNome() + " (" + getParametragem(Sub2) + ") : " + getTipagem(Sub2.getBranch("TYPE")));
-            }
-        }
-
-
-        DocumentoC.adicionarLinha("}");
-
-    }
 
     public void estrutura() {
 

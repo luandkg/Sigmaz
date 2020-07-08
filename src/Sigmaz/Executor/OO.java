@@ -118,6 +118,7 @@ public class OO {
             if (mAct.isExtern()) {
 
                 mActions_Extern.add(mAct);
+                mActionFunctions_Extern.add(mAct);
 
             } else if (mAct.isAll()) {
 
@@ -142,7 +143,10 @@ public class OO {
 
             if (mFunc.isExtern()) {
 
+                Index_Action mAct = new Index_Action(eAST);
+
                 mFunctions_Extern.add(mFunc);
+                mActionFunctions_Extern.add(mAct);
 
             } else if (mFunc.isAll()) {
 
@@ -264,6 +268,9 @@ public class OO {
 
     public ArrayList<Index_Action> getActionsFunctions_All() {
         return mActionFunctions_All;
+    }
+    public ArrayList<Index_Action> getActionsFunctions_Extern() {
+        return mActionFunctions_Extern;
     }
 
 

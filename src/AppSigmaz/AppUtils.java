@@ -103,7 +103,7 @@ public class AppUtils {
     }
 
 
-    public static void GRAFICO(int eIndice, ArrayList<String> mArquivos, String eSaida, String eGrafico) {
+    public static void UML(int eIndice, ArrayList<String> mArquivos, String eSaida, String eGrafico) {
 
 
         int iContando = 0;
@@ -116,7 +116,7 @@ public class AppUtils {
                 enc = true;
 
                 Sigmaz SigmazC = new Sigmaz();
-                SigmazC.grafico(mArquivo, eSaida, eGrafico);
+                SigmazC.uml(mArquivo, eSaida, eGrafico);
 
                 break;
             }
@@ -129,11 +129,46 @@ public class AppUtils {
 
     }
 
-    public static void GRAFICO_BIBLIOTECA(String eFonte, String eSaida, String eGrafico) {
+    public static void INTELISENSE(int eIndice, ArrayList<String> mArquivos, String eSaida, String eGrafico) {
+
+
+        int iContando = 0;
+        boolean enc = false;
+
+        for (String mArquivo : mArquivos) {
+            iContando += 1;
+            if (iContando == eIndice) {
+
+                enc = true;
+
+                Sigmaz SigmazC = new Sigmaz();
+                SigmazC.intellisense(mArquivo, eSaida, eGrafico);
+
+                break;
+            }
+        }
+
+        if (!enc) {
+            System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+    }
+
+    public static void INTELISENSE_BIBLIOTECA(String eFonte, String eSaida, String eGrafico) {
 
 
         Sigmaz SigmazC = new Sigmaz();
-        SigmazC.grafico(eFonte, eSaida, eGrafico);
+        SigmazC.intellisense(eFonte, eSaida, eGrafico);
+
+
+    }
+
+    public static void UML_BIBLIOTECA(String eFonte, String eSaida, String eGrafico) {
+
+
+        Sigmaz SigmazC = new Sigmaz();
+        SigmazC.uml(eFonte, eSaida, eGrafico);
 
 
     }

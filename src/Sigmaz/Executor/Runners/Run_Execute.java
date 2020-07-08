@@ -35,13 +35,13 @@ public class Run_Execute {
 
             //   System.out.println("Execuntando em  : " + ASTCorrente.getNome());
 
-            if (ASTCorrente.mesmoNome("this")){
+            if (ASTCorrente.mesmoNome("this")) {
 
-            }else{
+            } else {
                 if (mRunTime.getErros().size() > 0) {
                     return;
                 }
-                String eQualificador = mEscopo.getQualificador(mItem.getTipo());
+                String eQualificador =mRunTime.getQualificador(mItem.getTipo(),mEscopo.getRefers());
                 if (eQualificador.contentEquals("STRUCT")) {
 
                 } else {
@@ -55,7 +55,20 @@ public class Run_Execute {
             // System.out.println("Tipo : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
 
 
-            struct_chamada(ASTCorrente,mItem);
+            struct_chamada(ASTCorrente, mItem);
+
+        } else if (ASTCorrente.getValor().contentEquals("STRUCT_EXTERN")) {
+
+        //    System.out.println("GET EXTERN CALL -> " + mEscopo.getNome() + " : " + ASTCorrente.getNome());
+
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+
+            // Struct_Extern(ASTCorrente, eRetorno);
+            Run_Extern Run_ExternC = new Run_Extern(mRunTime);
+
+            Run_ExternC.Struct_Execute(ASTCorrente,mEscopo);
 
 
         } else {
@@ -66,7 +79,7 @@ public class Run_Execute {
     }
 
 
-    public void struct_chamada(AST ASTCorrente,Item mItem){
+    public void struct_chamada(AST ASTCorrente, Item mItem) {
 
         if (mRunTime.getErros().size() > 0) {
             return;
@@ -128,24 +141,12 @@ public class Run_Execute {
                 if (mRunTime.getErros().size() > 0) {
                     return;
                 }
-                //  } else {
-                // this.setNulo(mItem.getNulo());
-                //  this.setPrimitivo(mItem.getPrimitivo());
-                //  this.setConteudo(mItem.getValor());
-                // this.setRetornoTipo(mItem.getTipo());
-                //     break;
-                // }
 
-
-                // this.setNulo(mItem.getNulo());
-                // this.setPrimitivo(mItem.getPrimitivo());
-                // this.setConteudo(mItem.getValor());
-                //this.setRetornoTipo(mItem.getTipo());
 
 
             } else if (eInternal.mesmoValor("STRUCT_OBJECT")) {
 
-                  //System.out.println("STRUCT OBJECT : " +eInternal.getNome() );
+                //System.out.println("STRUCT OBJECT : " +eInternal.getNome() );
 
                 if (mRunTime.getErros().size() > 0) {
                     return;
@@ -158,17 +159,7 @@ public class Run_Execute {
 
                 mItem = mEscopoStruct.init_Object(eInternal, mEscopo, "<<ANY>>");
 
-              //  System.out.println("STRUCT OBJECT REF : " +mItem.getValor() );
-
-
-               // System.out.println("STRUCT OBJECT II : " +mEscopoStruct.getNome() );
-               // System.out.println("STRUCT OBJECT III : " +eItem.getValor() );
-
                 mEscopoStruct = mRunTime.getRun_Struct(mItem.getValor());
-
-                //  System.out.println("STRUCT OBJECT III : " +mEscopoStruct.getNome() );
-
-                 // System.out.println("STRUCT OBJECT  : " +mEscopoStruct.getNome() );
 
 
             }

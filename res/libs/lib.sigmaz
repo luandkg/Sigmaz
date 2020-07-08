@@ -43,3 +43,17 @@ type Tipado {
     define Nome : string = "";
     define Valor : string = "";
 }
+
+struct TesteGeral{
+
+all:
+    define A : string = "";
+
+    restrict:
+    define B : string = "";
+
+    extern:
+        define C : string = "";
+
+
+}

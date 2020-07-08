@@ -296,13 +296,13 @@ public class Sigmaz {
 
     }
 
-    public void grafico(String eArquivo, String saida, String eGrafico) {
+    public void uml(String eArquivo, String saida, String eGrafico) {
 
         if (geral(eArquivo, saida)) {
 
 
             System.out.println("");
-            System.out.println("################ RUNTIME ################");
+            System.out.println("################ UML ################");
             System.out.println("");
             System.out.println("\t - Executando : " + saida);
             System.out.println("");
@@ -323,7 +323,7 @@ public class Sigmaz {
             System.out.println("----------------------------------------------");
             System.out.println("");
 
-            RunTimeC.grafico(eGrafico);
+            RunTimeC.uml(eGrafico);
 
             System.out.println("");
             System.out.println("----------------------------------------------");
@@ -334,15 +334,51 @@ public class Sigmaz {
             System.out.println("\t - Iniciado : " + DI);
             System.out.println("\t - Finalizado : " + DF);
 
-            System.out.println("\t - Erros : " + RunTimeC.getErros().size());
 
-            if (RunTimeC.getErros().size() > 0) {
-                System.out.println("\n\t ERROS DE EXECUCAO : ");
+            System.out.println("");
+            System.out.println("----------------------------------------------");
 
-                for (String Erro : RunTimeC.getErros()) {
-                    System.out.println("\t\t" + Erro);
-                }
-            }
+
+        }
+
+    }
+
+    public void intellisense(String eArquivo, String saida, String eGrafico) {
+
+        if (geral(eArquivo, saida)) {
+
+
+            System.out.println("");
+            System.out.println("################ INTELISENSE ################");
+            System.out.println("");
+            System.out.println("\t - Executando : " + saida);
+            System.out.println("");
+
+            RunTime RunTimeC = new RunTime();
+            String DI = RunTimeC.getData().toString();
+
+
+            RunTimeC.init(saida);
+
+
+
+            System.out.println(RunTimeC.getArvoreDeInstrucoes());
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("");
+
+            RunTimeC.intellisense(eGrafico);
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("");
+
+            String DF = RunTimeC.getData().toString();
+
+            System.out.println("\t - Iniciado : " + DI);
+            System.out.println("\t - Finalizado : " + DF);
+
 
             System.out.println("");
             System.out.println("----------------------------------------------");

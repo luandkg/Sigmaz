@@ -58,7 +58,7 @@ public class Run_Apply {
             return;
         }
 
-        String eQualificador = mEscopo.getQualificador(mItem.getTipo());
+        String eQualificador =mRunTime.getQualificador(mItem.getTipo(),mEscopo.getRefers());
 
        // System.out.println("Tipo : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
 
@@ -166,7 +166,13 @@ public class Run_Apply {
             return;
         }
 
-        Run_Extern mEscopoStruct = mEscopo.getRun_Extern(mSettable.getNome());
+        Run_Extern mEscopoExtern = null;
+        for (Run_Extern mRun_Struct : mRunTime.getRunExternContexto(mEscopo.getRefers())) {
+            if (mRun_Struct.getNome().contentEquals(mSettable.getNome())) {
+                mEscopoExtern = mRun_Struct;
+                break;
+            }
+        }
 
 
         AST eInternal = mSettable.getBranch("INTERNAL");
@@ -175,7 +181,7 @@ public class Run_Apply {
         if (eInternal.mesmoValor("STRUCT_FUNCT")) {
 
 
-            Item eItem = mEscopoStruct.init_Function_Extern(eInternal, mEscopo, "<<ANY>>");
+            Item eItem = mEscopoExtern.init_Function_Extern(eInternal, mEscopo, "<<ANY>>");
 
 
             //   mRunTime.getErros().add("STRUCT : " + mEscopoStruct.getNome() + " -> " + eInternal.getNome() + " : " + eItem.getValor());
@@ -191,7 +197,7 @@ public class Run_Apply {
                 return;
             }
 
-            Item eItem = mEscopoStruct.init_ObjectExtern(eInternal, mEscopo, "<<ANY>>");
+            Item eItem = mEscopoExtern.init_ObjectExtern(eInternal, mEscopo, "<<ANY>>");
 
 
             if (mRunTime.getErros().size() > 0) {
@@ -203,7 +209,7 @@ public class Run_Apply {
             mAST.init(mValue, "<<ANY>>");
 
 
-            atribuir(mAST, mEscopoStruct.getEscopo(), eInternal.getNome());
+            atribuir(mAST, mEscopoExtern.getEscopo(), eInternal.getNome());
 
 
         } else {
