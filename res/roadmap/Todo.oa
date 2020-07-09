@@ -1,0 +1,34 @@
+   PACOTE OATodo
+    {
+      ID Indice = "8"
+      PACOTE Todos
+       {
+         OBJETO Item { 
+            ID Indice = "4"
+            ID Texto = ""
+            ID Data = "2020 07 08"
+            ID Status = ""
+         }
+         OBJETO Item { 
+            ID Indice = "6"
+            ID Texto = " OATodo "
+            ID Data = "2020 07 08"
+            ID Status = "c"
+            ID Tags = "oa "
+         }
+         OBJETO Item { 
+            ID Indice = "7"
+            ID Texto = " ObterContexto "
+            ID Data = "2020 07 08"
+            ID Status = "f"
+            ID Tags = ""
+         }
+         OBJETO Item { 
+            ID Indice = "8"
+            ID Texto = " Biblioteca - Tempo "
+            ID Data = "2020 07 08"
+            ID Status = "i"
+            ID Tags = ""
+         }
+       } 
+    } 

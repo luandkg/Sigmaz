@@ -3,7 +3,7 @@
       ID Version = "1"
       ID Branch = "8/7/2020"
       ID Works = "4"
-      ID Full = "1.4.91"
+      ID Full = "1.4.93"
       ID Mode = "."
       ID Release = "."
       ID Factor = "4"
@@ -40,10 +40,10 @@
           {
             ID Date = "8/7/2020"
             ID Start = "8/7/2020 0:1:52"
-            ID Update = "8/7/2020 11:35:3"
+            ID Update = "8/7/2020 11:39:26"
             ID End = "."
             ID Status = "GREEN"
-            ID Count = "91"
+            ID Count = "93"
           } 
        } 
       PACOTE Releases

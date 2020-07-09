@@ -52,8 +52,8 @@ public class AppSigmaz {
         OARoadmap oar = new OARoadmap("Roadmap.oa");
         oar.receber("res/roadmap/Roadmap.txt");
 
-        OATodo mTodo = new OATodo("Todo.oa");
-        mTodo.sincronizar("res/roadmap/Todo.txt");
+        OATodo mTodo = new OATodo("res/roadmap/Todo.oa");
+        mTodo.sincronizar("Todo.txt");
 
 
        // mTodo.Listar();
