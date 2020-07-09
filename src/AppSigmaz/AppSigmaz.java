@@ -49,20 +49,17 @@ public class AppSigmaz {
         OAVersion OA = new OAVersion("Sigmaz.oa");
         OA.init(OAVersion.Modos.INIT);
 
-        OARoadmap oar = new OARoadmap("Roadmap.oa");
-        oar.receber("res/roadmap/Roadmap.txt");
+        OARoadmap oar = new OARoadmap("res/oa/Roadmap.oa");
+        oar.receber( "Roadmap.txt");
 
-        OATodo mTodo = new OATodo("res/roadmap/Todo.oa");
+        OATodo mTodo = new OATodo("res/oa/Todo.oa");
         mTodo.sincronizar("Todo.txt");
-
 
        // mTodo.Listar();
 
         mTodo.ListarStatus("i","Iniciar");
-
-        mTodo.ListarStatus("f","Fazendo");
-
-        mTodo.ListarStatus("c","Concluido");
+        mTodo.ListarStatus_Recente("f","Fazendo");
+        mTodo.ListarStatus_Modificado("c","Concluido");
 
         mTodo.ListarTag("oa");
 

@@ -201,7 +201,11 @@ public class OATodo {
 
 
         System.out.println("");
-        System.out.println("########################### OA TODO ########################### ");
+
+        String a = "########################### OA TODO ";
+
+        System.out.println(a + paraFechar(a.length(),80,"#"));
+
         System.out.println("");
         System.out.println("\t - Iniciar : " + getDataHora());
 
@@ -271,6 +275,8 @@ public class OATodo {
                             // //mAction.Identifique("Data", getDataHora());
 
                             mObjeto.Identifique("Status", ItemC.getStatus());
+                            mObjeto.Identifique("Alterado", getDataHora());
+
                         }
 
 
@@ -294,6 +300,7 @@ public class OATodo {
 
                 eObjeto.Identifique("Texto", ItemC.getTexto());
                 eObjeto.Identifique("Data", getDataHora());
+                eObjeto.Identifique("Alterado", getDataHora());
                 eObjeto.Identifique("Status", ItemC.getStatus());
 
                 String mTags = "";
@@ -321,9 +328,27 @@ public class OATodo {
         System.out.println("\t - Itens : " +OATodos.getObjetos().size());
         System.out.println("\t - Finalizar : " + getDataHora());
         System.out.println("");
-        System.out.println("########################### ####### ########################### ");
+
+        String b = "########################### ####### ";
+
+        System.out.println(b + paraFechar(b.length(),80,"#"));
 
     }
+
+
+    public String paraFechar(int ja,int ate,String c){
+        String ret = "";
+
+        if (ja<ate){
+            int d = ate-ja;
+            for(int i=0;i<d;i++){
+                ret+=c;
+            }
+        }
+
+        return ret;
+    }
+
 
     public void Listar() {
 
@@ -403,7 +428,11 @@ public class OATodo {
     public void ListarStatus(String mStatus,String mStatusMostrar) {
 
         System.out.println("");
-        System.out.println("########################### STATUS : " + mStatusMostrar + " ########################### ");
+
+        String a = "########################### STATUS : " + mStatusMostrar + " " ;
+
+        System.out.println(a + paraFechar(a.length(),80,"#"));
+
         System.out.println("");
 
 
@@ -439,6 +468,99 @@ public class OATodo {
 
 
     }
+
+    public void ListarStatus_Recente(String mStatus,String mStatusMostrar) {
+
+        System.out.println("");
+
+        String a = "########################### STATUS : " + mStatusMostrar + " " ;
+
+        System.out.println(a + paraFechar(a.length(),80,"#"));
+
+
+        System.out.println(a + paraFechar(a.length(),80,"#"));
+
+        System.out.println("");
+
+
+        File arq = new File(mArquivo);
+        LuanDKG mTodo = new LuanDKG();
+
+        if (arq.exists()) {
+            mTodo.Abrir(mArquivo);
+        }
+
+        Pacote OATodo = mTodo.UnicoPacote("OATodo");
+        Pacote OATodos = OATodo.UnicoPacote("Todos");
+        for (Objeto mObjeto : OATodos.getObjetos()) {
+
+
+            String eTexto = mObjeto.Identifique("Texto").getValor();
+
+            if (eTexto.length() > 0) {
+                String eStatus = mObjeto.Identifique("Status").getValor();
+
+                if (mStatus.contentEquals(eStatus)) {
+
+                    String eData = mObjeto.Identifique("Alterado").getValor();
+
+                    System.out.println(" \t -> " + mStatusMostrar + " :: " + eData + " -->> " + eTexto);
+
+
+                }
+
+            }
+
+        }
+
+
+    }
+
+    public void ListarStatus_Modificado(String mStatus,String mStatusMostrar) {
+
+        System.out.println("");
+
+        String a = "########################### STATUS : " + mStatusMostrar + " " ;
+
+        System.out.println(a + paraFechar(a.length(),80,"#"));
+
+        System.out.println("");
+
+
+        File arq = new File(mArquivo);
+        LuanDKG mTodo = new LuanDKG();
+
+        if (arq.exists()) {
+            mTodo.Abrir(mArquivo);
+        }
+
+        Pacote OATodo = mTodo.UnicoPacote("OATodo");
+        Pacote OATodos = OATodo.UnicoPacote("Todos");
+        for (Objeto mObjeto : OATodos.getObjetos()) {
+
+
+            String eTexto = mObjeto.Identifique("Texto").getValor();
+
+            if (eTexto.length() > 0) {
+                String eStatus = mObjeto.Identifique("Status").getValor();
+
+                if (mStatus.contentEquals(eStatus)) {
+
+                    String eData = mObjeto.Identifique("Data").getValor();
+                    String eAlterado = mObjeto.Identifique("Alterado").getValor();
+
+                    System.out.println(" \t -> " + mStatusMostrar + " :: " + eData + " <> " + eAlterado + " -->> " + eTexto);
+
+
+                }
+
+            }
+
+        }
+
+
+    }
+
 
     public ArrayList<String> obterTags(String eTexto){
 
@@ -478,7 +600,11 @@ public class OATodo {
     public void ListarTag(String mTag) {
 
         System.out.println("");
-        System.out.println("########################### TAG : " + mTag + " ########################### ");
+
+        String a = "########################### TAG : " + mTag + " " ;
+
+        System.out.println(a + paraFechar(a.length(),80,"#"));
+
         System.out.println("");
 
 
@@ -505,7 +631,7 @@ public class OATodo {
 
                     String eData = mObjeto.Identifique("Data").getValor();
 
-                    System.out.println(" \t -> " + eStatus + " :: " + eData + " -->> " + eTexto);
+                    System.out.println(" \t -> " + eData + " -->> " + eTexto + "  { " + mObjeto.Identifique("Tags").getValor() + "}");
 
                 }
 

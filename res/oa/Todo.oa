@@ -1,6 +1,6 @@
    PACOTE OATodo
     {
-      ID Indice = "8"
+      ID Indice = "10"
       PACOTE Todos
        {
          OBJETO Item { 
@@ -15,6 +15,7 @@
             ID Data = "2020 07 08"
             ID Status = "c"
             ID Tags = "oa "
+            ID Alterado = "2020 07 08"
          }
          OBJETO Item { 
             ID Indice = "7"
@@ -22,6 +23,7 @@
             ID Data = "2020 07 08"
             ID Status = "f"
             ID Tags = ""
+            ID Alterado = "2020 07 08"
          }
          OBJETO Item { 
             ID Indice = "8"
@@ -29,6 +31,22 @@
             ID Data = "2020 07 08"
             ID Status = "i"
             ID Tags = ""
+         }
+         OBJETO Item { 
+            ID Indice = "9"
+            ID Texto = " OAVersion "
+            ID Data = "2020 07 08"
+            ID Status = "c"
+            ID Tags = ""
+            ID Alterado = "2020 07 08"
+         }
+         OBJETO Item { 
+            ID Indice = "10"
+            ID Texto = " OARoadmap "
+            ID Data = "2020 07 08"
+            ID Status = "c"
+            ID Tags = ""
+            ID Alterado = "2020 07 08"
          }
        } 
     } 

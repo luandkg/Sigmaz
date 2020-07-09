@@ -1,10 +1,12 @@
 
 
-
-    -  OATodo : c {oa}
+    - OATodo : c {oa}
 
     - ObterContexto : f
 
     - Biblioteca - Tempo : i
 
+    - OAVersion : c
+
+    - OARoadmap : c
 
