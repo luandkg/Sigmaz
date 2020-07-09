@@ -1,0 +1,107 @@
+   PACOTE OATodo
+    {
+      ID Indice = "8"
+      PACOTE Todos
+       {
+         OBJETO Item { 
+            ID Indice = "4"
+            ID Texto = ""
+            ID Data = "2020 07 08"
+            ID Status = ""
+         }
+         OBJETO Item { 
+            ID Indice = "6"
+            ID Texto = " OATodo "
+            ID Data = "2020 07 08"
+            ID Status = "c"
+            ID Tags = "oa "
+         }
+         OBJETO Item { 
+            ID Indice = "7"
+            ID Texto = " ObterContexto "
+            ID Data = "2020 07 08"
+            ID Status = "f"
+            ID Tags = ""
+         }
+         OBJETO Item { 
+            ID Indice = "8"
+            ID Texto = " Biblioteca - Tempo "
+            ID Data = "2020 07 08"
+            ID Status = "i"
+            ID Tags = ""
+         }
+       } 
+      PACOTE Branches
+       {
+         OBJETO ACTION { 
+            ID Mode = "INSERTED"
+            ID Item = " Implementar Arquivo todoc "
+         }
+         OBJETO ACTION { 
+            ID Mode = "INSERTED"
+            ID Item = " Correr com isso "
+         }
+         OBJETO ACTION { 
+            ID Mode = "INSERTED"
+            ID Item = " Terminei "
+         }
+         OBJETO ACAO { 
+            ID Modo = "ALTERACAO"
+            ID Item = "2"
+            ID Antes = "b"
+            ID Depois = "mng"
+         }
+         OBJETO ACAO { 
+            ID Modo = "ALTERACAO"
+            ID Item = "1"
+            ID Antes = "i"
+            ID Depois = "imnb"
+            ID Data = "2020 07 08"
+         }
+         OBJETO ACAO { 
+            ID Mode = "NOVO"
+            ID Item = ""
+            ID Data = "2020 07 08"
+         }
+         OBJETO ACAO { 
+            ID Modo = "ALTERACAO"
+            ID Item = "3"
+            ID Antes = "c"
+            ID Depois = "ccc"
+            ID Data = "2020 07 08"
+         }
+         OBJETO ACAO { 
+            ID Modo = "ALTERACAO"
+            ID Item = "1"
+            ID Antes = "imnb"
+            ID Depois = "imn"
+            ID Data = "2020 07 08"
+         }
+         OBJETO ACAO { 
+            ID Modo = "ALTERACAO"
+            ID Item = "3"
+            ID Antes = "ccc"
+            ID Depois = "r"
+            ID Data = "2020 07 08"
+         }
+         OBJETO ACAO { 
+            ID Mode = "NOVO"
+            ID Item = " Terminei "
+            ID Data = "2020 07 08"
+         }
+         OBJETO ACAO { 
+            ID Modo = "ALTERACAO"
+            ID Item = "5"
+            ID Antes = "ra"
+            ID Depois = "ral"
+            ID Data = "2020 07 08"
+         }
+         OBJETO ACAO { 
+            ID Modo = "ALTERACAO"
+            ID Item = "5"
+            ID Antes = "ral"
+            ID Depois = "mng"
+            ID Data = "2020 07 08"
+         }
+       } 
+    } 

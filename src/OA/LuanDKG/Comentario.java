@@ -1,4 +1,4 @@
-package OAVersion.LuanDKG;
+package OA.LuanDKG;
 
 public class Comentario {
 

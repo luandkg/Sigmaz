@@ -1,7 +1,7 @@
-package OAVersion;
+package OA;
 
-import OAVersion.LuanDKG.LuanDKG;
-import OAVersion.LuanDKG.Pacote;
+import OA.LuanDKG.LuanDKG;
+import OA.LuanDKG.Pacote;
 
 import java.io.File;
 import java.util.Calendar;
@@ -35,7 +35,7 @@ public class OAVersion {
             arquivo.Abrir(mArquivo);
         }
 
-        Pacote OA = arquivo.UnicoPacote("OAVersion");
+        Pacote OA = arquivo.UnicoPacote("OA");
 
         Pacote Branches = OA.UnicoPacote("Branches");
 
@@ -120,7 +120,7 @@ public class OAVersion {
             arquivo.Abrir(mArquivo);
         }
 
-        Pacote OA = arquivo.UnicoPacote("OAVersion");
+        Pacote OA = arquivo.UnicoPacote("OA");
 
         Pacote Branches = OA.UnicoPacote("Branches");
         Pacote Releases = OA.UnicoPacote("Releases");

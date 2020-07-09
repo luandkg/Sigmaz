@@ -1,7 +1,5 @@
-package OAVersion;
+package OA;
 
-import OAVersion.LuanDKG.LuanDKG;
-import OAVersion.LuanDKG.Pacote;
 import Sigmaz.Utils.Texto;
 
 import java.io.File;

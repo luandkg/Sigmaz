@@ -1,7 +1,8 @@
 package AppSigmaz;
 
-import OAVersion.OAVersion;
-import OAVersion.OARoadmap;
+import OA.OATodo;
+import OA.OAVersion;
+import OA.OARoadmap;
 
 import java.util.ArrayList;
 
@@ -10,6 +11,7 @@ public class AppSigmaz {
     public static void main(String[] args) {
 
         AUTO();
+
 
         ArrayList<String> mArquivos = Carregadores.Carregar_Arquivos();
         ArrayList<String> mBibliotecas = Carregadores.Carregar_Bibliotecas();
@@ -23,19 +25,21 @@ public class AppSigmaz {
 
         int ARQUIVO = 30;
 
-        switch (Fases.INTELLISENSE_BIBLIOTECA) {
+        switch (Fases.EXECUTAR) {
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
             case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);
-            case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos,mCompilado);
+            case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos, mCompilado);
             case TESTES -> AppUtils.TESTE_GERAL(mArquivos, mCompilado);
             case IDENTAR_TUDO -> AppUtils.IDENTAR_LOTE("ARQUIVOS", mArquivos);
             case IDENTAR_BIBLIOTECAS -> AppUtils.IDENTAR_LOTE("BIBLIOTECAS", mBibliotecas);
             case MONTAR_BIBLIOTECAS -> AppUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad);
-            case INTELLISENSE -> AppUtils.INTELISENSE(ARQUIVO, mArquivos,mCompilado,mIntellisense);
-            case INTELLISENSE_BIBLIOTECA -> AppUtils.INTELISENSE_BIBLIOTECA(mBiblioteca_Fonte,mBiblioteca_Sigmad,mIntellisense);
+            case INTELLISENSE -> AppUtils.INTELISENSE(ARQUIVO, mArquivos, mCompilado, mIntellisense);
+            case INTELLISENSE_BIBLIOTECA -> AppUtils.INTELISENSE_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad, mIntellisense);
             default -> System.out.println("\t - Fases : Desconhecida !");
         }
+
+
 
 
     }
@@ -47,6 +51,21 @@ public class AppSigmaz {
 
         OARoadmap oar = new OARoadmap("Roadmap.oa");
         oar.receber("res/roadmap/Roadmap.txt");
+
+        OATodo mTodo = new OATodo("Todo.oa");
+        mTodo.sincronizar("res/roadmap/Todo.txt");
+
+
+       // mTodo.Listar();
+
+        mTodo.ListarStatus("i","Iniciar");
+
+        mTodo.ListarStatus("f","Fazendo");
+
+        mTodo.ListarStatus("c","Concluido");
+
+        mTodo.ListarTag("oa");
+
 
     }
 }
