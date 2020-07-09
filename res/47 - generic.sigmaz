@@ -1,9 +1,8 @@
 call iniciar -> inicio ( );
-
 act inicio ( ) {
 	def a : Valoramento >> ( num ) = gerar ( 15 );
 	def b : num = a.getX ( );
-	def c : Valoramento >> ( num ) = init >> ( num ) Valoramento ( 10 );
+	def c : Valoramento >> ( num ) = init Valoramento ( 10 ) >> ( num );
 	passar ( c );
 	def d : num = c.getX ( );
 	def r : Ref = init Ref ( );
@@ -23,7 +22,7 @@ func passar ( g : Valoramento >> ( num ) ) : num {
 	return 1;
 }
 func gerar ( a : num ) : Valoramento >> ( num ) {
-	def tmp : Valoramento >> ( num ) = init >> ( num ) Valoramento ( a );
+	def tmp : Valoramento >> ( num ) = init Valoramento ( a ) >> ( num );
 	return tmp;
 }
 

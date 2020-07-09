@@ -1,7 +1,5 @@
 import "libs/lib.sigmaz";
-
 call iniciar -> operando ( );
-
 act operando ( ) {
 	moc PARAR : num = 10;
 	moc PASSO : num = 1;

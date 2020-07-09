@@ -1,12 +1,8 @@
 call iniciar -> inicio ( );
 define GERAL : Item >> ( num ) = null;
-
 act inicio ( ) {
-	def ig : Item >> ( num ) = init >> ( num ) Item ( );
-
-		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
-
+	def ig : Item >> ( num ) = init Item ( ) >> ( num );
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	def a : num = ig.getA ( );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
@@ -14,8 +10,6 @@ act inicio ( ) {
 struct Item in ( T ) {
 	define A : T = null;
 	func getA ( ) : T {
-
-
 		def mA : T = A;
 		return mA;
 	}

@@ -7,8 +7,7 @@ package Organismos {
 }
 package Animais {
 	refer Organismos;
-
-struct Gato with Mamifero {
+	struct Gato with Mamifero {
 		init Gato ( idade : num ) {
 			_idade = idade;
 		}
@@ -26,7 +25,6 @@ struct Gato with Mamifero {
 	
 }
 refer Animais;
-
 call iniciar -> {
 	def G : Gato = init Gato ( 12 );
 	def g_idade : num = G.getIdade ( );

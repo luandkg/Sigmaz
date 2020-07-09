@@ -1,5 +1,4 @@
 call iniciar -> inicio ( );
-
 act inicio ( ) {
 	def valor : num = 1;
 	def ternal : num = -> ( maior ( valor , 2 ) ) :: ( +1 ) not ( -1 );

@@ -11,12 +11,12 @@ package Lista {
 
 		act adicionar ( novo : T ) {
 			if ( isNull ( mPrimeiro ) ) -> {
-				mPrimeiro = init >> ( T ) Item ( );
+				mPrimeiro = init Item ( )>> ( T ) ;
 				mPrimeiro.setValor ( novo );
 				mUltimo = mPrimeiro;
 				mQuantidade = 1;
 			}others {
-				def mCorrente : Item >> ( T ) = init >> ( T ) Item ( );
+				def mCorrente : Item >> ( T ) = init  Item ( )>> ( T );
 				mCorrente.setValor ( novo );
 				mUltimo.setProximo ( mCorrente );
 				mUltimo = mCorrente;

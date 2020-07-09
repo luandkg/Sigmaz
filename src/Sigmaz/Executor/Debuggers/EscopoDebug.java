@@ -4,6 +4,7 @@ import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.Indexador.Index_Action;
 import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Executor.Item;
+import Sigmaz.Executor.Runners.Run_Context;
 import Sigmaz.Executor.Runners.Run_Extern;
 import Sigmaz.Executor.Runners.Run_Struct;
 import Sigmaz.Utils.AST;
@@ -508,8 +509,9 @@ public class EscopoDebug {
 
 
         System.out.println(" ######################### LOCAL : STRUCTS - " + mEscopo.getNome() + " ############################ ");
+        Run_Context mRun_Context = new Run_Context(mEscopo.getRunTime());
 
-           for (AST ASTC : mEscopo.getRunTime().getStructsContexto(mEscopo.getRefers())) {
+           for (AST ASTC : mRun_Context.getStructsContexto(mEscopo.getRefers())) {
 
 
                    if (ASTC.getBranch("EXTENDED").mesmoNome("STRUCT")) {

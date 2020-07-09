@@ -1,7 +1,6 @@
 package Tempo {
 	refer castings;
-
-struct Tempo {
+	struct Tempo {
 		restrict : 
 		define mHora : num = 0;
 		define mMinuto : num = 0;

@@ -128,5 +128,4 @@ act operar ( geral : num ) {
 }
 mockiz OPERANTE : num = 2;
 define SGeral : num = somar ( 2 , 2 );
-
 call iniciar -> operar ( OPERANTE );

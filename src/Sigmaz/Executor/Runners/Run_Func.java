@@ -93,8 +93,9 @@ public class Run_Func {
         boolean enc = false;
         boolean algum = false;
 
+        Run_Context mRun_Context = new Run_Context(mRunTime);
 
-        for (AST mAST : mRunTime.getOperatorsContexto(mEscopo.getRefers())) {
+        for (AST mAST : mRun_Context.getOperatorsContexto(mEscopo.getRefers())) {
 
        // for (AST mAST : mRunTime.getGlobalOperations()) {
 

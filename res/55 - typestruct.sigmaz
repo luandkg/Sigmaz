@@ -2,8 +2,7 @@ struct Bloco {
 	all : 
 	define Proximo : Caixa = null;
 	define PNumeral : Numeral = null;
-
-act setValor ( a : num ) {
+	act setValor ( a : num ) {
 		valor = a;
 	}
 

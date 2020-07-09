@@ -1,6 +1,5 @@
 call iniciar -> inicio ( );
 define A : num = 10;
-
 act inicio ( ) {
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
@@ -10,8 +9,7 @@ struct Contador at M_Contagem {
 	define Base : num = 10;
 	mockiz Fluxo : num = 12;
 	define val : vax >> ( num ) = 12;
-
-act contar ( a : num ) {
+	act contar ( a : num ) {
 		
 	}
 	func retornar ( b : num ) : num {
@@ -23,7 +21,6 @@ model M_Contagem {
 	define Base : num;
 	mockiz Fluxo : num;
 	define val : vax >> ( num );
-
-act contar ( num );
+	act contar ( num );
 	func retornar ( num ) : num;
 }

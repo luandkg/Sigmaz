@@ -18,13 +18,13 @@ struct Pessoa {
 	
 }
 call iniciar -> inicio ( );
-
 act inicio ( ) {
 	def valor : num = Pessoa -> publico;
 	def P1 : Pessoa = init Pessoa ( );
 	invoke __COMPILER__ -> UNIQUE_STRUCT ( P1 ) :: ALL;
 	Pessoa -> publico = 2;
 	Pessoa -> tipo = Tipos :: ZETA;
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }
 func somar_inteiro ( a : num , b : num ) : num {
 	def c : num;

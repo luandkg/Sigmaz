@@ -1,5 +1,4 @@
 call iniciar -> recursao ( 10 );
-
 act recursao ( a : num ) {
 	println ( "Valor A : ", a );
 	a = somar_inteiro ( a , 1 );

@@ -1,6 +1,5 @@
 refer COISAS;
 refer ESTRELAS;
-
 call iniciar -> {
 	def mID1 : num = Pessoa -> ID ( );
 	def mID2 : num = Pessoa -> ID ( );

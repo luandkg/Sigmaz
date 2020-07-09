@@ -1,7 +1,5 @@
 import "libs/lib.sigmaz";
-
 call iniciar -> operando ( );
-
 act operando ( ) {
 	def x : num = 10;
 	def resposta : string = "";

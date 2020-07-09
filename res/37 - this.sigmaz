@@ -1,7 +1,6 @@
 struct Pessoa {
 	define idade : num = 0;
-
-act aumentar ( ) {
+	act aumentar ( ) {
 		idade = somar_inteiro ( idade , 1 );
 	}
 
@@ -15,7 +14,6 @@ act aumentar ( ) {
 	mockiz TGR : num = 2;
 }
 call iniciar -> inicio ( );
-
 act inicio ( ) {
 	def P1 : Pessoa = init Pessoa ( );
 	P1.aumentar_comigo ( );

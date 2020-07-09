@@ -1,10 +1,8 @@
 call iniciar -> pular ( );
-
 struct Pessoa {
 	define nome : string = "";
 	define idade : num = 0;
-
-act setNome ( _nome : string ) {
+	act setNome ( _nome : string ) {
 		nome = _nome;
 	}
 	func getNome ( ) : string {

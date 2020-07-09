@@ -22,8 +22,7 @@ package MAIS {
 }
 package Objetos {
 	refer MAIS;
-
-struct Esconder {
+	struct Esconder {
 		init Esconder ( a : string ) {
 			
 		}
@@ -97,8 +96,7 @@ struct Esconder {
 			def qa : Q3 = start Q3 {
 				a = 10;
 				b = 12;
-			}
-			;
+			};
 			def m : Mais = init Mais ( );
 			m.mostraral ( );
 			
@@ -111,7 +109,6 @@ struct Esconder {
 }
 call iniciar -> inicio ( );
 refer Objetos;
-
 struct Cristal {
 	
 }
@@ -125,7 +122,7 @@ act inicio ( ) {
 	def Sacola1 : Sacola = init Sacola ( "Caneta");
 	
 	# Sacola1.mostrarStruct();
-	def Acumulador1 : Acumulador >> ( num ) = init >> ( num ) Acumulador ( 12 );
+	def Acumulador1 : Acumulador >> ( num ) = init Acumulador ( 12 ) >> ( num );
 	
 	# Acumulador1.mostrarStruct();
 	def c : Acumulador >> ( num ) = Acumulador1.this;
@@ -141,7 +138,6 @@ act inicio ( ) {
 	def qa : Q2 = start Q2 {
 		a = 10;
 		b = 12;
-	}
-	;
+	};
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }

@@ -1,7 +1,5 @@
 import "libs/lib.sigmaz";
-
 call iniciar -> inicio ( );
-
 act inicio ( ) {
 	def a : int = 12.5;
 	def b : int = 3.72;

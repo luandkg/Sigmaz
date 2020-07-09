@@ -1,5 +1,4 @@
 import "libs/lib.sigmaz";
-
 struct Sacola {
 	init Sacola ( ) {
 		
@@ -12,8 +11,7 @@ struct Sacola {
 	mockiz TGA : num = 4;
 	all : 
 	define itens : num = 0;
-
-act aumentar ( g : num ) {
+	act aumentar ( g : num ) {
 		itens = somar_inteiro ( itens , g );
 	}
 	func quantidade ( ) : num {
@@ -63,7 +61,6 @@ act aumentar ( g : num ) {
 	
 }
 call iniciar -> pular ( );
-
 act pular ( ) {
 	def sacola1 : Sacola = init Sacola ( );
 	def tt : num = Sacola -> CRINNAR ( 5 , 1 );

@@ -29,7 +29,6 @@ operator == ( a : bool , b : bool ) : bool {
 	return c;
 }
 call iniciar -> inicio ( );
-
 act inicio ( ) {
 	def a : num = 10 ++ 20;
 	def b : num = ( 10 ++ 20 ) ++ 10;

@@ -3,6 +3,7 @@ package Sigmaz.Executor;
 import Sigmaz.Executor.Debuggers.EscopoDebug;
 import Sigmaz.Executor.Indexador.Index_Action;
 import Sigmaz.Executor.Indexador.Index_Function;
+import Sigmaz.Executor.Runners.Run_Context;
 import Sigmaz.Executor.Runners.Run_Extern;
 import Sigmaz.Utils.AST;
 
@@ -586,64 +587,6 @@ public class Escopo {
         return ret;
     }
 
-    public boolean existeStage(String eStage) {
-        boolean enc = false;
-
-      //  System.out.println(this.getNome() + " -> Stages : " + mRunTime.getStructsContexto(this.getRefers()).size());
-
-        for (AST mAST : mRunTime.getStructsContexto(this.getRefers())) {
-          //  System.out.println(" -->> " + mAST.getNome());
-
-            for (AST sAST : mAST.getBranch("STAGES").getASTS()) {
-              //  System.out.println("\t :: " + sAST.getNome());
-
-                if (sAST.mesmoTipo("STAGE")) {
-                    String tmp = mAST.getNome() + "::" + sAST.getNome();
-                    if (tmp.contentEquals(eStage)) {
-                        enc = true;
-                        break;
-                    }
-                }
-
-
-            }
-        }
-
-        return enc;
-    }
-
-    public Item obterStage(String eStage) {
-        Item retStage = new Item("ret");
-
-        retStage.setNulo(true);
-
-      //  System.out.println(this.getNome() + " -> Stages : " + mRunTime.getStructsContexto(this.getRefers()).size());
-
-        for (AST mAST : mRunTime.getStructsContexto(this.getRefers())) {
-           // System.out.println(" -->> " + mAST.getNome());
-
-            int i = 0;
-
-            for (AST sAST : mAST.getBranch("STAGES").getASTS()) {
-              //  System.out.println("\t :: " + sAST.getNome());
-
-                if (sAST.mesmoTipo("STAGE")) {
-                    String tmp = mAST.getNome() + "::" + sAST.getNome();
-                    if (tmp.contentEquals(eStage)) {
-
-                        retStage.setNulo(false);
-                        retStage.setValor(String.valueOf(i));
-                        retStage.setTipo(mAST.getNome());
-                        break;
-                    }
-                }
-
-                i += 1;
-            }
-        }
-
-        return retStage;
-    }
 
 
 }

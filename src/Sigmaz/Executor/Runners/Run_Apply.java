@@ -14,268 +14,48 @@ public class Run_Apply {
         mRunTime = eRunTime;
         mEscopo = eEscopo;
 
-
     }
 
 
     public void init(AST ASTCorrente) {
 
-
         AST mSettable = ASTCorrente.getBranch("SETTABLE");
         AST mValue = ASTCorrente.getBranch("VALUE");
 
-        if (mSettable.mesmoValor("ID")) {
 
-            Run_Value mAST = new Run_Value(mRunTime, mEscopo);
-            mAST.init(mValue, mEscopo.getDefinidoTipo(mSettable.getNome()));
-
-            atribuir(mAST, mEscopo, mSettable.getNome());
-
-        } else if (mSettable.getValor().contentEquals("STRUCT")) {
-
-            Struct(mSettable, mValue);
-
-        } else if (mSettable.getValor().contentEquals("STRUCT_EXTERN")) {
-
-
-            Struct_Extern(mSettable, mValue);
-
-        } else {
-            mRunTime.getErros().add("Nao é possível realizar essa atribuicao !");
-        }
-
-
-    }
-
-
-    public void Struct(AST mSettable, AST mValue) {
-
-
-        Item mItem = mEscopo.getItem(mSettable.getNome());
-
-        //  System.out.println("Atribuindo para : " +mSettable.getNome() );
-        if (mRunTime.getErros().size() > 0) {
-            return;
-        }
-
-        String eQualificador =mRunTime.getQualificador(mItem.getTipo(),mEscopo.getRefers());
-
-       // System.out.println("Tipo : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
-
-        if (eQualificador.contentEquals("STRUCT")) {
-
-            Aplicar_Struct(mItem.getValor(), mSettable, mValue);
-
-        } else if (eQualificador.contentEquals("TYPE")) {
-
-            Aplicar_Type(mItem.getValor(), mSettable, mValue);
-
-        }
-
-
-    }
-
-    public void Aplicar_Struct(String eLocal, AST mSettable, AST mValue) {
-
-        Run_Struct mEscopoStruct = mRunTime.getRun_Struct(eLocal);
-
-
-        AST eInternal = mSettable.getBranch("INTERNAL");
+        Run_Value SettableValue = new Run_Value(mRunTime, mEscopo);
+        SettableValue.init(mSettable, "<<ANY>>");
 
         if (mRunTime.getErros().size() > 0) {
             return;
         }
 
-        if (eInternal.mesmoValor("STRUCT_FUNCT")) {
+      //  System.out.println("Settable -->> " + SettableValue.getRetornoTipo());
 
-            Item eItem = mEscopoStruct.init_Function(eInternal, mEscopo, "<<ANY>>");
+     //   System.out.println("Settable -->>" + SettableValue.getRetornoTipo() +  " ::: " +  SettableValue.getReferencia().getNome());
 
-
-            //   mRunTime.getErros().add("STRUCT : " + mEscopoStruct.getNome() + " -> " + eInternal.getNome() + " : " + eItem.getValor());
-
-        } else if (eInternal.mesmoValor("STRUCT_ACT")) {
-
-            mEscopoStruct.init_Action(eInternal, mEscopo);
-
-        } else if (eInternal.mesmoValor("STRUCT_OBJECT")) {
-
-            // mRunTime.getErros().add("STRUCT : " + mEscopoStruct.getNome());
-
-            Item eItem = mEscopoStruct.init_Object(eInternal, mEscopo, "<<ANY>>");
-
-            if (mRunTime.getErros().size() > 0) {
-                return;
-            }
-
-            Run_Value mAST = new Run_Value(mRunTime, mEscopo);
-            mAST.init(mValue, mEscopo.getDefinidoTipo(mSettable.getNome()));
-
-            atribuir(mAST, mEscopoStruct.getEscopo(), eInternal.getNome());
+     //   System.out.println("Erros : " + mRunTime.getErros().size());
 
 
+
+        Run_Value mAST = new Run_Value(mRunTime, mEscopo);
+        mAST.init(mValue,"<<ANY>>");
+
+        if ( SettableValue.getReferencia() == null) {
+            mRunTime.getErros().add("Referencia nao encontrada !");
         } else {
-
-            mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
-
+            SettableValue.getReferencia().setValor(mAST.getConteudo());
+            SettableValue.getReferencia().setNulo(mAST.getIsNulo());
         }
+
+
+      //  System.out.println("Settable : "+ SettableValue.getReferencia().getNome() + " = " + mAST.getConteudo() + " ::: " + mAST.getRetornoTipo());
+
+
 
     }
 
 
-    public void Aplicar_Type(String eLocal, AST mSettable, AST mValue) {
 
-        Run_Type mEscopoStruct = mRunTime.getRun_Type(eLocal);
-
-
-        AST eInternal = mSettable.getBranch("INTERNAL");
-
-        if (mRunTime.getErros().size() > 0) {
-            return;
-        }
-
-        if (eInternal.mesmoValor("STRUCT_OBJECT")) {
-
-            // mRunTime.getErros().add("STRUCT : " + mEscopoStruct.getNome());
-
-            Item eItem = mEscopoStruct.init_Object(eInternal, mEscopo, "<<ANY>>");
-
-            if (mRunTime.getErros().size() > 0) {
-                return;
-            }
-
-            Run_Value mAST = new Run_Value(mRunTime, mEscopo);
-            mAST.init(mValue, mEscopo.getDefinidoTipo(mSettable.getNome()));
-
-            atribuir(mAST, mEscopoStruct.getEscopo(), eInternal.getNome());
-
-
-        } else {
-
-            mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
-
-        }
-
-    }
-
-
-    public void Struct_Extern(AST mSettable, AST mValue) {
-
-
-        //  System.out.println("Atribuindo para : " +mSettable.getNome() );
-        if (mRunTime.getErros().size() > 0) {
-            return;
-        }
-
-        Run_Extern mEscopoExtern = null;
-        for (Run_Extern mRun_Struct : mRunTime.getRunExternContexto(mEscopo.getRefers())) {
-            if (mRun_Struct.getNome().contentEquals(mSettable.getNome())) {
-                mEscopoExtern = mRun_Struct;
-                break;
-            }
-        }
-
-
-        AST eInternal = mSettable.getBranch("INTERNAL");
-
-
-        if (eInternal.mesmoValor("STRUCT_FUNCT")) {
-
-
-            Item eItem = mEscopoExtern.init_Function_Extern(eInternal, mEscopo, "<<ANY>>");
-
-
-            //   mRunTime.getErros().add("STRUCT : " + mEscopoStruct.getNome() + " -> " + eInternal.getNome() + " : " + eItem.getValor());
-
-            //  } else if (eInternal.mesmoValor("STRUCT_ACT")) {
-
-            //   mEscopoStruct.init_Action(eInternal, mEscopo);
-
-        } else if (eInternal.mesmoValor("STRUCT_OBJECT")) {
-
-            // mRunTime.getErros().add("STRUCT : " + mEscopoStruct.getNome());
-            if (mRunTime.getErros().size() > 0) {
-                return;
-            }
-
-            Item eItem = mEscopoExtern.init_ObjectExtern(eInternal, mEscopo, "<<ANY>>");
-
-
-            if (mRunTime.getErros().size() > 0) {
-                return;
-            }
-
-
-            Run_Value mAST = new Run_Value(mRunTime, mEscopo);
-            mAST.init(mValue, "<<ANY>>");
-
-
-            atribuir(mAST, mEscopoExtern.getEscopo(), eInternal.getNome());
-
-
-        } else {
-
-            mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
-
-        }
-
-    }
-
-
-    public void atribuir(Run_Value mAST, Escopo gEscopo, String eVarNome) {
-
-        //  System.out.println("Aplicando " +eVarNome + " = " + mAST.getConteudo() + " ERROS -> " + mRunTime.getErros().size());
-
-        // System.out.println("Aplicando " +eVarNome + " = " + mAST.getConteudo() );
-        //  System.out.println("Estrutura " + mAST.getIsStruct() );
-
-        if (mRunTime.getErros().size() > 0) {
-            return;
-        }
-
-        if (mAST.getIsNulo()) {
-            gEscopo.anularDefinido(eVarNome);
-        } else if (mAST.getIsStruct()) {
-
-            String eTipo = gEscopo.getDefinidoTipo(eVarNome);
-
-            if (eTipo.contentEquals(mAST.getRetornoTipo())) {
-                gEscopo.setDefinidoStruct(eVarNome, mAST.getConteudo());
-            } else {
-                mRunTime.getErros().add("Retorno incompativel : Era esperado " + eTipo + " mas retornou " + mAST.getRetornoTipo());
-            }
-
-        } else {
-
-
-            String eValor = mAST.getConteudo();
-            String eTipo = gEscopo.getDefinidoTipo(eVarNome);
-
-            if (eTipo.contentEquals(mAST.getRetornoTipo())) {
-
-                gEscopo.setDefinido(eVarNome, eValor);
-
-            } else {
-
-                if (gEscopo.existeCast(eTipo)) {
-
-                    Run_Cast mCast = new Run_Cast(mRunTime, gEscopo);
-                    String res = mCast.realizarSetterCast(eTipo, mAST.getRetornoTipo(), mAST.getConteudo());
-
-                    if (res == null) {
-                        gEscopo.anularDefinido(eVarNome);
-                    } else {
-                        gEscopo.setDefinido(eVarNome, res);
-                    }
-
-
-                } else {
-                    mRunTime.getErros().add("Retorno incompativel : Era esperado " + eTipo + " mas retornou " + mAST.getRetornoTipo());
-                }
-
-
-            }
-        }
-
-    }
 
 }

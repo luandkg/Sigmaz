@@ -113,7 +113,7 @@ public class AST_Value {
             ASTPai.criarBranch("MODE").setNome("INVERSE");
 
             ASTPai.setNome("");
-            ASTPai.setValor("UNARY");
+            ASTPai.setValor("DIRECTOR");
 
             AST_Value mAST = new AST_Value(mCompiler);
             mAST.init(ASTPai.criarBranch("VALUE"));
@@ -176,18 +176,7 @@ public class AST_Value {
                 ASTPai.setValor("INIT");
 
 
-                AST AST_Generico = ASTPai.criarBranch("GENERIC");
-                AST_Generico.setNome("FALSE");
 
-                Token TokenFuturo = mCompiler.getTokenFuturo();
-                if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
-
-                    AST_Generico.setNome("TRUE");
-
-                    AST_Generic mg = new AST_Generic(mCompiler);
-                    mg.init(AST_Generico);
-
-                }
 
                 Token TokenC2 = mCompiler.getTokenAvante();
                 if (TokenC2.getTipo() == TokenTipo.ID) {
@@ -209,6 +198,20 @@ public class AST_Value {
                     System.out.println("Problema IC : " + TokenC2.getConteudo());
                 }
 
+
+                AST AST_Generico = ASTPai.criarBranch("GENERIC");
+                AST_Generico.setNome("FALSE");
+
+                Token TokenFuturo = mCompiler.getTokenFuturo();
+                if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
+
+                    AST_Generico.setNome("TRUE");
+
+                    AST_Generic mg = new AST_Generic(mCompiler);
+                    mg.init(AST_Generico);
+
+                }
+
                 SegundaParte(ASTPai);
 
 
@@ -222,6 +225,18 @@ public class AST_Value {
 
                     ASTPai.setNome(TokenC2.getConteudo());
 
+                    AST AST_Generico = ASTPai.criarBranch("GENERIC");
+                    AST_Generico.setNome("FALSE");
+
+                    Token TokenFuturo = mCompiler.getTokenFuturo();
+                    if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
+
+                        AST_Generico.setNome("TRUE");
+
+                        AST_Generic mg = new AST_Generic(mCompiler);
+                        mg.init(AST_Generico);
+
+                    }
 
                     AST_Start mAST = new AST_Start(mCompiler);
                     mAST.init(ASTPai);

@@ -93,39 +93,57 @@ public class Identador {
 
             if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
 
+                boolean ja = false;
+                if (mIndex - 1 > 0) {
+                    Token Passado = LexerC.getTokens().get(mIndex - 1);
+                    if (Passado.getTipo() == TokenTipo.CHAVE_FECHA) {
+                        eDocumento += TokenC.getConteudo() + "\n" + getTabulacao(mTab);
+                        ja = true;
+                    }
+                }
 
-                if (mIndex + 1 < mQuantidade) {
-                    Token Futuro = LexerC.getTokens().get(mIndex + 1);
-                    if (Futuro.getTipo() == TokenTipo.CHAVE_FECHA) {
-                        eDocumento += TokenC.getConteudo();
-                    } else if (Futuro.getTipo() == TokenTipo.ID && Futuro.mesmoConteudo("call")) {
+                if (!ja) {
 
-                        eDocumento += TokenC.getConteudo() + "\n\n";
-                    } else if (Futuro.getTipo() == TokenTipo.ID && Futuro.mesmoConteudo("act")) {
+                    if (mIndex + 1 < mQuantidade) {
 
-                        eDocumento += TokenC.getConteudo() + "\n\n";
-                    } else if (Futuro.getTipo() == TokenTipo.ID && Futuro.mesmoConteudo("struct")) {
+                        Token Futuro = LexerC.getTokens().get(mIndex + 1);
 
-                        eDocumento += TokenC.getConteudo() + "\n\n";
-                    } else if (Futuro.getTipo() == TokenTipo.ID && Futuro.mesmoConteudo("operation")) {
+                        if (Futuro.getTipo() == TokenTipo.CHAVE_FECHA) {
+                            eDocumento += TokenC.getConteudo();
+                        } else if (Futuro.getTipo() == TokenTipo.ID && Futuro.mesmoConteudo("call")) {
 
-                        eDocumento += TokenC.getConteudo() + "\n\n";
+                            eDocumento +=  TokenC.getConteudo()  + "\n" + getTabulacao(mTab);
+                        } else if (Futuro.getTipo() == TokenTipo.ID && Futuro.mesmoConteudo("act")) {
 
+                            eDocumento +=  TokenC.getConteudo()  + "\n" + getTabulacao(mTab);
+                        } else if (Futuro.getTipo() == TokenTipo.ID && Futuro.mesmoConteudo("struct")) {
+
+                            eDocumento +=  TokenC.getConteudo()  + "\n" + getTabulacao(mTab);
+                        } else if (Futuro.getTipo() == TokenTipo.ID && Futuro.mesmoConteudo("operator")) {
+
+                            eDocumento +=  TokenC.getConteudo()  + "\n" + getTabulacao(mTab);
+
+                        } else {
+                            eDocumento += TokenC.getConteudo() + "\n" + getTabulacao(mTab);
+                        }
                     } else {
                         eDocumento += TokenC.getConteudo() + "\n" + getTabulacao(mTab);
                     }
-                } else {
-                    eDocumento += TokenC.getConteudo() + "\n" + getTabulacao(mTab);
+
                 }
+
 
             } else if (TokenC.getTipo() == TokenTipo.COMENTARIO) {
 
                 eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
                 mTab += 1;
                 eDocumento += TokenC.getConteudo() + "\n" + getTabulacao(mTab);
+
             } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
                 mTab -= 1;
 
 
@@ -148,6 +166,8 @@ public class Identador {
 
                         eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n\n" + getTabulacao(mTab);
 
+                    } else if (Futuro.getTipo() == TokenTipo.PONTOVIRGULA) {
+                        eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo();
                     } else {
 
                         eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);

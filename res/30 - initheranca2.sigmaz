@@ -1,5 +1,4 @@
 call iniciar -> vamos_herdar_com_init ( );
-
 act vamos_herdar_com_init ( ) {
 	def a1 : Animal = init Animal ( "Muito Fofo", 40 );
 	
@@ -31,8 +30,6 @@ struct Qualidade {
 }
 
 struct Animal with Qualidade {
-	
-
 	init Animal ( v2 : string , i : num ) -> Qualidade ( v2 , i ) {
 		
 	}

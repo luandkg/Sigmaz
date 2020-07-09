@@ -1,6 +1,5 @@
 call iniciar -> inicio ( );
 define A : num = 10;
-
 act inicio ( ) {
 	def valor : num = 1;
 	def T : num = COISAS -> CG ( 5 );

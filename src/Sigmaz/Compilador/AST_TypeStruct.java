@@ -22,6 +22,21 @@ public class AST_TypeStruct {
             AST_Corrente.setNome(TokenC.getConteudo());
             ASTPai.getASTS().add(AST_Corrente);
 
+            AST AST_Generico = AST_Corrente.criarBranch("GENERIC");
+            AST_Generico.setNome("FALSE");
+
+            Token TokenFuturo = mCompiler.getTokenFuturo();
+            if (TokenFuturo.getTipo() == TokenTipo.ID && TokenFuturo.mesmoConteudo("in")) {
+
+                mCompiler.Proximo();
+                AST_Generico.setNome("TRUE");
+
+                AST_Generic mg = new AST_Generic(mCompiler);
+                mg.init_receber(AST_Generico);
+
+
+            }
+
 
 
             corpo(AST_Corrente);

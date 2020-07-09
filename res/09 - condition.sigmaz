@@ -1,5 +1,4 @@
 call iniciar -> operando ( );
-
 act operando ( ) {
 	def a1 : num = 10;
 	def a2 : num = 5;

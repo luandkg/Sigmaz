@@ -4,26 +4,34 @@ type Pessoa {
 	define idade : num = 0;
 	mockiz TAXA : num = 5.20;
 }
+type Casal {
+	define P1 : Pessoa = null;
+	define P2 : Pessoa = null;
+}
 
 act inicio ( ) {
 	def a : Pessoa = start Pessoa {
 		nome = "Luan";
 		idade = 20;
-	}
-	;
+	};
 	def b : Pessoa = start Pessoa {
 		nome = "Fernando";
 		idade = 34;
-	}
-	;
+	};
 	def c : Pessoa = start Pessoa {
 		nome = "Carlos";
 		idade = 50;
-	}
-	;
+	};
 	def a_nome : string = a.nome;
 	def a_idade : num = a.idade;
 	def b_nome : string = b.nome;
+	def CasalC : Casal = start Casal {
+		P1 = a;
+		P2 = b;
+	};
+	def cs_p1_nome : string = CasalC.P1.nome;
+	def cs_p1 : Pessoa = CasalC.P1;
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	
 	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 	a.nome = "Jana";
@@ -33,6 +41,7 @@ act inicio ( ) {
 	def a_nome2 : string = a.nome;
 	def t : num = a.TAXA;
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }
 
 act trash ( a : any ) {

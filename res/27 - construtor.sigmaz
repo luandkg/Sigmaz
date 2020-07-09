@@ -1,5 +1,4 @@
 call iniciar -> inicializando ( );
-
 act inicializando ( ) {
 	def a1 : Animal = init Animal ( 15 );
 	a1.mostrar ( );

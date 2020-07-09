@@ -1,5 +1,4 @@
 call iniciar -> vamos_herdar ( );
-
 act vamos_herdar ( ) {
 	def a1 : Animal = init Animal ( );
 	a1.setIdade ( 12 );
@@ -12,8 +11,7 @@ act vamos_herdar ( ) {
 
 struct Qualidade {
 	define qualidade : string = "";
-
-act setQualidade ( a : string ) {
+	act setQualidade ( a : string ) {
 		qualidade = a;
 	}
 	func getQualidade ( ) : string {
@@ -71,8 +69,7 @@ struct EstreptoCocos with Bacteria {
 
 struct Animal with Qualidade {
 	define idade : num = 0;
-
-act setIdade ( a : num ) {
+	act setIdade ( a : num ) {
 		idade = a;
 	}
 

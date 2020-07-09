@@ -1,6 +1,6 @@
    PACOTE OATodo
     {
-      ID Indice = "10"
+      ID Indice = "12"
       PACOTE Todos
        {
          OBJETO Item { 
@@ -47,6 +47,22 @@
             ID Status = "c"
             ID Tags = ""
             ID Alterado = "2020 07 08"
+         }
+         OBJETO Item { 
+            ID Indice = "11"
+            ID Texto = " Run_Dot "
+            ID Data = "2020 07 09"
+            ID Alterado = "2020 07 09"
+            ID Status = "c"
+            ID Tags = ""
+         }
+         OBJETO Item { 
+            ID Indice = "12"
+            ID Texto = " Run_Arrow "
+            ID Data = "2020 07 09"
+            ID Alterado = "2020 07 09"
+            ID Status = "c"
+            ID Tags = ""
          }
        } 
     } 

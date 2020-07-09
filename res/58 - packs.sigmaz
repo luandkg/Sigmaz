@@ -14,8 +14,7 @@ package Organismos {
 }
 package Animais {
 	refer Organismos;
-
-struct Gato with Mamifero {
+	struct Gato with Mamifero {
 		init Gato ( a : num ) {
 			_a = a;
 		}
@@ -30,7 +29,6 @@ struct Gato with Mamifero {
 	
 }
 refer Animais;
-
 call iniciar -> {
 	def G : Gato = init Gato ( 12 );
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;

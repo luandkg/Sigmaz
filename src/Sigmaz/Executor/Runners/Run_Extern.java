@@ -235,11 +235,12 @@ public class Run_Extern {
                 enc = true;
                 if (mIndex_Function.mesmoArgumentos(mArgumentos)) {
 
-                    // System.out.println("\t - Executar :  " + mIndex_Function.getNome());
+                   //  System.out.println("\t - Executar :  " + mIndex_Function.getNome());
 
                     algum = true;
+                   // System.out.println("\t - Executar :  " + mIndex_Function.getNome() + " ANTES :: " + eRetorne);
 
-                    if (mIndex_Function.getPonteiro().mesmoValor(eRetorne) || eRetorne.contentEquals("<<ANY>>")) {
+                    //if (mIndex_Function.getPonteiro().mesmoValor(eRetorne) || eRetorne.contentEquals("<<ANY>>")) {
 
                         if (mRunTime.getErros().size() > 0) {
                             break;
@@ -248,9 +249,11 @@ public class Run_Extern {
 
                         mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eRetorne);
 
-                    } else {
-                        mRunTime.getErros().add("Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Retorno incompativel !");
-                    }
+                      //  System.out.println("\t - Executar :  " + mIndex_Function.getNome() + " RET ::: " + mRet);
+
+                   // } else {
+                   //     mRunTime.getErros().add("Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Retorno incompativel !");
+                   // }
 
                     break;
                 }
@@ -368,9 +371,10 @@ public class Run_Extern {
       //  for (String r : gEscopo.getRefers()) {
        //     System.out.println("\t -  REFER : " + r);
       //  }
+        Run_Context mRun_Context = new Run_Context(mRunTime);
 
         Run_Extern mEscopoExtern = null;
-        for (Run_Extern mRun_Struct : mRunTime.getRunExternContexto(gEscopo.getRefers())) {
+        for (Run_Extern mRun_Struct : mRun_Context.getRunExternContexto(gEscopo.getRefers())) {
 
         //    System.out.println("\t - PASS EXTERN : " + mRun_Struct.getNome());
 

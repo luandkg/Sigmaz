@@ -1,5 +1,4 @@
 call iniciar -> inicio ( );
-
 act inicio ( ) {
 	def w : num = 5;
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;

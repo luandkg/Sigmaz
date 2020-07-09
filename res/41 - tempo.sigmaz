@@ -1,8 +1,6 @@
 import "libs/lib.sigmaz";
-
 call iniciar -> inicio ( );
 refer Tempo;
-
 act inicio ( ) {
 	def Tempo : string = Tempo -> getTempo_Formatado ( );
 	def Data : string = Tempo -> getData_Formatado ( );

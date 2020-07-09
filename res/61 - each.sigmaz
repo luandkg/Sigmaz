@@ -1,10 +1,8 @@
 import "libs/lib.sigmaz";
-
 call iniciar -> inicio ( );
 refer Lista;
-
 act inicio ( ) {
-	def ListaNumerica : Lista >> ( num ) = init >> ( num ) Lista ( );
+	def ListaNumerica : Lista >> ( num ) = init Lista ( ) >> ( num );
 	ListaNumerica.adicionar ( 10 );
 	ListaNumerica.adicionar ( 20 );
 	ListaNumerica.adicionar ( 30 );
@@ -21,13 +19,11 @@ act inicio ( ) {
 	def t1 : Tipado = start Tipado {
 		A = 10;
 		B = 12;
-	}
-	;
+	};
 	def t2 : Tipado = start Tipado {
 		A = -10;
 		B = 8;
-	}
-	;
+	};
 	def t3 : Tipado = t1 ++ t2;
 	def t3_A : num = t3.A;
 	def t3_B : num = t3.B;

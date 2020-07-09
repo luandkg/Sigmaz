@@ -15,18 +15,8 @@ public class OAVersion {
     }
 
 
-    public enum Modos {INIT, RELEASE}
+    public void init() {
 
-    public void init(Modos eModo) {
-        if (eModo == Modos.INIT) {
-            initing();
-        } else if (eModo == Modos.RELEASE) {
-            releasing();
-        }
-    }
-
-
-    private void initing() {
 
         LuanDKG arquivo = new LuanDKG();
         File arq = new File(mArquivo);
@@ -45,12 +35,18 @@ public class OAVersion {
 
         String f = OA.Identifique("Factor").getValor();
 
-        f = string_num(f, 1);
+        int factor = get_string_num(f, 1);
 
         String Hoje = getData();
 
         String b = OA.Identifique("Branch").getValor();
         Pacote Branch = null;
+
+
+        String r = OA.Identifique("Releaser").getValor();
+
+        int ri = get_string_num(r, 50);
+
 
         int ci = 1;
 
@@ -96,9 +92,43 @@ public class OAVersion {
             P.salvarLinear();
         }
 
-        int Trabalhos = Branches.getPacotes().size();
+        int Trabalhos = Branches.getPacotes().size() * 24;
+        int Trabalhos_Versao = 0;
 
-        String Full = v + "." + min3(Trabalhos) + "." + ci;
+        int Trabalhos_Antes = Trabalhos;
+
+        while (Trabalhos >= ri) {
+            Trabalhos -= ri;
+            Trabalhos_Versao += 1;
+        }
+
+        System.out.println("TRABALHADOR :: " + Trabalhos_Antes + " -->> " + Trabalhos + " com " + ri);
+
+        int ti = Trabalhos + ci;
+
+        String Full = v + "." + min3(Trabalhos_Versao) + "." + ti;
+
+
+        if (ci > 100) {
+
+            Pacote Release = Releases.PacoteComAtributoUnico("Release", "Date", Hoje);
+            String releaser = Release.Identifique("Releaser").getValor();
+            int rea = get_string_num(releaser, 0);
+
+            if (rea <= 0) {
+                factor += 1;
+
+                String FullRelease = v + "." + min3(Trabalhos_Versao) + " R" + factor;
+
+
+                Release.Identifique("Releaser").setValor(String.valueOf(factor));
+                Release.Identifique("Version").setValor(String.valueOf(FullRelease));
+
+            }
+
+
+        }
+
 
         OA.Identifique("Version").setValor(v);
         OA.Identifique("Branch").setValor(Hoje);
@@ -106,108 +136,8 @@ public class OAVersion {
         OA.Identifique("Full").setValor(Full);
         OA.Identifique("Mode").setValor(".");
         OA.Identifique("Release").setValor(".");
-        OA.Identifique("Factor").setValor(f);
-
-        arquivo.Salvar(mArquivo);
-    }
-
-    public void releasing() {
-
-        LuanDKG arquivo = new LuanDKG();
-        File arq = new File(mArquivo);
-
-        if (arq.exists()) {
-            arquivo.Abrir(mArquivo);
-        }
-
-        Pacote OA = arquivo.UnicoPacote("OA");
-
-        Pacote Branches = OA.UnicoPacote("Branches");
-        Pacote Releases = OA.UnicoPacote("Releases");
-
-
-        String Hoje = getData();
-
-        String v = OA.Identifique("Version").getValor();
-
-        v = string_num(v, 1);
-
-        String b = OA.Identifique("Branch").getValor();
-        Pacote Branch = null;
-
-
-        int bi = 1;
-
-        if (b.length() == 0) {
-            Branch = Branches.PacoteComAtributoUnico("Branch", "Date", Hoje);
-
-            Branch.Identifique("Start").setValor(getDataHora());
-            Branch.Identifique("Update").setValor(".");
-            Branch.Identifique("End").setValor(".");
-            Branch.Identifique("Status").setValor("BLUE");
-
-        } else {
-
-            Branch = Branches.PacoteComAtributoUnico("Branch", "Date", b);
-
-            if (b.contentEquals(Hoje)) {
-                Branch.Identifique("Update").setValor(getDataHora());
-
-                String C = Branch.Identifique("Count").getValor();
-                bi = get_string_num(C, 1) ;
-
-
-            } else {
-                Branch.Identifique("End").setValor(getDataHora());
-                Branch.Identifique("Status").setValor("RED");
-
-                Branch = Branches.PacoteComAtributoUnico("Branch", "Date", Hoje);
-                Branch.Identifique("Start").setValor(getDataHora());
-                Branch.Identifique("Update").setValor(".");
-                Branch.Identifique("End").setValor(".");
-                Branch.Identifique("Status").setValor("BLUE");
-
-            }
-
-        }
-
-        Branch.Identifique("Count").setValor(String.valueOf(bi));
-
-        int Trabalhos = Branches.getPacotes().size();
-        String Full = v + "." + min3(Trabalhos) + "." + bi;
-
-        OA.Identifique("Branch").setValor(Hoje);
-        OA.Identifique("Works").setValor(String.valueOf(Trabalhos));
-        OA.Identifique("Full").setValor(Full);
-
-
-        Pacote R = Releases.PacoteComAtributoUnico("Release", "Date", Hoje);
-
-        String C = R.Identifique("Count").getValor();
-
-        String f = OA.Identifique("Factor").getValor();
-        int fi = get_string_num(f, 0);
-
-
-        int ci = get_string_num(C, 0) + 1;
-
-        if (ci==1){
-            fi+=1;
-        }
-
-        String RString = OA.Identifique("Full").getValor() + " R" + fi + " : " + ci;
-
-        R.Identifique("Count").setValor(String.valueOf(ci));
-        R.Identifique("Release").setValor(RString);
-
-
-        OA.Identifique("Mode").setValor("Release");
-        OA.Identifique("Release").setValor(RString);
-        OA.Identifique("Factor").setValor(String.valueOf(fi));
-
-        for (Pacote P : Releases.getPacotes()) {
-            P.salvarLinear();
-        }
+        OA.Identifique("Factor").setValor(String.valueOf(factor));
+        OA.Identifique("Releaser").setValor(String.valueOf(ri));
 
         arquivo.Salvar(mArquivo);
     }

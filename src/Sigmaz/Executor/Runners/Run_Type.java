@@ -64,9 +64,6 @@ public class Run_Type {
         mEscopo.setNome(eNome);
 
 
-        AST mAST_Struct = null;
-
-
         boolean enc = false;
 
 
@@ -85,17 +82,21 @@ public class Run_Type {
 
         }
 
-        for (AST ASTC : mRunTime.getTypesContexto(BuscadorDeArgumentos.getRefers())) {
+        Run_Context mRun_Context = new Run_Context(mRunTime);
+
+        for (AST ASTC : mRun_Context.getTypesContexto(BuscadorDeArgumentos.getRefers())) {
             if (ASTC.mesmoTipo("TYPE")) {
                 if (ASTC.mesmoNome(mStructNome)) {
 
+
                     enc = true;
-                    mAST_Struct = ASTC;
+                    mStructCorpo = ASTC;
                     mTipoCompleto = mStructNome;
+
+
                 }
             }
         }
-
 
 
         if (!enc) {
@@ -103,9 +104,87 @@ public class Run_Type {
             return;
         }
 
+
+        AST mStructGeneric = mStructCorpo.getBranch("GENERIC");
+
+
+        AST init_Generic = ASTCorrente.getBranch("GENERIC");
+        String structTipagem = "";
+        int StructContagem = 0;
+
+        for (AST ASTC : mStructGeneric.getASTS()) {
+            structTipagem += "<" + getTipagem(ASTC) + ">";
+            StructContagem += 1;
+        }
+
+
+        String initTipagem = "";
+        int initContagem = 0;
+
+        for (AST ASTC : init_Generic.getASTS()) {
+            initTipagem += "<" + getTipagem(ASTC) + ">";
+            initContagem += 1;
+        }
+
+        mTipoCompleto = mStructNome + initTipagem;
+
+
+        if (init_Generic.mesmoNome("TRUE") && mStructGeneric.mesmoNome("TRUE")) {
+
+
+            if (StructContagem == initContagem) {
+
+                Alterador mAlterador = new Alterador();
+
+                int i = 0;
+                for (AST eSub : mStructGeneric.getASTS()) {
+
+                    mAlterador.adicionar(eSub.getNome(), init_Generic.getASTS().get(i).copiar());
+
+                    //   System.out.println("Alterando " + eSub.getNome() + " -> " + getTipagem( init_Generic.getASTS().get(i)) );
+                    //   init_Generic.getBranch("TYPE").ImprimirArvoreDeInstrucoes();
+
+                    i += 1;
+                }
+
+                mAlterador.alterar(mStructCorpo);
+
+                //  System.out.println(mStructCorpo.ImprimirArvoreDeInstrucoes());
+
+            } else {
+
+                mRunTime.getErros().add("Type " + mStructNome + " : Tipos abstratos nao conferem !");
+
+            }
+
+
+        } else if (init_Generic.mesmoNome("FALSE") && mStructGeneric.mesmoNome("FALSE")) {
+
+        } else if (init_Generic.mesmoNome("FALSE") && mStructGeneric.mesmoNome("TRUE")) {
+            mRunTime.getErros().add("Type " + mStructNome + " : Precisa retornar uma Instancia Generica !");
+        } else if (init_Generic.mesmoNome("TRUE") && mStructGeneric.mesmoNome("FALSE")) {
+
+
+            if (init_Generic.getASTS().size() == 0) {
+
+            } else {
+                mRunTime.getErros().add("Type " + mStructNome + " : Nao e Generica !");
+            }
+
+
+        } else {
+            mRunTime.getErros().add("Type " + mStructNome + " : Nao e Generica !");
+        }
+
+
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
+
+
         ArrayList<String> mAlocados = new ArrayList<>();
 
-        for (AST ASTC : mAST_Struct.getASTS()) {
+        for (AST ASTC : mStructCorpo.getASTS()) {
 
 
             if (ASTC.mesmoTipo("DEFINE")) {
@@ -175,6 +254,24 @@ public class Run_Type {
         }
 
         return mRet;
+    }
+
+
+    public String getTipagem(AST eAST) {
+
+        String mTipagem = eAST.getNome();
+
+        if (eAST.mesmoValor("GENERIC")) {
+
+            for (AST eTipando : eAST.getASTS()) {
+                mTipagem += "<" + getTipagem(eTipando) + ">";
+            }
+
+        }
+
+
+        return mTipagem;
+
     }
 
 }

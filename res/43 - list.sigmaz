@@ -1,5 +1,4 @@
 call iniciar -> inicio ( );
-
 act println ( a : string , b : num ) {
 	def c : num;
 	invoke terminal -> change ( ) :: c;
@@ -230,12 +229,12 @@ struct Lista in ( T ) {
 
 	act adicionar ( novo : T ) {
 		if ( isNull ( mPrimeiro ) ) -> {
-			mPrimeiro = init >> ( T ) Item ( );
+			mPrimeiro = init Item ( ) >> ( T );
 			mPrimeiro.setValor ( novo );
 			mUltimo = mPrimeiro;
 			mQuantidade = 1;
 		}others {
-			def mCorrente : Item >> ( T ) = init >> ( T ) Item ( );
+			def mCorrente : Item >> ( T ) = init Item ( ) >> ( T );
 			mCorrente.setValor ( novo );
 			mUltimo.setProximo ( mCorrente );
 			mUltimo = mCorrente;
@@ -431,7 +430,7 @@ struct Iterador in ( T ) {
 }
 
 act inicio ( ) {
-	def ig : Lista >> ( num ) = init >> ( num ) Lista ( );
+	def ig : Lista >> ( num ) = init Lista ( ) >> ( num );
 	ig.adicionar ( 10 );
 	ig.adicionar ( 20 );
 	def a : num = ig.getQuantidade ( );
@@ -484,7 +483,7 @@ act inicio ( ) {
 	ig.adicionar ( 60 );
 	ig.adicionar ( 87 );
 	ig.adicionar ( 90 );
-	def iterar : Iterador >> ( Lista >> ( num ) ) = init >> ( Lista >> ( num ) ) Iterador ( ig );
+	def iterar : Iterador >> ( Lista >> ( num ) ) = init Iterador ( ig ) >> ( Lista >> ( num ) );
 	iterar.iniciar ( );
 	while ( iterar.continuar ( ) ) -> {
 		println ( "-> ", iterar.getValor ( ) );

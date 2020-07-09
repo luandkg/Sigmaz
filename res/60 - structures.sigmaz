@@ -1,10 +1,8 @@
 import "libs/lib.sigmaz";
-
 call iniciar -> inicio ( );
 refer Lista;
-
 act inicio ( ) {
-	def ig : Lista >> ( num ) = init >> ( num ) Lista ( );
+	def ig : Lista >> ( num ) = init Lista ( ) >> ( num );
 	ig.adicionar ( 10 );
 	ig.adicionar ( 20 );
 	def a : num = ig.getQuantidade ( );
@@ -57,7 +55,7 @@ act inicio ( ) {
 	ig.adicionar ( 60 );
 	ig.adicionar ( 87 );
 	ig.adicionar ( 90 );
-	def iterar : Iterador >> ( Lista >> ( num ) ) = init >> ( Lista >> ( num ) ) Iterador ( ig );
+	def iterar : Iterador >> ( Lista >> ( num ) ) = init Iterador ( ig ) >> ( Lista >> ( num ) );
 	iterar.iniciar ( );
 	while ( iterar.continuar ( ) ) -> {
 		println ( "-> ", iterar.getValor ( ) );

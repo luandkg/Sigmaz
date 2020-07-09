@@ -131,8 +131,9 @@ public class Run_Struct {
      //   for (AST ASTC : mRunTime.getStructsContexto(BuscadorDeArgumentos.getRefers())) {
       //      System.out.println( "\t   STRUCT -->> " + ASTC.getNome());
      //  }
+        Run_Context mRun_Context = new Run_Context(mRunTime);
 
-        for (AST ASTC : mRunTime.getStructsContexto(BuscadorDeArgumentos.getRefers())) {
+        for (AST ASTC : mRun_Context.getStructsContexto(BuscadorDeArgumentos.getRefers())) {
 
             if (ASTC.mesmoTipo("STRUCT")) {
                 if (ASTC.mesmoNome(mStructNome)) {
@@ -168,13 +169,10 @@ public class Run_Struct {
         int StructContagem = 0;
 
         for (AST ASTC : mStructGeneric.getASTS()) {
-            structTipagem += "<" + ASTC.getNome() + ">";
+            structTipagem += "<" + getTipagem(ASTC) + ">";
             StructContagem += 1;
         }
 
-        //  System.out.println("Struct : " + mStructNome);
-        //  System.out.println("\t - Abstrata : " + mStructGeneric.getNome());
-        //   System.out.println("\t - Tipagem : " + structTipagem);
 
 
         String initTipagem = "";
@@ -185,11 +183,13 @@ public class Run_Struct {
             initContagem += 1;
         }
 
+        //  System.out.println("Struct : " + mStructNome);
+        //System.out.println("\t - Init : " + mStructNome + initTipagem);
+       // System.out.println("\t - Tipagem : " + mStructNome + structTipagem);
+
+
         mTipoCompleto = mStructNome + initTipagem;
 
-        //  System.out.println("Init");
-        //   System.out.println("\t - Abstrata : " + init_Generic.getNome());
-        //    System.out.println("\t - Tipagem : " + initTipagem);
 
         AST mRefers = mAST_Struct.getBranch("REFERS");
         for (AST ASTC : mRefers.getASTS()) {
@@ -251,6 +251,17 @@ public class Run_Struct {
 
         } else if (init_Generic.mesmoNome("FALSE") && mStructGeneric.mesmoNome("TRUE")) {
             mRunTime.getErros().add("Struct " + mStructNome + " : Precisa retornar uma Instancia Generica !");
+        } else if (init_Generic.mesmoNome("TRUE") && mStructGeneric.mesmoNome("FALSE")) {
+
+
+            if (init_Generic.getASTS().size()==0){
+
+            }else{
+                mRunTime.getErros().add("Struct " + mStructNome + " : Nao e Generica !");
+            }
+
+
+
         } else {
             mRunTime.getErros().add("Struct " + mStructNome + " : Nao e Generica !");
         }

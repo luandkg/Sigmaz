@@ -1,7 +1,6 @@
 struct Sacola {
 	define itens : num = 0;
-
-act aumentar ( g : num ) {
+	act aumentar ( g : num ) {
 		itens = somar_inteiro ( itens , g );
 	}
 	func quantidade ( ) : num {
@@ -46,7 +45,6 @@ act println ( a : string ) {
 	invoke terminal -> print ( a ) :: c;
 }
 call iniciar -> pular ( );
-
 act pular ( ) {
 	def sacola1 : Sacola = init Sacola ( );
 	sacola1.mostrar_struct ( );

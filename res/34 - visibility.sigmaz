@@ -1,7 +1,5 @@
 import "libs/lib.sigmaz";
-
 call iniciar -> pular ( );
-
 act pular ( ) {
 	def sacola1 : Sacola = init Sacola ( );
 	sacola1.aumentar ( 2 );

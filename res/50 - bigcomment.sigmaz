@@ -1,5 +1,4 @@
 call iniciar -> inicio ( );
-
 act inicio ( ) {
 	
 	# Comentario Pequeno

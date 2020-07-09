@@ -1,11 +1,9 @@
 import "libs/lib.sigmaz";
-
 call iniciar -> inicio ( );
 refer Lista;
 define GX : num = 10;
-
 act inicio ( ) {
-	def ListaNumerica : Lista >> ( num ) = init >> ( num ) Lista ( );
+	def ListaNumerica : Lista >> ( num ) = init Lista ( ) >> ( num );
 	def t : string = typeof ( ListaNumerica );
 	def t2 : string = typeof ( 12 );
 	def t3 : string = typeof ( false );

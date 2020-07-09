@@ -1,7 +1,5 @@
 import "libs/lib.sigmaz";
-
 call iniciar -> operando ( );
-
 act operando ( ) {
 	def cc : num = 0;
 	while ( menor ( cc , 20 ) ) -> {

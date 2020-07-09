@@ -1,5 +1,4 @@
 call iniciar -> varios_estagios ( );
-
 act varios_estagios ( ) {
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 	def cor1 : CORES = CORES :: AMARELO;
