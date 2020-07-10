@@ -11,12 +11,12 @@ package Lista {
 
 		act adicionar ( novo : T ) {
 			if ( isNull ( mPrimeiro ) ) -> {
-				mPrimeiro = init Item ( )>> ( T ) ;
+				mPrimeiro = init Item ( ) >> ( T );
 				mPrimeiro.setValor ( novo );
 				mUltimo = mPrimeiro;
 				mQuantidade = 1;
 			}others {
-				def mCorrente : Item >> ( T ) = init  Item ( )>> ( T );
+				def mCorrente : Item >> ( T ) = init Item ( ) >> ( T );
 				mCorrente.setValor ( novo );
 				mUltimo.setProximo ( mCorrente );
 				mUltimo = mCorrente;
@@ -93,7 +93,7 @@ package Lista {
 			mUltimo = null;
 		}
 		func getValor ( indice : num ) : T {
-			def ret : num = null;
+			def ret : T = null;
 			if ( maior_igual ( indice , 0 ) ) -> {
 				def contando : num = 0;
 				def enc : bool = false;

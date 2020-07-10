@@ -114,6 +114,9 @@ public class Run_Each {
             return;
         }
 
+       // System.out.println("  EACH LISTA --> " + mAST.getRetornoTipo());
+       // System.out.println("  EACH ITERADOR --> " + mTipagem);
+       // System.out.println("  ERROS = " + mRunTime.getErros().size());
 
         long HEAPID = mRunTime.getHEAPID();
         String eNome = "<Struct::" + "Iterador<Lista<" + mTipagem + ">>" + ":" + HEAPID + ">";
@@ -141,6 +144,8 @@ public class Run_Each {
 
         String eNomeEach = "{{EACH}}::" + HEAPID;
 
+       // System.out.println("  ERROS = " + mRunTime.getErros().size());
+
         EachEscopo.criarDefinicao(eNomeEach, "Iterador<Lista<" + mTipagem + ">>", eNome);
 
         //  System.out.println(eNomeEach + " -->> PRONTA ");
@@ -155,6 +160,7 @@ public class Run_Each {
 
         //  System.out.println(eNomeEach + " -->> INICIAR ");
 
+        //System.out.println("  ERROS = " + mRunTime.getErros().size());
 
         AST mCondition = new AST("CONDITION");
         mCondition.setNome(eNomeEach);
@@ -169,6 +175,9 @@ public class Run_Each {
 
 
         AST mDefWhile = ASTC.criar_Def(mDef.getNome(),mType);
+
+        //System.out.println("  ERROS = " + mRunTime.getErros().size());
+
 
         mDefWhile.getASTS().add(ASTC.criar_ValueStructFunction(eNomeEach,"getValor"));
 
@@ -200,6 +209,8 @@ public class Run_Each {
         Run_Value mAST = new Run_Value(mRunTime, EachEscopo);
         mAST.init(mCondicao, "bool");
 
+     //   System.out.println("  ERROS IE = " + mRunTime.getErros().size());
+
         if (mRunTime.getErros().size() > 0) {
             return;
         }
@@ -212,11 +223,17 @@ public class Run_Each {
 
                 while (mAST.getConteudo().contentEquals("true")) {
 
+                  //  System.out.println("  ERROS INTERNO = " + mRunTime.getErros().size());
+
                     Escopo EscopoInterno = new Escopo(mRunTime, EachEscopo);
                     EscopoInterno.setNome("While");
 
                     Run_Body cAST = new Run_Body(mRunTime, EscopoInterno);
                     cAST.init(mCorpo);
+
+                  //  System.out.println(mCorpo.ImprimirArvoreDeInstrucoes());
+
+               //     System.out.println("  ERROS INTERNO = " + mRunTime.getErros().size());
 
                     if (cAST.getCancelado()) {
                         break;

@@ -118,6 +118,7 @@ public class Carregadores {
         mArquivos.add("res/63 - typeof.sigmaz");
         mArquivos.add("res/64 - details.sigmaz");
         mArquivos.add("res/65 - dot.sigmaz");
+        mArquivos.add("res/66 - units.sigmaz");
 
         return mArquivos;
     }

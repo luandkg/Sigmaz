@@ -1,0 +1,58 @@
+import "libs/lib.sigmaz";
+
+refer UNIT;
+refer Lista;
+
+call iniciar -> {
+
+	println ( " --------- TESTES UNITARIOS --------- ");
+	println ( "");
+
+	def AssertC : Assert = init Assert ( );
+	AssertC.assert ( "Teste 1", true );
+	AssertC.assert ( "Teste 2", true );
+	AssertC.assert ( "Teste 3", false );
+
+	each AssertivaC : ASSERT_ITEM :: ( AssertC.ASSERTABLE ) -> {
+		println ( "ASSERT : ", AssertivaC.nome , " -->> ", AssertivaC.resultado );
+	}
+
+	AssertC.assert_clean ( );
+	
+	#invoke __COMPILER__ -> HEAP ( ) :: ALL;
+	
+}
+package UNIT {
+
+	refer Lista;
+
+	type ASSERT_ITEM {
+		define nome : string = "";
+		define resultado : bool = false;
+	}
+
+	struct Assert {
+
+	    all:
+
+		define ASSERTABLE : Lista >> ( ASSERT_ITEM ) = init Lista ( ) >> ( ASSERT_ITEM );
+
+
+		act assert_clean ( ) {
+			each a : ASSERT_ITEM :: ( ASSERTABLE ) -> {
+				trash ( a );
+			}
+			ASSERTABLE.limpar ( );
+		}
+
+		act assert ( teste : string , a : bool ) {
+			ASSERTABLE.adicionar ( start ASSERT_ITEM {
+				nome = teste;
+				resultado = a;
+			}
+			);
+		}
+		
+	}
+	
+}

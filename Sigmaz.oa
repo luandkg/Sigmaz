@@ -1,9 +1,9 @@
    PACOTE OA
     {
       ID Version = "1"
-      ID Branch = "9/7/2020"
-      ID Works = "20"
-      ID Full = "1.2.397"
+      ID Branch = "10/7/2020"
+      ID Works = "44"
+      ID Full = "1.2.107"
       ID Mode = "."
       ID Release = "."
       ID Factor = "5"
@@ -50,10 +50,19 @@
           {
             ID Date = "9/7/2020"
             ID Start = "9/7/2020 0:1:17"
-            ID Update = "9/7/2020 10:59:59"
+            ID Update = "9/7/2020 11:17:5"
+            ID End = "10/7/2020 7:34:29"
+            ID Status = "RED"
+            ID Count = "398"
+          } 
+         PACOTE Branch
+          {
+            ID Date = "10/7/2020"
+            ID Start = "10/7/2020 7:34:29"
+            ID Update = "10/7/2020 8:45:16"
             ID End = "."
             ID Status = "GREEN"
-            ID Count = "377"
+            ID Count = "63"
           } 
        } 
       PACOTE Releases

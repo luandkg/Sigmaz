@@ -58,8 +58,9 @@ package Lista {
 			return mIndex;
 		}
 		func getValor ( ) : T {
-			def ii : num = getIndex ( );
-			return mLista.getValor ( ii );
+			def ii : int = getIndex ( );
+			def iinum : num = ii;
+			return mLista.getValor ( iinum );
 		}
 		
 	}

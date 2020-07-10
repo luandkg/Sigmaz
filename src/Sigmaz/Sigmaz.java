@@ -112,7 +112,7 @@ public class Sigmaz {
             String AI = CompilerC.getData().toString();
 
 
-            System.out.println(CompilerC.getArvoreDeInstrucoes());
+           // System.out.println(CompilerC.getArvoreDeInstrucoes());
 
 
             AnaliseC.init(CompilerC.getASTS(), mLocal);
@@ -202,7 +202,7 @@ public class Sigmaz {
             System.out.println("");
 
 
-            System.out.println(RunTimeC.getArvoreDeInstrucoes());
+          //  System.out.println(RunTimeC.getArvoreDeInstrucoes());
 
             System.out.println("");
             System.out.println("----------------------------------------------");

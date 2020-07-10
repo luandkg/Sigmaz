@@ -1,0 +1,71 @@
+
+
+
+
+Sigmaz ::= Define | Mockiz | Ação | Função | Diretor | Operador | Cast| Tipado| Estrutura
+
+
+Tipo ::= Nome  | Nome '>>' '(' (( ( Tipo  (',' Tipo)*)) )* ')'
+
+Define ::= "define" Nome  (':') Tipo (';'  | '=' Valor ";" )
+
+Mockiz ::= "mockiz" Nome  (':') Tipo (';'  | '=' Valor ";" )
+
+
+
+Ação ::= "act"   Nome  '('  (() | (Param ':' Tipo  (',' Param ':' Tipo)*))  ')'  "{" Corpo "}"
+
+Função::= "func"   Nome  '('  (() | (Param ':' Tipo  (',' Param ':' Tipo)*))  ')'  ":" Tipo "{" Corpo "}"
+
+
+Diretor::= "director"   Nome  '('  (Param ':' Tipo )  ')'  ":" Tipo "{" Corpo "}"
+
+Operador::= "operator"   Nome  '('  (Param ':' Tipo) ","  (Param ':' Tipo)  ')'  ":" Tipo "{" Corpo "}"
+
+
+Cast::= "cast"  Nome "{" Corpo_Cast "}"
+
+Tipado::= "type"  Nome "{" Corpo_Tipado "}"
+
+Estrutura::= "struct"  Nome "{" Corpo_Estrutura "}"
+
+Corpo_Cast ::= ()
+(
+| "getter" Nome ":" Tipo_Primitivo "->" "{" Corpo_Funcao "}"
+| "setter" Nome ":" Tipo_Primitivo "->" "{" Corpo_Funcao  "}"
+)*
+
+
+Corpo_Tipado ::= ( ()  | Define Corpo_Tipado  | Mockiz Corpo_Tipado  )
+
+Corpo_Estrutura ::=  ()
+(
+| Define
+| Mockiz
+| Operador
+| Diretor
+| ("init" ":" Corpo_Estrutura_Init)
+| ("all" ":" Corpo_Estrutura_All)
+| ("restrict" ":" Corpo_Estrutura_Restrict)
+| ("extern" ":" Corpo_Estrutura_Extern)
+) *
+
+Valor_Lado ::= Nome
+| Nome '(' ')' ";"
+| Nome '::' Nome
+| Nome '(' ((Valor)  | Valor (',' Valor  )* ) ')'
+| 'init' Nome '(' ')'  ";"
+| 'init' Nome ( "("  ((Valor)  | Valor (',' Valor  )* )  ")")
+| 'init' Nome ('>>' '(' ((Tipo)  | Tipo(',' Tipo)* ) ) "(" ((Valor)  | Valor (',' Valor  )* )  ")"
+| 'start' Nome '{' '}'
+| 'start' Nome ('>>' '(' ((Tipo)  | Tipo(',' Tipo)* ) ")" )'{' '}'
+
+Valor ::= Valor_Lado ";"
+| Valor_Lado "==" Valor_Lado  ";"
+| Valor_Lado "!!" Valor_Lado  ";"
+| Valor_Lado "++" Valor_Lado  ";"
+| Valor_Lado "--" Valor_Lado  ";"
+| Valor_Lado "**" Valor_Lado  ";"
+| Valor_Lado "//" Valor_Lado  ";"
+
+Luan ::= Vida (Escolha ( Certa  | Errada  )* | Continuar ) Vida

@@ -3,12 +3,19 @@ package AppSigmaz;
 import OA.OATodo;
 import OA.OAVersion;
 import OA.OARoadmap;
+import Sigmaz.Gerador;
 
 import java.util.ArrayList;
 
 public class AppSigmaz {
 
     public static void main(String[] args) {
+
+
+      //  Gerador G = new Gerador();
+      //  G.gerarPrint();
+
+
 
         AUTO();
 
@@ -23,9 +30,9 @@ public class AppSigmaz {
         String mUML = "res/uml/uml.txt";
         String mIntellisense = "res/intellisenses/";
 
-        int ARQUIVO = 63;
+        int ARQUIVO = 66;
 
-        switch (Fases.IDENTAR_TUDO) {
+        switch (Fases.EXECUTAR) {
 
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
@@ -49,8 +56,6 @@ public class AppSigmaz {
         }
 
 
-
-
     }
 
     public static void AUTO() {
@@ -59,16 +64,16 @@ public class AppSigmaz {
         OA.init();
 
         OARoadmap oar = new OARoadmap("res/oa/Roadmap.oa");
-        oar.receber( "Roadmap.txt");
+        oar.receber("Roadmap.txt");
 
         OATodo mTodo = new OATodo("res/oa/Todo.oa");
         mTodo.sincronizar("Todo.txt");
 
-       // mTodo.Listar();
+        // mTodo.Listar();
 
-        mTodo.ListarStatus("i","Iniciar");
-        mTodo.ListarStatus_Recente("f","Fazendo");
-        mTodo.ListarStatus_Modificado("c","Concluido");
+        mTodo.ListarStatus("i", "Iniciar");
+        mTodo.ListarStatus_Recente("f", "Fazendo");
+        mTodo.ListarStatus_Modificado("c", "Concluido");
 
         mTodo.ListarTag("oa");
 
