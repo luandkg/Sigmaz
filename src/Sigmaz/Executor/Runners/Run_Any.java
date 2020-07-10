@@ -59,6 +59,7 @@ public class Run_Any {
                     break;
                 }
                 enc = true;
+                // System.out.println("\t - ARGUMENTAR :  " + mIndex_Function.getNome());
                 if (mIndex_Function.mesmoArgumentos(mArgumentos)) {
 
                     //  System.out.println("\t - Executar :  " + mIndex_Function.getNome());

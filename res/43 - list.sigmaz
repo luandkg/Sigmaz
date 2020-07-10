@@ -5,6 +5,14 @@ act println ( a : string , b : num ) {
 	invoke terminal -> print ( a ) :: c;
 	invoke terminal -> print ( b ) :: c;
 }
+
+act println ( a : string , b : int ) {
+	def b1 : num = b;
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b1 ) :: c;
+}
 func isNull ( ObjetoNulo : any ) : bool {
 	def c : bool;
 	invoke casting -> cast_isnull ( ObjetoNulo ) :: c;
@@ -148,6 +156,11 @@ func menor ( a : int , b : int ) : bool {
 	def a1 : num = a;
 	def b1 : num = b;
 	invoke math -> operator_less ( a1 , b1 ) :: c;
+	return c;
+}
+func menor ( a : num , b : num ) : bool {
+	def c : bool;
+	invoke math -> operator_less ( a , b ) :: c;
 	return c;
 }
 func maior ( a : int , b : int ) : bool {
@@ -352,7 +365,8 @@ struct Item in ( T ) {
 		mValor = eValor;
 	}
 	func getProximo ( ) : Item >> ( T ) {
-		return mProximo;
+		def tmp : Item >> ( T ) = mProximo;
+		return tmp;
 	}
 
 	act setProximo ( eProximo : Item >> ( T ) ) {
@@ -390,7 +404,8 @@ struct Iterador in ( T ) {
 		if ( mIniciado ) -> {
 			if ( mTerminou == false ) -> {
 				if ( menor ( mIndex , mTamanho ) ) -> {
-					mIndex = somar ( mIndex , 1 );
+					def um : int = 1;
+					mIndex = somar ( mIndex , um );
 				}others {
 					mTerminou = true;
 				}
@@ -475,7 +490,7 @@ act inicio ( ) {
 	ig.limpar ( );
 	ig.listar ( );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
-	ig.adicionar ( 32 );
+	ig.adicionar ( 1000 );
 	ig.listar ( );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
 	ig.adicionar ( 40 );

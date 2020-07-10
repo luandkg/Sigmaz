@@ -39,6 +39,9 @@ public class AST_Import {
                     mCompiler.getErros_Lexer().addAll(CompilerC.getErros_Lexer());
                     mCompiler.getErros_Compiler().addAll(CompilerC.getErros_Compiler());
 
+                    mCompiler.getComentarios().addAll(CompilerC.getComentarios());
+
+
                     for (AST ASTCorrente : CompilerC.getAST("SIGMAZ").getASTS()) {
                         if (ASTCorrente.mesmoTipo("PACKAGE")){
 

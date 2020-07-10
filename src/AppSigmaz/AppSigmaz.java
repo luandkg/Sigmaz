@@ -23,19 +23,28 @@ public class AppSigmaz {
         String mUML = "res/uml/uml.txt";
         String mIntellisense = "res/intellisenses/";
 
-        int ARQUIVO = 65;
+        int ARQUIVO = 63;
 
-        switch (Fases.EXECUTAR) {
+        switch (Fases.IDENTAR_TUDO) {
+
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
-            case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);
             case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos, mCompilado);
+
             case TESTES -> AppUtils.TESTE_GERAL(mArquivos, mCompilado);
+
+            case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);
             case IDENTAR_TUDO -> AppUtils.IDENTAR_LOTE("ARQUIVOS", mArquivos);
             case IDENTAR_BIBLIOTECAS -> AppUtils.IDENTAR_LOTE("BIBLIOTECAS", mBibliotecas);
+
             case MONTAR_BIBLIOTECAS -> AppUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad);
+
             case INTELLISENSE -> AppUtils.INTELISENSE(ARQUIVO, mArquivos, mCompilado, mIntellisense);
             case INTELLISENSE_BIBLIOTECA -> AppUtils.INTELISENSE_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad, mIntellisense);
+
+            case TODO -> AppUtils.TODO(ARQUIVO, mArquivos);
+            case COMENTARIOS -> AppUtils.COMENTARIOS(ARQUIVO, mArquivos);
+
             default -> System.out.println("\t - Fases : Desconhecida !");
         }
 

@@ -26,13 +26,15 @@ public class Argumentador {
                 } else {
                     if (mTipoArgumentos.get(i).contentEquals("any")) {
                         v += 1;
+                    }else if (mTipoArgumentos.get(i).contentEquals("<<ANY>>")) {
+                        v += 1;
                     }else if (mArgumentos.getTipo().contentEquals("<<ANY>>")) {
                         v += 1;
                     }
                 }
 
 
-           //     System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
+           // System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
 
                 i += 1;
 
@@ -62,7 +64,7 @@ public class Argumentador {
                 Run_Value mAST = new Run_Value(mRunTime, mBuscadorDeVariaveis);
                 mAST.init(a, "<<ANY>>");
 
-             //   System.out.println("\t - Recebendo Parametro  " + a.getValor() + " : " + " -> " + mAST.getRetornoTipo() + " :: " + mAST.getIsStruct());
+             //  System.out.println("\t - Recebendo Parametro  " + a.getValor() + " : " + " -> " + mAST.getRetornoTipo() + " :: " + mAST.getIsStruct());
 
                // if (mAST.getIsReferenciavel()) {
               //      System.out.println("\t Ref Anterior : " + mAST.getReferencia().getNome());

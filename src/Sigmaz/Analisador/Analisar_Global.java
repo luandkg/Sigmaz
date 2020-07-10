@@ -19,13 +19,11 @@ public class Analisar_Global {
         Analisador_Bloco mAnalisador_Bloco = new Analisador_Bloco(mAnalisador);
 
         ArrayList<String> mAlocados = new ArrayList<String>();
-      //  ArrayList<String> mAlocados = mAnalisador.copiarAlocados(mAlocadosAntes);
 
 
         for (AST mReq : mReqAST) {
             mAnalisador_Bloco.getAnalisar_Outros().inclusao(mReq);
         }
-
 
 
         // USAR PACKAGES

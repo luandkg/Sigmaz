@@ -121,6 +121,7 @@ public class Run_Type {
         String initTipagem = "";
         int initContagem = 0;
 
+
         for (AST ASTC : init_Generic.getASTS()) {
             initTipagem += "<" + getTipagem(ASTC) + ">";
             initContagem += 1;

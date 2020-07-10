@@ -71,7 +71,7 @@ if (mAST.getIsNulo()){
             if (mTipagem.contentEquals(mAST.getRetornoTipo())) {
                 mEscopo.criarDefinicaoNula(eAST.getNome(), mAST.getRetornoTipo());
             } else {
-                mRunTime.getErros().add("Retorno incompativel  c : " + mTipagem + " x "+ mAST.getRetornoTipo()); }
+                mRunTime.getErros().add("Retorno incompativel  : " + mTipagem + " x "+ mAST.getRetornoTipo()); }
 
         } else if (mAST.getIsPrimitivo()) {
 

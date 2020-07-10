@@ -2,6 +2,8 @@ package AppSigmaz;
 
 import Sigmaz.Sigmaz;
 import Sigmaz.Utils.Identador;
+import Sigmaz.Comentarios;
+import Sigmaz.Todos;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -288,5 +290,62 @@ public class AppUtils {
         }
 
     }
+
+    public static void COMENTARIOS(int eIndice, ArrayList<String> mArquivos) {
+
+
+        int iContando = 0;
+        boolean enc = false;
+
+        for (String mArquivo : mArquivos) {
+            iContando += 1;
+            if (iContando == eIndice) {
+
+                enc = true;
+
+
+                Comentarios comentariosC = new Comentarios();
+
+                comentariosC.init(mArquivo);
+
+                break;
+            }
+        }
+
+        if (!enc) {
+            System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+    }
+
+    public static void TODO(int eIndice, ArrayList<String> mArquivos) {
+
+
+        int iContando = 0;
+        boolean enc = false;
+
+        for (String mArquivo : mArquivos) {
+            iContando += 1;
+            if (iContando == eIndice) {
+
+                enc = true;
+
+
+                Todos TodosC = new Todos();
+
+                TodosC.init(mArquivo);
+
+                break;
+            }
+        }
+
+        if (!enc) {
+            System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+    }
+
 
 }

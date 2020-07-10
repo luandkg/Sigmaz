@@ -11,10 +11,6 @@ public class Analisar_Outros {
 
     private ArrayList<String> mPrimitivos;
 
-
-
-
-
     private ArrayList<String> mCasts_Nomes;
     private ArrayList<String> mStructs_Nomes;
     private ArrayList<String> mStages_Nomes;
@@ -88,6 +84,24 @@ public class Analisar_Outros {
         ArrayList<ItemContador> Itens = new ArrayList<ItemContador>();
 
         for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("CAST")) {
+                mAnalisador.mensagem("  -- Cast " + mAST.getNome());
+                mAnalisador_Bloco.getTipados().add(mAST.getNome());
+            } else if (mAST.mesmoTipo("STRUCT")) {
+
+                mAnalisador_Bloco.getTipados().add(mAST.getNome());
+            } else if (mAST.mesmoTipo("STAGES")) {
+
+                mAnalisador_Bloco.getTipados().add(mAST.getNome());
+            } else if (mAST.mesmoTipo("TYPE")) {
+
+                mAnalisador_Bloco.getTipados().add(mAST.getNome());
+            }
+
+        }
+
+
+        for (AST mAST : ASTPai.getASTS()) {
 
             if (mAST.mesmoTipo("FUNCTION")) {
 
@@ -115,7 +129,7 @@ public class Analisar_Outros {
 
             } else if (mAST.mesmoTipo("CAST")) {
 
-                mAnalisador_Bloco.getTipados().add(mAST.getNome());
+
 
                 if (!mCasts_Nomes.contains(mAST.getNome())) {
                     mCasts_Nomes.add(mAST.getNome());
@@ -129,7 +143,6 @@ public class Analisar_Outros {
 
             } else if (mAST.mesmoTipo("STRUCT")) {
 
-                mAnalisador_Bloco.getTipados().add(mAST.getNome());
 
                 AST AST_Stages = mAST.getBranch("EXTENDED");
                  if (AST_Stages.mesmoNome("STAGES")){
@@ -152,7 +165,6 @@ public class Analisar_Outros {
 
             } else if (mAST.mesmoTipo("STAGES")) {
 
-                mAnalisador_Bloco.getTipados().add(mAST.getNome());
 
                 if (!mStages_Nomes.contains(mAST.getNome())) {
                     mStages_Nomes.add(mAST.getNome());
@@ -164,7 +176,6 @@ public class Analisar_Outros {
 
             } else if (mAST.mesmoTipo("TYPE")) {
 
-                mAnalisador_Bloco.getTipados().add(mAST.getNome());
 
                 if (!mTypes_Nomes.contains(mAST.getNome())) {
                     mTypes_Nomes.add(mAST.getNome());
@@ -250,30 +261,14 @@ public class Analisar_Outros {
 
                 } else {
 
-                    mAnalisador.getErros().add("Tipo deconhecido y2 : " + mTipo.getNome());
+                    mAnalisador.getErros().add("Global Tipos : " + mAnalisador_Bloco.getTipados().toString());
+
+                    mAnalisador.getErros().add("Tipo deconhecido y5 : " + mTipo.getNome());
                 }
 
             }
         }
 
-
-    }
-
-    public void analisandoDefines2(AST ASTPai) {
-
-        if (mPrimitivos.contains(ASTPai.getValor())) {
-
-        } else if (mCasts_Nomes.contains(ASTPai.getValor())) {
-
-        } else if (mStructs_Nomes.contains(ASTPai.getValor())) {
-
-        } else if (mStages_Nomes.contains(ASTPai.getValor())) {
-
-        } else if (mTypes_Nomes.contains(ASTPai.getValor())) {
-
-        } else {
-            mAnalisador.getErros().add("Tipo deconhecido  2 : " + ASTPai.getValor());
-        }
 
     }
 

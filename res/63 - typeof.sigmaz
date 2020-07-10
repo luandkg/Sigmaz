@@ -3,6 +3,8 @@ call iniciar -> inicio ( );
 refer Lista;
 define GX : num = 10;
 act inicio ( ) {
+	
+	# FIXME : Lista Generica
 	def ListaNumerica : Lista >> ( num ) = init Lista ( ) >> ( num );
 	def t : string = typeof ( ListaNumerica );
 	def t2 : string = typeof ( 12 );
@@ -16,5 +18,14 @@ act inicio ( ) {
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 	
 	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
+	
+	# TODO : criar Funcao de Types diferentes
+	
+	## Muitos
+        comentarios
+                com
+                        varias
+                                linhas
+                                ##
 	
 }

@@ -169,3 +169,6 @@
 2020 07 09  -->>  Run_Internal - Implementação dos Internals STRUCT_FUNC STRUCT_OBJECT
 2020 07 09  -->>  Types genéricas
 2020 07 09  -->>  Simplificação dos Releases do AOVersion
+2020 07 09  -->>  Checagem de tipo no Run_Apply
+2020 07 09  -->>  Listagem de Comentarios
+2020 07 09  -->>  Listagem de TODO, FIXME, WARNING , ERROR e IMPLEMMENT

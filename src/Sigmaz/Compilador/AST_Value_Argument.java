@@ -91,6 +91,18 @@ public class AST_Value_Argument {
 
                     ASTPai.setNome(TokenC2.getConteudo());
 
+                    AST AST_Generico = ASTPai.criarBranch("GENERIC");
+                    AST_Generico.setNome("FALSE");
+
+                    Token TokenFuturo = mCompiler.getTokenFuturo();
+                    if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
+
+                        AST_Generico.setNome("TRUE");
+
+                        AST_Generic mg = new AST_Generic(mCompiler);
+                        mg.init(AST_Generico);
+
+                    }
 
                     AST_Start mAST = new AST_Start(mCompiler);
                     mAST.init(ASTPai);

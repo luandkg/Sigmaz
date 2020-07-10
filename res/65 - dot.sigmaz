@@ -5,10 +5,6 @@ type Pessoa {
 	mockiz TAXA : num = 5.20;
 }
 
-
-
-
-
 struct Alem {
 	extern : 
 	mockiz V : num = 33;
@@ -84,7 +80,7 @@ act inicio ( ) {
 	};
 	def cs_p1_nome : string = CasalC.P1.nome;
 	
-    #def b1 : Bloco = start Bloco {modelo="AC3"; peso =5;};
+	#def b1 : Bloco = start Bloco {modelo="AC3"; peso =5;};
 	def b1 : Bloco = init Bloco ( );
 	b1.modelo = "AC3";
 	def b1_modelo : string = b1.modelo;
@@ -110,23 +106,20 @@ act inicio ( ) {
 	def pCasal : Casal = Alem -> getCasal ( "Sara", "Lucas");
 	def pP1 : Pessoa = Alem -> getCasal ( "Sara", "Lucas").P1;
 	def pP1_nome : string = Alem -> getCasal ( "Sara", "Lucas").P1.nome;
-
-	def par1 : Par >> (num,num) = start Par >> (num,num) { chave=0; valor=1992; };
-
-
+	def par1 : Par >> ( num , num ) = start Par >> ( num , num ) {
+		chave = 0;
+		valor = 1992;
+	};
+	def par1_valor : num = par1.valor;
+	
 	#algo(12) = 30;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	invoke __COMPILER__ -> TYPES ( ) :: INSTANCES;
 }
-
-type Par in (T1,T2) {
-
-    define chave : T1 = null;
-    define valor : T2 = null;
-
+type Par in ( T1 , T2 ) {
+	define chave : T1 = null;
+	define valor : T2 = null;
 }
-
-
 func algo ( a : num ) : num {
 	return a;
 }

@@ -23,6 +23,9 @@ public class Compiler {
 
     private ArrayList<String> mRequisitados;
 
+    private ArrayList<GrupoDeComentario> mComentarios;
+
+
     private String mLocal;
     private String mArquivo;
 
@@ -46,7 +49,7 @@ public class Compiler {
         mLocal = "";
         mRequisitados = new ArrayList<>();
 
-
+        mComentarios = new ArrayList<>();
     }
 
     public int getIChars() {
@@ -83,13 +86,13 @@ public class Compiler {
 
         if (mIndex < mTamanho) {
 
-            mPosicao=mTokens.get(mIndex).getPosicao();
-            mFim=mTokens.get(mIndex).getFim();
-            mLinha=mTokens.get(mIndex).getLinha();
+            mPosicao = mTokens.get(mIndex).getPosicao();
+            mFim = mTokens.get(mIndex).getFim();
+            mLinha = mTokens.get(mIndex).getLinha();
 
             return mTokens.get(mIndex);
         } else {
-            return new Token(TokenTipo.DESCONHECIDO, "", mPosicao,mFim, mLinha);
+            return new Token(TokenTipo.DESCONHECIDO, "", mPosicao, mFim, mLinha);
         }
 
     }
@@ -100,7 +103,7 @@ public class Compiler {
         if (mIndex + 1 < mTamanho) {
             return mTokens.get(mIndex + 1);
         } else {
-            return new Token(TokenTipo.DESCONHECIDO, "", mPosicao,mFim, mLinha);
+            return new Token(TokenTipo.DESCONHECIDO, "", mPosicao, mFim, mLinha);
         }
 
     }
@@ -154,6 +157,11 @@ public class Compiler {
         return mRequisitados;
     }
 
+    public ArrayList<GrupoDeComentario> getComentarios() {
+        return mComentarios;
+    }
+
+
     public int Instrucoes() {
         int t = 0;
 
@@ -177,6 +185,7 @@ public class Compiler {
         mLocal = "";
         mIChars = 0;
         mITokens = 0;
+        mComentarios.clear();
 
         Lexer LexerC = new Lexer();
 
@@ -186,16 +195,21 @@ public class Compiler {
 
 
         for (Erro mErro : LexerC.getErros()) {
-            errarLexer(mErro.getMensagem(), mErro.getLinha(),mErro.getPosicao());
+            errarLexer(mErro.getMensagem(), mErro.getLinha(), mErro.getPosicao());
         }
 
+
+        GrupoDeComentario GrupoDeComentarioC = new GrupoDeComentario(eArquivo);
 
         for (Token TokenC : LexerC.getTokens()) {
             if (TokenC.getTipo() != TokenTipo.COMENTARIO) {
                 mTokens.add(TokenC);
+            } else {
+                GrupoDeComentarioC.adicionarComentario(TokenC);
             }
         }
 
+        mComentarios.add(GrupoDeComentarioC);
 
         mTamanho = mTokens.size();
 
@@ -222,6 +236,7 @@ public class Compiler {
         mLocal = "";
         mIChars = 0;
         mITokens = 0;
+        mComentarios.clear();
 
         Lexer LexerC = new Lexer();
 
@@ -238,13 +253,19 @@ public class Compiler {
         }
 
 
+        GrupoDeComentario GrupoDeComentarioC = new GrupoDeComentario(eArquivo);
+
         for (Token TokenC : LexerC.getTokens()) {
             if (TokenC.getTipo() != TokenTipo.COMENTARIO) {
                 mTokens.add(TokenC);
+            } else {
+                GrupoDeComentarioC.adicionarComentario(TokenC);
             }
-
-            //  System.out.println(" TOKEN : " + TokenC.getConteudo());
         }
+
+        mComentarios.add(GrupoDeComentarioC);
+
+
 
 
         mTamanho = mTokens.size();
@@ -319,12 +340,12 @@ public class Compiler {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 
                 AST_Alocador mAST = new AST_Alocador(this);
-                mAST.init("MOCKIZ",AST_Raiz, "ALL");
+                mAST.init("MOCKIZ", AST_Raiz, "ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
 
                 AST_Alocador mAST = new AST_Alocador(this);
-                mAST.init("DEFINE",AST_Raiz, "ALL");
+                mAST.init("DEFINE", AST_Raiz, "ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("invoke")) {
 
@@ -401,9 +422,9 @@ public class Compiler {
         Token TokenP = getTokenAvante();
         if (TokenP.getTipo() == TokenTipo.ID) {
 
-            if (TokenP.mesmoConteudo(eQualID)){
+            if (TokenP.mesmoConteudo(eQualID)) {
 
-            }else{
+            } else {
                 errarCompilacao(eErro + " contudo encontrou : " + TokenP.getConteudo(), TokenP);
             }
 
@@ -415,13 +436,13 @@ public class Compiler {
     }
 
 
-    public void errarLexer(String eMensagem, int eLinha,int ePosicao) {
+    public void errarLexer(String eMensagem, int eLinha, int ePosicao) {
 
         boolean enc = false;
 
         for (GrupoDeErro G : mErros_Lexer) {
             if (G.mesmmoArquivo(mArquivo)) {
-                G.adicionarErro(eMensagem,eLinha, ePosicao);
+                G.adicionarErro(eMensagem, eLinha, ePosicao);
                 enc = true;
                 break;
             }
@@ -429,12 +450,12 @@ public class Compiler {
 
         if (!enc) {
             GrupoDeErro nG = new GrupoDeErro(mArquivo);
-            nG.adicionarErro(eMensagem,eLinha, ePosicao);
+            nG.adicionarErro(eMensagem, eLinha, ePosicao);
             mErros_Lexer.add(nG);
         }
     }
 
-    public void errarCompilacao(String eMensagem,Token eToken) {
+    public void errarCompilacao(String eMensagem, Token eToken) {
 
         boolean enc = false;
 
@@ -448,7 +469,7 @@ public class Compiler {
 
         if (!enc) {
             GrupoDeErro nG = new GrupoDeErro(mArquivo);
-            nG.adicionarErro(eMensagem,eToken.getLinha(), eToken.getPosicao());
+            nG.adicionarErro(eMensagem, eToken.getLinha(), eToken.getPosicao());
             mErros_Compiler.add(nG);
         }
     }
