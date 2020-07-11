@@ -21,19 +21,36 @@
     -> bool      : Representação Lógica
     -> string    : Representação Textual
     
+### BIBLIOTECAS
+    
+    -> Tempo
+    -> Data
+    -> TempoData
+    -> Lista
+    -> Iterador
+    -> Unit
+
     
  ### IMPLEMENTAÇÕES
  
     -> Ações
     -> Funções
-    -> Operações
+    -> Operadores  ++ -- ** // == !!
+    -> Diretores   !
     -> Casts : Re-Interpretação de Primitivos
     -> Stages : Enumeradores
-    -> Orientação a Objeto
-    -> Escopo de Visibilidade : ALL, RESTRICT e EXTERN
-    -> Inicializadores
-    -> Herança
-    -> Polimorfismo
-    -> Genéricos
+        -> valueOf
+        -> nameOf
+        -> Igualdade e Diferença
+    -> Tipos Complexos : Types e Structs
+    -> Orientação a Objeto : Structs
+        -> Escopo de Visibilidade : ALL, RESTRICT e EXTERN
+        -> Inicializadores
+        -> Herança
+        -> Polimorfismo
+        -> Genéricos
+    -> Types Genéricos
     -> Modelos
-    -> Tipos
+    -> Externos Estáticos
+    -> Exceção
+    

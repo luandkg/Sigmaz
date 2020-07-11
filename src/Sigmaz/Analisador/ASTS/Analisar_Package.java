@@ -1,5 +1,6 @@
-package Sigmaz.Analisador;
+package Sigmaz.Analisador.ASTS;
 
+import Sigmaz.Analisador.Analisador;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;

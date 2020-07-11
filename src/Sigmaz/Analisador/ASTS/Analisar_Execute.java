@@ -1,5 +1,7 @@
-package Sigmaz.Analisador;
+package Sigmaz.Analisador.ASTS;
 
+import Sigmaz.Analisador.Analisador;
+import Sigmaz.Analisador.Analisador_Bloco;
 import Sigmaz.Utils.AST;
 
 public class Analisar_Execute {

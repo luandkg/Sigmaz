@@ -1,6 +1,17 @@
 
 refer Pacote_C;
 
+
+
+struct G12 at Modelo {
+
+    act somar(){}
+
+    act contar(a:num){}
+    func retornar ( a:num ) : num{}
+
+}
+
 call iniciar -> {
 
     def complexo_1 : Complexo = init Complexo();
@@ -11,7 +22,10 @@ call iniciar -> {
 
 package Pacote_A{
 
-struct Basico  {
+
+refer Pacote_B;
+
+struct Basico at ModeloTipo  {
 
     all:
         mockiz tipo : num = -5;
@@ -31,6 +45,12 @@ struct Avancado {
 package Pacote_B{
 
     refer Pacote_A;
+
+   model ModeloTipo {
+
+    	mockiz tipo : num;
+
+    }
 
     struct Simples with Basico {
 
@@ -64,4 +84,13 @@ package Pacote_C{
 
     }
 
+    model Modelo {
+
+    	act contar ( num );
+    	func retornar ( num ) : num;
+    }
+
 }
+
+
+

@@ -1,8 +1,8 @@
 package Sigmaz.Analisador;
 
-import Sigmaz.Executor.Escopo;
+import Sigmaz.Analisador.ASTS.Analisar_Global;
+import Sigmaz.Analisador.ASTS.Analisar_Package;
 import Sigmaz.Executor.RunTime;
-import Sigmaz.Executor.Runners.Run_Extern;
 import Sigmaz.Utils.AST;
 import Sigmaz.Utils.Tempo;
 
@@ -23,8 +23,6 @@ public class Analisador {
     private Analisar_Package mAnalisar_Package;
 
 
-    private Estagiador mEstagiador;
-    private Modelagem mModelagem;
 
     private boolean mExterno;
 
@@ -48,8 +46,6 @@ public class Analisador {
         mAnalisar_Package = new Analisar_Package(this);
 
 
-        mModelagem = new Modelagem(this);
-        mEstagiador = new Estagiador(this);
 
 
         mExterno = true;
@@ -200,9 +196,10 @@ public class Analisador {
         Heranca mHeranca = new Heranca(this);
         mHeranca.init(mASTS);
 
-
+        Modelagem  mModelagem = new Modelagem(this);
         mModelagem.init(mASTS);
 
+        Estagiador  mEstagiador = new Estagiador(this);
         mEstagiador.init(mASTS);
 
         Referenciador mReferenciador = new Referenciador(this);
