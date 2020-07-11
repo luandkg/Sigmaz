@@ -403,14 +403,20 @@ public class RunTime {
         requerer();
 
         boolean enc = false;
+
         AST ASTSigmaz = null;
+        AST ASTSigmaz_Call = null;
 
         for (AST ASTCGlobal : mASTS) {
 
             if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
 
+                ASTSigmaz_Call = ASTCGlobal;
                 ASTSigmaz = ASTCGlobal;
                 enc = true;
+                break;
+
+
 
             }
 
@@ -425,7 +431,7 @@ public class RunTime {
             mEscopoGlobal = Global;
 
             Run eRun = new Run(this);
-            eRun.runSigmaz(ASTSigmaz, Global);
+            eRun.runSigmaz(ASTSigmaz_Call,ASTSigmaz, Global);
 
         } else {
             mErros.add("Sigmaz Vazio !");
@@ -555,11 +561,6 @@ public class RunTime {
 
         return ret;
     }
-
-
-
-
-
 
 
     public AST getBranch(String eTipo) {

@@ -14,7 +14,7 @@ public class Run {
         mRunTime = eRunTime;
     }
 
-    public void runSigmaz(AST ASTCGlobal, Escopo Global) {
+    public void runSigmaz(AST ASTSigmaz_Call, AST ASTCGlobal, Escopo Global) {
 
 
         ArrayList<String> mRefers = new ArrayList<String>();
@@ -61,22 +61,19 @@ public class Run {
             }
         }
 
-        for (
-                String Referencia : mRefers) {
+        for (String Referencia : mRefers) {
+
+       //     System.out.println("Procurando Refer : " + Referencia);
 
             Global.adicionarRefer(Referencia);
 
             if (existePacote(Referencia, mGlobalPackages)) {
                 for (AST eAST : getPacote(Referencia, mGlobalPackages).getASTS()) {
 
-
                     if (eAST.mesmoTipo("STRUCT")) {
-
 
                         Global.externalizar(Referencia + "<>" + eAST.getNome());
 
-                    } else if (eAST.mesmoTipo("TYPE")) {
-                        ASTCGlobal.getASTS().add(eAST);
                     }
 
 
@@ -89,15 +86,13 @@ public class Run {
         }
 
         mRunTime.indexar(ASTCGlobal, Global);
-// Global.externalizarStructGeral(mRE.getNome());
+
 
 
         for (Run_Extern RE : mRunTime.getExtern()) {
             //  System.out.println("RE -->> " + RE.getNomeCompleto());
             RE.run();
         }
-
-
 
 
         for (
@@ -129,7 +124,7 @@ public class Run {
         }
 
         for (
-                AST ASTC : ASTCGlobal.getASTS()) {
+                AST ASTC : ASTSigmaz_Call.getASTS()) {
 
             if (ASTC.mesmoTipo("CALL")) {
 

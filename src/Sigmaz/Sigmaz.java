@@ -125,6 +125,8 @@ public class Sigmaz {
 
             System.out.println("\t - Erros : " + AnaliseC.getErros().size());
 
+            AnaliseC.MostrarMensagens();
+
 
             if (AnaliseC.getErros().size() > 0) {
                 System.out.println("\n\t ERROS DE ANALISE : ");
@@ -133,7 +135,7 @@ public class Sigmaz {
                     System.out.println("\t\t" + Erro);
                 }
 
-                AnaliseC.MostrarMensagens();
+
 
                 //  System.out.println("");
                 // System.out.println("################ AST - COM DEFEITOS ################");
@@ -202,7 +204,7 @@ public class Sigmaz {
             System.out.println("");
 
 
-          //  System.out.println(RunTimeC.getArvoreDeInstrucoes());
+           System.out.println(RunTimeC.getArvoreDeInstrucoes());
 
             System.out.println("");
             System.out.println("----------------------------------------------");

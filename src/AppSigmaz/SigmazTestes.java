@@ -20,12 +20,12 @@ public class SigmazTestes {
     public SigmazTestes() {
 
         mArquivos = new ArrayList<String>();
-        mSaida="Compiled.sigmad";
+        mSaida = "Compiled.sigmad";
 
     }
 
-    public void setSaida(String eSaida){
-        mSaida=eSaida;
+    public void setSaida(String eSaida) {
+        mSaida = eSaida;
     }
 
     public void adicionar(String eArquivo) {
@@ -57,6 +57,8 @@ public class SigmazTestes {
         int mSucesso = 0;
         int mProblema = 0;
 
+        ArrayList<String> mProblemasCom = new ArrayList<String>();
+
         for (String Arquivo : mArquivos) {
 
 
@@ -75,7 +77,7 @@ public class SigmazTestes {
 
                     Analisador AnaliseC = new Analisador();
 
-                    AnaliseC.init(CompilerC.getASTS(),"res/");
+                    AnaliseC.init(CompilerC.getASTS(), "res/");
 
                     if (AnaliseC.getErros().size() == 0) {
 
@@ -144,15 +146,15 @@ public class SigmazTestes {
 
             if (passou) {
                 System.out.println(" Arquivo : " + sContador + " -> " + Arquivo + " : SUCESSO ");
-                mSucesso+=1;
+                mSucesso += 1;
             } else {
 
                 System.out.println(" Arquivo : " + sContador + " -> " + Arquivo + " : FALHOU -> " + parou);
                 for (String Tempando : mTemp) {
                     System.out.println(Tempando);
                 }
-                mProblema+=1;
-
+                mProblema += 1;
+                mProblemasCom.add(Arquivo);
             }
 
             Contador += 1;
@@ -173,20 +175,31 @@ public class SigmazTestes {
         System.out.println("");
 
 
+        NumberFormat formatarFloat = new DecimalFormat("0.00");
 
-        NumberFormat formatarFloat= new DecimalFormat("0.00");
+        if (mQuantidade > 0) {
 
-        if (mQuantidade>0){
-
-            float s = ((float)mSucesso/(float)mQuantidade)*100.0f;
-            float f =( (float)mProblema/(float)mQuantidade)*100.0f;
+            float s = ((float) mSucesso / (float) mQuantidade) * 100.0f;
+            float f = ((float) mProblema / (float) mQuantidade) * 100.0f;
 
             System.out.println(" - TESTES  	: " + mQuantidade + " -> 100.00 % ");
-            System.out.println("\t - SUCESSO  : " + mSucesso + " -> " +  formatarFloat.format(s).replace(",", ".") + " % ");
-            System.out.println("\t - FALHOU  	: " + mProblema+ " -> " + formatarFloat.format(f).replace(",", ".")+ " % ");
+            System.out.println("\t - SUCESSO  : " + mSucesso + " -> " + formatarFloat.format(s).replace(",", ".") + " % ");
+            System.out.println("\t - FALHOU  	: " + mProblema + " -> " + formatarFloat.format(f).replace(",", ".") + " % ");
+
+
+            if (mProblemasCom.size() > 0) {
+
+                System.out.println("");
+
+
+                for(String a :mProblemasCom ){
+
+                    System.out.println("PROBLEMA COM : " + a);
+                }
+
+            }
 
         }
-
 
 
     }

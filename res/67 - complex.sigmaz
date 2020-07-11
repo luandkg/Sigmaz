@@ -1,0 +1,67 @@
+
+refer Pacote_C;
+
+call iniciar -> {
+
+    def complexo_1 : Complexo = init Complexo();
+	
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	
+}
+
+package Pacote_A{
+
+struct Basico  {
+
+    all:
+        mockiz tipo : num = -5;
+
+}
+
+struct Medio with Basico {
+
+}
+
+struct Avancado {
+
+}
+
+}
+
+package Pacote_B{
+
+    refer Pacote_A;
+
+    struct Simples with Basico {
+
+        all:
+            define simplicidade : num = 12;
+
+    }
+
+    struct Simples_T2{
+
+    }
+
+    struct Simples_T3 with Medio {
+
+    }
+
+    struct Simples_T4 with Simples_T3 {
+
+    }
+
+}
+
+package Pacote_C{
+
+    refer Pacote_B;
+
+    struct Complexo with Simples {
+
+        all:
+            define complexidade : num = 15;
+
+    }
+
+}

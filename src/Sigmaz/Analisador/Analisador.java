@@ -215,7 +215,7 @@ public class Analisador {
         System.out.println("\n\t MENSAGENS DE ANALISE : ");
 
         for (String Erro : getMensagens()) {
-            System.out.println("\t\t" + Erro);
+            System.out.println("\t" + Erro);
         }
 
     }

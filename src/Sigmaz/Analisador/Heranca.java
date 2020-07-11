@@ -17,399 +17,404 @@ public class Heranca {
 
     public void init(ArrayList<AST> mTodos) {
 
-        ArrayList<AST> mEstruturas = new ArrayList<AST>();
+        mAnalisador.mensagem("");
+        mAnalisador.mensagem(" ------------------ HERANCA ----------------------- ");
+
+
+        ArrayList<AST> mPacotes = new ArrayList<AST>();
 
         for (AST mAST : mTodos) {
 
             if (mAST.mesmoTipo("SIGMAZ")) {
 
-                ArrayList<AST> mPacotes = new ArrayList<AST>();
-
                 for (AST Struct_AST : mAST.getASTS()) {
                     if (Struct_AST.mesmoTipo("PACKAGE")) {
-                        mPacotes.add(Struct_AST);
+                        mPacotes.add(Struct_AST.copiar());
                     }
                 }
 
-                analisarPacotes(mPacotes);
 
-                for (AST Struct_AST : mPacotes) {
+                mAnalisador.mensagem("");
 
-                    ArrayList<AST> mPackageEstruturas = new ArrayList<AST>();
-                    ArrayList<AST> mPackageStructs = new ArrayList<AST>();
-                    ArrayList<AST> mStruct_Referenciadas = new ArrayList<AST>();
-
-                    for (AST PackageStruct : Struct_AST.getASTS()) {
-                        if (PackageStruct.mesmoTipo("STRUCT")) {
-                            mPackageStructs.add(PackageStruct);
-                        }
+                for (AST ePacote : mAST.getASTS()) {
+                    if (ePacote.mesmoTipo("PACKAGE")) {
+                        iniciarProcessamento(mPacotes, ePacote);
                     }
-
-                    mStruct_Referenciadas = referenciarStructs(mPacotes, Struct_AST);
-
-
-                    for (AST PackageStruct : mPackageStructs) {
-                        if (PackageStruct.mesmoTipo("STRUCT")) {
-                            mPackageEstruturas.add(PackageStruct);
-                        }
-                    }
-
-                    init_estruturas(mPackageEstruturas, mStruct_Referenciadas);
-
                 }
 
-                ArrayList<AST> mPackageStructs = new ArrayList<AST>();
-                ArrayList<AST> mPackageStructs_refer = new ArrayList<AST>();
+                iniciarProcessamento(mPacotes, mAST);
 
-                for (AST Struct_AST : mAST.getASTS()) {
 
-                    if (Struct_AST.mesmoTipo("STRUCT")) {
-                        mPackageStructs.add(Struct_AST);
-                    }
-
-                }
-
-                mPackageStructs_refer = referenciarStructs(mPacotes, mAST);
-
-                for (AST Struct_AST : mPackageStructs) {
-
-                    if (Struct_AST.mesmoTipo("STRUCT")) {
-                        mEstruturas.add(Struct_AST);
-                    }
-
-                }
 
             }
         }
 
-        ArrayList<AST> mStruct_Referenciadas = new ArrayList<AST>();
-
-        init_estruturas(mEstruturas, mStruct_Referenciadas);
 
     }
 
-    public class PacoteRefer {
-        public int Complexidade = 0;
-        public AST Pacote = null;
-    }
-
-    public void analisarPacotes(ArrayList<AST> mPacotes) {
-
-        ArrayList<PacoteRefer> Ref_Pacotes = new ArrayList<PacoteRefer>();
-
-        for (AST ASTC : mPacotes) {
-
-            ArrayList<String> usados = new ArrayList<String>();
-
-            PacoteRefer RP = new PacoteRefer();
-            RP.Complexidade = pacoteContagemRefer(mPacotes, ASTC.getNome(), usados);
-            RP.Pacote = ASTC;
-            Ref_Pacotes.add(RP);
-
-            if (RP.Complexidade < 0) {
-                mAnalisador.getErros().add("Pacote " + RP.Pacote.getNome() + " : Possui problemas de referencias !");
-                return;
-            }
-
-        }
-
-        while (Ref_Pacotes.size() > 0) {
-            PacoteRefer menor = getMenor(Ref_Pacotes);
-
-            mAnalisador.mensagem("PACKAGE : " + menor.Pacote.getNome() + " -->> " + menor.Complexidade);
-
-            Ref_Pacotes.remove(menor);
-        }
-
-    }
-
-    public PacoteRefer getMenor(ArrayList<PacoteRefer> Ref_Pacotes) {
-        PacoteRefer menor = null;
-
-        if (Ref_Pacotes.size() > 0) {
-            menor = Ref_Pacotes.get(0);
-
-            for (PacoteRefer RP : Ref_Pacotes) {
-                if (RP.Complexidade < menor.Complexidade) {
-                    menor = RP;
-                }
-            }
-        }
 
 
-        return menor;
-    }
 
-    public ArrayList<AST> referenciarStructs(ArrayList<AST> mPacotes, AST Pacote) {
+    public ArrayList<String> getRefers(AST eAST) {
 
-        ArrayList<AST> mStruct_Referenciadas = new ArrayList<AST>();
+        ArrayList<String> mRefers = new ArrayList<String>();
 
-        for (AST PackageStruct : Pacote.getASTS()) {
+        for (AST PackageStruct : eAST.getASTS()) {
             if (PackageStruct.mesmoTipo("REFER")) {
-                referPacote(mPacotes, PackageStruct.getNome(), mStruct_Referenciadas);
+                mRefers.add(PackageStruct.getNome());
+            }
+        }
+        return mRefers;
+    }
+
+
+    public void iniciarProcessamento(ArrayList<AST> mPacotes, AST mRaiz) {
+
+
+        ArrayList<String> mRefers = getRefers(mRaiz);
+
+        if (mRaiz.mesmoTipo("PACKAGE")) {
+            mAnalisador.mensagem("PACOTE : "  + mRaiz.getNome());
+        } else {
+            mAnalisador.mensagem("SIGMAZ : " + mRaiz.getTipo());
+        }
+
+        if (mRefers.size()>0){
+            mAnalisador.mensagem("");
+            for (String eRefer : mRefers) {
+                mAnalisador.mensagem("\t - REFER : " + eRefer);
             }
         }
 
-        return mStruct_Referenciadas;
+
+        ArrayList<AST> mStructs = new ArrayList<AST>();
+
+
+        for (AST eAST : mRaiz.getASTS()) {
+            if (eAST.mesmoTipo("STRUCT")) {
+                if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
+                    mStructs.add(eAST.copiar());
+                }
+            }
+
+        }
+
+        mAnalisador.mensagem("");
+        for (AST eAST : mRaiz.getASTS()) {
+            if (eAST.mesmoTipo("STRUCT")) {
+                if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
+
+                    if (eAST.getBranch("WITH").mesmoValor("TRUE")) {
+
+                        mAnalisador.mensagem("\t - STRUCT : " + eAST.getNome() + " :: HERANCA");
+
+                        String eBase = eAST.getBranch("WITH").getNome();
+
+
+                        montarStruct(eAST, mStructs, mRefers, mPacotes);
+
+                    }else{
+
+                        mAnalisador.mensagem("\t - STRUCT : " + eAST.getNome() + " :: CONCRETA");
+
+
+                    }
+
+                }
+            }
+
+        }
+
+
+        mAnalisador.mensagem("");
 
     }
 
-    public boolean existeRefer(ArrayList<AST> mPacotes, String eNome) {
-        boolean enc = false;
+    public void montarStruct(AST eStruct, ArrayList<AST> mStructs, ArrayList<String> mRefers, ArrayList<AST> mPacotes) {
 
-        for (AST ASTC : mPacotes) {
-            if (ASTC.mesmoNome(eNome)) {
-                enc = true;
+
+        String eBase_Nome = eStruct.getBranch("WITH").getNome();
+        AST eBase = null;
+        boolean BaseEnc = false;
+        String eLocal = ".";
+        AST ePacoteBase = null;
+        boolean BaseEmPacote = false;
+
+
+        mAnalisador.mensagem("\t\t - MONTAGEM : " + eStruct.getNome() + " -->> " + eBase_Nome);
+        mAnalisador.mensagem("\t\t\t  - ESTRUTURA : " + eStruct.getNome());
+
+
+        for (AST eAST : mStructs) {
+            if (eAST.mesmoNome(eBase_Nome)) {
+
+                eLocal = "LOCAL";
+                eBase = eAST.copiar();
+                BaseEnc = true;
                 break;
+
             }
         }
-        return enc;
-    }
 
-    public int pacoteContagemRefer(ArrayList<AST> mPacotes, String eNome, ArrayList<String> mUsados) {
-        int enc = -1;
+        if (!BaseEnc) {
 
-        for (AST ASTC : mPacotes) {
+            for (String eRefer : mRefers) {
 
+                AST mPacote = null;
+                boolean PacoteEnc = false;
 
-            if (ASTC.mesmoNome(eNome)) {
-                enc = 0;
-                if (!mUsados.contains(eNome)) {
-                    mUsados.add(eNome);
+                for (AST ePacote : mPacotes) {
+                    if (ePacote.mesmoNome(eRefer)) {
+                        mPacote = ePacote;
+                        PacoteEnc = true;
+                        break;
+                    }
+                }
 
+                if (PacoteEnc) {
 
-                    for (AST PackageStruct : ASTC.getASTS()) {
-                        if (PackageStruct.mesmoTipo("REFER")) {
+                    for (AST eAST : mPacote.getASTS()) {
+                        if (eAST.mesmoNome(eBase_Nome)) {
+                            eLocal = "REFER : " + eRefer;
 
+                            eBase = eAST.copiar();
 
-                            int tmp = pacoteContagemRefer(mPacotes, PackageStruct.getNome(), mUsados);
-                            if (tmp == -1) {
-                                return -1;
-                            } else {
-                                enc += 1 + tmp;
-                            }
+                            BaseEmPacote = true;
+                            ePacoteBase = mPacote;
+                            BaseEnc = true;
+                            break;
                         }
                     }
 
-
-                    break;
-                }
-            }
-        }
-        return enc;
-    }
-
-    public void referPacote(ArrayList<AST> mPacotes, String eNome, ArrayList<AST> mRefPacotes) {
-
-        boolean enc = false;
-
-        for (AST ASTC : mPacotes) {
-            if (ASTC.mesmoNome(eNome)) {
-
-
-                for (AST Sub : ASTC.getASTS()) {
-                    if (Sub.mesmoTipo("STRUCT")) {
-                        mRefPacotes.add(Sub);
+                    if (BaseEnc) {
+                        break;
                     }
-
-                }
-
-                enc = true;
-                break;
-            }
-        }
-
-        if (!enc) {
-            mAnalisador.getErros().add("Package " + eNome + " : Nao encontrado !");
-        }
-    }
-
-    public void init_estruturas(ArrayList<AST> mEstruturas, ArrayList<AST> mEstruturasReferenciadas) {
-
-        ArrayList<AST> mEstruturasComHeranca = new ArrayList<AST>();
-
-
-        int c = mEstruturas.size();
-        int v = 0;
-
-
-        for (AST Struct_AST : mEstruturas) {
-
-            //  System.out.println("Estruturando : " + Struct_AST.getNome());
-
-            AST AST_With = Struct_AST.getBranch("WITH");
-
-            if (AST_With.mesmoValor("TRUE")) {
-
-                String Struct_Base = Struct_AST.getBranch("WITH").getNome();
-
-                ArrayList<String> mDependencias = new ArrayList<String>();
-                boolean normalizavel = getNormalizavel(Struct_Base, mEstruturas, mDependencias, mEstruturasReferenciadas);
-
-                if (normalizavel) {
-
-                    v += 1;
-
-                    Struct_AST.getBranch("EXTENDED").setValor("" + (1 + mDependencias.size()));
-
-                    mEstruturasComHeranca.add(Struct_AST);
 
                 } else {
-                    mAnalisador.getErros().add("Estrutural : " + Struct_AST.getNome() + " -->> " + AST_With.getNome() + "  :: PROBLEMA DE DEPENDENCIA");
+                    mAnalisador.getErros().add("Pacote " + eRefer + " : Nao encontrado !");
+                    break;
+                }
+
+            }
+
+        }
+
+        if (BaseEnc) {
+
+            mAnalisador.mensagem("\t\t\t  - BASE : " + eBase_Nome + " -->> " + eLocal);
+
+
+
+            if (eBase.getBranch("WITH").mesmoValor("TRUE")) {
+
+                // ArrayList<String> pRefers = getRefers(mPacote);
+
+                mAnalisador.mensagem("\t\t\t  - CONCRETA : NAO -->> " + eBase.getBranch("WITH").getNome());
+
+
+                if (BaseEmPacote) {
+
+                    AST nBase = montarBase(eBase.copiar(), ePacoteBase.getASTS(), getRefers(ePacoteBase), mPacotes);
+
+                    herdarAgora(eStruct, nBase);
+
+                } else {
+
+                    AST nBase = montarBase(eBase.copiar(), mStructs, mRefers, mPacotes);
+
+                    herdarAgora(eStruct, nBase);
+
                 }
 
 
             } else {
-                //   System.out.println("Estrutural : " + Struct_AST.getNome());
 
-                Struct_AST.getBranch("EXTENDED").setValor("1");
+                mAnalisador.mensagem("\t\t\t  - CONCRETA : SIM ");
 
-                v += 1;
+                herdarAgora(eStruct, eBase);
+
             }
-        }
 
-        if (c == v) {
-
-            herdar(mEstruturas, mEstruturasComHeranca, mEstruturasReferenciadas);
 
         } else {
-
-            mAnalisador.getErros().add("Problema na heranca !");
-
+            eLocal = "DESCONHECIDO";
+            mAnalisador.getErros().add("Struct " + eBase_Nome + " : Nao encontrado !");
         }
 
+        mAnalisador.mensagem("");
 
     }
 
-
-    public void herdar(ArrayList<AST> mEstruturas, ArrayList<AST> mEstruturasComHeranca, ArrayList<AST> mEstruturasReferenciadas) {
-
-
-        for (AST Struct_AST : mEstruturasComHeranca) {
-
-            String Struct_Base = Struct_AST.getBranch("WITH").getNome();
-
-            ArrayList<String> mDependencias = new ArrayList<String>();
-
-            boolean normalizavel = getNormalizavel(Struct_Base, mEstruturas, mDependencias, mEstruturasReferenciadas);
-
-            Realizar_Heranca(Struct_AST.getNome(), mDependencias, mEstruturas, mEstruturasReferenciadas);
-
-        }
-
-    }
+    public AST montarBase(AST eStruct, ArrayList<AST> mStructs, ArrayList<String> mRefers, ArrayList<AST> mPacotes) {
 
 
-    public void Realizar_Heranca(String Struct_Nome, ArrayList<String> mDependencias, ArrayList<AST> mEstruturas, ArrayList<AST> mEstruturasReferenciadas) {
-
-        AST Super = ProcurarStruct(Struct_Nome, mEstruturas, mEstruturasReferenciadas);
-
-        String eBase = Super.getBranch("WITH").getNome();
-
-        mAnalisador.mensagem("---------------------------------------------------");
-
-        mAnalisador.mensagem("              " + Struct_Nome + "           ");
-
-        mAnalisador.mensagem("---------------------------------------------------");
 
 
-        mAnalisador.mensagem("Realizando Heranca : " + Struct_Nome + " -> " + eBase);
-        for (String mDepende : mDependencias) {
+        AST eBase = null;
+        AST ePacoteBase = null;
 
-            AST Base = ProcurarStruct(mDepende, mEstruturas, mEstruturasReferenciadas);
-
-            if (Base.getBranch("WITH").mesmoValor("TRUE")) {
-                mAnalisador.mensagem("\t\t - Precisa de : " + mDepende + " -> " + Base.getBranch("WITH").getNome());
-            } else {
-                mAnalisador.mensagem("\t\t - Precisa de : " + mDepende);
-            }
-        }
+        boolean BaseEnc = false;
+        String onde = "";
 
 
-        DependencieAgora("", Struct_Nome, eBase, mEstruturas, mEstruturasReferenciadas);
+        if (eStruct.getBranch("WITH").mesmoValor("TRUE")) {
 
+            String eBase_Nome = eStruct.getBranch("WITH").getNome();
+            String eLocal = "";
 
-        for (String mDepende : mDependencias) {
-            Super.getBranch("BASES").criarBranch("BASE").setNome(mDepende);
-        }
+            for (AST eAST : mStructs) {
+                if (eAST.mesmoNome(eBase_Nome)) {
 
+                    eBase = eAST;
+                    BaseEnc = true;
+                    eLocal = "LOCAL";
+                    onde = "LOCAL";
 
-    }
-
-    public AST ProcurarStruct(String eNome, ArrayList<AST> mEstruturas, ArrayList<AST> mEstruturasReferenciadas) {
-        AST mRet = null;
-        boolean enc = false;
-
-        for (AST Procurando : mEstruturas) {
-            if (Procurando.mesmoNome(eNome)) {
-                mRet = Procurando;
-                enc = true;
-                break;
-            }
-        }
-
-        if (!enc) {
-            for (AST Procurando : mEstruturasReferenciadas) {
-                if (Procurando.mesmoNome(eNome)) {
-                    mRet = Procurando;
-                    enc = true;
                     break;
                 }
             }
-        }
-        return mRet;
-    }
 
+            if (!BaseEnc) {
 
-    public boolean estanoRefer(String eNome, ArrayList<AST> mEstruturasReferenciadas) {
-        boolean enc = false;
+                for (String eRefer : mRefers) {
 
-        for (AST Procurando : mEstruturasReferenciadas) {
-            if (Procurando.mesmoNome(eNome)) {
-                enc = true;
-                break;
+                    AST mPacote = null;
+                    boolean PacoteEnc = false;
+
+                    for (AST ePacote : mPacotes) {
+                        if (ePacote.mesmoNome(eRefer)) {
+                            mPacote = ePacote;
+                            PacoteEnc = true;
+                            break;
+                        }
+                    }
+
+                    if (PacoteEnc) {
+
+                        for (AST eAST : mPacote.getASTS()) {
+                            if (eAST.mesmoNome(eBase_Nome)) {
+                                eLocal = "REFER : " + eRefer;
+                                onde = "REFER";
+
+                                eBase = eAST.copiar();
+                                ePacoteBase=mPacote;
+
+                                BaseEnc = true;
+                                break;
+                            }
+                        }
+
+                        if (BaseEnc) {
+                            break;
+                        }
+
+                    } else {
+                        mAnalisador.getErros().add("Pacote " + eRefer + " : Nao encontrado !");
+                        break;
+                    }
+
+                }
+
             }
+
+
+
+
+            if (BaseEnc) {
+
+                if (onde.contentEquals("LOCAL")) {
+
+                    AST nBase = montarBase(eBase.copiar(), mStructs, mRefers, mPacotes);
+
+                    herdarAgora(eStruct, nBase);
+
+                } else if (onde.contentEquals("REFER")) {
+
+                    AST nBase = montarBase(eBase.copiar(), ePacoteBase.getASTS(), getRefers(ePacoteBase), mPacotes);
+
+                    herdarAgora(eStruct, nBase);
+
+
+                } else {
+                    mAnalisador.getErros().add("Struct : " + eBase_Nome + " : Nao encontrada !");
+                }
+
+            } else {
+                mAnalisador.getErros().add("Struct : " + eBase_Nome + " : Nao encontrada !");
+
+            }
+
+
+            mAnalisador.mensagem("\t\t\t--------------------- MONTAR BASE -----------------------------");
+
+            mAnalisador.mensagem("\t\t\t  - BASE : " + eStruct.getNome());
+
+
+            mAnalisador.mensagem("\t\t\t  - HERDAR :  " + eBase_Nome  + " -->> " + eLocal);
+
+            if (eStruct.getBranch("WITH").mesmoValor("TRUE")) {
+
+                mAnalisador.mensagem("\t\t\t  - CONCRETA : NAO -->> " + eStruct.getBranch("WITH").getNome());
+
+            } else {
+                mAnalisador.mensagem("\t\t\t  - CONCRETA : SIM ");
+            }
+
+        }else{
+
+            mAnalisador.mensagem("\t\t\t--------------------- MONTAR BASE -----------------------------");
+
+            mAnalisador.mensagem("\t\t\t  - BASE : " + eStruct.getNome());
+
+            mAnalisador.mensagem("\t\t\t  - CONCRETA : SIM ");
         }
-        return enc;
+
+
+        return eStruct;
     }
 
 
-    public AST MontarBase(String ePref, String eBaseNome, ArrayList<AST> mEstruturas, ArrayList<AST> mEstruturasReferenciadas) {
-        AST copia = ProcurarStruct(eBaseNome, mEstruturas, mEstruturasReferenciadas).copiar();
+
+    public boolean checarArgumentos(AST mCall, String eBaseNome, ArrayList<AST> mInits) {
+
+        boolean ret = false;
+
+        int quantidade = mCall.getBranch("ARGUMENTS").getASTS().size();
 
 
-        if (copia.getBranch("WITH").mesmoValor("TRUE")) {
+        for (AST mBaseInit : mInits) {
 
-            DependencieAgora(ePref + "\t", eBaseNome, copia.getBranch("WITH").getNome(), mEstruturas, mEstruturasReferenciadas);
+            if (mBaseInit.mesmoNome(eBaseNome)) {
+                int init_quantidade = mBaseInit.getBranch("ARGUMENTS").getASTS().size();
 
-        } else {
-
-
-            mAnalisador.mensagem(ePref + "--------------------------------------------------");
-
-            mAnalisador.mensagem(ePref + "  - Simples  : " + eBaseNome);
+                if (init_quantidade == quantidade) {
+                    ret = true;
+                    break;
+                }
+            }
 
 
         }
 
-        return copia;
+        return ret;
     }
 
-    public void DependencieAgora(String ePref, String eStructNome, String eBaseNome, ArrayList<AST> mEstruturas, ArrayList<AST> mEstruturasReferenciadas) {
 
 
-        AST Base = MontarBase(ePref, eBaseNome, mEstruturas, mEstruturasReferenciadas);
+    public void herdarAgora(AST Super, AST Base) {
 
 
-        mAnalisador.mensagem(ePref + "--------------------------------------------------");
+        String eStructNome = Super.getNome();
+        String eBaseNome = Base.getNome();
 
 
-        AST Super = ProcurarStruct(eStructNome, mEstruturas, mEstruturasReferenciadas);
+        mAnalisador.mensagem("\t\t\t--------------------- HERDAR -----------------------------");
+
 
         AST Base_Inits = Base.getBranch("INITS");
         AST Super_Inits = Super.getBranch("INITS");
 
-        mAnalisador.mensagem(ePref + "  - Super  : " + eStructNome + " (" + Super_Inits.getASTS().size() + ")" + "   Base : " + eBaseNome + " (" + Base_Inits.getASTS().size() + ")");
+        mAnalisador.mensagem("\t\t\t  - Super  : " + eStructNome + " (" + Super_Inits.getASTS().size() + ")" + "   Base : " + eBaseNome + " (" + Base_Inits.getASTS().size() + ")");
 
 
         ArrayList<AST> mSuper_Inits_Filtrados = new ArrayList<AST>();
@@ -439,21 +444,21 @@ public class Heranca {
 
 
                             } else {
-                                mAnalisador.mensagem("  - Struct " + eStructNome + " com Chamador  " + eBaseNome + " : Quantidade de argumentos invalido !");
+                                mAnalisador.mensagem("\t\t\t  - Struct " + eStructNome + " com Chamador  " + eBaseNome + " : Quantidade de argumentos invalido !");
                                 mAnalisador.getErros().add("  - Struct " + eStructNome + " com Chamador  " + eBaseNome + " : Quantidade de argumentos invalido !");
                                 return;
                             }
 
 
                         } else {
-                            mAnalisador.mensagem("  - Struct " + eStructNome + " deve ter um chamador com o mesmo nome da Struct Base : " + eBaseNome);
+                            mAnalisador.mensagem("\t\t\t  - Struct " + eStructNome + " deve ter um chamador com o mesmo nome da Struct Base : " + eBaseNome);
                             mAnalisador.getErros().add("  - Struct " + eStructNome + " deve ter um chamador com o mesmo nome da Struct Base : " + eBaseNome);
                             return;
                         }
 
 
                     } else {
-                        mAnalisador.mensagem("  - Struct " + eStructNome + " deve ter um chamador ! ");
+                        mAnalisador.mensagem("\t\t\t  - Struct " + eStructNome + " deve ter um chamador ! ");
                         mAnalisador.getErros().add("  - Struct " + eStructNome + " deve ter um chamador ! ");
                         return;
                     }
@@ -461,7 +466,7 @@ public class Heranca {
 
 
             } else {
-                mAnalisador.mensagem("  - Struct " + eStructNome + " deve possuir um inicializador  ");
+                mAnalisador.mensagem("\t\t\t  - Struct " + eStructNome + " deve possuir um inicializador  ");
                 mAnalisador.getErros().add("  - Struct " + eStructNome + " deve possuir um inicializador  ");
                 return;
             }
@@ -470,7 +475,7 @@ public class Heranca {
             for (AST mStruct_Init : Super_Inits.getASTS()) {
                 AST mCall = mStruct_Init.getBranch("CALL");
                 if (mCall.mesmoValor("TRUE")) {
-                    mAnalisador.mensagem("  - Struct " + eStructNome + " nao pode ter chamadores ! ");
+                    mAnalisador.mensagem("\t\t\t  - Struct " + eStructNome + " nao pode ter chamadores ! ");
 
                     mAnalisador.getErros().add("  - Struct " + eStructNome + " nao pode ter chamadores ! ");
                     return;
@@ -495,86 +500,4 @@ public class Heranca {
         }
 
     }
-
-
-    public boolean checarArgumentos(AST mCall, String eBaseNome, ArrayList<AST> mInits) {
-
-        boolean ret = false;
-
-        int quantidade = mCall.getBranch("ARGUMENTS").getASTS().size();
-
-
-        for (AST mBaseInit : mInits) {
-
-            if (mBaseInit.mesmoNome(eBaseNome)) {
-                int init_quantidade = mBaseInit.getBranch("ARGUMENTS").getASTS().size();
-
-                if (init_quantidade == quantidade) {
-                    ret = true;
-                    break;
-                }
-            }
-
-
-        }
-
-        return ret;
-    }
-
-
-    public boolean getNormalizavel(String eNome, ArrayList<AST> mEstruturas, ArrayList<String> mDependencias, ArrayList<AST> mAnteriores) {
-
-
-        boolean enc = false;
-        boolean mais = false;
-        String eProximo = "";
-
-        for (AST Struct_AST : mEstruturas) {
-            if (Struct_AST.mesmoNome(eNome)) {
-                enc = true;
-
-                AST AST_With = Struct_AST.getBranch("WITH");
-                if (AST_With.mesmoValor("TRUE")) {
-                    mais = true;
-                    eProximo = AST_With.getNome();
-                }
-
-                break;
-            }
-        }
-
-        if (!enc) {
-            for (AST Struct_AST : mAnteriores) {
-                if (Struct_AST.mesmoNome(eNome)) {
-                    enc = true;
-                }
-            }
-
-        }
-
-        if (enc) {
-
-            if (mDependencias.contains(eNome)) {
-                return false;
-            } else {
-                mDependencias.add(eNome);
-
-                if (mais) {
-
-                    return getNormalizavel(eProximo, mEstruturas, mDependencias, mAnteriores);
-                } else {
-
-                    return true;
-                }
-
-            }
-
-        } else {
-            mAnalisador.mensagem("Struct " + eNome + " : Nao encontrada !");
-            return false;
-        }
-
-    }
-
-
 }

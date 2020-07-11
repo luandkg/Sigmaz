@@ -48,13 +48,19 @@ act inicio ( ) {
 	ig.listar ( );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
 	ig.adicionar ( 32 );
-	ig.listar ( );
-	println ( "Quantidade : ", ig.getQuantidade ( ) );
+    ig.listar ( );
+    println ( "Quantidade : ", ig.getQuantidade ( ) );
 	ig.adicionar ( 40 );
 	ig.adicionar ( 12 );
 	ig.adicionar ( 60 );
 	ig.adicionar ( 87 );
 	ig.adicionar ( 90 );
+
+	ig.listar ( );
+    println ( "Quantidade : ", ig.getQuantidade ( ) );
+
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
+
 	def iterar : Iterador >> ( Lista >> ( num ) ) = init Iterador ( ig ) >> ( Lista >> ( num ) );
 	iterar.iniciar ( );
 	while ( iterar.continuar ( ) ) -> {

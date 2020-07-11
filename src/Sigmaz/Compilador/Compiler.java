@@ -286,6 +286,7 @@ public class Compiler {
         mASTS.add(AST_Raiz);
 
 
+
         while (Continuar()) {
 
             Token TokenC = this.getTokenCorrente();
@@ -316,6 +317,7 @@ public class Compiler {
 
                 AST_Package mAST = new AST_Package(this);
                 mAST.init(AST_Raiz);
+
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("refer")) {
 
                 AST_Refer mAST = new AST_Refer(this);

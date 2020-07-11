@@ -41,20 +41,23 @@ public class AST_Import {
 
                     mCompiler.getComentarios().addAll(CompilerC.getComentarios());
 
-
                     for (AST ASTCorrente : CompilerC.getAST("SIGMAZ").getASTS()) {
-                        if (ASTCorrente.mesmoTipo("PACKAGE")){
 
-                            AST AST_Corrente = getPackage(ASTPai,ASTCorrente.getNome());
+                        if (ASTCorrente.mesmoTipo("PACKAGE")){
+                            AST ASTPacote = getPackage(ASTPai,ASTCorrente.getNome());
 
                             for (AST ASTP : ASTCorrente.getASTS()) {
-                                AST_Corrente.getASTS().add(ASTP);
+                                ASTPacote.getASTS().add(ASTP);
                             }
                         }else{
+                         //   System.out.println("Importando " + ASTCorrente.getTipo());
                             ASTPai.getASTS().add(ASTCorrente);
                         }
 
+
                     }
+
+
 
                 }
 

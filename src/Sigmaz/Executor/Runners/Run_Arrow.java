@@ -26,17 +26,20 @@ public class Run_Arrow {
                 break;
             }
         }
-
-     //   System.out.println(" - STRUCT EXTERN : " + mEscopoExtern.getNome());
+        if (mEscopoExtern == null) {
+            mRunTime.getErros().add("STRUCT EXTERN " + ASTCorrente.getNome() + " : Nao encontrada !");
+            return null;
+        }
+        //   System.out.println(" - STRUCT EXTERN : " + mEscopoExtern.getNome());
 
         AST eInternal = ASTCorrente.getBranch("INTERNAL");
 
-     //   System.out.println(" - Chamar : " + eInternal.getNome() + " -> " + eInternal.getValor());
+        //   System.out.println(" - Chamar : " + eInternal.getNome() + " -> " + eInternal.getValor());
 
 
         if (eInternal.mesmoValor("STRUCT_OBJECT")) {
 
-          //  System.out.println("\t - ESTRUTURA OBJECT : " + eInternal.getNome());
+            //  System.out.println("\t - ESTRUTURA OBJECT : " + eInternal.getNome());
 
 
             eItem = mEscopoExtern.init_ObjectExtern(eInternal, mEscopo, "<<ANY>>");
@@ -45,7 +48,7 @@ public class Run_Arrow {
                 return null;
             }
 
-        //    System.out.println("\t - ESTRUTURA OBJECT : " + eInternal.getNome() + " = " + eItem.getValor());
+            //    System.out.println("\t - ESTRUTURA OBJECT : " + eInternal.getNome() + " = " + eItem.getValor());
 
 
             // if (eInternal.existeBranch("INTERNAL")) {
@@ -54,24 +57,24 @@ public class Run_Arrow {
 
         } else if (eInternal.mesmoValor("STRUCT_FUNCT")) {
 
-           /// System.out.println("\t - ESTRUTURA STRUCT_FUNCT : " + eInternal.getNome());
+            /// System.out.println("\t - ESTRUTURA STRUCT_FUNCT : " + eInternal.getNome());
 
 
             eItem = mEscopoExtern.init_Function_Extern(eInternal, mEscopo, eRetorno);
 
-          //  System.out.println("\t - RETORNO : " + eItem);
+            //  System.out.println("\t - RETORNO : " + eItem);
 
 
             if (mRunTime.getErros().size() > 0) {
                 return null;
             }
 
-               if (eInternal.existeBranch("INTERNAL")){
-               //  System.out.println("PONTEIRO :: " + eItem.getValor() + " Dentro de Function -> " + eInternal.getBranch("INTERNAL").getNome());
+            if (eInternal.existeBranch("INTERNAL")) {
+                //  System.out.println("PONTEIRO :: " + eItem.getValor() + " Dentro de Function -> " + eInternal.getBranch("INTERNAL").getNome());
 
-                  eItem = operadorPonto( eItem, eInternal.getBranch("INTERNAL"), mEscopo, eRetorno);
+                eItem = operadorPonto(eItem, eInternal.getBranch("INTERNAL"), mEscopo, eRetorno);
 
-               }
+            }
 
 
         } else {
@@ -83,7 +86,7 @@ public class Run_Arrow {
         return eItem;
     }
 
-    public Item operadorPonto( Item eItem, AST ASTCorrente, Escopo mEscopo, String eRetorno) {
+    public Item operadorPonto(Item eItem, AST ASTCorrente, Escopo mEscopo, String eRetorno) {
 
 
         String eQualificador = mRunTime.getQualificador(eItem.getTipo(), mEscopo.getRefers());

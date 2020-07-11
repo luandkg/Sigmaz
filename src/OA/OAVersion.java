@@ -33,9 +33,6 @@ public class OAVersion {
 
         v = string_num(v, 1);
 
-        String f = OA.Identifique("Factor").getValor();
-
-        int factor = get_string_num(f, 1);
 
         String Hoje = getData();
 
@@ -43,9 +40,7 @@ public class OAVersion {
         Pacote Branch = null;
 
 
-        String r = OA.Identifique("Releaser").getValor();
 
-        int ri = get_string_num(r, 50);
 
 
         int ci = 1;
@@ -97,6 +92,8 @@ public class OAVersion {
 
         int Trabalhos_Antes = Trabalhos;
 
+        int ri = 50;
+
         while (Trabalhos >= ri) {
             Trabalhos -= ri;
             Trabalhos_Versao += 1;
@@ -108,36 +105,29 @@ public class OAVersion {
 
         String Full = v + "." + min3(Trabalhos_Versao) + "." + ti;
 
+        int mi = ci;
+        int rr= 1;
 
-        if (ci > 100) {
+        while (mi>=50){
 
             Pacote Release = Releases.PacoteComAtributoUnico("Release", "Date", Hoje);
-            String releaser = Release.Identifique("Releaser").getValor();
-            int rea = get_string_num(releaser, 0);
+            String FullRelease = v + "." + min3(Trabalhos_Versao) + " R" + rr;
 
-            if (rea <= 0) {
-                factor += 1;
+            Release.Identifique("Releaser").setValor(FullRelease);
 
-                String FullRelease = v + "." + min3(Trabalhos_Versao) + " R" + factor;
+            OA.Identifique("Releaser").setValor(FullRelease);
 
-
-                Release.Identifique("Releaser").setValor(String.valueOf(factor));
-                Release.Identifique("Version").setValor(String.valueOf(FullRelease));
-
-            }
-
-
+            mi-=50;
+            rr+=1;
         }
+
+
 
 
         OA.Identifique("Version").setValor(v);
         OA.Identifique("Branch").setValor(Hoje);
         OA.Identifique("Works").setValor(String.valueOf(Trabalhos));
         OA.Identifique("Full").setValor(Full);
-        OA.Identifique("Mode").setValor(".");
-        OA.Identifique("Release").setValor(".");
-        OA.Identifique("Factor").setValor(String.valueOf(factor));
-        OA.Identifique("Releaser").setValor(String.valueOf(ri));
 
         arquivo.Salvar(mArquivo);
     }
