@@ -30,9 +30,9 @@ public class AppSigmaz {
         String mUML = "res/uml/uml.txt";
         String mIntellisense = "res/intellisenses/";
 
-        int ARQUIVO = 67;
+        int ARQUIVO = 8;
 
-        switch (Fases.TESTES) {
+        switch (Fases.EXECUTAR) {
 
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);

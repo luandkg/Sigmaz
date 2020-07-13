@@ -417,7 +417,6 @@ public class RunTime {
                 break;
 
 
-
             }
 
 
@@ -431,14 +430,26 @@ public class RunTime {
             mEscopoGlobal = Global;
 
             Run eRun = new Run(this);
-            eRun.runSigmaz(ASTSigmaz_Call,ASTSigmaz, Global);
+            eRun.runSigmaz(ASTSigmaz_Call, ASTSigmaz, Global);
 
         } else {
             mErros.add("Sigmaz Vazio !");
         }
 
+      //  int i = 0;
+
+       // for (AST ASTCGlobal : mASTS) {
+
+         //   System.out.println(ASTCGlobal.toJava(i));
+
+       // i+=1;
+
+       // }
+
 
     }
+
+
 
 
     public boolean existePacote(String eNome) {
