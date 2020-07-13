@@ -27,6 +27,7 @@ public class Run_Extern {
     private int CD;
 
     private ArrayList<String> mDesseExtern;
+    private  ArrayList<String> dRefers;
 
     public Run_Extern(RunTime eRunTime) {
         mRunTime = eRunTime;
@@ -36,6 +37,7 @@ public class Run_Extern {
         mPreparadorDeArgumentos = new Argumentador();
 
         mDesseExtern = new ArrayList<String>();
+        dRefers = new ArrayList<String>();
 
     }
 
@@ -82,6 +84,8 @@ public class Run_Extern {
         mEscopo.setEstrutura(true);
 
 
+
+
         for (AST ASTC : mRunTime.getSigmaz().getASTS()) {
 
 
@@ -102,20 +106,32 @@ public class Run_Extern {
 
         mStructCorpo = ASTPai.getBranch("BODY");
 
+
+        AST mRefers = ASTPai.getBranch("REFERS");
+       dRefers = new ArrayList<String>();
+
+        for (AST ASTC : mRefers.getASTS()) {
+            String eRefer = ASTC.getNome();
+            dRefers.add(eRefer);
+        }
+
+
+
+
         for (AST ASTC : mStructCorpo.getASTS()) {
 
             if (ASTC.mesmoTipo("FUNCTION")) {
 
                 if (getModo(ASTC).contentEquals("EXTERN")) {
 
-                    mEscopo.guardarStruct(ASTC);
+                    mEscopo.guardarStruct(ASTC,dRefers);
                     CF += 1;
                 }
             } else if (ASTC.mesmoTipo("ACTION")) {
 
                 if (getModo(ASTC).contentEquals("EXTERN")) {
 
-                    mEscopo.guardarStruct(ASTC);
+                    mEscopo.guardarStruct(ASTC,dRefers);
                     CA += 1;
                 }
             }
@@ -144,7 +160,7 @@ public class Run_Extern {
 
                     mDesseExtern.add(ASTC.getNome());
 
-                    mEscopo.guardarStruct(ASTC);
+                    mEscopo.guardarStruct(ASTC,dRefers);
                     CD += 1;
                 }
 
@@ -158,7 +174,7 @@ public class Run_Extern {
 
                     mDesseExtern.add(ASTC.getNome());
 
-                    mEscopo.guardarStruct(ASTC);
+                    mEscopo.guardarStruct(ASTC,dRefers);
                     CM += 1;
 
                 }
@@ -228,12 +244,15 @@ public class Run_Extern {
 
             if (mIndex_Function.mesmoNome(ASTCorrente.getNome())) {
 
+                if ( !mIndex_Function.getEstaResolvido()){
+                    mIndex_Function.resolverTipagem(BuscadorDeVariaveis.getRefers());
+                }
 
                 if (mRunTime.getErros().size() > 0) {
                     break;
                 }
                 enc = true;
-                if (mIndex_Function.mesmoArgumentos(mArgumentos)) {
+                if (mIndex_Function.mesmoArgumentos(mEscopo,mArgumentos)) {
 
                    //  System.out.println("\t - Executar :  " + mIndex_Function.getNome());
 
@@ -297,12 +316,15 @@ public class Run_Extern {
 
             if (mIndex_Function.mesmoNome(ASTCorrente.getNome())) {
 
+                if (! mIndex_Function.getEstaResolvido()){
+                    mIndex_Function.resolverTipagem(BuscadorDeVariaveis.getRefers());
+                }
 
                 if (mRunTime.getErros().size() > 0) {
                     break;
                 }
                 enc = true;
-                if (mIndex_Function.mesmoArgumentos(mArgumentos)) {
+                if (mIndex_Function.mesmoArgumentos(mEscopo,mArgumentos)) {
 
                    // System.out.println("\t - Executar Extern :  " + mIndex_Function.getNome());
 

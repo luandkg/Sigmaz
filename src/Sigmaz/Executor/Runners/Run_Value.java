@@ -5,6 +5,8 @@ import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
 
+import java.util.ArrayList;
+
 public class Run_Value {
 
     private RunTime mRunTime;
@@ -424,9 +426,27 @@ public class Run_Value {
         String eNome = "<Struct::" + eRetorno + ":" + HEAPID + ">";
 
 
+        Run_GetType mRun_GetType2 = new Run_GetType(mRunTime, mEscopo);
+
+        ArrayList<AST> mGens = new ArrayList<AST>();
+
+        for (AST rAST : ASTCorrente.getBranch("GENERIC").getASTS()) {
+
+           // AST cAST = rAST.copiar();
+
+            String mGen = mRun_GetType2.getTipagem(rAST);
+           // rAST.setNome(mGen);
+
+
+
+            System.out.println(" ::>> INIT " + mGen);
+
+        }
+
+
         Run_Struct mRun_Struct = new Run_Struct(mRunTime);
         mRun_Struct.setNome(eNome);
-        mRun_Struct.init(eRetorno, ASTCorrente, mEscopo);
+        mRun_Struct.init(eRetorno,mGens, ASTCorrente, mEscopo);
 
         // System.out.println("Vamos Struct 2 - " + mRunTime.getErros().size());
 
@@ -455,7 +475,7 @@ public class Run_Value {
 
         }
 
-      //  System.out.println(" START -->> " + ASTCorrente.getNome());
+        //  System.out.println(" START -->> " + ASTCorrente.getNome());
 
         Run_Type mRun_Type = new Run_Type(mRunTime);
         mRun_Type.init(eNome, ASTCorrente, mEscopo);
@@ -473,16 +493,15 @@ public class Run_Value {
     }
 
 
-
     public void Stage(AST ASTCorrente, String eRetorno) {
 
         AST mFilho = ASTCorrente.getBranch("STAGED");
 
         Run_Context mRun_Context = new Run_Context(mRunTime);
 
-        if (mRun_Context.existeStage(ASTCorrente.getNome() + "::" + mFilho.getNome(),mEscopo.getRefers())) {
+        if (mRun_Context.existeStage(ASTCorrente.getNome() + "::" + mFilho.getNome(), mEscopo.getRefers())) {
 
-            Item eItem = mRun_Context.obterStage(ASTCorrente.getNome() + "::" + mFilho.getNome(),mEscopo.getRefers());
+            Item eItem = mRun_Context.obterStage(ASTCorrente.getNome() + "::" + mFilho.getNome(), mEscopo.getRefers());
 
             if (mRunTime.getErros().size() > 0) {
                 return;
@@ -565,7 +584,6 @@ public class Run_Value {
         }
 
     }
-
 
 
 }

@@ -97,12 +97,60 @@ public class OO {
 
     }
 
+    public void limpar(){
+
+        mGuardados = new ArrayList<>();
+
+        mStructGuardados = new ArrayList<>();
+
+        mInits = new ArrayList<Index_Action>();
+        mBases = new ArrayList<AST>();
+
+        mActions = new ArrayList<Index_Action>();
+        mActionFunctions = new ArrayList<Index_Action>();
+        mFunctions = new ArrayList<Index_Function>();
+        mDirectors = new ArrayList<Index_Function>();
+        mOperations = new ArrayList<Index_Function>();
+
+        mCasts = new ArrayList<AST>();
+        mStages = new ArrayList<AST>();
+        mTypes = new ArrayList<AST>();
+        mStructs = new ArrayList<AST>();
+
+
+        mActionFunctions_All = new ArrayList<Index_Action>();
+        mActionFunctions_Restrict = new ArrayList<Index_Action>();
+        mActionFunctions_Extern = new ArrayList<Index_Action>();
+
+        mActions_All = new ArrayList<Index_Action>();
+        mActions_Restrict = new ArrayList<Index_Action>();
+        mActions_Extern = new ArrayList<Index_Action>();
+
+        mFunctions_All = new ArrayList<Index_Function>();
+        mFunctions_Restrict = new ArrayList<Index_Function>();
+        mFunctions_Extern = new ArrayList<Index_Function>();
+
+        mDirectors_All = new ArrayList<Index_Function>();
+        mDirectors_Restrict = new ArrayList<Index_Function>();
+        mDirectors_Extern = new ArrayList<Index_Function>();
+
+        mOperations_All = new ArrayList<Index_Function>();
+        mOperations_Restrict = new ArrayList<Index_Function>();
+        mOperations_Extern = new ArrayList<Index_Function>();
+
+    }
+
+
+
     public Escopo getEscopo() {
         return mEscopo;
     }
 
-
     public void guardar(AST eAST) {
+        guardar(eAST,new ArrayList<String>());
+    }
+
+    public void guardar(AST eAST,ArrayList<String> dRefers) {
 
 
         mGuardados.add(eAST);
@@ -111,7 +159,8 @@ public class OO {
 
         if (eAST.mesmoTipo("ACTION")) {
 
-            Index_Action mAct = new Index_Action(eAST);
+            Index_Action mAct = new Index_Action(mRunTime,mEscopo,eAST);
+
             mActions.add(mAct);
             mActionFunctions.add(mAct);
 
@@ -139,11 +188,11 @@ public class OO {
 
         } else if (eAST.mesmoTipo("FUNCTION")) {
 
-            Index_Function mFunc = new Index_Function(eAST);
+            Index_Function mFunc = new Index_Function(mRunTime,mEscopo,eAST);
 
             if (mFunc.isExtern()) {
 
-                Index_Action mAct = new Index_Action(eAST);
+                Index_Action mAct = new Index_Action(mRunTime,mEscopo,eAST);
 
                 mFunctions_Extern.add(mFunc);
                 mActionFunctions_Extern.add(mAct);
@@ -153,7 +202,7 @@ public class OO {
                 mFunctions.add(mFunc);
                 mFunctions_All.add(mFunc);
 
-                Index_Action mAct = new Index_Action(eAST);
+                Index_Action mAct = new Index_Action(mRunTime,mEscopo,eAST);
                 mActionFunctions.add(mAct);
                 mActionFunctions_All.add(mAct);
 
@@ -161,7 +210,7 @@ public class OO {
 
                 mFunctions_Restrict.add(mFunc);
 
-                Index_Action mAct = new Index_Action(eAST);
+                Index_Action mAct = new Index_Action(mRunTime,mEscopo,eAST);
                 mActionFunctions.add(mAct);
                 mActionFunctions_Restrict.add(mAct);
 
@@ -170,7 +219,7 @@ public class OO {
 
         } else if (eAST.mesmoTipo("OPERATOR")) {
 
-            Index_Function mFunc = new Index_Function(eAST);
+            Index_Function mFunc = new Index_Function(mRunTime,mEscopo,eAST);
 
             if (mFunc.isExtern()) {
 
@@ -189,7 +238,7 @@ public class OO {
             }
         } else if (eAST.mesmoTipo("DIRECTOR")) {
 
-            Index_Function mFunc = new Index_Function(eAST);
+            Index_Function mFunc = new Index_Function(mRunTime,mEscopo,eAST);
 
             if (mFunc.isExtern()) {
 
@@ -211,7 +260,7 @@ public class OO {
             mCasts.add(eAST);
         } else if (eAST.mesmoTipo("INIT")) {
 
-            Index_Action mAct = new Index_Action(eAST);
+            Index_Action mAct = new Index_Action(mRunTime,mEscopo,eAST);
             mInits.add(mAct);
 
 
@@ -224,7 +273,7 @@ public class OO {
             if (eAST.getBranch("EXTENDED").mesmoNome("STAGES")) {
                 mStages.add(eAST);
 
-                AlocarStages(eAST, mEscopo);
+               // AlocarStages(eAST, mEscopo);
             } else {
                 mStructs.add(eAST);
             }

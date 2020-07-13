@@ -1,6 +1,10 @@
 package Sigmaz.Executor.Indexador;
 
+import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.Item;
+import Sigmaz.Executor.RunTime;
+import Sigmaz.Executor.Runners.Run_Context;
+import Sigmaz.Executor.Runners.Run_GetType;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
@@ -16,7 +20,14 @@ public class Index_Action {
     private AST mPonteiro;
     private Argumentador mArgumentador;
 
-    public Index_Action(AST ePonteiro) {
+    private RunTime mRunTime;
+    private Escopo mEscopo;
+
+    public Index_Action(RunTime eRunTime, Escopo eEscopo, AST ePonteiro) {
+
+        mPonteiro = ePonteiro;
+        mRunTime = eRunTime;
+        mEscopo = eEscopo;
 
         mPonteiro = ePonteiro;
         mNome = mPonteiro.getNome();
@@ -27,13 +38,16 @@ public class Index_Action {
 
         mArgumentador = new Argumentador();
 
+        Tipificador mTipificador = new Tipificador();
+
         for (AST aAST : mPonteiro.getBranch("ARGUMENTS").getASTS()) {
 
-            argumentar(aAST);
+            mTipificador. argumentar(mRunTime,mEscopo,aAST,eEscopo.getRefers(),mNomeArgumentos,mTipoArgumentos,mModoArgumentos);
 
         }
 
     }
+
 
     public void setNome(String eNome) {
         mNome = eNome;
@@ -44,29 +58,67 @@ public class Index_Action {
         return mNome;
     }
 
-    public boolean isExtern(){  return mPonteiro.getBranch("VISIBILITY").mesmoNome("EXTERN"); }
-    public boolean isAll(){  return mPonteiro.getBranch("VISIBILITY").mesmoNome("ALL"); }
-    public boolean isRestrict(){  return mPonteiro.getBranch("VISIBILITY").mesmoNome("RESTRICT"); }
+    public boolean isExtern() {
+        return mPonteiro.getBranch("VISIBILITY").mesmoNome("EXTERN");
+    }
+
+    public boolean isAll() {
+        return mPonteiro.getBranch("VISIBILITY").mesmoNome("ALL");
+    }
+
+    public boolean isRestrict() {
+        return mPonteiro.getBranch("VISIBILITY").mesmoNome("RESTRICT");
+    }
 
     public ArrayList<String> getParamentosModos() {
         return mModoArgumentos;
     }
 
-    public void argumentar(AST eArg) {
-        mNomeArgumentos.add(eArg.getNome());
-        mModoArgumentos.add(eArg.getValor());
+    private boolean mResolvido = false;
 
-        mTipoArgumentos.add(getTipagem(eArg.getBranch("TYPE")));
+
+    public boolean getEstaResolvido() {
+        return mResolvido;
     }
 
-    public String getTipagem(AST eAST){
+    public void resolverTipagem(ArrayList<String> dRefers) {
+
+
+            mNomeArgumentos.clear();
+            mModoArgumentos.clear();
+            mTipoArgumentos.clear();
+
+        Tipificador mTipificador = new Tipificador();
+
+        for (AST aAST : mPonteiro.getBranch("ARGUMENTS").getASTS()) {
+
+            mTipificador. argumentar(mRunTime,mEscopo,aAST,dRefers,mNomeArgumentos,mTipoArgumentos,mModoArgumentos);
+
+        }
+
+
+
+        if (mPonteiro.getNome().contentEquals("adicionar")) {
+
+
+            System.out.println("Definindo :: " + this.getDefinicao());
+
+        } else if (mPonteiro.getNome().contentEquals("setValor")) {
+            System.out.println("Definindo :: " + this.getDefinicao());
+
+        }
+
+        mResolvido = true;
+    }
+
+    public String getTipagem(AST eAST) {
 
         String mTipagem = eAST.getNome();
 
-        if (eAST.mesmoValor("GENERIC")){
+        if (eAST.mesmoValor("GENERIC")) {
 
             for (AST eTipando : eAST.getASTS()) {
-                mTipagem += "<" +getTipagem(eTipando) + ">";
+                mTipagem += "<" + getTipagem(eTipando) + ">";
             }
 
         }
@@ -88,8 +140,8 @@ public class Index_Action {
         return mNomeArgumentos;
     }
 
-    public boolean mesmoArgumentos(ArrayList<Item> eArgumentos) {
-        return mArgumentador.mesmoArgumentos(mTipoArgumentos, eArgumentos);
+    public boolean mesmoArgumentos(Escopo gEscopo,ArrayList<Item> eArgumentos) {
+        return mArgumentador.mesmoArgumentos(mRunTime,gEscopo,mTipoArgumentos, eArgumentos);
     }
 
     public String getDefinicao() {

@@ -12,7 +12,7 @@ public class AST_Struct {
         mCompiler = eCompiler;
     }
 
-    public void init(AST ASTPai) {
+    public void init(String eNomePacote,AST ASTPai) {
 
         Token TokenC = mCompiler.getTokenAvante();
 
@@ -20,6 +20,14 @@ public class AST_Struct {
 
             AST AST_Corrente = new AST("STRUCT");
             AST_Corrente.setNome(TokenC.getConteudo());
+            AST_Corrente.setValor("");
+
+            if (eNomePacote.length()==0) {
+                AST_Corrente.setValor( TokenC.getConteudo());
+            } else{
+                AST_Corrente.setValor(eNomePacote + "<>" + TokenC.getConteudo());
+            }
+
             ASTPai.getASTS().add(AST_Corrente);
 
             AST AST_Generico = AST_Corrente.criarBranch("GENERIC");

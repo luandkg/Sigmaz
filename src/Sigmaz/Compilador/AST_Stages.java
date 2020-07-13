@@ -13,10 +13,11 @@ public class AST_Stages {
     }
 
 
-    public void init(AST ASTAvo) {
+    public void init(String eNomePacote,AST ASTAvo) {
 
 
         AST ASTPai = ASTAvo.criarBranch("STRUCT");
+
 
 
         AST AST_With =  ASTPai.criarBranch("WITH");
@@ -45,6 +46,12 @@ public class AST_Stages {
 
 
         ASTPai.setNome(TokenN.getConteudo());
+
+        if (eNomePacote.length()==0) {
+            ASTPai.setValor( TokenN.getConteudo());
+        } else{
+            ASTPai.setValor(eNomePacote + "<>" + TokenN.getConteudo());
+        }
 
 
         Token TokenP = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma SETA !");

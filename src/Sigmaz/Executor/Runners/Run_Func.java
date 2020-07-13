@@ -99,13 +99,13 @@ public class Run_Func {
 
        // for (AST mAST : mRunTime.getGlobalOperations()) {
 
-            Index_Function mIndex_Function = new Index_Function(mAST);
+            Index_Function mIndex_Function = new Index_Function(mRunTime,mEscopo,mAST);
 
             if (mIndex_Function.mesmoNome(eNome)) {
 
 
                 enc = true;
-                if (mIndex_Function.mesmoArgumentos(mArgumentos)) {
+                if (mIndex_Function.mesmoArgumentos(mEscopo,mArgumentos)) {
 
 
 
@@ -202,13 +202,13 @@ public class Run_Func {
 
         for (AST mAST : mRunTime.getGlobalDirectors()) {
 
-            Index_Function mIndex_Function = new Index_Function(mAST);
+            Index_Function mIndex_Function = new Index_Function(mRunTime,mEscopo,mAST);
 
             if (mIndex_Function.mesmoNome(eNome)) {
 
 
                 enc = true;
-                if (mIndex_Function.mesmoArgumentos(mArgumentos)) {
+                if (mIndex_Function.mesmoArgumentos(mEscopo,mArgumentos)) {
 
 
 

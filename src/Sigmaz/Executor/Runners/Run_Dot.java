@@ -26,7 +26,7 @@ public class Run_Dot {
 
         String eQualificador = mRunTime.getQualificador(mItem.getTipo(), mEscopo.getRefers());
 
-     //   System.out.println("OPERANTE : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
+     //  System.out.println("OPERANTE : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
 
         if (eQualificador.contentEquals("STRUCT")) {
 

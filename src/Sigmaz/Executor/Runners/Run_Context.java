@@ -16,6 +16,35 @@ public class Run_Context {
 
     }
 
+    public ArrayList<AST> getCastsContexto(ArrayList<String> mPacotes) {
+        ArrayList<AST> ret = new ArrayList<AST>();
+
+        for (AST eAST : mRunTime.getGlobalCasts()) {
+            ret.add(eAST);
+        }
+
+        for (String Referencia : mPacotes) {
+
+            if (mRunTime.existePacote(Referencia)) {
+
+                for (AST eAST : mRunTime.getPacote(Referencia).getASTS()) {
+                    if (eAST.mesmoTipo("CAST")) {
+                        ret.add(eAST);
+
+                    }
+                }
+
+            } else {
+                mRunTime.getErros().add("PACKAGE  " + Referencia + " : Nao encontrado x1 !");
+            }
+
+        }
+
+
+        return ret;
+    }
+
+
     public ArrayList<AST> getStructsContexto(ArrayList<String> mPacotes) {
         ArrayList<AST> ret = new ArrayList<AST>();
 
@@ -36,7 +65,7 @@ public class Run_Context {
                 }
 
             } else {
-                mRunTime.getErros().add("PACKAGE  " + Referencia + " : Nao encontrado !");
+                mRunTime.getErros().add("PACKAGE  " + Referencia + " : Nao encontrado x2 !");
             }
 
         }
@@ -134,6 +163,7 @@ public class Run_Context {
             ret.add(eAST);
         }
 
+
         for (String Referencia : mPacotes) {
 
             if (mRunTime.existePacote(Referencia)) {
@@ -204,7 +234,7 @@ public class Run_Context {
 
                         retStage.setNulo(false);
                         retStage.setValor(String.valueOf(i));
-                        retStage.setTipo(mAST.getNome());
+                        retStage.setTipo(mAST.getValor());
                         break;
                     }
                 }

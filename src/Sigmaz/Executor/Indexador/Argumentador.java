@@ -2,6 +2,7 @@ package Sigmaz.Executor.Indexador;
 
 import Sigmaz.Executor.*;
 import Sigmaz.Executor.Runners.Run_Body;
+import Sigmaz.Executor.Runners.Run_GetType;
 import Sigmaz.Executor.Runners.Run_Value;
 import Sigmaz.Utils.AST;
 
@@ -9,16 +10,18 @@ import java.util.ArrayList;
 
 public class Argumentador {
 
-    public boolean mesmoArgumentos(ArrayList<String> mTipoArgumentos, ArrayList<Item> eArgumentos) {
+    public boolean mesmoArgumentos(RunTime mRunTime,Escopo mEscopo,ArrayList<String> mTipoArgumentos, ArrayList<Item> eArgumentos) {
         boolean ret = false;
 
         //  System.out.println("\t - Inicio da Checagem :  " + mTipoArgumentos.size() + " e " + eArgumentos.size());
 
+        Run_GetType mRun_GetType = new Run_GetType(mRunTime,mEscopo);
 
         if (eArgumentos.size() == mTipoArgumentos.size()) {
             int i = 0;
             int v = 0;
             for (Item mArgumentos : eArgumentos) {
+
 
 
                 if (mArgumentos.getTipo().contentEquals(mTipoArgumentos.get(i))) {
@@ -30,11 +33,21 @@ public class Argumentador {
                         v += 1;
                     }else if (mArgumentos.getTipo().contentEquals("<<ANY>>")) {
                         v += 1;
+                    } else {
+
+                        if (mArgumentos.getTipo().contains("<>")){
+
+                            if (mArgumentos.getTipo().contains(mTipoArgumentos.get(i))){
+                                v += 1;
+                            }
+
+                        }
+
                     }
                 }
 
 
-           // System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
+            System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
 
                 i += 1;
 

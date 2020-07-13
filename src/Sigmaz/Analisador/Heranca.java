@@ -38,12 +38,11 @@ public class Heranca {
 
                 for (AST ePacote : mAST.getASTS()) {
                     if (ePacote.mesmoTipo("PACKAGE")) {
-                        iniciarProcessamento(mPacotes, ePacote);
+                        iniciarProcessamento(ePacote.getNome(),mPacotes, ePacote);
                     }
                 }
 
-                iniciarProcessamento(mPacotes, mAST);
-
+                iniciarProcessamento("",mPacotes, mAST);
 
 
             }
@@ -51,8 +50,6 @@ public class Heranca {
 
 
     }
-
-
 
 
     public ArrayList<String> getRefers(AST eAST) {
@@ -68,18 +65,18 @@ public class Heranca {
     }
 
 
-    public void iniciarProcessamento(ArrayList<AST> mPacotes, AST mRaiz) {
+    public void iniciarProcessamento(String ePacote,ArrayList<AST> mPacotes, AST mRaiz) {
 
 
         ArrayList<String> mRefers = getRefers(mRaiz);
 
         if (mRaiz.mesmoTipo("PACKAGE")) {
-            mAnalisador.mensagem("PACOTE : "  + mRaiz.getNome());
+            mAnalisador.mensagem("PACOTE : " + mRaiz.getNome());
         } else {
             mAnalisador.mensagem("SIGMAZ : " + mRaiz.getTipo());
         }
 
-        if (mRefers.size()>0){
+        if (mRefers.size() > 0) {
             mAnalisador.mensagem("");
             for (String eRefer : mRefers) {
                 mAnalisador.mensagem("\t - REFER : " + eRefer);
@@ -111,9 +108,9 @@ public class Heranca {
                         String eBase = eAST.getBranch("WITH").getNome();
 
 
-                        montarStruct(eAST, mStructs, mRefers, mPacotes);
+                        montarStruct(ePacote,eAST, mStructs, mRefers, mPacotes);
 
-                    }else{
+                    } else {
 
                         mAnalisador.mensagem("\t - STRUCT : " + eAST.getNome() + " :: CONCRETA");
 
@@ -130,7 +127,7 @@ public class Heranca {
 
     }
 
-    public void montarStruct(AST eStruct, ArrayList<AST> mStructs, ArrayList<String> mRefers, ArrayList<AST> mPacotes) {
+    public void montarStruct(String eNomePacote,AST eStruct, ArrayList<AST> mStructs, ArrayList<String> mRefers, ArrayList<AST> mPacotes) {
 
 
         String eBase_Nome = eStruct.getBranch("WITH").getNome();
@@ -204,7 +201,6 @@ public class Heranca {
             mAnalisador.mensagem("\t\t\t  - BASE : " + eBase_Nome + " -->> " + eLocal);
 
 
-
             if (eBase.getBranch("WITH").mesmoValor("TRUE")) {
 
                 // ArrayList<String> pRefers = getRefers(mPacote);
@@ -214,15 +210,15 @@ public class Heranca {
 
                 if (BaseEmPacote) {
 
-                    AST nBase = montarBase(eBase.copiar(), ePacoteBase.getASTS(), getRefers(ePacoteBase), mPacotes);
+                    AST nBase = montarBase(ePacoteBase.getNome(),eBase.copiar(), ePacoteBase.getASTS(), getRefers(ePacoteBase), mPacotes);
 
-                    herdarAgora(eStruct, nBase);
+                    herdarAgora(ePacoteBase.getNome(),eStruct, nBase);
 
                 } else {
 
-                    AST nBase = montarBase(eBase.copiar(), mStructs, mRefers, mPacotes);
+                    AST nBase = montarBase(eNomePacote,eBase.copiar(), mStructs, mRefers, mPacotes);
 
-                    herdarAgora(eStruct, nBase);
+                    herdarAgora(eNomePacote,eStruct, nBase);
 
                 }
 
@@ -231,7 +227,7 @@ public class Heranca {
 
                 mAnalisador.mensagem("\t\t\t  - CONCRETA : SIM ");
 
-                herdarAgora(eStruct, eBase);
+                herdarAgora(eNomePacote,eStruct, eBase);
 
             }
 
@@ -245,9 +241,7 @@ public class Heranca {
 
     }
 
-    public AST montarBase(AST eStruct, ArrayList<AST> mStructs, ArrayList<String> mRefers, ArrayList<AST> mPacotes) {
-
-
+    public AST montarBase(String ePacoteNome,AST eStruct, ArrayList<AST> mStructs, ArrayList<String> mRefers, ArrayList<AST> mPacotes) {
 
 
         AST eBase = null;
@@ -297,7 +291,7 @@ public class Heranca {
                                 onde = "REFER";
 
                                 eBase = eAST.copiar();
-                                ePacoteBase=mPacote;
+                                ePacoteBase = mPacote;
 
                                 BaseEnc = true;
                                 break;
@@ -318,21 +312,19 @@ public class Heranca {
             }
 
 
-
-
             if (BaseEnc) {
 
                 if (onde.contentEquals("LOCAL")) {
 
-                    AST nBase = montarBase(eBase.copiar(), mStructs, mRefers, mPacotes);
+                    AST nBase = montarBase(ePacoteNome,eBase.copiar(), mStructs, mRefers, mPacotes);
 
-                    herdarAgora(eStruct, nBase);
+                    herdarAgora(ePacoteNome,eStruct, nBase);
 
                 } else if (onde.contentEquals("REFER")) {
 
-                    AST nBase = montarBase(eBase.copiar(), ePacoteBase.getASTS(), getRefers(ePacoteBase), mPacotes);
+                    AST nBase = montarBase(ePacoteBase.getNome(),eBase.copiar(), ePacoteBase.getASTS(), getRefers(ePacoteBase), mPacotes);
 
-                    herdarAgora(eStruct, nBase);
+                    herdarAgora(ePacoteBase.getNome(),eStruct, nBase);
 
 
                 } else {
@@ -350,7 +342,7 @@ public class Heranca {
             mAnalisador.mensagem("\t\t\t  - BASE : " + eStruct.getNome());
 
 
-            mAnalisador.mensagem("\t\t\t  - HERDAR :  " + eBase_Nome  + " -->> " + eLocal);
+            mAnalisador.mensagem("\t\t\t  - HERDAR :  " + eBase_Nome + " -->> " + eLocal);
 
             if (eStruct.getBranch("WITH").mesmoValor("TRUE")) {
 
@@ -360,7 +352,7 @@ public class Heranca {
                 mAnalisador.mensagem("\t\t\t  - CONCRETA : SIM ");
             }
 
-        }else{
+        } else {
 
             mAnalisador.mensagem("\t\t\t--------------------- MONTAR BASE -----------------------------");
 
@@ -372,7 +364,6 @@ public class Heranca {
 
         return eStruct;
     }
-
 
 
     public boolean checarArgumentos(AST mCall, String eBaseNome, ArrayList<AST> mInits) {
@@ -400,8 +391,7 @@ public class Heranca {
     }
 
 
-
-    public void herdarAgora(AST Super, AST Base) {
+    public void herdarAgora(String ePacote,AST Super,  AST Base) {
 
 
         String eStructNome = Super.getNome();
@@ -489,6 +479,15 @@ public class Heranca {
         AST Base_Corpo = Base.getBranch("BODY");
         AST Super_Corpo = Super.getBranch("BODY");
 
+        for (AST migrando : Base.getBranch("BASES").getASTS()) {
+            Super.getBranch("BASES").getASTS().add(migrando);
+        }
+
+        if (ePacote.length() == 0) {
+            Super.getBranch("BASES").criarBranch("BASE").setNome (eBaseNome);
+        } else {
+            Super.getBranch("BASES").criarBranch("BASE").setNome(ePacote + "<>" + eBaseNome);
+        }
 
         for (AST migrando : Base_Inits.getASTS()) {
             Super_Inits.getASTS().add(migrando);

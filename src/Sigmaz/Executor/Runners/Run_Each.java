@@ -5,6 +5,8 @@ import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
 import Sigmaz.Utils.AST_Implementador;
 
+import java.util.ArrayList;
+
 public class Run_Each {
 
     private RunTime mRunTime;
@@ -84,7 +86,10 @@ public class Run_Each {
         AST mList = ASTCorrente.getBranch("LIST");
         AST mBody = ASTCorrente.getBranch("BODY");
 
-        String mTipagem = mRunTime.getTipagem(mType);
+        String mTipagem =  mRunTime.getTipagem(mType);
+        Run_GetType mRun_GetType = new Run_GetType(mRunTime,mEscopo);
+
+        mTipagem = mRun_GetType.getTipagemSimples(mTipagem);
 
 
         Run_Value mAST = new Run_Value(mRunTime, EachEscopo);
@@ -101,11 +106,11 @@ public class Run_Each {
             mRunTime.getErros().add("O Iterable do Each precisa ser do tipo : Lista");
             return;
         }
-
-        if (mTipagem.contentEquals(getSubTipo(mAST.getRetornoTipo()))) {
+String realTipagem = "Lista<>Lista<" +mTipagem + ">";
+        if (realTipagem.contentEquals((mAST.getRetornoTipo()))) {
 
         } else {
-            mRunTime.getErros().add("O Tipo da variavel do Iterable nao e compativel : " + mTipagem + " vs " + getSubTipo(mAST.getRetornoTipo()));
+            mRunTime.getErros().add("O Tipo da variavel do Iterable nao e compativel : " + realTipagem + " vs " + (mAST.getRetornoTipo()));
             return;
         }
 
@@ -119,7 +124,7 @@ public class Run_Each {
        // System.out.println("  ERROS = " + mRunTime.getErros().size());
 
         long HEAPID = mRunTime.getHEAPID();
-        String eNome = "<Struct::" + "Iterador<Lista<" + mTipagem + ">>" + ":" + HEAPID + ">";
+        String eNome = "<Struct::" + "Iterador<" + mTipagem + ">>" + ":" + HEAPID + ">";
 
         AST eAST = new AST("INIT");
         eAST.setNome("Iterador");
@@ -137,7 +142,7 @@ public class Run_Each {
 
         Run_Struct mRun_Struct = new Run_Struct(mRunTime);
         mRun_Struct.setNome(eNome);
-        mRun_Struct.init("Iterador<Lista<" + mTipagem + ">>", eAST, EachEscopo);
+        mRun_Struct.init("Iterador<Lista<" + mTipagem + ">>",new ArrayList<AST>(), eAST, EachEscopo);
 
 
         mRunTime.adicionarHeap(mRun_Struct);
@@ -146,7 +151,7 @@ public class Run_Each {
 
        // System.out.println("  ERROS = " + mRunTime.getErros().size());
 
-        EachEscopo.criarDefinicao(eNomeEach, "Iterador<Lista<" + mTipagem + ">>", eNome);
+        EachEscopo.criarDefinicao(eNomeEach, "Lista<>Iterador<Lista<" + mTipagem + ">>", eNome);
 
         //  System.out.println(eNomeEach + " -->> PRONTA ");
         AST_Implementador ASTC = new AST_Implementador();

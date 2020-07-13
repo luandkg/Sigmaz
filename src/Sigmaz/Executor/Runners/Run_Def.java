@@ -17,28 +17,18 @@ public class Run_Def {
 
     }
 
-    public String getTipagem(AST eAST){
-
-        String mTipagem = eAST.getNome();
-
-        if (eAST.mesmoValor("GENERIC")){
-
-            for (AST eTipando : eAST.getASTS()) {
-                mTipagem += "<" +getTipagem(eTipando) + ">";
-            }
-
-        }
 
 
-        return mTipagem;
-
-    }
 
     public void init(AST eAST) {
 
         AST mGENERIC = eAST.getBranch("GENERIC");
 
-        String mTipagem = getTipagem(eAST.getBranch("TYPE"));
+        Run_GetType mRun_GetType = new Run_GetType(mRunTime,mEscopo);
+
+        String mTipagem = mRun_GetType.getTipagem(eAST.getBranch("TYPE"));
+
+     //   System.out.println("Tipagem : " + mTipagem);
 
 
         AST mValor = eAST.getBranch("VALUE");
@@ -51,14 +41,8 @@ public class Run_Def {
         Run_Value mAST = new Run_Value(mRunTime, mEscopo);
         mAST.init(mValor, mTipagem);
 
-     //  System.out.println("Def Retorno : " + mAST.getRetornoTipo());
+     // System.out.println("Def Retorno : " + mAST.getRetornoTipo());
 
-
-if (mAST.getIsNulo()){
-  //  System.out.println("Retornou  -> Def " + eAST.getNome() + " : " + mAST.getRetornoTipo() + " = NULL -> " + mAST.getModulante());
-}else{
-   // System.out.println("Retornou  -> Def " + eAST.getNome() + " : " + mAST.getRetornoTipo() + " = " + mAST.getConteudo() + " -> " + mAST.getModulante());
-}
 
 
 
@@ -82,11 +66,6 @@ if (mAST.getIsNulo()){
                 if (mRunTime.getErros().size() > 0) {
                     return;
                 }
-
-                //  System.out.println("Retorno ESQ : " + eTipado);
-                // System.out.println("Retorno DIR x : " + mAST.getRetornoTipo());
-
-             //    System.out.println("CASTING : " + mAST.getRetornoTipo() + " -> " + mTipagem);
 
                 if (mEscopo.existeCast(mTipagem)) {
 

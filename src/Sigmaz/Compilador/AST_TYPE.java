@@ -24,6 +24,7 @@ public class AST_TYPE {
 
         AST_Tipo.setNome(TokenC3.getConteudo());
 
+
         AST_Tipo.setValor("CONCRETE");
 
 

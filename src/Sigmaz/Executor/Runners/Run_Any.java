@@ -44,6 +44,11 @@ public class Run_Any {
             // System.out.println("\t - " + mIndex_Function.getNome());
         }
 
+        ArrayList<String> mRefers = new ArrayList<String>();
+        mRefers.addAll(mEscopo.getRefers());
+        mRefers.addAll(BuscadorDeVariaveis.getRefers());
+
+
         for (Index_Function mIndex_Function : eFunctions) {
 
             //  System.out.println("\t - Funcao :  " +mIndex_Function.getNome());
@@ -54,13 +59,14 @@ public class Run_Any {
 
             if (mIndex_Function.mesmoNome(ASTCorrente.getNome())) {
 
+                mIndex_Function.resolverTipagem(mRefers);
 
                 if (mRunTime.getErros().size() > 0) {
                     break;
                 }
                 enc = true;
                 // System.out.println("\t - ARGUMENTAR :  " + mIndex_Function.getNome());
-                if (mIndex_Function.mesmoArgumentos(mArgumentos)) {
+                if (mIndex_Function.mesmoArgumentos(mEscopo,mArgumentos)) {
 
                     //  System.out.println("\t - Executar :  " + mIndex_Function.getNome());
 
@@ -126,6 +132,9 @@ public class Run_Any {
 
         // System.out.println("\t - Executando Dentro :  " +this.getNome());
 
+        ArrayList<String> mRefers = new ArrayList<String>();
+        mRefers.addAll(mEscopo.getRefers());
+        mRefers.addAll(BuscadorDeVariaveis.getRefers());
 
         for (Index_Action mIndex_Function : eActions) {
 
@@ -133,6 +142,9 @@ public class Run_Any {
             //  for (AST ArgumentoC : mArgumentos) {
             //    System.out.println("\t\t - Arg :  " +ArgumentoC.getNome());
             // }
+
+            mIndex_Function.resolverTipagem(mRefers);
+
 
 
             if (mIndex_Function.mesmoNome(ASTCorrente.getNome())) {
@@ -143,7 +155,7 @@ public class Run_Any {
                     break;
                 }
                 enc = true;
-                if (mIndex_Function.mesmoArgumentos(mArgumentos)) {
+                if (mIndex_Function.mesmoArgumentos(mEscopo,mArgumentos)) {
 
                     // System.out.println("\t - Executar :  " + mIndex_Function.getNome());
 
@@ -160,12 +172,12 @@ public class Run_Any {
                     //  mPreparadorDeArgumentos.executar_Action(mRunTime,  mEscopo, mIndex_Function, mArgumentos);
 
                     for (AST eAST : BuscadorDeVariaveis.getStructs()) {
-                        if (!mEscopo.possuiStruct(eAST.getNome())){
+                        if (!mEscopo.possuiStruct(eAST.getNome())) {
                             mEscopo.guardar(eAST);
                         }
                     }
 
-                 //   System.out.println(mEscopo.getNome() + " EA -> Structs : " + mEscopo.getStructs().size());
+                    //   System.out.println(mEscopo.getNome() + " EA -> Structs : " + mEscopo.getStructs().size());
 
 
                     mPreparadorDeArgumentos.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);

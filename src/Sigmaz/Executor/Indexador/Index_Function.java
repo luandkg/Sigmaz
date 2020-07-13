@@ -1,6 +1,9 @@
 package Sigmaz.Executor.Indexador;
 
+import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.Item;
+import Sigmaz.Executor.RunTime;
+import Sigmaz.Executor.Runners.Run_GetType;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
@@ -18,10 +21,18 @@ public class Index_Function {
 
     private Argumentador mArgumentador;
 
-    public Index_Function(AST ePonteiro) {
+
+    private RunTime mRunTime;
+    private Escopo mEscopo;
+
+
+
+
+    public Index_Function(RunTime eRunTime, Escopo eEscopo,AST ePonteiro) {
 
         mPonteiro = ePonteiro;
-
+        mRunTime = eRunTime;
+        mEscopo = eEscopo;
 
         mNome = mPonteiro.getNome();
         mTipo = mPonteiro.getValor();
@@ -41,6 +52,7 @@ public class Index_Function {
         }
 
     }
+
 
 
     public String getTipagem(AST eAST){
@@ -115,8 +127,8 @@ public class Index_Function {
         return mModoArgumentos;
     }
 
-    public boolean mesmoArgumentos(ArrayList<Item> eArgumentos) {
-        return mArgumentador.mesmoArgumentos(mTipoArgumentos, eArgumentos);
+    public boolean mesmoArgumentos(Escopo gEscopo,ArrayList<Item> eArgumentos) {
+        return mArgumentador.mesmoArgumentos(mRunTime,gEscopo,mTipoArgumentos, eArgumentos);
     }
 
 
@@ -125,8 +137,43 @@ public class Index_Function {
         mNomeArgumentos.add(eArg.getNome());
         mModoArgumentos.add(eArg.getValor());
 
-        mTipoArgumentos.add(getTipagem(eArg.getBranch("TYPE")));
+        Run_GetType mRun_GetType = new Run_GetType(mRunTime,mEscopo);
+
+        String mTipagem = mRun_GetType.getTipagem(eArg.getBranch("TYPE"));
+
+        mTipoArgumentos.add(mTipagem);
+
+       // mTipoArgumentos.add(getTipagem(eArg.getBranch("TYPE")));
     }
+
+
+
+
+    private boolean mResolvido = false;
+
+
+    public boolean getEstaResolvido() {
+        return mResolvido;
+    }
+
+    public void resolverTipagem(ArrayList<String> dRefers) {
+
+        mNomeArgumentos.clear();
+        mModoArgumentos.clear();
+        mTipoArgumentos.clear();
+
+        Tipificador mTipificador = new Tipificador();
+
+        for (AST aAST : mPonteiro.getBranch("ARGUMENTS").getASTS()) {
+
+            mTipificador. argumentar(mRunTime,mEscopo,aAST,dRefers,mNomeArgumentos,mTipoArgumentos,mModoArgumentos);
+
+        }
+
+
+        mResolvido=true;
+    }
+
 
     public String getDefinicao() {
         return this.getNome() + " ( " + this.getParametragem() + " ) -> " + this.getTipo();

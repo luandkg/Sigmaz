@@ -42,6 +42,9 @@ public class Run_Execute {
                     return;
                 }
                 String eQualificador =mRunTime.getQualificador(mItem.getTipo(),mEscopo.getRefers());
+
+                System.out.println("Q -->> " + mItem.getTipo() + " :: " +eQualificador );
+
                 if (eQualificador.contentEquals("STRUCT")) {
 
                 } else {

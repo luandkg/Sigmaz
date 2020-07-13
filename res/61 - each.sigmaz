@@ -1,7 +1,15 @@
 import "libs/lib.sigmaz";
+
 call iniciar -> inicio ( );
+
 refer Lista;
+
 act inicio ( ) {
+
+        def aa : num = -1;
+
+		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
 	def ListaNumerica : Lista >> ( num ) = init Lista ( ) >> ( num );
 	ListaNumerica.adicionar ( 10 );
 	ListaNumerica.adicionar ( 20 );

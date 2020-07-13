@@ -108,17 +108,17 @@ public class AST_Package {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("cast")) {
 
                 AST_Cast mAST = new AST_Cast(mCompiler);
-                mAST.init(AST_Raiz);
+                mAST.init(AST_Raiz.getNome(),AST_Raiz);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("struct")) {
 
                 AST_Struct mAST = new AST_Struct(mCompiler);
-                mAST.init(AST_Raiz);
+                mAST.init(AST_Raiz.getNome(),AST_Raiz);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("type")) {
 
                 AST_TypeStruct mAST = new AST_TypeStruct(mCompiler);
-                mAST.init(AST_Raiz);
+                mAST.init(AST_Raiz.getNome(),AST_Raiz);
 
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("external")) {
@@ -130,7 +130,7 @@ public class AST_Package {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("stages")) {
 
                 AST_Stages mAST = new AST_Stages(mCompiler);
-                mAST.init(AST_Raiz);
+                mAST.init(AST_Raiz.getNome(),AST_Raiz);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("model")) {
 

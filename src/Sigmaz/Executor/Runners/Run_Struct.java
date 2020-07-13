@@ -76,7 +76,7 @@ public class Run_Struct {
         return mTipoCompleto;
     }
 
-    public void init(String eNome, AST ASTCorrente, Escopo BuscadorDeArgumentos) {
+    public void init(String eNome, ArrayList<AST> mGens, AST ASTCorrente, Escopo BuscadorDeArgumentos) {
 
         mEscopo = new Escopo(mRunTime, null);
         mEscopo.setNome(eNome);
@@ -122,15 +122,15 @@ public class Run_Struct {
 
         //   System.out.println(BuscadorDeArgumentos.getNome() + " -> Structs : " + BuscadorDeArgumentos.getStructs().size() );
 
-       // System.out.println("ESCOPO :: " + mEscopo.getNome());
-      //  for (String eRefer : BuscadorDeArgumentos.getRefers()) {
+        // System.out.println("ESCOPO :: " + mEscopo.getNome());
+        //  for (String eRefer : BuscadorDeArgumentos.getRefers()) {
 
-         //   System.out.println( "\t   PAST REFER -->> " + eRefer);
+        //   System.out.println( "\t   PAST REFER -->> " + eRefer);
 
-     //   }
-     //   for (AST ASTC : mRunTime.getStructsContexto(BuscadorDeArgumentos.getRefers())) {
-      //      System.out.println( "\t   STRUCT -->> " + ASTC.getNome());
-     //  }
+        //   }
+        //   for (AST ASTC : mRunTime.getStructsContexto(BuscadorDeArgumentos.getRefers())) {
+        //      System.out.println( "\t   STRUCT -->> " + ASTC.getNome());
+        //  }
         Run_Context mRun_Context = new Run_Context(mRunTime);
 
         for (AST ASTC : mRun_Context.getStructsContexto(BuscadorDeArgumentos.getRefers())) {
@@ -174,7 +174,6 @@ public class Run_Struct {
         }
 
 
-
         String initTipagem = "";
         int initContagem = 0;
 
@@ -185,27 +184,46 @@ public class Run_Struct {
 
         //  System.out.println("Struct : " + mStructNome);
         //System.out.println("\t - Init : " + mStructNome + initTipagem);
-       // System.out.println("\t - Tipagem : " + mStructNome + structTipagem);
+        // System.out.println("\t - Tipagem : " + mStructNome + structTipagem);
+
+        String mTipando = "";
+
+        Run_GetType mRun_GetType = new Run_GetType(mRunTime, BuscadorDeArgumentos);
+
+        for (AST ASTC : init_Generic.getASTS()) {
+            mTipando += "<" + getTipagem(mRun_GetType,ASTC) + ">";
+
+        }
 
 
-        mTipoCompleto = mStructNome + initTipagem;
+        mTipoCompleto = mRun_GetType.getTipagemSimples(mStructNome) + mTipando;
 
 
         AST mRefers = mAST_Struct.getBranch("REFERS");
+        ArrayList<String> dRefers = new ArrayList<String>();
+
+        ArrayList<AST> eReferenciados = new ArrayList<AST>();
+
         for (AST ASTC : mRefers.getASTS()) {
             String eRefer = ASTC.getNome();
+            dRefers.add(eRefer);
 
-      //      System.out.println( mEscopo.getNome() +  "   REFER -->> " + eRefer);
+
+            eReferenciados.add(mRunTime.getPacote(eRefer));
 
             mEscopo.adicionarRefer(eRefer);
-            for (AST mDentro : mRunTime.getPacote(eRefer).getASTS()) {
 
-            //    System.out.println("\t\t\t -> Recebendo " + mDentro.getNome());
-                mEscopo.guardar(mDentro);
+        }
+        for (AST ASTC : eReferenciados) {
+
+            for (AST mDentro : ASTC.getASTS()) {
+
+                //    System.out.println("\t\t\t -> Recebendo " + mDentro.getNome());
+                mEscopo.guardar(mDentro, dRefers);
 
             }
-        }
 
+        }
 
         mStructCorpo = mAST_Struct.getBranch("BODY").copiar();
         mStructInits = mAST_Struct.getBranch("INITS").copiar();
@@ -214,7 +232,7 @@ public class Run_Struct {
         AST mBase = mAST_Struct.getBranch("BASES");
 
         for (AST ASTC : mBase.getASTS()) {
-            mEscopo.guardarStruct(ASTC);
+            mEscopo.guardarStruct(ASTC, dRefers);
         }
 
 
@@ -225,12 +243,19 @@ public class Run_Struct {
 
                 Alterador mAlterador = new Alterador();
 
+
+                System.out.println("ALTERADOR " + eNome);
+
                 int i = 0;
-                for (AST eSub : mStructGeneric.getASTS()) {
+                //      for (AST eSub : mStructGeneric.getASTS()) {
+                for (AST eSub : init_Generic.getASTS()) {
 
-                    mAlterador.adicionar(eSub.getNome(), init_Generic.getASTS().get(i).copiar());
+                    AST sInit = mStructGeneric.getASTS().get(i);
 
-                    //   System.out.println("Alterando " + eSub.getNome() + " -> " + getTipagem( init_Generic.getASTS().get(i)) );
+                    System.out.println("Alterando " + sInit.getNome() + " -> " + getTipagem(init_Generic.getASTS().get(i)));
+
+                    mAlterador.adicionar(sInit.getNome(), eSub);
+
                     //   init_Generic.getBranch("TYPE").ImprimirArvoreDeInstrucoes();
 
                     i += 1;
@@ -254,12 +279,11 @@ public class Run_Struct {
         } else if (init_Generic.mesmoNome("TRUE") && mStructGeneric.mesmoNome("FALSE")) {
 
 
-            if (init_Generic.getASTS().size()==0){
+            if (init_Generic.getASTS().size() == 0) {
 
-            }else{
+            } else {
                 mRunTime.getErros().add("Struct " + mStructNome + " : Nao e Generica !");
             }
-
 
 
         } else {
@@ -294,20 +318,20 @@ public class Run_Struct {
             if (ASTC.mesmoTipo("FUNCTION")) {
                 mEscopo.guardar(ASTC);
 
-                mEscopo.guardarStruct(ASTC);
+                mEscopo.guardarStruct(ASTC, dRefers);
 
             } else if (ASTC.mesmoTipo("ACTION")) {
                 mEscopo.guardar(ASTC);
 
-                mEscopo.guardarStruct(ASTC);
+                mEscopo.guardarStruct(ASTC, dRefers);
 
             } else if (ASTC.mesmoTipo("OPERATION")) {
                 mEscopo.guardar(ASTC);
-                mEscopo.guardarStruct(ASTC);
+                mEscopo.guardarStruct(ASTC, dRefers);
 
             } else if (ASTC.mesmoTipo("CAST")) {
                 mEscopo.guardar(ASTC);
-                mEscopo.guardarStruct(ASTC);
+                mEscopo.guardarStruct(ASTC, dRefers);
 
             }
 
@@ -323,7 +347,7 @@ public class Run_Struct {
                     Run_Def mAST = new Run_Def(mRunTime, mEscopo);
                     mAST.init(ASTC);
 
-                    mEscopo.guardarStruct(ASTC);
+                    mEscopo.guardarStruct(ASTC, dRefers);
                 }
 
 
@@ -334,7 +358,7 @@ public class Run_Struct {
                     Run_Moc mAST = new Run_Moc(mRunTime, mEscopo);
                     mAST.init(ASTC);
 
-                    mEscopo.guardarStruct(ASTC);
+                    mEscopo.guardarStruct(ASTC, dRefers);
 
                 }
 
@@ -377,6 +401,23 @@ public class Run_Struct {
 
     }
 
+    public String getTipagem(Run_GetType mRun_GetType,AST eAST) {
+
+        String mTipagem = mRun_GetType.getTipagemSimples(eAST.getNome());
+
+        if (eAST.mesmoValor("GENERIC")) {
+
+            for (AST eTipando : eAST.getASTS()) {
+                mTipagem += "<" + getTipagem(mRun_GetType,eTipando) + ">";
+            }
+
+        }
+
+
+        return mTipagem;
+
+    }
+
     public String getTipagem(AST eAST) {
 
         String mTipagem = eAST.getNome();
@@ -393,6 +434,7 @@ public class Run_Struct {
         return mTipagem;
 
     }
+
 
     public void Inicializador(String eOrigem, AST ASTCorrente, Escopo BuscadorDeArgumentos) {
 
@@ -411,7 +453,12 @@ public class Run_Struct {
                 break;
             }
             enc = true;
-            if (mIndex_Function.mesmoNome(eOrigem) && mIndex_Function.mesmoArgumentos(mArgumentos)) {
+
+            mIndex_Function.resolverTipagem(mEscopo.getRefers());
+
+            System.out.println("Init :: " + mIndex_Function.getDefinicao());
+
+            if (mIndex_Function.mesmoNome(eOrigem) && mIndex_Function.mesmoArgumentos(mEscopo, mArgumentos)) {
 
 
                 algum = true;
@@ -442,7 +489,9 @@ public class Run_Struct {
 
                             //  System.out.println("\t - Inicializador Interno :  " + mIndex_Function.getNome());
 
-                            mIndex_Function3 = new Index_Action(mIndex_Function2);
+                            mIndex_Function3 = new Index_Action(mRunTime, mEscopo, mIndex_Function2);
+                            mIndex_Function3.resolverTipagem(mEscopo.getRefers());
+
                             segundomax = mIndex_Function3.getParamentos().size();
 
                         }
@@ -535,13 +584,15 @@ public class Run_Struct {
 
         for (AST pIndex_Function : mInitSub) {
 
-            Index_Action mIndex_Function = new Index_Action(pIndex_Function);
+            Index_Action mIndex_Function = new Index_Action(mRunTime, mEscopo, pIndex_Function);
+
+            mIndex_Function.resolverTipagem(mEscopo.getRefers());
 
             if (mRunTime.getErros().size() > 0) {
                 break;
             }
             enc = true;
-            if (mIndex_Function.mesmoNome(eOrigem) && mIndex_Function.mesmoArgumentos(mArgumentos)) {
+            if (mIndex_Function.mesmoNome(eOrigem) && mIndex_Function.mesmoArgumentos(mEscopo, mArgumentos)) {
 
 
                 algum = true;
@@ -578,7 +629,7 @@ public class Run_Struct {
 
                             //  System.out.println("\t - Inicializador Interno :  " + mIndex_Function.getNome());
 
-                            mIndex_Function3 = new Index_Action(mIndex_Function2);
+                            mIndex_Function3 = new Index_Action(mRunTime, mEscopo, mIndex_Function2);
                             segundomax = mIndex_Function3.getParamentos().size();
 
                         }
@@ -690,14 +741,6 @@ public class Run_Struct {
 
     }
 
-
-    public void init_Action(AST ASTCorrente, Escopo BuscadorDeVariaveis) {
-
-        Run_Any mRun_Any = new Run_Any(mRunTime);
-
-        mRun_Any.init_Action(ASTCorrente, BuscadorDeVariaveis, mEscopo, mStructNome + "." + ASTCorrente.getNome(), mEscopo.getOO().getActions_All());
-
-    }
 
     public void init_ActionFunction(AST ASTCorrente, Escopo BuscadorDeArgumentos) {
 

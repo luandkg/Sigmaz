@@ -12,7 +12,7 @@ public class AST_Cast {
         mCompiler = eCompiler;
     }
 
-    public void init(AST ASTPai) {
+    public void init(String eNomePacote,AST ASTPai) {
 
         Token TokenC = mCompiler.getTokenAvante();
 
@@ -21,6 +21,13 @@ public class AST_Cast {
             AST AST_Corrente = new AST("CAST");
             AST_Corrente.setNome(TokenC.getConteudo());
             ASTPai.getASTS().add(AST_Corrente);
+
+
+            if (eNomePacote.length()==0) {
+                AST_Corrente.setValor( TokenC.getConteudo());
+            } else{
+                AST_Corrente.setValor(eNomePacote + "<>" + TokenC.getConteudo());
+            }
 
 
             Token TokenP = mCompiler.getTokenAvanteStatus(TokenTipo.CHAVE_ABRE, "Era esperado abrir chaves");

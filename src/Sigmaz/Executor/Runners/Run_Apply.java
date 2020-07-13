@@ -64,6 +64,10 @@ public class Run_Apply {
 
         String mTipagem = receber.getTipo();
 
+
+
+
+
         receber.setValor(aplicar.getConteudo());
         receber.setNulo(aplicar.getIsNulo());
 
@@ -126,7 +130,7 @@ public class Run_Apply {
 
                 } else {
 
-                    mRunTime.getErros().add("Retorno incompativel  : " + mTipagem + " vx " + aplicar.getRetornoTipo());
+                    mRunTime.getErros().add("Retorno incompativel  g: " + mTipagem + " vx " + aplicar.getRetornoTipo());
 
 
                 }
@@ -141,7 +145,7 @@ public class Run_Apply {
                 receber.setTipo(aplicar.getRetornoTipo());
 
             } else {
-                mRunTime.getErros().add("Retorno incompativel  : " + mTipagem + " x " + aplicar.getRetornoTipo());
+                mRunTime.getErros().add("Retorno incompativel  b: " + mTipagem + " x " + aplicar.getRetornoTipo());
             }
 
         } else {

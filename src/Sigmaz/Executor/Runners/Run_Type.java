@@ -18,11 +18,13 @@ public class Run_Type {
     private String mStructNome;
     private AST mStructCorpo;
     private String mTipoCompleto;
+    private  ArrayList<String> dRefers;
 
     public Run_Type(RunTime eRunTime) {
 
         mRunTime = eRunTime;
         mTipoCompleto = "";
+        dRefers=new  ArrayList<String>();
 
     }
 
@@ -127,7 +129,31 @@ public class Run_Type {
             initContagem += 1;
         }
 
-        mTipoCompleto = mStructNome + initTipagem;
+
+        if (mStructCorpo.existeBranch("REFERS")){
+            AST mRefers = mStructCorpo.getBranch("REFERS");
+            dRefers = new ArrayList<String>();
+
+            for (AST ASTC : mRefers.getASTS()) {
+                String eRefer = ASTC.getNome();
+                dRefers.add(eRefer);
+            }
+        }
+
+
+
+        Run_GetType mRun_GetType = new Run_GetType(mRunTime,BuscadorDeArgumentos);
+        String mTipando = "";
+
+        for (AST ASTC : init_Generic.getASTS()) {
+            mTipando += "<" + mRun_GetType.getTipagem(ASTC) + ">";
+
+        }
+
+        mTipoCompleto = mRun_GetType.getTipagemSimples(mStructNome)  + mTipando;
+
+
+
 
 
         if (init_Generic.mesmoNome("TRUE") && mStructGeneric.mesmoNome("TRUE")) {
@@ -195,7 +221,7 @@ public class Run_Type {
                 Run_Def mAST = new Run_Def(mRunTime, mEscopo);
                 mAST.init(ASTC);
 
-                mEscopo.guardarStruct(ASTC);
+                mEscopo.guardarStruct(ASTC,dRefers);
 
 
             } else if (ASTC.mesmoTipo("MOCKIZ")) {
@@ -205,7 +231,7 @@ public class Run_Type {
                 Run_Moc mAST = new Run_Moc(mRunTime, mEscopo);
                 mAST.init(ASTC);
 
-                mEscopo.guardarStruct(ASTC);
+                mEscopo.guardarStruct(ASTC,dRefers);
 
 
             }

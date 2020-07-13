@@ -1,7 +1,7 @@
 
 refer Pacote_C;
 
-
+stages Moradias -> {CASA,APARTAMENTO}
 
 struct G12 at Modelo {
 
@@ -12,10 +12,34 @@ struct G12 at Modelo {
 
 }
 
+func typeof ( a : any ) : string {
+	def ret : string = "";
+	invoke casting -> typeof ( a ) :: ret;
+	return ret;
+}
+
+type Par {
+
+    define P1 : num = 0;
+    define P2 : num = 0;
+
+}
+
 call iniciar -> {
 
     def complexo_1 : Complexo = init Complexo();
-	
+
+	def tipo : string = typeof( complexo_1);
+
+    def G12C : G12 = init G12();
+
+    def m1 : Moradias = Moradias::CASA;
+
+    def e1 : Estados = Estados::DF;
+
+    def t1 : Par = start Par{};
+    def tc1 : CPar = start CPar{};
+
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	
 }
@@ -89,6 +113,15 @@ package Pacote_C{
     	act contar ( num );
     	func retornar ( num ) : num;
     }
+
+    stages Estados -> {DF,MG}
+
+type CPar {
+
+    define P1 : num = 0;
+    define P2 : num = 0;
+
+}
 
 }
 

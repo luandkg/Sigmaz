@@ -97,6 +97,7 @@ public class Escopo {
 
     }
 
+
     public Escopo getEscopoAnterior() {
         return mEscopoAnterior;
     }
@@ -134,20 +135,12 @@ public class Escopo {
         return mRet;
     }
 
-    public void externalizarStruct(String eCom) {
+    public void limpar(){
 
-        for (Run_Extern eAST : mRunTime.getExtern()) {
-            if (eAST.getNomeCompleto().contentEquals(eCom)) {
-                // System.out.println("\t -  " + this.getNome() + " Receber Externo : " + eAST.getNomeCompleto() + " de " + eCom);
-
-                mExternos.add(eAST);
-
-            }
-
-
-        }
+        mAO.limpar();
 
     }
+
 
     public void externalizar(String eNomeCompleto) {
 
@@ -198,12 +191,16 @@ public class Escopo {
 
 
 
+    public void guardarStruct(AST eAST,ArrayList<String> dRefers) {
+
+        mOO.guardar(eAST,dRefers);
+
+    }
     public void guardarStruct(AST eAST) {
 
         mOO.guardar(eAST);
 
     }
-
 
     public void guardar(AST eAST) {
 
@@ -211,6 +208,11 @@ public class Escopo {
 
     }
 
+    public void guardar(AST eAST,ArrayList<String> dRefers) {
+
+        mAO.guardar(eAST,dRefers);
+
+    }
 
     public ArrayList<Index_Function> getFunctionsCompleto() {
         return mAO.getFunctionsCompleto();

@@ -279,6 +279,8 @@ public class RunTime {
 
     public void indexar(AST ASTCGlobal, Escopo Global) {
 
+        Global.limpar();
+
         for (AST ASTC : ASTCGlobal.getASTS()) {
 
 
@@ -429,6 +431,8 @@ public class RunTime {
 
             mEscopoGlobal = Global;
 
+            indexar(ASTSigmaz, Global);
+
             Run eRun = new Run(this);
             eRun.runSigmaz(ASTSigmaz_Call, ASTSigmaz, Global);
 
@@ -497,22 +501,55 @@ public class RunTime {
 
 
         String ret = "";
-
-
         String eNome = "";
-        int i = 0;
-        int o = aNome.length();
-        while (i < o) {
-            String l = String.valueOf(aNome.charAt(i));
-            if (l.contentEquals("<")) {
-                break;
-            } else {
-                eNome += l;
+
+        if (aNome.contains("<>")){
+
+            int i = 0;
+            int o = aNome.length();
+
+            while (i < o) {
+                String l = String.valueOf(aNome.charAt(i));
+                if (l.contentEquals(">")) {
+                    i+=1;
+                    break;
+                }
+                i += 1;
             }
-            i += 1;
+
+            while (i < o) {
+                String l = String.valueOf(aNome.charAt(i));
+                if (l.contentEquals("<")) {
+                    break;
+                } else  if (l.contentEquals(">")) {
+                    break;
+                } else {
+                    eNome += l;
+                }
+                i += 1;
+            }
+
+        }else{
+
+            int i = 0;
+            int o = aNome.length();
+            while (i < o) {
+                String l = String.valueOf(aNome.charAt(i));
+                if (l.contentEquals("<")) {
+                    break;
+                } else {
+                    eNome += l;
+                }
+                i += 1;
+            }
+
         }
 
+
+
         ret = "PRIMITIVE";
+
+        System.out.println("Tipando --> " + eNome);
 
         ArrayList<AST> mCasts = new ArrayList<AST>();
         ArrayList<AST> mTipos = new ArrayList<AST>();
