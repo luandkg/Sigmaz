@@ -56,9 +56,9 @@
     
    ### BIBLIOTECA SIGMAZ
     
-    ![lib1](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/lib1.png)
+![lib1](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/lib1.png)
     
-    ![lib2](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/lib2.png)
+![lib2](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/lib2.png)
 
     
        
