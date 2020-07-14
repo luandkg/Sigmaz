@@ -99,7 +99,7 @@ public class OAVersion {
             Trabalhos_Versao += 1;
         }
 
-        System.out.println("TRABALHADOR :: " + Trabalhos_Antes + " -->> " + Trabalhos + " com " + ri);
+        //System.out.println("TRABALHADOR :: " + Trabalhos_Antes + " -->> " + Trabalhos + " com " + ri);
 
         int ti = Trabalhos + ci;
 

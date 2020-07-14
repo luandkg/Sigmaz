@@ -1,11 +1,11 @@
 package Sigmaz.Executor;
 
 import Sigmaz.Executor.Runners.*;
+import Sigmaz.Intellisenses.Intellisense;
 import Sigmaz.Utils.*;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class RunTime {
 
@@ -440,20 +440,18 @@ public class RunTime {
             mErros.add("Sigmaz Vazio !");
         }
 
-      //  int i = 0;
+        //  int i = 0;
 
-       // for (AST ASTCGlobal : mASTS) {
+        // for (AST ASTCGlobal : mASTS) {
 
-         //   System.out.println(ASTCGlobal.toJava(i));
+        //   System.out.println(ASTCGlobal.toJava(i));
 
-       // i+=1;
+        // i+=1;
 
-       // }
+        // }
 
 
     }
-
-
 
 
     public boolean existePacote(String eNome) {
@@ -503,7 +501,7 @@ public class RunTime {
         String ret = "";
         String eNome = "";
 
-        if (aNome.contains("<>")){
+        if (aNome.contains("<>")) {
 
             int i = 0;
             int o = aNome.length();
@@ -511,7 +509,7 @@ public class RunTime {
             while (i < o) {
                 String l = String.valueOf(aNome.charAt(i));
                 if (l.contentEquals(">")) {
-                    i+=1;
+                    i += 1;
                     break;
                 }
                 i += 1;
@@ -521,7 +519,7 @@ public class RunTime {
                 String l = String.valueOf(aNome.charAt(i));
                 if (l.contentEquals("<")) {
                     break;
-                } else  if (l.contentEquals(">")) {
+                } else if (l.contentEquals(">")) {
                     break;
                 } else {
                     eNome += l;
@@ -529,7 +527,7 @@ public class RunTime {
                 i += 1;
             }
 
-        }else{
+        } else {
 
             int i = 0;
             int o = aNome.length();
@@ -544,7 +542,6 @@ public class RunTime {
             }
 
         }
-
 
 
         ret = "PRIMITIVE";
@@ -570,12 +567,25 @@ public class RunTime {
             if (existePacote(Referencia)) {
 
                 for (AST eAST : getPacote(Referencia).getASTS()) {
+
+                    System.out.println("Tipando " + eAST.getNome() + "....");
+
+
                     if (eAST.mesmoTipo("CAST")) {
                         mCasts.add(eAST);
-                    } else if (eAST.mesmoTipo("TYPE")) {
-                        mTipos.add(eAST);
+                  //  } else if (eAST.mesmoTipo("TYPE")) {
+
                     } else if (eAST.mesmoTipo("STRUCT")) {
-                        mStructs.add(eAST);
+
+                        String eExtended = eAST.getBranch("EXTENDED").getNome();
+
+
+                        if (eExtended.contentEquals("STRUCT")) {
+                            mStructs.add(eAST);
+                        } else if (eExtended.contentEquals("TYPE")) {
+                            mTipos.add(eAST);
+                        }
+
                     }
                 }
 
@@ -600,8 +610,18 @@ public class RunTime {
         }
 
         for (AST eAST : mStructs) {
+
+
             if (eAST.mesmoNome(eNome)) {
-                ret = "STRUCT";
+                String eExtended = eAST.getBranch("EXTENDED").getNome();
+
+                if (eExtended.contentEquals("STRUCT")) {
+                    ret = "STRUCT";
+                } else if (eExtended.contentEquals("TYPE")) {
+                    ret = "TYPE";
+                }
+
+
                 break;
             }
         }

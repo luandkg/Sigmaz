@@ -23,6 +23,7 @@ public class OATodo {
         private String mData;
         private String mStatus;
         public ArrayList<String> mTags;
+        public ArrayList<String> mTarefas;
 
         public Item(String eTexto, String eData, String eStatus) {
 
@@ -30,6 +31,7 @@ public class OATodo {
             mData = eData;
             mStatus = eStatus;
             mTags = new ArrayList<String>();
+            mTarefas = new ArrayList<String>();
 
         }
 
@@ -55,6 +57,37 @@ public class OATodo {
 
         public void setStatus(String eStatus) {
             mStatus = eStatus;
+        }
+
+        public ArrayList<String> getTags() {
+            return mTags;
+        }
+
+        public ArrayList<String> getTarefas() {
+            return mTarefas;
+        }
+
+        public ArrayList<String> getTarefas_Completas() {
+            ArrayList<String> mLista = new ArrayList<String>();
+            for (String eTarefa : mTarefas) {
+                if (eTarefa.startsWith("@")) {
+                    mLista.add(eTarefa);
+                }
+            }
+            return mLista;
+        }
+
+        public ArrayList<String> getTarefas_ParaFazer() {
+
+
+            ArrayList<String> mLista = new ArrayList<String>();
+            for (String eTarefa : mTarefas) {
+                if (!eTarefa.startsWith("@")) {
+                    mLista.add(eTarefa);
+                }
+            }
+            return mLista;
+
         }
 
     }
@@ -145,16 +178,17 @@ public class OATodo {
             i += 1;
         }
 
-        boolean temTags = false;
 
         while (i < o) {
             String l = eTexto.charAt(i) + "";
             if (l.contentEquals("{")) {
-                i += 1;
-                temTags = true;
+                break;
+            } else if (l.contentEquals("(")) {
                 break;
             } else if (l.contentEquals(" ")) {
             } else if (l.contentEquals("\t")) {
+            } else if (l.contentEquals("}")) {
+                break;
             } else {
                 itemStatus += l;
             }
@@ -162,6 +196,38 @@ public class OATodo {
         }
 
         Item ItemC = new Item(itemTexto, itemData, itemStatus);
+
+        obterOutras(eTexto, i, o, ItemC);
+
+
+        return ItemC;
+    }
+
+    public void obterOutras(String eTexto, int i, int o, Item ItemC) {
+
+
+        boolean temTags = false;
+        boolean temTarefas = false;
+
+        while (i < o) {
+            String l = eTexto.charAt(i) + "";
+            if (l.contentEquals("{")) {
+                temTags = true;
+                i += 1;
+                break;
+            } else if (l.contentEquals("(")) {
+                temTarefas = true;
+                i += 1;
+                break;
+            } else if (l.contentEquals(" ")) {
+            } else if (l.contentEquals("\t")) {
+            } else if (l.contentEquals("}")) {
+                break;
+            } else {
+
+            }
+            i += 1;
+        }
 
         if (temTags) {
 
@@ -174,6 +240,8 @@ public class OATodo {
                         ItemC.mTags.add(mTag);
                     }
                     mTag = "";
+                    i += 1;
+                    break;
                 } else if (l.contentEquals(" ")) {
                     if (mTag.length() > 0) {
                         ItemC.mTags.add(mTag);
@@ -192,8 +260,46 @@ public class OATodo {
 
         }
 
+        if (temTarefas) {
 
-        return ItemC;
+            String mTarefa = "";
+
+            while (i < o) {
+                String l = eTexto.charAt(i) + "";
+                if (l.contentEquals(")")) {
+                    if (mTarefa.length() > 0) {
+                        ItemC.mTarefas.add(mTarefa);
+                    }
+                    mTarefa = "";
+                    i += 1;
+                    break;
+                } else if (l.contentEquals(" ")) {
+                    if (mTarefa.length() > 0) {
+                        ItemC.mTarefas.add(mTarefa);
+                    }
+                    mTarefa = "";
+                } else if (l.contentEquals("\t")) {
+                    if (mTarefa.length() > 0) {
+                        ItemC.mTarefas.add(mTarefa);
+                    }
+                    mTarefa = "";
+                } else {
+                    mTarefa += l;
+                }
+                i += 1;
+            }
+
+        }
+
+        temTags = false;
+        temTarefas = false;
+
+        if (i < o) {
+
+            obterOutras(eTexto, i, o, ItemC);
+
+        }
+
     }
 
 
@@ -204,7 +310,7 @@ public class OATodo {
 
         String a = "########################### OA TODO ";
 
-        System.out.println(a + paraFechar(a.length(),80,"#"));
+        System.out.println(a + paraFechar(a.length(), 80, "#"));
 
         System.out.println("");
         System.out.println("\t - Iniciar : " + getDataHora());
@@ -256,11 +362,18 @@ public class OATodo {
                     mTags += mTag + " ";
                 }
 
+                String mTarefas = "";
+
+                for (String mTag : ItemC.mTarefas) {
+                    mTarefas += mTag + " ";
+                }
+
                 for (Objeto mObjeto : OATodos.getObjetos()) {
                     if (mObjeto.Identifique("Texto").getValor().contentEquals(ItemC.getTexto())) {
                         existe = true;
 
                         mObjeto.Identifique("Tags").setValor(mTags);
+                        mObjeto.Identifique("Tarefas").setValor(mTarefas);
 
                         if (mObjeto.Identifique("Status").getValor().contentEquals(ItemC.getStatus())) {
 
@@ -309,7 +422,14 @@ public class OATodo {
                     mTags += mTag + " ";
                 }
 
+                String mTarefas = "";
+
+                for (String mTag : ItemC.mTarefas) {
+                    mTarefas += mTag + " ";
+                }
+
                 eObjeto.Identifique("Tags").setValor(mTags);
+                eObjeto.Identifique("Tarefas").setValor(mTarefas);
 
 
                 // Objeto mAction = OABranches.CriarObjeto("ACAO");
@@ -325,24 +445,24 @@ public class OATodo {
         mTodo.Salvar(mArquivo);
 
 
-        System.out.println("\t - Itens : " +OATodos.getObjetos().size());
+        System.out.println("\t - Itens : " + OATodos.getObjetos().size());
         System.out.println("\t - Finalizar : " + getDataHora());
         System.out.println("");
 
         String b = "########################### ####### ";
 
-        System.out.println(b + paraFechar(b.length(),80,"#"));
+        System.out.println(b + paraFechar(b.length(), 80, "#"));
 
     }
 
 
-    public String paraFechar(int ja,int ate,String c){
+    public String paraFechar(int ja, int ate, String c) {
         String ret = "";
 
-        if (ja<ate){
-            int d = ate-ja;
-            for(int i=0;i<d;i++){
-                ret+=c;
+        if (ja < ate) {
+            int d = ate - ja;
+            for (int i = 0; i < d; i++) {
+                ret += c;
             }
         }
 
@@ -425,13 +545,13 @@ public class OATodo {
 
     }
 
-    public void ListarStatus(String mStatus,String mStatusMostrar) {
+    public void ListarStatus(String mStatus, String mStatusMostrar) {
 
         System.out.println("");
 
-        String a = "########################### STATUS : " + mStatusMostrar + " " ;
+        String a = "########################### STATUS : " + mStatusMostrar + " ";
 
-        System.out.println(a + paraFechar(a.length(),80,"#"));
+        System.out.println(a + paraFechar(a.length(), 80, "#"));
 
         System.out.println("");
 
@@ -469,16 +589,16 @@ public class OATodo {
 
     }
 
-    public void ListarStatus_Recente(String mStatus,String mStatusMostrar) {
+    public void ListarStatus_Recente(String mStatus, String mStatusMostrar) {
 
         System.out.println("");
 
-        String a = "########################### STATUS : " + mStatusMostrar + " " ;
+        String a = "########################### STATUS : " + mStatusMostrar + " ";
 
-        System.out.println(a + paraFechar(a.length(),80,"#"));
+        System.out.println(a + paraFechar(a.length(), 80, "#"));
 
 
-        System.out.println(a + paraFechar(a.length(),80,"#"));
+        System.out.println(a + paraFechar(a.length(), 80, "#"));
 
         System.out.println("");
 
@@ -516,13 +636,13 @@ public class OATodo {
 
     }
 
-    public void ListarStatus_Modificado(String mStatus,String mStatusMostrar) {
+    public void ListarStatus_Modificado(String mStatus, String mStatusMostrar) {
 
         System.out.println("");
 
-        String a = "########################### STATUS : " + mStatusMostrar + " " ;
+        String a = "########################### STATUS : " + mStatusMostrar + " ";
 
-        System.out.println(a + paraFechar(a.length(),80,"#"));
+        System.out.println(a + paraFechar(a.length(), 80, "#"));
 
         System.out.println("");
 
@@ -562,7 +682,7 @@ public class OATodo {
     }
 
 
-    public ArrayList<String> obterTags(String eTexto){
+    public ArrayList<String> obterTags(String eTexto) {
 
         ArrayList<String> Tags = new ArrayList<String>();
         int i = 0;
@@ -601,9 +721,9 @@ public class OATodo {
 
         System.out.println("");
 
-        String a = "########################### TAG : " + mTag + " " ;
+        String a = "########################### TAG : " + mTag + " ";
 
-        System.out.println(a + paraFechar(a.length(),80,"#"));
+        System.out.println(a + paraFechar(a.length(), 80, "#"));
 
         System.out.println("");
 
@@ -627,12 +747,63 @@ public class OATodo {
                 String eStatus = mObjeto.Identifique("Status").getValor();
 
                 ArrayList<String> mTags = obterTags(mObjeto.Identifique("Tags").getValor());
-                if (mTags.contains(mTag)){
+                if (mTags.contains(mTag)) {
 
                     String eData = mObjeto.Identifique("Data").getValor();
 
                     System.out.println(" \t -> " + eData + " -->> " + eTexto + "  { " + mObjeto.Identifique("Tags").getValor() + "}");
 
+                }
+
+            }
+
+        }
+
+        System.out.println("");
+
+    }
+
+    public void ListarComTarefas() {
+
+        System.out.println("");
+
+        String a = "########################### AOTodo : " + "TAREFAS" + " ";
+
+        System.out.println(a + paraFechar(a.length(), 80, "#"));
+
+        System.out.println("");
+
+
+        File arq = new File(mArquivo);
+        LuanDKG mTodo = new LuanDKG();
+
+        if (arq.exists()) {
+            mTodo.Abrir(mArquivo);
+        }
+
+        Pacote OATodo = mTodo.UnicoPacote("OATodo");
+        Pacote OATodos = OATodo.UnicoPacote("Todos");
+
+        for (Objeto mObjeto : OATodos.getObjetos()) {
+
+
+            String eTexto = mObjeto.Identifique("Texto").getValor();
+
+            if (eTexto.length() > 0) {
+                String eStatus = mObjeto.Identifique("Status").getValor();
+
+                ArrayList<String> mTags = obterTags(mObjeto.Identifique("Tarefas").getValor());
+                if (mTags.size() > 0) {
+
+                    String eData = mObjeto.Identifique("Data").getValor();
+
+                    System.out.println(" \t -> " + eData + " -->> " + eTexto + "  :: [ " + getTarefas_Completas(mTags).size() + "/" + mTags.size() + " ]");
+                int ti = 1;
+
+                    for (String t : mTags) {
+                        System.out.println(" \t\t :: " + ti + " = " + t);
+                        ti+=1;
+                    }
                 }
 
             }
@@ -683,6 +854,29 @@ public class OATodo {
         }
 
         return vi;
+
+    }
+
+    public ArrayList<String> getTarefas_Completas(ArrayList<String> mTarefas) {
+        ArrayList<String> mLista = new ArrayList<String>();
+        for (String eTarefa : mTarefas) {
+            if (eTarefa.startsWith("@")) {
+                mLista.add(eTarefa);
+            }
+        }
+        return mLista;
+    }
+
+    public ArrayList<String> getTarefas_ParaFazer(ArrayList<String> mTarefas) {
+
+
+        ArrayList<String> mLista = new ArrayList<String>();
+        for (String eTarefa : mTarefas) {
+            if (!eTarefa.startsWith("@")) {
+                mLista.add(eTarefa);
+            }
+        }
+        return mLista;
 
     }
 

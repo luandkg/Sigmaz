@@ -15,7 +15,8 @@
             ID Data = "2020 07 08"
             ID Status = "c"
             ID Tags = "oa "
-            ID Alterado = "2020 07 08"
+            ID Alterado = "2020 07 13"
+            ID Tarefas = ""
          }
          OBJETO Item { 
             ID Indice = "7"
@@ -23,7 +24,8 @@
             ID Data = "2020 07 08"
             ID Status = "f"
             ID Tags = ""
-            ID Alterado = "2020 07 08"
+            ID Alterado = "2020 07 13"
+            ID Tarefas = ""
          }
          OBJETO Item { 
             ID Indice = "8"
@@ -31,6 +33,8 @@
             ID Data = "2020 07 08"
             ID Status = "i"
             ID Tags = ""
+            ID Alterado = "2020 07 13"
+            ID Tarefas = ""
          }
          OBJETO Item { 
             ID Indice = "9"
@@ -38,7 +42,8 @@
             ID Data = "2020 07 08"
             ID Status = "c"
             ID Tags = ""
-            ID Alterado = "2020 07 08"
+            ID Alterado = "2020 07 13"
+            ID Tarefas = ""
          }
          OBJETO Item { 
             ID Indice = "10"
@@ -46,23 +51,26 @@
             ID Data = "2020 07 08"
             ID Status = "c"
             ID Tags = ""
-            ID Alterado = "2020 07 08"
+            ID Alterado = "2020 07 13"
+            ID Tarefas = ""
          }
          OBJETO Item { 
             ID Indice = "11"
             ID Texto = " Run_Dot "
             ID Data = "2020 07 09"
-            ID Alterado = "2020 07 09"
+            ID Alterado = "2020 07 13"
             ID Status = "c"
             ID Tags = ""
+            ID Tarefas = ""
          }
          OBJETO Item { 
             ID Indice = "12"
             ID Texto = " Run_Arrow "
             ID Data = "2020 07 09"
-            ID Alterado = "2020 07 09"
+            ID Alterado = "2020 07 13"
             ID Status = "c"
             ID Tags = ""
+            ID Tarefas = ""
          }
          OBJETO Item { 
             ID Indice = "13"
@@ -71,6 +79,7 @@
             ID Alterado = "2020 07 13"
             ID Status = "i"
             ID Tags = ""
+            ID Tarefas = "@arvore posicao render "
          }
        } 
     } 

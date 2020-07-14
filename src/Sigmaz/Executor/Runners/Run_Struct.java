@@ -145,7 +145,12 @@ public class Run_Struct {
 
                     AST init_Extend = ASTC.getBranch("EXTENDED");
 
-                    if (init_Extend.mesmoNome("STAGES")) {
+                    if (init_Extend.mesmoNome("STRUCT")) {
+
+                    } else if (init_Extend.mesmoNome("TYPE")) {
+                        mRunTime.getErros().add("Type " + mStructNome + " : Nao pode ser instanciada como Struct !");
+                        return;
+                    } else if (init_Extend.mesmoNome("STAGES")) {
                         mRunTime.getErros().add("Struct " + mStructNome + " : Nao pode ser instanciada !");
                         return;
                     } else if (init_Extend.mesmoNome("EXTERNAL")) {

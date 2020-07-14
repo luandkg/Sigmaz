@@ -10,9 +10,6 @@ package Lista {
 		}
 
 		act adicionar ( novo : T ) {
-
-
-
 			if ( isNull ( mPrimeiro ) ) -> {
 				mPrimeiro = init Item ( ) >> ( T );
 				mPrimeiro.setValor ( novo );

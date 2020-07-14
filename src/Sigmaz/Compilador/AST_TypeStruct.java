@@ -18,6 +18,72 @@ public class AST_TypeStruct {
 
         if (TokenC.getTipo() == TokenTipo.ID) {
 
+
+            AST AST_Corrente = new AST("STRUCT");
+            AST_Corrente.setNome(TokenC.getConteudo());
+            AST_Corrente.setValor("");
+
+            if (eNomePacote.length()==0) {
+                AST_Corrente.setValor( TokenC.getConteudo());
+            } else{
+                AST_Corrente.setValor(eNomePacote + "<>" + TokenC.getConteudo());
+            }
+
+            ASTPai.getASTS().add(AST_Corrente);
+
+            AST AST_Generico = AST_Corrente.criarBranch("GENERIC");
+            AST_Generico.setNome("FALSE");
+
+            AST AST_With =  AST_Corrente.criarBranch("WITH");
+            AST_With.setValor("FALSE");
+
+            AST AST_Model =  AST_Corrente.criarBranch("MODEL");
+            AST_Model.setValor("FALSE");
+
+            AST AST_Stages =  AST_Corrente.criarBranch("STAGES");
+            AST_Stages.setValor("FALSE");
+
+            AST mExtended = AST_Corrente.criarBranch("EXTENDED");
+            mExtended.setNome("TYPE");
+
+            AST mBases = AST_Corrente.criarBranch("BASES");
+
+            AST mRefers = AST_Corrente.criarBranch("REFERS");
+
+
+            AST AST_Inits =  AST_Corrente.criarBranch("INITS");
+
+            Token TokenFuturo = mCompiler.getTokenFuturo();
+            if (TokenFuturo.getTipo() == TokenTipo.ID && TokenFuturo.mesmoConteudo("in")) {
+
+                mCompiler.Proximo();
+                AST_Generico.setNome("TRUE");
+
+                AST_Generic mg = new AST_Generic(mCompiler);
+                mg.init_receber(AST_Generico);
+
+
+            }
+
+            AST AST_Corpo = AST_Corrente.criarBranch("BODY");
+
+            corpo(AST_Corpo);
+
+
+        } else {
+            mCompiler.errarCompilacao("Era esperado o nome para uma TYPE !", TokenC);
+        }
+
+
+    }
+
+
+    public void initbackup(String eNomePacote,AST ASTPai) {
+
+        Token TokenC = mCompiler.getTokenAvante();
+
+        if (TokenC.getTipo() == TokenTipo.ID) {
+
             AST AST_Corrente = new AST("TYPE");
             AST_Corrente.setNome(TokenC.getConteudo());
             ASTPai.getASTS().add(AST_Corrente);
@@ -55,6 +121,7 @@ public class AST_TypeStruct {
 
 
     }
+
 
     public void corpo(AST AST_Corrente) {
 

@@ -31,5 +31,7 @@ Linguagem de Programação Estruturada - Alterações
         - REESTRUTURAÇÃO DO SISTEMA DE ANALISE
         - ANALISADOR_BLOCO
     
+    - 2020 07 14
+        - ALTERANDO AST_TYPE para AST_STRUCT EXTENDED TYPE
  
   

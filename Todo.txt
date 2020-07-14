@@ -14,5 +14,5 @@
 
     - Run_Arrow : c
 
-    - Visualizador de Arvore : i
+    - Visualizador de Arvore : i (  @arvore posicao render )
 

@@ -16,8 +16,8 @@ public class AppSigmaz {
       //  G.gerarPrint();
 
 
-
         AUTO();
+
 
 
         ArrayList<String> mArquivos = Carregadores.Carregar_Arquivos();
@@ -30,9 +30,9 @@ public class AppSigmaz {
         String mUML = "res/uml/uml.txt";
         String mIntellisense = "res/intellisenses/";
 
-        int ARQUIVO = 66;
+        int ARQUIVO = 49;
 
-        switch (Fases.TESTES) {
+        switch (Fases.INTELLISENSE_BIBLIOTECA) {
 
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
@@ -56,6 +56,7 @@ public class AppSigmaz {
         }
 
 
+
     }
 
     public static void AUTO() {
@@ -69,7 +70,7 @@ public class AppSigmaz {
         OATodo mTodo = new OATodo("res/oa/Todo.oa");
         mTodo.sincronizar("Todo.txt");
 
-        // mTodo.Listar();
+         mTodo.Listar();
 
         mTodo.ListarStatus("i", "Iniciar");
         mTodo.ListarStatus_Recente("f", "Fazendo");
@@ -77,6 +78,7 @@ public class AppSigmaz {
 
         mTodo.ListarTag("oa");
 
+        mTodo.ListarComTarefas();
 
     }
 }

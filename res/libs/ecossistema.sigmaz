@@ -1,0 +1,123 @@
+package Ecossistema {
+	external Populacao {
+		define Organismos : num = 0;
+	}
+
+	struct Animal at Organismo {
+		define nome : string = "";
+		define idade : num = 0;
+		mockiz Tipo : CelulaTipos = CelulaTipos :: EUCARIONTE;
+		act setNome ( aNome : string ) {
+			
+		}
+
+		act setIdade ( aIdade : num ) {
+			
+		}
+		func getNome ( ) : string {
+			
+		}
+		func getIdade ( ) : num {
+			
+		}
+
+		act viver ( ) {
+			
+		}
+
+		act morrer ( ) {
+			
+		}
+		func alimentar ( comida : string ) : num {
+			return 0;
+		}
+		
+	}
+	stages CelulaTipos -> {
+		EUCARIONTE , PROCARIONTE 
+	}
+
+	struct Bacteria {
+		mockiz Tipo : CelulaTipos = CelulaTipos :: PROCARIONTE;
+	}
+
+	struct Fungo {
+		init Fungo ( ) {
+			
+		}
+		mockiz Tipo : CelulaTipos = CelulaTipos :: EUCARIONTE;
+	}
+
+	struct Saccharomyces with Fungo {
+		init Saccharomyces ( ) -> Fungo ( ) {
+			
+		}
+		
+	}
+	model Organismo {
+		define nome : string;
+		define idade : num;
+		mockiz Tipo : CelulaTipos;
+		act viver ( );
+		act morrer ( );
+		func alimentar ( string ) : num;
+	}
+
+	struct Vegetal {
+		define Pigmento : string = "Clorofila";
+	}
+
+	struct Planta with Vegetal at Organismo {
+		define nome : string = "";
+		define idade : num = 0;
+		mockiz Tipo : CelulaTipos = CelulaTipos :: EUCARIONTE;
+		act setNome ( aNome : string ) {
+			
+		}
+
+		act setIdade ( aIdade : num ) {
+			
+		}
+		func getNome ( ) : string {
+			
+		}
+		func getIdade ( ) : num {
+			
+		}
+
+		act viver ( ) {
+			
+		}
+
+		act morrer ( ) {
+			
+		}
+		func alimentar ( comida : string ) : num {
+			return 0;
+		}
+		
+	}
+	cast Contador {
+		getter a : num -> {
+			return a;
+		}
+		setter b : num -> {
+			return b;
+		}
+		
+	}
+	type Celula {
+		define Tipo : CelulaTipos = null;
+		define Tamanho : num = 0;
+		define Estagio : string = "";
+		mockiz FORCA : num = 12;
+	}
+
+	type Dupla in (T) {
+
+	    define P1 : T = null;
+	    define P2 : T = null;
+
+	}
+	
+}

@@ -31,6 +31,8 @@ package UNIT {
 
 	refer Lista;
 
+    cast CUNIT {}
+
 	type ASSERT_ITEM {
 		define nome : string = "";
 		define resultado : bool = false;

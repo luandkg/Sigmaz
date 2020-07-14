@@ -17,6 +17,8 @@ public class Run_Type {
 
     private String mStructNome;
     private AST mStructCorpo;
+    private AST mStructGeneric;
+
     private String mTipoCompleto;
     private  ArrayList<String> dRefers;
 
@@ -59,6 +61,7 @@ public class Run_Type {
         mEscopo.setEstrutura(true);
 
         mStructCorpo = null;
+         mStructGeneric = null;
 
         mNome = ASTCorrente.getNome();
         mStructNome = ASTCorrente.getNome();
@@ -86,17 +89,35 @@ public class Run_Type {
 
         Run_Context mRun_Context = new Run_Context(mRunTime);
 
-        for (AST ASTC : mRun_Context.getTypesContexto(BuscadorDeArgumentos.getRefers())) {
-            if (ASTC.mesmoTipo("TYPE")) {
+        for (AST ASTC : mRun_Context.getStructsContexto(BuscadorDeArgumentos.getRefers())) {
+
+            if (ASTC.mesmoTipo("STRUCT")) {
                 if (ASTC.mesmoNome(mStructNome)) {
 
-
+                    mStructGeneric = ASTC.getBranch("GENERIC");
                     enc = true;
-                    mStructCorpo = ASTC;
-                    mTipoCompleto = mStructNome;
+
+                    mStructCorpo = ASTC.getBranch("BODY");
+                    mStructGeneric =  ASTC.getBranch("GENERIC");
+
+                    AST init_Extend = ASTC.getBranch("EXTENDED");
+
+                    if (init_Extend.mesmoNome("TYPE")) {
+
+                    } else if (init_Extend.mesmoNome("STRUCT")) {
+                        mRunTime.getErros().add("Struct " + mStructNome + " : Nao pode ser instanciada como Type !");
+                        return;
+                    } else if (init_Extend.mesmoNome("STAGES")) {
+                        mRunTime.getErros().add("Struct " + mStructNome + " : Nao pode ser instanciada !");
+                        return;
+                    } else if (init_Extend.mesmoNome("EXTERNAL")) {
+                        mRunTime.getErros().add("Struct " + mStructNome + " : Nao pode ser instanciada !");
+                        return;
+                    }
 
 
                 }
+
             }
         }
 
@@ -107,7 +128,6 @@ public class Run_Type {
         }
 
 
-        AST mStructGeneric = mStructCorpo.getBranch("GENERIC");
 
 
         AST init_Generic = ASTCorrente.getBranch("GENERIC");

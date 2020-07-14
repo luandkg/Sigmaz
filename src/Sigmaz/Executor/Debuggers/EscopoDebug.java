@@ -263,15 +263,20 @@ public class EscopoDebug {
 
     public String getTipagem(AST eAST) {
 
-        String mTipagem = eAST.getNome();
+        String mTipagem = "";
 
-        if (eAST.mesmoValor("GENERIC")) {
+        if (eAST != null){
+             mTipagem = eAST.getNome();
 
-            for (AST eTipando : eAST.getASTS()) {
-                mTipagem += "<" + getTipagem(eTipando) + ">";
+            if (eAST.mesmoValor("GENERIC")) {
+
+                for (AST eTipando : eAST.getASTS()) {
+                    mTipagem += "<" + getTipagem(eTipando) + ">";
+                }
+
             }
-
         }
+
 
 
         return mTipagem;

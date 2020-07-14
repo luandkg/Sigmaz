@@ -12,8 +12,8 @@ import "neg.sigmaz";
 import "int.sigmaz";
 import "lista/lista.sigmaz";
 import "lista/iterador.sigmaz";
-import "castings.sigmaz";
 import "pacote_tempo.sigmaz";
+import "ecossistema.sigmaz";
 stages Numeros -> {
 	POSITIVO , NEGATIVO , ZERO 
 }
@@ -22,6 +22,10 @@ stages Comparacao -> {
 }
 stages Logico -> {
 	TRUE , FALSE 
+}
+type Par in ( T1 , T2 ) {
+	define chave : T1 = null;
+	define valor : T2 = null;
 }
 
 act trash ( a : any ) {
