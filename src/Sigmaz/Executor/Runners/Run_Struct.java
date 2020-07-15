@@ -76,7 +76,7 @@ public class Run_Struct {
         return mTipoCompleto;
     }
 
-    public void init(String eNome, ArrayList<AST> mGens, AST ASTCorrente, Escopo BuscadorDeArgumentos) {
+    public void init(String eNome, AST ASTCorrente, Escopo BuscadorDeArgumentos) {
 
         mEscopo = new Escopo(mRunTime, null);
         mEscopo.setNome(eNome);
@@ -173,8 +173,10 @@ public class Run_Struct {
         String structTipagem = "";
         int StructContagem = 0;
 
+        Run_GetType mRun_GetType = new Run_GetType(mRunTime, BuscadorDeArgumentos);
+
         for (AST ASTC : mStructGeneric.getASTS()) {
-            structTipagem += "<" + getTipagem(ASTC) + ">";
+            structTipagem += "<" + mRun_GetType.getTipagem(ASTC) + ">";
             StructContagem += 1;
         }
 
@@ -183,7 +185,7 @@ public class Run_Struct {
         int initContagem = 0;
 
         for (AST ASTC : init_Generic.getASTS()) {
-            initTipagem += "<" + getTipagem(ASTC) + ">";
+            initTipagem += "<" + mRun_GetType.getTipagem(ASTC) + ">";
             initContagem += 1;
         }
 
@@ -193,16 +195,16 @@ public class Run_Struct {
 
         String mTipando = "";
 
-        Run_GetType mRun_GetType = new Run_GetType(mRunTime, BuscadorDeArgumentos);
 
         for (AST ASTC : init_Generic.getASTS()) {
-            mTipando += "<" + getTipagem(mRun_GetType,ASTC) + ">";
+            mTipando += "<" + mRun_GetType.getTipagem(ASTC) + ">";
 
         }
 
 
         mTipoCompleto = mRun_GetType.getTipagemSimples(mStructNome) + mTipando;
 
+       // System.out.println(" -->> STRUCT :: " + mTipoCompleto);
 
         AST mRefers = mAST_Struct.getBranch("REFERS");
         ArrayList<String> dRefers = new ArrayList<String>();
@@ -210,12 +212,13 @@ public class Run_Struct {
         ArrayList<AST> eReferenciados = new ArrayList<AST>();
 
         for (AST ASTC : mRefers.getASTS()) {
-            String eRefer = ASTC.getNome();
-            dRefers.add(eRefer);
 
+            String eRefer = ASTC.getNome();
 
             eReferenciados.add(mRunTime.getPacote(eRefer));
 
+
+            dRefers.add(eRefer);
             mEscopo.adicionarRefer(eRefer);
 
         }
@@ -249,7 +252,7 @@ public class Run_Struct {
                 Alterador mAlterador = new Alterador();
 
 
-                System.out.println("ALTERADOR " + eNome);
+              //  System.out.println("ALTERADOR " + eNome);
 
                 int i = 0;
                 //      for (AST eSub : mStructGeneric.getASTS()) {
@@ -257,7 +260,7 @@ public class Run_Struct {
 
                     AST sInit = mStructGeneric.getASTS().get(i);
 
-                    System.out.println("Alterando " + sInit.getNome() + " -> " + getTipagem(init_Generic.getASTS().get(i)));
+                 //   System.out.println("Alterando " + sInit.getNome() + " -> " + mRun_GetType.getTipagem(init_Generic.getASTS().get(i)));
 
                     mAlterador.adicionar(sInit.getNome(), eSub);
 
@@ -406,39 +409,9 @@ public class Run_Struct {
 
     }
 
-    public String getTipagem(Run_GetType mRun_GetType,AST eAST) {
-
-        String mTipagem = mRun_GetType.getTipagemSimples(eAST.getNome());
-
-        if (eAST.mesmoValor("GENERIC")) {
-
-            for (AST eTipando : eAST.getASTS()) {
-                mTipagem += "<" + getTipagem(mRun_GetType,eTipando) + ">";
-            }
-
-        }
 
 
-        return mTipagem;
 
-    }
-
-    public String getTipagem(AST eAST) {
-
-        String mTipagem = eAST.getNome();
-
-        if (eAST.mesmoValor("GENERIC")) {
-
-            for (AST eTipando : eAST.getASTS()) {
-                mTipagem += "<" + getTipagem(eTipando) + ">";
-            }
-
-        }
-
-
-        return mTipagem;
-
-    }
 
 
     public void Inicializador(String eOrigem, AST ASTCorrente, Escopo BuscadorDeArgumentos) {
@@ -461,7 +434,7 @@ public class Run_Struct {
 
             mIndex_Function.resolverTipagem(mEscopo.getRefers());
 
-            System.out.println("Init :: " + mIndex_Function.getDefinicao());
+           // System.out.println("Init :: " + mIndex_Function.getDefinicao());
 
             if (mIndex_Function.mesmoNome(eOrigem) && mIndex_Function.mesmoArgumentos(mEscopo, mArgumentos)) {
 

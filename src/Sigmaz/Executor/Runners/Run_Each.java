@@ -142,7 +142,7 @@ String realTipagem = "Lista<>Lista<" +mTipagem + ">";
 
         Run_Struct mRun_Struct = new Run_Struct(mRunTime);
         mRun_Struct.setNome(eNome);
-        mRun_Struct.init("Iterador<Lista<" + mTipagem + ">>",new ArrayList<AST>(), eAST, EachEscopo);
+        mRun_Struct.init("Iterador<Lista<" + mTipagem + ">>", eAST, EachEscopo);
 
 
         mRunTime.adicionarHeap(mRun_Struct);

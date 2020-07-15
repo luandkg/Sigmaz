@@ -98,16 +98,21 @@ act inicio ( ) {
 	def b1 : Bloco = init Bloco ( );
 	b1.modelo = "AC3";
 	def b1_modelo : string = b1.modelo;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	def b1_peso : num = b1.peso;
+
+
 	b1.mudarPeso ( 50 );
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
 	def b1_peso2 : num = b1.peso;
 	def b1_peso3 : num = b1.getPeso ( );
 	def b1_bloco : Bloco = b1.getBloco ( 32 );
 	def b1_b_peso : num = b1_bloco.getPeso ( );
 	def b1_b_peso2 : num = b1.getBloco ( 17 ).getPeso ( );
 	def dono : Pessoa = b1.getDono ( "lucas", 40 );
-	
+
+		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
 	#def dono_nome : string = dono.nome;
 	def dono2_nome : string = b1.getDono ( "Feh", 33 ).nome;
 	b1_bloco.modelo = "AZZ - 6";

@@ -145,7 +145,7 @@ public class Run_Apply {
                 receber.setTipo(aplicar.getRetornoTipo());
 
             } else {
-                mRunTime.getErros().add("Retorno incompativel  b: " + mTipagem + " x " + aplicar.getRetornoTipo());
+                mRunTime.getErros().add("Retorno incompativel  cx: " + mTipagem + " x " + aplicar.getRetornoTipo());
             }
 
         } else {

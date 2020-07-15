@@ -98,15 +98,7 @@ public class Index_Action {
 
 
 
-        if (mPonteiro.getNome().contentEquals("adicionar")) {
 
-
-            System.out.println("Definindo :: " + this.getDefinicao());
-
-        } else if (mPonteiro.getNome().contentEquals("setValor")) {
-            System.out.println("Definindo :: " + this.getDefinicao());
-
-        }
 
         mResolvido = true;
     }

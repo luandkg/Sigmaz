@@ -19,7 +19,7 @@ public class AppSigmaz {
       //  G.gerarPrint();
 
 
-
+        AUTO();
 
 
         ArrayList<String> mArquivos = Carregadores.Carregar_Arquivos();
@@ -32,9 +32,9 @@ public class AppSigmaz {
         String mUML = "res/uml/uml.txt";
         String mIntellisense = "res/intellisenses/";
 
-        int ARQUIVO = 49;
+        int ARQUIVO = 65;
 
-        switch (Fases.INTELLISENSE_BIBLIOTECA) {
+        switch (Fases.TESTES) {
 
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
@@ -57,7 +57,7 @@ public class AppSigmaz {
             default -> System.out.println("\t - Fases : Desconhecida !");
         }
 
-        AUTO();
+
 
 
     }
@@ -69,8 +69,9 @@ public class AppSigmaz {
 
         OARoadmap oar = new OARoadmap("res/oa/Roadmap.oa");
         oar.receber("Roadmap.txt");
+     //   oar.exportar("roadmap.png");
 
-        oar.exportar("roadmap.png");
+        oar.exportarEscalado("roadmap.png");
 
 
         OATodo mTodo = new OATodo("res/oa/Todo.oa");
@@ -78,27 +79,6 @@ public class AppSigmaz {
 
         mTodo.marcarSem("i");
         mTodo.removerCom("r");
-
-        //mTodo.Listar();
-
-       // mTodo.ListarStatus("i", "Ideias");
-      //  mTodo.ListarStatus_Recente("f", "Fazendo");
-      //  mTodo.ListarStatus_Modificado("c", "Cancelado");
-      //  mTodo.ListarStatus_Modificado("t", "Terminado");
-
-       // mTodo.ListarTag("oa");
-
-      //  mTodo.ListarComTarefas();
-
-
-
-
-
-
-
-
-
-
 
         ArrayList<Anotacao> eInfos = new ArrayList<Anotacao>();
 

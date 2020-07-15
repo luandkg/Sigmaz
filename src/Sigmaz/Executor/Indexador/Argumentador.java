@@ -38,6 +38,7 @@ public class Argumentador {
                         if (mArgumentos.getTipo().contains("<>")){
 
                             if (mArgumentos.getTipo().contains(mTipoArgumentos.get(i))){
+                                mArgumentos.setTipo(mTipoArgumentos.get(i));
                                 v += 1;
                             }
 
@@ -47,7 +48,7 @@ public class Argumentador {
                 }
 
 
-            System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
+         //   System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
 
                 i += 1;
 

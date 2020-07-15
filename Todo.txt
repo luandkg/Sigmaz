@@ -15,7 +15,8 @@
 
     - Visualizador de Arvore : t (  @arvore @posicao @render )
 
-
     - Marcar Tags com Data : c
+
+    - Roadmap Renderizador : i
 
 

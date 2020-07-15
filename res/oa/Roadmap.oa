@@ -77,7 +77,8 @@
 2020 06 23  -->>  Operador Seta Para Extern
 2020 06 23  -->>  Carregamento De Extern Durante Run
 2020 06 23  -->>  Escopo This
-2020 06 23  -->>  Stage_def : Function Nameof, Function Valueof, Operation Match e Operation Unmatch
+2020 06 23  -->>  Stage_def : Function Nameof, Function Valueof
+2020 06 23  -->>  Operation Match e Operation Unmatch
 2020 06 23  -->>  Library : Time, Date, Datetime
         
 
@@ -163,7 +164,7 @@
 2020 07 08  -->>  Obter por Contexto - Usando Refer
 2020 07 08  -->>  OATODO
 
-2020 07 09  -->>  Correção no Identador "Ponto e virgula apos start type {}; + quebra de linha"
+2020 07 09  -->>  Correção no Identador "Ponto e virgula apos start type {};
 2020 07 09  -->>  Run_Dot para reorganizar Type e Struct
 2020 07 09  -->>  Run_Apply - Re Implamentação
 2020 07 09  -->>  Run_Internal - Implementação dos Internals STRUCT_FUNC STRUCT_OBJECT
@@ -192,3 +193,4 @@
 2020 07 14  -->>  Alterando AST_TYPE para AST_STRUCT EXTENDED TYPE
 2020 07 14  -->>  Renderizador TODO
 2020 07 14  -->>  Renderizador de Roadmap
+2020 07 15  -->>  Renderizador OATodo Completo

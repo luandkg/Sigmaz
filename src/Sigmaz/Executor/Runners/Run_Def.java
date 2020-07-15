@@ -92,7 +92,7 @@ public class Run_Def {
 
                 } else {
 
-                    mRunTime.getErros().add("Retorno incompativel  : " + mTipagem + " vx "+ mAST.getRetornoTipo());
+                    mRunTime.getErros().add("Retorno incompativel  st : " + mTipagem + " vx "+ mAST.getRetornoTipo());
 
 
                 }

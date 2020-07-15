@@ -128,6 +128,7 @@ public class Run_Type {
         }
 
 
+        Run_GetType mRun_GetType = new Run_GetType(mRunTime, BuscadorDeArgumentos);
 
 
         AST init_Generic = ASTCorrente.getBranch("GENERIC");
@@ -135,7 +136,7 @@ public class Run_Type {
         int StructContagem = 0;
 
         for (AST ASTC : mStructGeneric.getASTS()) {
-            structTipagem += "<" + getTipagem(ASTC) + ">";
+            structTipagem += "<" + mRun_GetType.getTipagem(ASTC) + ">";
             StructContagem += 1;
         }
 
@@ -145,7 +146,7 @@ public class Run_Type {
 
 
         for (AST ASTC : init_Generic.getASTS()) {
-            initTipagem += "<" + getTipagem(ASTC) + ">";
+            initTipagem += "<" + mRun_GetType.getTipagem(ASTC) + ">";
             initContagem += 1;
         }
 
@@ -162,7 +163,6 @@ public class Run_Type {
 
 
 
-        Run_GetType mRun_GetType = new Run_GetType(mRunTime,BuscadorDeArgumentos);
         String mTipando = "";
 
         for (AST ASTC : init_Generic.getASTS()) {
@@ -172,6 +172,7 @@ public class Run_Type {
 
         mTipoCompleto = mRun_GetType.getTipagemSimples(mStructNome)  + mTipando;
 
+       // System.out.println(" -->> TYPE :: " + mTipoCompleto);
 
 
 
@@ -304,21 +305,5 @@ public class Run_Type {
     }
 
 
-    public String getTipagem(AST eAST) {
-
-        String mTipagem = eAST.getNome();
-
-        if (eAST.mesmoValor("GENERIC")) {
-
-            for (AST eTipando : eAST.getASTS()) {
-                mTipagem += "<" + getTipagem(eTipando) + ">";
-            }
-
-        }
-
-
-        return mTipagem;
-
-    }
 
 }

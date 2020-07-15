@@ -915,9 +915,6 @@ public class OATodo {
 
     public void exportarDiario(String eLocal,String eExtensao,ArrayList<Anotacao> eAnotacoes){
 
-
-        System.out.println(eLocal+Tempo.getDia() + eExtensao);
-
         OATodoExporter mExportador = new OATodoExporter(eAnotacoes);
         mExportador.exportar(mArquivo, eLocal+getDia() + eExtensao);
     }

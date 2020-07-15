@@ -204,6 +204,14 @@ public class Run_Value {
         }
 
 
+        if (!getRetornoTipo().contains("<>")){
+
+            Run_GetType mRun_GetType = new Run_GetType(mRunTime, mEscopo);
+            mRetornoTipo=mRun_GetType.getTipagemSimples(mRetornoTipo);
+
+        }
+
+
     }
 
     public void Variavel(AST ASTCorrente, String eRetorno) {
@@ -426,27 +434,10 @@ public class Run_Value {
         String eNome = "<Struct::" + eRetorno + ":" + HEAPID + ">";
 
 
-        Run_GetType mRun_GetType2 = new Run_GetType(mRunTime, mEscopo);
-
-        ArrayList<AST> mGens = new ArrayList<AST>();
-
-        for (AST rAST : ASTCorrente.getBranch("GENERIC").getASTS()) {
-
-           // AST cAST = rAST.copiar();
-
-            String mGen = mRun_GetType2.getTipagem(rAST);
-           // rAST.setNome(mGen);
-
-
-
-            System.out.println(" ::>> INIT " + mGen);
-
-        }
-
 
         Run_Struct mRun_Struct = new Run_Struct(mRunTime);
         mRun_Struct.setNome(eNome);
-        mRun_Struct.init(eRetorno,mGens, ASTCorrente, mEscopo);
+        mRun_Struct.init(eRetorno, ASTCorrente, mEscopo);
 
         // System.out.println("Vamos Struct 2 - " + mRunTime.getErros().size());
 

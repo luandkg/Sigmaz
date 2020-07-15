@@ -6,8 +6,8 @@ refer Lista;
 call iniciar -> {
 
 
-		def WA : Lista >> ( ASSERT_ITEM ) = init Lista ( ) >> ( ASSERT_ITEM );
-invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	def WA : Lista >> ( ASSERT_ITEM ) = init Lista ( ) >> ( ASSERT_ITEM );
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
 
 	println ( " --------- TESTES UNITARIOS --------- ");
@@ -45,9 +45,6 @@ package UNIT {
 		define ASSERTABLE : Lista >> ( ASSERT_ITEM ) = init Lista ( ) >> ( ASSERT_ITEM );
 
 
-
-
-
 		act assert_clean ( ) {
 			each a : ASSERT_ITEM :: ( ASSERTABLE ) -> {
 				trash ( a );
@@ -61,7 +58,7 @@ package UNIT {
                                    				nome = teste;
                                    				resultado = a;
                                    			};
-invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+            invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
 			ASSERTABLE.adicionar ( aa);
 		}

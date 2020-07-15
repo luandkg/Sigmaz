@@ -546,7 +546,7 @@ public class RunTime {
 
         ret = "PRIMITIVE";
 
-        System.out.println("Tipando --> " + eNome);
+      //  System.out.println("Tipando --> " + eNome);
 
         ArrayList<AST> mCasts = new ArrayList<AST>();
         ArrayList<AST> mTipos = new ArrayList<AST>();
@@ -568,7 +568,7 @@ public class RunTime {
 
                 for (AST eAST : getPacote(Referencia).getASTS()) {
 
-                    System.out.println("Tipando " + eAST.getNome() + "....");
+                  //  System.out.println("Tipando " + eAST.getNome() + "....");
 
 
                     if (eAST.mesmoTipo("CAST")) {
