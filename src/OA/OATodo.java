@@ -3,6 +3,7 @@ package OA;
 import OA.LuanDKG.LuanDKG;
 import OA.LuanDKG.Objeto;
 import OA.LuanDKG.Pacote;
+import Sigmaz.Utils.Tempo;
 import Sigmaz.Utils.Texto;
 
 import java.io.File;
@@ -340,21 +341,8 @@ public class OATodo {
 
             boolean existe = false;
 
-            if (ItemC.getStatus().contentEquals("r")) {
-                existe = true;
-
-                for (Objeto mObjeto : OATodos.getObjetos()) {
-                    if (mObjeto.Identifique("Texto").getValor().contentEquals(ItemC.getTexto())) {
-                        OATodos.getObjetos().remove(mObjeto);
-                        break;
-                    }
 
 
-                }
-
-            }
-
-            if (!existe) {
 
                 String mTags = "";
 
@@ -380,13 +368,6 @@ public class OATodo {
                         } else {
 
 
-                            // Objeto mAction = OABranches.CriarObjeto("ACAO");
-                            // mAction.Identifique("Modo", "ALTERACAO");
-                            // mAction.Identifique("Item", mObjeto.Identifique("Indice").getValor());
-                            // mAction.Identifique("Antes", mObjeto.Identifique("Status").getValor());
-                            // mAction.Identifique("Depois", ItemC.getStatus());
-                            // //mAction.Identifique("Data", getDataHora());
-
                             mObjeto.Identifique("Status", ItemC.getStatus());
                             mObjeto.Identifique("Alterado", getDataHora());
 
@@ -396,10 +377,6 @@ public class OATodo {
                         break;
                     }
                 }
-
-
-            }
-
 
             if (!existe) {
 
@@ -416,26 +393,10 @@ public class OATodo {
                 eObjeto.Identifique("Alterado", getDataHora());
                 eObjeto.Identifique("Status", ItemC.getStatus());
 
-                String mTags = "";
-
-                for (String mTag : ItemC.mTags) {
-                    mTags += mTag + " ";
-                }
-
-                String mTarefas = "";
-
-                for (String mTag : ItemC.mTarefas) {
-                    mTarefas += mTag + " ";
-                }
 
                 eObjeto.Identifique("Tags").setValor(mTags);
                 eObjeto.Identifique("Tarefas").setValor(mTarefas);
 
-
-                // Objeto mAction = OABranches.CriarObjeto("ACAO");
-                //  mAction.Identifique("Mode", "NOVO");
-                //  mAction.Identifique("Item", ItemC.getTexto());
-                //  mAction.Identifique("Data", getDataHora());
 
             }
 
@@ -455,6 +416,70 @@ public class OATodo {
 
     }
 
+
+    public void marcarSem(String eSem) {
+
+        File arq = new File(mArquivo);
+        LuanDKG mTodo = new LuanDKG();
+
+        if (arq.exists()) {
+            mTodo.Abrir(mArquivo);
+        }
+
+        Pacote OATodo = mTodo.UnicoPacote("OATodo");
+        String index = OATodo.Identifique("Indice").getValor();
+
+        int ci = get_string_num(index, 0);
+
+
+        Pacote OATodos = OATodo.UnicoPacote("Todos");
+
+        for (Objeto mObjeto : OATodos.getObjetos()) {
+            if (mObjeto.Identifique("Status").getValor().contentEquals("")) {
+                mObjeto.Identifique("Status").setValor(eSem);
+            }
+        }
+
+
+        mTodo.Salvar(mArquivo);
+
+
+    }
+
+    public void removerCom(String eCom) {
+
+        File arq = new File(mArquivo);
+        LuanDKG mTodo = new LuanDKG();
+
+        if (arq.exists()) {
+            mTodo.Abrir(mArquivo);
+        }
+
+        Pacote OATodo = mTodo.UnicoPacote("OATodo");
+        String index = OATodo.Identifique("Indice").getValor();
+
+        int ci = get_string_num(index, 0);
+
+
+        Pacote OATodos = OATodo.UnicoPacote("Todos");
+
+        ArrayList<Objeto> mRemover = new ArrayList<Objeto>();
+
+        for (Objeto mObjeto : OATodos.getObjetos()) {
+            if (mObjeto.Identifique("Status").getValor().contentEquals(eCom)) {
+              mRemover.add(mObjeto);
+              System.out.println("Removendo " + mObjeto.Identifique("Texto").getValor());
+            }
+        }
+        for (Objeto mObjeto : mRemover) {
+            OATodos.getObjetos().remove(mObjeto);
+        }
+
+
+        mTodo.Salvar(mArquivo);
+
+
+    }
 
     public String paraFechar(int ja, int ate, String c) {
         String ret = "";
@@ -798,11 +823,11 @@ public class OATodo {
                     String eData = mObjeto.Identifique("Data").getValor();
 
                     System.out.println(" \t -> " + eData + " -->> " + eTexto + "  :: [ " + getTarefas_Completas(mTags).size() + "/" + mTags.size() + " ]");
-                int ti = 1;
+                    int ti = 1;
 
                     for (String t : mTags) {
                         System.out.println(" \t\t :: " + ti + " = " + t);
-                        ti+=1;
+                        ti += 1;
                     }
                 }
 
@@ -877,6 +902,41 @@ public class OATodo {
             }
         }
         return mLista;
+
+    }
+
+    public void exportar(String eArquivo,ArrayList<Anotacao> eAnotacoes) {
+
+        OATodoExporter mExportador = new OATodoExporter(eAnotacoes);
+        mExportador.exportar(mArquivo,eArquivo);
+
+
+    }
+
+    public void exportarDiario(String eLocal,String eExtensao,ArrayList<Anotacao> eAnotacoes){
+
+
+        System.out.println(eLocal+Tempo.getDia() + eExtensao);
+
+        OATodoExporter mExportador = new OATodoExporter(eAnotacoes);
+        mExportador.exportar(mArquivo, eLocal+getDia() + eExtensao);
+    }
+
+    public static String getDia() {
+
+        Calendar c = Calendar.getInstance();
+
+        int dia = c.get(Calendar.DAY_OF_MONTH);
+        int mes = c.get(Calendar.MONTH) + 1;
+        int ano = c.get(Calendar.YEAR);
+
+        String sdia = String.valueOf(dia);
+        String smes = String.valueOf(mes);
+
+        if (sdia.length()==1){sdia="0" + sdia;}
+        if (smes.length()==1){smes="0" + smes;}
+
+        return ano + "_" + smes + "_" + sdia;
 
     }
 

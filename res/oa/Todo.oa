@@ -1,21 +1,15 @@
    PACOTE OATodo
     {
-      ID Indice = "13"
+      ID Indice = "67"
       PACOTE Todos
        {
-         OBJETO Item { 
-            ID Indice = "4"
-            ID Texto = ""
-            ID Data = "2020 07 08"
-            ID Status = ""
-         }
          OBJETO Item { 
             ID Indice = "6"
             ID Texto = " OATodo "
             ID Data = "2020 07 08"
-            ID Status = "c"
+            ID Status = "t"
             ID Tags = "oa "
-            ID Alterado = "2020 07 13"
+            ID Alterado = "2020 07 14"
             ID Tarefas = ""
          }
          OBJETO Item { 
@@ -40,26 +34,26 @@
             ID Indice = "9"
             ID Texto = " OAVersion "
             ID Data = "2020 07 08"
-            ID Status = "c"
+            ID Status = "t"
             ID Tags = ""
-            ID Alterado = "2020 07 13"
+            ID Alterado = "2020 07 14"
             ID Tarefas = ""
          }
          OBJETO Item { 
             ID Indice = "10"
             ID Texto = " OARoadmap "
             ID Data = "2020 07 08"
-            ID Status = "c"
+            ID Status = "t"
             ID Tags = ""
-            ID Alterado = "2020 07 13"
+            ID Alterado = "2020 07 14"
             ID Tarefas = ""
          }
          OBJETO Item { 
             ID Indice = "11"
             ID Texto = " Run_Dot "
             ID Data = "2020 07 09"
-            ID Alterado = "2020 07 13"
-            ID Status = "c"
+            ID Alterado = "2020 07 14"
+            ID Status = "t"
             ID Tags = ""
             ID Tarefas = ""
          }
@@ -67,8 +61,8 @@
             ID Indice = "12"
             ID Texto = " Run_Arrow "
             ID Data = "2020 07 09"
-            ID Alterado = "2020 07 13"
-            ID Status = "c"
+            ID Alterado = "2020 07 14"
+            ID Status = "t"
             ID Tags = ""
             ID Tarefas = ""
          }
@@ -76,10 +70,19 @@
             ID Indice = "13"
             ID Texto = " Visualizador de Arvore "
             ID Data = "2020 07 13"
-            ID Alterado = "2020 07 13"
-            ID Status = "i"
+            ID Alterado = "2020 07 14"
+            ID Status = "t"
             ID Tags = ""
-            ID Tarefas = "@arvore posicao render "
+            ID Tarefas = "@arvore @posicao @render "
+         }
+         OBJETO Item { 
+            ID Indice = "14"
+            ID Texto = " Marcar Tags com Data "
+            ID Data = "2020 07 14"
+            ID Alterado = "2020 07 14"
+            ID Status = "c"
+            ID Tags = ""
+            ID Tarefas = ""
          }
        } 
     } 

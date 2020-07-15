@@ -1,18 +1,21 @@
 
-
-    - OATodo : c {oa}
+    - OATodo : t {oa}
 
     - ObterContexto : f
 
     - Biblioteca - Tempo : i
 
-    - OAVersion : c
+    - OAVersion : t
 
-    - OARoadmap : c
+    - OARoadmap : t
 
-    - Run_Dot : c
+    - Run_Dot : t
 
-    - Run_Arrow : c
+    - Run_Arrow : t
 
-    - Visualizador de Arvore : i (  @arvore posicao render )
+    - Visualizador de Arvore : t (  @arvore @posicao @render )
+
+
+    - Marcar Tags com Data : c
+
 

@@ -110,7 +110,6 @@ public class Intellisense {
 
                 mISig.sigmaz_raiz_horizontal(eLocal, "SIGMAZ_1", ASTCGlobal, eLargura);
 
-
                // mIP.sigmaz_package(eLocal, "SIGMAZ_2", ASTCGlobal, eLargura);
 
                 mIP.sigmaz_package_horizontal(eLocal, "SIGMAZ_2", ASTCGlobal, eLargura);

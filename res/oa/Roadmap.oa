@@ -4,63 +4,63 @@
 2020 06 13  -->>  Compiler
  
 
-2020 06 14 -->>  Action
-2020 06 14 -->>  Function
-2020 06 14 -->>  Call
-2020 06 14 -->>  Invoke
-2020 06 14 -->>  Def
-2020 06 14 -->>  Define
-2020 06 14 -->>  Value
-2020 06 14 -->>  Types : Num, String E Bool
-2020 06 14 -->>  Require
-2020 06 14 -->>  Arguments
-2020 06 14 -->>  Body
-2020 06 14 -->>  Param
-2020 06 14 -->>  Runtime
+2020 06 14  -->>  Action
+2020 06 14  -->>  Function
+2020 06 14  -->>  Call
+2020 06 14  -->>  Invoke
+2020 06 14  -->>  Def
+2020 06 14  -->>  Define
+2020 06 14  -->>  Value
+2020 06 14  -->>  Types : Num, String E Bool
+2020 06 14  -->>  Require
+2020 06 14  -->>  Arguments
+2020 06 14  -->>  Body
+2020 06 14  -->>  Param
+2020 06 14  -->>  Runtime
         
 
-2020 06 15 -->>  Mockiz
-2020 06 15 -->>  Moc
-2020 06 15 -->>  Value
-2020 06 15 -->>  Match
-2020 06 15 -->>  Mismatch
-2020 06 15 -->>  Analise
-2020 06 15 -->>  Apply
+2020 06 15  -->>  Mockiz
+2020 06 15  -->>  Moc
+2020 06 15  -->>  Value
+2020 06 15  -->>  Match
+2020 06 15  -->>  Mismatch
+2020 06 15  -->>  Analise
+2020 06 15  -->>  Apply
 
 
-2020 06 16 -->>  While
-2020 06 16 -->>  Step
-2020 06 16 -->>  Continue
-2020 06 16 -->>  Cancel
+2020 06 16  -->>  While
+2020 06 16  -->>  Step
+2020 06 16  -->>  Continue
+2020 06 16  -->>  Cancel
         
 
-2020 06 17 -->>  Daz
-2020 06 17 -->>  Value : Reestruturação
-2020 06 17 -->>  Operation
-2020 06 17 -->>  Uniao : Run_function Run_action E Run_actionfunction
-2020 06 17 -->>  Compilacao Em Lote
+2020 06 17  -->>  Daz
+2020 06 17  -->>  Value : Reestruturação
+2020 06 17  -->>  Operation
+2020 06 17  -->>  Uniao : Run_function Run_action E Run_actionfunction
+2020 06 17  -->>  Compilacao Em Lote
         
 
-2020 06 18 -->>  Cast
+2020 06 18  -->>  Cast
         
 
-2020 06 19 -->>  Primitive To Cast
-2020 06 19 -->>  Cast To Primitive
+2020 06 19  -->>  Primitive To Cast
+2020 06 19  -->>  Cast To Primitive
         
 
-2020 06 20 -->>  Reorganizacao De Escopo
-2020 06 20 -->>  Reorganizacao Do Ast_value
-2020 06 20 -->>  Reorganizacao Do Run_func
-2020 06 20 -->>  Struct
-2020 06 20 -->>  Orientacao A Objeto - Inicio
-2020 06 20 -->>  Implementando Heranca - Inicio
+2020 06 20  -->>  Reorganizacao De Escopo
+2020 06 20  -->>  Reorganizacao Do Ast_value
+2020 06 20  -->>  Reorganizacao Do Run_func
+2020 06 20  -->>  Struct
+2020 06 20  -->>  Orientacao A Objeto - Inicio
+2020 06 20  -->>  Implementando Heranca - Inicio
         
 
-2020 06 21 -->>  Reorganizacao Em Stacks
-2020 06 21 -->>  Recursao Em Oo
-2020 06 21 -->>  Inicializadores De Struct
-2020 06 21 -->>  Heranca Do Inicializador De Struct
-2020 06 21 -->>  Stages
+2020 06 21  -->>  Reorganizacao Em Stacks
+2020 06 21  -->>  Recursao Em Oo
+2020 06 21  -->>  Inicializadores De Struct
+2020 06 21  -->>  Heranca Do Inicializador De Struct
+2020 06 21  -->>  Stages
         
 
 2020 06 22  -->>  Contadores No Runtime
@@ -187,5 +187,8 @@
 2020 07 13  -->>  AST Funções Complementares
 2020 07 13  -->>  Tipagem completa por Pacote
 2020 07 13  -->>  Check List em Tarefas no TODO
+
 2020 07 14  -->>  Melhorando Intellisense
 2020 07 14  -->>  Alterando AST_TYPE para AST_STRUCT EXTENDED TYPE
+2020 07 14  -->>  Renderizador TODO
+2020 07 14  -->>  Renderizador de Roadmap

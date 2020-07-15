@@ -1,10 +1,13 @@
 package AppSigmaz;
 
+import OA.Anotacao;
 import OA.OATodo;
 import OA.OAVersion;
 import OA.OARoadmap;
 import Sigmaz.Gerador;
+import Sigmaz.Utils.Tempo;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class AppSigmaz {
@@ -16,7 +19,6 @@ public class AppSigmaz {
       //  G.gerarPrint();
 
 
-        AUTO();
 
 
 
@@ -55,6 +57,7 @@ public class AppSigmaz {
             default -> System.out.println("\t - Fases : Desconhecida !");
         }
 
+        AUTO();
 
 
     }
@@ -67,18 +70,47 @@ public class AppSigmaz {
         OARoadmap oar = new OARoadmap("res/oa/Roadmap.oa");
         oar.receber("Roadmap.txt");
 
+        oar.exportar("roadmap.png");
+
+
         OATodo mTodo = new OATodo("res/oa/Todo.oa");
         mTodo.sincronizar("Todo.txt");
 
-         mTodo.Listar();
+        mTodo.marcarSem("i");
+        mTodo.removerCom("r");
 
-        mTodo.ListarStatus("i", "Iniciar");
-        mTodo.ListarStatus_Recente("f", "Fazendo");
-        mTodo.ListarStatus_Modificado("c", "Concluido");
+        //mTodo.Listar();
 
-        mTodo.ListarTag("oa");
+       // mTodo.ListarStatus("i", "Ideias");
+      //  mTodo.ListarStatus_Recente("f", "Fazendo");
+      //  mTodo.ListarStatus_Modificado("c", "Cancelado");
+      //  mTodo.ListarStatus_Modificado("t", "Terminado");
 
-        mTodo.ListarComTarefas();
+       // mTodo.ListarTag("oa");
+
+      //  mTodo.ListarComTarefas();
+
+
+
+
+
+
+
+
+
+
+
+        ArrayList<Anotacao> eInfos = new ArrayList<Anotacao>();
+
+        eInfos.add(new Anotacao("i","Ideias",new Color(39, 174, 96)));
+        eInfos.add(new Anotacao("f","Fazendo",new Color(230, 126, 34)));
+        eInfos.add(new Anotacao("c","Cancelado",new Color(192, 57, 43)));
+        eInfos.add(new Anotacao("t","Terminado",new Color(41, 128, 185)));
+
+        mTodo.exportar("todo.png",eInfos);
+
+        mTodo.exportarDiario("C:\\Users\\Luand\\OneDrive\\Imagens\\todos\\sigmaz_",".png",eInfos);
+
 
     }
 }
