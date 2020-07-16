@@ -21,11 +21,6 @@ public class Run_Each {
 
     }
 
-
-    public boolean getCancelado() {
-        return mEscopo.getCancelar();
-    }
-
     public String getTipo(String eTipo) {
         String mTipo = "";
 
@@ -45,36 +40,6 @@ public class Run_Each {
         return mTipo;
     }
 
-    public String getSubTipo(String eTipo) {
-        String mTipo = "";
-
-        int i = 0;
-        int o = eTipo.length() - 1;
-
-        boolean pegar = false;
-
-        while (i < o) {
-            String l = eTipo.charAt(i) + "";
-            if (l.contentEquals("<")) {
-                pegar = true;
-                i += 1;
-                break;
-            }
-            i += 1;
-        }
-
-        if (pegar) {
-
-            while (i < o) {
-                String l = eTipo.charAt(i) + "";
-                mTipo += l;
-                i += 1;
-            }
-
-        }
-
-        return mTipo;
-    }
 
     public void init(AST ASTCorrente) {
 
@@ -86,8 +51,8 @@ public class Run_Each {
         AST mList = ASTCorrente.getBranch("LIST");
         AST mBody = ASTCorrente.getBranch("BODY");
 
-        String mTipagem =  mRunTime.getTipagem(mType);
-        Run_GetType mRun_GetType = new Run_GetType(mRunTime,mEscopo);
+        String mTipagem = mRunTime.getTipagem(mType);
+        Run_GetType mRun_GetType = new Run_GetType(mRunTime, mEscopo);
 
         mTipagem = mRun_GetType.getTipagemSimples(mTipagem);
 
@@ -106,7 +71,7 @@ public class Run_Each {
             mRunTime.getErros().add("O Iterable do Each precisa ser do tipo : Lista");
             return;
         }
-String realTipagem = "Lista<>Lista<" +mTipagem + ">";
+        String realTipagem = "Lista<>Lista<" + mTipagem + ">";
         if (realTipagem.contentEquals((mAST.getRetornoTipo()))) {
 
         } else {
@@ -119,21 +84,20 @@ String realTipagem = "Lista<>Lista<" +mTipagem + ">";
             return;
         }
 
-       // System.out.println("  EACH LISTA --> " + mAST.getRetornoTipo());
-       // System.out.println("  EACH ITERADOR --> " + mTipagem);
-       // System.out.println("  ERROS = " + mRunTime.getErros().size());
+        // System.out.println("  EACH LISTA --> " + mAST.getRetornoTipo());
+        // System.out.println("  EACH ITERADOR --> " + mTipagem);
+        // System.out.println("  ERROS = " + mRunTime.getErros().size());
 
         long HEAPID = mRunTime.getHEAPID();
-        String eNome = "<Struct::" + "Iterador<" + mTipagem + ">>" + ":" + HEAPID + ">";
+        String eNome = "<Struct::" + "Lista<>Iterador<" + mTipagem + ">>" + ":" + HEAPID + ">";
 
-        AST eAST = new AST("INIT");
-        eAST.setNome("Iterador");
-        AST eGen = eAST.criarBranch("GENERIC");
-        AST eType = eGen.criarBranch("TYPE");
-        eType.setNome("Lista<" + mTipagem + ">");
-        eGen.setNome("TRUE");
+      //  System.out.println(eNome);
+        AST_Implementador mImplementador = new AST_Implementador();
 
-        AST eArgs = eAST.criarBranch("ARGUMENTS");
+        AST eAST = mImplementador.criar_InitGenerico("Iterador","Lista<" + mTipagem + ">");
+
+        AST eArgs = eAST.getBranch("ARGUMENTS");
+
         AST eArg = mList.copiar();
         eArg.setTipo("ARGUMENT");
         eArgs.getASTS().add(eArg);
@@ -144,20 +108,22 @@ String realTipagem = "Lista<>Lista<" +mTipagem + ">";
         mRun_Struct.setNome(eNome);
         mRun_Struct.init("Iterador<Lista<" + mTipagem + ">>", eAST, EachEscopo);
 
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
 
         mRunTime.adicionarHeap(mRun_Struct);
 
         String eNomeEach = "{{EACH}}::" + HEAPID;
 
-       // System.out.println("  ERROS = " + mRunTime.getErros().size());
+        // System.out.println("  ERROS = " + mRunTime.getErros().size());
 
         EachEscopo.criarDefinicao(eNomeEach, "Lista<>Iterador<Lista<" + mTipagem + ">>", eNome);
 
         //  System.out.println(eNomeEach + " -->> PRONTA ");
-        AST_Implementador ASTC = new AST_Implementador();
 
 
-        AST mExecute = ASTC.criar_ExecuteFunction(eNomeEach, "iniciar");
+        AST mExecute = mImplementador.criar_ExecuteFunction(eNomeEach, "iniciar");
 
 
         Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
@@ -165,42 +131,25 @@ String realTipagem = "Lista<>Lista<" +mTipagem + ">";
 
         //  System.out.println(eNomeEach + " -->> INICIAR ");
 
-        //System.out.println("  ERROS = " + mRunTime.getErros().size());
-
-        AST mCondition = new AST("CONDITION");
-        mCondition.setNome(eNomeEach);
-        mCondition.setValor("STRUCT");
-        AST mInternalCondition = mCondition.criarBranch("INTERNAL");
-        mInternalCondition.setNome("continuar");
-        mInternalCondition.setValor("STRUCT_FUNCT");
-        mInternalCondition.criarBranch("ARGUMENTS");
-
+        AST mCondition =   mImplementador.criar_CondicaoStruct_Func(eNomeEach,"continuar");
 
         AST mBody2 = new AST("BODY");
 
 
-        AST mDefWhile = ASTC.criar_Def(mDef.getNome(),mType);
+        AST mGetValor = mImplementador.criar_DefCom_ValueStructFunction(mDef.getNome(), mType,eNomeEach, "getValor");
 
-        //System.out.println("  ERROS = " + mRunTime.getErros().size());
+        AST mProximo = mImplementador.criar_ExecuteFunction(eNomeEach, "proximo");
 
+        mImplementador.adicionar(mBody2,mGetValor);
 
-        mDefWhile.getASTS().add(ASTC.criar_ValueStructFunction(eNomeEach,"getValor"));
+        mImplementador. copiarBranches(mBody2,mBody);
 
-
-
-        mBody2.getASTS().add(mDefWhile);
-
-        mBody2.getASTS().addAll(mBody.getASTS());
+        mImplementador.adicionar(mBody2,mProximo);
 
 
-        mBody2.getASTS().add(ASTC.criar_ExecuteFunction(eNomeEach, "proximo"));
-
-
-        //     mWhile.ImprimirArvoreDeInstrucoes();
+     // System.out.println(  mBody2.ImprimirArvoreDeInstrucoes());
 
         initEach(mCondition, mBody2, EachEscopo);
-
-        // System.out.println(eNomeEach + " -->> PROXIMO ");
 
 
         mRunTime.removerHeap(eNome);
@@ -214,7 +163,7 @@ String realTipagem = "Lista<>Lista<" +mTipagem + ">";
         Run_Value mAST = new Run_Value(mRunTime, EachEscopo);
         mAST.init(mCondicao, "bool");
 
-     //   System.out.println("  ERROS IE = " + mRunTime.getErros().size());
+        //   System.out.println("  ERROS IE = " + mRunTime.getErros().size());
 
         if (mRunTime.getErros().size() > 0) {
             return;
@@ -228,7 +177,7 @@ String realTipagem = "Lista<>Lista<" +mTipagem + ">";
 
                 while (mAST.getConteudo().contentEquals("true")) {
 
-                  //  System.out.println("  ERROS INTERNO = " + mRunTime.getErros().size());
+                    //  System.out.println("  ERROS INTERNO = " + mRunTime.getErros().size());
 
                     Escopo EscopoInterno = new Escopo(mRunTime, EachEscopo);
                     EscopoInterno.setNome("While");
@@ -236,9 +185,9 @@ String realTipagem = "Lista<>Lista<" +mTipagem + ">";
                     Run_Body cAST = new Run_Body(mRunTime, EscopoInterno);
                     cAST.init(mCorpo);
 
-                  //  System.out.println(mCorpo.ImprimirArvoreDeInstrucoes());
+                    //  System.out.println(mCorpo.ImprimirArvoreDeInstrucoes());
 
-               //     System.out.println("  ERROS INTERNO = " + mRunTime.getErros().size());
+                    //     System.out.println("  ERROS INTERNO = " + mRunTime.getErros().size());
 
                     if (cAST.getCancelado()) {
                         break;

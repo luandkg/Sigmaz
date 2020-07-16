@@ -128,6 +128,7 @@ public class Run {
 
             if (ASTC.mesmoTipo("CALL")) {
 
+                Global.setNome(ASTC.getNome());
 
                 if (ASTC.mesmoValor("REFER")) {
                     AST mSending = ASTC.getBranch("SENDING");

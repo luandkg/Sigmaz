@@ -1,75 +1,74 @@
 import "libs/lib.sigmaz";
 
-refer UNIT;
-refer Lista;
+refer TesteUnitario;
 
-refer Fungos;
 
 call iniciar -> {
-
-
-	def WA : Lista >> ( ASSERT_ITEM ) = init Lista ( ) >> ( ASSERT_ITEM );
-    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
 
 	println ( " --------- TESTES UNITARIOS --------- ");
 	println ( "");
 
 	def AssertC : Assert = init Assert ( );
-	AssertC.assert ( "Teste 1", true );
-	AssertC.assert ( "Teste 2", true );
-	AssertC.assert ( "Teste 3", false );
+	AssertC.testar ( "Teste 1", true );
+	AssertC.testar ( "Teste 2", true );
+	AssertC.testar ( "Teste 3", false );
 
-	each AssertivaC : ASSERT_ITEM :: ( AssertC.ASSERTABLE ) -> {
-		println ( "ASSERT : ", AssertivaC.nome , " -->> ", AssertivaC.resultado );
-	}
+    AssertC.listar();
 
-	AssertC.assert_clean ( );
+	AssertC.limpar ( );
 	
 	#invoke __COMPILER__ -> HEAP ( ) :: ALL;
 
-    def f1 : Fungo = init Fungo();
 
+    #def ASSERTABLE : Lista >> ( ASSERT_ITEM ) = AssertC.ASSERTABLE;
 
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
 
 
 }
-package UNIT {
+package TesteUnitario {
 
 	refer Lista;
 
-    cast CUNIT {}
-
-	type ASSERT_ITEM {
+	type Assertiva {
 		define nome : string = "";
 		define resultado : bool = false;
 	}
 
 	struct Assert {
 
-	    all:
+	    restrict:
+		    define Assertivas : Lista >> ( Assertiva ) = init Lista ( ) >> ( Assertiva );
 
-		define ASSERTABLE : Lista >> ( ASSERT_ITEM ) = init Lista ( ) >> ( ASSERT_ITEM );
+        all:
 
-
-		act assert_clean ( ) {
-			each a : ASSERT_ITEM :: ( ASSERTABLE ) -> {
+		act limpar ( ) {
+			each a : Assertiva :: ( Assertivas ) -> {
 				trash ( a );
 			}
-			ASSERTABLE.limpar ( );
+			Assertivas.limpar ( );
 		}
 
-		act assert ( teste : string , a : bool ) {
+		act testar ( teste : string , a : bool ) {
 
-		    def aa : ASSERT_ITEM = start ASSERT_ITEM {
+		    def aa : Assertiva = start Assertiva {
                                    				nome = teste;
                                    				resultado = a;
                                    			};
-            invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+            #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
-			ASSERTABLE.adicionar ( aa);
+			Assertivas.adicionar ( aa);
+		}
+
+
+		act listar(){
+
+			each AssertivaC : Assertiva :: ( Assertivas ) -> {
+        		println ( "ASSERT : ", AssertivaC.nome , " -->> ", AssertivaC.resultado );
+        	}
+
 		}
 		
 	}

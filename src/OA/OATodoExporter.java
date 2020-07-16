@@ -2,7 +2,6 @@ package OA;
 
 import OA.LuanDKG.LuanDKG;
 import OA.LuanDKG.Objeto;
-import OA.LuanDKG.Organizador;
 import OA.LuanDKG.Pacote;
 import Sigmaz.Utils.Tempo;
 
@@ -21,19 +20,10 @@ public class OATodoExporter {
 
     private ArrayList<Anotacao> mAnotacoes;
 
-    public BufferedImage IMG_ITEM = null;
-    public BufferedImage IMG_ITEM_SIM = null;
-    public BufferedImage IMG_ITEM_NAO = null;
-
 
     public OATodoExporter(ArrayList<Anotacao> eAnotacoes) {
         mAnotacoes = eAnotacoes;
-        try {
-            IMG_ITEM = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\define_all.png"));
-            IMG_ITEM_SIM = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\mockiz_all.png"));
-            IMG_ITEM_NAO = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\mockiz_restrict.png"));
-        } catch (IOException e) {
-        }
+
     }
 
     public String getData() {
@@ -54,13 +44,12 @@ public class OATodoExporter {
         Pacote OATodo = mTodo.UnicoPacote("OATodo");
         Pacote OATodos = OATodo.UnicoPacote("Todos");
 
-        ArrayList<Agrupador<Objeto>> mGrupos = new ArrayList<Agrupador<Objeto>>();
 
-        Organizador<Objeto> mOrganizador = new Organizador<Objeto>();
+        Agrupador<Objeto> mAgrupador = new Agrupador<Objeto>();
 
         for (Anotacao mAnotacao : mAnotacoes) {
 
-            mOrganizador.agruparVazio(mAnotacao.getReal(), mGrupos);
+            mAgrupador.agrupar(mAnotacao.getReal());
 
         }
 
@@ -72,7 +61,7 @@ public class OATodoExporter {
             } else {
                 String eStatus = mObjeto.Identifique("Status").getValor();
 
-                mOrganizador.agrupar(eStatus, mGrupos).adicionar(mObjeto);
+                mAgrupador.agrupar(eStatus).adicionar(mObjeto);
             }
 
         }
@@ -85,7 +74,7 @@ public class OATodoExporter {
         int eLarguraGrupo = 600;
         int eAltura = 500;
 
-        int eColunas = mGrupos.size();
+        int eColunas = mAgrupador.getGrupos().size();
         if (eColunas == 0) {
             eColunas = 1;
         }
@@ -95,7 +84,7 @@ public class OATodoExporter {
 
         int maxAltura = eAltura;
 
-        for (Agrupador<Objeto> Grupo : mGrupos) {
+        for (OA.Grupo<Objeto> Grupo : mAgrupador.getGrupos()) {
             int cAltura = eAltura;
             for (Objeto mObjeto : Grupo.getObjetos()) {
 
@@ -150,7 +139,7 @@ public class OATodoExporter {
         x += separador;
 
 
-        for (Agrupador<Objeto> Grupo : mGrupos) {
+        for (OA.Grupo<Objeto> Grupo : mAgrupador.getGrupos()) {
 
 
             Color eCor = new Color(189, 195, 199);
@@ -200,23 +189,30 @@ public class OATodoExporter {
                 }
 
 
-                leftString(g, new Rectangle(x + 30, cy, eLarguraGrupo, 100), eNota, new Font("TimesRoman", Font.BOLD, 30), IMG_ITEM);
+                leftString_ComBar(g, new Rectangle(x + 30, cy, eLarguraGrupo, 100), eNota, new Font("TimesRoman", Font.BOLD, 30), eCor);
 
 
                 if (mTags.size() > 0) {
 
                     cy += 50;
 
+                    int ti=0;
+                    int to = mTags.size();
+
                     for (String t : mTags) {
 
                         if (t.contains("@")) {
                             t = t.replace("@", "");
-                            leftString(g, new Rectangle(x + 80, cy, eLarguraGrupo, 100), t, new Font("TimesRoman", Font.BOLD, 30), IMG_ITEM_SIM);
+                            leftString_ComQuad(g, new Rectangle(x + 100, cy, eLarguraGrupo, 100), t, new Font("TimesRoman", Font.BOLD, 30), new Color(32, 191, 107));
                         } else {
-                            leftString(g, new Rectangle(x + 80, cy, eLarguraGrupo, 100), t, new Font("TimesRoman", Font.BOLD, 30), IMG_ITEM_NAO);
+                            leftString_ComQuad(g, new Rectangle(x + 100, cy, eLarguraGrupo, 100), t, new Font("TimesRoman", Font.BOLD, 30),new Color(231, 76, 60));
                         }
 
-                        cy += 50;
+                        ti+=1;
+                        if (ti<to){
+                            cy += 50;
+                        }
+
 
                     }
                 }
@@ -281,6 +277,61 @@ public class OATodoExporter {
         g.drawString(s, r.x + 40, r.y + b);
     }
 
+    public void leftString_ComQuad(Graphics g, Rectangle r, String s,
+                           Font font, Color eCor) {
+        FontRenderContext frc =
+                new FontRenderContext(null, true, true);
+
+        Rectangle2D r2D = font.getStringBounds(s, frc);
+        int rWidth = (int) Math.round(r2D.getWidth());
+        int rHeight = (int) Math.round(r2D.getHeight());
+        int rX = (int) Math.round(r2D.getX());
+        int rY = (int) Math.round(r2D.getY());
+
+        int a = (r.width / 2) - (rWidth / 2) - rX;
+        int b = (r.height / 2) - (rHeight / 2) - rY;
+
+
+        Color rCor = g.getColor();
+
+        g.setColor(eCor);
+
+        g.fillRect(r.x,r.y + b - 20,20,20);
+
+        g.setColor(rCor);
+
+        g.setFont(font);
+
+        g.drawString(s, r.x + 40, r.y + b);
+    }
+
+    public void leftString_ComBar(Graphics g, Rectangle r, String s,
+                                   Font font, Color eCor) {
+        FontRenderContext frc =
+                new FontRenderContext(null, true, true);
+
+        Rectangle2D r2D = font.getStringBounds(s, frc);
+        int rWidth = (int) Math.round(r2D.getWidth());
+        int rHeight = (int) Math.round(r2D.getHeight());
+        int rX = (int) Math.round(r2D.getX());
+        int rY = (int) Math.round(r2D.getY());
+
+        int a = (r.width / 2) - (rWidth / 2) - rX;
+        int b = (r.height / 2) - (rHeight / 2) - rY;
+
+
+        Color rCor = g.getColor();
+
+        g.setColor(eCor);
+
+        g.fillRect(r.x,r.y + b - 20,40,20);
+
+        g.setColor(rCor);
+
+        g.setFont(font);
+
+        g.drawString(s, r.x + 50, r.y + b);
+    }
 
     public void leftString_sem(Graphics g, Rectangle r, String s,
                            Font font ) {

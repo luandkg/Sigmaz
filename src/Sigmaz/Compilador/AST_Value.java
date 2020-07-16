@@ -149,15 +149,26 @@ public class AST_Value {
             mAST_TRUE.initParam(AST_True);
             AST_True.setTipo("TRUE");
 
-            Token TokenQ2 = mCompiler.getTokenAvanteIDStatus("not", "Era esperado not");
-            Token TokenC_2 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
 
-            AST AST_False = ASTPai.criarBranch("FALSE");
-            AST_Value mAST_False = new AST_Value(mCompiler);
-            mAST_False.initParam(AST_False);
-            AST_False.setTipo("FALSE");
+            if (mCompiler.getTokenFuturo().getTipo()==TokenTipo.PONTOVIRGULA){
 
-            SegundaParte(ASTPai);
+                mCompiler.Proximo();
+
+            }else{
+
+                Token TokenQ2 = mCompiler.getTokenAvanteIDStatus("not", "Era esperado not");
+                Token TokenC_2 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
+
+                AST AST_False = ASTPai.criarBranch("FALSE");
+                AST_Value mAST_False = new AST_Value(mCompiler);
+                mAST_False.initParam(AST_False);
+                AST_False.setTipo("FALSE");
+
+                SegundaParte(ASTPai);
+
+            }
+
+
 
 
         } else if (TokenD.getTipo() == TokenTipo.TEXTO) {

@@ -1,37 +1,50 @@
 package OA;
 
-import OA.LuanDKG.Objeto;
-
 import java.util.ArrayList;
 
 public class Agrupador<T> {
 
-    private String mNome;
+    private ArrayList<Grupo<T>> mGrupos;
 
-    private ArrayList<T> mObjetos;
+    public Agrupador (){
 
-    public Agrupador(String eNome) {
-
-        mNome = eNome;
-        mObjetos = new ArrayList<T>();
-
+        mGrupos = new ArrayList<Grupo<T>>();
     }
 
-
-    public String getNome() {
-        return mNome;
+    public ArrayList<Grupo<T>> getGrupos(){
+        return mGrupos;
     }
 
-    public ArrayList<T> getObjetos() {
-        return mObjetos;
+    public Grupo<T> agrupar(String eNome) {
+
+        boolean enc = false;
+        Grupo<T> ret = null;
+
+        for (Grupo<T> eGrupo : mGrupos) {
+
+            if (eGrupo.getNome().contentEquals(eNome)) {
+
+                ret = eGrupo;
+
+                enc = true;
+                break;
+            }
+
+
+        }
+
+        if (!enc) {
+
+            Grupo<T> eGrupo = new Grupo<T>(eNome);
+
+            ret = eGrupo;
+
+            mGrupos.add(eGrupo);
+
+        }
+
+        return ret;
     }
-
-
-    public void adicionar(T eObjeto) {
-        mObjetos.add(eObjeto);
-    }
-
-
 
 
 }

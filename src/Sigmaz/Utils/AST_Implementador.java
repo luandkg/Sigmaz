@@ -23,6 +23,22 @@ public class AST_Implementador {
         return mDefWhile;
     }
 
+    public AST criar_DefCom_ValueStructFunction(String eNome, AST eTipo,String eNomeStruct,String eFuncaoStruct) {
+        AST mDefWhile = new AST("DEF");
+        mDefWhile.setNome(eNome);
+        mDefWhile.getASTS().add(eTipo);
+
+        AST mVal = mDefWhile.criarBranch("VALUE");
+        mVal.setNome(eNomeStruct);
+        mVal.setValor("STRUCT");
+        AST mInternalVal = mVal.criarBranch("INTERNAL");
+        mInternalVal.setNome(eFuncaoStruct);
+        mInternalVal.setValor("STRUCT_FUNCT");
+        mInternalVal.criarBranch("ARGUMENTS");
+
+        return mDefWhile;
+    }
+
     public AST criar_ValueStructFunction(String eNome, String eFuncao) {
 
         AST mVal = new AST("VALUE");
@@ -36,4 +52,44 @@ public class AST_Implementador {
 
     }
 
+
+    public void adicionar(AST eLocal,AST eNovo){
+
+        eLocal.getASTS().add(eNovo);
+
+    }
+
+    public void copiarBranches(AST eLocal,AST eOutro){
+
+        eLocal.getASTS().addAll(eOutro.getASTS());
+
+    }
+
+    public AST criar_CondicaoStruct_Func(String eStruct,String eFunc){
+
+        AST mCondition = new AST("CONDITION");
+        mCondition.setNome(eStruct);
+
+        mCondition.setValor("STRUCT");
+        AST mInternalCondition = mCondition.criarBranch("INTERNAL");
+        mInternalCondition.setNome(eFunc);
+        mInternalCondition.setValor("STRUCT_FUNCT");
+        mInternalCondition.criarBranch("ARGUMENTS");
+
+        return mCondition;
+    }
+
+    public AST criar_InitGenerico(String eStruct,String mTipagem){
+
+        AST eAST = new AST("INIT");
+        eAST.setNome(eStruct);
+        AST eGen = eAST.criarBranch("GENERIC");
+        AST eType = eGen.criarBranch("TYPE");
+        eType.setNome(mTipagem);
+        eGen.setNome("TRUE");
+
+        AST eArgs = eAST.criarBranch("ARGUMENTS");
+
+        return eAST;
+    }
 }

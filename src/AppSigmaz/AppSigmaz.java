@@ -1,14 +1,10 @@
 package AppSigmaz;
 
-import OA.Anotacao;
-import OA.OATodo;
-import OA.OAVersion;
-import OA.OARoadmap;
-import Sigmaz.Gerador;
-import Sigmaz.Utils.Tempo;
+import OA.*;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class AppSigmaz {
 
@@ -31,14 +27,16 @@ public class AppSigmaz {
 
         String mUML = "res/uml/uml.txt";
         String mIntellisense = "res/intellisenses/";
+        String mInternos = "res/internos/";
 
-        int ARQUIVO = 1;
+        int ARQUIVO = 67;
 
-        switch (Fases.EXECUTAR) {
+        switch (Fases.INTERNO) {
 
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
             case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos, mCompilado);
+            case INTERNO -> AppUtils.INTERNO(ARQUIVO, mArquivos, mCompilado, mInternos);
 
             case TESTES -> AppUtils.TESTE_GERAL(mArquivos, mCompilado);
 
@@ -58,11 +56,10 @@ public class AppSigmaz {
         }
 
 
+
     }
 
     public static void AUTO() {
-
-
 
         OAVersion OA = new OAVersion("Sigmaz.oa");
         OA.init();
@@ -83,23 +80,74 @@ public class AppSigmaz {
 
         mTodo.exportar("todo.png", eInfos);
 
-        mTodo.exportarDiario("C:\\Users\\Luand\\OneDrive\\Imagens\\todos\\sigmaz_", ".png", eInfos);
 
+        mTodo.exportarDiario("C:\\Users\\Luand\\OneDrive\\Imagens\\todos\\sigmaz_", ".png", eInfos);
 
 
         String IMG_ROAD = "https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/road.png";
         String IMG_CHANGE = "https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/change.png";
 
 
-        OARoadmap mOARoadmap = new OARoadmap("res/oa/Roadmap.oa");
+        OARoad mOARoadmap = new OARoad("res/oa/Roadmap.oa");
         mOARoadmap.receber("Roadmap.txt");
-        mOARoadmap.exportarImagem("roadmap.png",new Color(52, 73, 94));
+        mOARoadmap.exportarImagem("roadmap.png", new Color(52, 73, 94));
         mOARoadmap.exportarMarkDown("ROADMAP.md", "Linguagem de Programação Estruturada - Implementações", IMG_ROAD, "RoadMap - Sigmaz");
 
-        OARoadmap mChangeList = new OARoadmap("res/oa/ChangeList.oa");
+
+        OARoad mChangeList = new OARoad("res/oa/ChangeList.oa");
         mChangeList.receber("ChangeList.txt");
-        mChangeList.exportarImagem("changelist.png",new Color(230, 126, 34));
+        mChangeList.exportarImagem("changelist.png", new Color(230, 126, 34));
         mChangeList.exportarMarkDown("CHANGELIST.md", "Linguagem de Programação Estruturada - Alterações", IMG_CHANGE, "ChangeList - Sigmaz");
+
+
+        OATrilha mTrilha = new OATrilha();
+
+        OA.exportarReleases("VersionMap.png", "res/oa/Roadmap.oa");
+
+        //mTrilha.exportarBranches("res/imagens/changebranches.png", "Sigmaz.oa", "res/oa/ChangeList.oa",new Color(243, 156, 18));
+        //mTrilha.exportarBranches("res/imagens/roadbranches.png", "Sigmaz.oa", "res/oa/Roadmap.oa",new Color(41, 128, 185));
+
+
+        mOARoadmap.exportarImagem("res/imagens/roadmap.png", new Color(52, 73, 94));
+        mChangeList.exportarImagem("res/imagens/changelist.png", new Color(230, 126, 34));
+
+
+
+
+    }
+
+    public void ale(){
+
+        for (int i = 1; i <= 4; i++) {
+
+            Random rd = new Random();
+            int v = rd.nextInt( 100)+10;
+
+            int sh = rd.nextInt(10)+7;
+            int sm = rd.nextInt(48) + 1;
+            int ss = rd.nextInt(48) + 1;
+
+            int fh = sh + rd.nextInt(5)+1;
+            int fm = rd.nextInt(48) + 1;
+            int fs = rd.nextInt(48) + 1;
+
+            int uh = fh + rd.nextInt(2)+1;
+            int um = rd.nextInt(48) + 1;
+            int us = rd.nextInt(48) + 1;
+
+            System.out.println(" PACOTE Branch");
+            System.out.println("   {");
+            System.out.println("      ID Date = \"" + i + "/7/2020\"");
+            System.out.println("      ID Start = \"" + i+ "/7/2020 " + sh + ":" + sm + ":" + ss +"\"");
+            System.out.println("    ID Update = \"" + i + "/7/2020 " + fh + ":" + fm + ":" + fs +"\"");
+            System.out.println("    ID End = \"" + i + "/7/2020 " + uh + ":" + um + ":" + us +"\"");
+            System.out.println("     ID Status = \"RED\"");
+            System.out.println("     ID Count = \"" + v + "\"");
+            System.out.println(" }");
+
+
+        }
+
 
 
     }

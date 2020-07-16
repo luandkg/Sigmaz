@@ -412,13 +412,18 @@ public class Run_Value {
 
         } else {
 
-            Run_Value sRun_Value = new Run_Value(mRunTime, mEscopo);
-            sRun_Value.init(ASTCorrente.getBranch("FALSE"), eRetorno);
+            if (ASTCorrente.existeBranch("FALSE")){
 
-            this.setNulo(sRun_Value.getIsNulo());
-            this.setPrimitivo(sRun_Value.getIsPrimitivo());
-            this.setConteudo(sRun_Value.getConteudo());
-            this.setRetornoTipo(sRun_Value.getRetornoTipo());
+                Run_Value sRun_Value = new Run_Value(mRunTime, mEscopo);
+                sRun_Value.init(ASTCorrente.getBranch("FALSE"), eRetorno);
+
+                this.setNulo(sRun_Value.getIsNulo());
+                this.setPrimitivo(sRun_Value.getIsPrimitivo());
+                this.setConteudo(sRun_Value.getConteudo());
+                this.setRetornoTipo(sRun_Value.getRetornoTipo());
+
+            }
+
 
 
         }

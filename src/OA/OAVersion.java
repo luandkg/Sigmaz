@@ -3,7 +3,9 @@ package OA;
 import OA.LuanDKG.LuanDKG;
 import OA.LuanDKG.Pacote;
 
+import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class OAVersion {
@@ -140,6 +142,66 @@ public class OAVersion {
         arquivo.Salvar(mArquivo);
     }
 
+
+
+    public ArrayList<Grupo<String>> getReleases() {
+
+        LuanDKG arquivo = new LuanDKG();
+        File arq = new File(mArquivo);
+
+        if (arq.exists()) {
+            arquivo.Abrir(mArquivo);
+        }
+
+        Pacote OA = arquivo.UnicoPacote("OA");
+
+        Pacote Branches = OA.UnicoPacote("Branches");
+        Pacote Releases = OA.UnicoPacote("Releases");
+
+
+        Agrupador<String> mAgrupador = new Agrupador<String>();
+
+        for (Pacote ReleaseC : Releases.getPacotes()) {
+
+            String eData = ReleaseC.Identifique("Date").getValor();
+            String eReleaser = ReleaseC.Identifique("Releaser").getValor();
+
+            mAgrupador.agrupar(eData).setValor(eReleaser);
+
+        }
+
+
+        return mAgrupador.getGrupos();
+    }
+
+    public ArrayList<Grupo<String>> getBranches() {
+
+        LuanDKG arquivo = new LuanDKG();
+        File arq = new File(mArquivo);
+
+        if (arq.exists()) {
+            arquivo.Abrir(mArquivo);
+        }
+
+        Pacote OA = arquivo.UnicoPacote("OA");
+
+        Pacote Branches = OA.UnicoPacote("Branches");
+        Pacote Releases = OA.UnicoPacote("Releases");
+
+
+        Agrupador<String> mAgrupador = new Agrupador<String>();
+
+        for (Pacote ReleaseC : Branches.getPacotes()) {
+
+            String eData = ReleaseC.Identifique("Date").getValor();
+
+            mAgrupador.agrupar(eData).setValor(eData);
+
+        }
+
+
+        return mAgrupador.getGrupos();
+    }
 
     private void reorganizar(String v, Pacote Branches, Pacote Releases) {
 
@@ -303,5 +365,170 @@ public class OAVersion {
 
     }
 
+    public void exportarReleases(String eLocal ,String eRoad) {
+
+        OARoad mOARoadmap = new OARoad(eRoad);
+
+        ArrayList<Grupo<String>> mReleases=  this.getReleases();
+        ArrayList<Grupo<String>> mRoads=  mOARoadmap.getRoads();
+
+        Agrupador<String> mAgrupador = interno(mReleases,mRoads);
+
+        OATrilha mRotas = new OATrilha();
+
+        mRotas.gerarRotas(eLocal,mAgrupador.getGrupos(), new Color(39, 174, 96));
+
+    }
+
+    public void exportarBranches(String eLocal,String eRoad,Color eCor) {
+
+
+        OARoad mOARoadmap = new OARoad(eRoad);
+
+        ArrayList<Grupo<String>> mReleases=  this.getBranches();
+        ArrayList<Grupo<String>> mRoads=  mOARoadmap.getRoads();
+
+        Agrupador<String> mAgrupador = interno(mReleases,mRoads);
+
+        OATrilha mRotas = new OATrilha();
+
+        mRotas.gerarRotas(eLocal,mAgrupador.getGrupos(), eCor);
+
+    }
+
+    public   Agrupador<String> interno( ArrayList<Grupo<String>> mReleases ,ArrayList<Grupo<String>> mRoads){
+
+        Agrupador<String> mAgrupador = new  Agrupador<String>();
+
+        for (Grupo<String> mapa : mReleases) {
+
+            int i = 0;
+            int o = mapa.getNome().length();
+
+            String eDia = "";
+            String eMes = "";
+            String eAno = "";
+
+            int e = 0;
+
+            while (i < o) {
+                String l = mapa.getNome().charAt(i) + "";
+                if (l.contentEquals("/")) {
+                    e += 1;
+                } else {
+                    if (e == 0) {
+                        eDia += l;
+                    }
+                    if (e == 1) {
+                        eMes += l;
+                    }
+                    if (e == 2) {
+                        eAno += l;
+                    }
+                }
+                i += 1;
+            }
+
+
+            int iDia = Integer.parseInt(eDia);
+            int iMes = Integer.parseInt(eMes);
+            int iAno = Integer.parseInt(eAno);
+
+            int iValor = iDia + (iMes*30) + (iAno*365);
+            String mPeso = iValor + "";
+
+            //mOrganizador.agrupar(mPeso,mAnalise);
+
+
+            ArrayList<Grupo<String>> mRemover =  new   ArrayList<Grupo<String>>();
+
+            for (Grupo<String> mRota : mRoads) {
+
+                for (String eAnotacao : mRota.getObjetos()) {
+
+                    int Peso2 =  getPeso(mRota.getNome());
+                    String mPeso2 = Peso2+ "";
+
+                    if (Peso2<=iValor){
+
+                        // mAgrupador.agrupar(mapa.getValor()).adicionar(eAnotacao + " : " +mRota.getNome() );
+                        mAgrupador.agrupar(mapa.getValor()).adicionar(eAnotacao  );
+
+                        mRemover.add(mRota);
+
+                    }
+
+                }
+
+            }
+
+            for (Grupo<String> mRota : mRemover) {
+
+                mRoads.remove(mRota);
+
+            }
+
+
+            //  System.out.println(mapa.getNome() + " -> " + mapa.getValor());
+            //   System.out.println("\t - Dia : " + iDia);
+            //   System.out.println("\t - Mes : " + iMes);
+            //  System.out.println("\t - Ano : " + iAno);
+            //   System.out.println("\t - Valor : " + iValor);
+
+        }
+
+
+
+
+        // for (Grupo<String> mRota : mAnalise) {
+
+        //    for (String eAnotacao : mRota.getObjetos()) {
+
+        //     System.out.println("\t ->> : " + mRota.getNome() + " :: " + eAnotacao);
+
+        //   }
+        //  }
+
+        return mAgrupador;
+    }
+
+    public int getPeso(String eNome){
+
+        int i = 0;
+        int o =eNome.length();
+
+        String eDia = "";
+        String eMes = "";
+        String eAno = "";
+
+        int e = 0;
+
+        while (i < o) {
+            String l =eNome.charAt(i) + "";
+            if (l.contentEquals(" ")) {
+                e += 1;
+            } else {
+                if (e == 2) {
+                    eDia += l;
+                }
+                if (e == 1) {
+                    eMes += l;
+                }
+                if (e == 0) {
+                    eAno += l;
+                }
+            }
+            i += 1;
+        }
+
+
+        int iDia = Integer.parseInt(eDia);
+        int iMes = Integer.parseInt(eMes);
+        int iAno = Integer.parseInt(eAno);
+
+        int iValor = iDia + (iMes*30) + (iAno*365);
+
+        return iValor;
+    }
 
 }

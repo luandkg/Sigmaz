@@ -12,5 +12,6 @@ public enum Fases {
     INTELLISENSE,
     INTELLISENSE_BIBLIOTECA,
     COMENTARIOS,
-    TODO
+    TODO,
+    INTERNO
 }

@@ -24,6 +24,7 @@ public class Run_Struct {
 
     private AST mStructGeneric;
     private AST mStructCorpo;
+    private ArrayList<String> mStack_All;
 
     public Run_Struct(RunTime eRunTime) {
 
@@ -39,6 +40,7 @@ public class Run_Struct {
 
         mPreparadorDeArgumentos = new Argumentador();
 
+       mStack_All = new ArrayList<String>();
     }
 
     public void setNome(String eNome) {
@@ -88,6 +90,7 @@ public class Run_Struct {
 
         mEscopo.setNome(eNome);
 
+        mStack_All.clear();
 
         AST mStructInits = null;
 
@@ -345,6 +348,8 @@ public class Run_Struct {
 
         }
 
+
+
         for (AST ASTC : mStructCorpo.getASTS()) {
 
             mTamanho += 1;
@@ -356,7 +361,12 @@ public class Run_Struct {
                     mAST.init(ASTC);
 
                     mEscopo.guardarStruct(ASTC, dRefers);
+
+                    if (getModo(ASTC).contentEquals("ALL")){
+                        mStack_All.add(ASTC.getNome());
+                    }
                 }
+
 
 
             } else if (ASTC.mesmoTipo("MOCKIZ")) {
@@ -368,6 +378,9 @@ public class Run_Struct {
 
                     mEscopo.guardarStruct(ASTC, dRefers);
 
+                    if (getModo(ASTC).contentEquals("ALL")){
+                        mStack_All.add(ASTC.getNome());
+                    }
                 }
 
 
@@ -694,15 +707,21 @@ public class Run_Struct {
         boolean enc = false;
         Item mRet = null;
 
-        for (Item mItem : mEscopo.getOO().getStacks()) {
+       // System.out.println("Operador Ponto -> " +mStructNome + "." + ASTCorrente.getNome()  );
 
-            if (mItem.getNome().contentEquals(ASTCorrente.getNome())) {
-                mRet = mItem;
-                enc = true;
-                break;
+        if (mStack_All.contains(ASTCorrente.getNome())){
+            for (Item mItem : mEscopo.getOO().getStacks()) {
+
+
+                if (mItem.getNome().contentEquals(ASTCorrente.getNome())) {
+                    mRet = mItem;
+                    enc = true;
+                    break;
+                }
+
             }
-
         }
+
 
         if (!enc) {
             mRunTime.getErros().add(mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");

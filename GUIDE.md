@@ -28,4 +28,4 @@ Struct : Cria um novo tipo de dado Complexo com defines, mockizes, functions, ac
 
 External : Cria uma struct nao instanciável que só possui membros externs.
 
-Package : Cria um pacote para armazenar : Actions, Function, Operators, Directors, Types, Stages, Structs e Externals.
+Package : Cria um pacote para armazenar :  Types, Stages, Structs e Externals.

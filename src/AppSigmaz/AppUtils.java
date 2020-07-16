@@ -104,6 +104,33 @@ public class AppUtils {
 
     }
 
+    public static void INTERNO(int eIndice, ArrayList<String> mArquivos, String eSaida,String eLocal) {
+
+
+        int iContando = 0;
+        boolean enc = false;
+
+        for (String mArquivo : mArquivos) {
+            iContando += 1;
+            if (iContando == eIndice) {
+
+                enc = true;
+
+
+                Sigmaz SigmazC = new Sigmaz();
+
+                SigmazC.interno(mArquivo, eSaida,eLocal);
+
+                break;
+            }
+        }
+
+        if (!enc) {
+            System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+    }
 
     public static void UML(int eIndice, ArrayList<String> mArquivos, String eSaida, String eGrafico) {
 

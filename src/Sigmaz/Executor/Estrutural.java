@@ -21,7 +21,6 @@ public class Estrutural {
     private ArrayList<AST> mTypes;
     private ArrayList<AST> mCasts;
     private ArrayList<AST> mStructs;
-    private ArrayList<AST> mStages;
     private ArrayList<AST> mPackages;
 
 
@@ -40,7 +39,6 @@ public class Estrutural {
         mTypes = new ArrayList<AST>();
         mCasts = new ArrayList<AST>();
         mStructs = new ArrayList<AST>();
-        mStages = new ArrayList<AST>();
         mPackages = new ArrayList<AST>();
 
     }
@@ -97,31 +95,6 @@ public class Estrutural {
 
         }
 
-    }
-
-
-    public ArrayList<AST> getFunctions() {
-        return mFunctions;
-    }
-
-    public ArrayList<AST> getActions() {
-        return mActions;
-    }
-
-    public ArrayList<AST> getDirectors() {
-        return mDirectors;
-    }
-
-    public ArrayList<AST> getOperators() {
-        return mOperators;
-    }
-
-    public ArrayList<AST> getCasts() {
-        return mCasts;
-    }
-
-    public ArrayList<AST> getPackages() {
-        return mPackages;
     }
 
 
@@ -414,36 +387,6 @@ public class Estrutural {
         }
     }
 
-    public void listarExtern(String ePrefixo, AST ASTPai) {
-
-        System.out.println(ePrefixo + "\t\t - ACTIONS : ");
-        for (AST mAST : ASTPai.getASTS()) {
-            if (mAST.mesmoTipo("ACTION")) {
-                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + ")");
-            }
-        }
-
-        System.out.println(ePrefixo + "\t\t - FUNCTIONS : ");
-        for (AST mAST : ASTPai.getASTS()) {
-            if (mAST.mesmoTipo("FUNCTION")) {
-                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
-            }
-        }
-
-        System.out.println(ePrefixo + "\t\t - DIRECTORS : ");
-        for (AST mAST : ASTPai.getASTS()) {
-            if (mAST.mesmoTipo("DIRECTOR")) {
-                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
-            }
-        }
-
-        System.out.println(ePrefixo + "\t\t - OPERATORS : ");
-        for (AST mAST : ASTPai.getASTS()) {
-            if (mAST.mesmoTipo("OPERATOR")) {
-                System.out.println(ePrefixo + "\t\t\t - " + getModo(mAST) + " " + mAST.getNome() + " ( " + getParametros(mAST) + " ) -> " + getTipagem(mAST.getBranch("TYPE")));
-            }
-        }
-    }
 
     public void listarStages(String ePrefixo,AST ASTPai) {
 

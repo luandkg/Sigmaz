@@ -2,6 +2,7 @@ package Sigmaz.Executor;
 
 import Sigmaz.Executor.Runners.*;
 import Sigmaz.Intellisenses.Intellisense;
+import Sigmaz.Internal;
 import Sigmaz.Utils.*;
 
 import java.io.File;
@@ -546,7 +547,7 @@ public class RunTime {
 
         ret = "PRIMITIVE";
 
-      //  System.out.println("Tipando --> " + eNome);
+        //  System.out.println("Tipando --> " + eNome);
 
         ArrayList<AST> mCasts = new ArrayList<AST>();
         ArrayList<AST> mTipos = new ArrayList<AST>();
@@ -568,12 +569,12 @@ public class RunTime {
 
                 for (AST eAST : getPacote(Referencia).getASTS()) {
 
-                  //  System.out.println("Tipando " + eAST.getNome() + "....");
+                    //  System.out.println("Tipando " + eAST.getNome() + "....");
 
 
                     if (eAST.mesmoTipo("CAST")) {
                         mCasts.add(eAST);
-                  //  } else if (eAST.mesmoTipo("TYPE")) {
+                        //  } else if (eAST.mesmoTipo("TYPE")) {
 
                     } else if (eAST.mesmoTipo("STRUCT")) {
 
@@ -727,32 +728,7 @@ public class RunTime {
 
                 for (AST ASTC : ASTCGlobal.getASTS()) {
 
-
-                    if (ASTC.mesmoTipo("FUNCTION")) {
-                        mEstrutural.guardar(ASTC);
-                    } else if (ASTC.mesmoTipo("ACTION")) {
-                        mEstrutural.guardar(ASTC);
-                    } else if (ASTC.mesmoTipo("DIRECTOR")) {
-                        mEstrutural.guardar(ASTC);
-                    } else if (ASTC.mesmoTipo("OPERATOR")) {
-                        mEstrutural.guardar(ASTC);
-                    } else if (ASTC.mesmoTipo("CAST")) {
-                        mEstrutural.guardar(ASTC);
-                    } else if (ASTC.mesmoTipo("TYPE")) {
-                        mEstrutural.guardar(ASTC);
-                    } else if (ASTC.mesmoTipo("STRUCT")) {
-                        mEstrutural.guardar(ASTC);
-                    } else if (ASTC.mesmoTipo("STAGES")) {
-                        mEstrutural.guardar(ASTC);
-                    } else if (ASTC.mesmoTipo("CALL")) {
-                        mEstrutural.guardar(ASTC);
-                    } else if (ASTC.mesmoTipo("DEFINE")) {
-                        mEstrutural.guardar(ASTC);
-                    } else if (ASTC.mesmoTipo("MOCKIZ")) {
-                        mEstrutural.guardar(ASTC);
-                    } else if (ASTC.mesmoTipo("PACKAGE")) {
-                        mEstrutural.guardar(ASTC);
-                    }
+                    mEstrutural.guardar(ASTC);
 
                 }
 
@@ -768,6 +744,32 @@ public class RunTime {
             }
 
 
+        }
+
+    }
+
+
+    public void interno(String eLocal) {
+
+        limpar();
+
+        boolean enc = false;
+
+
+        for (AST ASTCGlobal : mASTS) {
+
+            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
+
+                Internal mInternal = new Internal(ASTCGlobal);
+                mInternal.exportar(eLocal);
+                enc = true;
+
+            }
+
+        }
+
+        if(!enc){
+            mErros.add("Sigmaz Vazio !");
         }
 
     }

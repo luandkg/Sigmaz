@@ -298,6 +298,65 @@ public class Sigmaz {
 
     }
 
+    public void interno(String eArquivo, String saida,String eLocal) {
+
+
+        if (geral(eArquivo, saida)) {
+
+
+            System.out.println("");
+            System.out.println("################ RUNTIME ################");
+            System.out.println("");
+            System.out.println("\t - Executando : " + saida);
+            System.out.println("");
+
+            RunTime RunTimeC = new RunTime();
+            String DI = RunTimeC.getData().toString();
+
+
+            RunTimeC.init(saida);
+
+            System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
+            System.out.println("");
+
+
+            System.out.println(RunTimeC.getArvoreDeInstrucoes());
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("");
+
+            RunTimeC.interno(eLocal);
+
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+            System.out.println("");
+
+            String DF = RunTimeC.getData().toString();
+
+            System.out.println("\t - Iniciado : " + DI);
+            System.out.println("\t - Finalizado : " + DF);
+
+            System.out.println("\t - Erros : " + RunTimeC.getErros().size());
+
+            if (RunTimeC.getErros().size() > 0) {
+                System.out.println("\n\t ERROS DE EXECUCAO : ");
+
+                for (String Erro : RunTimeC.getErros()) {
+                    System.out.println("\t\t" + Erro);
+                }
+            }
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+
+
+        }
+
+    }
+
+
     public void uml(String eArquivo, String saida, String eGrafico) {
 
         if (geral(eArquivo, saida)) {
