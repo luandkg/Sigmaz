@@ -6,12 +6,23 @@ cast pos {
 		}
 		return a;
 	}
+
+	getter a2 : int -> {
+			if ( menor ( a2 , 0 ) ) -> {
+    			exception "Nao e possivel obter valores negativos !";
+    		}
+	    return a2;
+	}
+
 	setter b : num -> {
 		if ( menor ( b , 0 ) ) -> {
 			exception "Nao e possivel obter valores negativos !";
 		}
 		return b;
 	}
+
+
+
 	
 }
 cast neg {
@@ -21,6 +32,15 @@ cast neg {
 		}
 		return a;
 	}
+
+		getter a2 : int -> {
+    			if ( maior ( a2 , 0 ) ) -> {
+			exception "Nao e possivel obter valores positivos !";
+        		}
+    	    return a2;
+    	}
+
+
 	setter b : num -> {
 		if ( maior ( b , 0 ) ) -> {
 			exception "Nao e possivel obter valores positivos !";
@@ -29,6 +49,35 @@ cast neg {
 	}
 	
 }
+
+cast int {
+
+	getter a1 : num -> {return a1;}
+
+	getter a2 : pos -> {return a2;}
+	getter a3 : neg -> {return a3;}
+
+	setter b : num -> {return b;}
+
+}
+
+
+func menor ( a : int , b : num ) : bool {
+	def c : bool;
+	def a1 : num = num(a);
+	invoke math -> operator_less (  a1, b ) :: c;
+	return c;
+}
+
+func maior ( a : int , b : num ) : bool {
+	def c : bool;
+		def a1 : num = num(a);
+
+	invoke math -> operator_great ( a1 , b ) :: c;
+	return c;
+}
+
+
 func menor ( a : num , b : num ) : bool {
 	def c : bool;
 	invoke math -> operator_less ( a , b ) :: c;
@@ -70,7 +119,25 @@ act pular ( ) {
 	def P3 : pos = positivar ( P1 , pos ( 5 ) );
 	def v3 : num = num ( P3 );
 	def ii : bool = num ( pos ( 0 ) ) == num ( neg ( 0 ) );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+
+    def iMais5 : int = 5;
+    def iMenos : int = -5;
+
+	def pos_int : pos = iMais5;
+    def neg_int : neg = iMenos;
+
+   def int_pos : int = pos_int;
+   # def int_neg : int = neg_int;
+
+    def ipos : pos = int(5);
+    def ineg : neg = int(-5);
+
+    def pint : int = pos(2);
+    def nint : int = neg(-2);
+
+    def nn : neg = neg(-2);
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
 func positivar ( p1 : pos , p2 : pos ) : pos {
 	p1 = p2;

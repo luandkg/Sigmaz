@@ -22,7 +22,7 @@ public class Analisar_Cast {
         for (AST mAST : ASTPai.getASTS()) {
 
 
-            if (mAnalisador.getPrimitivos().contains(mAST.getValor())){
+            if (mAnalisador_Bloco.getPrimitivos().contains(mAST.getValor())){
 
             }else{
                 mAnalisador.getErros().add("CAST " + ASTPai.getNome() + " de " + mAST.getValor() + " : Impossivel !");

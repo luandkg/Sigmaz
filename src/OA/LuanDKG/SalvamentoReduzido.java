@@ -5,12 +5,34 @@ import java.util.ArrayList;
 public class SalvamentoReduzido {
 
     public String Codifica(String e) {
-        e = e.replace("@", "@A");
-        e = e.replace("'", "@S");
-        e = e.replace("\"", "@D");
-        e = e.replace("-", "@H");
+       // e = e.replace("@", "@A");
+      //  e = e.replace("'", "@S");
+      //  e = e.replace("\"", "@D");
+      //  e = e.replace("-", "@H");
 
-        return e;
+        int i = 0;
+        int o = e.length();
+        String ret = "";
+
+        while (i < o) {
+            String l = e.charAt(i) + "";
+            if (l.contentEquals("@")) {
+                ret += "@A";
+            } else if (l.contentEquals("'")) {
+                ret += "@S";
+            } else if (l.contentEquals("\"")) {
+                ret += "@D";
+            } else if (l.contentEquals("-")) {
+                ret += "@H";
+            } else {
+                ret += l;
+            }
+            i += 1;
+        }
+
+
+        return ret;
+      //  return e;
     }
 
     private void Identificadores(ITexto ITextoC, ArrayList<Identificador> mIdentificadores) {

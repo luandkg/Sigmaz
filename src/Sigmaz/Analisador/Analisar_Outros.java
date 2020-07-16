@@ -85,8 +85,11 @@ public class Analisar_Outros {
 
         for (AST mAST : ASTPai.getASTS()) {
             if (mAST.mesmoTipo("CAST")) {
+
                 mAnalisador.mensagem("  -- Cast " + mAST.getNome());
                 mAnalisador_Bloco.getTipados().add(mAST.getNome());
+                mAnalisador_Bloco.getPrimitivos().add(mAST.getNome());
+
             } else if (mAST.mesmoTipo("STRUCT")) {
 
                 mAnalisador_Bloco.getTipados().add(mAST.getNome());

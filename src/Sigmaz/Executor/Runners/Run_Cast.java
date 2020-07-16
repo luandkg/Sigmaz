@@ -17,85 +17,151 @@ public class Run_Cast {
 
     }
 
-    public String realizarGetterCast(String mCAST_NOME, String eRetorno, String eConteudo) {
+
+    public String realizarCast(String mSaida, String mEntrada, String eConteudo) {
 
         // mRunTime.getErros().add("Realizar CAST GETTER : " + mCAST_NOME + " :: " + rRetorno);
-
-        AST mCast = mEscopo.getCast(mCAST_NOME);
-        boolean enc = false;
         String ret = null;
 
-        for (AST mGetter : mCast.getASTS()) {
-            if (mGetter.mesmoTipo("GETTER") && mGetter.mesmoValor(eRetorno)) {
+      //  System.out.println("Casting -->> " + mEntrada + " para " + mSaida);
 
-                Escopo mEscopoInterno = new Escopo(mRunTime, mRunTime.getEscopoGlobal());
-                mEscopoInterno.criarParametro(mGetter.getNome(), mGetter.getValor(), eConteudo);
+       if (mEntrada.contentEquals(mSaida)) {
+           return eConteudo;
+       } else if (mEntrada.contentEquals("num")) {
+               ret = realizarPrimitivoCast(mEntrada, mSaida, eConteudo);
+           } else if (mEntrada.contentEquals("string")) {
+               ret = realizarPrimitivoCast(mEntrada, mSaida, eConteudo);
+           } else if (mEntrada.contentEquals("bool")) {
+               ret = realizarPrimitivoCast(mEntrada, mSaida, eConteudo);
 
-                Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
-                mAST.init(mGetter);
+       } else {
 
-                if (mAST.getIsNulo()) {
-                    ret = null;
-                } else if (mAST.getIsPrimitivo()) {
-                    ret = mAST.getConteudo();
+
+            boolean enc = false;
+
+
+            // TENTAR GETTER
+            for (AST mCast : mEscopo.getCastsCompleto()) {
+
+
+                if (mCast.mesmoNome(mEntrada)) {
+
+
+                   // System.out.println("\t Com Entrada -->> " + mCast.getNome());
+
+                    for (AST mCasting : mCast.getASTS()) {
+                        if (mCasting.mesmoTipo("SETTER") && mCasting.mesmoValor(mSaida)) {
+
+                            ret = realizar(mCasting, eConteudo);
+
+                            enc = true;
+                            break;
+                        }
+
+                    }
+
+                    if (enc) {
+                        break;
+                    }
+
+                } else if (mCast.mesmoNome(mSaida)) {
+
+
+                 //   System.out.println("\t Com Saida -->> " + mCast.getNome());
+
+                    for (AST mCasting : mCast.getASTS()) {
+                        if (mCasting.mesmoTipo("GETTER") && mCasting.mesmoValor(mEntrada)) {
+
+                            ret = realizar(mCasting, eConteudo);
+
+                            enc = true;
+                            break;
+                        }
+
+
+                    }
+
+                    if (enc) {
+                        break;
+                    }
+
                 }
-
-
-                enc = true;
-                break;
             }
-            // mRunTime.getErros().add(" - Casting de " + mGetter.getValor());
+
+
+            if (!enc) {
+
+                mRunTime.getErros().add("CASTING DESCONHECIDO " + mEntrada + " -> " + mSaida + " !");
+
+            }
 
 
         }
 
-        if (!enc) {
-            mRunTime.getErros().add("CASTING GETTER " + eRetorno + " -> " + mCAST_NOME + " : IMPOSSIVEL !");
-        }
 
         return ret;
 
     }
 
-    public String realizarSetterCast(String mCAST_NOME, String eRetorno, String eConteudo) {
+    public String realizarPrimitivoCast(String mEntrada, String mSaida, String eConteudo) {
 
-        // mRunTime.getErros().add("Realizar CAST SETTER : " + mCAST_NOME + " :: " + rRetorno);
-
-        AST mCast = mEscopo.getCast(mCAST_NOME);
-        boolean enc = false;
         String ret = null;
+        boolean enc = false;
 
-        for (AST mGetter : mCast.getASTS()) {
-            if (mGetter.mesmoTipo("SETTER") && mGetter.mesmoValor(eRetorno)) {
+       // System.out.println("\t Com Primitivo -->> " + mEntrada);
 
-                Escopo mEscopoInterno = new Escopo(mRunTime, mRunTime.getEscopoGlobal());
-                mEscopoInterno.criarParametro(mGetter.getNome(), mGetter.getValor(), eConteudo);
 
-                Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
-                mAST.init(mGetter);
+        for (AST mCast : mEscopo.getCastsCompleto()) {
 
-                if (mAST.getIsNulo()) {
-                    ret = null;
-                } else if (mAST.getIsPrimitivo()) {
-                    ret = mAST.getConteudo();
+            if (mCast.mesmoNome(mSaida)) {
+
+
+                for (AST mCasting : mCast.getASTS()) {
+                    if (mCasting.mesmoTipo("GETTER") && mCasting.mesmoValor(mEntrada)) {
+
+                        ret = realizar(mCasting, eConteudo);
+
+                        enc = true;
+                        break;
+                    }
+
+
                 }
-
-
-                enc = true;
                 break;
+
             }
-            // mRunTime.getErros().add(" - Casting de " + mGetter.getValor());
 
 
         }
 
         if (!enc) {
-            mRunTime.getErros().add("CASTING SETTER " + eRetorno + " -> " + mCAST_NOME + " : IMPOSSIVEL !");
+
+            mRunTime.getErros().add("CASTING DESCONHECIDO " + mEntrada + " -> " + mSaida + " !");
+
         }
+
 
         return ret;
 
     }
 
+    public String realizar(AST mCasting, String eConteudo) {
+
+        String ret = null;
+
+        Escopo mEscopoInterno = new Escopo(mRunTime, mRunTime.getEscopoGlobal());
+        mEscopoInterno.criarParametro(mCasting.getNome(), mCasting.getValor(), eConteudo);
+
+        Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
+        mAST.init(mCasting);
+
+        if (mAST.getIsNulo()) {
+            ret = null;
+        } else if (mAST.getIsPrimitivo()) {
+            ret = mAST.getConteudo();
+        }
+
+        return ret;
+    }
 
 }

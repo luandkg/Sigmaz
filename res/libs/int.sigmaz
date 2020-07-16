@@ -7,7 +7,7 @@ cast int {
 		invoke casting -> cast_integer ( b ) :: b;
 		return b;
 	}
-	
+
 }
 func somar ( a : int , b : int ) : int {
 	def c1 : num = null;

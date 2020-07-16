@@ -194,6 +194,24 @@ public class Run_Context {
 
         for (AST mAST : mRun_Context.getStructsContexto(mRefers)) {
             //  System.out.println(" -->> " + mAST.getNome());
+            if (mAST.mesmoNome(eStage)) {
+                enc = true;
+                break;
+            }
+
+        }
+
+        return enc;
+    }
+
+    public boolean existeStage_Type(String eStage,ArrayList<String> mRefers) {
+        boolean enc = false;
+
+        //  System.out.println(this.getNome() + " -> Stages : " + mRunTime.getStructsContexto(this.getRefers()).size());
+        Run_Context mRun_Context = new Run_Context(mRunTime);
+
+        for (AST mAST : mRun_Context.getStructsContexto(mRefers)) {
+            //  System.out.println(" -->> " + mAST.getNome());
 
             for (AST sAST : mAST.getBranch("STAGES").getASTS()) {
                 //  System.out.println("\t :: " + sAST.getNome());

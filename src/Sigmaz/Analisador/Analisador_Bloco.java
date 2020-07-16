@@ -26,9 +26,13 @@ public class Analisador_Bloco {
     private Analisar_Outros mAnalisar_Outros;
 
     private ArrayList<String> mTipados;
+    private ArrayList<String> mPrimitivos;
 
     public ArrayList<String> getTipados() {
         return mTipados;
+    }
+    public ArrayList<String> getPrimitivos() {
+        return mPrimitivos;
     }
 
     public Analisador_Bloco(Analisador eAnalisador) {
@@ -56,10 +60,15 @@ public class Analisador_Bloco {
         mAnalisar_Outros = new Analisar_Outros(mAnalisador,this);
 
         mTipados = new ArrayList<>();
+        mPrimitivos = new ArrayList<>();
 
         mTipados.add("num");
         mTipados.add("string");
         mTipados.add("bool");
+
+        mPrimitivos.add("num");
+        mPrimitivos.add("string");
+        mPrimitivos.add("bool");
     }
 
     public void analisarValoracao(AST ASTPai, ArrayList<String> mAlocadosAntes) {

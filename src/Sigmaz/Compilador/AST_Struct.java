@@ -102,6 +102,23 @@ public class AST_Struct {
             mAST.init(AST_Corrente,AST_Inits,TokenC.getConteudo());
 
 
+            if (AST_Inits.getASTS().size()==0){
+
+                AST AST_IniPadrao = new AST("INIT");
+                AST_IniPadrao.setNome(AST_Corrente.getNome());
+                AST_Inits.getASTS().add(AST_IniPadrao);
+
+                AST AST_Visibilidade = AST_IniPadrao.criarBranch("VISIBILITY");
+                AST_Visibilidade.setNome("ALL");
+
+
+                AST AST_Call = AST_IniPadrao.criarBranch("CALL");
+                AST_Call.setValor("FALSE");
+
+                AST_IniPadrao.criarBranch("ARGUMENTS");
+                 AST_IniPadrao.criarBranch("BODY");
+            }
+
         } else {
             mCompiler.errarCompilacao("Era esperado o nome para uma STRUCT !", TokenC);
         }

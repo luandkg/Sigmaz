@@ -13,10 +13,16 @@
 
     - Run_Arrow : t
 
-    - Visualizador de Arvore : t (  @arvore @posicao @render )
+    - Visualizador de Arvore : t (  @Arvore @Posicao @Render )
 
     - Marcar Tags com Data : c
 
-    - Roadmap Renderizador : i
+    - Roadmap Renderizador : c
+
+    - Argumentos Opcionais : i
+
+    - UML : i (Montagem Renderização)
+
+    - ChangeList : t
 
 

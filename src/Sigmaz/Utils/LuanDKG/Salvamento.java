@@ -78,8 +78,8 @@ public class Salvamento {
 
 			for (Identificador IdentificadorC : ObjetoC.getIdentificadores()) {
 
-				ITextoC.AdicionarLinha(ePrefixo + "   " + "   " + "ID " + IdentificadorC.getNome() + " = " + "\""
-						+ IdentificadorC.getValor() + "\"");
+				ITextoC.AdicionarLinha(ePrefixo + "   " + "   " + "ID " + Codifica(IdentificadorC.getNome()) + " = " + "\""
+						+ Codifica(IdentificadorC.getValor()) + "\"");
 
 			}
 

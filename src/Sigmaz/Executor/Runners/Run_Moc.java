@@ -44,7 +44,11 @@ public class Run_Moc{
         AST mValor = eAST.getBranch("VALUE");
 
 
-        String mTipagem = getTipagem(eAST.getBranch("TYPE"));
+      //  String mTipagem = getTipagem(eAST.getBranch("TYPE"));
+
+        Run_GetType mRun_GetType = new Run_GetType(mRunTime,mEscopo);
+
+        String mTipagem = mRun_GetType.getTipagem(eAST.getBranch("TYPE"));
 
 
         Run_Value mAST = new Run_Value(mRunTime, mEscopo);
@@ -66,37 +70,14 @@ public class Run_Moc{
                     return;
                 }
 
-                //  System.out.println("Retorno ESQ : " + eTipado);
-                // System.out.println("Retorno DIR x : " + mAST.getRetornoTipo());
+                Run_Cast mCast = new Run_Cast(mRunTime, mEscopo);
 
-                if (mEscopo.existeCast(mTipagem)) {
+                String res = mCast.realizarCast(mTipagem, mTipagem, mAST.getConteudo());
 
-
-                    Run_Cast mCast = new Run_Cast(mRunTime, mEscopo);
-                    String res = mCast.realizarGetterCast(mTipagem, mAST.getRetornoTipo(), mAST.getConteudo());
-
-                    if (res == null) {
-                        mEscopo.criarConstanteNula(eAST.getNome(), mAST.getRetornoTipo());
-                    } else {
-                        mEscopo.criarConstante(eAST.getNome(), mTipagem, res);
-                    }
-
-                } else if (mEscopo.existeCast(mAST.getRetornoTipo())) {
-
-                    Run_Cast mCast = new Run_Cast(mRunTime, mEscopo);
-                    String res = mCast.realizarSetterCast(mAST.getRetornoTipo(), mTipagem, mAST.getConteudo());
-
-                    if (res == null) {
-                        mEscopo.criarConstanteNula(eAST.getNome(), mAST.getRetornoTipo());
-                    } else {
-                        mEscopo.criarConstante(eAST.getNome(), mTipagem, res);
-                    }
-
+                if (res == null) {
+                    mEscopo.criarConstanteNula(eAST.getNome(), mTipagem);
                 } else {
-
-                    mRunTime.getErros().add("Retorno incompativel  : " + mAST.getRetornoTipo());
-
-
+                    mEscopo.criarConstante(eAST.getNome(), mTipagem, res);
                 }
 
             }

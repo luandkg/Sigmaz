@@ -3,7 +3,6 @@ package OA;
 import OA.LuanDKG.LuanDKG;
 import OA.LuanDKG.Objeto;
 import OA.LuanDKG.Pacote;
-import Sigmaz.Utils.Tempo;
 import Sigmaz.Utils.Texto;
 
 import java.io.File;

@@ -3,6 +3,8 @@ import "libs/lib.sigmaz";
 refer UNIT;
 refer Lista;
 
+refer Fungos;
+
 call iniciar -> {
 
 
@@ -25,7 +27,14 @@ call iniciar -> {
 	AssertC.assert_clean ( );
 	
 	#invoke __COMPILER__ -> HEAP ( ) :: ALL;
-	
+
+    def f1 : Fungo = init Fungo();
+
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+
+
 }
 package UNIT {
 

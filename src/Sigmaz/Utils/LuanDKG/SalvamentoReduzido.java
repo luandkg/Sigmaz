@@ -71,8 +71,8 @@ public class SalvamentoReduzido {
 
             for (Identificador IdentificadorC : ObjetoC.getIdentificadores()) {
 
-                ITextoC.Adicionar( " ID " + IdentificadorC.getNome() + " = " + "\""
-                        + IdentificadorC.getValor() + "\"");
+                ITextoC.Adicionar( " ID " + Codifica(IdentificadorC.getNome()) + " = " + "\""
+                        + Codifica(IdentificadorC.getValor()) + "\"");
 
             }
 

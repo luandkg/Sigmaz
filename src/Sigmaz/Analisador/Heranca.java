@@ -494,8 +494,10 @@ public class Heranca {
         }
 
 
+        int n =0;
         for (AST migrando : Base_Corpo.getASTS()) {
-            Super_Corpo.getASTS().add(migrando);
+            Super_Corpo.getASTS().add(n,migrando);
+            n+=1;
         }
 
     }

@@ -15,8 +15,8 @@ public class AppSigmaz {
     public static void main(String[] args) {
 
 
-      //  Gerador G = new Gerador();
-      //  G.gerarPrint();
+        //  Gerador G = new Gerador();
+        //  G.gerarPrint();
 
 
         AUTO();
@@ -32,9 +32,9 @@ public class AppSigmaz {
         String mUML = "res/uml/uml.txt";
         String mIntellisense = "res/intellisenses/";
 
-        int ARQUIVO = 65;
+        int ARQUIVO = 1;
 
-        switch (Fases.TESTES) {
+        switch (Fases.EXECUTAR) {
 
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
@@ -58,20 +58,14 @@ public class AppSigmaz {
         }
 
 
-
-
     }
 
     public static void AUTO() {
 
+
+
         OAVersion OA = new OAVersion("Sigmaz.oa");
         OA.init();
-
-        OARoadmap oar = new OARoadmap("res/oa/Roadmap.oa");
-        oar.receber("Roadmap.txt");
-     //   oar.exportar("roadmap.png");
-
-        oar.exportarEscalado("roadmap.png");
 
 
         OATodo mTodo = new OATodo("res/oa/Todo.oa");
@@ -82,14 +76,30 @@ public class AppSigmaz {
 
         ArrayList<Anotacao> eInfos = new ArrayList<Anotacao>();
 
-        eInfos.add(new Anotacao("i","Ideias",new Color(39, 174, 96)));
-        eInfos.add(new Anotacao("f","Fazendo",new Color(230, 126, 34)));
-        eInfos.add(new Anotacao("c","Cancelado",new Color(192, 57, 43)));
-        eInfos.add(new Anotacao("t","Terminado",new Color(41, 128, 185)));
+        eInfos.add(new Anotacao("i", "Ideias", new Color(39, 174, 96)));
+        eInfos.add(new Anotacao("f", "Fazendo", new Color(230, 126, 34)));
+        eInfos.add(new Anotacao("c", "Cancelado", new Color(192, 57, 43)));
+        eInfos.add(new Anotacao("t", "Terminado", new Color(41, 128, 185)));
 
-        mTodo.exportar("todo.png",eInfos);
+        mTodo.exportar("todo.png", eInfos);
 
-        mTodo.exportarDiario("C:\\Users\\Luand\\OneDrive\\Imagens\\todos\\sigmaz_",".png",eInfos);
+        mTodo.exportarDiario("C:\\Users\\Luand\\OneDrive\\Imagens\\todos\\sigmaz_", ".png", eInfos);
+
+
+
+        String IMG_ROAD = "https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/road.png";
+        String IMG_CHANGE = "https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/change.png";
+
+
+        OARoadmap mOARoadmap = new OARoadmap("res/oa/Roadmap.oa");
+        mOARoadmap.receber("Roadmap.txt");
+        mOARoadmap.exportarImagem("roadmap.png",new Color(52, 73, 94));
+        mOARoadmap.exportarMarkDown("ROADMAP.md", "Linguagem de Programação Estruturada - Implementações", IMG_ROAD, "RoadMap - Sigmaz");
+
+        OARoadmap mChangeList = new OARoadmap("res/oa/ChangeList.oa");
+        mChangeList.receber("ChangeList.txt");
+        mChangeList.exportarImagem("changelist.png",new Color(230, 126, 34));
+        mChangeList.exportarMarkDown("CHANGELIST.md", "Linguagem de Programação Estruturada - Alterações", IMG_CHANGE, "ChangeList - Sigmaz");
 
 
     }

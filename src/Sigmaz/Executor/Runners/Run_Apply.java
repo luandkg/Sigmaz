@@ -93,46 +93,19 @@ public class Run_Apply {
                 //  System.out.println("Retorno ESQ : " + eTipado);
                 // System.out.println("Retorno DIR x : " + mAST.getRetornoTipo());
 
-                //    System.out.println("CASTING : " + mAST.getRetornoTipo() + " -> " + mTipagem);
+                 //  System.out.println("CASTING : " + aplicar.getRetornoTipo() + " -> " + mTipagem);
 
-                if (mEscopo.existeCast(mTipagem)) {
+                Run_Cast mCast = new Run_Cast(mRunTime, mEscopo);
 
+                String res = mCast.realizarCast(mTipagem, aplicar.getRetornoTipo(), aplicar.getConteudo());
 
-                    Run_Cast mCast = new Run_Cast(mRunTime, mEscopo);
-                    String res = mCast.realizarGetterCast(mTipagem, aplicar.getRetornoTipo(), aplicar.getConteudo());
-
-                    if (res == null) {
-
-                        receber.setValor(aplicar.getConteudo());
-                        receber.setNulo(aplicar.getIsNulo());
-                        receber.setTipo(mTipagem);
-
-                    } else {
-                        receber.setValor(aplicar.getConteudo());
-                        receber.setNulo(aplicar.getIsNulo());
-                        receber.setTipo(mTipagem);
-                    }
-
-                } else if (mEscopo.existeCast(aplicar.getRetornoTipo())) {
-
-                    Run_Cast mCast = new Run_Cast(mRunTime, mEscopo);
-                    String res = mCast.realizarSetterCast(aplicar.getRetornoTipo(), mTipagem, aplicar.getConteudo());
-
-                    if (res == null) {
-                        receber.setValor(aplicar.getConteudo());
-                        receber.setNulo(aplicar.getIsNulo());
-                        receber.setTipo(aplicar.getRetornoTipo());
-                    } else {
-                        receber.setValor(aplicar.getConteudo());
-                        receber.setNulo(aplicar.getIsNulo());
-                        receber.setTipo(aplicar.getRetornoTipo());
-                    }
-
+                if (res == null) {
+                    receber.setValor(aplicar.getConteudo());
+                    receber.setNulo(aplicar.getIsNulo());
                 } else {
-
-                    mRunTime.getErros().add("Retorno incompativel  g: " + mTipagem + " vx " + aplicar.getRetornoTipo());
-
-
+                    receber.setValor(aplicar.getConteudo());
+                    receber.setNulo(aplicar.getIsNulo());
+                    receber.setTipo(mTipagem);
                 }
 
             }

@@ -1,6 +1,6 @@
    PACOTE OATodo
     {
-      ID Indice = "68"
+      ID Indice = "71"
       PACOTE Todos
        {
          OBJETO Item { 
@@ -23,7 +23,7 @@
          }
          OBJETO Item { 
             ID Indice = "8"
-            ID Texto = " Biblioteca - Tempo "
+            ID Texto = " Biblioteca @H Tempo "
             ID Data = "2020 07 08"
             ID Status = "i"
             ID Tags = ""
@@ -73,7 +73,7 @@
             ID Alterado = "2020 07 14"
             ID Status = "t"
             ID Tags = ""
-            ID Tarefas = "@arvore @posicao @render "
+            ID Tarefas = "@AArvore @APosicao @ARender "
          }
          OBJETO Item { 
             ID Indice = "14"
@@ -89,7 +89,34 @@
             ID Texto = " Roadmap Renderizador "
             ID Data = "2020 07 15"
             ID Alterado = "2020 07 15"
+            ID Status = "c"
+            ID Tags = ""
+            ID Tarefas = ""
+         }
+         OBJETO Item { 
+            ID Indice = "69"
+            ID Texto = " Argumentos Opcionais "
+            ID Data = "2020 07 15"
+            ID Alterado = "2020 07 15"
             ID Status = "i"
+            ID Tags = ""
+            ID Tarefas = ""
+         }
+         OBJETO Item { 
+            ID Indice = "70"
+            ID Texto = " UML "
+            ID Data = "2020 07 15"
+            ID Alterado = "2020 07 15"
+            ID Status = "i"
+            ID Tags = ""
+            ID Tarefas = "Montagem Renderização "
+         }
+         OBJETO Item { 
+            ID Indice = "71"
+            ID Texto = " ChangeList "
+            ID Data = "2020 07 15"
+            ID Alterado = "2020 07 15"
+            ID Status = "t"
             ID Tags = ""
             ID Tarefas = ""
          }

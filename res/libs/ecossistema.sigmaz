@@ -41,19 +41,11 @@ package Ecossistema {
 		mockiz Tipo : CelulaTipos = CelulaTipos :: PROCARIONTE;
 	}
 
-	struct Fungo {
-		init Fungo ( ) {
-			
-		}
-		mockiz Tipo : CelulaTipos = CelulaTipos :: EUCARIONTE;
-	}
 
-	struct Saccharomyces with Fungo {
-		init Saccharomyces ( ) -> Fungo ( ) {
-			
-		}
-		
-	}
+
+
+
+
 	model Organismo {
 		define nome : string;
 		define idade : num;
@@ -71,6 +63,9 @@ package Ecossistema {
 		define nome : string = "";
 		define idade : num = 0;
 		mockiz Tipo : CelulaTipos = CelulaTipos :: EUCARIONTE;
+
+		init Planta() -> Vegetal () {}
+
 		act setNome ( aNome : string ) {
 			
 		}
@@ -120,4 +115,27 @@ package Ecossistema {
 
 	}
 	
+}
+
+package Fungos{
+
+    refer Ecossistema;
+
+	struct Fungo {
+
+		mockiz Tipo : CelulaTipos = CelulaTipos :: EUCARIONTE;
+
+		init Fungo ( ) {
+
+		}
+	}
+
+	struct Saccharomyces with Fungo {
+		init Saccharomyces ( ) -> Fungo ( ) {
+
+		}
+
+	}
+
+
 }

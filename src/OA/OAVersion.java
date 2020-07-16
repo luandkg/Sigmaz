@@ -40,9 +40,6 @@ public class OAVersion {
         Pacote Branch = null;
 
 
-
-
-
         int ci = 1;
 
         if (b.length() == 0) {
@@ -87,7 +84,18 @@ public class OAVersion {
             P.salvarLinear();
         }
 
-        int Trabalhos = Branches.getPacotes().size() * 24;
+        //  int Trabalhos = Branches.getPacotes().size() * 24;
+
+        int Trabalhos = 0;
+        for (Pacote CBranch : Branches.getPacotes()) {
+
+            String CBT = CBranch.Identifique("Count").getValor();
+
+            int CBTI = get_string_num(CBT, 1);
+            Trabalhos += CBTI;
+        }
+
+
         int Trabalhos_Versao = 0;
 
         int Trabalhos_Antes = Trabalhos;
@@ -101,28 +109,28 @@ public class OAVersion {
 
         //System.out.println("TRABALHADOR :: " + Trabalhos_Antes + " -->> " + Trabalhos + " com " + ri);
 
-        int ti = Trabalhos + ci;
+        int ti = Trabalhos;
 
         String Full = v + "." + min3(Trabalhos_Versao) + "." + ti;
 
         int mi = ci;
-        int rr= 1;
+        int rr = 1;
 
-        while (mi>=50){
+        while (mi >= 50) {
 
             Pacote Release = Releases.PacoteComAtributoUnico("Release", "Date", Hoje);
-            String FullRelease = v + "." + min3(Trabalhos_Versao) + " R" + rr;
+            String FullRelease = Full + " R" + rr;
 
             Release.Identifique("Releaser").setValor(FullRelease);
 
             OA.Identifique("Releaser").setValor(FullRelease);
 
-            mi-=50;
-            rr+=1;
+            mi -= 50;
+            rr += 1;
         }
 
 
-
+        // reorganizar(v,Branches,Releases);
 
         OA.Identifique("Version").setValor(v);
         OA.Identifique("Branch").setValor(Hoje);
@@ -132,6 +140,69 @@ public class OAVersion {
         arquivo.Salvar(mArquivo);
     }
 
+
+    private void reorganizar(String v, Pacote Branches, Pacote Releases) {
+
+        int Trabalhos = 0;
+
+        for (Pacote CBranch : Branches.getPacotes()) {
+
+            String CBT = CBranch.Identifique("Count").getValor();
+
+            String C = CBranch.Identifique("Count").getValor();
+
+            String eData = CBranch.Identifique("Date").getValor();
+
+            int ci = get_string_num(C, 1);
+
+            Trabalhos += ci;
+
+            int Trabalhos_Versao = 0;
+
+            int Trabalhos_Antes = Trabalhos;
+
+            int ri = 50;
+
+            while (Trabalhos_Antes >= ri) {
+                Trabalhos_Antes -= ri;
+                Trabalhos_Versao += 1;
+            }
+
+            //System.out.println("TRABALHADOR :: " + Trabalhos_Antes + " -->> " + Trabalhos + " com " + ri);
+
+            int ti = Trabalhos_Antes;
+
+            String Full = v + "." + min3(Trabalhos_Versao) + "." + ti;
+
+            System.out.println(eData + " >> " + Full + " :: " + ci);
+
+            int rr = 1;
+
+            int mi = ci;
+            String FullRelease = Full + " R1";
+            int si = 0;
+            int gi = ci;
+
+            while (mi >= 50) {
+                si += 50;
+
+                FullRelease = v + "." + min3(Trabalhos_Versao) + "." + (gi - si) + " R" + rr;
+
+                Pacote Release = Releases.PacoteComAtributoUnico("Release", "Date", eData);
+
+                Release.Identifique("Releaser").setValor(FullRelease);
+
+                //  OA.Identifique("Releaser").setValor(FullRelease);
+
+                mi -= 50;
+                rr += 1;
+            }
+
+            System.out.println("\t - " + FullRelease);
+
+        }
+
+    }
 
     private static String string_num(String v, int min) {
 

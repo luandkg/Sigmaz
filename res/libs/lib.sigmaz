@@ -14,6 +14,8 @@ import "lista/lista.sigmaz";
 import "lista/iterador.sigmaz";
 import "pacote_tempo.sigmaz";
 import "ecossistema.sigmaz";
+import "ecologia.sigmaz";
+
 stages Numeros -> {
 	POSITIVO , NEGATIVO , ZERO 
 }

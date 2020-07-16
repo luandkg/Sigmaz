@@ -66,7 +66,7 @@ public class IS_Cast {
         for (AST Sub2 : eTudo.getASTS()) {
 
             if (Sub2.mesmoTipo("GETTER")) {
-                String eConteudo = Sub2.getValor();
+                String eConteudo =  eTudo.getNome() + " <<-- " + Sub2.getValor() ;
                 mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_GETTER);
                 mais += 30;
             }
@@ -77,7 +77,7 @@ public class IS_Cast {
         for (AST Sub2 : eTudo.getASTS()) {
 
             if (Sub2.mesmoTipo("SETTER")) {
-                String eConteudo = Sub2.getValor();
+                String eConteudo =eTudo.getNome()+ " -->> " + Sub2.getValor();
                 mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_SETTER);
                 mais += 30;
             }

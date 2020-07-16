@@ -79,6 +79,8 @@ public class LuanDKG {
 
 		SalvamentoC.Pacote_Listar(ITextoC, "   ", this.getPacotes());
 
+		//System.out.println(ITextoC.toString());
+
 		return ITextoC.toString();
 	}
 

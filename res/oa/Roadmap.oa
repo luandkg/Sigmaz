@@ -194,3 +194,6 @@
 2020 07 14  -->>  Renderizador TODO
 2020 07 14  -->>  Renderizador de Roadmap
 2020 07 15  -->>  Renderizador OATodo Completo
+2020 07 15  -->>  Inicializador padrão de Struct
+2020 07 15  -->>  Reorganização do Casting
+2020 07 15  -->>  Correção do Releaser no AOVersion

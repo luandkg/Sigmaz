@@ -38,5 +38,9 @@ act pular ( ) {
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 	def p1 : num = num ( f );
 	def p2 : pos = pos ( 12 );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+
+
+
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }

@@ -15,7 +15,7 @@ package Organismos {
 package Animais {
 	refer Organismos;
 	struct Gato with Mamifero {
-		init Gato ( a : num ) {
+		init Gato ( a : num ) -> Mamifero() {
 			_a = a;
 		}
 		restrict : 

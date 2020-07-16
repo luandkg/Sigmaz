@@ -126,18 +126,8 @@ public class OARoadmap {
 
     }
 
-    public void exportarEscalado(String eArquivo) {
 
-        BufferedImage IMG_ITEM = null;
-        BufferedImage IMG_ROAD = null;
-
-        try {
-            IMG_ITEM = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\define_all.png"));
-            IMG_ROAD = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\road.png"));
-
-        } catch (IOException e) {
-        }
-
+    public ArrayList<Agrupador<String>> getRoads() {
 
         String Documento = "";
 
@@ -194,7 +184,7 @@ public class OARoadmap {
                 String eResto = eLinha.substring(18);
 
                 if (eResto.length() > 31) {
-                //    eResto = eResto.substring(0, 30) + "...";
+                    //    eResto = eResto.substring(0, 30) + "...";
                 }
 
                 //    System.out.println(ePrefixo + " :: " + eResto);
@@ -203,6 +193,25 @@ public class OARoadmap {
             }
 
         }
+
+        return mGrupos;
+    }
+
+    public void exportarImagem(String eArquivo,Color eBarra) {
+
+        BufferedImage IMG_ITEM = null;
+        BufferedImage IMG_ROAD = null;
+
+        try {
+            IMG_ITEM = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\define_all.png"));
+            IMG_ROAD = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\road.png"));
+
+        } catch (IOException e) {
+        }
+
+
+        ArrayList<Agrupador<String>> mGrupos = getRoads();
+
 
         int Alturamin = 220;
 
@@ -218,20 +227,20 @@ public class OARoadmap {
                 alturando += 30;
             }
 
-            if (intercalador==0){
+            if (intercalador == 0) {
 
                 if (alturando > acima) {
                     acima = alturando;
                 }
 
-                intercalador=1;
-            }else{
+                intercalador = 1;
+            } else {
 
                 if (alturando > abaixo) {
                     abaixo = alturando;
                 }
 
-                intercalador=0;
+                intercalador = 0;
             }
 
 
@@ -239,7 +248,6 @@ public class OARoadmap {
 
         Alturamin = 220 + acima + abaixo;
 
-        Color eBarra = new Color(52, 73, 94);
 
         int separador = 30;
 
@@ -248,7 +256,7 @@ public class OARoadmap {
         int eLargura = eLarguraGrupo;
 
         if (mGrupos.size() > 0) {
-            eLargura = eLarguraGrupo * (mGrupos.size());
+            eLargura = (eLarguraGrupo * (mGrupos.size())) + 200;
         }
 
         BufferedImage img = new BufferedImage(eLargura, Alturamin, BufferedImage.TYPE_INT_ARGB);
@@ -262,19 +270,20 @@ public class OARoadmap {
         g.fillRect(0, acima, eLargura, 100);
 
 
-        int y = 110;
+        g.setColor(new Color(52, 73, 94));
+
         int c = 0;
 
-        intercalador=0;
+        intercalador = 0;
 
         for (Agrupador<String> Grupo : mGrupos) {
 
 
-            if (intercalador==0){
+            if (intercalador == 0) {
 
-                int cAltura = acima-100;
+                int cAltura = acima - 100;
 
-                g.drawImage(IMG_ROAD, (c * eLarguraGrupo) + (eLarguraGrupo / 2) - (IMG_ROAD.getWidth() / 2), cAltura +120, null);
+                g.drawImage(IMG_ROAD, (c * eLarguraGrupo) + (eLarguraGrupo / 2) - (IMG_ROAD.getWidth() / 2), cAltura + 120, null);
 
 
                 centerString(g, new Rectangle(c * eLarguraGrupo, cAltura, eLarguraGrupo, 100), Grupo.getNome(), new Font("TimesRoman", Font.BOLD, 50));
@@ -291,9 +300,9 @@ public class OARoadmap {
                 }
 
 
-                intercalador=1;
-            }else{
-                int cAltura = acima+110;
+                intercalador = 1;
+            } else {
+                int cAltura = acima + 110;
 
                 g.drawImage(IMG_ROAD, (c * eLarguraGrupo) + (eLarguraGrupo / 2) - (IMG_ROAD.getWidth() / 2), cAltura - 90, null);
 
@@ -311,9 +320,8 @@ public class OARoadmap {
 
                 }
 
-                intercalador=0;
+                intercalador = 0;
             }
-
 
 
             c += 1;
@@ -331,159 +339,6 @@ public class OARoadmap {
 
     }
 
-
-    public void exportar(String eArquivo) {
-
-        BufferedImage IMG_ITEM = null;
-        BufferedImage IMG_ROAD = null;
-
-        try {
-            IMG_ITEM = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\define_all.png"));
-            IMG_ROAD = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\road.png"));
-
-        } catch (IOException e) {
-        }
-
-
-        String Documento = "";
-
-        File arq = new File(mArquivo);
-
-        if (arq.exists()) {
-            Documento = Texto.Ler(mArquivo);
-        }
-
-
-        ArrayList<String> mLinhas = new ArrayList<String>();
-
-        int i = 0;
-        int o = Documento.length();
-
-        String mLinha = "";
-
-        while (i < o) {
-            String l = Documento.charAt(i) + "";
-
-            if (l.contentEquals("\n")) {
-                if (mLinha.length() > 0) {
-                    if (mLinha.replace(" ", "").length() > 0) {
-                        if (mLinha.replace("\t", "").length() > 0) {
-                            mLinhas.add(mLinha);
-                        }
-                    }
-                }
-                mLinha = "";
-            } else {
-                mLinha += l;
-            }
-            i += 1;
-        }
-
-        if (mLinha.length() > 0) {
-            if (mLinha.replace(" ", "").length() > 0) {
-                if (mLinha.replace("\t", "").length() > 0) {
-                    mLinhas.add(mLinha);
-                }
-            }
-        }
-
-
-        ArrayList<Agrupador<String>> mGrupos = new ArrayList<Agrupador<String>>();
-
-        Organizador<String> mOrganizador = new Organizador<String>();
-
-
-        for (String eLinha : mLinhas) {
-            if (eLinha.length() > 19) {
-
-                String ePrefixo = eLinha.substring(0, 10);
-                String eResto = eLinha.substring(18);
-
-                if (eResto.length() > 31) {
-                    eResto = eResto.substring(0, 30) + "...";
-                }
-
-                //    System.out.println(ePrefixo + " :: " + eResto);
-
-                mOrganizador.agrupar(ePrefixo, mGrupos).adicionar(eResto);
-            }
-
-        }
-
-        int Alturamin = 220;
-
-        for (Agrupador<String> Grupo : mGrupos) {
-            int alturando = 220;
-            for (String mObjeto : Grupo.getObjetos()) {
-                alturando += 30;
-            }
-
-            if (alturando > Alturamin) {
-                Alturamin = alturando;
-            }
-        }
-
-
-        Color eBarra = new Color(52, 73, 94);
-
-        int separador = 30;
-
-        int eLarguraGrupo = 600;
-
-        int eLargura = eLarguraGrupo;
-
-        if (mGrupos.size() > 0) {
-            eLargura = eLarguraGrupo * (mGrupos.size());
-        }
-
-        BufferedImage img = new BufferedImage(eLargura, Alturamin, BufferedImage.TYPE_INT_ARGB);
-        Graphics g = img.getGraphics();
-
-        g.setColor(Color.WHITE);
-        g.fillRect(0, 0, eLargura, Alturamin);
-
-
-        g.setColor(eBarra);
-        g.fillRect(0, 0, eLargura, 100);
-
-
-        int y = 110;
-        int c = 0;
-
-        for (Agrupador<String> Grupo : mGrupos) {
-
-            int cAltura = y;
-
-            g.drawImage(IMG_ROAD, (c * eLarguraGrupo) + (eLarguraGrupo / 2) - (IMG_ROAD.getWidth() / 2), y - 90, null);
-
-
-            centerString(g, new Rectangle(c * eLarguraGrupo, y, eLarguraGrupo, 100), Grupo.getNome(), new Font("TimesRoman", Font.BOLD, 50));
-
-            cAltura += 100;
-
-            for (String mObjeto : Grupo.getObjetos()) {
-
-
-                leftString(g, new Rectangle((c * eLarguraGrupo) + 80, cAltura, eLarguraGrupo, 100), mObjeto, new Font("TimesRoman", Font.BOLD, 30), IMG_ITEM);
-
-                cAltura += 30;
-
-            }
-
-            c += 1;
-
-        }
-
-
-        try {
-            File outputfile = new File(eArquivo);
-            ImageIO.write(img, "png", outputfile);
-        } catch (
-                IOException e) {
-
-        }
-
-    }
 
     public void centerString(Graphics g, Rectangle r, String s,
                              Font font) {
@@ -524,6 +379,36 @@ public class OARoadmap {
         g.setFont(font);
 
         g.drawString(s, r.x + 40, r.y + b);
+    }
+
+    public void exportarMarkDown(String eArquivo, String eTitulo, String eLinkImagem, String eDesImagem) {
+
+        ArrayList<Agrupador<String>> mGrupos = getRoads();
+
+
+        String eConteudo = "";
+
+        eConteudo +="![" + eDesImagem+ "](" + eLinkImagem + ")";
+        eConteudo+="\n\n";
+
+        eConteudo+="\n" + eTitulo;
+        eConteudo+="\n\n";
+
+        for (Agrupador<String> Grupo : mGrupos) {
+
+
+
+            for(String eLinha : Grupo.getObjetos()){
+
+                eConteudo+="\n\t\t" + Grupo.getNome() + " -->> " + eLinha;
+
+            }
+
+            eConteudo+="\n\n";
+        }
+
+        Texto.Escrever(eArquivo, eConteudo);
+
     }
 
 }

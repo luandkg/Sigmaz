@@ -1,158 +1,210 @@
+![RoadMap - Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/road.png)
 
- 
-![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/road.png)
 
 Linguagem de Programação Estruturada - Implementações
 
-    2020 06 13  -->>  Lexer
-    2020 06 13  -->>  Parser
-    2020 06 13  -->>  Compiler
-     
-    
-    2020 06 14 -->>  Action
-    2020 06 14 -->>  Function
-    2020 06 14 -->>  Call
-    2020 06 14 -->>  Invoke
-    2020 06 14 -->>  Def
-    2020 06 14 -->>  Define
-    2020 06 14 -->>  Value
-    2020 06 14 -->>  Types : Num, String E Bool
-    2020 06 14 -->>  Require
-    2020 06 14 -->>  Arguments
-    2020 06 14 -->>  Body
-    2020 06 14 -->>  Param
-    2020 06 14 -->>  Runtime
-            
-    
-    2020 06 15 -->>  Mockiz
-    2020 06 15 -->>  Moc
-    2020 06 15 -->>  Value
-    2020 06 15 -->>  Match
-    2020 06 15 -->>  Mismatch
-    2020 06 15 -->>  Analise
-    2020 06 15 -->>  Apply
-    
-    
-    2020 06 16 -->>  While
-    2020 06 16 -->>  Step
-    2020 06 16 -->>  Continue
-    2020 06 16 -->>  Cancel
-            
-    
-    2020 06 17 -->>  Daz
-    2020 06 17 -->>  Value : Reestruturação
-    2020 06 17 -->>  Operation
-    2020 06 17 -->>  Uniao : Run_function Run_action E Run_actionfunction
-    2020 06 17 -->>  Compilacao Em Lote
-            
-    
-    2020 06 18 -->>  Cast
-            
-    
-    2020 06 19 -->>  Primitive To Cast
-    2020 06 19 -->>  Cast To Primitive
-            
-    
-    2020 06 20 -->>  Reorganizacao De Escopo
-    2020 06 20 -->>  Reorganizacao Do Ast_value
-    2020 06 20 -->>  Reorganizacao Do Run_func
-    2020 06 20 -->>  Struct
-    2020 06 20 -->>  Orientacao A Objeto - Inicio
-    2020 06 20 -->>  Implementando Heranca - Inicio
-            
-    
-    2020 06 21 -->>  Reorganizacao Em Stacks
-    2020 06 21 -->>  Recursao Em Oo
-    2020 06 21 -->>  Inicializadores De Struct
-    2020 06 21 -->>  Heranca Do Inicializador De Struct
-    2020 06 21 -->>  Stages
-            
-    
-    2020 06 22  -->>  Contadores No Runtime
-    2020 06 22  -->>  Aprimoramento Do Sistema De Analise : Unicidade Execute Outros
-    2020 06 22  -->>  Estrutural
-    2020 06 22  -->>  Reorganizacao Do Ast_value
-    2020 06 22  -->>  Separacao Em Duas Partes Do Ast_value : Ast_value e Ast_value_argument
-                
-    
-    2020 06 23  -->>  Visibilidade : All, Restrict E Extern
-    2020 06 23  -->>  Exportacao De Operadores Extern De Structs
-    2020 06 23  -->>  Remocao De Struct Do Heap
-    2020 06 23  -->>  Pilha De Extern
-    2020 06 23  -->>  Operador Seta Para Extern
-    2020 06 23  -->>  Carregamento De Extern Durante Run
-    2020 06 23  -->>  Escopo This
-    2020 06 23  -->>  Stage_def : Function Nameof, Function Valueof, Operation Match e Operation Unmatch
-    2020 06 23  -->>  Library : Time, Date, Datetime
-            
-    
-    2020 06 24  -->>  Generic Type
-    2020 06 24  -->>  Alter Type Runtime -> Generic Type
-            
-    
-    2020 06 25  -->>  Ident
-    2020 06 25  -->>  Ident Libraries
-    2020 06 25  -->>  Ident All
-    2020 06 25  -->>  Value Ternal
-    2020 06 25  -->>  Required
-    2020 06 25  -->>  Inclusao Dos Nomes De Funcoes Externas Na Analise
-    
-    
-    2020 06 26  -->>  Reestruturacao Da Heranca
-    2020 06 26  -->>  Reestruturacao De Inicializadores De Heranca
-    2020 06 26  -->>  External
-    2020 06 26  -->>  Generic Em Tipagem De Functions
-    2020 06 26  -->>  Model
-    2020 06 26  -->>  Function Return Generic
-    2020 06 26  -->>  Generic Arguments
-            
-    
-    2020 06 28  -->>  Operadores Sum,sub,mux E Div
-    2020 06 28  -->>  Ast_return - Organizando
-    2020 06 28  -->>  Ast_type - Criacao
-    2020 06 28  -->>  Ast_value - Reorganizando Ultima Parte
-    2020 06 28  -->>  Unary
-           
-    
-    2020 06 29  -->>  Type
-    2020 06 29  -->>  Unificacao Do Run_func
-    2020 06 29  -->>  Posicao E Linha De Erro
-    2020 06 29  -->>  Comentarios Com Multiplas Linhas
-            
-    
-    2020 06 30  -->>  Operator - Reorganização
-    2020 06 30  -->>  Debugger - Separação
-    2020 06 30  -->>  Ast_value : Container
-    2020 06 30  -->>  Ast_try
-            
-    
-    
-    2020 07 02  -->>  Try : 3 Opcoes
-    2020 07 02  -->>  Referenciamento Em Argumento
-    2020 07 02  -->>  Syntax Hightlight - Intellj
-    2020 07 02  -->>  Ast_call : Auto Refer
-    2020 07 02  -->>  Ast_argument Struct
-    2020 07 02  -->>  Ast_argument Type
-            
-    
-    2020 07 03  -->>  Ast_Package
-    2020 07 03  -->>  Ast_Refer
-    2020 07 03  -->>  Exportar Conteudo Para Global Com Refer
-            
-    
-    2020 07 04  -->>  Analisar Refer
-    
-    
-    2020 07 05  -->>  Referenciamento De Pacotes
-    2020 07 05  -->>  Analise Do Referenciamento De Pacotes
-    2020 07 05  -->>  Analise Do Escopo De Pacotes
-    2020 07 05  -->>  Sistema de Versionamento
-    2020 07 05  -->>  Sistema de Organização de Implementações
-    2020 07 05  -->>  AST_Refer
-    
-    
-    2020 07 06  -->>  Herança Entre Pacotes
-    2020 07 06  -->>  Unificação de Pacotes com mesmo nome
-    2020 07 06  -->>  Implementando AST_Each
-    2020 07 06  -->>  Externalização de Struct de Pacotes
-    2020 07 06  -->>  Transformação do AST_STAGES -> AST_STRUCT com EXTENDED STAGES
+
+		2020 06 13 -->> Lexer
+		2020 06 13 -->> Parser
+		2020 06 13 -->> Compiler
+
+
+		2020 06 14 -->> Action
+		2020 06 14 -->> Function
+		2020 06 14 -->> Call
+		2020 06 14 -->> Invoke
+		2020 06 14 -->> Def
+		2020 06 14 -->> Define
+		2020 06 14 -->> Value
+		2020 06 14 -->> Types : Num, String E Bool
+		2020 06 14 -->> Require
+		2020 06 14 -->> Arguments
+		2020 06 14 -->> Body
+		2020 06 14 -->> Param
+		2020 06 14 -->> Runtime
+
+
+		2020 06 15 -->> Mockiz
+		2020 06 15 -->> Moc
+		2020 06 15 -->> Value
+		2020 06 15 -->> Match
+		2020 06 15 -->> Mismatch
+		2020 06 15 -->> Analise
+		2020 06 15 -->> Apply
+
+
+		2020 06 16 -->> While
+		2020 06 16 -->> Step
+		2020 06 16 -->> Continue
+		2020 06 16 -->> Cancel
+
+
+		2020 06 17 -->> Daz
+		2020 06 17 -->> Value : Reestruturação
+		2020 06 17 -->> Operation
+		2020 06 17 -->> Uniao : Run_function Run_action E Run_actionfunction
+		2020 06 17 -->> Compilacao Em Lote
+
+
+		2020 06 18 -->> Cast
+
+
+		2020 06 19 -->> Primitive To Cast
+		2020 06 19 -->> Cast To Primitive
+
+
+		2020 06 20 -->> Reorganizacao De Escopo
+		2020 06 20 -->> Reorganizacao Do Ast_value
+		2020 06 20 -->> Reorganizacao Do Run_func
+		2020 06 20 -->> Struct
+		2020 06 20 -->> Orientacao A Objeto - Inicio
+		2020 06 20 -->> Implementando Heranca - Inicio
+
+
+		2020 06 21 -->> Reorganizacao Em Stacks
+		2020 06 21 -->> Recursao Em Oo
+		2020 06 21 -->> Inicializadores De Struct
+		2020 06 21 -->> Heranca Do Inicializador De Struct
+		2020 06 21 -->> Stages
+
+
+		2020 06 22 -->> Contadores No Runtime
+		2020 06 22 -->> Aprimoramento Do Sistema De Analise : Unicidade Execute Outros
+		2020 06 22 -->> Estrutural
+		2020 06 22 -->> Reorganizacao Do Ast_value
+		2020 06 22 -->> Separacao Em Duas Partes Do Ast_value : Ast_value e Ast_value_argument
+
+
+		2020 06 23 -->> Visibilidade : All, Restrict E Extern
+		2020 06 23 -->> Exportacao De Operadores Extern De Structs
+		2020 06 23 -->> Remocao De Struct Do Heap
+		2020 06 23 -->> Pilha De Extern
+		2020 06 23 -->> Operador Seta Para Extern
+		2020 06 23 -->> Carregamento De Extern Durante Run
+		2020 06 23 -->> Escopo This
+		2020 06 23 -->> Stage_def : Function Nameof, Function Valueof
+		2020 06 23 -->> Operation Match e Operation Unmatch
+		2020 06 23 -->> Library : Time, Date, Datetime
+
+
+		2020 06 24 -->> Generic Type
+		2020 06 24 -->> Alter Type Runtime -> Generic Type
+
+
+		2020 06 25 -->> Ident
+		2020 06 25 -->> Ident Libraries
+		2020 06 25 -->> Ident All
+		2020 06 25 -->> Value Ternal
+		2020 06 25 -->> Required
+		2020 06 25 -->> Inclusao Dos Nomes De Funcoes Externas Na Analise
+
+
+		2020 06 26 -->> Reestruturacao Da Heranca
+		2020 06 26 -->> Reestruturacao De Inicializadores De Heranca
+		2020 06 26 -->> External
+		2020 06 26 -->> Generic Em Tipagem De Functions
+		2020 06 26 -->> Model
+		2020 06 26 -->> Function Return Generic
+		2020 06 26 -->> Generic Arguments
+
+
+		2020 06 28 -->> Operadores Sum,sub,mux E Div
+		2020 06 28 -->> Ast_return - Organizando
+		2020 06 28 -->> Ast_type - Criacao
+		2020 06 28 -->> Ast_value - Reorganizando Ultima Parte
+		2020 06 28 -->> Unary
+
+
+		2020 06 29 -->> Type
+		2020 06 29 -->> Unificacao Do Run_func
+		2020 06 29 -->> Posicao E Linha De Erro
+		2020 06 29 -->> Comentarios Com Multiplas Linhas
+
+
+		2020 06 30 -->> Operator - Reorganização
+		2020 06 30 -->> Debugger - Separação
+		2020 06 30 -->> Ast_value : Container
+		2020 06 30 -->> Ast_try
+
+
+		2020 07 02 -->> Try : 3 Opcoes
+		2020 07 02 -->> Referenciamento Em Argumento
+		2020 07 02 -->> Syntax Hightlight - Intellj
+		2020 07 02 -->> Ast_call : Auto Refer
+		2020 07 02 -->> Ast_argument Struct
+		2020 07 02 -->> Ast_argument Type
+
+
+		2020 07 03 -->> Ast_Package
+		2020 07 03 -->> Ast_Refer
+		2020 07 03 -->> Exportar Conteudo Para Global Com Refer
+
+
+		2020 07 04 -->> Analisar Refer
+
+
+		2020 07 05 -->> Referenciamento De Pacotes
+		2020 07 05 -->> Analise Do Referenciamento De Pacotes
+		2020 07 05 -->> Analise Do Escopo De Pacotes
+		2020 07 05 -->> Sistema de Versionamento
+		2020 07 05 -->> Sistema de Organização de Implementações
+		2020 07 05 -->> AST_Refer
+
+
+		2020 07 06 -->> Herança Entre Pacotes
+		2020 07 06 -->> Unificação de Pacotes com mesmo nome
+		2020 07 06 -->> Implementando AST_Each
+		2020 07 06 -->> Externalização de Struct de Pacotes
+		2020 07 06 -->> Transformação do AST_STAGES -> AST_STRUCT com EXTENDED STAGES
+		2020 07 06 -->> OAVersion
+		2020 07 06 -->> OARoadmap
+
+
+		2020 07 07 -->> Reorganizando Refer
+		2020 07 07 -->> AOVersion bug no Release
+
+
+		2020 07 08 -->> Intelsense
+		2020 07 08 -->> Extern Struct de Packages
+		2020 07 08 -->> Obter por Contexto - Usando Refer
+		2020 07 08 -->> OATODO
+
+
+		2020 07 09 -->> Correção no Identador "Ponto e virgula apos start type {};
+		2020 07 09 -->> Run_Dot para reorganizar Type e Struct
+		2020 07 09 -->> Run_Apply - Re Implamentação
+		2020 07 09 -->> Run_Internal - Implementação dos Internals STRUCT_FUNC STRUCT_OBJECT
+		2020 07 09 -->> Types genéricas
+		2020 07 09 -->> Simplificação dos Releases do AOVersion
+		2020 07 09 -->> Checagem de tipo no Run_Apply
+		2020 07 09 -->> Listagem de Comentarios
+		2020 07 09 -->> Listagem de TODO, FIXME, WARNING , ERROR e IMPLEMMENT
+
+
+		2020 07 10 -->> Montagem de Diagrama de Sintaxe
+		2020 07 10 -->> Biblioteca UNIT
+
+
+		2020 07 11 -->> Herança entre Pacotes referenciados
+		2020 07 11 -->> Modelador de Structs dentro de Pacotes
+
+
+		2020 07 12 -->> Visualizador de Arvore AST
+
+
+		2020 07 13 -->> AST Funções Complementares
+		2020 07 13 -->> Tipagem completa por Pacote
+		2020 07 13 -->> Check List em Tarefas no TODO
+
+
+		2020 07 14 -->> Melhorando Intellisense
+		2020 07 14 -->> Alterando AST_TYPE para AST_STRUCT EXTENDED TYPE
+		2020 07 14 -->> Renderizador TODO
+		2020 07 14 -->> Renderizador de Roadmap
+
+
+		2020 07 15 -->> Renderizador OATodo Completo
+		2020 07 15 -->> Inicializador padrão de Struct
+		2020 07 15 -->> Reorganização do Casting
+		2020 07 15 -->> Correção do Releaser no AOVersion
+

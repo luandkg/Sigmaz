@@ -57,7 +57,7 @@ struct Basico at ModeloTipo  {
 }
 
 struct Medio with Basico {
-
+    init Medio() -> Basico(){}
 }
 
 struct Avancado {
@@ -78,8 +78,11 @@ package Pacote_B{
 
     struct Simples with Basico {
 
+        init Simples() -> Basico(){}
+
         all:
             define simplicidade : num = 12;
+
 
     }
 
@@ -88,10 +91,11 @@ package Pacote_B{
     }
 
     struct Simples_T3 with Medio {
-
+        init Simples_T3 () -> Medio(){}
     }
 
     struct Simples_T4 with Simples_T3 {
+        init Simples_T4 () -> Simples_T3(){}
 
     }
 
@@ -102,6 +106,7 @@ package Pacote_C{
     refer Pacote_B;
 
     struct Complexo with Simples {
+        init Complexo () -> Simples(){}
 
         all:
             define complexidade : num = 15;

@@ -203,6 +203,9 @@ public class Run_Value {
 
         }
 
+        if (mRunTime.getErros().size()>0){
+            return ;
+        }
 
         if (!getRetornoTipo().contains("<>")){
 
@@ -490,22 +493,30 @@ public class Run_Value {
 
         Run_Context mRun_Context = new Run_Context(mRunTime);
 
-        if (mRun_Context.existeStage(ASTCorrente.getNome() + "::" + mFilho.getNome(), mEscopo.getRefers())) {
+        if (mRun_Context.existeStage(ASTCorrente.getNome() , mEscopo.getRefers())) {
 
-            Item eItem = mRun_Context.obterStage(ASTCorrente.getNome() + "::" + mFilho.getNome(), mEscopo.getRefers());
+            if (mRun_Context.existeStage_Type(ASTCorrente.getNome() + "::" + mFilho.getNome(), mEscopo.getRefers())) {
+                Item eItem = mRun_Context.obterStage(ASTCorrente.getNome() + "::" + mFilho.getNome(), mEscopo.getRefers());
 
-            if (mRunTime.getErros().size() > 0) {
-                return;
+                if (mRunTime.getErros().size() > 0) {
+                    return;
+                }
+
+
+                this.setNulo(eItem.getNulo());
+                this.setPrimitivo(eItem.getPrimitivo());
+                this.setConteudo(eItem.getValor());
+                this.setRetornoTipo(eItem.getTipo());
+            }else{
+
+                mRunTime.getErros().add("Stage Tipo Deconhecido : " + ASTCorrente.getNome() + "::" + mFilho.getNome());
+
             }
 
 
-            this.setNulo(eItem.getNulo());
-            this.setPrimitivo(eItem.getPrimitivo());
-            this.setConteudo(eItem.getValor());
-            this.setRetornoTipo(eItem.getTipo());
 
         } else {
-            mRunTime.getErros().add("Stage Deconhecido : " + ASTCorrente.getNome() + "::" + mFilho.getNome());
+            mRunTime.getErros().add("Stage Deconhecido : " + ASTCorrente.getNome() );
             return;
         }
 
