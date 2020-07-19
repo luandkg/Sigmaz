@@ -43,52 +43,41 @@ public class Run_Moc{
 
         AST mValor = eAST.getBranch("VALUE");
 
-
-      //  String mTipagem = getTipagem(eAST.getBranch("TYPE"));
-
-        Run_GetType mRun_GetType = new Run_GetType(mRunTime,mEscopo);
+        Run_GetType mRun_GetType = new Run_GetType(mRunTime, mEscopo);
 
         String mTipagem = mRun_GetType.getTipagem(eAST.getBranch("TYPE"));
 
-
-        Run_Value mAST = new Run_Value(mRunTime, mEscopo);
-        mAST.init(mValor, mTipagem);
+        Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mEscopo);
+        Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, mTipagem);
 
         if (mRunTime.getErros().size() > 0) {
             return;
         }
 
+        // System.out.println("Definindo " + eAST.getNome() + " : " +mAST.getRetornoTipo() + " = " +mAST.getConteudo() + " -> " + mAST.getIsNulo() );
+
         if (mAST.getIsNulo()) {
-            mEscopo.criarConstanteNula(eAST.getNome(), mAST.getRetornoTipo());
-        } else if (mAST.getIsPrimitivo()) {
 
-            if (mTipagem.contentEquals(mAST.getRetornoTipo())) {
-                mEscopo.criarConstante(eAST.getNome(), mAST.getRetornoTipo(), mAST.getConteudo());
-            } else {
 
-                if (mRunTime.getErros().size() > 0) {
-                    return;
-                }
+            if (mAST.getIsPrimitivo()) {
+                mEscopo.criarConstanteNula(eAST.getNome(), mAST.getRetornoTipo());
 
-                Run_Cast mCast = new Run_Cast(mRunTime, mEscopo);
+            } else if (mAST.getIsStruct()) {
 
-                String res = mCast.realizarCast(mTipagem, mTipagem, mAST.getConteudo());
-
-                if (res == null) {
-                    mEscopo.criarConstanteNula(eAST.getNome(), mTipagem);
-                } else {
-                    mEscopo.criarConstante(eAST.getNome(), mTipagem, res);
-                }
+                mEscopo.criarConstanteStructNula(eAST.getNome(), mAST.getRetornoTipo());
 
             }
-        } else if (mAST.getIsStruct()) {
 
+        }else{
 
-            mEscopo.criarConstanteStruct(eAST.getNome(), mTipagem, mAST.getConteudo());
+            if (mAST.getIsPrimitivo()) {
+                mEscopo.criarConstante(eAST.getNome(), mAST.getRetornoTipo(), mAST.getConteudo());
 
-        } else {
+            } else if (mAST.getIsStruct()) {
 
-            mRunTime.getErros().add("Retorno incompativel  : " + mAST.getRetornoTipo());
+                mEscopo.criarConstanteStruct(eAST.getNome(), mAST.getRetornoTipo(), mAST.getConteudo());
+
+            }
 
         }
 

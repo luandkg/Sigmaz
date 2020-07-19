@@ -78,22 +78,15 @@ public class EscopoDebug {
         ArrayList<Item> ls_Defines = new ArrayList<>();
         ArrayList<Item> ls_Constants = new ArrayList<>();
 
-        int defines_nulos = 0;
-        int defines_validos = 0;
-
         for (Item i : mEscopo.getStacks()) {
             if (i.getModo() == 0) {
                 ls_Defines.add(i);
 
-                if (i.getNulo()) {
-                    defines_nulos += 1;
-                } else {
-                    defines_validos += 1;
-                }
-
             } else if (i.getModo() == 1) {
                 ls_Constants.add(i);
             }
+
+           // System.out.println("DEFINICAO :: " + i.getNome());
         }
 
         System.out.println(" - DEFINES : ");
@@ -102,7 +95,7 @@ public class EscopoDebug {
         System.out.println("\t - NAO NULOS : ");
 
         for (Item i : ls_Defines) {
-            if (i.getNulo() == false) {
+            if (!i.getNulo()) {
                 mostrarItem(i);
 
             }

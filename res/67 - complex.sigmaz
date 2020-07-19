@@ -27,7 +27,10 @@ type Par {
 
 call iniciar -> {
 
+
     def complexo_1 : Complexo = init Complexo();
+
+    complexo_1.chamar(5);
 
 	def tipo : string = typeof( complexo_1);
 
@@ -110,6 +113,17 @@ package Pacote_C{
 
         all:
             define complexidade : num = 15;
+            act chamar(a:num) {
+
+                def b : num = a;
+                this.passar(b);
+
+            }
+        restrict:
+            act passar(a:num){
+                def b : num = a;
+                invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+            }
 
     }
 

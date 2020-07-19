@@ -215,4 +215,15 @@ Linguagem de Programação Estruturada - Implementações
 		2020 07 16 -->> Trilhas para ChangeList
 		2020 07 16 -->> Trilhas para AOVersion com Branches
 		2020 07 16 -->> Trilhas para AOVersion com Releases
+		2020 07 16 -->> Operador Ternario sem parte FALSE
+
+
+		2020 07 17 -->> Ações Anônimas
+		2020 07 17 -->> Funções Anônimas
+
+
+		2020 07 18 -->> Run_Anonymous
+		2020 07 18 -->> Simplificação do Run_Apply
+		2020 07 18 -->> Argumentos Opcionais
+		2020 07 18 -->> Argumentos Referenciados Opcionais
 

@@ -1,16 +1,16 @@
 call iniciar -> inicio ( );
 act inicio ( ) {
 	def w : num = 5;
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 	passador ( w );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 	referenciador ( w );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 	def t : num = -1;
 	janelador ( t );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 	ref_janelador ( t );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 	
 	#ref_janelador(ale());
 	
@@ -26,7 +26,9 @@ act passador ( a : num ) {
 }
 
 act referenciador ( ref a : num ) {
+invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	a = 10;
+
 }
 func janelador ( a : num ) : bool {
 	a = 10;

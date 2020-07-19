@@ -66,6 +66,10 @@ struct Bloco {
 		};
 		
 	}
+
+    #restrict
+	all:
+	    define re : num = 12;
 	
 }
 type Casal {
@@ -100,6 +104,7 @@ act inicio ( ) {
 	def b1_modelo : string = b1.modelo;
 	def b1_peso : num = b1.peso;
 
+    def b1_re : num = b1.re;
 
 	b1.mudarPeso ( 50 );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;

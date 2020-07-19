@@ -13,11 +13,9 @@ public class OATrilha {
 
     public void gerarRotas(String eArquivo, ArrayList<Grupo<String>> mGrupos, Color eBarra) {
 
-        BufferedImage IMG_ITEM = null;
         BufferedImage IMG_ROAD = null;
 
         try {
-            IMG_ITEM = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\define_all.png"));
             IMG_ROAD = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\road.png"));
 
         } catch (IOException e) {
@@ -30,12 +28,14 @@ public class OATrilha {
         int abaixo = 0;
         int intercalador = 0;
 
+        int entreLinhas = 40;
+
         for (OA.Grupo<String> Grupo : mGrupos) {
 
             int alturando = 220;
 
             for (String mObjeto : Grupo.getObjetos()) {
-                alturando += 30;
+                alturando += entreLinhas;
             }
 
             if (intercalador == 0) {
@@ -60,7 +60,6 @@ public class OATrilha {
         Alturamin = 220 + acima + abaixo;
 
 
-        int separador = 30;
 
         int eLarguraGrupo = 600;
 
@@ -104,9 +103,9 @@ public class OATrilha {
                 for (String mObjeto : Grupo.getObjetos()) {
 
 
-                    leftString(g, new Rectangle((c * eLarguraGrupo) + 80, cAltura, eLarguraGrupo, 100), mObjeto, new Font("TimesRoman", Font.BOLD, 30), IMG_ITEM);
+                    leftString(g, new Rectangle((c * eLarguraGrupo) + 80, cAltura, eLarguraGrupo, 100), mObjeto, new Font("TimesRoman", Font.BOLD, 30));
 
-                    cAltura -= 30;
+                    cAltura -= entreLinhas;
 
                 }
 
@@ -125,9 +124,9 @@ public class OATrilha {
                 for (String mObjeto : Grupo.getObjetos()) {
 
 
-                    leftString(g, new Rectangle((c * eLarguraGrupo) + 80, cAltura, eLarguraGrupo, 100), mObjeto, new Font("TimesRoman", Font.BOLD, 30), IMG_ITEM);
+                    leftString(g, new Rectangle((c * eLarguraGrupo) + 80, cAltura, eLarguraGrupo, 100), mObjeto, new Font("TimesRoman", Font.BOLD, 30));
 
-                    cAltura += 30;
+                    cAltura += entreLinhas;
 
                 }
 
@@ -171,7 +170,7 @@ public class OATrilha {
 
 
     public void leftString(Graphics g, Rectangle r, String s,
-                           Font font, BufferedImage ePino) {
+                           Font font) {
         FontRenderContext frc =
                 new FontRenderContext(null, true, true);
 
@@ -184,7 +183,7 @@ public class OATrilha {
         int a = (r.width / 2) - (rWidth / 2) - rX;
         int b = (r.height / 2) - (rHeight / 2) - rY;
 
-        g.drawImage(ePino, r.x, r.y + b - (ePino.getHeight()), null);
+        g.fillRect(r.x,r.y + (b/2) + (25/2),25,25);
 
 
         g.setFont(font);

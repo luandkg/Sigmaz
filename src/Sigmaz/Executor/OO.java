@@ -348,7 +348,7 @@ public class OO {
         return mActions;
     }
 
-    public ArrayList<Index_Action> getActionFunctions() {
+    public ArrayList<Index_Action> getActionsFunctions() {
         return mActionFunctions;
     }
 
@@ -429,7 +429,7 @@ public class OO {
 
         ArrayList<Index_Action> gc = new ArrayList<Index_Action>();
 
-        for (Index_Action mIndex_Function : getActionFunctions()) {
+        for (Index_Action mIndex_Function : getActionsFunctions()) {
             gc.add(mIndex_Function);
         }
 

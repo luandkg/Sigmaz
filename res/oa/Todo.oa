@@ -1,6 +1,6 @@
    PACOTE OATodo
     {
-      ID Indice = "73"
+      ID Indice = "75"
       PACOTE Todos
        {
          OBJETO Item { 
@@ -97,10 +97,10 @@
             ID Indice = "69"
             ID Texto = " Argumentos Opcionais "
             ID Data = "2020 07 15"
-            ID Alterado = "2020 07 15"
-            ID Status = "i"
+            ID Alterado = "2020 07 18"
+            ID Status = "t"
             ID Tags = ""
-            ID Tarefas = ""
+            ID Tarefas = "@AValorados @AReferenciados "
          }
          OBJETO Item { 
             ID Indice = "70"
@@ -137,6 +137,24 @@
             ID Status = "i"
             ID Tags = ""
             ID Tarefas = "@AOrganizar Montar "
+         }
+         OBJETO Item { 
+            ID Indice = "74"
+            ID Texto = " Ações Anônimas "
+            ID Data = "2020 07 17"
+            ID Alterado = "2020 07 18"
+            ID Status = "t"
+            ID Tags = ""
+            ID Tarefas = ""
+         }
+         OBJETO Item { 
+            ID Indice = "75"
+            ID Texto = " Funções Anônimas "
+            ID Data = "2020 07 17"
+            ID Alterado = "2020 07 18"
+            ID Status = "t"
+            ID Tags = ""
+            ID Tarefas = ""
          }
        } 
     } 

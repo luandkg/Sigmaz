@@ -35,6 +35,9 @@ public class Escopo {
     private ArrayList<Run_Extern> mExternos;
     private ArrayList<String> mRefers;
 
+    private int mAutoID;
+    private int mFunctorID;
+
 
     public void setNome(String eNome) {
         mNome = eNome;
@@ -95,6 +98,8 @@ public class Escopo {
 
         mExternos = new ArrayList<Run_Extern>();
 
+        mAutoID = 0;
+        mFunctorID = 0;
     }
 
 
@@ -135,7 +140,7 @@ public class Escopo {
         return mRet;
     }
 
-    public void limpar(){
+    public void limpar() {
 
         mAO.limpar();
 
@@ -147,7 +152,7 @@ public class Escopo {
         for (Run_Extern eAST : mRunTime.getExtern()) {
 
             if (eAST.getNomeCompleto().contentEquals(eNomeCompleto)) {
-             //   System.out.println("\t - Receber Externo Geral : " + eAST.getNomeCompleto());
+                //   System.out.println("\t - Receber Externo Geral : " + eAST.getNomeCompleto());
                 mExternos.add(eAST);
             }
 
@@ -189,13 +194,12 @@ public class Escopo {
     }
 
 
+    public void guardarStruct(AST eAST, ArrayList<String> dRefers) {
 
-
-    public void guardarStruct(AST eAST,ArrayList<String> dRefers) {
-
-        mOO.guardar(eAST,dRefers);
+        mOO.guardar(eAST, dRefers);
 
     }
+
     public void guardarStruct(AST eAST) {
 
         mOO.guardar(eAST);
@@ -208,9 +212,9 @@ public class Escopo {
 
     }
 
-    public void guardar(AST eAST,ArrayList<String> dRefers) {
+    public void guardar(AST eAST, ArrayList<String> dRefers) {
 
-        mAO.guardar(eAST,dRefers);
+        mAO.guardar(eAST, dRefers);
 
     }
 
@@ -253,7 +257,7 @@ public class Escopo {
         if (eItem.getIsEstrutura()) {
 
             if (eItem.getNulo()) {
-                this.criarParametroStructNulo(eNome, eItem.getTipo());
+                this.criarParametroStructNula(eNome, eItem.getTipo());
             } else {
                 this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor());
             }
@@ -284,9 +288,9 @@ public class Escopo {
 
             if (eItem.getNulo()) {
                 if (eItem.getIsReferenciavel()) {
-                    this.criarParametroStructNulo(eNome, eItem.getTipo());
+                    this.criarParametroStructNula(eNome, eItem.getTipo());
                 } else {
-                    this.criarParametroStructNulo(eNome, eItem.getTipo());
+                    this.criarParametroStructNula(eNome, eItem.getTipo());
                 }
             } else {
                 if (eItem.getIsReferenciavel()) {
@@ -375,20 +379,68 @@ public class Escopo {
         return gc;
     }
 
-    public Escopo getEstruturador() {
 
-        Escopo ret = null;
+    public String getAnonimoAuto() {
+        mAutoID += 1;
+        return "@AUTO_" + mAutoID;
+    }
 
-        if (this.getEstrutura() == true) {
-            ret = this;
-        } else {
-            if (this.mEscopoAnterior != null) {
-                ret = mEscopoAnterior.getEstruturador();
+    public String getAnonimoFunctor() {
+        mFunctorID += 1;
+        return "@FUNCTOR_" + mFunctorID;
+    }
+
+
+    public void removerAuto(String eNome) {
+
+        for (Index_Action eAST : this.getActionsCompleto()) {
+            if (eAST.getPonteiro().mesmoValor(eNome)) {
+              //  System.out.println("Remover Auto : " + eNome);
+                eAST.setNome("");
+                eAST.getPonteiro().setTipo("");
             }
         }
 
+    }
 
-        return ret;
+    public void removerFunctor(String eNome) {
+
+        for (Index_Function eAST : this.getFunctionsCompleto()) {
+            if (eAST.getPonteiro().mesmoValor(eNome)) {
+               // System.out.println("Removendo Functor : " + eNome);
+                eAST.setNome("");
+                eAST.getPonteiro().setTipo("");
+            }
+        }
+
+    }
+
+    public AST obterAuto(String eNome) {
+        AST mRet = null;
+
+        for (Index_Action eAST : this.getActionsCompleto()) {
+            if (eAST.getPonteiro().mesmoValor(eNome)) {
+
+                mRet = eAST.getPonteiro().copiar();
+                break;
+
+            }
+        }
+        return mRet;
+    }
+
+    public AST obterFunctor(String eNome) {
+        AST mRet = null;
+
+        for (Index_Function eAST : this.getFunctionsCompleto()) {
+            if (eAST.getPonteiro().mesmoValor(eNome)) {
+
+                mRet = eAST.getPonteiro().copiar();
+                break;
+
+            }
+        }
+        return mRet;
     }
 
 
@@ -416,17 +468,6 @@ public class Escopo {
         return i;
     }
 
-    public String getNomeStruct() {
-        if (this.getNome() == null) {
-            if (this.mEscopoAnterior != null) {
-                return this.mEscopoAnterior.getNome();
-            } else {
-                return "";
-            }
-        } else {
-            return this.getNome();
-        }
-    }
 
     public ArrayList<AST> getGuardadosCompleto() {
         return mAO.getGuardadosCompleto();
@@ -435,20 +476,6 @@ public class Escopo {
 
     public ArrayList<AST> getStruct() {
         return mOO.getStruct();
-    }
-
-    public AST getCast(String eNome) {
-
-        AST gc = null;
-
-        for (AST mCast : getCastsCompleto()) {
-            if (mCast.mesmoNome(eNome)) {
-                gc = mCast;
-                break;
-            }
-        }
-
-        return gc;
     }
 
     public ArrayList<AST> getStages() {
@@ -510,8 +537,8 @@ public class Escopo {
         mEscopoStack.criarParametroNulo(eNome, eTipo);
     }
 
-    public void criarParametroStructNulo(String eNome, String eTipo) {
-        mEscopoStack.criarParametroStructNulo(eNome, eTipo);
+    public void criarParametroStructNula(String eNome, String eTipo) {
+        mEscopoStack.criarParametroStructNula(eNome, eTipo);
     }
 
     public void criarParametroStruct(String eNome, String eTipo, String eRef) {
@@ -528,12 +555,20 @@ public class Escopo {
     }
 
 
+    public void criarDefinicaoStructNula(String eNome, String eTipo) {
+        mEscopoStack.criarDefinicaoStructNula(eNome, eTipo);
+    }
+
     public void criarDefinicaoStruct(String eNome, String eTipo, String eRef) {
         mEscopoStack.criarDefinicaoStruct(eNome, eTipo, eRef);
     }
 
     public void criarConstanteStruct(String eNome, String eTipo, String eRef) {
         mEscopoStack.criarConstanteStruct(eNome, eTipo, eRef);
+    }
+
+    public void criarConstanteStructNula(String eNome, String eTipo) {
+        mEscopoStack.criarConstanteStructNula(eNome, eTipo);
     }
 
     public void setDefinido(String eNome, String eValor) {
@@ -588,7 +623,6 @@ public class Escopo {
 
         return ret;
     }
-
 
 
 }

@@ -43,25 +43,69 @@ public class AST_Argumentos {
                 AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
 
 
+                boolean mOpt = false;
 
-                if (TokenD.mesmoConteudo("ref")){
+                if (TokenD.mesmoConteudo("ref")) {
                     ASTCorrente.setValor("REF");
 
                     Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro");
                     ASTCorrente.setNome(TokenC4.getConteudo());
 
-                }else{
+                }else if (TokenD.mesmoConteudo("opt")) {
+                    mOpt = true;
+
+                    ASTCorrente.setValor("OPT");
+
+                    Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro");
+
+                    if (TokenC4.mesmoConteudo("ref")) {
+
+                        ASTCorrente.setValor("OPTREF");
+
+                        Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro");
+                        ASTCorrente.setNome(TokenC5.getConteudo());
+
+                    }else{
+
+                        ASTCorrente.setNome(TokenC4.getConteudo());
+
+                    }
+
+
+                } else {
                     ASTCorrente.setValor("VALUE");
                     ASTCorrente.setNome(TokenD.getConteudo());
                 }
 
 
-
                 AST_TYPE mType = new AST_TYPE(mCompiler);
                 mType.init(ASTCorrente);
 
+                Token P2 = null;
 
-                Token P2 = mCompiler.getTokenAvante();
+                if (mOpt){
+
+                    Token TokenP3 = mCompiler.getTokenAvante();
+               if (TokenP3.getTipo() == TokenTipo.IGUAL) {
+
+                   AST ASTValue =  ASTCorrente.criarBranch("VALUE");
+                   AST_Value_Argument gAST = new AST_Value_Argument(mCompiler);
+                   gAST.initArgumento(ASTValue);
+
+               }else{
+                   mCompiler.errarCompilacao("Era esperado o valor opcional do argumento " + ASTCorrente.getNome() + " !", TokenC);
+               }
+
+
+
+                    P2=  mCompiler.getTokenCorrente();
+
+                } else{
+
+                    P2=  mCompiler.getTokenAvante();
+                }
+
+
 
                 if (P2.getTipo() == TokenTipo.VIRGULA) {
                     mais = true;

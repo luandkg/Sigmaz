@@ -1,0 +1,89 @@
+
+call iniciar -> {
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+
+    def a : auto = @(a:num)  {
+
+        def a1 : num = 10;
+        def a2 : num = 20;
+        #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    };
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+
+    def teste : bool = true;
+
+    if (teste) -> {
+         a(10);
+
+            def passador : auto = @(a:num)  {
+
+                def p1 : num = 5;
+                def p2 : num = 11;
+                #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+            };
+
+            passador(5);
+
+    }
+
+    a(2);
+
+    a =  @(a:num,b:num)  {
+
+                def a1 : num = a;
+                def a2 : num = b;
+                #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+            };
+
+    a(13,15);
+
+    def b : auto = a;
+
+    #def c : auto = b;
+    def c : auto = null;
+    c = a;
+   # a= null;
+
+    a(11,1);
+    b(22,2);
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+
+    #def chamar : auto = a;
+    #chamar(16);
+
+    def autosoma : functor = @(a:num,b:num) : num {
+        def c : num;
+    	invoke math -> operator_sum ( a , b ) :: c;
+        return c;
+    };
+
+    def fa : num = autosoma(5,2);
+
+    def mastigar : functor = autosoma;
+    autosoma = null;
+
+    def mastigado : num = mastigar(1,3);
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: FUNCTIONS;
+
+
+    moc rel : auto = @(p:num){
+
+            invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    };
+
+    rel(12);
+
+    moc tgu : num = 12;
+
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	
+}
+

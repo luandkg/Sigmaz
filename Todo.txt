@@ -29,4 +29,11 @@
 
     - Trilha de Desenvolvimento : i ( @Organizar Montar)
 
+    - Ações Anônimas : t
+
+    - Funções Anônimas : t
+
+    - Argumentos Opcionais : t ( @Valorados @Referenciados)
+
+
 

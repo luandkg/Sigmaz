@@ -1,6 +1,7 @@
 package AppSigmaz;
 
 public enum Fases {
+    LEXER,
     EXECUTAR,
     IDENTAR,
     IDENTAR_TUDO,

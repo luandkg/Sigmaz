@@ -25,7 +25,10 @@ public class Run_Cast {
 
       //  System.out.println("Casting -->> " + mEntrada + " para " + mSaida);
 
-       if (mEntrada.contentEquals(mSaida)) {
+        //System.out.println(" :: " + mEntrada + " e "+mSaida);
+
+
+        if (mEntrada.contentEquals(mSaida)) {
            return eConteudo;
        } else if (mEntrada.contentEquals("num")) {
                ret = realizarPrimitivoCast(mEntrada, mSaida, eConteudo);

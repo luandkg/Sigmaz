@@ -48,7 +48,8 @@ public class Argumentador {
                 }
 
 
-         //   System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
+           //System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
+            //    System.out.println("\t - Entrando Tipo :  " +mArgumentos.getTipo() + " : " + mArgumentos.getValor() );
 
                 i += 1;
 

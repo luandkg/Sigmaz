@@ -125,7 +125,7 @@ act inicio ( ) {
 	def Acumulador1 : Acumulador >> ( num ) = init Acumulador ( 12 ) >> ( num );
 	
 	# Acumulador1.mostrarStruct();
-	def c : Acumulador >> ( num ) = Acumulador1.this;
+	def c : Acumulador >> ( num ) = Acumulador1;
 	c.guardar ( 2 );
 	
 	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;

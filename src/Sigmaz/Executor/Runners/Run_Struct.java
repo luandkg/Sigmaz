@@ -730,6 +730,40 @@ public class Run_Struct {
         return mRet;
     }
 
+    public Item init_ObjectDireto(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
+
+        if (BuscadorDeVariaveis == null) {
+            mRunTime.getErros().add(mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");
+            return null;
+        }
+
+        boolean enc = false;
+        Item mRet = null;
+
+        // System.out.println("Operador Ponto -> " +mStructNome + "." + ASTCorrente.getNome()  );
+
+        //if (mStack_All.contains(ASTCorrente.getNome())){
+            for (Item mItem : mEscopo.getOO().getStacks()) {
+
+
+                if (mItem.getNome().contentEquals(ASTCorrente.getNome())) {
+                    mRet = mItem;
+                    enc = true;
+                    break;
+                }
+
+            }
+       // }
+
+
+        if (!enc) {
+            mRunTime.getErros().add(mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");
+        }
+
+        return mRet;
+    }
+
+
     public Item init_Function(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
 
         Run_Any mRun_Any = new Run_Any(mRunTime);
@@ -738,6 +772,13 @@ public class Run_Struct {
 
     }
 
+    public Item init_FunctionDireto(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
+
+        Run_Any mRun_Any = new Run_Any(mRunTime);
+
+        return mRun_Any.init_Function(ASTCorrente, BuscadorDeVariaveis, mEscopo, eRetorne, mStructNome + "." + ASTCorrente.getNome(), mEscopo.getOO().getFunctions());
+
+    }
 
     public void init_ActionFunction(AST ASTCorrente, Escopo BuscadorDeArgumentos) {
 
@@ -747,6 +788,17 @@ public class Run_Struct {
         Run_Any mRun_Any = new Run_Any(mRunTime);
 
         mRun_Any.init_Action(ASTCorrente, BuscadorDeArgumentos, mEscopo, mStructNome + "." + ASTCorrente.getNome(), mEscopo.getOO().getActionsFunctions_All());
+
+    }
+
+    public void init_ActionFunctionDireto(AST ASTCorrente, Escopo BuscadorDeArgumentos) {
+
+        //  System.out.println(BuscadorDeArgumentos.getNome() + " AF -> Structs : " + BuscadorDeArgumentos.getStructs().size() );
+
+
+        Run_Any mRun_Any = new Run_Any(mRunTime);
+
+        mRun_Any.init_Action(ASTCorrente, BuscadorDeArgumentos, mEscopo, mStructNome + "." + ASTCorrente.getNome(), mEscopo.getOO().getActionsFunctions());
 
     }
 

@@ -77,6 +77,7 @@ public class Analisar_Global {
 
         }
 
+        ArrayList<AST> mInserirActions = new ArrayList<AST>();
 
         for (AST mAST : ASTPai.getASTS()) {
 
@@ -88,6 +89,20 @@ public class Analisar_Global {
 
                 mAnalisador_Bloco.getAnalisar_Action().analisarAction(mAST, mAlocados);
 
+
+                if (mAnalisador_Bloco.getAnalisar_Action().getOpcionais(mAST.getBranch("ARGUMENTS"))>0){
+
+                    mAnalisador.mensagem("Action " + mAST.getNome() + " :: OPT " +mAnalisador_Bloco.getAnalisar_Action().getOpcionais(mAST.getBranch("ARGUMENTS")) );
+
+
+                    mAnalisador_Bloco.getAnalisar_Action().desopcionar(mAST.copiar(),mInserirActions);
+
+                    mAnalisador_Bloco.getAnalisar_Action().removerOpcionais(mAST.getBranch("ARGUMENTS"));
+
+                }
+
+
+
             } else if (mAST.mesmoTipo("FUNCTION")) {
 
                 if (mAnalisador.getProibidos().contains(mAST.getNome())) {
@@ -96,7 +111,24 @@ public class Analisar_Global {
 
                 mAnalisador_Bloco.getAnalisar_Function().analisarFunction(mAST, mAlocados);
 
+
+                if (mAnalisador_Bloco.getAnalisar_Function().getOpcionais(mAST.getBranch("ARGUMENTS"))>0){
+
+                    mAnalisador.mensagem("Function " + mAST.getNome() + " :: OPT " +mAnalisador_Bloco.getAnalisar_Action().getOpcionais(mAST.getBranch("ARGUMENTS")) );
+
+
+                    mAnalisador_Bloco.getAnalisar_Function().desopcionar(mAST.copiar(),mInserirActions);
+
+                    mAnalisador_Bloco.getAnalisar_Function().removerOpcionais(mAST.getBranch("ARGUMENTS"));
+
+                }
+
             } else if (mAST.mesmoTipo("CALL")) {
+
+                for(AST eAST : mAST.getBranch("BODY").getASTS()) {
+                    mAnalisador_Bloco.getAnalisar_Action().analisarDentroAction(eAST, mAlocados, false);
+                }
+
             } else if (mAST.mesmoTipo("INVOKE")) {
 
             } else if (mAST.mesmoTipo("DEFINE")) {
@@ -140,6 +172,9 @@ public class Analisar_Global {
                     mAnalisador_Bloco.getAnalisar_Struct().init_Struct(mAST, mAlocados);
                 }
 
+             //   mAnalisador.getAnalisar_Global().analisarGlobal(mAST.getBranch("BODY"), mReqAST);
+
+                mAnalisador_Bloco.getAnalisar_Struct().init_Struct(mAST, mAlocados);
 
 
             } else if (mAST.mesmoTipo("STAGES")) {
@@ -174,6 +209,9 @@ public class Analisar_Global {
 
         mAnalisador_Bloco.getAnalisar_Outros().exportarOperadores(ASTPai);
 
+        for (AST mAST : mInserirActions) {
+            ASTPai.getASTS().add(mAST);
+        }
 
     }
 

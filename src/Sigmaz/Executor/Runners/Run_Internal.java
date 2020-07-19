@@ -48,7 +48,7 @@ public class Run_Internal {
                 eItem = mRun_Dot.operadorPontoStruct(mEstruturador, eItem, eInternal.getBranch("INTERNAL"), mEscopo, eRetorno);
             }
 
-        } else         if (eInternal.mesmoValor("STRUCT_FUNCT")) {
+        } else if (eInternal.mesmoValor("STRUCT_FUNCT")) {
 
             //    System.out.println("\t - ESTRUTURA STRUCT_FUNCT : " + eInternal.getNome());
 
@@ -59,7 +59,7 @@ public class Run_Internal {
                 return null;
             }
 
-            if (eInternal.existeBranch("INTERNAL")){
+            if (eInternal.existeBranch("INTERNAL")) {
                 //  System.out.println("PONTEIRO :: " + eItem.getValor() + " Dentro de Function -> " + eInternal.getBranch("INTERNAL").getNome());
                 Run_Dot mRun_Dot = new Run_Dot(mRunTime);
 
@@ -76,7 +76,6 @@ public class Run_Internal {
 
         return eItem;
     }
-
 
 
     public Item Struct_DentroType(String eLocal, AST eInternal, Escopo mEscopo, String eRetorno) {

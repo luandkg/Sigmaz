@@ -13,6 +13,9 @@ SIGMAZ - BIBLIOTECA
         - LISTA : adicionar, quantidade, remover, listar
         - ITERADOR : iniciar, continuar, proximo, getIndice, getValor
         
+    - 2020 07 13
+        - TesteUnitario
+        
 
         
     

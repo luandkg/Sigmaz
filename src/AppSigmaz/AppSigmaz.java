@@ -29,9 +29,9 @@ public class AppSigmaz {
         String mIntellisense = "res/intellisenses/";
         String mInternos = "res/internos/";
 
-        int ARQUIVO = 67;
+        int ARQUIVO = 69;
 
-        switch (Fases.INTERNO) {
+        switch (Fases.TESTES) {
 
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
@@ -49,6 +49,7 @@ public class AppSigmaz {
             case INTELLISENSE -> AppUtils.INTELISENSE(ARQUIVO, mArquivos, mCompilado, mIntellisense);
             case INTELLISENSE_BIBLIOTECA -> AppUtils.INTELISENSE_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad, mIntellisense);
 
+            case LEXER -> AppUtils.LEXER(ARQUIVO, mArquivos);
             case TODO -> AppUtils.TODO(ARQUIVO, mArquivos);
             case COMENTARIOS -> AppUtils.COMENTARIOS(ARQUIVO, mArquivos);
 
@@ -99,8 +100,6 @@ public class AppSigmaz {
         mChangeList.exportarImagem("changelist.png", new Color(230, 126, 34));
         mChangeList.exportarMarkDown("CHANGELIST.md", "Linguagem de Programação Estruturada - Alterações", IMG_CHANGE, "ChangeList - Sigmaz");
 
-
-        OATrilha mTrilha = new OATrilha();
 
         OA.exportarReleases("VersionMap.png", "res/oa/Roadmap.oa");
 

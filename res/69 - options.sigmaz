@@ -1,0 +1,95 @@
+call iniciar -> {
+
+    algo();
+    algo(-119);
+
+    def s : num = som(4);
+
+    duplo(3);
+
+    quazar();
+    quazar(9);
+
+def w : num = 12;
+
+fofocar(w);
+
+fofocar();
+
+def ga : num = gral(5);
+
+        invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: FUNCTIONS;
+
+
+}
+
+act fofocar(opt ref r : num=50,opt a:num = 5){
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+}
+
+
+func bla() : num {
+    return som(2,false);
+}
+
+func som(g:num,opt v:bool = false) : num {
+    return g;
+}
+
+act algo(opt a:num = 5){
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+
+}
+
+act duplo(opt a:num = 5,b:num){
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+
+}
+
+act quazar(opt a:num = 5,opt b:num=12){
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+
+}
+
+act normal( a:num , b:num){
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+
+}
+
+func gral(g:num,opt ref v:bool = false) : num {
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    return g;
+}
+
+package COX{
+
+    struct Coxa {
+
+        act encoxar(a:num,opt b:bool = false,opt c:num=12){
+
+            invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+            invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+
+     }
+
+    }
+
+}

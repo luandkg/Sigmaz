@@ -292,11 +292,11 @@ public class Lexer {
             } else if (charC.contentEquals("@")) {
 
                 int eInicio = mPosicao;
-                mIndex += 1;
-                String eTokenConteudo = ObterID();
+              //  mIndex += 1;
+               // String eTokenConteudo = ObterID();
                 int eFim = mPosicao;
 
-                mTokens.add(new Token(TokenTipo.ARROBA, eTokenConteudo, eInicio, eFim, mLinha));
+                mTokens.add(new Token(TokenTipo.ARROBA, "@", eInicio, eFim, mLinha));
 
 
             } else if (charC.contentEquals("\n")) {

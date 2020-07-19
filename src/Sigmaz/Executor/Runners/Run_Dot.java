@@ -30,9 +30,15 @@ public class Run_Dot {
 
         if (eQualificador.contentEquals("STRUCT")) {
 
+
+
             Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
             mItem = mRun_Internal.Struct_DentroStruct(mItem.getValor(), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
+
+
+
+
 
         } else if (eQualificador.contentEquals("TYPE")) {
             Run_Internal mRun_Internal = new Run_Internal(mRunTime);

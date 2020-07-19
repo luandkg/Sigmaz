@@ -96,6 +96,10 @@ public class Run_Value {
 
             mIsNulo = true;
             mRetornoTipo = eRetorno;
+            mIsPrimitivo=true;
+            mIsEstrutura=false;
+
+         //   System.out.println("RETORNAR NULO");
 
         } else if (ASTCorrente.mesmoValor("Text")) {
 
@@ -195,6 +199,15 @@ public class Run_Value {
 
             init(ASTCorrente.getBranch("VALUE"), eRetorno);
 
+        } else if (ASTCorrente.getValor().contentEquals("AUTO")) {
+
+            auto(ASTCorrente, eRetorno);
+
+        } else if (ASTCorrente.getValor().contentEquals("FUNCTOR")) {
+
+            functor(ASTCorrente, eRetorno);
+
+
         } else {
 
 
@@ -239,12 +252,14 @@ public class Run_Value {
 
             mIsNulo = true;
             mRetornoTipo = eRetorno;
+mIsPrimitivo=true;
 
         } else {
 
-            //   System.out.println("Valorando  -> Def " + ASTCorrente.getNome());
 
             Item mItem = mEscopo.getItem(ASTCorrente.getNome());
+
+            //System.out.println("Valorando  -> Def " + mItem.getNome() + " : " + mItem.getTipo() + " = " + mItem.getValor());
 
             if (mItem != null) {
 
@@ -374,6 +389,8 @@ public class Run_Value {
         Run_Func mAST = new Run_Func(mRunTime, mEscopo);
         Item eItem = mAST.init_Function(ASTCorrente, eRetorno);
 
+       // System.out.println("Ent ->> " + eRetorno);
+
         if (mRunTime.getErros().size() > 0) {
             return;
         }
@@ -384,7 +401,7 @@ public class Run_Value {
         this.setRetornoTipo(eItem.getTipo());
 
 
-        //  System.out.println("FUNCT EXIT  -> " + ASTCorrente.getNome() + " -> " + this.getConteudo() + " P : " + mIsPrimitivo + " N : " + mIsNulo + " T : " + mRetornoTipo);
+        //  System.out.println("FUNCT EXIT  -> " + ASTCorrente.getNome() + " -> " + this.getConteudo() + " Primitivo : " + mIsPrimitivo + " Nulo : " + mIsNulo + " Tipo : " + mRetornoTipo);
 
 
     }
@@ -491,6 +508,30 @@ public class Run_Value {
 
     }
 
+    public void auto(AST ASTCorrente, String eRetorno) {
+
+
+        mIsNulo = false;
+        mIsPrimitivo = true;
+        mRetornoTipo = "auto";
+        mIsEstrutura = false;
+        mConteudo = "auto";
+
+
+    }
+
+
+    public void functor(AST ASTCorrente, String eRetorno) {
+
+
+        mIsNulo = false;
+        mIsPrimitivo = true;
+        mRetornoTipo = "functor";
+        mIsEstrutura = false;
+        mConteudo = "functor";
+
+
+    }
 
     public void Stage(AST ASTCorrente, String eRetorno) {
 

@@ -35,15 +35,16 @@ public class Run_Execute {
 
             //   System.out.println("Execuntando em  : " + ASTCorrente.getNome());
 
-            if (ASTCorrente.mesmoNome("this")) {
+          //  if (ASTCorrente.mesmoNome("this")) {
 
-            } else {
+           // } else {
                 if (mRunTime.getErros().size() > 0) {
                     return;
                 }
                 String eQualificador =mRunTime.getQualificador(mItem.getTipo(),mEscopo.getRefers());
 
                // System.out.println("Q -->> " + mItem.getTipo() + " :: " +eQualificador );
+
 
                 if (eQualificador.contentEquals("STRUCT")) {
 
@@ -52,7 +53,7 @@ public class Run_Execute {
                     return;
 
                 }
-            }
+           // }
 
 
             // System.out.println("Tipo : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
@@ -131,14 +132,25 @@ public class Run_Execute {
 
                 //System.out.println("STRUCT Estou : " + mEscopoStruct.getNome());
 
-                if (eInternal.existeBranch("INTERNAL")) {
+                if (mItem.getNome().contentEquals("this")){
 
+                    if (eInternal.existeBranch("INTERNAL")) {
+                        mItem = mEscopoStruct.init_FunctionDireto(eInternal, mEscopo, "<<ANY>>");
+                    } else {
+                        mEscopoStruct.init_ActionFunctionDireto(eInternal, mEscopo);
+                        break;
+                    }
 
-                    mItem = mEscopoStruct.init_Function(eInternal, mEscopo, "<<ANY>>");
-                } else {
-                    mEscopoStruct.init_ActionFunction(eInternal, mEscopo);
-                    break;
+                }else{
+                    if (eInternal.existeBranch("INTERNAL")) {
+                        mItem = mEscopoStruct.init_Function(eInternal, mEscopo, "<<ANY>>");
+                    } else {
+                        mEscopoStruct.init_ActionFunction(eInternal, mEscopo);
+                        break;
+                    }
                 }
+
+
 
 
                 if (mRunTime.getErros().size() > 0) {
@@ -160,7 +172,11 @@ public class Run_Execute {
                     return;
                 }
 
-                mItem = mEscopoStruct.init_Object(eInternal, mEscopo, "<<ANY>>");
+                if (mItem.getNome().contentEquals("this")){
+                    mItem = mEscopoStruct.init_ObjectDireto(eInternal, mEscopo, "<<ANY>>");
+                }else{
+                    mItem = mEscopoStruct.init_Object(eInternal, mEscopo, "<<ANY>>");
+                }
 
                 mEscopoStruct = mRunTime.getRun_Struct(mItem.getValor());
 

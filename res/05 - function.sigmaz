@@ -1,12 +1,22 @@
-define BLA : string = "Luan Alves Freitas";
+
+define BLA : string = "Luan";
+
 define FZ3 : num = -512;
+
 define NULO : num = null;
+
 define FZ4 : num = FZ3;
+
 define TGA : num = somar ( 10 , 5 );
+
 define DUPLO : num = somar ( 10 , somar ( 1 , 1 ) );
+
 define ABERTO : bool = true;
+
 define FECHADO : bool = false;
+
 invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+
 func somar ( a : num , b : num ) : num {
 	def c : num;
 	invoke math -> operator_sum ( a , b ) :: c;

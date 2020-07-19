@@ -23,112 +23,46 @@ public class Run_Apply {
         AST mValue = ASTCorrente.getBranch("VALUE");
 
 
-        Run_Value SettableValue = new Run_Value(mRunTime, mEscopo);
-        SettableValue.init(mSettable, "<<ANY>>");
+        Run_Value mAplicador = new Run_Value(mRunTime, mEscopo);
+        mAplicador.init(mSettable, "<<ANY>>");
 
         if (mRunTime.getErros().size() > 0) {
             return;
         }
 
-         // System.out.println("Settable -->> " + SettableValue.getRetornoTipo());
+        // System.out.println("Settable -->> " + SettableValue.getRetornoTipo());
 
         //   System.out.println("Settable -->>" + SettableValue.getRetornoTipo() +  " ::: " +  SettableValue.getReferencia().getNome());
 
         //   System.out.println("Erros : " + mRunTime.getErros().size());
 
 
-        Run_Value mAST = new Run_Value(mRunTime, mEscopo);
-        mAST.init(mValue, SettableValue.getRetornoTipo());
+        Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mEscopo);
+        Run_Value  mAST = mRun_Valoramento.init(mAplicador.getReferencia().getNome(), mValue, mAplicador.getRetornoTipo());
 
-        if (SettableValue.getReferencia() == null) {
+
+        if (mAplicador.getReferencia() == null) {
             mRunTime.getErros().add("Referencia nao encontrada !");
         } else {
 
-            aplicar(SettableValue.getReferencia(), mAST);
 
-            // if (SettableValue.getReferencia().getTipo().contentEquals(mAST.getRetornoTipo())) {
-            //     SettableValue.getReferencia().setValor(mAST.getConteudo());
-            //     SettableValue.getReferencia().setNulo(mAST.getIsNulo());
-            // } else {
-            // mRunTime.getErros().add("Retorno incompativel  : " + SettableValue.getReferencia().getTipo() + " x " + mAST.getRetornoTipo());
-            // }
+            if (mAplicador.getReferencia().getModo() == 1) {
+                mRunTime.getErros().add("A constante nao pode ser alterada : " + mAplicador.getReferencia().getNome());
+                return;
+            }
+
+
+            mAplicador.getReferencia().setValor(mAST.getConteudo());
+            mAplicador.getReferencia().setNulo(mAST.getIsNulo());
+
+
+
         }
 
 
     }
 
 
-    //  System.out.println("Settable : "+ SettableValue.getReferencia().getNome() + " = " + mAST.getConteudo() + " ::: " + mAST.getRetornoTipo());
-
-    public void aplicar(Item receber, Run_Value aplicar) {
-
-        String mTipagem = receber.getTipo();
-
-
-
-
-
-        receber.setValor(aplicar.getConteudo());
-        receber.setNulo(aplicar.getIsNulo());
-
-        if (aplicar.getIsNulo()) {
-
-           // if (mTipagem.contentEquals(aplicar.getRetornoTipo())) {
-                receber.setNulo(aplicar.getIsNulo());
-           // } else {
-           //     mRunTime.getErros().add("Retorno incompativel  : " + mTipagem + " sx " + aplicar.getRetornoTipo());
-          //  }
-
-        } else if (aplicar.getIsPrimitivo()) {
-
-            if (mTipagem.contentEquals(aplicar.getRetornoTipo())) {
-                receber.setValor(aplicar.getConteudo());
-                receber.setNulo(aplicar.getIsNulo());
-            } else {
-
-                if (mRunTime.getErros().size() > 0) {
-                    return;
-                }
-
-                //  System.out.println("Retorno ESQ : " + eTipado);
-                // System.out.println("Retorno DIR x : " + mAST.getRetornoTipo());
-
-                 //  System.out.println("CASTING : " + aplicar.getRetornoTipo() + " -> " + mTipagem);
-
-                Run_Cast mCast = new Run_Cast(mRunTime, mEscopo);
-
-                String res = mCast.realizarCast(mTipagem, aplicar.getRetornoTipo(), aplicar.getConteudo());
-
-                if (res == null) {
-                    receber.setValor(aplicar.getConteudo());
-                    receber.setNulo(aplicar.getIsNulo());
-                } else {
-                    receber.setValor(aplicar.getConteudo());
-                    receber.setNulo(aplicar.getIsNulo());
-                    receber.setTipo(mTipagem);
-                }
-
-            }
-        } else if (aplicar.getIsStruct()) {
-
-            if (mTipagem.contentEquals(aplicar.getRetornoTipo())) {
-
-                receber.setValor(aplicar.getConteudo());
-                receber.setNulo(aplicar.getIsNulo());
-                receber.setTipo(aplicar.getRetornoTipo());
-
-            } else {
-                mRunTime.getErros().add("Retorno incompativel  cx: " + mTipagem + " x " + aplicar.getRetornoTipo());
-            }
-
-        } else {
-
-            mRunTime.getErros().add("Retorno incompativel  f : " + mTipagem + " x " + aplicar.getRetornoTipo());
-
-        }
-
-
-    }
 
 
 }

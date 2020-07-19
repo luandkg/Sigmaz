@@ -83,6 +83,40 @@ public class EscopoStack {
         }
     }
 
+
+    public void criarDefinicaoStructNula(String eNome, String eTipo) {
+
+        boolean enc = existeAqui(eNome, mEscopo.getStacks());
+
+        if (enc) {
+            mRunTime.getErros().add("Variavel Duplicada : " + eNome);
+        }
+
+
+        if (!enc) {
+
+            Item IC = BuscarAnterior(eNome);
+            if (IC != null) {
+                enc = true;
+            }
+
+        }
+
+        if (enc) {
+            //  mRunTime.getErros().add("Variavel Duplicada : " + eNome);
+        } else {
+            Item Novo = new Item(eNome);
+            Novo.setModo(0);
+            Novo.setTipo(eTipo);
+            Novo.setNulo(true);
+            Novo.setPrimitivo(false);
+            Novo.setIsEstrutura(true);
+            Novo.setValor("");
+            mEscopo.getStacks().add(Novo);
+
+        }
+    }
+
     public void criarConstanteStruct(String eNome, String eTipo, String eRef) {
 
         boolean enc = existeAqui(eNome, mEscopo.getStacks());
@@ -115,6 +149,38 @@ public class EscopoStack {
         }
     }
 
+
+    public void criarConstanteStructNula(String eNome, String eTipo) {
+
+        boolean enc = existeAqui(eNome, mEscopo.getStacks());
+
+        if (enc) {
+            mRunTime.getErros().add("Variavel Duplicada : " + eNome);
+        }
+
+        if (!enc) {
+
+            Item IC = BuscarAnterior(eNome);
+            if (IC != null) {
+                enc = true;
+            }
+
+        }
+
+        if (enc) {
+            //   mRunTime.getErros().add("Variavel Duplicada : " + eNome);
+        } else {
+            Item Novo = new Item(eNome);
+            Novo.setModo(0);
+            Novo.setTipo(eTipo);
+            Novo.setNulo(true);
+            Novo.setPrimitivo(false);
+            Novo.setIsEstrutura(true);
+            Novo.setValor("");
+            mEscopo.getStacks().add(Novo);
+
+        }
+    }
 
     public void criarParametro(String eNome, String eTipo, String eValor) {
 
@@ -188,7 +254,7 @@ public class EscopoStack {
         }
     }
 
-    public void criarParametroStructNulo(String eNome, String eTipo) {
+    public void criarParametroStructNula(String eNome, String eTipo) {
 
         boolean enc = existeAqui(eNome, mEscopo.getParametros());
 

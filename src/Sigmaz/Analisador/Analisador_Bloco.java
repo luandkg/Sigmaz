@@ -65,10 +65,13 @@ public class Analisador_Bloco {
         mTipados.add("num");
         mTipados.add("string");
         mTipados.add("bool");
+        mTipados.add("auto");
+        mTipados.add("functor");
 
         mPrimitivos.add("num");
         mPrimitivos.add("string");
         mPrimitivos.add("bool");
+
     }
 
     public void analisarValoracao(AST ASTPai, ArrayList<String> mAlocadosAntes) {

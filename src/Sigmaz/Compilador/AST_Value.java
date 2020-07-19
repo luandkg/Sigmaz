@@ -70,6 +70,8 @@ public class AST_Value {
 
         Token TokenD = mCompiler.getTokenAvante();
 
+       // System.out.println("Pre Valor : " + TokenD.getConteudo());
+
 
         if (TokenD.getTipo() == TokenTipo.PARENTESES_ABRE) {
 
@@ -117,6 +119,16 @@ public class AST_Value {
 
             AST_Value mAST = new AST_Value(mCompiler);
             mAST.init(ASTPai.criarBranch("VALUE"));
+
+        } else if (TokenD.getTipo() == TokenTipo.ARROBA) {
+
+            ASTPai.setNome("");
+
+            AST_Auto mAST = new AST_Auto(mCompiler);
+            mAST.init(ASTPai);
+
+
+            SegundaParte(ASTPai);
 
 
         } else if (TokenD.getTipo() == TokenTipo.NUMERO) {

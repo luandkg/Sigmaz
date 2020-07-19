@@ -66,6 +66,8 @@ public class Analisador {
         mProibidos.add("all");
         mProibidos.add("step");
 
+        mProibidos.add("this");
+
 
         mPrimitivos = new ArrayList<String>();
         mPrimitivos.add("num");
