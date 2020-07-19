@@ -36,3 +36,7 @@ Linguagem de Programação Estruturada - Alterações
 
 		2020 07 15 -->> ChangeList automatizado
 
+
+		2020 07 19 -->> Divisão do Compiler : Compiler e CompilerUnit
+		2020 07 19 -->> Processamento de Compilação em Fila
+

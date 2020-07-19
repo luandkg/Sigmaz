@@ -6,10 +6,10 @@ import Sigmaz.Utils.AST;
 
 public class AST_Value_Argument {
 
-    private Compiler mCompiler;
+    private CompilerUnit mCompiler;
 
 
-    public AST_Value_Argument(Compiler eCompiler) {
+    public AST_Value_Argument(CompilerUnit eCompiler) {
         mCompiler = eCompiler;
     }
 

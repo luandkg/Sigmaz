@@ -1,6 +1,6 @@
    PACOTE OATodo
     {
-      ID Indice = "75"
+      ID Indice = "84"
       PACOTE Todos
        {
          OBJETO Item { 
@@ -16,18 +16,18 @@
             ID Indice = "7"
             ID Texto = " ObterContexto "
             ID Data = "2020 07 08"
-            ID Status = "f"
+            ID Status = "t"
             ID Tags = ""
-            ID Alterado = "2020 07 13"
+            ID Alterado = "2020 07 18"
             ID Tarefas = ""
          }
          OBJETO Item { 
             ID Indice = "8"
             ID Texto = " Biblioteca @H Tempo "
             ID Data = "2020 07 08"
-            ID Status = "i"
+            ID Status = "f"
             ID Tags = ""
-            ID Alterado = "2020 07 13"
+            ID Alterado = "2020 07 18"
             ID Tarefas = ""
          }
          OBJETO Item { 
@@ -74,15 +74,6 @@
             ID Status = "t"
             ID Tags = ""
             ID Tarefas = "@AArvore @APosicao @ARender "
-         }
-         OBJETO Item { 
-            ID Indice = "14"
-            ID Texto = " Marcar Tags com Data "
-            ID Data = "2020 07 14"
-            ID Alterado = "2020 07 14"
-            ID Status = "c"
-            ID Tags = ""
-            ID Tarefas = ""
          }
          OBJETO Item { 
             ID Indice = "68"
@@ -133,10 +124,10 @@
             ID Indice = "73"
             ID Texto = " Trilha de Desenvolvimento "
             ID Data = "2020 07 16"
-            ID Alterado = "2020 07 16"
-            ID Status = "i"
+            ID Alterado = "2020 07 18"
+            ID Status = "t"
             ID Tags = ""
-            ID Tarefas = "@AOrganizar Montar "
+            ID Tarefas = "@AOrganizar @AMontar @ARenderizar "
          }
          OBJETO Item { 
             ID Indice = "74"
@@ -153,6 +144,42 @@
             ID Data = "2020 07 17"
             ID Alterado = "2020 07 18"
             ID Status = "t"
+            ID Tags = ""
+            ID Tarefas = ""
+         }
+         OBJETO Item { 
+            ID Indice = "78"
+            ID Texto = " Compilação em Fila "
+            ID Data = "2020 07 18"
+            ID Alterado = "2020 07 19"
+            ID Status = "t"
+            ID Tags = ""
+            ID Tarefas = ""
+         }
+         OBJETO Item { 
+            ID Indice = "79"
+            ID Texto = " Biblioteca @H Lista "
+            ID Data = "2020 07 18"
+            ID Alterado = "2020 07 18"
+            ID Status = "f"
+            ID Tags = ""
+            ID Tarefas = ""
+         }
+         OBJETO Item { 
+            ID Indice = "80"
+            ID Texto = " Biblioteca @H Arquivo "
+            ID Data = "2020 07 18"
+            ID Alterado = "2020 07 18"
+            ID Status = "i"
+            ID Tags = ""
+            ID Tarefas = ""
+         }
+         OBJETO Item { 
+            ID Indice = "81"
+            ID Texto = " Biblioteca @H Texto "
+            ID Data = "2020 07 18"
+            ID Alterado = "2020 07 18"
+            ID Status = "i"
             ID Tags = ""
             ID Tarefas = ""
          }

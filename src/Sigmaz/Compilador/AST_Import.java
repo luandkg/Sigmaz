@@ -8,9 +8,9 @@ import java.io.File;
 
 public class AST_Import {
 
-    private Compiler mCompiler;
+    private CompilerUnit mCompiler;
 
-    public AST_Import(Compiler eCompiler) {
+    public AST_Import(CompilerUnit eCompiler) {
         mCompiler = eCompiler;
     }
 
@@ -20,52 +20,13 @@ public class AST_Import {
 
         if (TokenC.getTipo() == TokenTipo.TEXTO) {
 
-
             Token TokenP3 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA, "Era esperado PONTO E VIRGULA !");
-
 
             String mLocalRequisicao = mCompiler.getLocal() + TokenC.getConteudo();
 
-            File arq = new File(mLocalRequisicao);
-            if (arq.exists()) {
+            mCompiler.enfileirar(mLocalRequisicao);
 
-                if (!mCompiler.getRequisitados().contains(mLocalRequisicao)) {
-                    mCompiler.getRequisitados().add(mLocalRequisicao);
-
-
-                    Compiler CompilerC = new Compiler();
-                    CompilerC.importando(mLocalRequisicao, mCompiler.getRequisitados());
-
-                    mCompiler.getErros_Lexer().addAll(CompilerC.getErros_Lexer());
-                    mCompiler.getErros_Compiler().addAll(CompilerC.getErros_Compiler());
-
-                    mCompiler.getComentarios().addAll(CompilerC.getComentarios());
-
-                    for (AST ASTCorrente : CompilerC.getAST("SIGMAZ").getASTS()) {
-
-                        if (ASTCorrente.mesmoTipo("PACKAGE")){
-                            AST ASTPacote = getPackage(ASTPai,ASTCorrente.getNome());
-
-                            for (AST ASTP : ASTCorrente.getASTS()) {
-                                ASTPacote.getASTS().add(ASTP);
-                            }
-                        }else{
-                         //   System.out.println("Importando " + ASTCorrente.getTipo());
-                            ASTPai.getASTS().add(ASTCorrente);
-                        }
-
-
-                    }
-
-
-
-                }
-
-
-            } else {
-                mCompiler.errarCompilacao("Importacao nao encontrada : " + mLocalRequisicao, TokenC);
-            }
-
+          //  importarAntigo(ASTPai,mLocalRequisicao);
 
         } else {
             mCompiler.errarCompilacao("Era esperado o caminho de uma Importacao !", TokenC);
@@ -73,26 +34,50 @@ public class AST_Import {
 
     }
 
-    public AST getPackage(AST ASTPai, String eNome) {
 
-        AST AST_Corrente = null;
-        boolean enc = false;
+    public void importarAntigo(AST ASTPai,String mLocalRequisicao){
 
-        for (AST eAST : ASTPai.getASTS()) {
-            if (eAST.mesmoTipo("PACKAGE") && eAST.mesmoNome(eNome)) {
-                AST_Corrente = eAST;
-                enc = true;
-                break;
+        File arq = new File(mLocalRequisicao);
+        if (arq.exists()) {
+
+            //System.out.println("Importando :: " + mLocalRequisicao);
+
+            if (!mCompiler.getRequisitados().contains(mLocalRequisicao)) {
+                mCompiler.getRequisitados().add(mLocalRequisicao);
+
+
+                CompilerUnit CompilerC = new CompilerUnit();
+                CompilerC.init(mLocalRequisicao,ASTPai, mCompiler.getRequisitados());
+
+                mCompiler.getErros_Lexer().addAll(CompilerC.getErros_Lexer());
+                mCompiler.getErros_Compiler().addAll(CompilerC.getErros_Compiler());
+
+                mCompiler.getComentarios().addAll(CompilerC.getComentarios());
+
+                for (AST ASTCorrente : CompilerC.getAST("SIGMAZ").getASTS()) {
+
+                    if (ASTCorrente.mesmoTipo("PACKAGE")){
+                        AST ASTPacote = mCompiler.getPackage(ASTPai,ASTCorrente.getNome());
+
+                        for (AST ASTP : ASTCorrente.getASTS()) {
+                            ASTPacote.getASTS().add(ASTP);
+                        }
+                    }else{
+                        //   System.out.println("Importando " + ASTCorrente.getTipo());
+                        ASTPai.getASTS().add(ASTCorrente);
+                    }
+
+
+                }
+
+
+
             }
-        }
 
-        if (!enc) {
-            AST_Corrente = new AST("PACKAGE");
-            AST_Corrente.setNome(eNome);
-            ASTPai.getASTS().add(AST_Corrente);
-        }
 
-        return AST_Corrente;
+        } else {
+            mCompiler.errarCompilacao("Importacao nao encontrada : " + mLocalRequisicao, new Token(TokenTipo.ID,"",0,0,0));
+        }
     }
 
 }

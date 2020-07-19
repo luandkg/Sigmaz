@@ -227,3 +227,7 @@ Linguagem de Programação Estruturada - Implementações
 		2020 07 18 -->> Argumentos Opcionais
 		2020 07 18 -->> Argumentos Referenciados Opcionais
 
+
+		2020 07 19 -->> Processamento de Importações em Fila
+		2020 07 19 -->> Compiler Unit
+

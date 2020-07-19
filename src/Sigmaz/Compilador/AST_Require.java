@@ -8,9 +8,9 @@ import java.io.File;
 
 public class AST_Require {
 
-    private Compiler mCompiler;
+    private CompilerUnit mCompiler;
 
-    public AST_Require(Compiler eCompiler) {
+    public AST_Require(CompilerUnit eCompiler) {
         mCompiler = eCompiler;
     }
 

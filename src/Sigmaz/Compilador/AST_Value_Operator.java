@@ -4,9 +4,9 @@ import Sigmaz.Utils.AST;
 
 public class AST_Value_Operator {
 
-    private Compiler mCompiler;
+    private CompilerUnit mCompiler;
 
-    public AST_Value_Operator(Compiler eCompiler) {
+    public AST_Value_Operator(CompilerUnit eCompiler) {
 
         mCompiler = eCompiler;
 

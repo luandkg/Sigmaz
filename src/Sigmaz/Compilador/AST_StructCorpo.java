@@ -6,9 +6,9 @@ import Sigmaz.Utils.AST;
 
 public class AST_StructCorpo {
 
-    private Compiler mCompiler;
+    private CompilerUnit mCompiler;
 
-    public AST_StructCorpo(Compiler eCompiler) {
+    public AST_StructCorpo(CompilerUnit eCompiler) {
         mCompiler = eCompiler;
     }
 

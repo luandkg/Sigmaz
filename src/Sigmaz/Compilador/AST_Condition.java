@@ -6,9 +6,9 @@ import Sigmaz.Utils.AST;
 
 public class AST_Condition {
 
-    private Compiler mCompiler;
+    private CompilerUnit mCompiler;
 
-    public AST_Condition(Compiler eCompiler) {
+    public AST_Condition(CompilerUnit eCompiler) {
         mCompiler = eCompiler;
     }
 

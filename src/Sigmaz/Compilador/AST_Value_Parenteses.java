@@ -6,10 +6,10 @@ import Sigmaz.Utils.AST;
 
 public class AST_Value_Parenteses {
 
-    private Compiler mCompiler;
+    private CompilerUnit mCompiler;
 
 
-    public AST_Value_Parenteses(Compiler eCompiler) {
+    public AST_Value_Parenteses(CompilerUnit eCompiler) {
         mCompiler = eCompiler;
     }
 

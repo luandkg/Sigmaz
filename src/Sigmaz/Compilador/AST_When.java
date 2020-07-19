@@ -6,9 +6,9 @@ import Sigmaz.Utils.AST;
 
 public class AST_When {
 
-    private Compiler mCompiler;
+    private CompilerUnit mCompiler;
 
-    public AST_When(Compiler eCompiler) {
+    public AST_When(CompilerUnit eCompiler) {
         mCompiler = eCompiler;
     }
 

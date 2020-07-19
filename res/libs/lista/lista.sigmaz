@@ -1,3 +1,5 @@
+
+
 package Lista {
 	struct Lista in ( T ) {
 		restrict : 

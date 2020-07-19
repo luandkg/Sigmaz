@@ -28,7 +28,7 @@ public class Sigmaz {
         String mLocal = arq.getParent() + "/";
 
 
-        System.out.println("################ SIGMAZ ################");
+        System.out.println("################# SIGMAZ #################");
         System.out.println("");
         System.out.println(" - AUTOR	: LUAN FREITAS");
         System.out.println(" - VERSAO   : 1.0");
@@ -40,6 +40,10 @@ public class Sigmaz {
 
         Compiler CompilerC = new Compiler();
         CompilerC.init(eArquivo);
+
+        System.out.println("############## PROCESSAMENTO ###############");
+        System.out.println("");
+        System.out.println(CompilerC.getProcessamento());
 
         System.out.println("################# LEXER ##################");
         System.out.println("");
@@ -55,7 +59,7 @@ public class Sigmaz {
         System.out.println("############### COMPILADOR ###############");
         System.out.println("");
         System.out.println("\t Iniciado : " + CompilerC.getData().toString());
-        System.out.println("\t - Instrucoes : " + CompilerC.Instrucoes());
+        System.out.println("\t - Instrucoes : " + CompilerC.getInstrucoes());
         System.out.println("\t - Erros : " + CompilerC.getErros_Compiler().size());
         System.out.println("\t - Requisitados : ");
 

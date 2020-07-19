@@ -1,9 +1,15 @@
 
     - OATodo : t {oa}
 
-    - ObterContexto : f
+    - ObterContexto : t
 
-    - Biblioteca - Tempo : i
+    - Biblioteca - Tempo : f
+
+    - Biblioteca - Lista : f
+
+    - Biblioteca - Arquivo : i
+
+    - Biblioteca - Texto : i
 
     - OAVersion : t
 
@@ -17,23 +23,23 @@
 
     - Visualizador Interno : t
 
-    - Marcar Tags com Data : c
-
     - Roadmap Renderizador : t
 
-    - Argumentos Opcionais : i
+    - Argumentos Opcionais : t
 
     - UML : i (Montagem Renderização)
 
     - ChangeList : t
 
-    - Trilha de Desenvolvimento : i ( @Organizar Montar)
+    - Trilha de Desenvolvimento : t ( @Organizar @Montar @Renderizar)
 
     - Ações Anônimas : t
 
     - Funções Anônimas : t
 
     - Argumentos Opcionais : t ( @Valorados @Referenciados)
+
+    - Compilação em Fila : t
 
 
 

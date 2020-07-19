@@ -6,11 +6,11 @@ import Sigmaz.Utils.AST;
 
 public class AST_Value {
 
-    private Compiler mCompiler;
+    private CompilerUnit mCompiler;
     private TokenTipo mTerminar;
     private String mTerminarErro;
 
-    public AST_Value(Compiler eCompiler) {
+    public AST_Value(CompilerUnit eCompiler) {
 
         mCompiler = eCompiler;
         mTerminar = TokenTipo.PONTOVIRGULA;

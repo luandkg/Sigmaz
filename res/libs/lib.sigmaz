@@ -10,8 +10,10 @@ import "strings.sigmaz";
 import "pos.sigmaz";
 import "neg.sigmaz";
 import "int.sigmaz";
+
 import "lista/lista.sigmaz";
 import "lista/iterador.sigmaz";
+
 import "pacote_tempo.sigmaz";
 import "ecossistema.sigmaz";
 import "ecologia.sigmaz";

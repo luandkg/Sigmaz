@@ -46,7 +46,7 @@ public class Todos {
         System.out.println("############### COMPILADOR ###############");
         System.out.println("");
         System.out.println("\t Iniciado : " + CompilerC.getData().toString());
-        System.out.println("\t - Instrucoes : " + CompilerC.Instrucoes());
+        System.out.println("\t - Instrucoes : " + CompilerC.getInstrucoes());
         System.out.println("\t - Erros : " + CompilerC.getErros_Compiler().size());
         System.out.println("\t - Requisitados : ");
 

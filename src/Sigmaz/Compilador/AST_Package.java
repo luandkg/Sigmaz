@@ -6,9 +6,9 @@ import Sigmaz.Utils.AST;
 
 public class AST_Package {
 
-    private Compiler mCompiler;
+    private CompilerUnit mCompiler;
 
-    public AST_Package(Compiler eCompiler) {
+    public AST_Package(CompilerUnit eCompiler) {
         mCompiler = eCompiler;
     }
 

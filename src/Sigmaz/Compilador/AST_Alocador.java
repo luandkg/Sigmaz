@@ -6,9 +6,9 @@ import Sigmaz.Utils.AST;
 
 public class AST_Alocador {
 
-    private Compiler mCompiler;
+    private CompilerUnit mCompiler;
 
-    public AST_Alocador(Compiler eCompiler) {
+    public AST_Alocador(CompilerUnit eCompiler) {
         mCompiler = eCompiler;
     }
 

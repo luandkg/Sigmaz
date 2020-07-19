@@ -1,6 +1,9 @@
 
 import "anexo.sigmaz";
 
+
+import "anexo.sigmaz";
+
 act correr(){}
 
 act pular(){}

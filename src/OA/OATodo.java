@@ -306,14 +306,14 @@ public class OATodo {
     public void sincronizar(String eArquivo) {
 
 
-        System.out.println("");
+       // System.out.println("");
 
-        String a = "########################### OA TODO ";
+       // String a = "########################### OA TODO ";
 
-        System.out.println(a + paraFechar(a.length(), 80, "#"));
+       // System.out.println(a + paraFechar(a.length(), 80, "#"));
 
-        System.out.println("");
-        System.out.println("\t - Iniciar : " + getDataHora());
+      //  System.out.println("");
+      //  System.out.println("\t - Iniciar : " + getDataHora());
 
         ArrayList<Item> mItens = getNovos(eArquivo);
 
@@ -405,13 +405,13 @@ public class OATodo {
         mTodo.Salvar(mArquivo);
 
 
-        System.out.println("\t - Itens : " + OATodos.getObjetos().size());
-        System.out.println("\t - Finalizar : " + getDataHora());
-        System.out.println("");
+      //  System.out.println("\t - Itens : " + OATodos.getObjetos().size());
+      //  System.out.println("\t - Finalizar : " + getDataHora());
+      //  System.out.println("");
 
-        String b = "########################### ####### ";
+      //  String b = "########################### ####### ";
 
-        System.out.println(b + paraFechar(b.length(), 80, "#"));
+      //  System.out.println(b + paraFechar(b.length(), 80, "#"));
 
     }
 

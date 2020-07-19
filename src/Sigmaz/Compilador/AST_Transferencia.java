@@ -6,9 +6,9 @@ import Sigmaz.Utils.AST;
 
 public class AST_Transferencia {
 
-    private Compiler mCompiler;
+    private CompilerUnit mCompiler;
 
-    public AST_Transferencia(Compiler eCompiler) {
+    public AST_Transferencia(CompilerUnit eCompiler) {
         mCompiler = eCompiler;
     }
 

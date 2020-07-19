@@ -6,9 +6,9 @@ import Sigmaz.Utils.AST;
 
 public class AST_Recebimentos {
 
-    private Compiler mCompiler;
+    private CompilerUnit mCompiler;
 
-    public AST_Recebimentos(Compiler eCompiler) {
+    public AST_Recebimentos(CompilerUnit eCompiler) {
         mCompiler = eCompiler;
     }
 

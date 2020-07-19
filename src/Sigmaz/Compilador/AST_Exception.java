@@ -6,9 +6,9 @@ import Sigmaz.Utils.AST;
 
 public class AST_Exception {
 
-    private Compiler mCompiler;
+    private CompilerUnit mCompiler;
 
-    public AST_Exception(Compiler eCompiler) {
+    public AST_Exception(CompilerUnit eCompiler) {
         mCompiler = eCompiler;
     }
 

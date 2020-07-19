@@ -29,7 +29,7 @@ public class AppSigmaz {
         String mIntellisense = "res/intellisenses/";
         String mInternos = "res/internos/";
 
-        int ARQUIVO = 69;
+        int ARQUIVO = 4;
 
         switch (Fases.TESTES) {
 

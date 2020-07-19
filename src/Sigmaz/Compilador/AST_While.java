@@ -6,9 +6,9 @@ import Sigmaz.Utils.AST;
 
 public class AST_While {
 
-    private Compiler mCompiler;
+    private CompilerUnit mCompiler;
 
-    public AST_While(Compiler eCompiler) {
+    public AST_While(CompilerUnit eCompiler) {
         mCompiler = eCompiler;
     }
 
