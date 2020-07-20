@@ -29,9 +29,9 @@ public class AppSigmaz {
         String mIntellisense = "res/intellisenses/";
         String mInternos = "res/internos/";
 
-        int ARQUIVO = 68;
+        int ARQUIVO = 70;
 
-        switch (Fases.TESTES) {
+        switch (Fases.EXECUTAR) {
 
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
@@ -88,29 +88,28 @@ public class AppSigmaz {
         String IMG_ROAD = "https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/road.png";
         String IMG_CHANGE = "https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/change.png";
 
+        Color eCorFonte = new Color(52, 73, 94);
 
-        OARoad mOARoadmap = new OARoad("res/oa/Roadmap.oa");
+        OARoad mOARoadmap = new OARoad("res/oa/Roadmap.trilha");
         mOARoadmap.receber("Roadmap.txt");
-        mOARoadmap.exportarImagem("roadmap.png", new Color(52, 73, 94));
+        mOARoadmap.exportarImagemHV("roadmap.png", new Color(52, 73, 94),eCorFonte);
         mOARoadmap.exportarMarkDown("ROADMAP.md", "Linguagem de Programação Estruturada - Implementações", IMG_ROAD, "RoadMap - Sigmaz");
 
 
-        OARoad mChangeList = new OARoad("res/oa/ChangeList.oa");
+        OARoad mChangeList = new OARoad("res/oa/ChangeList.trilha");
         mChangeList.receber("ChangeList.txt");
-        mChangeList.exportarImagem("changelist.png", new Color(230, 126, 34));
+        mChangeList.exportarImagemHV("changelist.png", new Color(230, 126, 34),eCorFonte);
         mChangeList.exportarMarkDown("CHANGELIST.md", "Linguagem de Programação Estruturada - Alterações", IMG_CHANGE, "ChangeList - Sigmaz");
 
 
-        OA.exportarReleases("VersionMap.png", "res/oa/Roadmap.oa");
-
-        //mTrilha.exportarBranches("res/imagens/changebranches.png", "Sigmaz.oa", "res/oa/ChangeList.oa",new Color(243, 156, 18));
-        //mTrilha.exportarBranches("res/imagens/roadbranches.png", "Sigmaz.oa", "res/oa/Roadmap.oa",new Color(41, 128, 185));
+        OA.exportarReleasesHV("VersionMap.png", "res/oa/Roadmap.trilha",eCorFonte);
 
 
-        mOARoadmap.exportarImagem("res/imagens/roadmap.png", new Color(52, 73, 94));
-        mChangeList.exportarImagem("res/imagens/changelist.png", new Color(230, 126, 34));
+        mOARoadmap.exportarImagemHV("res/imagens/roadmap.png", new Color(52, 73, 94),eCorFonte);
+        mChangeList.exportarImagemHV("res/imagens/changelist.png", new Color(230, 126, 34),eCorFonte);
 
-
+        OA.exportarReleasesHV("res/imagens/VersionMap.png", "res/oa/Roadmap.trilha",eCorFonte);
+        OA.exportarBranchesHV("res/imagens/VersionBranches.png", "res/oa/Roadmap.trilha",eCorFonte);
 
 
     }

@@ -365,7 +365,7 @@ public class OAVersion {
 
     }
 
-    public void exportarReleases(String eLocal ,String eRoad) {
+    public void exportarReleases(String eLocal ,String eRoad,Color eFonteCor) {
 
         OARoad mOARoadmap = new OARoad(eRoad);
 
@@ -376,11 +376,26 @@ public class OAVersion {
 
         OATrilha mRotas = new OATrilha();
 
-        mRotas.gerarRotas(eLocal,mAgrupador.getGrupos(), new Color(39, 174, 96));
+        mRotas.gerarRotasH(eLocal,mAgrupador.getGrupos(), new Color(39, 174, 96),eFonteCor);
 
     }
 
-    public void exportarBranches(String eLocal,String eRoad,Color eCor) {
+    public void exportarReleasesHV(String eLocal ,String eRoad,Color eFonteCor) {
+
+        OARoad mOARoadmap = new OARoad(eRoad);
+
+        ArrayList<Grupo<String>> mReleases=  this.getReleases();
+        ArrayList<Grupo<String>> mRoads=  mOARoadmap.getRoads();
+
+        Agrupador<String> mAgrupador = interno(mReleases,mRoads);
+
+        OATrilha mRotas = new OATrilha();
+
+        mRotas.gerarRotasHV(eLocal,mAgrupador.getGrupos(), new Color(39, 174, 96),eFonteCor);
+
+    }
+
+    public void exportarBranches(String eLocal,String eRoad,Color eCor,Color eFonteCor) {
 
 
         OARoad mOARoadmap = new OARoad(eRoad);
@@ -392,7 +407,22 @@ public class OAVersion {
 
         OATrilha mRotas = new OATrilha();
 
-        mRotas.gerarRotas(eLocal,mAgrupador.getGrupos(), eCor);
+        mRotas.gerarRotasH(eLocal,mAgrupador.getGrupos(), eCor,eFonteCor);
+
+    }
+
+    public void exportarBranchesHV(String eLocal ,String eRoad,Color eFonteCor) {
+
+        OARoad mOARoadmap = new OARoad(eRoad);
+
+        ArrayList<Grupo<String>> mReleases=  this.getBranches();
+        ArrayList<Grupo<String>> mRoads=  mOARoadmap.getRoads();
+
+        Agrupador<String> mAgrupador = interno(mReleases,mRoads);
+
+        OATrilha mRotas = new OATrilha();
+
+        mRotas.gerarRotasHV(eLocal,mAgrupador.getGrupos(), new Color(52, 152, 219),eFonteCor);
 
     }
 

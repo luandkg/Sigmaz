@@ -205,9 +205,9 @@ public class Escopo {
         return mAO.getOperationsCompleto();
     }
 
-    public ArrayList<AST> getCastsCompleto() {
-        return mAO.getCastsCompleto();
-    }
+   // public ArrayList<AST> getCastsCompleto() {
+    //    return mAO.getCastsCompleto();
+   // }
 
 
     public ArrayList<Item> getStacks() {
@@ -473,6 +473,9 @@ public class Escopo {
         return mEscopoStack.BuscarAnterior(eNome);
     }
 
+
+    // PRIMITIVO
+
     public void criarDefinicaoNula(String eNome, String eTipo) {
         mEscopoStack.alocarPrimitivo(eNome, eTipo, false, false, "");
     }
@@ -480,22 +483,6 @@ public class Escopo {
     public void criarConstanteNula(String eNome, String eTipo) {
         mEscopoStack.alocarPrimitivo(eNome, eTipo, true, false, "");
 
-    }
-
-    public void criarParametro(String eNome, String eTipo, String eValor) {
-        mEscopoStack.criarParametro(eNome, eTipo, eValor);
-    }
-
-    public void criarParametroNulo(String eNome, String eTipo) {
-        mEscopoStack.criarParametroNulo(eNome, eTipo);
-    }
-
-    public void criarParametroStructNula(String eNome, String eTipo) {
-        mEscopoStack.criarParametroStructNula(eNome, eTipo);
-    }
-
-    public void criarParametroStruct(String eNome, String eTipo, String eRef) {
-        mEscopoStack.criarParametroStruct(eNome, eTipo, eRef);
     }
 
     public void criarDefinicao(String eNome, String eTipo, String eValor) {
@@ -507,6 +494,12 @@ public class Escopo {
 
     }
 
+    public void criarParametro(String eNome, String eTipo, String eValor) {
+        mEscopoStack.criarParametro(eNome, eTipo, eValor);
+    }
+
+
+    // STRUCT
 
     public void criarDefinicaoStructNula(String eNome, String eTipo) {
         mEscopoStack.criarDefinicaoStructNula(eNome, eTipo);
@@ -523,6 +516,25 @@ public class Escopo {
     public void criarConstanteStructNula(String eNome, String eTipo) {
         mEscopoStack.criarConstanteStructNula(eNome, eTipo);
     }
+
+
+    // PARAMETRO
+
+    public void criarParametroNulo(String eNome, String eTipo) {
+        mEscopoStack.criarParametroNulo(eNome, eTipo);
+    }
+
+    public void criarParametroStructNula(String eNome, String eTipo) {
+        mEscopoStack.criarParametroStructNula(eNome, eTipo);
+    }
+
+    public void criarParametroStruct(String eNome, String eTipo, String eRef) {
+        mEscopoStack.criarParametroStruct(eNome, eTipo, eRef);
+    }
+
+
+
+
 
     public void setDefinido(String eNome, String eValor) {
         mEscopoStack.setDefinido(eNome, eValor);

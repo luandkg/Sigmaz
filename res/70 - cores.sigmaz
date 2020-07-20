@@ -1,5 +1,6 @@
 import "libs/lib.sigmaz";
 
+
 refer Cores;
 
 call iniciar -> {

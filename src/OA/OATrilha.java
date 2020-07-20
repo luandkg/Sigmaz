@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class OATrilha {
 
-    public void gerarRotas(String eArquivo, ArrayList<Grupo<String>> mGrupos, Color eBarra) {
+    public void gerarRotasH(String eArquivo, ArrayList<Grupo<String>> mGrupos, Color eBarra,Color eFonteCor) {
 
         BufferedImage IMG_ROAD = null;
 
@@ -60,7 +60,6 @@ public class OATrilha {
         Alturamin = 220 + acima + abaixo;
 
 
-
         int eLarguraGrupo = 600;
 
         int eLargura = eLarguraGrupo;
@@ -96,14 +95,14 @@ public class OATrilha {
                 g.drawImage(IMG_ROAD, (c * eLarguraGrupo) + (eLarguraGrupo / 2) - (IMG_ROAD.getWidth() / 2), cAltura + 120, null);
 
 
-                centerString(g, new Rectangle(c * eLarguraGrupo, cAltura, eLarguraGrupo, 100), Grupo.getNome(), new Font("TimesRoman", Font.BOLD, 50));
+                centerString(g, new Rectangle(c * eLarguraGrupo, cAltura, eLarguraGrupo, 100), Grupo.getNome(), new Font("TimesRoman", Font.BOLD, 50),eFonteCor);
 
                 cAltura -= 100;
 
                 for (String mObjeto : Grupo.getObjetos()) {
 
 
-                    leftString(g, new Rectangle((c * eLarguraGrupo) + 80, cAltura, eLarguraGrupo, 100), mObjeto, new Font("TimesRoman", Font.BOLD, 30));
+                    leftString(g, new Rectangle((c * eLarguraGrupo) + 80, cAltura, eLarguraGrupo, 100), mObjeto, new Font("TimesRoman", Font.BOLD, 30),eFonteCor);
 
                     cAltura -= entreLinhas;
 
@@ -117,14 +116,14 @@ public class OATrilha {
                 g.drawImage(IMG_ROAD, (c * eLarguraGrupo) + (eLarguraGrupo / 2) - (IMG_ROAD.getWidth() / 2), cAltura - 90, null);
 
 
-                centerString(g, new Rectangle(c * eLarguraGrupo, cAltura, eLarguraGrupo, 100), Grupo.getNome(), new Font("TimesRoman", Font.BOLD, 50));
+                centerString(g, new Rectangle(c * eLarguraGrupo, cAltura, eLarguraGrupo, 100), Grupo.getNome(), new Font("TimesRoman", Font.BOLD, 50),eFonteCor);
 
                 cAltura += 100;
 
                 for (String mObjeto : Grupo.getObjetos()) {
 
 
-                    leftString(g, new Rectangle((c * eLarguraGrupo) + 80, cAltura, eLarguraGrupo, 100), mObjeto, new Font("TimesRoman", Font.BOLD, 30));
+                    leftString(g, new Rectangle((c * eLarguraGrupo) + 80, cAltura, eLarguraGrupo, 100), mObjeto, new Font("TimesRoman", Font.BOLD, 30),eFonteCor);
 
                     cAltura += entreLinhas;
 
@@ -151,7 +150,7 @@ public class OATrilha {
 
 
     public void centerString(Graphics g, Rectangle r, String s,
-                             Font font) {
+                             Font font,Color mCorFonte) {
         FontRenderContext frc =
                 new FontRenderContext(null, true, true);
 
@@ -163,6 +162,8 @@ public class OATrilha {
 
         int a = (r.width / 2) - (rWidth / 2) - rX;
         int b = (r.height / 2) - (rHeight / 2) - rY;
+
+        g.setColor(mCorFonte);
 
         g.setFont(font);
         g.drawString(s, r.x + a, r.y + b);
@@ -170,7 +171,7 @@ public class OATrilha {
 
 
     public void leftString(Graphics g, Rectangle r, String s,
-                           Font font) {
+                           Font font,Color mCorFonte) {
         FontRenderContext frc =
                 new FontRenderContext(null, true, true);
 
@@ -183,12 +184,286 @@ public class OATrilha {
         int a = (r.width / 2) - (rWidth / 2) - rX;
         int b = (r.height / 2) - (rHeight / 2) - rY;
 
-        g.fillRect(r.x,r.y + (b/2) + (25/2),25,25);
+        g.fillRect(r.x, r.y + (b / 2) + (25 / 2), 25, 25);
 
 
         g.setFont(font);
 
+        g.setColor(mCorFonte);
+
         g.drawString(s, r.x + 40, r.y + b);
+    }
+
+
+    public void gerarRotasHV(String eArquivo, ArrayList<Grupo<String>> mGrupos, Color eBarra,Color mCorFonte) {
+
+        BufferedImage IMG_ROAD = null;
+
+        try {
+            IMG_ROAD = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\road.png"));
+
+        } catch (IOException e) {
+        }
+
+
+        BlocoDeTrilha BDT = new BlocoDeTrilha(10);
+        for (OA.Grupo<String> Grupo : mGrupos) {
+            BDT.adicionar(Grupo);
+        }
+
+        boolean modo = true;
+
+        int Alturamin = 0;
+        int eLarguraGrupo = 600;
+        int eLargura = (11 * eLarguraGrupo) + 200;
+        int entreLinhas = 40;
+        int Faixa = 100;
+        int Separador = 50;
+        int SeparadorGrande = 120;
+
+        if (BDT.getTrilhas().size() == 0) {
+            Alturamin = 100;
+        } else {
+            Alturamin = 0;
+        }
+
+        boolean a = true;
+        for (EmTrila mEmTrila : BDT.getTrilhas()) {
+            if (a) {
+                mEmTrila.calcular(true);
+                a=false;
+            } else {
+                mEmTrila.calcular(false);
+                a=true;
+            }
+        }
+
+        for (EmTrila mEmTrila : BDT.getTrilhas()) {
+
+            int altura = Faixa + (4 * Separador) + (2 * SeparadorGrande) + (mEmTrila.getAcima() * entreLinhas) + (mEmTrila.getAbaixo() * entreLinhas);
+
+            if (modo) {
+                modo = false;
+             //   System.out.println("Trilha : " + mEmTrila.getGrupos().size() + " -->> [ " + mEmTrila.getAcima() + " :: " + mEmTrila.getAbaixo() + " -> " + altura + " ] - Indo ");
+
+
+            } else {
+                modo = true;
+             //   System.out.println("Trilha : " + mEmTrila.getGrupos().size() + " -->> [ " + mEmTrila.getAcima() + " :: " + mEmTrila.getAbaixo() + " -> " + altura + " ] - Voltando ");
+
+
+            }
+
+            Alturamin += altura;
+
+        }
+
+
+        BufferedImage img = new BufferedImage(eLargura, Alturamin, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = img.getGraphics();
+
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, eLargura, Alturamin);
+
+
+        g.setColor(new Color(52, 73, 94));
+
+        int eixoY = 0;
+        modo = true;
+
+        int eixoX = 400;
+
+        int trilhando = 0;
+        int mTrilhas = BDT.getTrilhas().size();
+
+        int mBarraYAnteior = 0;
+
+        for (EmTrila mEmTrila : BDT.getTrilhas()) {
+
+            int superior = (mEmTrila.getAcima() * entreLinhas);
+            int inferior = (mEmTrila.getAbaixo() * entreLinhas);
+
+           // System.out.println("Trilha : " + mEmTrila.getGrupos().size() + " -->> [ " + mEmTrila.getAcima() + " :: " + mEmTrila.getAbaixo() + " ] ");
+           // System.out.println("\t - Superior : " + mEmTrila.getAcima() + " -->> " + superior);
+           // System.out.println("\t - Inferior : " + mEmTrila.getAbaixo() + " -->> " + inferior);
+           // System.out.println("\t - Altura : " + mAltura);
+          //  if (modo) {
+          //      System.out.println("\t - Modo : Indo");
+          //  } else {
+             //   System.out.println("\t - Modo : Voltando");
+          //  }
+
+
+            int BarraY = eixoY + superior + (2 * Separador) + SeparadorGrande;
+
+
+
+            if (modo) {
+
+                if (mEmTrila.getGrupos().size()==10){
+                    g.setColor(eBarra);
+                    g.fillRect(0, BarraY, eLargura, Faixa);
+                }else{
+                    g.setColor(eBarra);
+                    g.fillRect(0 , BarraY,  ((mEmTrila.getGrupos().size()+1)*eLarguraGrupo), Faixa);
+
+                }
+
+
+
+            }else{
+
+                if (mEmTrila.getGrupos().size()==10){
+                    g.setColor(eBarra);
+                    g.fillRect(0, BarraY, eLargura, Faixa);
+                }else{
+                    g.setColor(eBarra);
+                    g.fillRect(eLargura - ((mEmTrila.getGrupos().size()+1)*eLarguraGrupo) , BarraY,  ((mEmTrila.getGrupos().size()+1)*eLarguraGrupo), Faixa);
+
+                }
+
+            }
+
+            if(trilhando==0){
+
+
+                g.setColor(eBarra);
+                g.fillRect(0, BarraY-100, 100, 300);
+
+
+            }else if( trilhando == mTrilhas-1){
+
+                if (mEmTrila.getGrupos().size()==10){
+
+                    g.setColor(eBarra);
+                    g.fillRect(0, BarraY-100, 100, 300);
+
+                }else{
+
+                    if (modo) {
+
+                        g.setColor(eBarra);
+                        g.fillRect(((mEmTrila.getGrupos().size()+1)*eLarguraGrupo)-100, BarraY-100, 100, 300);
+
+
+                    }else{
+                        g.setColor(eBarra);
+                        g.fillRect(eLargura - ((mEmTrila.getGrupos().size()+1)*eLarguraGrupo)-100, BarraY-100, 100, 300);
+
+                    }
+
+
+
+                }
+
+            }
+
+            if (trilhando<mTrilhas-1  ) {
+
+                int mAcimaAnterior = BDT.getTrilhas().get(trilhando+1).getAcima()* entreLinhas;
+                int mAltura = inferior+(4*Separador) + (2*SeparadorGrande)+Faixa +mAcimaAnterior ;
+
+
+                if (modo) {
+
+                    g.setColor(eBarra);
+                    g.fillRect(eLargura - 100, BarraY+Faixa, 100, mAltura);
+
+                } else {
+
+                    g.setColor(eBarra);
+                    g.fillRect(0, BarraY+Faixa, 100, mAltura);
+                }
+
+            }
+
+            mBarraYAnteior=BarraY;
+
+            int c = 0;
+
+            if (modo) {
+                c = 0;
+            } else {
+                c = 9;
+            }
+
+            boolean submodo = mEmTrila.getIntercalador();
+            for (OA.Grupo<String> Grupo : mEmTrila.getGrupos()) {
+
+
+                g.drawImage(IMG_ROAD, (c * eLarguraGrupo) + (eLarguraGrupo / 2) - (IMG_ROAD.getWidth() / 2) + eixoX, BarraY + 25, null);
+
+                if (submodo) {
+
+                    int alturaBloco = BarraY + SeparadorGrande;
+
+                    centerString(g, new Rectangle((c * eLarguraGrupo) + eixoX, alturaBloco, eLarguraGrupo, 100), Grupo.getNome(), new Font("TimesRoman", Font.BOLD, 50),mCorFonte);
+
+                    alturaBloco += (2 * Separador);
+
+                    for (String mObjeto : Grupo.getObjetos()) {
+
+                        leftString(g, new Rectangle((c * eLarguraGrupo) + eixoX + 80, alturaBloco, eLarguraGrupo, 100), mObjeto, new Font("TimesRoman", Font.BOLD, 30),mCorFonte);
+
+                        alturaBloco += entreLinhas;
+
+                    }
+
+                } else {
+
+                    int alturaBloco = BarraY - SeparadorGrande;
+
+                    centerString(g, new Rectangle((c * eLarguraGrupo) + eixoX, alturaBloco, eLarguraGrupo, 100), Grupo.getNome(), new Font("TimesRoman", Font.BOLD, 50),mCorFonte);
+
+                    alturaBloco -= (2 * Separador);
+
+                    for (String mObjeto : Grupo.getObjetos()) {
+
+                        leftString(g, new Rectangle((c * eLarguraGrupo) + eixoX + 80, alturaBloco, eLarguraGrupo, 100), mObjeto, new Font("TimesRoman", Font.BOLD, 30),mCorFonte);
+
+                        alturaBloco -= entreLinhas;
+
+                    }
+
+                }
+
+                if (modo) {
+                    c += 1;
+                } else {
+                    c -= 1;
+                }
+
+
+                if (submodo) {
+                    submodo = false;
+                } else {
+                    submodo = true;
+                }
+
+            }
+
+
+            if (modo) {
+                modo = false;
+            } else {
+                modo = true;
+            }
+
+
+            eixoY = BarraY + inferior + (2 * Separador) + SeparadorGrande + Faixa;
+            trilhando += 1;
+
+        }
+
+
+        try {
+            File outputfile = new File(eArquivo);
+            ImageIO.write(img, "png", outputfile);
+        } catch (
+                IOException e) {
+
+        }
+
     }
 
 }

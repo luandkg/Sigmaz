@@ -15,7 +15,6 @@ public class Compiler {
 
     private ArrayList<AST> mASTS;
 
-    private ArrayList<String> mFila;
 
     private ArrayList<String> mRequisitados;
 
@@ -33,7 +32,6 @@ public class Compiler {
 
         mASTS = new ArrayList<>();
 
-        mFila = new ArrayList<String>();
 
         mRequisitados = new ArrayList<>();
 
@@ -45,7 +43,7 @@ public class Compiler {
 
         mIChars = 0;
         mITokens = 0;
-        mProcessamento="";
+        mProcessamento = "";
 
     }
 
@@ -77,7 +75,9 @@ public class Compiler {
         return mRequisitados;
     }
 
-    public String getProcessamento(){return mProcessamento;}
+    public String getProcessamento() {
+        return mProcessamento;
+    }
 
     public void init(String eArquivo) {
 
@@ -85,118 +85,62 @@ public class Compiler {
         AST AST_Raiz = new AST("SIGMAZ");
         mASTS.add(AST_Raiz);
 
-        mFila.add(eArquivo);
+        Enfileirador mFila = new Enfileirador();
 
-        mProcessamento="";
+        mFila.adicionar(eArquivo);
 
-        if (mFila.size() > 0) {
+        mFila.iniciar();
 
-
-            int o = mFila.size();
-
-
-            while (o > 0) {
-
-                ArrayList<String> mRemover = new ArrayList<String>();
-                ArrayList<String> mAdicionar = new ArrayList<String>();
-
-                String mLocalRequisicao = mFila.get(0);
-                mRemover.add(mLocalRequisicao);
-
-                mProcessamento +="PROCESSANDO : " + mLocalRequisicao + " :: " + o + "\n";
-
-                if (!getRequisitados().contains(mLocalRequisicao)) {
-
-                    getRequisitados().add(mLocalRequisicao);
-
-                    File arq = new File(mLocalRequisicao);
+        while (mFila.estaExecutando()) {
 
 
-                    if (arq.exists()) {
+            String mLocalRequisicao = mFila.processar();
+
+            if (mLocalRequisicao!=null){
 
 
-                        CompilerUnit mCompilerUnit = new CompilerUnit();
-                        mCompilerUnit.init(mLocalRequisicao, AST_Raiz, mRequisitados);
+                getRequisitados().add(mLocalRequisicao);
 
-                        mITokens += mCompilerUnit.getITokens();
-                        mIChars += mCompilerUnit.getIChars();
+                File arq = new File(mLocalRequisicao);
 
 
-                        for (String a : mCompilerUnit.getFila()) {
-                            mAdicionar.add(a);
-                        }
+                if (arq.exists()) {
+
+                    CompilerUnit mCompilerUnit = new CompilerUnit();
+                    mCompilerUnit.init(mLocalRequisicao, AST_Raiz, mRequisitados);
+
+                    mITokens += mCompilerUnit.getITokens();
+                    mIChars += mCompilerUnit.getIChars();
 
 
-                        getErros_Lexer().addAll(mCompilerUnit.getErros_Lexer());
-                        getErros_Compiler().addAll(mCompilerUnit.getErros_Compiler());
-
-                        getComentarios().addAll(mCompilerUnit.getComentarios());
-
-
-                    } else {
-
-                        GrupoDeErro nG = new GrupoDeErro("SIGMAZ");
-                        nG.adicionarErro("Importacao nao encontrada : " + mLocalRequisicao, 0, 0);
-                        mErros_Compiler.add(nG);
-
+                    for (String a : mCompilerUnit.getFila()) {
+                        mFila.momentoAdicionar(a);
                     }
 
+
+                    getErros_Lexer().addAll(mCompilerUnit.getErros_Lexer());
+                    getErros_Compiler().addAll(mCompilerUnit.getErros_Compiler());
+                    getComentarios().addAll(mCompilerUnit.getComentarios());
+
+
+                } else {
+
+                    GrupoDeErro nG = new GrupoDeErro("SIGMAZ");
+                    nG.adicionarErro("Importacao nao encontrada : " + mLocalRequisicao, 0, 0);
+                    mErros_Compiler.add(nG);
+                    break;
                 }
-
-
-                ArrayList<String> realAdicionar = new ArrayList<String>();
-                ArrayList<String> jaAdicionados = new ArrayList<String>();
-
-                for (String e : mAdicionar) {
-                    if (!mFila.contains(e)) {
-                        mFila.add(e);
-                        realAdicionar.add(e);
-                    } else {
-                        if (!jaAdicionados.contains(e)) {
-                            jaAdicionados.add(e);
-                        }
-                    }
-
-                }
-
-                if (realAdicionar.size() > 0) {
-                    mProcessamento +="\tADICIONAR"+ "\n";
-                    for (String e : realAdicionar) {
-                        mProcessamento +="\t\t - " + e+ "\n";
-                    }
-                }
-
-                if (jaAdicionados.size() > 0) {
-                    mProcessamento +="\tNAO PROCESSAR"+ "\n";
-                    for (String e : jaAdicionados) {
-                        mProcessamento +="\t\t - " + e+ "\n";
-                    }
-                }
-
-
-                if (mRemover.size() > 0) {
-                    mProcessamento +="\tREMOVER"+ "\n";
-
-                    for (String e : mRemover) {
-                        while (mFila.contains(e)) {
-                            if (mFila.contains(e)) {
-                                mFila.remove(e);
-                            }
-                        }
-                        mProcessamento +="\t\t - " + e+ "\n";
-                    }
-                }
-
-                int a = o;
-
-                o = mFila.size();
-                //i+=1;
-                mProcessamento +="\tREENFILEIRAR :: " + a + " -->> " + o+ "\n";
-
 
             }
 
+
+
+            mFila.organizar();
+
+
         }
+
+        mProcessamento = mFila.getProcessamento();
 
     }
 

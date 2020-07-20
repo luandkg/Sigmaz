@@ -194,12 +194,23 @@ public class OARoad {
         return mAgrupador.getGrupos();
     }
 
-    public void exportarImagem(String eArquivo,Color eBarra) {
+    public void exportarImagem(String eArquivo,Color eBarra,Color eFonteCor) {
 
 
         OATrilha mRotas = new OATrilha();
 
-        mRotas.gerarRotas(eArquivo,this.getRoads(), eBarra);
+        mRotas.gerarRotasH(eArquivo,this.getRoads(), eBarra,eFonteCor);
+
+
+
+    }
+
+    public void exportarImagemHV(String eArquivo,Color eBarra,Color eFonteCor) {
+
+
+        OATrilha mRotas = new OATrilha();
+
+        mRotas.gerarRotasHV(eArquivo,this.getRoads(), eBarra,eFonteCor);
 
 
 

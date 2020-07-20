@@ -474,7 +474,7 @@ public class OO {
         return gc;
     }
 
-    public ArrayList<AST> getCastsCompleto() {
+/*    public ArrayList<AST> getCastsCompleto() {
 
         ArrayList<AST> gc = new ArrayList<AST>();
 
@@ -489,7 +489,7 @@ public class OO {
         }
 
         return gc;
-    }
+   }*/
 
     public ArrayList<AST> getGuardadosCompleto() {
 

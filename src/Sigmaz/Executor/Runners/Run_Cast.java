@@ -43,8 +43,10 @@ public class Run_Cast {
             boolean enc = false;
 
 
+            Run_Context mRun_Context = new Run_Context(mRunTime);
+
             // TENTAR GETTER
-            for (AST mCast : mEscopo.getCastsCompleto()) {
+            for (AST mCast : mRun_Context.getCastsContexto(mEscopo.getRefers())) {
 
 
                 if (mCast.mesmoNome(mEntrada)) {
@@ -113,8 +115,9 @@ public class Run_Cast {
 
        // System.out.println("\t Com Primitivo -->> " + mEntrada);
 
+        Run_Context mRun_Context = new Run_Context(mRunTime);
 
-        for (AST mCast : mEscopo.getCastsCompleto()) {
+        for (AST mCast : mRun_Context.getCastsContexto(mEscopo.getRefers())) {
 
             if (mCast.mesmoNome(mSaida)) {
 
