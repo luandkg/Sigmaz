@@ -16,7 +16,7 @@ public class Run_Dot {
 
     public Item operadorPonto(AST ASTCorrente, Escopo mEscopo, String eRetorno) {
 
-      //  System.out.println("OPERANTE : " + ASTCorrente.getNome());
+        //  System.out.println("OPERANTE : " + ASTCorrente.getNome());
 
         Item mItem = mEscopo.getItem(ASTCorrente.getNome());
 
@@ -26,18 +26,20 @@ public class Run_Dot {
 
         String eQualificador = mRunTime.getQualificador(mItem.getTipo(), mEscopo.getRefers());
 
-     //  System.out.println("OPERANTE : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
+        //  System.out.println("OPERANTE : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
 
         if (eQualificador.contentEquals("STRUCT")) {
 
 
+            if (mItem.getNome().contentEquals("this")) {
+                Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
-            Run_Internal mRun_Internal = new Run_Internal(mRunTime);
+                mItem = mRun_Internal.Struct_DentroDiretoStruct(mItem.getValor(), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
+            } else {
+                Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
-            mItem = mRun_Internal.Struct_DentroStruct(mItem.getValor(), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
-
-
-
+                mItem = mRun_Internal.Struct_DentroStruct(mItem.getValor(), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
+            }
 
 
         } else if (eQualificador.contentEquals("TYPE")) {
@@ -53,14 +55,12 @@ public class Run_Dot {
     }
 
 
-
-
     public Item operadorPontoType(Run_Type mEscopoType, Item eItem, AST ASTCorrente, Escopo mEscopo, String eRetorno) {
 
 
         String eQualificador = mRunTime.getQualificador(eItem.getTipo(), mEscopo.getRefers());
 
-      //  System.out.println("OPERANTE EM TYPE : " + eItem.getNome() + " -> " + eQualificador);
+        //  System.out.println("OPERANTE EM TYPE : " + eItem.getNome() + " -> " + eQualificador);
 
 
         if (eQualificador.contentEquals("STRUCT")) {
@@ -70,16 +70,16 @@ public class Run_Dot {
         } else if (eQualificador.contentEquals("TYPE")) {
             Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
-            eItem =mRun_Internal. Struct_DentroType(eItem.getValor(), ASTCorrente, mEscopo, eRetorno);
+            eItem = mRun_Internal.Struct_DentroType(eItem.getValor(), ASTCorrente, mEscopo, eRetorno);
 
         } else {
 
             if (ASTCorrente.mesmoValor("STRUCT_OBJECT")) {
-              //  System.out.println("OPERANTE EM TYPE : " + mEscopoType.getNome() + " -> " + ASTCorrente.getNome());
+                //  System.out.println("OPERANTE EM TYPE : " + mEscopoType.getNome() + " -> " + ASTCorrente.getNome());
 
                 eItem = mEscopoType.init_Object(ASTCorrente, mEscopo, eRetorno);
 
-            //    System.out.println(" ->>  : " + eItem.getNome());
+                //    System.out.println(" ->>  : " + eItem.getNome());
 
             }
 
@@ -96,7 +96,7 @@ public class Run_Dot {
 
         String eQualificador = mRunTime.getQualificador(eItem.getTipo(), mEscopo.getRefers());
 
-      //  System.out.println("OPERANTE EM STRUCT : " + eItem.getNome() + " -> " + eQualificador);
+        //  System.out.println("OPERANTE EM STRUCT : " + eItem.getNome() + " -> " + eQualificador);
 
         if (eQualificador.contentEquals("STRUCT")) {
             Run_Internal mRun_Internal = new Run_Internal(mRunTime);
@@ -111,11 +111,11 @@ public class Run_Dot {
         } else {
 
             if (ASTCorrente.mesmoValor("STRUCT_OBJECT")) {
-             //   System.out.println("OPERANTE EM TYPE : " + mEscopoType.getNome() + " -> " + ASTCorrente.getNome());
+                //   System.out.println("OPERANTE EM TYPE : " + mEscopoType.getNome() + " -> " + ASTCorrente.getNome());
 
                 eItem = mEscopoType.init_Object(ASTCorrente, mEscopo, eRetorno);
 
-             //   System.out.println(" ->>  : " + eItem.getNome());
+                //   System.out.println(" ->>  : " + eItem.getNome());
 
             }
 

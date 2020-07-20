@@ -1,0 +1,11 @@
+import "libs/lib.sigmaz";
+
+refer Cores;
+
+call iniciar -> {
+
+    def cor1 : Cor = Cor->getCor(100,120,50);
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+}

@@ -257,6 +257,9 @@ public class Estagiador {
 
     public void criarOperador(AST mSigmaz, AST mStageDef, String mOperacao, String mInvocacao) {
 
+        String p1 = mStageDef.getNome() + "_1";
+        String p2 = mStageDef.getNome() + "_2";
+
 
         AST mMATCH = mSigmaz.criarBranch("OPERATOR");
         mMATCH.setNome(mOperacao);
@@ -269,14 +272,14 @@ public class Estagiador {
 
         AST mArguments = mMATCH.criarBranch("ARGUMENTS");
         AST mAlfa = mArguments.criarBranch("ARGUMENT");
-        mAlfa.setNome("ALFA");
+        mAlfa.setNome(p1);
         mAlfa.setValor("VALUE");
 
         criarTipagemConcreta(mAlfa, mStageDef.getNome());
 
 
         AST mBeta = mArguments.criarBranch("ARGUMENT");
-        mBeta.setNome("BETA");
+        mBeta.setNome(p2);
         mBeta.setValor("VALUE");
 
         criarTipagemConcreta(mBeta, mStageDef.getNome());
@@ -302,11 +305,11 @@ public class Estagiador {
         AST mInvokeArguments = mInvoke.criarBranch("ARGUMENTS");
 
         AST mAlfa_Invoke = mInvokeArguments.criarBranch("ARGUMENT");
-        mAlfa_Invoke.setNome("ALFA");
+        mAlfa_Invoke.setNome(p1);
         mAlfa_Invoke.setValor("ID");
 
         AST mBeta_Invoke = mInvokeArguments.criarBranch("ARGUMENT");
-        mBeta_Invoke.setNome("BETA");
+        mBeta_Invoke.setNome(p2);
         mBeta_Invoke.setValor("ID");
 
 

@@ -230,7 +230,7 @@ public class Run_Struct {
             for (AST mDentro : ASTC.getASTS()) {
 
                 //    System.out.println("\t\t\t -> Recebendo " + mDentro.getNome());
-                mEscopo.guardar(mDentro, dRefers);
+                mEscopo.guardar(mDentro);
 
             }
 
@@ -243,9 +243,13 @@ public class Run_Struct {
         AST mBase = mAST_Struct.getBranch("BASES");
 
         for (AST ASTC : mBase.getASTS()) {
-            mEscopo.guardarStruct(ASTC, dRefers);
+            mEscopo.guardarStruct(ASTC);
         }
 
+
+        if( mRunTime.getErros().size()>0){
+            return;
+        }
 
         if (init_Generic.mesmoNome("TRUE") && mStructGeneric.mesmoNome("TRUE")) {
 
@@ -322,6 +326,9 @@ public class Run_Struct {
         //       System.out.println("\t - INIT :  " + mIndex_Function.getNome() + " -> " + mIndex_Function.getParametragem());
         // }
 
+        if( mRunTime.getErros().size()>0){
+            return;
+        }
 
         for (AST ASTC : mStructCorpo.getASTS()) {
 
@@ -329,26 +336,28 @@ public class Run_Struct {
             if (ASTC.mesmoTipo("FUNCTION")) {
                 mEscopo.guardar(ASTC);
 
-                mEscopo.guardarStruct(ASTC, dRefers);
+                mEscopo.guardarStruct(ASTC);
 
             } else if (ASTC.mesmoTipo("ACTION")) {
                 mEscopo.guardar(ASTC);
 
-                mEscopo.guardarStruct(ASTC, dRefers);
+                mEscopo.guardarStruct(ASTC);
 
             } else if (ASTC.mesmoTipo("OPERATION")) {
                 mEscopo.guardar(ASTC);
-                mEscopo.guardarStruct(ASTC, dRefers);
+                mEscopo.guardarStruct(ASTC);
 
             } else if (ASTC.mesmoTipo("CAST")) {
                 mEscopo.guardar(ASTC);
-                mEscopo.guardarStruct(ASTC, dRefers);
+                mEscopo.guardarStruct(ASTC);
 
             }
 
         }
 
-
+        if( mRunTime.getErros().size()>0){
+            return;
+        }
 
         for (AST ASTC : mStructCorpo.getASTS()) {
 
@@ -360,7 +369,7 @@ public class Run_Struct {
                     Run_Def mAST = new Run_Def(mRunTime, mEscopo);
                     mAST.init(ASTC);
 
-                    mEscopo.guardarStruct(ASTC, dRefers);
+                    mEscopo.guardarStruct(ASTC);
 
                     if (getModo(ASTC).contentEquals("ALL")){
                         mStack_All.add(ASTC.getNome());
@@ -376,7 +385,7 @@ public class Run_Struct {
                     Run_Moc mAST = new Run_Moc(mRunTime, mEscopo);
                     mAST.init(ASTC);
 
-                    mEscopo.guardarStruct(ASTC, dRefers);
+                    mEscopo.guardarStruct(ASTC);
 
                     if (getModo(ASTC).contentEquals("ALL")){
                         mStack_All.add(ASTC.getNome());
@@ -388,8 +397,14 @@ public class Run_Struct {
 
         }
 
+        if( mRunTime.getErros().size()>0){
+            return;
+        }
         mEscopo.criarConstanteStruct("this", mTipoCompleto, mNome);
 
+        if( mRunTime.getErros().size()>0){
+            return;
+        }
 
         if (mStructInits.getASTS().size() > 0) {
             Inicializador(mStructNome, ASTCorrente, BuscadorDeArgumentos);
@@ -403,6 +418,7 @@ public class Run_Struct {
             // System.out.println("Argumentos " + ASTCorrente.getBranch("ARGUMENTS").getASTS().size());
 
         }
+
 
 
     }
@@ -434,10 +450,14 @@ public class Run_Struct {
         boolean enc = false;
         boolean algum = false;
 
+        if( mRunTime.getErros().size()>0){
+            return;
+        }
 
         // System.out.println("\t -->> Inicializando :  " + ASTCorrente.getNome());
 
         for (Index_Action mIndex_Function : mEscopo.getOO().getInits()) {
+
 
 
             if (mRunTime.getErros().size() > 0) {
@@ -449,7 +469,10 @@ public class Run_Struct {
 
            // System.out.println("Init :: " + mIndex_Function.getDefinicao());
 
+
+
             if (mIndex_Function.mesmoNome(eOrigem) && mIndex_Function.mesmoArgumentos(mEscopo, mArgumentos)) {
+
 
 
                 algum = true;
@@ -470,6 +493,8 @@ public class Run_Struct {
                 AST mInitCall = mIndex_Function.getPonteiro().getBranch("CALL");
                 Escopo tmpEscopo = new Escopo(mRunTime, mEscopo);
 
+
+
                 if (mInitCall.mesmoValor("TRUE")) {
 
                     Index_Action mIndex_Function3 = null;
@@ -487,6 +512,7 @@ public class Run_Struct {
 
                         }
                     }
+
 
 
                     ai = 0;
@@ -513,14 +539,22 @@ public class Run_Struct {
 
                 }
 
+
+
                 mPreparadorDeArgumentos.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
 
+                if( mRunTime.getErros().size()>0){
+                    return;
+                }
 
                 break;
             }
 
 
+
         }
+
+
 
 
         if (enc) {

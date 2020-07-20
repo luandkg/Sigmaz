@@ -146,11 +146,9 @@ public class OO {
         return mEscopo;
     }
 
-    public void guardar(AST eAST) {
-        guardar(eAST,new ArrayList<String>());
-    }
 
-    public void guardar(AST eAST,ArrayList<String> dRefers) {
+
+    public void guardar(AST eAST) {
 
 
         mGuardados.add(eAST);
@@ -515,56 +513,7 @@ public class OO {
     }
 
 
-    public ArrayList<AST> getTypes() {
 
-        ArrayList<AST> gca = new ArrayList<AST>();
-
-        for (AST mIndex_Function : mTypes) {
-            gca.add(mIndex_Function);
-        }
-
-        if (getEscopo().getEscopoAnterior() != null) {
-            for (AST mIndex_Function : getEscopo().getEscopoAnterior().getTypes()) {
-                gca.add(mIndex_Function);
-            }
-        }
-
-        return gca;
-    }
-
-    public ArrayList<AST> getStructs() {
-
-        ArrayList<AST> gca = new ArrayList<AST>();
-
-        for (AST mIndex_Function : mStructs) {
-            gca.add(mIndex_Function);
-        }
-
-        if (getEscopo().getEscopoAnterior() != null) {
-            for (AST mIndex_Function : getEscopo().getEscopoAnterior().getStructs()) {
-                gca.add(mIndex_Function);
-            }
-        }
-
-        return gca;
-    }
-
-    public ArrayList<AST> getStages() {
-
-        ArrayList<AST> gca = new ArrayList<AST>();
-
-        for (AST mIndex_Function : mStages) {
-            gca.add(mIndex_Function);
-        }
-
-        if (getEscopo().getEscopoAnterior() != null) {
-            for (AST mIndex_Function : getEscopo().getEscopoAnterior().getStages()) {
-                gca.add(mIndex_Function);
-            }
-        }
-
-        return gca;
-    }
 
 
 }

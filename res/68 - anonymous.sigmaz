@@ -11,7 +11,6 @@ call iniciar -> {
 
     };
 
-    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
 
     def teste : bool = true;
 
@@ -32,10 +31,12 @@ call iniciar -> {
 
     a(2);
 
-    a =  @(a:num,b:num)  {
+    #a =null;
 
-                def a1 : num = a;
-                def a2 : num = b;
+    a =  @(pa:num,pb:num)  {
+
+                def a1 : num = pa;
+                def a2 : num = pb;
                 #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
             };
@@ -48,6 +49,7 @@ call iniciar -> {
     def c : auto = null;
     c = a;
    # a= null;
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
 
     a(11,1);
     b(22,2);

@@ -7,6 +7,8 @@ Linguagem de Programação Estruturada - Implementações
 		2020 06 13 -->> Lexer
 		2020 06 13 -->> Parser
 		2020 06 13 -->> Compiler
+		2020 06 13 -->> Erro
+		2020 06 13 -->> Grupo de Erros
 
 
 		2020 06 14 -->> Action
@@ -91,9 +93,9 @@ Linguagem de Programação Estruturada - Implementações
 		2020 06 24 -->> Alter Type Runtime -> Generic Type
 
 
-		2020 06 25 -->> Ident
-		2020 06 25 -->> Ident Libraries
-		2020 06 25 -->> Ident All
+		2020 06 25 -->> Identador
+		2020 06 25 -->> Identador de Bibliotecas
+		2020 06 25 -->> Identar Todos
 		2020 06 25 -->> Value Ternal
 		2020 06 25 -->> Required
 		2020 06 25 -->> Inclusao Dos Nomes De Funcoes Externas Na Analise

@@ -216,6 +216,8 @@ public class Run_Value {
 
         }
 
+
+
         if (mRunTime.getErros().size()>0){
             return ;
         }
@@ -453,7 +455,7 @@ mIsPrimitivo=true;
 
     public void Init(AST ASTCorrente, String eRetorno) {
 
-        //System.out.println("Vamos Struct 1 - " + mRunTime.getErros().size());
+      //  System.out.println("Vamos Struct 1 - " + eRetorno);
 
         long HEAPID = mRunTime.getHEAPID();
         String eNome = "<Struct::" + eRetorno + ":" + HEAPID + ">";
@@ -462,17 +464,21 @@ mIsPrimitivo=true;
 
         Run_Struct mRun_Struct = new Run_Struct(mRunTime);
         mRun_Struct.setNome(eNome);
+        mRunTime.adicionarHeap(mRun_Struct);
+
         mRun_Struct.init(eRetorno, ASTCorrente, mEscopo);
 
-        // System.out.println("Vamos Struct 2 - " + mRunTime.getErros().size());
 
-        mRunTime.adicionarHeap(mRun_Struct);
+
+     //    System.out.println("Vamos Struct 2 - " + mRunTime.getHeap().size());
 
         mIsNulo = false;
         mIsPrimitivo = false;
         mRetornoTipo = mRun_Struct.getTipoCompleto();
         mIsEstrutura = true;
         mConteudo = eNome;
+
+
 
     }
 

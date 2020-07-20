@@ -16,12 +16,12 @@ public class Run_Valoramento {
 
 
     }
-
     public Run_Value init(String eNome,AST mValor, String mTipagem) {
 
-        // System.out.println("Valorando  -> Def " + eAST.getNome());
+      // System.out.println("Valorando  -> Def " + mValor.getValor());
 
         // System.out.println("Pas Retorno : " + mTipagem);
+
 
         Run_Value mAST = new Run_Value(mRunTime, mEscopo);
         mAST.init(mValor, mTipagem);
@@ -32,8 +32,10 @@ public class Run_Valoramento {
             mAST.setRetornoTipo(mTipagem);
         }
 
+
         if (mRunTime.getErros().size() > 0) {
-            return null;
+        //    System.out.println(" -->> " + mRunTime.getErros().get(0));
+            return mAST;
         }
 
         if (mAST.getIsNulo()) {
@@ -67,7 +69,7 @@ public class Run_Valoramento {
             } else {
 
                 if (mRunTime.getErros().size() > 0) {
-                    return null;
+                    return mAST;
                 }
 
 
@@ -76,7 +78,7 @@ public class Run_Valoramento {
                 String res = mCast.realizarCast(mTipagem, mAST.getRetornoTipo(), mAST.getConteudo());
 
                 if (mRunTime.getErros().size() > 0) {
-                    return null;
+                    return mAST;
                 }
 
                 if (res == null) {

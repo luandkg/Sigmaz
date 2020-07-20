@@ -171,11 +171,7 @@ public class Run_Any {
 
                     //  mPreparadorDeArgumentos.executar_Action(mRunTime,  mEscopo, mIndex_Function, mArgumentos);
 
-                    for (AST eAST : BuscadorDeVariaveis.getStructs()) {
-                        if (!mEscopo.possuiStruct(eAST.getNome())) {
-                            mEscopo.guardar(eAST);
-                        }
-                    }
+
 
                     //   System.out.println(mEscopo.getNome() + " EA -> Structs : " + mEscopo.getStructs().size());
 

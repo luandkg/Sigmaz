@@ -112,6 +112,7 @@ public class Run_Body {
 
             // System.out.println("\n  -->> EX :: " + fAST.getTipo() + " :: " + mRunTime.getErros().size());
 
+           // System.out.println("BODY - 0 " + fAST.getTipo() + " = " + mRunTime.getErros().size());
 
             if (mRunTime.getErros().size() > 0) {
                 break;

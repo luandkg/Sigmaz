@@ -34,16 +34,17 @@ public class Run_Def {
         Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mEscopo);
         Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, mTipagem);
 
+
         if (mRunTime.getErros().size() > 0) {
             return;
         }
 
-       // System.out.println("Definindo " + eAST.getNome() + " : " +mAST.getRetornoTipo() + " = " +mAST.getConteudo() + " -> " + mAST.getIsNulo() );
 
         if (mAST.getIsNulo()) {
 
 
             if (mAST.getIsPrimitivo()) {
+
                 mEscopo.criarDefinicaoNula(eAST.getNome(), mAST.getRetornoTipo());
 
             } else if (mAST.getIsStruct()) {
@@ -55,6 +56,7 @@ public class Run_Def {
         }else{
 
             if (mAST.getIsPrimitivo()) {
+
                 mEscopo.criarDefinicao(eAST.getNome(), mAST.getRetornoTipo(), mAST.getConteudo());
 
             } else if (mAST.getIsStruct()) {

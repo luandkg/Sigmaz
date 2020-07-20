@@ -242,7 +242,7 @@ public class Run_Type {
                 Run_Def mAST = new Run_Def(mRunTime, mEscopo);
                 mAST.init(ASTC);
 
-                mEscopo.guardarStruct(ASTC,dRefers);
+                mEscopo.guardarStruct(ASTC);
 
 
             } else if (ASTC.mesmoTipo("MOCKIZ")) {
@@ -252,7 +252,7 @@ public class Run_Type {
                 Run_Moc mAST = new Run_Moc(mRunTime, mEscopo);
                 mAST.init(ASTC);
 
-                mEscopo.guardarStruct(ASTC,dRefers);
+                mEscopo.guardarStruct(ASTC);
 
 
             }

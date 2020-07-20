@@ -3,9 +3,7 @@ package Sigmaz.Executor.Runners;
 import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
-import Sigmaz.Utils.AST_Implementador;
-
-import java.util.ArrayList;
+import Sigmaz.Executor.AST_Implementador;
 
 public class Run_Each {
 

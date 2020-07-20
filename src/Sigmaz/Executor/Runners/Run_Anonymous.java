@@ -37,6 +37,8 @@ public class Run_Anonymous {
             mEscopo.guardar(eAcao);
         } else {
 
+            String eAntigo = mAST.getConteudo();
+
             if (mAST.getIsNulo()){
 
             }else{
@@ -54,6 +56,7 @@ public class Run_Anonymous {
 
             }
 
+        //    mEscopo.removerAuto(eAntigo);
 
 
         }

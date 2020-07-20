@@ -18,6 +18,8 @@ import "pacote_tempo.sigmaz";
 import "ecossistema.sigmaz";
 import "ecologia.sigmaz";
 
+import "cores.sigmaz";
+
 stages Numeros -> {
 	POSITIVO , NEGATIVO , ZERO 
 }

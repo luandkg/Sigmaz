@@ -646,7 +646,9 @@ public class EscopoDebug {
 
     public void listar_Stages() {
 
-        for (AST mAST : getEscopo().getStages()) {
+        Run_Context mRun_Context = new Run_Context(mEscopo.getRunTime());
+
+        for (AST mAST : mRun_Context.getStructsContexto(mEscopo.getRefers())) {
             if (mAST.getBranch("EXTENDED").mesmoNome("STAGES")) {
                 System.out.println("\t - " + mAST.getNome() + getStages(mAST.getBranch("STAGES")));
             }
@@ -655,7 +657,9 @@ public class EscopoDebug {
     }
 
     public void listar_Structs() {
-        for (AST mAST : getEscopo().getStructs()) {
+        Run_Context mRun_Context = new Run_Context(mEscopo.getRunTime());
+
+        for (AST mAST : mRun_Context.getStructsContexto(mEscopo.getRefers())) {
             if (mAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
                 System.out.println("\t - " + mAST.getNome());
             }

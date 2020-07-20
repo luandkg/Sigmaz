@@ -61,17 +61,7 @@ public class Escopo {
     }
 
 
-    public boolean possuiStruct(String eNome) {
-        boolean ret = false;
 
-        for (AST eAST : getStructs()) {
-            if (eAST.mesmoNome(eNome)) {
-                ret = true;
-                break;
-            }
-        }
-        return ret;
-    }
 
     public Escopo(RunTime eRunTime, Escopo eEscopoAnterior) {
 
@@ -164,19 +154,6 @@ public class Escopo {
         mExternos.add(eAST);
     }
 
-    public void externalizarStructGeral(String eExterno) {
-
-        for (Run_Extern eAST : mRunTime.getExtern()) {
-
-            if (eAST.getNome().contentEquals(eExterno)) {
-                //   System.out.println("\t - Receber Externo Geral : " + eAST.getNomeCompleto());
-                mExternos.add(eAST);
-            }
-
-
-        }
-
-    }
 
     public ArrayList<Run_Extern> getExtern() {
         ArrayList<Run_Extern> mRet = new ArrayList<Run_Extern>();
@@ -194,12 +171,6 @@ public class Escopo {
     }
 
 
-    public void guardarStruct(AST eAST, ArrayList<String> dRefers) {
-
-        mOO.guardar(eAST, dRefers);
-
-    }
-
     public void guardarStruct(AST eAST) {
 
         mOO.guardar(eAST);
@@ -212,11 +183,6 @@ public class Escopo {
 
     }
 
-    public void guardar(AST eAST, ArrayList<String> dRefers) {
-
-        mAO.guardar(eAST, dRefers);
-
-    }
 
     public ArrayList<Index_Function> getFunctionsCompleto() {
         return mAO.getFunctionsCompleto();
@@ -395,7 +361,8 @@ public class Escopo {
 
         for (Index_Action eAST : this.getActionsCompleto()) {
             if (eAST.getPonteiro().mesmoValor(eNome)) {
-              //  System.out.println("Remover Auto : " + eNome);
+                System.out.println("Remover Auto : " + eNome);
+
                 eAST.setNome("");
                 eAST.getPonteiro().setTipo("");
             }
@@ -407,7 +374,7 @@ public class Escopo {
 
         for (Index_Function eAST : this.getFunctionsCompleto()) {
             if (eAST.getPonteiro().mesmoValor(eNome)) {
-               // System.out.println("Removendo Functor : " + eNome);
+                // System.out.println("Removendo Functor : " + eNome);
                 eAST.setNome("");
                 eAST.getPonteiro().setTipo("");
             }
@@ -474,21 +441,7 @@ public class Escopo {
     }
 
 
-    public ArrayList<AST> getStruct() {
-        return mOO.getStruct();
-    }
 
-    public ArrayList<AST> getStages() {
-        return mAO.getStages();
-    }
-
-    public ArrayList<AST> getStructs() {
-        return mAO.getStructs();
-    }
-
-    public ArrayList<AST> getTypes() {
-        return mAO.getTypes();
-    }
 
 
     public void setCancelar(boolean eCancelar) {
@@ -609,19 +562,6 @@ public class Escopo {
 
     public Item getItem(String eNome) {
         return mEscopoStack.getItem(eNome);
-    }
-
-
-    public boolean existeCast(String eNome) {
-        boolean ret = false;
-
-        for (AST fAST : this.getCastsCompleto()) {
-            if (fAST.mesmoNome(eNome)) {
-                ret = true;
-            }
-        }
-
-        return ret;
     }
 
 

@@ -1,0 +1,33 @@
+package Cores{
+
+    stages Cores -> { BRANCO, AMARELO, VERMELHO, AZUL, VERDE, PRETO, CINZA}
+
+    struct Cor {
+
+        init Cor(r:int,g:int,b:int){
+            this.mR = r;
+            this.mG = g;
+            this.mB = b;
+        }
+
+        restrict:
+            define mR : int = 0;
+            define mG : int = 0;
+            define mB : int = 0;
+
+        all:
+            func getR() : int { return mR; }
+            func getG() : int { return mG; }
+            func getB() : int { return mB; }
+
+        extern:
+            func getCor(r:int,g:int,b:int) : Cor {
+                return init Cor(r,g,b);
+            }
+            func getCor(r:num,g:num,b:num) : Cor {
+                return init Cor(int(r),int(g),int(b));
+            }
+
+    }
+
+}

@@ -107,13 +107,15 @@ public class Run_Extern {
         mStructCorpo = ASTPai.getBranch("BODY");
 
 
-        AST mRefers = ASTPai.getBranch("REFERS");
+        AST ASTRefers = ASTPai.getBranch("REFERS");
        dRefers = new ArrayList<String>();
 
-        for (AST ASTC : mRefers.getASTS()) {
+        for (AST ASTC : ASTRefers.getASTS()) {
             String eRefer = ASTC.getNome();
             dRefers.add(eRefer);
+            mEscopo.adicionarRefer(eRefer);
         }
+
 
 
 
@@ -124,14 +126,14 @@ public class Run_Extern {
 
                 if (getModo(ASTC).contentEquals("EXTERN")) {
 
-                    mEscopo.guardarStruct(ASTC,dRefers);
+                    mEscopo.guardarStruct(ASTC);
                     CF += 1;
                 }
             } else if (ASTC.mesmoTipo("ACTION")) {
 
                 if (getModo(ASTC).contentEquals("EXTERN")) {
 
-                    mEscopo.guardarStruct(ASTC,dRefers);
+                    mEscopo.guardarStruct(ASTC);
                     CA += 1;
                 }
             }
@@ -140,15 +142,13 @@ public class Run_Extern {
 
     }
 
-    public void externalizar(ArrayList<Run_Extern> GlobalExtern) {
 
-        for (Run_Extern mRE : GlobalExtern) {
-            mEscopo.externalizarStructGeral(mRE.getNome());
-        }
-
-    }
 
     public void run() {
+
+       // System.out.println("Externo :: " + this.getNomeCompleto());
+
+        mEscopo.externalizar(this.getNomeCompleto());
 
         for (AST ASTC : mStructCorpo.getASTS()) {
 
@@ -160,7 +160,7 @@ public class Run_Extern {
 
                     mDesseExtern.add(ASTC.getNome());
 
-                    mEscopo.guardarStruct(ASTC,dRefers);
+                    mEscopo.guardarStruct(ASTC);
                     CD += 1;
                 }
 
@@ -174,7 +174,7 @@ public class Run_Extern {
 
                     mDesseExtern.add(ASTC.getNome());
 
-                    mEscopo.guardarStruct(ASTC,dRefers);
+                    mEscopo.guardarStruct(ASTC);
                     CM += 1;
 
                 }
@@ -254,7 +254,7 @@ public class Run_Extern {
                 enc = true;
                 if (mIndex_Function.mesmoArgumentos(mEscopo,mArgumentos)) {
 
-                   //  System.out.println("\t - Executar :  " + mIndex_Function.getNome());
+                   // System.out.println("\t - Executar :  " + mIndex_Function.getNome());
 
                     algum = true;
                    // System.out.println("\t - Executar :  " + mIndex_Function.getNome() + " ANTES :: " + eRetorne);
@@ -312,7 +312,7 @@ public class Run_Extern {
 
         for (Index_Action mIndex_Function : mEscopo.getOO().getActionsFunctions_Extern()) {
 
-           // System.out.println("\t - Procurar Extern :  " + mIndex_Function.getNome());
+           //System.out.println("\t - Procurar Extern :  " + mIndex_Function.getNome());
 
             if (mIndex_Function.mesmoNome(ASTCorrente.getNome())) {
 

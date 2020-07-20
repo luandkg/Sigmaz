@@ -3,6 +3,7 @@ package Sigmaz.Executor.Indexador;
 import Sigmaz.Executor.*;
 import Sigmaz.Executor.Runners.Run_Body;
 import Sigmaz.Executor.Runners.Run_GetType;
+import Sigmaz.Executor.Runners.Run_Valoramento;
 import Sigmaz.Executor.Runners.Run_Value;
 import Sigmaz.Utils.AST;
 
@@ -10,12 +11,11 @@ import java.util.ArrayList;
 
 public class Argumentador {
 
-    public boolean mesmoArgumentos(RunTime mRunTime,Escopo mEscopo,ArrayList<String> mTipoArgumentos, ArrayList<Item> eArgumentos) {
+    public boolean mesmoArgumentos(RunTime mRunTime, Escopo mEscopo, ArrayList<String> mTipoArgumentos, ArrayList<Item> eArgumentos) {
         boolean ret = false;
 
         //  System.out.println("\t - Inicio da Checagem :  " + mTipoArgumentos.size() + " e " + eArgumentos.size());
 
-        Run_GetType mRun_GetType = new Run_GetType(mRunTime,mEscopo);
 
         if (eArgumentos.size() == mTipoArgumentos.size()) {
             int i = 0;
@@ -23,21 +23,20 @@ public class Argumentador {
             for (Item mArgumentos : eArgumentos) {
 
 
-
                 if (mArgumentos.getTipo().contentEquals(mTipoArgumentos.get(i))) {
                     v += 1;
                 } else {
                     if (mTipoArgumentos.get(i).contentEquals("any")) {
                         v += 1;
-                    }else if (mTipoArgumentos.get(i).contentEquals("<<ANY>>")) {
+                    } else if (mTipoArgumentos.get(i).contentEquals("<<ANY>>")) {
                         v += 1;
-                    }else if (mArgumentos.getTipo().contentEquals("<<ANY>>")) {
+                    } else if (mArgumentos.getTipo().contentEquals("<<ANY>>")) {
                         v += 1;
                     } else {
 
-                        if (mArgumentos.getTipo().contains("<>")){
+                        if (mArgumentos.getTipo().contains("<>")) {
 
-                            if (mArgumentos.getTipo().contains(mTipoArgumentos.get(i))){
+                            if (mArgumentos.getTipo().contains(mTipoArgumentos.get(i))) {
                                 mArgumentos.setTipo(mTipoArgumentos.get(i));
                                 v += 1;
                             }
@@ -48,8 +47,8 @@ public class Argumentador {
                 }
 
 
-           //System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
-            //    System.out.println("\t - Entrando Tipo :  " +mArgumentos.getTipo() + " : " + mArgumentos.getValor() );
+                //System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
+                //    System.out.println("\t - Entrando Tipo :  " +mArgumentos.getTipo() + " : " + mArgumentos.getValor() );
 
                 i += 1;
 
@@ -79,11 +78,17 @@ public class Argumentador {
                 Run_Value mAST = new Run_Value(mRunTime, mBuscadorDeVariaveis);
                 mAST.init(a, "<<ANY>>");
 
-             //  System.out.println("\t - Recebendo Parametro  " + a.getValor() + " : " + " -> " + mAST.getRetornoTipo() + " :: " + mAST.getIsStruct());
+                // System.out.println("\t - Iniciando Parametro : " + a.getTipo());
 
-               // if (mAST.getIsReferenciavel()) {
-              //      System.out.println("\t Ref Anterior : " + mAST.getReferencia().getNome());
-              //  }
+                //  Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mBuscadorDeVariaveis);
+                // Run_Value mAST = mRun_Valoramento.init(a.getNome(), a, "<<ANY>>");
+
+
+                //System.out.println("\t - Recebendo Parametro  " + a.getValor() + " : " + " -> " + mAST.getRetornoTipo() + " :: " + mAST.getIsStruct());
+
+                // if (mAST.getIsReferenciavel()) {
+                //      System.out.println("\t Ref Anterior : " + mAST.getReferencia().getNome());
+                //  }
 
 
                 Item v = new Item("");
@@ -152,6 +157,16 @@ public class Argumentador {
         mEscopoInterno.setNome(mFunction.getNome());
 
 
+        for (String eRefer : mStructEscopo.getRefers()) {
+
+
+          //  System.out.println("REFER " + eRefer);
+
+            mEscopoInterno.adicionarRefer(eRefer);
+
+        }
+
+
         passarParametros(mEscopoInterno, mFunction.getParamentos(), mFunction.getParamentosModos(), mArgumentos);
 
         AST mASTBody = mFunction.getPonteiro().getBranch("BODY");
@@ -164,7 +179,7 @@ public class Argumentador {
         Saida.setValor(mAST.getConteudo());
         Saida.setTipo(mAST.getRetornoTipo());
 
-        if (Saida.getNulo()){
+        if (Saida.getNulo()) {
             Saida.setTipo(eReturne);
         }
 
@@ -196,14 +211,18 @@ public class Argumentador {
         //   System.out.println(" -->> ACTION CALL : " + mFunction.getNome() );
         //  System.out.println("\t - Escopo : " + mStructEscopo.getNome() );
 
-      //  System.out.println(mStructEscopo.getNome() + " -> Structs : " + mStructEscopo.getStructs().size() );
+        //  System.out.println(mStructEscopo.getNome() + " -> Structs : " + mStructEscopo.getStructs().size() );
+
+
 
 
         Escopo mEscopoInterno = new Escopo(mRunTime, mStructEscopo);
         mEscopoInterno.setNome(mFunction.getNome());
 
 
+
         passarParametros(mEscopoInterno, mFunction.getParamentos(), mFunction.getParamentosModos(), mArgumentos);
+
 
 
         //  mEscopoInterno.ListarAll();
