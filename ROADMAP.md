@@ -242,3 +242,6 @@ Linguagem de Programação Estruturada - Implementações
 
 		2020 07 20 -->> Trilhador Horizontal_Vertical
 
+
+		2020 07 21 -->> Organizador Todo 2.0
+

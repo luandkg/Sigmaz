@@ -1,8 +1,4 @@
 
-    - OATodo : t {oa}
-
-    - ObterContexto : t
-
     - Biblioteca - Tempo : f
 
     - Biblioteca - Lista : f
@@ -11,35 +7,29 @@
 
     - Biblioteca - Texto : i
 
-    - OAVersion : t
-
-    - OARoadmap : t
-
-    - Run_Dot : t
-
-    - Run_Arrow : t
-
     - Visualizador de Arvore : t (  @Arvore @Posicao @Render )
-
-    - Visualizador Interno : t
-
-    - Roadmap Renderizador : t
 
     - Argumentos Opcionais : t
 
     - UML : i (Montagem Renderização)
 
-    - ChangeList : t
-
     - Trilha de Desenvolvimento : t ( @Organizar @Montar @Renderizar)
-
-    - Ações Anônimas : t
-
-    - Funções Anônimas : t
 
     - Argumentos Opcionais : t ( @Valorados @Referenciados)
 
     - Compilação em Fila : t
+
+    - Compilador : t (@Lexer @Parser @Compiler @Analisador @Runner @Identador @Comentarios)
+
+    - Trilhas : f (@Horizontal Vertical @Horizontal_Vertical Vertical_Horizontal)
+
+    - Sigmaz : t ( @Call @Action @Function @Define @Mockiz @Value @Arguments @Type @Struct @Stages @Model @Init @Start @Anonymous @Dot @Seta @Contexto )
+
+    - Visualizadores : t ( @Trilhas @Interno @Todo @Roadmap @ChangeList )
+
+    - Intellisense : t (@Sigmaz @Packages)
+
+    - OA : f (@Todo @Version @Trilha)
 
 
 

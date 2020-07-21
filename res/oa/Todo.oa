@@ -1,26 +1,8 @@
    PACOTE OATodo
     {
-      ID Indice = "84"
+      ID Indice = "99"
       PACOTE Todos
        {
-         OBJETO Item { 
-            ID Indice = "6"
-            ID Texto = " OATodo "
-            ID Data = "2020 07 08"
-            ID Status = "t"
-            ID Tags = "oa "
-            ID Alterado = "2020 07 14"
-            ID Tarefas = ""
-         }
-         OBJETO Item { 
-            ID Indice = "7"
-            ID Texto = " ObterContexto "
-            ID Data = "2020 07 08"
-            ID Status = "t"
-            ID Tags = ""
-            ID Alterado = "2020 07 18"
-            ID Tarefas = ""
-         }
          OBJETO Item { 
             ID Indice = "8"
             ID Texto = " Biblioteca @H Tempo "
@@ -28,42 +10,6 @@
             ID Status = "f"
             ID Tags = ""
             ID Alterado = "2020 07 18"
-            ID Tarefas = ""
-         }
-         OBJETO Item { 
-            ID Indice = "9"
-            ID Texto = " OAVersion "
-            ID Data = "2020 07 08"
-            ID Status = "t"
-            ID Tags = ""
-            ID Alterado = "2020 07 14"
-            ID Tarefas = ""
-         }
-         OBJETO Item { 
-            ID Indice = "10"
-            ID Texto = " OARoadmap "
-            ID Data = "2020 07 08"
-            ID Status = "t"
-            ID Tags = ""
-            ID Alterado = "2020 07 14"
-            ID Tarefas = ""
-         }
-         OBJETO Item { 
-            ID Indice = "11"
-            ID Texto = " Run_Dot "
-            ID Data = "2020 07 09"
-            ID Alterado = "2020 07 14"
-            ID Status = "t"
-            ID Tags = ""
-            ID Tarefas = ""
-         }
-         OBJETO Item { 
-            ID Indice = "12"
-            ID Texto = " Run_Arrow "
-            ID Data = "2020 07 09"
-            ID Alterado = "2020 07 14"
-            ID Status = "t"
-            ID Tags = ""
             ID Tarefas = ""
          }
          OBJETO Item { 
@@ -76,24 +22,6 @@
             ID Tarefas = "@AArvore @APosicao @ARender "
          }
          OBJETO Item { 
-            ID Indice = "68"
-            ID Texto = " Roadmap Renderizador "
-            ID Data = "2020 07 15"
-            ID Alterado = "2020 07 16"
-            ID Status = "t"
-            ID Tags = ""
-            ID Tarefas = ""
-         }
-         OBJETO Item { 
-            ID Indice = "69"
-            ID Texto = " Argumentos Opcionais "
-            ID Data = "2020 07 15"
-            ID Alterado = "2020 07 18"
-            ID Status = "t"
-            ID Tags = ""
-            ID Tarefas = "@AValorados @AReferenciados "
-         }
-         OBJETO Item { 
             ID Indice = "70"
             ID Texto = " UML "
             ID Data = "2020 07 15"
@@ -103,24 +31,6 @@
             ID Tarefas = "Montagem Renderização "
          }
          OBJETO Item { 
-            ID Indice = "71"
-            ID Texto = " ChangeList "
-            ID Data = "2020 07 15"
-            ID Alterado = "2020 07 15"
-            ID Status = "t"
-            ID Tags = ""
-            ID Tarefas = ""
-         }
-         OBJETO Item { 
-            ID Indice = "72"
-            ID Texto = " Visualizador Interno "
-            ID Data = "2020 07 16"
-            ID Alterado = "2020 07 16"
-            ID Status = "t"
-            ID Tags = ""
-            ID Tarefas = ""
-         }
-         OBJETO Item { 
             ID Indice = "73"
             ID Texto = " Trilha de Desenvolvimento "
             ID Data = "2020 07 16"
@@ -128,24 +38,6 @@
             ID Status = "t"
             ID Tags = ""
             ID Tarefas = "@AOrganizar @AMontar @ARenderizar "
-         }
-         OBJETO Item { 
-            ID Indice = "74"
-            ID Texto = " Ações Anônimas "
-            ID Data = "2020 07 17"
-            ID Alterado = "2020 07 18"
-            ID Status = "t"
-            ID Tags = ""
-            ID Tarefas = ""
-         }
-         OBJETO Item { 
-            ID Indice = "75"
-            ID Texto = " Funções Anônimas "
-            ID Data = "2020 07 17"
-            ID Alterado = "2020 07 18"
-            ID Status = "t"
-            ID Tags = ""
-            ID Tarefas = ""
          }
          OBJETO Item { 
             ID Indice = "78"
@@ -182,6 +74,69 @@
             ID Status = "i"
             ID Tags = ""
             ID Tarefas = ""
+         }
+         OBJETO Item { 
+            ID Indice = "86"
+            ID Texto = " Trilhas "
+            ID Data = "2020 07 20"
+            ID Alterado = "2020 07 20"
+            ID Status = "f"
+            ID Tags = ""
+            ID Tarefas = "@AHorizontal Vertical @AHorizontal_Vertical Vertical_Horizontal "
+         }
+         OBJETO Item { 
+            ID Indice = "87"
+            ID Texto = " Compilador "
+            ID Data = "2020 07 20"
+            ID Alterado = "2020 07 20"
+            ID Status = "t"
+            ID Tags = ""
+            ID Tarefas = "@ALexer @AParser @ACompiler @AAnalisador @ARunner @AIdentador @AComentarios "
+         }
+         OBJETO Item { 
+            ID Indice = "88"
+            ID Texto = " Sigmaz "
+            ID Data = "2020 07 20"
+            ID Alterado = "2020 07 20"
+            ID Status = "t"
+            ID Tags = ""
+            ID Tarefas = "@ACall @AAction @AFunction @ADefine @AMockiz @AValue @AArguments @AType @AStruct @AStages @AModel @AInit @AStart @AAnonymous @ADot @ASeta @AContexto "
+         }
+         OBJETO Item { 
+            ID Indice = "89"
+            ID Texto = " Visualizadores "
+            ID Data = "2020 07 20"
+            ID Alterado = "2020 07 20"
+            ID Status = "t"
+            ID Tags = ""
+            ID Tarefas = "@ATrilhas @AInterno @ATodo @ARoadmap @AChangeList "
+         }
+         OBJETO Item { 
+            ID Indice = "98"
+            ID Texto = " Intellisense "
+            ID Data = "2020 07 20"
+            ID Alterado = "2020 07 20"
+            ID Status = "t"
+            ID Tags = ""
+            ID Tarefas = "@ASigmaz @APackages "
+         }
+         OBJETO Item { 
+            ID Indice = "99"
+            ID Texto = " OA "
+            ID Data = "2020 07 20"
+            ID Alterado = "2020 07 20"
+            ID Status = "f"
+            ID Tags = ""
+            ID Tarefas = "@ATodo @AVersion @ATrilha "
+         }
+         OBJETO Item { 
+            ID Indice = "69"
+            ID Texto = " Argumentos Opcionais "
+            ID Data = "2020 07 15"
+            ID Alterado = "2020 07 18"
+            ID Status = "t"
+            ID Tags = ""
+            ID Tarefas = "@AValorados @AReferenciados "
          }
        } 
     } 

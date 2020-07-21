@@ -14,8 +14,8 @@ public class AppSigmaz {
         //  Gerador G = new Gerador();
         //  G.gerarPrint();
 
-
         AUTO();
+
 
 
         ArrayList<String> mArquivos = Carregadores.Carregar_Arquivos();
@@ -58,6 +58,7 @@ public class AppSigmaz {
 
 
 
+
     }
 
     public static void AUTO() {
@@ -66,23 +67,23 @@ public class AppSigmaz {
         OA.init();
 
 
-        OATodo mTodo = new OATodo("res/oa/Todo.oa");
-        mTodo.sincronizar("Todo.txt");
+      //  OATodo mTodo = new OATodo("res/oa/Todo.oa");
+        //mTodo.sincronizar("Todo.txt");
 
-        mTodo.marcarSem("i");
-        mTodo.removerCom("r");
+       // mTodo.marcarSem("i");
+       // mTodo.removerCom("r");
 
-        ArrayList<Anotacao> eInfos = new ArrayList<Anotacao>();
+       // ArrayList<Anotacao> eInfos = new ArrayList<Anotacao>();
 
-        eInfos.add(new Anotacao("i", "Ideias", new Color(39, 174, 96)));
-        eInfos.add(new Anotacao("f", "Fazendo", new Color(230, 126, 34)));
-        eInfos.add(new Anotacao("c", "Cancelado", new Color(192, 57, 43)));
-        eInfos.add(new Anotacao("t", "Terminado", new Color(41, 128, 185)));
+        //eInfos.add(new Anotacao("i", "Ideias", new Color(39, 174, 96)));
+        //eInfos.add(new Anotacao("f", "Fazendo", new Color(230, 126, 34)));
+       // eInfos.add(new Anotacao("c", "Cancelado", new Color(192, 57, 43)));
+        //eInfos.add(new Anotacao("t", "Terminado", new Color(41, 128, 185)));
 
-        mTodo.exportar("todo.png", eInfos);
+       // mTodo.exportar("todo.png", eInfos);
 
 
-        mTodo.exportarDiario("C:\\Users\\Luand\\OneDrive\\Imagens\\todos\\sigmaz_", ".png", eInfos);
+        //mTodo.exportarDiario("C:\\Users\\Luand\\OneDrive\\Imagens\\todos\\sigmaz_", ".png", eInfos);
 
 
         String IMG_ROAD = "https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/road.png";
@@ -111,6 +112,9 @@ public class AppSigmaz {
         OA.exportarReleasesHV("res/imagens/VersionMap.png", "res/oa/Roadmap.trilha",eCorFonte);
         OA.exportarBranchesHV("res/imagens/VersionBranches.png", "res/oa/Roadmap.trilha",eCorFonte);
 
+
+        OAOrganizador mOrganizador = new OAOrganizador("res/oa/Organizador.oa");
+        mOrganizador.renderizar("todo.todo","todo.png");
 
     }
 
