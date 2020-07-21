@@ -10,6 +10,7 @@ public class Analisar_Action {
 
     private Analisador mAnalisador;
 
+    private ArrayList<String> mAlocadoAqui ;
 
     private Analisador_Bloco mAnalisador_Bloco;
 
@@ -17,7 +18,7 @@ public class Analisar_Action {
 
         mAnalisador = eAnalisador;
 
-
+        mAlocadoAqui= new ArrayList<String>();
         mAnalisador_Bloco = eAnalisador_Bloco;
 
     }
@@ -25,7 +26,15 @@ public class Analisar_Action {
 
     public void analisarDentroAction(AST ASTPai, ArrayList<String> mAlocadosAntes, boolean laco) {
 
+
         if (ASTPai.mesmoTipo("DEF")) {
+
+            if (mAlocadoAqui.contains(ASTPai.getNome())) {
+                mAnalisador.getErros().add("Alocacao : " + ASTPai.getNome() + " : Duplicada !");
+            }else{
+                mAlocadoAqui.add(ASTPai.getNome());
+            }
+
 
             mAlocadosAntes.add(ASTPai.getNome());
 
@@ -44,6 +53,12 @@ public class Analisar_Action {
 
             mAnalisador_Bloco.getAnalisar_Outros().analisarTipagem(ASTPai);
         } else if (ASTPai.mesmoTipo("MOC")) {
+
+            if (mAlocadoAqui.contains(ASTPai.getNome())) {
+                mAnalisador.getErros().add("Alocacao : " + ASTPai.getNome() + " : Duplicada !");
+            }else{
+                mAlocadoAqui.add(ASTPai.getNome());
+            }
 
             mAlocadosAntes.add(ASTPai.getNome());
 

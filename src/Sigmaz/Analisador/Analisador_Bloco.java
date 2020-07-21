@@ -9,8 +9,8 @@ public class Analisador_Bloco {
 
     private Analisador mAnalisador;
 
-    private Analisar_Function mAnalisar_Function;
-    private Analisar_Action mAnalisar_Action;
+  //  private Analisar_Function mAnalisar_Function;
+   // private Analisar_Action mAnalisar_Action;
     private Analisar_Execute mAnalisar_Execute;
     private Analisar_Cast mAnalisar_Cast;
     private Analisar_Daz mAnalisar_Daz;
@@ -39,8 +39,8 @@ public class Analisador_Bloco {
 
         mAnalisador=eAnalisador;
 
-        mAnalisar_Function = new Analisar_Function(mAnalisador,this);
-        mAnalisar_Action = new Analisar_Action(mAnalisador,this);
+       // mAnalisar_Function = new Analisar_Function(mAnalisador,this);
+      //  mAnalisar_Action = new Analisar_Action(mAnalisador,this);
 
         mAnalisar_Execute = new Analisar_Execute(mAnalisador,this);
         mAnalisar_Cast = new Analisar_Cast(mAnalisador,this);
@@ -81,11 +81,16 @@ public class Analisador_Bloco {
     }
 
     public Analisar_Function getAnalisar_Function() {
-        return mAnalisar_Function;
+
+        return  new Analisar_Function(mAnalisador,this);
+
+
     }
 
     public Analisar_Action getAnalisar_Action() {
-        return mAnalisar_Action;
+
+        return  new Analisar_Action(mAnalisador,this);
+
     }
 
     public Analisar_Execute getAnalisar_Execute() {

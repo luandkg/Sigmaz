@@ -1,8 +1,5 @@
 package OA;
 
-import OA.LuanDKG.LuanDKG;
-import OA.LuanDKG.Objeto;
-import OA.LuanDKG.Pacote;
 import Sigmaz.Utils.Tempo;
 
 import javax.imageio.ImageIO;
@@ -20,6 +17,24 @@ public class OAQuadrum {
 
     public OAQuadrum() {
 
+    }
+
+    public class MarcadorCor {
+        private String mMarcador;
+        private Color mCor;
+
+        public MarcadorCor(String eMarcador, Color eCor) {
+            mMarcador = eMarcador;
+            mCor = eCor;
+        }
+
+        public String getMarcador() {
+            return mMarcador;
+        }
+
+        public Color getCor() {
+            return mCor;
+        }
 
     }
 
@@ -27,45 +42,84 @@ public class OAQuadrum {
         return Tempo.getData();
     }
 
-    public void exportar(String eArquivo, ArrayList<Note> mNotes, ArrayList<Note> mConfig) {
+    public void exportar(String eArquivo, ArrayList<AOAnotacao> mAOAnotacaos, ArrayList<AOAnotacao> mConfig) {
 
 
-        Agrupador<Note> mAgrupador = new Agrupador<Note>();
+        Agrupador<AOAnotacao> mAgrupador = new Agrupador<AOAnotacao>();
 
         ArrayList<String> mFinalizados = new ArrayList<String>();
         ArrayList<String> mCancelados = new ArrayList<String>();
 
+         ArrayList<MarcadorCor> mMarcadores= new ArrayList<MarcadorCor>();
+
         String mTitulo = "";
 
-        for (Note eConfig : mConfig) {
+        for (AOAnotacao eConfig : mConfig) {
 
             mTitulo = eConfig.getNome();
 
-            for (Pagina mPagina : eConfig.getPaginas()) {
-                if (mPagina.getNome().contentEquals("Colors")) {
-                    for (Tarefa mTarefa : mPagina.getTarefas()) {
+            for (AOPagina mAOPagina : eConfig.getPaginas()) {
+                if (mAOPagina.getNome().contentEquals("Colors")) {
+                    for (AOTarefa mAOTarefa : mAOPagina.getTarefas()) {
 
-                        mAgrupador.agrupar(mTarefa.getMarcador()).setValor(mTarefa.getNome());
+                        mAgrupador.agrupar(mAOTarefa.getMarcador()).setValor(mAOTarefa.getNome());
+
+                        if (mAOTarefa.getTags().size() >= 3) {
+
+                            String sr = mAOTarefa.getTags().get(0);
+                            String sg = mAOTarefa.getTags().get(1);
+                            String sb = mAOTarefa.getTags().get(2);
+
+                            //    System.out.println("Cor :: " + sr + " " + sg + " " + sb);
+
+                            try {
+                                int r = Integer.parseInt(sr);
+                                int g = Integer.parseInt(sg);
+                                int b = Integer.parseInt(sb);
+
+                                if (r >= 0 && r <= 255) {
+                                    if (g >= 0 && g <= 255) {
+                                        if (b >= 0 && b <= 255) {
+                                            //  ret = new Color(r, g, b);
+
+                                            mMarcadores.add(new MarcadorCor(mAOTarefa.getMarcador(), new Color(r, g, b)));
+                                        }
+                                    }
+                                }
+
+                            } catch (Exception e) {
+
+                            }
+
+                        }
+
 
                     }
-                } else if (mPagina.getNome().contentEquals("End")) {
-                    for (Tarefa mTarefa : mPagina.getTarefas()) {
-                        mFinalizados.add(mTarefa.getMarcador());
+                } else if (mAOPagina.getNome().contentEquals("Markers")) {
+                    for (AOTarefa mAOTarefa : mAOPagina.getTarefas()) {
+
+                        if (mAOTarefa.getNome().contentEquals("End")) {
+                            for (String mTag : mAOTarefa.getTags()) {
+                                mFinalizados.add(mTag);
+                            }
+                        } else if (mAOTarefa.getNome().contentEquals("Cancel")) {
+                            for (String mTag : mAOTarefa.getTags()) {
+                                mCancelados.add(mTag);
+                            }
+                        }
 
                     }
-                } else if (mPagina.getNome().contentEquals("Cancel")) {
-                    for (Tarefa mTarefa : mPagina.getTarefas()) {
-                        mCancelados.add(mTarefa.getMarcador());
-                    }
+
                 }
+
+
             }
-
-
         }
 
-        for (Note eNote : mNotes) {
 
-            mAgrupador.agrupar(eNote.getMarcador()).adicionar(eNote);
+        for (AOAnotacao eAOAnotacao : mAOAnotacaos) {
+
+            mAgrupador.agrupar(eAOAnotacao.getMarcador()).adicionar(eAOAnotacao);
 
 
         }
@@ -88,25 +142,25 @@ public class OAQuadrum {
 
         int maxAltura = eAltura;
 
-        for (OA.Grupo<Note> Grupo : mAgrupador.getGrupos()) {
+        for (OA.Grupo<AOAnotacao> Grupo : mAgrupador.getGrupos()) {
             int cAltura = eAltura;
-            for (Note mObjeto : Grupo.getObjetos()) {
+            for (AOAnotacao mObjeto : Grupo.getObjetos()) {
 
                 if (mObjeto.getTarefas().size() > 0) {
                     cAltura += 50;
-                    for (Tarefa mTarefa : mObjeto.getTarefas()) {
+                    for (AOTarefa mAOTarefa : mObjeto.getTarefas()) {
                         cAltura += 50;
                     }
                 }
 
                 if (mObjeto.getPaginas().size() > 0) {
                     cAltura += 50;
-                    for (Pagina mPagina : mObjeto.getPaginas()) {
+                    for (AOPagina mAOPagina : mObjeto.getPaginas()) {
                         cAltura += 50;
 
-                        if (mPagina.getTarefas().size() > 0) {
+                        if (mAOPagina.getTarefas().size() > 0) {
                             cAltura += 50;
-                            for (Tarefa mTarefa : mPagina.getTarefas()) {
+                            for (AOTarefa mAOTarefa : mAOPagina.getTarefas()) {
                                 cAltura += 50;
                             }
                         }
@@ -150,14 +204,14 @@ public class OAQuadrum {
         x += separador;
 
 
-        for (OA.Grupo<Note> Grupo : mAgrupador.getGrupos()) {
+        for (OA.Grupo<AOAnotacao> Grupo : mAgrupador.getGrupos()) {
 
 
             Color eCor = new Color(189, 195, 199);
             String eInfo = Grupo.getNome();
 
             String eNome = Grupo.getValor();
-            eCor = getCor(eInfo, mConfig);
+            eCor = getCor(eInfo, mMarcadores);
 
 
             g.setColor(eCor);
@@ -170,7 +224,7 @@ public class OAQuadrum {
             int cy = y + 110;
 
 
-            for (Note mObjeto : Grupo.getObjetos()) {
+            for (AOAnotacao mObjeto : Grupo.getObjetos()) {
 
 
                 String eNota = mObjeto.getNome();
@@ -181,10 +235,10 @@ public class OAQuadrum {
                     int todas = 0;
                     int completa = 0;
 
-                    for (Tarefa mTarefa : mObjeto.getTarefas()) {
+                    for (AOTarefa mAOTarefa : mObjeto.getTarefas()) {
 
-                        if (mFinalizados.contains(mTarefa.getMarcador())){
-                            completa+=1;
+                        if (mFinalizados.contains(mAOTarefa.getMarcador())) {
+                            completa += 1;
                         }
                         todas += 1;
 
@@ -206,17 +260,15 @@ public class OAQuadrum {
                     int ti = 0;
                     int to = mObjeto.getTarefas().size();
 
-                    for (Tarefa mTarefa : mObjeto.getTarefas()) {
+                    for (AOTarefa mAOTarefa : mObjeto.getTarefas()) {
 
-                      Color  tarefaCor = getCor(mTarefa.getMarcador(), mConfig);
+                        Color tarefaCor = getCor(mAOTarefa.getMarcador(), mMarcadores);
 
-                        if (mCancelados.contains(mTarefa.getMarcador())) {
-                            leftString_ComQuad_Cortada(g, new Rectangle(x + 100, cy, eLarguraGrupo, 100), mTarefa.getNome(), new Font("TimesRoman", Font.BOLD, 30), tarefaCor);
-                        }else{
-                            leftString_ComQuad(g, new Rectangle(x + 100, cy, eLarguraGrupo, 100), mTarefa.getNome(), new Font("TimesRoman", Font.BOLD, 30), tarefaCor);
+                        if (mCancelados.contains(mAOTarefa.getMarcador())) {
+                            leftString_ComQuad_Cortada(g, new Rectangle(x + 100, cy, eLarguraGrupo, 100), mAOTarefa.getNome(), new Font("TimesRoman", Font.BOLD, 30), tarefaCor);
+                        } else {
+                            leftString_ComQuad(g, new Rectangle(x + 100, cy, eLarguraGrupo, 100), mAOTarefa.getNome(), new Font("TimesRoman", Font.BOLD, 30), tarefaCor);
                         }
-
-
 
 
                         ti += 1;
@@ -233,22 +285,21 @@ public class OAQuadrum {
 
                     cy += 50;
 
-                    for (Pagina mPagina : mObjeto.getPaginas()) {
+                    for (AOPagina mAOPagina : mObjeto.getPaginas()) {
 
 
+                        String ePaginaNome = mAOPagina.getNome();
 
-                        String ePaginaNome = mPagina.getNome();
 
-
-                        if (mPagina.getTarefas().size() > 0) {
+                        if (mAOPagina.getTarefas().size() > 0) {
 
                             int todas = 0;
                             int completa = 0;
 
-                            for (Tarefa mTarefa : mPagina.getTarefas()) {
+                            for (AOTarefa mAOTarefa : mAOPagina.getTarefas()) {
 
-                                if (mFinalizados.contains(mTarefa.getMarcador())){
-                                    completa+=1;
+                                if (mFinalizados.contains(mAOTarefa.getMarcador())) {
+                                    completa += 1;
                                 }
                                 todas += 1;
 
@@ -259,31 +310,29 @@ public class OAQuadrum {
                             }
                         }
 
-                        int xFase = x +80;
+                        int xFase = x + 80;
 
-                        leftString_ComPagina    (g, new Rectangle(xFase, cy, eLarguraGrupo, 100), ePaginaNome, new Font("TimesRoman", Font.BOLD, 30), eCor);
+                        leftString_ComPagina(g, new Rectangle(xFase, cy, eLarguraGrupo, 100), ePaginaNome, new Font("TimesRoman", Font.BOLD, 30), eCor);
 
 
-
-                        if (mPagina.getTarefas().size() > 0) {
+                        if (mAOPagina.getTarefas().size() > 0) {
 
                             cy += 50;
 
                             int ti = 0;
-                            int to = mPagina.getTarefas().size();
+                            int to = mAOPagina.getTarefas().size();
 
-                            for (Tarefa mTarefa : mPagina.getTarefas()) {
+                            for (AOTarefa mAOTarefa : mAOPagina.getTarefas()) {
 
-                                Color  tarefaCor = getCor(mTarefa.getMarcador(), mConfig);
+                                Color tarefaCor = getCor(mAOTarefa.getMarcador(), mMarcadores);
 
-                                if (mCancelados.contains(mTarefa.getMarcador())){
-                                    leftString_ComQuad_Cortada(g, new Rectangle(xFase + 100, cy, eLarguraGrupo, 100), mTarefa.getNome(), new Font("TimesRoman", Font.PLAIN, 30), tarefaCor);
+                                if (mCancelados.contains(mAOTarefa.getMarcador())) {
+                                    leftString_ComQuad_Cortada(g, new Rectangle(xFase + 100, cy, eLarguraGrupo, 100), mAOTarefa.getNome(), new Font("TimesRoman", Font.PLAIN, 30), tarefaCor);
 
-                                }else{
-                                    leftString_ComQuad(g, new Rectangle(xFase + 100, cy, eLarguraGrupo, 100), mTarefa.getNome(), new Font("TimesRoman", Font.PLAIN, 30), tarefaCor);
+                                } else {
+                                    leftString_ComQuad(g, new Rectangle(xFase + 100, cy, eLarguraGrupo, 100), mAOTarefa.getNome(), new Font("TimesRoman", Font.PLAIN, 30), tarefaCor);
 
                                 }
-
 
 
                                 ti += 1;
@@ -297,12 +346,9 @@ public class OAQuadrum {
                         }
 
 
-
                     }
 
                 }
-
-
 
 
                 cy += 50;
@@ -325,109 +371,20 @@ public class OAQuadrum {
     }
 
 
-    public String getNome(String eMarca, ArrayList<Note> mConfig) {
 
-        String ret = "";
-        boolean enc = false;
-
-        for (Note eConfig : mConfig) {
-
-            for (Pagina mPagina : eConfig.getPaginas()) {
-                if (mPagina.getNome().contentEquals("Colors")) {
-                    for (Tarefa mTarefa : mPagina.getTarefas()) {
-
-                       // System.out.println("Passando por " + mTarefa.getMarcador() + " atras de " + eMarca);
-
-                        if (mTarefa.getMarcador().contentEquals(eMarca)) {
-                            ret = mTarefa.getNome();
-                            enc = true;
-                            break;
-                        }
-
-                        if (enc) {
-                            break;
-                        }
-
-                    }
-                }
-
-                if (enc) {
-                    break;
-                }
-            }
-
-            if (enc) {
-                break;
-            }
-        }
-
-        return ret;
-    }
-
-    public Color getCor(String eMarca, ArrayList<Note> mConfig) {
+    public Color getCor(String eMarca, ArrayList<MarcadorCor> mMarcadores) {
 
         Color ret = Color.WHITE;
 
-        boolean enc = false;
+        for (MarcadorCor eMarcadorCor : mMarcadores) {
 
-        for (Note eConfig : mConfig) {
-
-            for (Pagina mPagina : eConfig.getPaginas()) {
-                if (mPagina.getNome().contentEquals("Colors")) {
-                    for (Tarefa mTarefa : mPagina.getTarefas()) {
-
-                    //    System.out.println("Passando por " + mTarefa.getMarcador() + " atras de " + eMarca);
-
-                        if (mTarefa.getMarcador().contentEquals(eMarca)) {
-
-                            if (mTarefa.getTags().size() >= 3) {
-
-                                String sr = mTarefa.getTags().get(0);
-                                String sg = mTarefa.getTags().get(1);
-                                String sb = mTarefa.getTags().get(2);
-
-                            //    System.out.println("Cor :: " + sr + " " + sg + " " + sb);
-
-                                try {
-                                    int r = Integer.parseInt(sr);
-                                    int g = Integer.parseInt(sg);
-                                    int b = Integer.parseInt(sb);
-
-                                    if (r >= 0 && r <= 255) {
-                                        if (g >= 0 && g <= 255) {
-                                            if (b >= 0 && b <= 255) {
-                                                ret = new Color(r, g, b);
-                                            }
-                                        }
-                                    }
-
-                                } catch (Exception e) {
-
-                                }
-
-                            }
-
-
-                            enc = true;
-                            break;
-                        }
-
-                        if (enc) {
-                            break;
-                        }
-
-                    }
-                }
-
-                if (enc) {
-                    break;
-                }
-            }
-
-            if (enc) {
+            if (eMarcadorCor.getMarcador().contentEquals(eMarca)) {
+                ret = eMarcadorCor.getCor();
                 break;
             }
+
         }
+
 
         return ret;
     }
@@ -502,7 +459,7 @@ public class OAQuadrum {
     }
 
     public void leftString_ComQuad_Cortada(Graphics g, Rectangle r, String s,
-                                   Font font, Color eCor) {
+                                           Font font, Color eCor) {
         FontRenderContext frc =
                 new FontRenderContext(null, true, true);
 
@@ -528,7 +485,7 @@ public class OAQuadrum {
 
         g.drawString(s, r.x + 40, r.y + b);
 
-        g.fillRect(r.x+40, r.y + b - (b/4) , rWidth, 5);
+        g.fillRect(r.x + 40, r.y + b - (b / 4), rWidth, 5);
 
     }
 
@@ -561,7 +518,7 @@ public class OAQuadrum {
     }
 
     public void leftString_ComBar_Cortada(Graphics g, Rectangle r, String s,
-                                  Font font, Color eCor) {
+                                          Font font, Color eCor) {
         FontRenderContext frc =
                 new FontRenderContext(null, true, true);
 
@@ -587,13 +544,13 @@ public class OAQuadrum {
 
         g.drawString(s, r.x + 50, r.y + b);
 
-        g.fillRect(r.x, r.y + b , rWidth, 5);
+        g.fillRect(r.x, r.y + b, rWidth, 5);
 
 
     }
 
     public void leftString_ComPagina(Graphics g, Rectangle r, String s,
-                                  Font font, Color eCor) {
+                                     Font font, Color eCor) {
         FontRenderContext frc =
                 new FontRenderContext(null, true, true);
 
@@ -614,7 +571,7 @@ public class OAQuadrum {
 
         g.fillRect(r.x, r.y + b - 20, 40, 20);
 
-        g.fillRect(r.x+10, r.y + b - 30, 20, 40);
+        g.fillRect(r.x + 10, r.y + b - 30, 20, 40);
 
         g.setColor(rCor);
 
@@ -643,39 +600,6 @@ public class OAQuadrum {
 
     }
 
-    public ArrayList<String> obterTags(String eTexto) {
-
-        ArrayList<String> Tags = new ArrayList<String>();
-        int i = 0;
-        int o = eTexto.length();
-
-        String mTag = "";
-
-        while (i < o) {
-            String l = eTexto.charAt(i) + "";
-            if (l.contentEquals("}")) {
-                if (mTag.length() > 0) {
-                    Tags.add(mTag);
-                }
-                mTag = "";
-            } else if (l.contentEquals(" ")) {
-                if (mTag.length() > 0) {
-                    Tags.add(mTag);
-                }
-                mTag = "";
-            } else if (l.contentEquals("\t")) {
-                if (mTag.length() > 0) {
-                    Tags.add(mTag);
-                }
-                mTag = "";
-            } else {
-                mTag += l;
-            }
-            i += 1;
-        }
-
-        return Tags;
-    }
 
     public static String getDia() {
 

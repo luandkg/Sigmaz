@@ -1,123 +1,93 @@
-
-    note "Biblioteca - Tempo" : f () {}
-
-    note "Biblioteca - Lista" : f() {}
-
-    note "Biblioteca - Arquivo" : i() {}
-
-    note "Biblioteca - Texto" : i() {}
-
-    note "Visualizador de Arvore" : t (  Arvore Posicao Render ) {}
-
-    note "Argumentos Opcionais" : t() {}
-
-    note "UML" : i (Montagem Renderização) {}
-
-    note "Trilha de Desenvolvimento" : t ( Organizar Montar Renderizar) {}
-
-    note "Argumentos Opcionais" : t ( Valorados Referenciados) {}
-
-    note "Compilação em Fila" : t() {}
-
-   note "Compilador" : t (      ) {
-
-   task "Lexer" : t;
-      task "Parser" : t;
-   task "Compiler" : t;
-   task "Analisador" : t;
-   task "Runner" : t;
-   task "Identador" : t;
-   task "Comentarios" : t;
-
-   }
-
-    note "Trilhas" : f (  ) {
-       task "Horizontal" : t;
-          task "Vertical" : t;
-             task "Horizontal_Vertical" : t;
-                task "Vertical_Horizontal" : t;
-    }
-
-   note "Sigmaz" : t (   ) {
-
-        page "Fase ALFA" {
-
-            task "Call" : t;
-            task "Action" : t;
-            task "Function" : t;
-            task "Define" : t;
-            task "Mockiz" : t;
-
-        }
-
-        page "Fase BETA" {
-
-            task "Value" : t;
-            task "Arguments" : t;
-            task "Type" : t;
-            task "Struct" : t;
-            task "Stages" : t;
-            task "Model" : t;
-
-        }
-
-      page "Fase GAMA" {
-
-
-            task "Init" : t;
-            task "Start" : t;
-
-        }
-
-        page "Fase DELTA" {
-
-            task "Dot" : t;
-            task "Seta" : t;
-            task "Contexto" : t;
-
-        }
-       page "Fase DELTA" {
-                  task "Anonymous" : t;
-
-            }
-
-   }
-
-    note "Visualizadores" : t ( Trilhas Interno Organizador Roadmap ChangeList ) {}
-
-   note "Intellisense" : t (Sigmaz Packages) {}
-
-   note "OA" : f (Complexo) {
-
-        task "Organizador" : t;
-        task "Version" : t;
-        task "Trilha" : f;
-
-   }
-
-   config "Planejamento Sigmaz" : render () {
-
-        page "Colors" {
-
-            task "Ideias" : i (52, 152, 219);
-            task "Fazendo" : f (241, 196, 15);
-            task "Cancelado" : c (231, 76, 60);
-            task "Terminado" : t (46, 204, 113);
-
-        }
-
-        page "End" {
-            task "Terminado" : t;
-            task "Cancelado" : c;
-        }
-
-        page "Cancel" {
-            task "Cancelado" : c;
-        }
-
-
-   }
-
-
-
-
+config "Planejamento Sigmaz" : render ( ) {
+		page "Colors" {
+			task "Ideias" : i ( 52 152 219 ) ;
+			task "Fazendo" : f ( 241 196 15 ) ;
+			task "Cancelado" : c ( 231 76 60 ) ;
+			task "Terminado" : t ( 46 204 113 ) ;
+		}
+		page "Markers" {
+			task "End" : info ( t c ) ;
+			task "Cancel" : info ( c ) ;
+		}
+}
+note "Biblioteca - Tempo" : f ( ) { }
+note "Biblioteca - Lista" : f ( ) { }
+note "Biblioteca - Arquivo" : i ( ) { }
+note "Biblioteca - Texto" : i ( ) { }
+note "Visualizador de Arvore" : t ( Arvore Posicao Render ) { }
+note "Argumentos Opcionais" : t ( ) { }
+note "UML" : c ( ) {
+		task "Montagem" : c ;
+		task "Renderização" : c ;
+}
+note "Trilha de Desenvolvimento" : t ( Organizar Montar Renderizar ) { }
+note "Argumentos Opcionais" : t ( Valorados Referenciados ) { }
+note "Compilação em Fila" : t ( ) { }
+note "Compilador" : t ( ) {
+		task "Lexer" : t ;
+		task "Parser" : t ;
+		task "Compiler" : t ;
+		task "Analisador" : t ;
+		task "Runner" : t ;
+		task "Identador" : t ;
+		task "Comentarios" : t ;
+}
+note "Trilhas" : f ( ) {
+		task "Horizontal" : t ;
+		task "Vertical" : f ;
+		task "Horizontal_Vertical" : t ;
+		task "Vertical_Horizontal" : f ;
+}
+note "Sigmaz" : t ( ) {
+		page "Primeira Fase" {
+			task "Call" : t ;
+			task "Action" : t ;
+			task "Function" : t ;
+			task "Define" : t ;
+			task "Mockiz" : t ;
+		}
+		page "Segunda Fase" {
+			task "Value" : t ;
+			task "Arguments" : t ;
+			task "Run_Action" : t ;
+			task "Run_Function" : t ;
+			task "Operator" : t ;
+			task "Director" : t ;
+			task "Execute" : t ;
+			task "Apply" : t ;
+		}
+		page "Terceira Fase" {
+			task "Type" : t ;
+			task "Struct" : t ;
+			task "Stages" : t ;
+			task "Model" : t ;
+			task "Init" : t ;
+			task "Start" : t ;
+			task "All" : t ;
+			task "Restrict" : t ;
+			task "Extern" : t ;
+		}
+		page "Quarta Fase" {
+			task "Dot" : t ;
+			task "Seta" : t ;
+			task "Package" : t ;
+			task "Contexto" : t ;
+		}
+		page "Quinta Fase" {
+			task "Anonymous" : t ;
+		}
+}
+note "Visualizadores" : t ( ) {
+		task "Trilhas" : t ;
+		task "Interno" : t ;
+		task "Organizador" : t ;
+		task "Trilhador - Roadmap" : t ;
+		task "Trilhador - ChangeList" : t ;
+}
+note "Intellisense" : t ( Sigmaz Packages ) { }
+note "OA" : t ( Complexo ) {
+		task "Organizador" : t ;
+		task "Versionador" : t ;
+		task "Trilhador" : t ;
+		task "Organizador - Identador" : t ;
+}

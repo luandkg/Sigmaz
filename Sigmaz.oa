@@ -3,8 +3,8 @@
       ID Version = "1"
       ID Branch = "21/7/2020"
       ID Works = "43"
-      ID Full = "1.82.43"
-      ID Releaser = "1.82.2 R3"
+      ID Full = "1.83.43"
+      ID Releaser = "1.83.43 R1"
       PACOTE Branches
        {
          PACOTE Branch
@@ -344,10 +344,10 @@
           {
             ID Date = "21/7/2020"
             ID Start = "21/7/2020 0:0:57"
-            ID Update = "21/7/2020 1:40:36"
+            ID Update = "21/7/2020 1:18:28"
             ID End = "."
             ID Status = "GREEN"
-            ID Count = "41"
+            ID Count = "91"
           } 
        } 
       PACOTE Releases
@@ -374,5 +374,6 @@
          PACOTE Release {  ID Date = "18/7/2020" ID Releaser = "1.75.15 R4" } 
          PACOTE Release {  ID Date = "19/7/2020" ID Releaser = "1.78.24 R3" } 
          PACOTE Release {  ID Date = "20/7/2020" ID Releaser = "1.82.2 R3" } 
+         PACOTE Release {  ID Date = "21/7/2020" ID Releaser = "1.83.43 R1" } 
        } 
     } 

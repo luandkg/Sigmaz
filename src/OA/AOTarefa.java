@@ -2,21 +2,16 @@ package OA;
 
 import java.util.ArrayList;
 
-public class Note {
+public class AOTarefa {
 
     private String mNome;
     private String mMarcador;
     private ArrayList<String> mTags;
-    private ArrayList<Tarefa> mTarefas;
-    private ArrayList<Pagina> mPaginas;
 
-    public Note(String eNome) {
+    public AOTarefa(String eNome) {
         mNome = eNome;
         mMarcador = "";
         mTags = new ArrayList<String>();
-        mTarefas = new ArrayList<Tarefa>();
-        mPaginas = new ArrayList<Pagina>();
-
     }
 
     public String getNome() {
@@ -37,12 +32,6 @@ public class Note {
 
     public ArrayList<String> getTags() {
         return mTags;
-    }
-    public ArrayList<Tarefa> getTarefas() {
-        return mTarefas;
-    }
-    public ArrayList<Pagina> getPaginas() {
-        return mPaginas;
     }
 
 }

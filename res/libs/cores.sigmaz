@@ -25,7 +25,7 @@ package Cores{
                 return init Cor(r,g,b);
             }
             func getCor(r:num,g:num,b:num) : Cor {
-                return init Cor(int(r),int(g),int(b));
+                return Cor->getCor(int(r),int(g),int(b));
             }
 
     }

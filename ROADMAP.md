@@ -244,4 +244,6 @@ Linguagem de Programação Estruturada - Implementações
 
 
 		2020 07 21 -->> Organizador Todo 2.0
+		2020 07 21 -->> Analisar Action por Contexto
+		2020 07 21 -->> Analisar Function por Contexto
 

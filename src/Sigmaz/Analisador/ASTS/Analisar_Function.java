@@ -11,11 +11,13 @@ public class Analisar_Function {
 
     private Analisador mAnalisador;
     private Analisador_Bloco mAnalisador_Bloco;
+    private ArrayList<String> mAlocadoAqui ;
 
     public Analisar_Function(Analisador eAnalisador, Analisador_Bloco eAnalisador_Bloco) {
 
         mAnalisador = eAnalisador;
         mAnalisador_Bloco = eAnalisador_Bloco;
+        mAlocadoAqui= new ArrayList<String>();
 
     }
 
@@ -55,6 +57,12 @@ public class Analisar_Function {
 
         if (ASTPai.mesmoTipo("DEF")) {
 
+            if (mAlocadoAqui.contains(ASTPai.getNome())) {
+                mAnalisador.getErros().add("Alocacao : " + ASTPai.getNome() + " : Duplicada !");
+            }else{
+                mAlocadoAqui.add(ASTPai.getNome());
+            }
+
             mAlocadosAntes.add(ASTPai.getNome());
 
             if (mAnalisador.getProibidos().contains(ASTPai.getNome())) {
@@ -71,6 +79,12 @@ public class Analisar_Function {
             mAnalisador_Bloco.analisarValoracao(ASTPai, mAlocadosAntes);
 
         } else if (ASTPai.mesmoTipo("MOC")) {
+
+            if (mAlocadoAqui.contains(ASTPai.getNome())) {
+                mAnalisador.getErros().add("Alocacao : " + ASTPai.getNome() + " : Duplicada !");
+            }else{
+                mAlocadoAqui.add(ASTPai.getNome());
+            }
 
             mAlocadosAntes.add(ASTPai.getNome());
 

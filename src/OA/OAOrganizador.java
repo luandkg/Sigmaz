@@ -64,18 +64,14 @@ public class OAOrganizador {
     }
 
 
-    public void renderizar(String eSincronizar,String eArquivoQuadro) {
+    public void renderizar(String eArquivoQuadro) {
 
-
-        System.out.println("Sincronizador de Organizacao");
-
-        ArrayList<Note> mNotes = new ArrayList<Note>();
-        ArrayList<Note> mConfig = new ArrayList<Note>();
+        ArrayList<AOAnotacao> mAOAnotacaos = new ArrayList<AOAnotacao>();
+        ArrayList<AOAnotacao> mConfig = new ArrayList<AOAnotacao>();
 
         mErros = new ArrayList<String>();
 
-
-        parser(eSincronizar,mNotes,mConfig,mErros);
+        parser(mAOAnotacaos, mConfig, mErros);
 
         mIndex = 0;
         mFim = mLexemas.size();
@@ -86,17 +82,17 @@ public class OAOrganizador {
 
             if (eLexema.getTipoLexema() == TipoLexema.ID && eLexema.mesmoConteudo("note")) {
 
-                Note eNote = new Note("");
-                mNotes.add(eNote);
+                AOAnotacao eAOAnotacao = new AOAnotacao("");
+                mAOAnotacaos.add(eAOAnotacao);
 
-                parser_note(eNote);
+                parser_note(eAOAnotacao);
 
             } else if (eLexema.getTipoLexema() == TipoLexema.ID && eLexema.mesmoConteudo("config")) {
 
-                Note eNote = new Note("");
-                mConfig.add(eNote);
+                AOAnotacao eAOAnotacao = new AOAnotacao("");
+                mConfig.add(eAOAnotacao);
 
-                parser_note(eNote);
+                parser_note(eAOAnotacao);
             }
 
 
@@ -105,20 +101,9 @@ public class OAOrganizador {
 
         if (mErros.size() == 0) {
 
-/*            for (Note eNote : mNotes) {
-
-                imprimir("NOTE", eNote);
-
-            }
-
-            for (Note eNote : mConfig) {
-
-                imprimir("CONFIGURATION", eNote);
-
-            }*/
-
             OAQuadrum Q = new OAQuadrum();
-            Q.exportar(eArquivoQuadro,mNotes,mConfig);
+            Q.exportar(eArquivoQuadro, mAOAnotacaos, mConfig);
+
         } else {
 
             for (String erro : mErros) {
@@ -130,25 +115,174 @@ public class OAOrganizador {
 
     }
 
-    public void imprimir(String eTitulo, Note eNote) {
+    public void identar() {
 
-        System.out.println(eTitulo + " : " + eNote.getNome());
-        System.out.println("\t - Marcador :  " + eNote.getMarcador());
+        ArrayList<AOAnotacao> mAOAnotacaos = new ArrayList<AOAnotacao>();
+        ArrayList<AOAnotacao> mConfig = new ArrayList<AOAnotacao>();
+
+        mErros = new ArrayList<String>();
+
+        parser(mAOAnotacaos, mConfig, mErros);
+
+        mIndex = 0;
+        mFim = mLexemas.size();
+
+        while (mIndex < mFim) {
+            Lexema eLexema = mLexemas.get(mIndex);
+
+
+            if (eLexema.getTipoLexema() == TipoLexema.ID && eLexema.mesmoConteudo("note")) {
+
+                AOAnotacao eAOAnotacao = new AOAnotacao("");
+                mAOAnotacaos.add(eAOAnotacao);
+
+                parser_note(eAOAnotacao);
+
+            } else if (eLexema.getTipoLexema() == TipoLexema.ID && eLexema.mesmoConteudo("config")) {
+
+                AOAnotacao eAOAnotacao = new AOAnotacao("");
+                mConfig.add(eAOAnotacao);
+
+                parser_note(eAOAnotacao);
+            }
+
+
+            mIndex += 1;
+        }
+
+        if (mErros.size() == 0) {
+
+            String eDocumento = "";
+
+            mIndex = 0;
+            mFim = mLexemas.size();
+
+            int mTab = 0;
+
+            while (mIndex < mFim) {
+                Lexema eLexema = mLexemas.get(mIndex);
+
+                if (mTab < 0) {
+                    mTab = 0;
+                }
+                if (eLexema.getTipoLexema() == TipoLexema.TEXTO) {
+
+                    if (eLexema.getConteudo().contains("\"")) {
+                        eDocumento += "'" + eLexema.getConteudo() + "' ";
+                    } else {
+                        eDocumento += "\"" + eLexema.getConteudo() + "\" ";
+                    }
+
+
+                } else if (eLexema.getTipoLexema() == TipoLexema.CHAVES_ABRE) {
+
+
+                    boolean mudar = true;
+
+                    int pIndex = mIndex + 1;
+                    if (pIndex < mFim) {
+                        if (mLexemas.get(pIndex).getTipoLexema() == TipoLexema.CHAVES_FECHA) {
+                            mTab -= 1;
+                            mudar = false;
+                        }
+                    }
+
+                    if (mudar) {
+                        eDocumento += eLexema.getConteudo() + "\n";
+                        mTab += 1;
+                        if (mTab > 0) {
+                            for (int i = 0; i <= mTab; i++) {
+                                eDocumento += "\t";
+                            }
+                        }
+                    } else {
+                        eDocumento += eLexema.getConteudo() + " ";
+                    }
+
+
+                } else if (eLexema.getTipoLexema() == TipoLexema.CHAVES_FECHA) {
+
+                    //   eDocumento +=  "\n" ;
+
+
+                    mTab -= 1;
+                    if (mTab > 0) {
+                        for (int i = 0; i <= mTab; i++) {
+                            eDocumento += "\t";
+                        }
+                    }
+                    eDocumento += eLexema.getConteudo() + "\n";
+
+                    boolean espacar = true;
+
+                    int pIndex = mIndex + 1;
+                    if (pIndex < mFim) {
+                        if (mLexemas.get(pIndex).getTipoLexema() == TipoLexema.CHAVES_FECHA) {
+                            mTab -= 1;
+                        }
+                    }
+
+
+                    if (mTab > 0) {
+                        for (int i = 0; i <= mTab; i++) {
+                            eDocumento += "\t";
+                        }
+                    }
+
+                } else if (eLexema.getTipoLexema() == TipoLexema.PONTO_VIRGULA) {
+                    eDocumento += eLexema.getConteudo() + "\n";
+
+                    boolean espacar = true;
+
+                    int pIndex = mIndex + 1;
+                    if (pIndex < mFim) {
+                        if (mLexemas.get(pIndex).getTipoLexema() == TipoLexema.CHAVES_FECHA) {
+                            espacar = false;
+                        }
+                    }
+                    if (espacar) {
+                        if (mTab > 0) {
+                            for (int i = 0; i <= mTab; i++) {
+                                eDocumento += "\t";
+                            }
+                        }
+                    }
+
+
+                } else {
+                    eDocumento += eLexema.getConteudo() + " ";
+
+                }
+                mIndex += 1;
+            }
+
+            //System.out.println(eDocumento);
+
+            Texto.Escrever(mArquivo, eDocumento);
+        }
+
+    }
+
+
+    public void imprimir(String eTitulo, AOAnotacao eAOAnotacao) {
+
+        System.out.println(eTitulo + " : " + eAOAnotacao.getNome());
+        System.out.println("\t - Marcador :  " + eAOAnotacao.getMarcador());
 
         System.out.println("\t - Tags :  ");
 
-        for (String eTag : eNote.getTags()) {
+        for (String eTag : eAOAnotacao.getTags()) {
             System.out.println("\t\t - " + eTag);
         }
 
         System.out.println("\t - Tarefas :  ");
 
-        for (Tarefa eTarefa : eNote.getTarefas()) {
-            System.out.println("\t\t - " + eTarefa.getNome() + " : " + eTarefa.getMarcador());
+        for (AOTarefa eAOTarefa : eAOAnotacao.getTarefas()) {
+            System.out.println("\t\t - " + eAOTarefa.getNome() + " : " + eAOTarefa.getMarcador());
 
             System.out.println("\t\t\t - Tags :  ");
 
-            for (String eTag : eTarefa.getTags()) {
+            for (String eTag : eAOTarefa.getTags()) {
                 System.out.println("\t\t\t\t - " + eTag);
             }
 
@@ -157,18 +291,18 @@ public class OAOrganizador {
 
         System.out.println("\t - Paginas :  ");
 
-        for (Pagina ePagina : eNote.getPaginas()) {
-            System.out.println("\t\t - " + ePagina.getNome());
+        for (AOPagina eAOPagina : eAOAnotacao.getPaginas()) {
+            System.out.println("\t\t - " + eAOPagina.getNome());
 
 
             System.out.println("\t\t\t - Tarefas :  ");
 
-            for (Tarefa eTarefa : ePagina.getTarefas()) {
-                System.out.println("\t\t\t\t - " + eTarefa.getNome() + " : " + eTarefa.getMarcador());
+            for (AOTarefa eAOTarefa : eAOPagina.getTarefas()) {
+                System.out.println("\t\t\t\t - " + eAOTarefa.getNome() + " : " + eAOTarefa.getMarcador());
 
                 System.out.println("\t\t\t\t\t\t - Tags :  ");
 
-                for (String eTag : eTarefa.getTags()) {
+                for (String eTag : eAOTarefa.getTags()) {
                     System.out.println("\t\t\t\t\t\t\t - " + eTag);
                 }
 
@@ -181,18 +315,17 @@ public class OAOrganizador {
     }
 
 
-    public void parser(String eSincronizar,  ArrayList<Note> mNotes, ArrayList<Note> mConfig,ArrayList<String> mErros) {
-
+    public void parser(ArrayList<AOAnotacao> mAOAnotacaos, ArrayList<AOAnotacao> mConfig, ArrayList<String> mErros) {
 
 
         mLexemas = new ArrayList<Lexema>();
 
 
-        File arq = new File(eSincronizar);
+        File arq = new File(mArquivo);
 
         if (arq.exists()) {
 
-            mDocumento = Texto.Ler(eSincronizar);
+            mDocumento = Texto.Ler(mArquivo);
 
 
             mIndex = 0;
@@ -309,7 +442,7 @@ public class OAOrganizador {
         //   }
     }
 
-    public void parser_note(Note eNote) {
+    public void parser_note(AOAnotacao eAOAnotacao) {
 
 
         mIndex += 1;
@@ -318,7 +451,7 @@ public class OAOrganizador {
             Lexema sLexema = mLexemas.get(mIndex);
 
             if (sLexema.getTipoLexema() == TipoLexema.TEXTO) {
-                eNote.setNome(sLexema.getConteudo());
+                eAOAnotacao.setNome(sLexema.getConteudo());
 
             } else {
                 mErros.add("Era esperado o texto da anotacao !");
@@ -345,7 +478,7 @@ public class OAOrganizador {
             Lexema sLexema = mLexemas.get(mIndex);
 
             if (sLexema.getTipoLexema() == TipoLexema.ID) {
-                eNote.setMarcador(sLexema.getConteudo());
+                eAOAnotacao.setMarcador(sLexema.getConteudo());
 
             } else {
                 mErros.add("Era esperado o tipo da anotacao !");
@@ -354,9 +487,9 @@ public class OAOrganizador {
 
         }
 
-        parser_tags(eNote.getTags());
+        parser_tags(eAOAnotacao.getTags());
 
-        parser_tarefas(eNote);
+        parser_tarefas(eAOAnotacao);
 
 
     }
@@ -405,7 +538,7 @@ public class OAOrganizador {
 
     }
 
-    public void parser_tarefas(Note eNote) {
+    public void parser_tarefas(AOAnotacao eAOAnotacao) {
 
 
         mIndex += 1;
@@ -432,16 +565,16 @@ public class OAOrganizador {
 
                     if (tLexema.mesmoConteudo("task")) {
 
-                        Tarefa eTarefa = new Tarefa("");
-                        eNote.getTarefas().add(eTarefa);
+                        AOTarefa eAOTarefa = new AOTarefa("");
+                        eAOAnotacao.getTarefas().add(eAOTarefa);
 
-                        parser_tarefa(eTarefa);
+                        parser_tarefa(eAOTarefa);
                     } else if (tLexema.mesmoConteudo("page")) {
 
-                        Pagina ePagina = new Pagina("");
-                        eNote.getPaginas().add(ePagina);
+                        AOPagina eAOPagina = new AOPagina("");
+                        eAOAnotacao.getPaginas().add(eAOPagina);
 
-                        parser_pagina(ePagina);
+                        parser_pagina(eAOPagina);
                     } else {
                         mErros.add("ID nao desconhecido : " + tLexema.getConteudo());
                     }
@@ -466,7 +599,7 @@ public class OAOrganizador {
 
     }
 
-    public void parser_tarefa(Tarefa eTarefa) {
+    public void parser_tarefa(AOTarefa eAOTarefa) {
 
 
         mIndex += 1;
@@ -475,7 +608,7 @@ public class OAOrganizador {
             Lexema sLexema = mLexemas.get(mIndex);
 
             if (sLexema.getTipoLexema() == TipoLexema.TEXTO) {
-                eTarefa.setNome(sLexema.getConteudo());
+                eAOTarefa.setNome(sLexema.getConteudo());
 
             } else {
                 mErros.add("Era esperado o texto da tarefa !");
@@ -502,7 +635,7 @@ public class OAOrganizador {
             Lexema sLexema = mLexemas.get(mIndex);
 
             if (sLexema.getTipoLexema() == TipoLexema.ID) {
-                eTarefa.setMarcador(sLexema.getConteudo());
+                eAOTarefa.setMarcador(sLexema.getConteudo());
 
             } else {
                 mErros.add("Era esperado o tipo da tarefa !");
@@ -520,7 +653,7 @@ public class OAOrganizador {
 
                 mIndex -= 1;
 
-                parser_tags(eTarefa.getTags());
+                parser_tags(eAOTarefa.getTags());
 
                 mIndex += 1;
                 if (mIndex < mFim) {
@@ -542,7 +675,7 @@ public class OAOrganizador {
 
     }
 
-    public void parser_pagina(Pagina ePagina) {
+    public void parser_pagina(AOPagina eAOPagina) {
 
 
         mIndex += 1;
@@ -551,7 +684,7 @@ public class OAOrganizador {
             Lexema sLexema = mLexemas.get(mIndex);
 
             if (sLexema.getTipoLexema() == TipoLexema.TEXTO) {
-                ePagina.setNome(sLexema.getConteudo());
+                eAOPagina.setNome(sLexema.getConteudo());
 
             } else {
                 mErros.add("Era esperado o texto da pagina !");
@@ -560,13 +693,13 @@ public class OAOrganizador {
         }
 
 
-        parser_tarefas_pagina(ePagina);
+        parser_tarefas_pagina(eAOPagina);
 
 
     }
 
 
-    public void parser_tarefas_pagina(Pagina ePagina) {
+    public void parser_tarefas_pagina(AOPagina eAOPagina) {
 
 
         mIndex += 1;
@@ -593,10 +726,10 @@ public class OAOrganizador {
 
                     if (tLexema.mesmoConteudo("task")) {
 
-                        Tarefa eTarefa = new Tarefa("");
-                        ePagina.getTarefas().add(eTarefa);
+                        AOTarefa eAOTarefa = new AOTarefa("");
+                        eAOPagina.getTarefas().add(eAOTarefa);
 
-                        parser_tarefa(eTarefa);
+                        parser_tarefa(eAOTarefa);
 
                     } else {
                         mErros.add("ID nao desconhecido : " + tLexema.getConteudo());

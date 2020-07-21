@@ -31,7 +31,7 @@ public class AppSigmaz {
 
         int ARQUIVO = 70;
 
-        switch (Fases.EXECUTAR) {
+        switch (Fases.TESTES) {
 
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
@@ -67,24 +67,10 @@ public class AppSigmaz {
         OA.init();
 
 
-      //  OATodo mTodo = new OATodo("res/oa/Todo.oa");
-        //mTodo.sincronizar("Todo.txt");
+        OAOrganizador mOrganizador = new OAOrganizador("todo.todo");
+        mOrganizador.renderizar("todo.png");
 
-       // mTodo.marcarSem("i");
-       // mTodo.removerCom("r");
-
-       // ArrayList<Anotacao> eInfos = new ArrayList<Anotacao>();
-
-        //eInfos.add(new Anotacao("i", "Ideias", new Color(39, 174, 96)));
-        //eInfos.add(new Anotacao("f", "Fazendo", new Color(230, 126, 34)));
-       // eInfos.add(new Anotacao("c", "Cancelado", new Color(192, 57, 43)));
-        //eInfos.add(new Anotacao("t", "Terminado", new Color(41, 128, 185)));
-
-       // mTodo.exportar("todo.png", eInfos);
-
-
-        //mTodo.exportarDiario("C:\\Users\\Luand\\OneDrive\\Imagens\\todos\\sigmaz_", ".png", eInfos);
-
+        mOrganizador.identar();
 
         String IMG_ROAD = "https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/road.png";
         String IMG_CHANGE = "https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/change.png";
@@ -113,8 +99,7 @@ public class AppSigmaz {
         OA.exportarBranchesHV("res/imagens/VersionBranches.png", "res/oa/Roadmap.trilha",eCorFonte);
 
 
-        OAOrganizador mOrganizador = new OAOrganizador("res/oa/Organizador.oa");
-        mOrganizador.renderizar("todo.todo","todo.png");
+
 
     }
 
