@@ -11,11 +11,13 @@ public class Run_Invoke {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
     public Run_Invoke(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
+        mLocal = "Run_Invoke";
 
     }
 
@@ -64,7 +66,7 @@ public class Run_Invoke {
 
         } else {
 
-            mRunTime.getErros().add("Invocacao : Biblioteca nao encontrada ->  " + eNome);
+            mRunTime.errar(mLocal,"Invocacao : Biblioteca nao encontrada ->  " + eNome);
 
         }
 
@@ -233,7 +235,7 @@ public class Run_Invoke {
                         if (mEscopo.getDefinidoTipo(eAST.getNome()).contentEquals("bool")) {
                             eRet = mEscopo.getDefinido(eAST.getNome());
                         } else {
-                            mRunTime.getErros().add("Invocacao : Ação inconsistente -> Era esperado um bool");
+                            mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um bool");
                         }
 
 
@@ -247,10 +249,10 @@ public class Run_Invoke {
 
 
                 } else if (eAST.mesmoValor("Num")) {
-                    mRunTime.getErros().add("Invocacao : Ação inconsistente -> Era esperado um bool");
+                    mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um bool");
 
                 } else if (eAST.mesmoValor("Text")) {
-                    mRunTime.getErros().add("Invocacao : Ação inconsistente -> Era esperado um bool");
+                    mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um bool");
                 }
 
                 i += 1;
@@ -287,13 +289,13 @@ public class Run_Invoke {
                     String eRet = "";
 
                     if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
-                        mRunTime.getErros().add("Invocacao : Ação inconsistente -> Era esperado uma string");
+                        mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado uma string");
                     } else {
 
                         if (mEscopo.getDefinidoTipo(eAST.getNome()).contentEquals("string")) {
                             eRet = mEscopo.getDefinido(eAST.getNome());
                         } else {
-                            mRunTime.getErros().add("Invocacao : Ação inconsistente -> Era esperado uma string");
+                            mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado uma string");
                         }
 
 
@@ -307,7 +309,7 @@ public class Run_Invoke {
 
 
                 } else if (eAST.mesmoValor("Num")) {
-                    mRunTime.getErros().add("Invocacao : Ação inconsistente -> Era esperado um string");
+                    mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um string");
 
                 } else if (eAST.mesmoValor("Text")) {
 
@@ -353,13 +355,13 @@ public class Run_Invoke {
                     String eRet = "";
 
                     if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
-                        mRunTime.getErros().add("Invocacao : Ação inconsistente -> Era esperado um num");
+                        mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um num");
                     } else {
 
                         if (mEscopo.getDefinidoTipo(eAST.getNome()).contentEquals("num")) {
                             eRet = mEscopo.getDefinido(eAST.getNome());
                         } else {
-                            mRunTime.getErros().add("Invocacao : Ação inconsistente -> Era esperado um num");
+                            mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um num");
                         }
 
 
@@ -381,7 +383,7 @@ public class Run_Invoke {
                     }
 
                 } else if (eAST.mesmoValor("Text")) {
-                    mRunTime.getErros().add("Invocacao : Ação inconsistente -> Era esperado um num");
+                    mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um num");
                 }
 
                 i += 1;

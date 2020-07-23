@@ -7,12 +7,14 @@ public class Run_Apply {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
 
     public Run_Apply(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
+        mLocal = "Run_Apply";
 
     }
 
@@ -42,12 +44,12 @@ public class Run_Apply {
 
 
         if (mAplicador.getReferencia() == null) {
-            mRunTime.getErros().add("Referencia nao encontrada !");
+              mRunTime.errar(mLocal,"Referencia nao encontrada !");
         } else {
 
 
             if (mAplicador.getReferencia().getModo() == 1) {
-                mRunTime.getErros().add("A constante nao pode ser alterada : " + mAplicador.getReferencia().getNome());
+                  mRunTime.errar(mLocal,"A constante nao pode ser alterada : " + mAplicador.getReferencia().getNome());
                 return;
             }
 

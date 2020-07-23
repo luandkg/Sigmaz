@@ -2,9 +2,7 @@ package Sigmaz.Executor.Runners;
 
 import Sigmaz.Executor.Alterador;
 import Sigmaz.Executor.Escopo;
-import Sigmaz.Executor.Indexador.Argumentador;
 import Sigmaz.Executor.Indexador.Index_Action;
-import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
@@ -17,7 +15,7 @@ public class Run_Struct {
     private Escopo mEscopo;
 
     private String mNome;
-    private Argumentador mPreparadorDeArgumentos;
+    private Run_Arguments mPreparadorDeArgumentos;
 
     private String mStructNome;
     private int mTamanho;
@@ -25,10 +23,12 @@ public class Run_Struct {
     private AST mStructGeneric;
     private AST mStructCorpo;
     private ArrayList<String> mStack_All;
+    private String mLocal;
 
     public Run_Struct(RunTime eRunTime) {
 
         mRunTime = eRunTime;
+        mLocal = "Run_Struct";
 
         mNome = "";
         mStructNome = "";
@@ -38,7 +38,7 @@ public class Run_Struct {
         mStructCorpo = null;
 
 
-        mPreparadorDeArgumentos = new Argumentador();
+        mPreparadorDeArgumentos = new Run_Arguments();
 
        mStack_All = new ArrayList<String>();
     }
@@ -151,13 +151,13 @@ public class Run_Struct {
                     if (init_Extend.mesmoNome("STRUCT")) {
 
                     } else if (init_Extend.mesmoNome("TYPE")) {
-                        mRunTime.getErros().add("Type " + mStructNome + " : Nao pode ser instanciada como Struct !");
+                        mRunTime.errar(mLocal,"Type " + mStructNome + " : Nao pode ser instanciada como Struct !");
                         return;
                     } else if (init_Extend.mesmoNome("STAGES")) {
-                        mRunTime.getErros().add("Struct " + mStructNome + " : Nao pode ser instanciada !");
+                        mRunTime.errar(mLocal,"Struct " + mStructNome + " : Nao pode ser instanciada !");
                         return;
                     } else if (init_Extend.mesmoNome("EXTERNAL")) {
-                        mRunTime.getErros().add("Struct " + mStructNome + " : Nao pode ser instanciada !");
+                        mRunTime.errar(mLocal,"Struct " + mStructNome + " : Nao pode ser instanciada !");
                         return;
                     }
 
@@ -168,7 +168,7 @@ public class Run_Struct {
         }
 
         if (!enc) {
-            mRunTime.getErros().add("Struct " + mStructNome + " : Nao Encontrada !");
+            mRunTime.errar(mLocal,"Struct " + mStructNome + " : Nao Encontrada !");
             return;
         }
 
@@ -282,7 +282,7 @@ public class Run_Struct {
 
             } else {
 
-                mRunTime.getErros().add("Struct " + mStructNome + " : Tipos abstratos nao conferem !");
+                mRunTime.errar(mLocal,"Struct " + mStructNome + " : Tipos abstratos nao conferem !");
 
             }
 
@@ -290,19 +290,19 @@ public class Run_Struct {
         } else if (init_Generic.mesmoNome("FALSE") && mStructGeneric.mesmoNome("FALSE")) {
 
         } else if (init_Generic.mesmoNome("FALSE") && mStructGeneric.mesmoNome("TRUE")) {
-            mRunTime.getErros().add("Struct " + mStructNome + " : Precisa retornar uma Instancia Generica !");
+            mRunTime.errar(mLocal,"Struct " + mStructNome + " : Precisa retornar uma Instancia Generica !");
         } else if (init_Generic.mesmoNome("TRUE") && mStructGeneric.mesmoNome("FALSE")) {
 
 
             if (init_Generic.getASTS().size() == 0) {
 
             } else {
-                mRunTime.getErros().add("Struct " + mStructNome + " : Nao e Generica !");
+                mRunTime.errar(mLocal,"Struct " + mStructNome + " : Nao e Generica !");
             }
 
 
         } else {
-            mRunTime.getErros().add("Struct " + mStructNome + " : Nao e Generica !");
+            mRunTime.errar(mLocal,"Struct " + mStructNome + " : Nao e Generica !");
         }
 
         if (mRunTime.getExterno()) {
@@ -411,7 +411,7 @@ public class Run_Struct {
         } else {
 
             if (ASTCorrente.getBranch("ARGUMENTS").getASTS().size() > 0) {
-                mRunTime.getErros().add("Struct " + mStructNome + " nao possui Init com argumentos !");
+                mRunTime.errar(mLocal,"Struct " + mStructNome + " nao possui Init com argumentos !");
 
             }
 
@@ -559,10 +559,10 @@ public class Run_Struct {
 
         if (enc) {
             if (!algum) {
-                mRunTime.getErros().add("Init " + eOrigem + "." + ASTCorrente.getNome() + " : Argumentos incompativeis !");
+                mRunTime.errar(mLocal,"Init " + eOrigem + "." + ASTCorrente.getNome() + " : Argumentos incompativeis !");
             }
         } else {
-            mRunTime.getErros().add("Init  " + eOrigem + "." + ASTCorrente.getNome() + " : Nao Encontrada !");
+            mRunTime.errar(mLocal,"Init  " + eOrigem + "." + ASTCorrente.getNome() + " : Nao Encontrada !");
         }
 
 
@@ -697,10 +697,10 @@ public class Run_Struct {
 
         if (enc) {
             if (!algum) {
-                mRunTime.getErros().add("Init " + eOrigem + "." + eOrigem + " : Argumentos incompativeis !");
+                mRunTime.errar(mLocal,"Init " + eOrigem + "." + eOrigem + " : Argumentos incompativeis !");
             }
         } else {
-            mRunTime.getErros().add("Init  " + eOrigem + "." + eOrigem + " : Nao Encontrada !");
+            mRunTime.errar(mLocal,"Init  " + eOrigem + "." + eOrigem + " : Nao Encontrada !");
         }
 
 
@@ -734,7 +734,7 @@ public class Run_Struct {
     public Item init_Object(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
 
         if (BuscadorDeVariaveis == null) {
-            mRunTime.getErros().add(mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");
+            mRunTime.errar(mLocal,mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");
             return null;
         }
 
@@ -758,7 +758,7 @@ public class Run_Struct {
 
 
         if (!enc) {
-            mRunTime.getErros().add(mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");
+            mRunTime.errar(mLocal,mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");
         }
 
         return mRet;
@@ -767,7 +767,7 @@ public class Run_Struct {
     public Item init_ObjectDireto(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
 
         if (BuscadorDeVariaveis == null) {
-            mRunTime.getErros().add(mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");
+            mRunTime.errar(mLocal,mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");
             return null;
         }
 
@@ -791,7 +791,7 @@ public class Run_Struct {
 
 
         if (!enc) {
-            mRunTime.getErros().add(mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");
+            mRunTime.errar(mLocal,mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");
         }
 
         return mRet;

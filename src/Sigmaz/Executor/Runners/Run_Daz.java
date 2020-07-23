@@ -8,12 +8,14 @@ public class Run_Daz {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
 
     public Run_Daz(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
+        mLocal = "Run_Daz";
 
 
     }
@@ -47,7 +49,7 @@ public class Run_Daz {
         try {
             CGeral = Float.parseFloat(mAST.getConteudo());
         } catch (Exception e) {
-            mRunTime.getErros().add("Uma condição Daz requer argumentos numericos  !");
+            mRunTime.errar(mLocal,"Uma condição Daz requer argumentos numericos  !");
             return;
         }
 
@@ -59,7 +61,7 @@ public class Run_Daz {
             AST ouCorpo = fAST.getBranch("BODY");
 
             if (ouCondicao.getASTS().size() != 2) {
-                mRunTime.getErros().add("Uma condição Daz requer 2 argumentos !");
+                mRunTime.errar(mLocal,"Uma condição Daz requer 2 argumentos !");
                 return;
             }
 
@@ -77,7 +79,7 @@ public class Run_Daz {
                 P1 = Float.parseFloat(RV_1.getConteudo());
                 P2 = Float.parseFloat(RV_2.getConteudo());
             } catch (Exception e) {
-                mRunTime.getErros().add("Uma condição Daz requer argumentos numericos  !");
+                mRunTime.errar(mLocal,"Uma condição Daz requer argumentos numericos  !");
                 return;
             }
 

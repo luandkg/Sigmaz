@@ -11,6 +11,7 @@ public class Run_GetType {
     private RunTime mRunTime;
     private Escopo mEscopo;
 private ArrayList<String> dRefers;
+    private String mLocal;
 
     public Run_GetType(RunTime eRunTime, Escopo eEscopo) {
 
@@ -18,6 +19,7 @@ private ArrayList<String> dRefers;
         mEscopo = eEscopo;
 
         dRefers = new ArrayList<>();
+        mLocal = "Run_GetType";
 
     }
 
@@ -112,7 +114,7 @@ private ArrayList<String> dRefers;
             }
 
             if (!enc) {
-                //mRunTime.getErros().add("Tipagem  " + mPrefixo + " : Deconhecido !");
+                //mRunTime.errar(mLocal,"Tipagem  " + mPrefixo + " : Deconhecido !");
             }
         }
 

@@ -8,11 +8,13 @@ public class Run_Def {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
     public Run_Def(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
+        mLocal = "Run_Def";
 
 
     }

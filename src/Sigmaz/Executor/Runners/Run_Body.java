@@ -17,6 +17,7 @@ public class Run_Body {
     private Object mObjeto;
 
     private String mRetornoTipo;
+    private String mLocal;
 
     public Run_Body(RunTime eRunTime, Escopo eEscopo) {
 
@@ -29,6 +30,7 @@ public class Run_Body {
         mObjeto = null;
         mConteudo = null;
         mRetornoTipo = null;
+        mLocal = "Run_Body";
 
     }
 

@@ -8,12 +8,14 @@ public class Run_Step {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
 
     public Run_Step(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
+        mLocal = "Run_Step";
 
 
     }
@@ -38,7 +40,7 @@ public class Run_Step {
         mAST.init(mArgumentos.getASTS().get(0), "num");
 
         if (mAST.getIsNulo()) {
-            mRunTime.getErros().add("Valor inicial do Step com problemas !");
+            mRunTime.errar(mLocal,"Valor inicial do Step com problemas !");
         } else if (mAST.getIsPrimitivo()) {
 
             mEscopo.setDefinido(mPassador,mAST.getConteudo());
@@ -85,7 +87,7 @@ public class Run_Step {
 
 
         } else {
-            mRunTime.getErros().add("Step com problemas !");
+            mRunTime.errar(mLocal,"Step com problemas !");
         }
 
 
@@ -114,7 +116,7 @@ public class Run_Step {
         mAST.init(mArgumentos.getASTS().get(0), "num");
 
         if (mAST.getIsNulo()) {
-            mRunTime.getErros().add("Valor inicial do Step com problemas !");
+            mRunTime.errar(mLocal,"Valor inicial do Step com problemas !");
         } else if (mAST.getIsPrimitivo()) {
 
             EscopoPrimario.setDefinido(mPassador,mAST.getConteudo());
@@ -165,7 +167,7 @@ public class Run_Step {
 
 
         } else {
-            mRunTime.getErros().add("Step com problemas !");
+            mRunTime.errar(mLocal,"Step com problemas !");
         }
 
 

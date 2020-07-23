@@ -793,5 +793,9 @@ public class RunTime {
 
     }
 
+    public void errar(String eLocal,String eMensagem){
+        getErros().add(eLocal + " -->> " + eMensagem);
+    }
+
 
 }

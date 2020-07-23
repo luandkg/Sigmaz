@@ -63,6 +63,10 @@ public class AST_StructCorpo {
 
                 AST_Operation mAST = new AST_Operation(mCompiler);
                 mAST.init(AST_Corpo);
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("director")) {
+
+                AST_Director mAST = new AST_Director(mCompiler);
+                mAST.init(AST_Corpo,"ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("all")) {
 

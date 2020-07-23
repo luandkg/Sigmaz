@@ -1,6 +1,9 @@
-package Sigmaz.Executor.Indexador;
+package Sigmaz.Executor.Runners;
 
 import Sigmaz.Executor.*;
+import Sigmaz.Executor.Indexador.Index_Action;
+import Sigmaz.Executor.Indexador.Index_Argument;
+import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Executor.Runners.Run_Body;
 import Sigmaz.Executor.Runners.Run_GetType;
 import Sigmaz.Executor.Runners.Run_Valoramento;
@@ -9,63 +12,8 @@ import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
 
-public class Argumentador {
+public class Run_Arguments {
 
-    public boolean mesmoArgumentos(RunTime mRunTime, Escopo mEscopo, ArrayList<String> mTipoArgumentos, ArrayList<Item> eArgumentos) {
-        boolean ret = false;
-
-        //  System.out.println("\t - Inicio da Checagem :  " + mTipoArgumentos.size() + " e " + eArgumentos.size());
-
-
-        if (eArgumentos.size() == mTipoArgumentos.size()) {
-            int i = 0;
-            int v = 0;
-            for (Item mArgumentos : eArgumentos) {
-
-
-                if (mArgumentos.getTipo().contentEquals(mTipoArgumentos.get(i))) {
-                    v += 1;
-                } else {
-                    if (mTipoArgumentos.get(i).contentEquals("any")) {
-                        v += 1;
-                    } else if (mTipoArgumentos.get(i).contentEquals("<<ANY>>")) {
-                        v += 1;
-                    } else if (mArgumentos.getTipo().contentEquals("<<ANY>>")) {
-                        v += 1;
-                    } else {
-
-                        if (mArgumentos.getTipo().contains("<>")) {
-
-                            if (mArgumentos.getTipo().contains(mTipoArgumentos.get(i))) {
-                                mArgumentos.setTipo(mTipoArgumentos.get(i));
-                                v += 1;
-                            }
-
-                        }
-
-                    }
-                }
-
-
-                //System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
-                //    System.out.println("\t - Entrando Tipo :  " +mArgumentos.getTipo() + " : " + mArgumentos.getValor() );
-
-                i += 1;
-
-
-            }
-
-
-            if (v == i) {
-                ret = true;
-            }
-
-            //  System.out.println("\t - Contagem Tipo :  " + i + " e " + v + " -> " + ret);
-
-        }
-
-        return ret;
-    }
 
     public ArrayList<Item> preparar_argumentos(RunTime mRunTime, Escopo mBuscadorDeVariaveis, AST ASTCorrente) {
 
@@ -115,11 +63,38 @@ public class Argumentador {
 
     }
 
-    public void passarParametros(Escopo mEscopoInterno, ArrayList<String> eParametrosNomes, ArrayList<String> eParametrosModos, ArrayList<Item> mArgumentos) {
 
-        if (eParametrosNomes.size() > 0) {
+    public String getTipagem(ArrayList<Item> mArgumentos){
 
-            for (int argC = 0; argC < eParametrosNomes.size(); argC++) {
+
+        String mTipagem = "";
+
+
+        int i = 0;
+        int o = mArgumentos.size();
+        for (Item ie : mArgumentos) {
+
+            i += 1;
+
+            if (i < o) {
+                mTipagem += ie.getTipo() + " , ";
+            } else {
+                mTipagem += ie.getTipo() + " ";
+            }
+
+
+        }
+
+       return " ( " + mTipagem + " ) ";
+
+    }
+
+
+    public void passarParametros(Escopo mEscopoInterno, ArrayList<Index_Argument> eParametros, ArrayList<Item> mArgumentos) {
+
+        if (eParametros.size() > 0) {
+
+            for (int argC = 0; argC < eParametros.size(); argC++) {
 
                 // System.out.println("\t - Passando Parametro : " + eParametrosNomes.get(argC) + " -> " + mArgumentos.get(argC).getTipo() + " :: " + mArgumentos.get(argC).getValor());
 
@@ -127,12 +102,12 @@ public class Argumentador {
 
                 //  System.out.println("\t - Passando Parametro : " + eParametrosNomes.get(argC) + " " + eParametrosModos.get(argC) + " -> " + mArgumentos.get(argC).getTipo() + " :: " + mArgumentos.get(argC).getValor());
 
-                if (eParametrosModos.get(argC).contentEquals("VALUE")) {
-                    mEscopoInterno.passarParametroByValue(eParametrosNomes.get(argC), mArgumentos.get(argC));
-                } else if (eParametrosModos.get(argC).contentEquals("REF")) {
-                    mEscopoInterno.passarParametroByRef(eParametrosNomes.get(argC), mArgumentos.get(argC));
+                if (eParametros.get(argC).getModo().contentEquals("VALUE")) {
+                    mEscopoInterno.passarParametroByValue(eParametros.get(argC).getNome(), mArgumentos.get(argC));
+                } else if (eParametros.get(argC).getModo().contentEquals("REF")) {
+                    mEscopoInterno.passarParametroByRef(eParametros.get(argC).getNome(), mArgumentos.get(argC));
                 } else {
-                    mEscopoInterno.getRunTime().getErros().add("Passagem de parametro desconhcida : " + eParametrosModos.get(argC));
+                    mEscopoInterno.getRunTime().getErros().add("Passagem de parametro desconhcida : " + eParametros.get(argC).getModo());
                     return;
                 }
 
@@ -167,7 +142,7 @@ public class Argumentador {
         }
 
 
-        passarParametros(mEscopoInterno, mFunction.getParamentos(), mFunction.getParamentosModos(), mArgumentos);
+        passarParametros(mEscopoInterno, mFunction.getArgumentos(), mArgumentos);
 
         AST mASTBody = mFunction.getPonteiro().getBranch("BODY");
 
@@ -221,7 +196,7 @@ public class Argumentador {
 
 
 
-        passarParametros(mEscopoInterno, mFunction.getParamentos(), mFunction.getParamentosModos(), mArgumentos);
+        passarParametros(mEscopoInterno, mFunction.getArgumentos(), mArgumentos);
 
 
 
@@ -251,5 +226,115 @@ public class Argumentador {
 
 
     }
+
+
+    public boolean mesmoArgumentos(RunTime mRunTime, Escopo mEscopo, ArrayList<Index_Argument> mParametros, ArrayList<Item> eArgumentos) {
+        boolean ret = false;
+
+        //  System.out.println("\t - Inicio da Checagem :  " + mTipoArgumentos.size() + " e " + eArgumentos.size());
+
+
+        if (eArgumentos.size() == mParametros.size()) {
+            int i = 0;
+            int v = 0;
+            for (Item mArgumentos : eArgumentos) {
+
+
+                if (mArgumentos.getTipo().contentEquals(mParametros.get(i).getTipo())) {
+                    v += 1;
+                } else {
+                    if (mParametros.get(i).getTipo().contentEquals("any")) {
+                        v += 1;
+                    } else if (mParametros.get(i).getTipo().contentEquals("<<ANY>>")) {
+                        v += 1;
+                    } else if (mArgumentos.getTipo().contentEquals("<<ANY>>")) {
+                        v += 1;
+                    } else {
+
+                        if (mArgumentos.getTipo().contains("<>")) {
+
+                            if (mArgumentos.getTipo().contains(mParametros.get(i).getTipo())) {
+                                mArgumentos.setTipo(mParametros.get(i).getTipo());
+                                v += 1;
+                            }
+
+                        }
+
+                    }
+                }
+
+
+                //System.out.println("\t - Checando Tipo :  " + mArgumentos.getTipo() + " e " + mTipoArgumentos.get(i));
+                //    System.out.println("\t - Entrando Tipo :  " +mArgumentos.getTipo() + " : " + mArgumentos.getValor() );
+
+                i += 1;
+
+
+            }
+
+
+            if (v == i) {
+                ret = true;
+            }
+
+            //  System.out.println("\t - Contagem Tipo :  " + i + " e " + v + " -> " + ret);
+
+        }
+
+        return ret;
+    }
+
+    public int conferirArgumentos(RunTime mRunTime, Escopo mEscopo, ArrayList<Index_Argument> mParametros, ArrayList<Item> eArgumentos) {
+        int v = 0;
+
+        //  System.out.println("\t - Inicio da Checagem :  " + mTipoArgumentos.size() + " e " + eArgumentos.size());
+
+
+        if (eArgumentos.size() == mParametros.size()) {
+            int i = 0;
+
+            for (Item mArgumentos : eArgumentos) {
+
+
+                if (mArgumentos.getTipo().contentEquals(mParametros.get(i).getTipo())) {
+                    v += 1;
+                } else {
+                    if (mParametros.get(i).getTipo().contentEquals("any")) {
+                        v += 1;
+                    } else if (mParametros.get(i).getTipo().contentEquals("<<ANY>>")) {
+                        v += 1;
+                    } else if (mArgumentos.getTipo().contentEquals("<<ANY>>")) {
+                        v += 1;
+                    } else {
+
+                        if (mArgumentos.getTipo().contains("<>")) {
+
+                            if (mArgumentos.getTipo().contains(mParametros.get(i).getTipo())) {
+                                mArgumentos.setTipo(mParametros.get(i).getTipo());
+                                v += 1;
+                            }
+
+                        }
+
+                    }
+                }
+
+
+               // System.out.println("\t - Conferindo Tipo :  " + mArgumentos.getTipo() + " e " + mParametros.get(i).getTipo());
+                //    System.out.println("\t - Entrando Tipo :  " +mArgumentos.getTipo() + " : " + mArgumentos.getValor() );
+
+                i += 1;
+
+
+            }
+
+
+            //  System.out.println("\t - Contagem Tipo :  " + i + " e " + v + " -> " + ret);
+
+        }
+
+        return v;
+    }
+
 
 }

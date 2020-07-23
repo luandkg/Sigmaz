@@ -18,7 +18,7 @@ public class Tipificador {
 
         Run_GetType mRun_GetType = new Run_GetType(eRunTime,mEscopo,dRefers);
 
-        String antes =mRun_GetType.getTipagemBruta(eArg.getBranch("TYPE"));
+       // String antes =mRun_GetType.getTipagemBruta(eArg.getBranch("TYPE"));
         String mTipagem = mRun_GetType.getTipagem(eArg.getBranch("TYPE"));
 
      //   System.out.println("Tipando : " + antes + " -->> " + mTipagem);
@@ -26,5 +26,24 @@ public class Tipificador {
         mTipoArgumentos.add(mTipagem);
 
     }
+
+
+    public String getTipagem(AST eAST){
+
+        String mTipagem = eAST.getNome();
+
+        if (eAST.mesmoValor("GENERIC")){
+
+            for (AST eTipando : eAST.getASTS()) {
+                mTipagem += "<" +getTipagem(eTipando) + ">";
+            }
+
+        }
+
+
+        return mTipagem;
+
+    }
+
 
 }

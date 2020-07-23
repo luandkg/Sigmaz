@@ -9,11 +9,13 @@ public class Run_Try {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
     public Run_Try(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
+        mLocal = "Run_Try";
 
 
     }
@@ -47,13 +49,13 @@ public class Run_Try {
 
         if(L){
             if (!eLogic.getTipo().contentEquals("bool")) {
-                mRunTime.getErros().add("A variavel logica precisa ser do tipo bool !");
+                mRunTime.errar(mLocal,"A variavel logica precisa ser do tipo bool !");
             }
         }
 
         if(M){
             if (!eMensagem.getTipo().contentEquals("string")) {
-                mRunTime.getErros().add("A variavel logica precisa ser do tipo string !");
+                mRunTime.errar(mLocal,"A variavel logica precisa ser do tipo string !");
             }
         }
 

@@ -3,6 +3,7 @@ package Sigmaz.Executor.Indexador;
 import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
+import Sigmaz.Executor.Runners.Run_Arguments;
 import Sigmaz.Executor.Runners.Run_GetType;
 import Sigmaz.Utils.AST;
 
@@ -12,23 +13,24 @@ public class Index_Function {
 
     private String mNome;
 
-    private ArrayList<String> mNomeArgumentos;
-    private ArrayList<String> mTipoArgumentos;
-    private ArrayList<String> mModoArgumentos;
-
+    private ArrayList<Index_Argument> mArgumentos;
     private String mTipo;
-    private AST mPonteiro;
 
-    private Argumentador mArgumentador;
+
+    private Run_Arguments mRunArguments;
 
 
     private RunTime mRunTime;
     private Escopo mEscopo;
 
+    private AST mPonteiro;
+    private AST mPonteiroVisibility;
+
+    private boolean mResolvido;
+    private Tipificador mTipificador;
 
 
-
-    public Index_Function(RunTime eRunTime, Escopo eEscopo,AST ePonteiro) {
+    public Index_Function(RunTime eRunTime, Escopo eEscopo, AST ePonteiro) {
 
         mPonteiro = ePonteiro;
         mRunTime = eRunTime;
@@ -37,63 +39,51 @@ public class Index_Function {
         mNome = mPonteiro.getNome();
         mTipo = mPonteiro.getValor();
 
-        mNomeArgumentos = new ArrayList<String>();
-        mTipoArgumentos = new ArrayList<String>();
-        mModoArgumentos = new ArrayList<String>();
-
-        mArgumentador = new Argumentador();
-
-       // System.out.println(mPonteiro.ImprimirArvoreDeInstrucoes());
-
-        for (AST aAST : mPonteiro.getBranch("ARGUMENTS").getASTS()) {
-
-            argumentar(aAST);
-
-        }
-
-    }
+        mArgumentos = new ArrayList<Index_Argument>();
 
 
+        mRunArguments = new Run_Arguments();
 
-    public String getTipagem(AST eAST){
+        // System.out.println(mPonteiro.ImprimirArvoreDeInstrucoes());
 
-        String mTipagem = eAST.getNome();
+        mPonteiroVisibility = mPonteiro.getBranch("VISIBILITY");
 
-        if (eAST.mesmoValor("GENERIC")){
+        mTipificador = new Tipificador();
 
-            for (AST eTipando : eAST.getASTS()) {
-                mTipagem += "<" +getTipagem(eTipando) + ">";
-            }
+        mResolvido = false;
 
-        }
-
-
-        return mTipagem;
+        resolverTipagem(mEscopo.getRefers());
 
     }
 
+
+    public String getTipagem(AST eAST) {
+
+        return mTipificador.getTipagem(eAST);
+
+    }
+
+    public ArrayList<Index_Argument> getArgumentos(){return mArgumentos;}
 
 
     public String getTipo() {
         return getTipagem(mPonteiro.getBranch("TYPE"));
     }
 
-
-
     public boolean isExtern() {
-        return mPonteiro.getBranch("VISIBILITY").mesmoNome("EXTERN");
+        return mPonteiroVisibility.mesmoNome("EXTERN");
     }
 
     public boolean isAll() {
-        return mPonteiro.getBranch("VISIBILITY").mesmoNome("ALL");
+        return mPonteiroVisibility.mesmoNome("ALL");
     }
 
     public boolean isRestrict() {
-        return mPonteiro.getBranch("VISIBILITY").mesmoNome("RESTRICT");
+        return mPonteiroVisibility.mesmoNome("RESTRICT");
     }
 
     public String getModo() {
-        return mPonteiro.getBranch("VISIBILITY").getNome();
+        return mPonteiroVisibility.getNome();
     }
 
 
@@ -120,37 +110,29 @@ public class Index_Function {
 
 
     public ArrayList<String> getParamentos() {
-        return mNomeArgumentos;
+
+        ArrayList<String> ret = new ArrayList<String>();
+        for (Index_Argument ia : mArgumentos) {
+            ret.add(ia.getNome());
+        }
+
+        return ret;
     }
 
     public ArrayList<String> getParamentosModos() {
-        return mModoArgumentos;
+
+
+        ArrayList<String> ret = new ArrayList<String>();
+        for (Index_Argument ia : mArgumentos) {
+            ret.add(ia.getModo());
+        }
+        return ret;
+
     }
 
-    public boolean mesmoArgumentos(Escopo gEscopo,ArrayList<Item> eArgumentos) {
-        return mArgumentador.mesmoArgumentos(mRunTime,gEscopo,mTipoArgumentos, eArgumentos);
+    public boolean mesmoArgumentos(Escopo gEscopo, ArrayList<Item> eArgumentos) {
+        return mRunArguments.mesmoArgumentos(mRunTime, gEscopo, mArgumentos, eArgumentos);
     }
-
-
-    public void argumentar(AST eArg) {
-
-        mNomeArgumentos.add(eArg.getNome());
-        mModoArgumentos.add(eArg.getValor());
-
-        Run_GetType mRun_GetType = new Run_GetType(mRunTime,mEscopo);
-
-        String mTipagem = mRun_GetType.getTipagem(eArg.getBranch("TYPE"));
-
-        mTipoArgumentos.add(mTipagem);
-
-       // mTipoArgumentos.add(getTipagem(eArg.getBranch("TYPE")));
-    }
-
-
-
-
-    private boolean mResolvido = false;
-
 
     public boolean getEstaResolvido() {
         return mResolvido;
@@ -158,20 +140,24 @@ public class Index_Function {
 
     public void resolverTipagem(ArrayList<String> dRefers) {
 
-        mNomeArgumentos.clear();
-        mModoArgumentos.clear();
-        mTipoArgumentos.clear();
+        mArgumentos.clear();
 
-        Tipificador mTipificador = new Tipificador();
 
         for (AST aAST : mPonteiro.getBranch("ARGUMENTS").getASTS()) {
 
-            mTipificador. argumentar(mRunTime,mEscopo,aAST,dRefers,mNomeArgumentos,mTipoArgumentos,mModoArgumentos);
 
+            Run_GetType mRun_GetType = new Run_GetType(mRunTime,mEscopo,dRefers);
+
+            // String antes =mRun_GetType.getTipagemBruta(eArg.getBranch("TYPE"));
+            String mTipagem = mRun_GetType.getTipagem(aAST.getBranch("TYPE"));
+
+            //   System.out.println("Tipando : " + antes + " -->> " + mTipagem);
+
+            mArgumentos.add(new Index_Argument(aAST.getNome(),mTipagem,aAST.getValor()));
         }
 
 
-        mResolvido=true;
+        mResolvido = true;
     }
 
 
@@ -182,15 +168,15 @@ public class Index_Function {
     public String getParametros() {
         String ret = "";
 
-        int total = mNomeArgumentos.size();
+        int total = mArgumentos.size();
 
 
         for (int ii = 0; ii < total; ii++) {
 
             if (ii < total - 1) {
-                ret += mNomeArgumentos.get(ii) + " : " + mTipoArgumentos.get(ii) + " , ";
+                ret += mArgumentos.get(ii).getNome() + " : " + mArgumentos.get(ii).getTipo() + " , ";
             } else {
-                ret += mNomeArgumentos.get(ii) + " : " + mTipoArgumentos.get(ii) + " ";
+                ret += mArgumentos.get(ii).getNome() + " : " + mArgumentos.get(ii).getTipo() + " ";
             }
 
         }
@@ -201,15 +187,15 @@ public class Index_Function {
     public String getParametragem() {
         String ret = "";
 
-        int total = mTipoArgumentos.size();
+        int total = mArgumentos.size();
 
 
         for (int ii = 0; ii < total; ii++) {
 
             if (ii < total - 1) {
-                ret += mTipoArgumentos.get(ii) + " , ";
+                ret += mArgumentos.get(ii).getTipo() + " , ";
             } else {
-                ret += mTipoArgumentos.get(ii) + " ";
+                ret += mArgumentos.get(ii).getTipo() + " ";
             }
 
         }

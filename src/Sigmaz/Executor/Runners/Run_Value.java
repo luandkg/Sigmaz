@@ -23,11 +23,14 @@ public class Run_Value {
 
     private boolean mIsReferenciavel;
     private Item mReferencia;
+    private String mLocal;
 
     public Run_Value(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
+        mLocal = "Run_Value";
+
         mIsNulo = false;
         mIsPrimitivo = false;
         mIsEstrutura = false;
@@ -211,7 +214,7 @@ public class Run_Value {
         } else {
 
 
-            mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE  : " + ASTCorrente.getValor());
+            mRunTime.errar(mLocal,"AST_Value --> STRUCTURED VALUE  : " + ASTCorrente.getValor());
 
 
         }
@@ -324,6 +327,10 @@ mIsPrimitivo=true;
         }
 
 
+       // System.out.println("OPERATOR  DIREITA -> " + mRun_Direita.getRetornoTipo());
+       // System.out.println("OPERATOR  ESQUERDA -> " + mRun_Esquerda.getRetornoTipo());
+
+
         if (eModo.mesmoNome("MATCH")) {
 
             realizarOperacao("MATCH", mRun_Esquerda, mRun_Direita, mRetornoTipo);
@@ -349,7 +356,7 @@ mIsPrimitivo=true;
             realizarOperacao("DIV", mRun_Esquerda, mRun_Direita, mRetornoTipo);
 
         } else {
-            mRunTime.getErros().add("Comparador Desconhecido : " + eModo.getNome());
+            mRunTime.errar(mLocal,"Comparador Desconhecido : " + eModo.getNome());
         }
 
 
@@ -378,7 +385,7 @@ mIsPrimitivo=true;
 
 
         } else {
-            mRunTime.getErros().add("Unario Desconhecido : " + eModo.getNome());
+            mRunTime.errar(mLocal,"Unario Desconhecido : " + eModo.getNome());
         }
 
 
@@ -388,8 +395,8 @@ mIsPrimitivo=true;
 
         // System.out.println("Valorando  -> FUNCT " + ASTCorrente.getNome());
 
-        Run_Func mAST = new Run_Func(mRunTime, mEscopo);
-        Item eItem = mAST.init_Function(ASTCorrente, eRetorno);
+        Run_Any mAST = new Run_Any(mRunTime);
+        Item eItem = mAST.init_Function(ASTCorrente,mEscopo, mEscopo,eRetorno,"",mEscopo.getFunctionsCompleto());
 
        // System.out.println("Ent ->> " + eRetorno);
 
@@ -484,14 +491,14 @@ mIsPrimitivo=true;
 
     public void Start(AST ASTCorrente, String eRetorno) {
 
-        //  mRunTime.getErros().add("Vamos Type - " + eRetorno);
+        //  mRunTime.errar(mLocal,"Vamos Type - " + eRetorno);
         long HEAPID = mRunTime.getHEAPID();
         String eNome = "<Type::" + ASTCorrente.getNome() + ":" + HEAPID + ">";
 
         String eQualificador = mRunTime.getQualificador(ASTCorrente.getNome(), mEscopo.getRefers());
 
         if (eQualificador.contentEquals("STRUCT")) {
-            mRunTime.getErros().add("Era esperado um TYPE e nao STRUCT !");
+            mRunTime.errar(mLocal,"Era esperado um TYPE e nao STRUCT !");
             return;
         } else if (eQualificador.contentEquals("TYPE")) {
 
@@ -561,14 +568,14 @@ mIsPrimitivo=true;
                 this.setRetornoTipo(eItem.getTipo());
             }else{
 
-                mRunTime.getErros().add("Stage Tipo Deconhecido : " + ASTCorrente.getNome() + "::" + mFilho.getNome());
+                mRunTime.errar(mLocal,"Stage Tipo Deconhecido : " + ASTCorrente.getNome() + "::" + mFilho.getNome());
 
             }
 
 
 
         } else {
-            mRunTime.getErros().add("Stage Deconhecido : " + ASTCorrente.getNome() );
+            mRunTime.errar(mLocal,"Stage Deconhecido : " + ASTCorrente.getNome() );
             return;
         }
 
@@ -581,8 +588,14 @@ mIsPrimitivo=true;
 
         // System.out.println("Realizando Operacao : " + eOperacao + " :: " + eRetorno);
 
-        Run_Func mRun_Matchable = new Run_Func(mRunTime, mEscopo);
-        Item mItem = mRun_Matchable.init_Operation(eOperacao, mRun_Esquerda, mRun_Direita, eRetorno);
+      //  System.out.println("OPERATOR " + eOperacao + " DIREITA -> " + mRun_Direita.getRetornoTipo());
+       // System.out.println("OPERATOR " + eOperacao + " ESQUERDA -> " + mRun_Esquerda.getRetornoTipo());
+
+
+        Run_Any mRun_Matchable = new Run_Any(mRunTime);
+        Item mItem = mRun_Matchable.init_Operation(eOperacao, mRun_Esquerda, mRun_Direita,mEscopo, eRetorno);
+
+
 
         if (mRunTime.getErros().size() > 0) {
             return;
@@ -613,8 +626,8 @@ mIsPrimitivo=true;
     public void realizarDirector(String eOperacao, Run_Value mRun_Esquerda, String eRetorno) {
 
 
-        Run_Func mRun_Matchable = new Run_Func(mRunTime, mEscopo);
-        Item mItem = mRun_Matchable.init_Director(eOperacao, mRun_Esquerda, eRetorno);
+        Run_Any mRun_Matchable = new Run_Any(mRunTime);
+        Item mItem = mRun_Matchable.init_Director(eOperacao, mRun_Esquerda,mEscopo, eRetorno);
 
         if (mRunTime.getErros().size() > 0) {
             return;

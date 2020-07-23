@@ -8,11 +8,13 @@ public class Run_Exception {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
     public Run_Exception(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
+        mLocal = "Run_Exception";
 
 
     }
@@ -26,10 +28,10 @@ public class Run_Exception {
 
         if (mAST.getIsNulo()) {
 
-            mRunTime.getErros().add("NULL");
+            mRunTime.errar(mLocal,"NULL");
 
         } else if (mAST.getIsPrimitivo()) {
-            mRunTime.getErros().add(mAST.getConteudo());
+            mRunTime.errar(mLocal,mAST.getConteudo());
         }
 
 

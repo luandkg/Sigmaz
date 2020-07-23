@@ -452,6 +452,8 @@ public class AST_Value {
     }
 
 
+
+
     public void initUltimo(AST ASTPai) {
 
         Token TokenD = mCompiler.getTokenAvante();
@@ -664,6 +666,22 @@ public class AST_Value {
                     return;
                 } else {
                     System.out.println("Problema EE :  " + TokenC4.getConteudo());
+                }
+
+            } else if (TokenC2.getTipo() == TokenTipo.PONTO) {
+
+
+                ASTPai.setValor("STRUCT");
+
+                ReceberNovoEscopo(ASTPai);
+
+                Token TokenC3 = mCompiler.getTokenAvante();
+                if (TokenC3.getTipo() == mTerminar) {
+                    return;
+                }  else if (TokenC3.getTipo() == TokenTipo.VIRGULA || TokenC3.getTipo() == TokenTipo.PARENTESES_FECHA) {
+                    return;
+                } else {
+                    System.out.println("Problema A : " + TokenC3.getConteudo());
                 }
 
             } else {

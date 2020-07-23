@@ -8,12 +8,14 @@ public class Run_When {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
 
     public Run_When(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
+        mLocal = "Run_When";
 
 
     }

@@ -8,12 +8,14 @@ public class Run_While {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
 
     public Run_While(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
+        mLocal = "Run_While";
 
 
     }
@@ -76,7 +78,7 @@ public class Run_While {
             }
 
         } else {
-            mRunTime.getErros().add("O loop deve possuir tipo BOOL !");
+            mRunTime.errar(mLocal,"O loop deve possuir tipo BOOL !");
         }
 
     }

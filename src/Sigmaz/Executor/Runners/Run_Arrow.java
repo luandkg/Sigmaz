@@ -8,9 +8,12 @@ import Sigmaz.Utils.AST;
 public class Run_Arrow {
 
     private RunTime mRunTime;
+    private String mLocal;
 
     public Run_Arrow(RunTime eRunTime) {
         mRunTime = eRunTime;
+        mLocal = "Run_Arrow";
+
     }
 
     public Item operadorSeta(AST ASTCorrente, Escopo mEscopo, String eRetorno) {
@@ -27,7 +30,7 @@ public class Run_Arrow {
             }
         }
         if (mEscopoExtern == null) {
-            mRunTime.getErros().add("STRUCT EXTERN " + ASTCorrente.getNome() + " : Nao encontrada !");
+              mRunTime.errar(mLocal,"STRUCT EXTERN " + ASTCorrente.getNome() + " : Nao encontrada !");
             return null;
         }
         //   System.out.println(" - STRUCT EXTERN : " + mEscopoExtern.getNome());
@@ -79,7 +82,7 @@ public class Run_Arrow {
 
         } else {
 
-            mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
+              mRunTime.errar(mLocal,"AST_Value --> STRUCTURED VALUE !");
 
         }
 
@@ -105,7 +108,7 @@ public class Run_Arrow {
 
         } else {
 
-            mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
+              mRunTime.errar(mLocal,"AST_Value --> STRUCTURED VALUE !");
 
         }
 

@@ -205,10 +205,6 @@ public class Escopo {
         return mAO.getOperationsCompleto();
     }
 
-   // public ArrayList<AST> getCastsCompleto() {
-    //    return mAO.getCastsCompleto();
-   // }
-
 
     public ArrayList<Item> getStacks() {
         return mStacks;

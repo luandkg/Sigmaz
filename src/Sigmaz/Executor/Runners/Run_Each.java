@@ -9,12 +9,14 @@ public class Run_Each {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
 
     public Run_Each(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
+        mLocal = "Run_Each";
 
 
     }
@@ -66,19 +68,19 @@ public class Run_Each {
         if (getTipo(mAST.getRetornoTipo()).contentEquals("Lista")) {
 
         } else {
-            mRunTime.getErros().add("O Iterable do Each precisa ser do tipo : Lista");
+            mRunTime.errar(mLocal,"O Iterable do Each precisa ser do tipo : Lista");
             return;
         }
         String realTipagem = "Lista<>Lista<" + mTipagem + ">";
         if (realTipagem.contentEquals((mAST.getRetornoTipo()))) {
 
         } else {
-            mRunTime.getErros().add("O Tipo da variavel do Iterable nao e compativel : " + realTipagem + " vs " + (mAST.getRetornoTipo()));
+            mRunTime.errar(mLocal,"O Tipo da variavel do Iterable nao e compativel : " + realTipagem + " vs " + (mAST.getRetornoTipo()));
             return;
         }
 
         if (mAST.getIsNulo()) {
-            mRunTime.getErros().add("O Iterable nao poder ser nulo !");
+            mRunTime.errar(mLocal,"O Iterable nao poder ser nulo !");
             return;
         }
 
@@ -212,7 +214,7 @@ public class Run_Each {
             }
 
         } else {
-            mRunTime.getErros().add("O loop deve possuir tipo BOOL !");
+            mRunTime.errar(mLocal,"O loop deve possuir tipo BOOL !");
         }
 
     }

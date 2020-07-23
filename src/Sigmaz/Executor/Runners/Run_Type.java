@@ -12,6 +12,7 @@ public class Run_Type {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
     private String mNome;
 
@@ -27,6 +28,7 @@ public class Run_Type {
         mRunTime = eRunTime;
         mTipoCompleto = "";
         dRefers=new  ArrayList<String>();
+        mLocal = "Run_Type";
 
     }
 
@@ -105,13 +107,13 @@ public class Run_Type {
                     if (init_Extend.mesmoNome("TYPE")) {
 
                     } else if (init_Extend.mesmoNome("STRUCT")) {
-                        mRunTime.getErros().add("Struct " + mStructNome + " : Nao pode ser instanciada como Type !");
+                        mRunTime.errar(mLocal,"Struct " + mStructNome + " : Nao pode ser instanciada como Type !");
                         return;
                     } else if (init_Extend.mesmoNome("STAGES")) {
-                        mRunTime.getErros().add("Struct " + mStructNome + " : Nao pode ser instanciada !");
+                        mRunTime.errar(mLocal,"Struct " + mStructNome + " : Nao pode ser instanciada !");
                         return;
                     } else if (init_Extend.mesmoNome("EXTERNAL")) {
-                        mRunTime.getErros().add("Struct " + mStructNome + " : Nao pode ser instanciada !");
+                        mRunTime.errar(mLocal,"Struct " + mStructNome + " : Nao pode ser instanciada !");
                         return;
                     }
 
@@ -123,7 +125,7 @@ public class Run_Type {
 
 
         if (!enc) {
-            mRunTime.getErros().add("Type " + mStructNome + " : Nao Encontrada !");
+            mRunTime.errar(mLocal,"Type " + mStructNome + " : Nao Encontrada !");
             return;
         }
 
@@ -201,7 +203,7 @@ public class Run_Type {
 
             } else {
 
-                mRunTime.getErros().add("Type " + mStructNome + " : Tipos abstratos nao conferem !");
+                mRunTime.errar(mLocal,"Type " + mStructNome + " : Tipos abstratos nao conferem !");
 
             }
 
@@ -209,19 +211,19 @@ public class Run_Type {
         } else if (init_Generic.mesmoNome("FALSE") && mStructGeneric.mesmoNome("FALSE")) {
 
         } else if (init_Generic.mesmoNome("FALSE") && mStructGeneric.mesmoNome("TRUE")) {
-            mRunTime.getErros().add("Type " + mStructNome + " : Precisa retornar uma Instancia Generica !");
+            mRunTime.errar(mLocal,"Type " + mStructNome + " : Precisa retornar uma Instancia Generica !");
         } else if (init_Generic.mesmoNome("TRUE") && mStructGeneric.mesmoNome("FALSE")) {
 
 
             if (init_Generic.getASTS().size() == 0) {
 
             } else {
-                mRunTime.getErros().add("Type " + mStructNome + " : Nao e Generica !");
+                mRunTime.errar(mLocal,"Type " + mStructNome + " : Nao e Generica !");
             }
 
 
         } else {
-            mRunTime.getErros().add("Type " + mStructNome + " : Nao e Generica !");
+            mRunTime.errar(mLocal,"Type " + mStructNome + " : Nao e Generica !");
         }
 
 
@@ -262,7 +264,7 @@ public class Run_Type {
         for (AST mDentro : ASTCorrente.getBranch("STARTED").getASTS()) {
 
             if (!mAlocados.contains(mDentro.getBranch("SETTABLE").getNome())) {
-                mRunTime.getErros().add(mStructNome + "." + mDentro.getBranch("SETTABLE").getNome() + " : Membro nao existe !");
+                mRunTime.errar(mLocal,mStructNome + "." + mDentro.getBranch("SETTABLE").getNome() + " : Membro nao existe !");
                 return;
             }
 
@@ -280,7 +282,7 @@ public class Run_Type {
     public Item init_Object(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
 
         if (BuscadorDeVariaveis == null) {
-            mRunTime.getErros().add(mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");
+            mRunTime.errar(mLocal,mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");
             return null;
         }
 
@@ -298,7 +300,7 @@ public class Run_Type {
         }
 
         if (!enc) {
-            mRunTime.getErros().add(mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");
+            mRunTime.errar(mLocal,mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");
         }
 
         return mRet;

@@ -1,0 +1,97 @@
+
+package Blocos {
+
+    struct CXA {
+
+        init CXA( eValor : num ){
+            this.mValor = eValor;
+        }
+
+        restrict:
+            define mValor : num = 0;
+
+        all:
+
+            func getValor() : num {return this.mValor;}
+
+            act aumentar(eValor:num) {
+                this.mValor = mValor ++ eValor;
+            }
+
+            act diminuir(eValor:num) {
+                this.mValor = mValor -- eValor;
+            }
+
+            operator ++(a:CXA,b:CXA) : CXA {
+                return init CXA(a.getValor() ++ b.getValor());
+            }
+            director !(a:CXA) : CXA {
+                return init CXA(a.getValor() ** (-1));
+            }
+    }
+
+}
+
+refer Blocos;
+
+call iniciar -> {
+
+    def a1 : CXA = init CXA(12);
+    def a2 : CXA = init CXA(18);
+
+    def a1_valor : num = a1.getValor();
+    def a2_valor : num = a2.getValor();
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    def a3 : CXA = a1 ++ a2;
+
+    def a3_valor : num = a3.getValor();
+
+    def a4 : CXA = !a3;
+    def a4_valor : num = a4.getValor();
+
+    a4.aumentar(10);
+
+    def a4_valor2 : num = a4.getValor();
+
+  #  def a : string = a4;
+
+    def r : num = azucrinar(1,2);
+
+
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+}
+
+func azucrinar(a:bool) : num {
+
+return -1;
+
+}
+
+func azucrinar(a:num,b:num) : num {
+
+return -1;
+
+}
+
+
+operator ++ ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_sum ( a , b ) :: c;
+	return c;
+}
+
+operator -- ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_sub ( a , b ) :: c;
+	return c;
+}
+
+operator ** ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_mux ( a , b ) :: c;
+	return c;
+}

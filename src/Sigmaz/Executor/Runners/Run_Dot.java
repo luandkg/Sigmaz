@@ -8,9 +8,13 @@ import Sigmaz.Utils.AST;
 public class Run_Dot {
 
     private RunTime mRunTime;
+    private String mLocal;
 
     public Run_Dot(RunTime eRunTime) {
+        
         mRunTime = eRunTime;
+        mLocal = "Run_Dot";
+
     }
 
 
@@ -48,7 +52,7 @@ public class Run_Dot {
             mItem = mRun_Internal.Struct_DentroType(mItem.getValor(), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
 
         } else {
-            mRunTime.getErros().add("CAST nao possui operador PONTO !");
+            mRunTime.errar(mLocal,"CAST nao possui operador PONTO !");
         }
 
         return mItem;

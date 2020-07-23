@@ -8,36 +8,40 @@ public class Run_Cast {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
     public Run_Cast(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
 
+        mLocal = "Run_Cast";
 
     }
 
 
-    public String realizarCast(String mSaida, String mEntrada, String eConteudo) {
+    public String realizarCast(String mSaida, Run_Value mAST) {
 
-        // mRunTime.getErros().add("Realizar CAST GETTER : " + mCAST_NOME + " :: " + rRetorno);
+        //   mRunTime.errar(mLocal,"Realizar CAST GETTER : " + mCAST_NOME + " :: " + rRetorno);
         String ret = null;
 
-      //  System.out.println("Casting -->> " + mEntrada + " para " + mSaida);
+        //  System.out.println("Casting -->> " + mEntrada + " para " + mSaida);
 
         //System.out.println(" :: " + mEntrada + " e "+mSaida);
 
+        String mEntrada = mAST.getRetornoTipo();
+        String eConteudo = mAST.getConteudo();
 
         if (mEntrada.contentEquals(mSaida)) {
-           return eConteudo;
-       } else if (mEntrada.contentEquals("num")) {
-               ret = realizarPrimitivoCast(mEntrada, mSaida, eConteudo);
-           } else if (mEntrada.contentEquals("string")) {
-               ret = realizarPrimitivoCast(mEntrada, mSaida, eConteudo);
-           } else if (mEntrada.contentEquals("bool")) {
-               ret = realizarPrimitivoCast(mEntrada, mSaida, eConteudo);
+            return eConteudo;
+        } else if (mEntrada.contentEquals("num")) {
+            ret = realizarPrimitivoCast(mEntrada, mSaida, eConteudo);
+        } else if (mEntrada.contentEquals("string")) {
+            ret = realizarPrimitivoCast(mEntrada, mSaida, eConteudo);
+        } else if (mEntrada.contentEquals("bool")) {
+            ret = realizarPrimitivoCast(mEntrada, mSaida, eConteudo);
 
-       } else {
+        } else {
 
 
             boolean enc = false;
@@ -52,7 +56,7 @@ public class Run_Cast {
                 if (mCast.mesmoNome(mEntrada)) {
 
 
-                   // System.out.println("\t Com Entrada -->> " + mCast.getNome());
+                    // System.out.println("\t Com Entrada -->> " + mCast.getNome());
 
                     for (AST mCasting : mCast.getASTS()) {
                         if (mCasting.mesmoTipo("SETTER") && mCasting.mesmoValor(mSaida)) {
@@ -72,7 +76,7 @@ public class Run_Cast {
                 } else if (mCast.mesmoNome(mSaida)) {
 
 
-                 //   System.out.println("\t Com Saida -->> " + mCast.getNome());
+                    //   System.out.println("\t Com Saida -->> " + mCast.getNome());
 
                     for (AST mCasting : mCast.getASTS()) {
                         if (mCasting.mesmoTipo("GETTER") && mCasting.mesmoValor(mEntrada)) {
@@ -96,13 +100,16 @@ public class Run_Cast {
 
             if (!enc) {
 
-                mRunTime.getErros().add("CASTING DESCONHECIDO " + mEntrada + " -> " + mSaida + " !");
+                mRunTime.errar(mLocal, "CASTING DESCONHECIDO " + mEntrada + " -> " + mSaida + " !");
 
             }
 
 
         }
 
+        if (mRunTime.getErros().size() == 0) {
+            mAST.setRetornoTipo(mSaida);
+        }
 
         return ret;
 
@@ -113,7 +120,7 @@ public class Run_Cast {
         String ret = null;
         boolean enc = false;
 
-       // System.out.println("\t Com Primitivo -->> " + mEntrada);
+        // System.out.println("\t Com Primitivo -->> " + mEntrada);
 
         Run_Context mRun_Context = new Run_Context(mRunTime);
 
@@ -142,7 +149,7 @@ public class Run_Cast {
 
         if (!enc) {
 
-            mRunTime.getErros().add("CASTING DESCONHECIDO " + mEntrada + " -> " + mSaida + " !");
+                mRunTime.errar(mLocal,"CASTING DESCONHECIDO " + mEntrada + " -> " + mSaida + " !");
 
         }
 

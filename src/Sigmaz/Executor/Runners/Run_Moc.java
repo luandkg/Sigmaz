@@ -12,12 +12,13 @@ public class Run_Moc{
     private ArrayList<Item> mStacks;
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
     public Run_Moc(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
-
+        mLocal = "Run_Moc";
 
     }
 

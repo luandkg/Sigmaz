@@ -224,3 +224,13 @@
 2020 07 21  -->>  Organizador Todo 2.0
 2020 07 21  -->>  Analisar Action por Contexto
 2020 07 21  -->>  Analisar Function por Contexto
+2020 07 21  -->>  Run_Context Director
+2020 07 22  -->>  RunTime - Personalização da Mensagem de Erro
+2020 07 23  -->>  Index_Argument
+2020 07 23  -->>  Conferir Argumentos
+2020 07 23  -->>  Unificação em Run_Any
+2020 07 23  -->>  Inclusao do Run_Action
+2020 07 23  -->>  Inclusao do Run_Function
+2020 07 23  -->>  Inclusao do Run_ActionFunction
+2020 07 23  -->>  Inclusao do Run_Operator
+2020 07 23  -->>  Inclusao do Run_Director

@@ -3,7 +3,7 @@ package Sigmaz.Executor.Indexador;
 import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
-import Sigmaz.Executor.Runners.Run_Context;
+import Sigmaz.Executor.Runners.Run_Arguments;
 import Sigmaz.Executor.Runners.Run_GetType;
 import Sigmaz.Utils.AST;
 
@@ -13,15 +13,17 @@ public class Index_Action {
 
     private String mNome;
 
-    private ArrayList<String> mNomeArgumentos;
-    private ArrayList<String> mTipoArgumentos;
-    private ArrayList<String> mModoArgumentos;
 
-    private AST mPonteiro;
-    private Argumentador mArgumentador;
+    private Run_Arguments mRunArguments;
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private boolean mResolvido;
+
+    private AST mPonteiro;
+    private AST mPonteiroVisibility;
+    private Tipificador mTipificador;
+    private ArrayList<Index_Argument> mArgumentos;
 
     public Index_Action(RunTime eRunTime, Escopo eEscopo, AST ePonteiro) {
 
@@ -32,19 +34,17 @@ public class Index_Action {
         mPonteiro = ePonteiro;
         mNome = mPonteiro.getNome();
 
-        mNomeArgumentos = new ArrayList<String>();
-        mTipoArgumentos = new ArrayList<String>();
-        mModoArgumentos = new ArrayList<String>();
 
-        mArgumentador = new Argumentador();
+        mRunArguments = new Run_Arguments();
+        mTipificador = new Tipificador();
 
-        Tipificador mTipificador = new Tipificador();
+        mPonteiroVisibility = mPonteiro.getBranch("VISIBILITY");
 
-        for (AST aAST : mPonteiro.getBranch("ARGUMENTS").getASTS()) {
+        mResolvido = false;
+        mArgumentos = new ArrayList<Index_Argument>();
 
-            mTipificador. argumentar(mRunTime,mEscopo,aAST,eEscopo.getRefers(),mNomeArgumentos,mTipoArgumentos,mModoArgumentos);
 
-        }
+        resolverTipagem(eEscopo.getRefers());
 
     }
 
@@ -53,29 +53,31 @@ public class Index_Action {
         mNome = eNome;
     }
 
-
     public String getNome() {
         return mNome;
     }
 
     public boolean isExtern() {
-        return mPonteiro.getBranch("VISIBILITY").mesmoNome("EXTERN");
+        return mPonteiroVisibility.mesmoNome("EXTERN");
     }
 
     public boolean isAll() {
-        return mPonteiro.getBranch("VISIBILITY").mesmoNome("ALL");
+        return mPonteiroVisibility.mesmoNome("ALL");
     }
 
     public boolean isRestrict() {
-        return mPonteiro.getBranch("VISIBILITY").mesmoNome("RESTRICT");
+        return mPonteiroVisibility.mesmoNome("RESTRICT");
     }
 
     public ArrayList<String> getParamentosModos() {
-        return mModoArgumentos;
+
+        ArrayList<String> ret = new ArrayList<String>();
+        for (Index_Argument ia : mArgumentos) {
+            ret.add(ia.getModo());
+        }
+        return ret;
+
     }
-
-    private boolean mResolvido = false;
-
 
     public boolean getEstaResolvido() {
         return mResolvido;
@@ -84,39 +86,28 @@ public class Index_Action {
     public void resolverTipagem(ArrayList<String> dRefers) {
 
 
-            mNomeArgumentos.clear();
-            mModoArgumentos.clear();
-            mTipoArgumentos.clear();
+        mArgumentos.clear();
 
-        Tipificador mTipificador = new Tipificador();
 
         for (AST aAST : mPonteiro.getBranch("ARGUMENTS").getASTS()) {
 
-            mTipificador. argumentar(mRunTime,mEscopo,aAST,dRefers,mNomeArgumentos,mTipoArgumentos,mModoArgumentos);
 
+            Run_GetType mRun_GetType = new Run_GetType(mRunTime,mEscopo,dRefers);
+
+            // String antes =mRun_GetType.getTipagemBruta(eArg.getBranch("TYPE"));
+            String mTipagem = mRun_GetType.getTipagem(aAST.getBranch("TYPE"));
+
+            //   System.out.println("Tipando : " + antes + " -->> " + mTipagem);
+
+            mArgumentos.add(new Index_Argument(aAST.getNome(),mTipagem,aAST.getValor()));
         }
 
-
-
-
-
-        mResolvido = true;
     }
 
     public String getTipagem(AST eAST) {
 
-        String mTipagem = eAST.getNome();
+        return mTipificador.getTipagem(eAST);
 
-        if (eAST.mesmoValor("GENERIC")) {
-
-            for (AST eTipando : eAST.getASTS()) {
-                mTipagem += "<" + getTipagem(eTipando) + ">";
-            }
-
-        }
-
-
-        return mTipagem;
 
     }
 
@@ -128,12 +119,20 @@ public class Index_Action {
         return mPonteiro;
     }
 
+    public ArrayList<Index_Argument> getArgumentos(){return mArgumentos;}
+
+
     public ArrayList<String> getParamentos() {
-        return mNomeArgumentos;
+        ArrayList<String> ret = new ArrayList<String>();
+        for (Index_Argument ia : mArgumentos) {
+            ret.add(ia.getNome());
+        }
+
+        return ret;
     }
 
-    public boolean mesmoArgumentos(Escopo gEscopo,ArrayList<Item> eArgumentos) {
-        return mArgumentador.mesmoArgumentos(mRunTime,gEscopo,mTipoArgumentos, eArgumentos);
+    public boolean mesmoArgumentos(Escopo gEscopo, ArrayList<Item> eArgumentos) {
+        return mRunArguments.mesmoArgumentos(mRunTime, gEscopo, mArgumentos, eArgumentos);
     }
 
     public String getDefinicao() {
@@ -143,15 +142,15 @@ public class Index_Action {
     public String getParametros() {
         String ret = "";
 
-        int total = mNomeArgumentos.size();
+        int total = mArgumentos.size();
 
 
         for (int ii = 0; ii < total; ii++) {
 
             if (ii < total - 1) {
-                ret += mNomeArgumentos.get(ii) + " : " + mTipoArgumentos.get(ii) + " , ";
+                ret += mArgumentos.get(ii).getNome() + " : " + mArgumentos.get(ii).getTipo() + " , ";
             } else {
-                ret += mNomeArgumentos.get(ii) + " : " + mTipoArgumentos.get(ii) + " ";
+                ret += mArgumentos.get(ii).getNome() + " : " + mArgumentos.get(ii).getTipo() + " ";
             }
 
         }
@@ -162,15 +161,15 @@ public class Index_Action {
     public String getParametragem() {
         String ret = "";
 
-        int total = mTipoArgumentos.size();
+        int total = mArgumentos.size();
 
 
         for (int ii = 0; ii < total; ii++) {
 
             if (ii < total - 1) {
-                ret += mTipoArgumentos.get(ii) + " , ";
+                ret += mArgumentos.get(ii).getTipo() + " , ";
             } else {
-                ret += mTipoArgumentos.get(ii) + " ";
+                ret += mArgumentos.get(ii).getTipo() + " ";
             }
 
         }

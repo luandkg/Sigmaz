@@ -8,9 +8,12 @@ import Sigmaz.Utils.AST;
 public class Run_Internal {
 
     private RunTime mRunTime;
+    private String mLocal;
 
     public Run_Internal(RunTime eRunTime) {
         mRunTime = eRunTime;
+        mLocal = "Run_Internal";
+
     }
 
 
@@ -70,7 +73,7 @@ public class Run_Internal {
 
         } else {
 
-            mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
+            mRunTime.errar(mLocal,"AST_Value --> STRUCTURED VALUE !");
 
         }
 
@@ -133,7 +136,7 @@ public class Run_Internal {
 
         } else {
 
-            mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
+            mRunTime.errar(mLocal,"AST_Value --> STRUCTURED VALUE !");
 
         }
 
@@ -177,7 +180,7 @@ public class Run_Internal {
 
         } else {
 
-            mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
+            mRunTime.errar(mLocal,"AST_Value --> STRUCTURED VALUE !");
 
         }
 

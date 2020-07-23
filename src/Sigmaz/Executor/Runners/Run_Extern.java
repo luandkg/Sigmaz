@@ -1,7 +1,6 @@
 package Sigmaz.Executor.Runners;
 
 import Sigmaz.Executor.Escopo;
-import Sigmaz.Executor.Indexador.Argumentador;
 import Sigmaz.Executor.Indexador.Index_Action;
 import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Executor.Item;
@@ -14,11 +13,12 @@ public class Run_Extern {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
     private String mPacote;
     private String mNome;
 
-    private Argumentador mPreparadorDeArgumentos;
+    private Run_Arguments mPreparadorDeArgumentos;
     private AST mStructCorpo;
 
     private int CA;
@@ -34,10 +34,11 @@ public class Run_Extern {
 
         mNome = "";
 
-        mPreparadorDeArgumentos = new Argumentador();
+        mPreparadorDeArgumentos = new Run_Arguments();
 
         mDesseExtern = new ArrayList<String>();
         dRefers = new ArrayList<String>();
+        mLocal = "Run_Extern";
 
     }
 
@@ -194,7 +195,7 @@ public class Run_Extern {
     public Item init_ObjectExtern(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
 
         if (BuscadorDeVariaveis == null) {
-            mRunTime.getErros().add(getNome() + "." + ASTCorrente.getNome() + " : Membro Extern nao encontrado !");
+            mRunTime.errar(mLocal,getNome() + "." + ASTCorrente.getNome() + " : Membro Extern nao encontrado !");
             return null;
         }
 
@@ -217,7 +218,7 @@ public class Run_Extern {
         }
 
         if (!enc) {
-            mRunTime.getErros().add(getNome() + "." + ASTCorrente.getNome() + " :  Membro Extern nao encontrado !");
+            mRunTime.errar(mLocal,getNome() + "." + ASTCorrente.getNome() + " :  Membro Extern nao encontrado !");
         }
 
         return mRet;
@@ -271,7 +272,7 @@ public class Run_Extern {
                       //  System.out.println("\t - Executar :  " + mIndex_Function.getNome() + " RET ::: " + mRet);
 
                    // } else {
-                   //     mRunTime.getErros().add("Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Retorno incompativel !");
+                   //     mRunTime.errar(mLocal,"Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Retorno incompativel !");
                    // }
 
                     break;
@@ -285,10 +286,10 @@ public class Run_Extern {
 
         if (enc) {
             if (!algum) {
-                mRunTime.getErros().add("Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Argumentos incompativeis !");
+                mRunTime.errar(mLocal,"Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Argumentos incompativeis !");
             }
         } else {
-            mRunTime.getErros().add("Function  Extern " + mNome + "." + ASTCorrente.getNome() + " : Nao Encontrada !");
+            mRunTime.errar(mLocal,"Function  Extern " + mNome + "." + ASTCorrente.getNome() + " : Nao Encontrada !");
 
         }
 
@@ -340,7 +341,7 @@ public class Run_Extern {
                         mPreparadorDeArgumentos.executar_Action(mRunTime, BuscadorDeVariaveis, mIndex_Function, mArgumentos);
 
                     } else {
-                        mRunTime.getErros().add("Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Retorno incompativel !");
+                        mRunTime.errar(mLocal,"Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Retorno incompativel !");
                     }
 
                     break;
@@ -354,10 +355,10 @@ public class Run_Extern {
 
         if (enc) {
             if (!algum) {
-                mRunTime.getErros().add("Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Argumentos incompativeis !");
+                mRunTime.errar(mLocal,"Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Argumentos incompativeis !");
             }
         } else {
-            mRunTime.getErros().add("Function  Extern " + mNome + "." + ASTCorrente.getNome() + " : Nao Encontrada !");
+            mRunTime.errar(mLocal,"Function  Extern " + mNome + "." + ASTCorrente.getNome() + " : Nao Encontrada !");
 
         }
 
@@ -483,7 +484,7 @@ public class Run_Extern {
 
         } else {
 
-            mRunTime.getErros().add("AST_Value --> STRUCTURED VALUE !");
+            mRunTime.errar(mLocal,"AST_Value --> STRUCTURED VALUE !");
 
         }
 

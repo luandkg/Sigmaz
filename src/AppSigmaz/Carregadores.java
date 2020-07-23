@@ -124,6 +124,7 @@ public class Carregadores {
         mArquivos.add("res/68 - anonymous.sigmaz");
         mArquivos.add("res/69 - options.sigmaz");
         mArquivos.add("res/70 - cores.sigmaz");
+        mArquivos.add("res/71 - refers.sigmaz");
 
         return mArquivos;
     }

@@ -10,6 +10,7 @@ public class Run_Anonymous {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
     public Run_Anonymous(RunTime eRunTime, Escopo eEscopo) {
 

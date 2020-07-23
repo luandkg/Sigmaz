@@ -132,8 +132,8 @@ public class Run {
 
                 if (ASTC.mesmoValor("REFER")) {
                     AST mSending = ASTC.getBranch("SENDING");
-                    Run_Func mAST = new Run_Func(mRunTime, Global);
-                    mAST.init_ActionFunction(mSending);
+                    Run_Any mAST = new Run_Any(mRunTime);
+                    mAST.init_ActionFunction(mSending,Global);
                 } else {
 
                     Run_Body mAST = new Run_Body(mRunTime, Global);

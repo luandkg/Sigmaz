@@ -8,12 +8,14 @@ public class Run_Condition {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
 
     public Run_Condition(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
+        mLocal = "Run_Condition";
 
 
     }
@@ -94,7 +96,7 @@ public class Run_Condition {
 
                             }
                         } else {
-                            mRunTime.getErros().add("A condição deve possuir tipo BOOL !");
+                              mRunTime.errar(mLocal,"A condição deve possuir tipo BOOL !");
                         }
 
                     }
@@ -113,7 +115,7 @@ public class Run_Condition {
             }
 
         } else {
-            mRunTime.getErros().add("A condição deve possuir tipo BOOL !");
+              mRunTime.errar(mLocal,"A condição deve possuir tipo BOOL !");
         }
 
     }

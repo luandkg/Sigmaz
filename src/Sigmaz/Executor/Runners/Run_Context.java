@@ -9,10 +9,12 @@ import java.util.ArrayList;
 public class Run_Context {
 
     private RunTime mRunTime;
+    private String mLocal;
 
     public Run_Context(RunTime eRunTime) {
 
         mRunTime = eRunTime;
+        mLocal = "Run_Context";
 
     }
 
@@ -35,7 +37,7 @@ public class Run_Context {
                 }
 
             } else {
-                mRunTime.getErros().add("PACKAGE  " + Referencia + " : Nao encontrado x1 !");
+                mRunTime.errar(mLocal,"PACKAGE  " + Referencia + " : Nao encontrado x1 !");
             }
 
         }
@@ -65,7 +67,7 @@ public class Run_Context {
                 }
 
             } else {
-                mRunTime.getErros().add("PACKAGE  " + Referencia + " : Nao encontrado x2 !");
+                mRunTime.errar(mLocal,"PACKAGE  " + Referencia + " : Nao encontrado x2 !");
             }
 
         }
@@ -119,7 +121,7 @@ public class Run_Context {
                 }
 
             } else {
-                mRunTime.getErros().add("PACKAGE  " + Referencia + " : Nao encontrado !");
+                mRunTime.errar(mLocal,"PACKAGE  " + Referencia + " : Nao encontrado !");
             }
 
         }
@@ -127,6 +129,58 @@ public class Run_Context {
 
         return ret;
     }
+
+    public ArrayList<AST> getDirectorsContexto(ArrayList<String> mPacotes) {
+        ArrayList<AST> ret = new ArrayList<AST>();
+
+        for (AST eAST : mRunTime.getGlobalDirectors()) {
+            if (eAST.mesmoTipo("DIRECTOR")) {
+                ret.add(eAST);
+            }
+        }
+
+
+
+        for (AST mStruct : mRunTime.getGlobalStructs()) {
+            for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
+                if (mStructBody.mesmoTipo("DIRECTOR")) {
+
+                    ret.add(mStructBody);
+
+                }
+            }
+        }
+
+        for (String Referencia : mPacotes) {
+
+            if (mRunTime.existePacote(Referencia)) {
+
+                for (AST eAST : mRunTime.getPacote(Referencia).getASTS()) {
+                    if (eAST.mesmoTipo("STRUCT")) {
+
+
+                        for (AST mStructBody : eAST.getBranch("BODY").getASTS()) {
+                            if (mStructBody.mesmoTipo("DIRECTOR")) {
+
+                                ret.add(mStructBody);
+
+
+                            }
+                        }
+
+                    }
+                }
+
+            } else {
+                mRunTime.errar(mLocal,"PACKAGE  " + Referencia + " : Nao encontrado !");
+            }
+
+        }
+
+
+        return ret;
+    }
+
 
     public ArrayList<Run_Extern> getRunExternContexto(ArrayList<String> mPacotes) {
         ArrayList<Run_Extern> ret = new ArrayList<Run_Extern>();
@@ -147,7 +201,7 @@ public class Run_Context {
                     }
                 }
             } else {
-                mRunTime.getErros().add("PACKAGE  " + Referencia + " : Nao encontrado !");
+                mRunTime.errar(mLocal,"PACKAGE  " + Referencia + " : Nao encontrado !");
             }
 
         }
@@ -177,7 +231,7 @@ public class Run_Context {
                 }
 
             } else {
-                mRunTime.getErros().add("PACKAGE  " + Referencia + " : Nao encontrado !");
+                mRunTime.errar(mLocal,"PACKAGE  " + Referencia + " : Nao encontrado !");
             }
 
         }

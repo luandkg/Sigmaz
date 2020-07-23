@@ -9,12 +9,14 @@ public class Run_Execute {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
+    private String mLocal;
 
 
     public Run_Execute(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
+        mLocal = "Run_Execute";
 
 
     }
@@ -26,8 +28,8 @@ public class Run_Execute {
 
             //  System.out.println("Execuntando em  : " + ASTCorrente.getNome());
 
-            Run_Func mAST = new Run_Func(mRunTime, mEscopo);
-            mAST.init_ActionFunction(ASTCorrente);
+            Run_Any mAST = new Run_Any(mRunTime);
+            mAST.init_ActionFunction(ASTCorrente,mEscopo);
 
         } else if (ASTCorrente.getValor().contentEquals("STRUCT")) {
 
@@ -49,7 +51,7 @@ public class Run_Execute {
                 if (eQualificador.contentEquals("STRUCT")) {
 
                 } else {
-                    mRunTime.getErros().add("Apenas struct possuem ACTIONS !");
+                    mRunTime.errar(mLocal,"Apenas struct possuem ACTIONS !");
                     return;
 
                 }
@@ -76,7 +78,7 @@ public class Run_Execute {
 
 
         } else {
-            mRunTime.getErros().add("Problema na execucao : " + ASTCorrente.getNome());
+            mRunTime.errar(mLocal,"Problema na execucao : " + ASTCorrente.getNome());
         }
 
 
@@ -168,7 +170,7 @@ public class Run_Execute {
                 }
 
                 if (mEscopoStruct == null) {
-                    mRunTime.getErros().add("Estrutura" + " " + ASTCorrente.getNome() + " : Nula !");
+                    mRunTime.errar(mLocal,"Estrutura" + " " + ASTCorrente.getNome() + " : Nula !");
                     return;
                 }
 
