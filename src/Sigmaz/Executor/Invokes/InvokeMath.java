@@ -65,7 +65,7 @@ public class InvokeMath {
                 float f3 = f1 + f2;
                 mEscopo.setDefinido(eSaida, String.valueOf(f3));
             } catch (Exception e) {
-                mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + e.toString());
             }
 
         } else if (eAcao.contentEquals("operator_sub")) {

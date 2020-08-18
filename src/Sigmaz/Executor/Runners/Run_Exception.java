@@ -31,7 +31,7 @@ public class Run_Exception {
             mRunTime.errar(mLocal,"NULL");
 
         } else if (mAST.getIsPrimitivo()) {
-            mRunTime.errar(mLocal,mAST.getConteudo());
+            mRunTime.errar("",mAST.getConteudo());
         }
 
 

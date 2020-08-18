@@ -1,5 +1,7 @@
 package Sigmaz.Executor.Runners;
 
+import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
@@ -79,7 +81,11 @@ public class Run_Context {
 
 
 
-    public ArrayList<AST> getOperatorsContexto(ArrayList<String> mPacotes) {
+    public ArrayList<AST> getOperatorsContexto(Escopo gEscopo) {
+
+
+        ArrayList<String> mRefers = gEscopo.getRefers();
+
         ArrayList<AST> ret = new ArrayList<AST>();
 
         for (AST eAST : mRunTime.getGlobalOperations()) {
@@ -88,6 +94,9 @@ public class Run_Context {
             }
         }
 
+        for (Index_Function eAST : gEscopo.getOperationsCompleto()) {
+            ret.add(eAST.getPonteiro());
+        }
 
 
         for (AST mStruct : mRunTime.getGlobalStructs()) {
@@ -100,7 +109,7 @@ public class Run_Context {
             }
         }
 
-        for (String Referencia : mPacotes) {
+        for (String Referencia : mRefers) {
 
             if (mRunTime.existePacote(Referencia)) {
 
@@ -130,8 +139,17 @@ public class Run_Context {
         return ret;
     }
 
-    public ArrayList<AST> getDirectorsContexto(ArrayList<String> mPacotes) {
+    public ArrayList<AST> getDirectorsContexto(Escopo gEscopo) {
         ArrayList<AST> ret = new ArrayList<AST>();
+
+
+        ArrayList<String> mRefers = gEscopo.getRefers();
+
+        for (Index_Function eAST : gEscopo.getDirectorsCompleto()) {
+            ret.add(eAST.getPonteiro());
+        }
+
+
 
         for (AST eAST : mRunTime.getGlobalDirectors()) {
             if (eAST.mesmoTipo("DIRECTOR")) {
@@ -151,7 +169,7 @@ public class Run_Context {
             }
         }
 
-        for (String Referencia : mPacotes) {
+        for (String Referencia : mRefers) {
 
             if (mRunTime.existePacote(Referencia)) {
 

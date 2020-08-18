@@ -25,7 +25,7 @@ public class Run_Any {
     public Item init_Function(AST ASTCorrente, Escopo BuscadorDeVariaveis, Escopo mEscopo, String eRetorne, String eMensagem, ArrayList<Index_Function> eFunctions) {
 
         //System.out.println("Procurando FUNC " + this.getStructNome() + "." + ASTCorrente.getNome());
-        String  mLocal = "Run_Function";
+        String mLocal = "Run_Function";
 
         Item mRet = null;
 
@@ -91,7 +91,7 @@ public class Run_Any {
                         //  mPreparadorDeArgumentos.executar_Action(mRunTime,  mEscopo, mIndex_Function, mArgumentos);
                         //   System.out.println(mEscopo.getNome() + " EA -> Structs : " + mEscopo.getStructs().size());
 
-                        mRet=  mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos,eRetorne);
+                        mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eRetorne);
 
 
                     } else {
@@ -110,7 +110,7 @@ public class Run_Any {
         }
 
 
-        errar("Function", eNome, mTipagem, sugestao, enc, algum, realizada,mLocal);
+        errar("Function", eNome, mTipagem, sugestao, enc, algum, realizada, mLocal);
 
 
         return mRet;
@@ -121,7 +121,7 @@ public class Run_Any {
         //   System.out.println(" -->> DENTRO : " + this.getStructNome() );
         //  System.out.println(" -->> Procurando ACTION " + this.getStructNome() + "." + ASTCorrente.getNome());
 
-        String  mLocal = "Run_Action";
+        String mLocal = "Run_Action";
 
         ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, BuscadorDeVariaveis, ASTCorrente.getBranch("ARGUMENTS"));
 
@@ -145,6 +145,7 @@ public class Run_Any {
         ArrayList<String> mRefers = new ArrayList<String>();
         mRefers.addAll(mEscopo.getRefers());
         mRefers.addAll(BuscadorDeVariaveis.getRefers());
+        mRefers.addAll(BuscadorDeVariaveis.getRefersOcultas());
 
         String eNome = ASTCorrente.getNome();
 
@@ -159,6 +160,8 @@ public class Run_Any {
             // }
 
             if (mIndex_Function.mesmoNome(eNome)) {
+
+               // System.out.println("Resolver Com :: " + BuscadorDeVariaveis.getNome());
 
                 mIndex_Function.resolverTipagem(mRefers);
 
@@ -192,14 +195,17 @@ public class Run_Any {
 
                     } else {
                         if (contagem > sugestionando) {
+
+
+
+
                             sugestionando = contagem;
                             sugestao = mIndex_Function.getDefinicao();
                         }
                     }
 
 
-                }else{
-
+                } else {
 
 
                 }
@@ -209,21 +215,21 @@ public class Run_Any {
 
         }
 
-        errar("Action", eNome, mTipagem, sugestao, enc, algum, realizada,mLocal);
+        errar("Action", eNome, mTipagem, sugestao, enc, algum, realizada, mLocal);
 
 
     }
 
-    public void init_ActionFunction(AST ASTCorrente,Escopo mEscopo) {
+    public void init_ActionFunction(AST ASTCorrente, Escopo mEscopo) {
 
 
         init_Action(ASTCorrente, mEscopo, mEscopo, ASTCorrente.getNome(), mEscopo.getActionFunctionsCompleto());
 
     }
 
-    public Item init_Operation(String eNome, Run_Value Esquerda, Run_Value Direita,Escopo mEscopo, String eReturne) {
+    public Item init_Operation(String eNome, Run_Value Esquerda, Run_Value Direita, Escopo mEscopo, String eReturne) {
 
-        String  mLocal = "Run_Operator";
+        String mLocal = "Run_Operator";
 
         Item mItem = null;
 
@@ -267,7 +273,21 @@ public class Run_Any {
 
         Run_Context mRun_Context = new Run_Context(mRunTime);
 
-        ArrayList<AST> mOperadores = mRun_Context.getOperatorsContexto(mEscopo.getRefers());
+        //  ArrayList<AST> mOperadores = mRun_Context.getOperatorsContexto(mEscopo.getRefers());
+        ArrayList<AST> mOperadores = mRun_Context.getOperatorsContexto(mEscopo);
+
+      //  System.out.println("Procurando Operador :: " + eNome);
+
+      //  for (AST mAST : mOperadores) {
+
+       //     Index_Function mIndex_Function = new Index_Function(mRunTime, mEscopo, mAST);
+
+        //    mIndex_Function.resolverTipagem(mEscopo.getRefers());
+
+        //    System.out.println("\t - Operador :  " + mIndex_Function.getDefinicao());
+
+       // }
+
 
         String maisProxima = "";
         int mais = -1;
@@ -278,13 +298,15 @@ public class Run_Any {
 
             // for (AST mAST : mRunTime.getGlobalOperations()) {
 
-            //  System.out.println("\t - Operador :  " +mIndex_Function.getDefinicao());
+            //  System.out.println("\t - Procurando Operador :  " +eNome);
 
             if (mAST.mesmoNome(eNome)) {
 
                 Index_Function mIndex_Function = new Index_Function(mRunTime, mEscopo, mAST);
 
                 mIndex_Function.resolverTipagem(mEscopo.getRefers());
+
+                // System.out.println("\t - Resolvendo Operador :  " +mIndex_Function.getDefinicao() + " para " + mTipagem);
 
                 enc = true;
 
@@ -306,12 +328,12 @@ public class Run_Any {
                         }
 
                         mItem = mPreparadorDeArgumentos.executar_FunctionGlobal(mRunTime, mIndex_Function, mArgumentos, eReturne);
-                        realizada=true;
+                        realizada = true;
 
                         break;
                     } else {
-                        if (contagem>mais){
-                            mais=contagem;
+                        if (contagem > mais) {
+                            mais = contagem;
                             maisProxima = mIndex_Function.getDefinicao();
                         }
                     }
@@ -323,16 +345,16 @@ public class Run_Any {
 
         }
 
-        errar("Operator",eNome,mTipagem,maisProxima,enc,algum,realizada,mLocal);
+        errar("Operator", eNome, mTipagem, maisProxima, enc, algum, realizada, mLocal);
 
         return mItem;
 
     }
 
 
-    public Item init_Director(String eNome, Run_Value Esquerda,Escopo mEscopo, String eReturne) {
+    public Item init_Director(String eNome, Run_Value Esquerda, Escopo mEscopo, String eReturne) {
 
-        String  mLocal = "Run_Director";
+        String mLocal = "Run_Director";
 
         Item mItem = null;
 
@@ -350,7 +372,7 @@ public class Run_Any {
 
         String mTipagem = ve.getTipo();
 
-        //System.out.println("MATCH : " +mTipagem );
+       // System.out.println("Procurando Diretor : " + eNome + " " +mTipagem );
 
         mArgumentos.add(ve);
 
@@ -363,7 +385,10 @@ public class Run_Any {
 
         Run_Context mRun_Context = new Run_Context(mRunTime);
 
-        for (AST mAST : mRun_Context.getDirectorsContexto(mEscopo.getRefers())) {
+        ArrayList<AST> mDirecionadores = mRun_Context.getDirectorsContexto(mEscopo);
+
+
+        for (AST mAST : mDirecionadores) {
 
 
             Index_Function mIndex_Function = new Index_Function(mRunTime, mEscopo, mAST);
@@ -438,7 +463,7 @@ public class Run_Any {
     }
 
 
-    public void errar(String eGrupo, String eNome, String mTipagem, String sugestao, boolean enc, boolean algum, boolean realizada,String mLocal) {
+    public void errar(String eGrupo, String eNome, String mTipagem, String sugestao, boolean enc, boolean algum, boolean realizada, String mLocal) {
 
         if (enc) {
             if (algum) {

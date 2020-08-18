@@ -228,6 +228,7 @@ public class Run_Value {
         if (!getRetornoTipo().contains("<>")){
 
             Run_GetType mRun_GetType = new Run_GetType(mRunTime, mEscopo);
+            mRun_GetType.adicionarRefers(mEscopo.getRefersOcultas());
             mRetornoTipo=mRun_GetType.getTipagemSimples(mRetornoTipo);
 
         }

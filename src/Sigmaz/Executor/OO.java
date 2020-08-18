@@ -219,10 +219,11 @@ public class OO {
 
             Index_Function mFunc = new Index_Function(mRunTime,mEscopo,eAST);
 
+            mOperations.add(mFunc);
+
             if (mFunc.isExtern()) {
 
                 mOperations_Extern.add(mFunc);
-                mOperations.add(mFunc);
 
             } else if (mFunc.isAll()) {
 
@@ -238,10 +239,11 @@ public class OO {
 
             Index_Function mFunc = new Index_Function(mRunTime,mEscopo,eAST);
 
+            mDirectors.add(mFunc);
+
             if (mFunc.isExtern()) {
 
                 mDirectors_Extern.add(mFunc);
-                mDirectors.add(mFunc);
 
             } else if (mFunc.isAll()) {
 

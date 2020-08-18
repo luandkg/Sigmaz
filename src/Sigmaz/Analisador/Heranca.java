@@ -404,7 +404,62 @@ public class Heranca {
         AST Base_Inits = Base.getBranch("INITS");
         AST Super_Inits = Super.getBranch("INITS");
 
-        mAnalisador.mensagem("\t\t\t  - Super  : " + eStructNome + " (" + Super_Inits.getASTS().size() + ")" + "   Base : " + eBaseNome + " (" + Base_Inits.getASTS().size() + ")");
+        AST Base_Generics = Base.getBranch("GENERIC");
+        AST Super_Generics = Super.getBranch("GENERIC");
+
+        String mBaseGenerica = "Nao";
+        String mSuperGenerica = "Nao";
+
+        if (Base_Generics.mesmoNome("TRUE")){
+            mBaseGenerica="Sim";
+        }
+
+        if (Super_Generics.mesmoNome("TRUE")){
+            mSuperGenerica="Sim";
+        }
+
+        mAnalisador.mensagem("\t\t\t  - Super  : " + eStructNome + " - Generics " + mSuperGenerica + " (" + Super_Generics.getASTS().size() + ")" + "   Base : " + eBaseNome + " - Generics " + mBaseGenerica + " (" + Base_Generics.getASTS().size() + ")");
+
+        mAnalisador.mensagem("\t\t\t  - Super  : " + eStructNome + " - Inits (" + Super_Inits.getASTS().size() + ")" + "   Base : " + eBaseNome + " - Inits (" + Base_Inits.getASTS().size() + ")");
+
+        if (mBaseGenerica.contentEquals("Sim")){
+
+            if (mSuperGenerica.contentEquals("Sim")){
+
+
+                ArrayList<String> mBaseGenericos = new ArrayList<String>();
+                ArrayList<String> mSuperGenericos = new ArrayList<String>();
+
+                for (AST mBase_Generica : Base_Generics.getASTS()) {
+                    mBaseGenericos.add(mBase_Generica.getNome());
+                }
+                for (AST mSuper_Generica : Super_Generics.getASTS()) {
+                    mSuperGenericos.add(mSuper_Generica.getNome());
+                }
+
+                int v = 0;
+                int vo = mBaseGenericos.size();
+                for(String eg : mBaseGenericos){
+
+                    if (mSuperGenericos.contains(eg)){
+                        v+=1;
+                    }else{
+
+                        mAnalisador.mensagem("A Struct " + eStructNome + " precisa ter o tipo generico : "  + eg);
+                        mAnalisador.getErros().add("A Struct " + eStructNome + " precisa ter o tipo generico : "  + eg);
+
+                    }
+
+                }
+
+
+
+            }else{
+                mAnalisador.mensagem("A Struct " + eStructNome + " precisa ser Generica !");
+                mAnalisador.getErros().add("A Struct " + eStructNome + " precisa ser Generica !");
+            }
+
+        }
 
 
         ArrayList<AST> mSuper_Inits_Filtrados = new ArrayList<AST>();

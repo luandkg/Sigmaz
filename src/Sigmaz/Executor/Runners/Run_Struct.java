@@ -172,43 +172,6 @@ public class Run_Struct {
             return;
         }
 
-        AST init_Generic = ASTCorrente.getBranch("GENERIC");
-        String structTipagem = "";
-        int StructContagem = 0;
-
-        Run_GetType mRun_GetType = new Run_GetType(mRunTime, BuscadorDeArgumentos);
-
-        for (AST ASTC : mStructGeneric.getASTS()) {
-            structTipagem += "<" + mRun_GetType.getTipagem(ASTC) + ">";
-            StructContagem += 1;
-        }
-
-
-        String initTipagem = "";
-        int initContagem = 0;
-
-        for (AST ASTC : init_Generic.getASTS()) {
-            initTipagem += "<" + mRun_GetType.getTipagem(ASTC) + ">";
-            initContagem += 1;
-        }
-
-        //  System.out.println("Struct : " + mStructNome);
-        //System.out.println("\t - Init : " + mStructNome + initTipagem);
-        // System.out.println("\t - Tipagem : " + mStructNome + structTipagem);
-
-        String mTipando = "";
-
-
-        for (AST ASTC : init_Generic.getASTS()) {
-            mTipando += "<" + mRun_GetType.getTipagem(ASTC) + ">";
-
-        }
-
-
-        mTipoCompleto = mRun_GetType.getTipagemSimples(mStructNome) + mTipando;
-
-       // System.out.println(" -->> STRUCT :: " + mTipoCompleto);
-
         AST mRefers = mAST_Struct.getBranch("REFERS");
         ArrayList<String> dRefers = new ArrayList<String>();
 
@@ -235,6 +198,67 @@ public class Run_Struct {
             }
 
         }
+
+        AST init_Generic = ASTCorrente.getBranch("GENERIC");
+        String structTipagem = "";
+        int StructContagem = 0;
+
+        Run_GetType mRun_GetType = new Run_GetType(mRunTime, BuscadorDeArgumentos);
+
+
+
+
+        for(String eref : BuscadorDeArgumentos.getRefers()){
+           mEscopo.adicionarReferOculto(eref);
+        }
+        for(String eref : BuscadorDeArgumentos.getRefersOcultas()){
+            mEscopo.adicionarReferOculto(eref);
+        }
+
+        mRun_GetType.adicionarRefers(mEscopo.getRefersOcultas());
+
+        for (AST ASTC : mStructGeneric.getASTS()) {
+            structTipagem += "<" + mRun_GetType.getTipagem(ASTC) + ">";
+            StructContagem += 1;
+        }
+
+        String initTipagem = "";
+        int initContagem = 0;
+
+        for (AST ASTC : init_Generic.getASTS()) {
+            initTipagem += "<" + mRun_GetType.getTipagem(ASTC) + ">";
+            initContagem += 1;
+
+           // for(String eref : mEscopo.getRefersOcultas()){
+           //     System.out.println("Me ref Oculto : " + eref + " da Struct " + mAST_Struct.getNome());
+           // }
+
+           // for(String eref : BuscadorDeArgumentos.getRefers()){
+           //     System.out.println("Tem ref : " + eref+ " em Escopo " + BuscadorDeArgumentos.getNome());
+           // }
+
+
+           // System.out.println("Iniciando Struct " + mStructNome + " :: Generico = " + mRun_GetType.getTipagem(ASTC));
+        }
+
+        //  System.out.println("Struct : " + mStructNome);
+        //System.out.println("\t - Init : " + mStructNome + initTipagem);
+        // System.out.println("\t - Tipagem : " + mStructNome + structTipagem);
+
+        String mTipando = "";
+
+
+        for (AST ASTC : init_Generic.getASTS()) {
+            mTipando += "<" + mRun_GetType.getTipagem(ASTC) + ">";
+
+        }
+
+
+        mTipoCompleto = mRun_GetType.getTipagemSimples(mStructNome) + mTipando;
+
+       // System.out.println(" -->> STRUCT :: " + mTipoCompleto);
+
+
 
         mStructCorpo = mAST_Struct.getBranch("BODY").copiar();
         mStructInits = mAST_Struct.getBranch("INITS").copiar();
@@ -280,6 +304,9 @@ public class Run_Struct {
                 mAlterador.alterar(mStructCorpo);
 
 
+                //System.out.println(mStructCorpo.ImprimirArvoreDeInstrucoes());
+
+
             } else {
 
                 mRunTime.errar(mLocal,"Struct " + mStructNome + " : Tipos abstratos nao conferem !");
@@ -313,6 +340,27 @@ public class Run_Struct {
             //   System.out.println("########################### ####### ############################");
 
         }
+
+
+        for(AST eAST : mStructCorpo.getASTS()){
+
+            if (eAST.mesmoTipo("OPERATOR")){
+
+                BuscadorDeArgumentos.guardar(eAST);
+
+             //   System.out.println("Guardando Operador - " +eAST.ImprimirArvoreDeInstrucoes() );
+
+            } else  if (eAST.mesmoTipo("DIRECTOR")){
+
+                BuscadorDeArgumentos.guardar(eAST);
+
+            }
+
+        }
+
+     //   System.out.println(" ----- OPERADOR" );
+
+       // BuscadorDeArgumentos.getDebug().listar_Directors();
 
 
         for (AST ASTC : mStructInits.getASTS()) {

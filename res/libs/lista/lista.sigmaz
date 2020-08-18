@@ -28,7 +28,7 @@ package Lista {
 		}
 
 		act remover ( a : T ) {
-			println ( "Remover : ", a );
+			#println ( "Remover : ", a );
 			if ( isNull ( mPrimeiro ) ) -> {
 				
 			}others {
@@ -38,7 +38,7 @@ package Lista {
 				def mUltimoIndice : num = subtrair_inteiro ( mQuantidade , 1 );
 				while ( isNull ( mCorrente ) == false ) -> {
 					if ( mCorrente.getValor ( ) == a ) -> {
-						println ( "Removendo : ", a );
+						#println ( "Removendo : ", a );
 						if ( mIndice == 0 ) -> {
 							if ( mQuantidade == 1 ) -> {
 								mPrimeiro = null;
@@ -69,6 +69,7 @@ package Lista {
 		}
 
 		act listar ( ) {
+
 			if ( isNull ( mPrimeiro ) == false ) -> {
 				def mCorrente : Item >> ( T ) = mPrimeiro;
 				while ( isNull ( mCorrente ) == false ) -> {
@@ -81,6 +82,9 @@ package Lista {
 		}
 
 		act limpar ( ) {
+
+		#println ( "QT : ", mQuantidade );
+
 			if ( isNull ( mPrimeiro ) == false ) -> {
 				def mCorrente : Item >> ( T ) = mPrimeiro;
 				def mAnterior : Item >> ( T ) = mPrimeiro;
@@ -88,12 +92,14 @@ package Lista {
 					mAnterior = mCorrente;
 					mCorrente = mCorrente.getProximo ( );
 					trash ( mAnterior );
+					mQuantidade = subtrair_inteiro ( mQuantidade , 1 );
 				}
 				trash ( mAnterior );
 			}
 			mPrimeiro = null;
 			mUltimo = null;
 		}
+
 		func getValor ( indice : num ) : T {
 			def ret : T = null;
 			if ( maior_igual ( indice , 0 ) ) -> {

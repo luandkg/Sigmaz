@@ -92,3 +92,4 @@ note "OA" : t ( Complexo ) {
 		task "Organizador - Identador" : t ;
 }
 note "Error ID - Run" : t ( ) { }
+note "Heranca de Struct Generica" : i ( ) { }

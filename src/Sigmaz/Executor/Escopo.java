@@ -34,6 +34,7 @@ public class Escopo {
 
     private ArrayList<Run_Extern> mExternos;
     private ArrayList<String> mRefers;
+    private ArrayList<String> mRefersOcultas;
 
     private int mAutoID;
     private int mFunctorID;
@@ -85,6 +86,7 @@ public class Escopo {
         mDebug = new EscopoDebug(this);
         mEscopoStack = new EscopoStack(mRunTime, this);
         mRefers = new ArrayList<String>();
+        mRefersOcultas= new ArrayList<String>();
 
         mExternos = new ArrayList<Run_Extern>();
 
@@ -129,6 +131,29 @@ public class Escopo {
 
         return mRet;
     }
+
+    public void adicionarReferOculto(String eRefer) {
+        mRefersOcultas.add(eRefer);
+    }
+
+    public ArrayList<String> getRefersOcultas() {
+
+        ArrayList<String> mRet = new ArrayList<String>();
+        mRet.addAll(mRefers);
+        mRet.addAll(mRefersOcultas);
+
+        if (this.mEscopoAnterior != null) {
+            for (String r : mEscopoAnterior.getRefersOcultas()) {
+                if (!mRet.contains(r)) {
+                    mRet.add(r);
+                }
+            }
+        }
+
+
+        return mRet;
+    }
+
 
     public void limpar() {
 

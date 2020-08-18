@@ -44,7 +44,7 @@ public class Index_Action {
         mArgumentos = new ArrayList<Index_Argument>();
 
 
-        resolverTipagem(eEscopo.getRefers());
+        resolverTipagem(eEscopo.getRefersOcultas());
 
     }
 
@@ -89,6 +89,7 @@ public class Index_Action {
         mArgumentos.clear();
 
 
+
         for (AST aAST : mPonteiro.getBranch("ARGUMENTS").getASTS()) {
 
 
@@ -97,7 +98,13 @@ public class Index_Action {
             // String antes =mRun_GetType.getTipagemBruta(eArg.getBranch("TYPE"));
             String mTipagem = mRun_GetType.getTipagem(aAST.getBranch("TYPE"));
 
-            //   System.out.println("Tipando : " + antes + " -->> " + mTipagem);
+            String mTipagemAntes = mRun_GetType.getTipagemAntes(aAST.getBranch("TYPE"));
+
+
+           // System.out.println("Resolvendo Tipo : " + mTipagemAntes + " -->> " + mTipagem);
+           // for(String eref : dRefers){
+             //   System.out.println("\t USOU REF :: " + eref);
+           // }
 
             mArgumentos.add(new Index_Argument(aAST.getNome(),mTipagem,aAST.getValor()));
         }

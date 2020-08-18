@@ -260,4 +260,5 @@ Linguagem de Programação Estruturada - Implementações
 		2020 07 23 -->> Inclusao do Run_ActionFunction
 		2020 07 23 -->> Inclusao do Run_Operator
 		2020 07 23 -->> Inclusao do Run_Director
+		2020 07 23 -->> Implementação do Refer Oculto
 

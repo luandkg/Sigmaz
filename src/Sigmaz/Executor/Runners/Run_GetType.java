@@ -31,6 +31,13 @@ private ArrayList<String> dRefers;
 
     }
 
+    public void adicionarRefers(ArrayList<String> maisRefers){
+
+        dRefers.addAll(maisRefers);
+
+    }
+
+
     public String getTipagemSimples(String mTipagem) {
 
 
@@ -132,6 +139,25 @@ private ArrayList<String> dRefers;
 
             for (AST eTipando : eAST.getASTS()) {
                 mTipagem += "<" + getTipagem(eTipando) + ">";
+            }
+
+        }
+
+
+        return mTipagem;
+
+    }
+
+    public String getTipagemAntes(AST eAST) {
+
+
+        String mTipagem = (eAST.getNome());
+
+
+        if (eAST.mesmoValor("GENERIC")) {
+
+            for (AST eTipando : eAST.getASTS()) {
+                mTipagem += "<" + getTipagemAntes(eTipando) + ">";
             }
 
         }

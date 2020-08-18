@@ -31,6 +31,11 @@ public class Run_Valoramento {
 
         // System.out.println("Def Retorno : " + mAST.getRetornoTipo());
 
+        if (mRunTime.getErros().size() > 0) {
+            //    System.out.println(" -->> " + mRunTime.getErros().get(0));
+            return mAST;
+        }
+
         if (mAST.getRetornoTipo().contentEquals("<<ANY>>")) {
             mAST.setRetornoTipo(mTipagem);
         }

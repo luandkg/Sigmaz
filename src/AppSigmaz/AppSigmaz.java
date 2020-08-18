@@ -29,7 +29,7 @@ public class AppSigmaz {
         String mIntellisense = "res/intellisenses/";
         String mInternos = "res/internos/";
 
-        int ARQUIVO = 71;
+        int ARQUIVO = 66;
 
         switch (Fases.TESTES) {
 
@@ -79,24 +79,24 @@ public class AppSigmaz {
 
         OARoad mOARoadmap = new OARoad("res/oa/Roadmap.trilha");
         mOARoadmap.receber("Roadmap.txt");
-        mOARoadmap.exportarImagemHV("roadmap.png", new Color(52, 73, 94),eCorFonte);
-        mOARoadmap.exportarMarkDown("ROADMAP.md", "Linguagem de Programação Estruturada - Implementações", IMG_ROAD, "RoadMap - Sigmaz");
+     //   mOARoadmap.exportarImagemHV("roadmap.png", new Color(52, 73, 94),eCorFonte);
+      //  mOARoadmap.exportarMarkDown("ROADMAP.md", "Linguagem de Programação Estruturada - Implementações", IMG_ROAD, "RoadMap - Sigmaz");
 
 
         OARoad mChangeList = new OARoad("res/oa/ChangeList.trilha");
         mChangeList.receber("ChangeList.txt");
-        mChangeList.exportarImagemHV("changelist.png", new Color(230, 126, 34),eCorFonte);
-        mChangeList.exportarMarkDown("CHANGELIST.md", "Linguagem de Programação Estruturada - Alterações", IMG_CHANGE, "ChangeList - Sigmaz");
+      //  mChangeList.exportarImagemHV("changelist.png", new Color(230, 126, 34),eCorFonte);
+       // mChangeList.exportarMarkDown("CHANGELIST.md", "Linguagem de Programação Estruturada - Alterações", IMG_CHANGE, "ChangeList - Sigmaz");
 
 
-        OA.exportarReleasesHV("VersionMap.png", "res/oa/Roadmap.trilha",eCorFonte);
+       // OA.exportarReleasesHV("VersionMap.png", "res/oa/Roadmap.trilha",eCorFonte);
 
 
-        mOARoadmap.exportarImagemHV("res/imagens/roadmap.png", new Color(52, 73, 94),eCorFonte);
-        mChangeList.exportarImagemHV("res/imagens/changelist.png", new Color(230, 126, 34),eCorFonte);
+     //   mOARoadmap.exportarImagemHV("res/imagens/roadmap.png", new Color(52, 73, 94),eCorFonte);
+     //   mChangeList.exportarImagemHV("res/imagens/changelist.png", new Color(230, 126, 34),eCorFonte);
 
-        OA.exportarReleasesHV("res/imagens/VersionMap.png", "res/oa/Roadmap.trilha",eCorFonte);
-        OA.exportarBranchesHV("res/imagens/VersionBranches.png", "res/oa/Roadmap.trilha",eCorFonte);
+       // OA.exportarReleasesHV("res/imagens/VersionMap.png", "res/oa/Roadmap.trilha",eCorFonte);
+      //  OA.exportarBranchesHV("res/imagens/VersionBranches.png", "res/oa/Roadmap.trilha",eCorFonte);
 
 
 

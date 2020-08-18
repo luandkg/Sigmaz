@@ -24,6 +24,7 @@ public class Run_Def {
 
 
         Run_GetType mRun_GetType = new Run_GetType(mRunTime, mEscopo);
+        mRun_GetType.adicionarRefers(mEscopo.getRefersOcultas());
 
         String mTipagem = mRun_GetType.getTipagem(eAST.getBranch("TYPE"));
 

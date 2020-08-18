@@ -310,8 +310,8 @@ public class Run_Arguments {
                         if (mArgumentos.getTipo().contains("<>")) {
 
                             if (mArgumentos.getTipo().contains(mParametros.get(i).getTipo())) {
-                                mArgumentos.setTipo(mParametros.get(i).getTipo());
-                                v += 1;
+                             //   mArgumentos.setTipo(mParametros.get(i).getTipo());
+                              //  v += 1;
                             }
 
                         }
@@ -320,7 +320,7 @@ public class Run_Arguments {
                 }
 
 
-               // System.out.println("\t - Conferindo Tipo :  " + mArgumentos.getTipo() + " e " + mParametros.get(i).getTipo());
+                //System.out.println("\t - Conferindo Tipo :  " + mArgumentos.getTipo() + " e " + mParametros.get(i).getTipo());
                 //    System.out.println("\t - Entrando Tipo :  " +mArgumentos.getTipo() + " : " + mArgumentos.getValor() );
 
                 i += 1;

@@ -26,6 +26,9 @@ public class Carregadores {
 
         mArquivos.add("res/libs/ecossistema.sigmaz");
 
+        mArquivos.add("res/libs/cores.sigmaz");
+        mArquivos.add("res/libs/unit.sigmaz");
+
         return mArquivos;
 
     }

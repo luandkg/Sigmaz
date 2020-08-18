@@ -1,32 +1,44 @@
 
 package Blocos {
 
-    struct CXA {
+    struct CX in (T) {
 
-        init CXA( eValor : num ){
+    restrict:
+          define mValor : T = null;
+
+    }
+
+    struct CXA in (T) with CX  {
+
+        init CXA( eValor : T ) -> CX () {
             this.mValor = eValor;
         }
 
-        restrict:
-            define mValor : num = 0;
+
 
         all:
 
-            func getValor() : num {return this.mValor;}
+            func getValor() :  T {return this.mValor;}
 
-            act aumentar(eValor:num) {
+            act aumentar(eValor: T) {
                 this.mValor = mValor ++ eValor;
             }
 
-            act diminuir(eValor:num) {
+            act diminuir(eValor: T) {
                 this.mValor = mValor -- eValor;
             }
 
-            operator ++(a:CXA,b:CXA) : CXA {
-                return init CXA(a.getValor() ++ b.getValor());
+            operator ++(a:CXA >> (T),b:CXA >> (T)) : CXA >> (T){
+
+
+
+                def tt : T = a.getValor() ++ b.getValor();
+ invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+                return init CXA(tt) >> (T);
             }
-            director !(a:CXA) : CXA {
-                return init CXA(a.getValor() ** (-1));
+            director !(a:CXA >> (T)) : CXA {
+                return init CXA(a.getValor() ** (-1)) >> (T);
             }
     }
 
@@ -36,19 +48,23 @@ refer Blocos;
 
 call iniciar -> {
 
-    def a1 : CXA = init CXA(12);
-    def a2 : CXA = init CXA(18);
+    def a1 : CXA >> (num) = init CXA(12) >> (num);
+    def a2 : CXA >> (num)  = init CXA(18) >> (num);
 
     def a1_valor : num = a1.getValor();
     def a2_valor : num = a2.getValor();
 
-    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+    def tt : bool =true;
 
-    def a3 : CXA = a1 ++ a2;
+   # invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    def a3 : CXA >> (num) = a1 ++ a2;
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
     def a3_valor : num = a3.getValor();
 
-    def a4 : CXA = !a3;
+    def a4 : CXA >> (num) = !a3;
     def a4_valor : num = a4.getValor();
 
     a4.aumentar(10);
