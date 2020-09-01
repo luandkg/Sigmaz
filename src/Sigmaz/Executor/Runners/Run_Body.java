@@ -90,8 +90,6 @@ public class Run_Body {
     public void Cancelar() {
         mEscopo.setCancelar(true);
         //  System.out.println("\n  -->> Cancelando : " + mEscopo.getNome());
-
-
     }
 
     public void Continuar() {
@@ -140,6 +138,17 @@ public class Run_Body {
                 Run_Moc mAST = new Run_Moc(mRunTime, mEscopo);
                 mAST.init(fAST);
 
+            } else   if (fAST.mesmoTipo("LET")) {
+
+
+                Run_Def mAST = new Run_Def(mRunTime, mEscopo);
+                mAST.initLet(fAST);
+
+            } else if (fAST.mesmoTipo("VOZ")) {
+
+                Run_Moc mAST = new Run_Moc(mRunTime, mEscopo);
+                mAST.initVoz(fAST);
+
             } else if (fAST.mesmoTipo("INVOKE")) {
 
                 Run_Invoke mAST = new Run_Invoke(mRunTime, mEscopo);
@@ -155,6 +164,7 @@ public class Run_Body {
                 Run_Condition mAST = new Run_Condition(mRunTime, mEscopo);
 
                 mAST.init(fAST);
+
                 if (mAST.getCancelado()) {
                     Cancelar();
                 }

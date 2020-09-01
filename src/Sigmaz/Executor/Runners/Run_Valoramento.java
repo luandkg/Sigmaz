@@ -51,13 +51,13 @@ public class Run_Valoramento {
             if (mTipagem.contentEquals(mAST.getRetornoTipo())) {
 
             } else {
-                mRunTime.errar(mLocal,"Retorno incompativel  : " + mTipagem + " x1 " + mAST.getRetornoTipo());
+                mRunTime.errar(mLocal, "Retorno incompativel  : " + mTipagem + " x1 " + mAST.getRetornoTipo());
             }
 
         } else if (mAST.getIsPrimitivo()) {
 
 
-            if (mTipagem.contentEquals(mAST.getRetornoTipo())) {
+            if (mTipagem.contentEquals(mAST.getRetornoTipo()) || mTipagem.contentEquals("<<ANY>>")) {
 
 
                 if (mAST.getRetornoTipo().contentEquals("auto")) {
@@ -92,7 +92,7 @@ public class Run_Valoramento {
                 if (mTipagem.contentEquals(mAST.getRetornoTipo())) {
 
                 } else {
-                    mRunTime.errar(mLocal,"Retorno incompativel  : " + mTipagem + " x1 " + mAST.getRetornoTipo());
+                    mRunTime.errar(mLocal, "Retorno incompativel  : " + mTipagem + " x1 " + mAST.getRetornoTipo());
                     return mAST;
                 }
 
@@ -102,22 +102,27 @@ public class Run_Valoramento {
 
 
             }
+
+
         } else if (mAST.getIsStruct()) {
 
-            if (mTipagem.contentEquals(mAST.getRetornoTipo())) {
+            if (mTipagem.contentEquals(mAST.getRetornoTipo()) || mTipagem.contentEquals("<<ANY>>")) {
 
 
             } else {
-                mRunTime.errar(mLocal,"Retorno incompativel  : " + mTipagem + " x3 " + mAST.getRetornoTipo());
+                mRunTime.errar(mLocal, "Retorno incompativel  : " + mTipagem + " x3 " + mAST.getRetornoTipo());
             }
 
         } else {
 
-            mRunTime.errar(mLocal,"Retorno incompativel  f : " + mTipagem + " x " + mAST.getRetornoTipo());
+            mRunTime.errar(mLocal, "Retorno incompativel  f : " + mTipagem + " x " + mAST.getRetornoTipo());
 
         }
+        if (mTipagem.contentEquals("<<ANY>>")) {
 
-        mAST.setRetornoTipo(mTipagem);
+        }else{
+            mAST.setRetornoTipo(mTipagem);
+        }
 
         return mAST;
 

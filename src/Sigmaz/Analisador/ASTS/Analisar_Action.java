@@ -56,7 +56,7 @@ public class Analisar_Action {
 
             if (mAlocadoAqui.contains(ASTPai.getNome())) {
                 mAnalisador.getErros().add("Alocacao : " + ASTPai.getNome() + " : Duplicada !");
-            }else{
+            } else {
                 mAlocadoAqui.add(ASTPai.getNome());
             }
 
@@ -71,6 +71,47 @@ public class Analisar_Action {
             } else if (ASTPai.getBranch("TYPE").mesmoNome("functor")) {
                 mAnalisador_Bloco.getAnalisar_Outros().getFunctions_ApenasNomes().add(ASTPai.getNome());
             }
+
+            mAnalisador.analisarAlocacao(ASTPai, mAlocadosAntes);
+            mAnalisador_Bloco.analisarValoracao(ASTPai, mAlocadosAntes);
+
+            mAnalisador_Bloco.getAnalisar_Outros().analisarTipagem(ASTPai);
+
+        } else    if (ASTPai.mesmoTipo("LET")) {
+
+            if (mAlocadoAqui.contains(ASTPai.getNome())) {
+                mAnalisador.getErros().add("Alocacao : " + ASTPai.getNome() + " : Duplicada !");
+            }else{
+                mAlocadoAqui.add(ASTPai.getNome());
+            }
+
+
+            mAlocadosAntes.add(ASTPai.getNome());
+
+            if (mAnalisador.getProibidos().contains(ASTPai.getNome())) {
+                mAnalisador.getErros().add("Let : " + ASTPai.getNome() + " : Nome Proibido !");
+            }
+
+
+            mAnalisador.analisarAlocacao(ASTPai, mAlocadosAntes);
+            mAnalisador_Bloco.analisarValoracao(ASTPai, mAlocadosAntes);
+
+            mAnalisador_Bloco.getAnalisar_Outros().analisarTipagem(ASTPai);
+        } else    if (ASTPai.mesmoTipo("VOZ")) {
+
+            if (mAlocadoAqui.contains(ASTPai.getNome())) {
+                mAnalisador.getErros().add("Alocacao : " + ASTPai.getNome() + " : Duplicada !");
+            }else{
+                mAlocadoAqui.add(ASTPai.getNome());
+            }
+
+
+            mAlocadosAntes.add(ASTPai.getNome());
+
+            if (mAnalisador.getProibidos().contains(ASTPai.getNome())) {
+                mAnalisador.getErros().add("Let : " + ASTPai.getNome() + " : Nome Proibido !");
+            }
+
 
             mAnalisador.analisarAlocacao(ASTPai, mAlocadosAntes);
             mAnalisador_Bloco.analisarValoracao(ASTPai, mAlocadosAntes);

@@ -100,8 +100,46 @@ public class Analisar_Function {
 
             mAnalisador_Bloco.getAnalisar_Outros().analisarTipagem(ASTPai);
             mAnalisador_Bloco.analisarValoracao(ASTPai, mAlocadosAntes);
+        } else    if (ASTPai.mesmoTipo("LET")) {
+
+            if (mAlocadoAqui.contains(ASTPai.getNome())) {
+                mAnalisador.getErros().add("Alocacao : " + ASTPai.getNome() + " : Duplicada !");
+            }else{
+                mAlocadoAqui.add(ASTPai.getNome());
+            }
 
 
+            mAlocadosAntes.add(ASTPai.getNome());
+
+            if (mAnalisador.getProibidos().contains(ASTPai.getNome())) {
+                mAnalisador.getErros().add("Let : " + ASTPai.getNome() + " : Nome Proibido !");
+            }
+
+
+            mAnalisador.analisarAlocacao(ASTPai, mAlocadosAntes);
+            mAnalisador_Bloco.analisarValoracao(ASTPai, mAlocadosAntes);
+
+            mAnalisador_Bloco.getAnalisar_Outros().analisarTipagem(ASTPai);
+        } else    if (ASTPai.mesmoTipo("VOZ")) {
+
+            if (mAlocadoAqui.contains(ASTPai.getNome())) {
+                mAnalisador.getErros().add("Alocacao : " + ASTPai.getNome() + " : Duplicada !");
+            }else{
+                mAlocadoAqui.add(ASTPai.getNome());
+            }
+
+
+            mAlocadosAntes.add(ASTPai.getNome());
+
+            if (mAnalisador.getProibidos().contains(ASTPai.getNome())) {
+                mAnalisador.getErros().add("Let : " + ASTPai.getNome() + " : Nome Proibido !");
+            }
+
+
+            mAnalisador.analisarAlocacao(ASTPai, mAlocadosAntes);
+            mAnalisador_Bloco.analisarValoracao(ASTPai, mAlocadosAntes);
+
+            mAnalisador_Bloco.getAnalisar_Outros().analisarTipagem(ASTPai);
         } else if (ASTPai.mesmoTipo("INVOKE")) {
 
         } else if (ASTPai.mesmoTipo("RETURN")) {

@@ -78,6 +78,77 @@ public class AST_Alocador {
 
 
 
+    public void initSemTipagem(String eTipo,  AST ASTPai) {
+
+
+        String erro = "";
+
+        if (eTipo.contentEquals("LET")) {
+
+            erro = "Variável";
+
+        } else if (eTipo.contentEquals("VOZ")) {
+
+            erro = "Constante";
+
+
+        }
+
+
+        Token TokenC = mCompiler.getTokenAvante();
+
+        if (TokenC.getTipo() == TokenTipo.ID) {
+
+
+
+        } else {
+            mCompiler.errarCompilacao("Era esperado o nome da " + erro + " !", TokenC);
+            return;
+        }
+
+
+
+        AST AST_Corrente = new AST(eTipo);
+        AST_Corrente.setNome(TokenC.getConteudo());
+        ASTPai.getASTS().add(AST_Corrente);
+
+
+
+
+        //  System.out.println("To : " + mCompiler.getTokenCorrente().getConteudo());
+        AST AST_Valor = AST_Corrente.criarBranch("VALUE");
+
+
+        Token TokenP3 = mCompiler.getTokenAvante();
+
+        if (TokenP3.getTipo() == TokenTipo.PONTOVIRGULA) {
+
+            mCompiler.errarCompilacao("A definicao de uma " +  erro + " com inferencia de tipo precisa receber um valor de atribuicao !", TokenC);
+
+            return;
+        } else if (TokenP3.getTipo() == TokenTipo.IGUAL) {
+
+            AST_Value mAST = new AST_Value(mCompiler);
+
+            mAST.init(AST_Valor);
+
+            if (AST_Valor.mesmoNome("null") && AST_Valor.mesmoValor("ID")){
+
+                mCompiler.errarCompilacao("A definicao de uma " +  erro + " com inferencia de tipo nao pode ter o valor de atribuicao NULO !", TokenC);
+
+            }
+
+        } else {
+
+            mCompiler.errarCompilacao("Era esperado o valor da " + erro + " !", TokenC);
+
+        }
+
+
+    }
+
+
+
 
     public void init(String eTipo,  AST ASTPai,String Visibilidade) {
 

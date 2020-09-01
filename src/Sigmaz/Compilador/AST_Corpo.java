@@ -28,6 +28,7 @@ public class AST_Corpo {
             if (TokenD.getTipo() == TokenTipo.CHAVE_FECHA) {
                 saiu = true;
                 break;
+
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("def")){
 
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
@@ -37,6 +38,17 @@ public class AST_Corpo {
 
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
                 mAST.init("MOC",ASTPai);
+
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("let")){
+
+                AST_Alocador mAST = new AST_Alocador(mCompiler);
+                mAST.initSemTipagem("LET",ASTPai);
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("voz")){
+
+                AST_Alocador mAST = new AST_Alocador(mCompiler);
+                mAST.initSemTipagem("VOZ",ASTPai);
+
+
 
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("return")){
 
