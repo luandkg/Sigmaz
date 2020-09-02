@@ -110,6 +110,21 @@ public class AST_Value {
             } else {
                 System.out.println("Problema D : " + TokenC2.getConteudo());
             }
+
+        } else if (TokenD.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+            System.out.println("Abrindo Chaves em AST_VALUE");
+
+
+            ASTPai.setNome("");
+            ASTPai.setValor("VECTOR");
+
+            AST_Vector mAST = new AST_Vector(mCompiler);
+            mAST.init(ASTPai);
+
+            SegundaParte(ASTPai);
+
+
         } else if (TokenD.getTipo() == TokenTipo.NEGADOR) {
 
             ASTPai.criarBranch("MODE").setNome("INVERSE");

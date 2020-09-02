@@ -1,36 +1,27 @@
-
-
-
 call iniciar -> {
-
-
-    let a  = 12;
-    let b  = true;
-    let c = "02";
-    let d = "oie";
-
-   # let e = null;
-
-    let f = init Bloco();
-
-    voz g = 12;
-
-    # voz h = null;
-
-    voz i = init Bloco();
-    voz j = start Pareamento {a = 6; b=3;};
-    voz j_a = j.a;
-
-    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
+	let a = 12;
+	let b = true;
+	let c = "02";
+	let d = "oie";
+	
+	# let e = null;
+	let f = init Bloco ( );
+	voz g = 12;
+	
+	# voz h = null;
+	voz i = init Bloco ( );
+	voz j = start Pareamento {
+		a = 6;
+		b = 3;
+	};
+	voz j_a = j.a;
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }
 
-struct Bloco{
-
-
+struct Bloco {
+	
 }
-
 type Pareamento {
-    define a : num = 12;
-    define b : num = 30;
+	define a : num = 12;
+	define b : num = 30;
 }

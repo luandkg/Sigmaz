@@ -88,13 +88,15 @@ public class Run_Def {
         Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mEscopo);
         Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, "<<ANY>>");
 
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
+
         if (mAST.getRetornoTipo().contentEquals("<<ANY>>")){
             mRunTime.getErros().add("O retorno de uma variavel definida a partir de LET nao pode ser nula");
         }
 
-        if (mRunTime.getErros().size() > 0) {
-            return;
-        }
+
 
 
         if (mAST.getIsNulo()) {

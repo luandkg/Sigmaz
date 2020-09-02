@@ -1,20 +1,11 @@
 call iniciar -> inicio ( );
-
 act inicio ( ) {
-
 	def valor : num = 1;
-
-
-	def alfa : num = -> (maior ( valor , 2 ) ) :: ( +1 ) not ( -1 );
-
-	def beta : num = -> (maior(5,2)) :: (+1);
-
-	def gama : num = -> (maior(valor,2)) :: (+1);
-
-
+	def alfa : num = -> ( maior ( valor , 2 ) ) :: ( +1 ) not ( -1 );
+	def beta : num = -> ( maior ( 5 , 2 ) ) :: ( +1 );
+	def gama : num = -> ( maior ( valor , 2 ) ) :: ( +1 );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
-
 func maior ( a : num , b : num ) : bool {
 	def c : bool;
 	invoke math -> operator_great ( a , b ) :: c;

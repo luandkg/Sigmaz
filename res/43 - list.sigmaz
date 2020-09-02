@@ -443,16 +443,10 @@ struct Iterador in ( T ) {
 	}
 	
 }
-
 refer Delicia;
-
 act inicio ( ) {
-
 	def ls : Lista >> ( string ) = init Lista ( ) >> ( string );
 	def lsi : Iterador >> ( Lista >> ( string ) ) = init Iterador ( ls ) >> ( Lista >> ( string ) );
-
-
-
 	def ig : Lista >> ( num ) = init Lista ( ) >> ( num );
 	ig.adicionar ( 10 );
 	ig.adicionar ( 20 );
@@ -506,31 +500,24 @@ act inicio ( ) {
 	ig.adicionar ( 60 );
 	ig.adicionar ( 87 );
 	ig.adicionar ( 90 );
-
 	def iterar : Iterador >> ( Lista >> ( num ) ) = init Iterador ( ig ) >> ( Lista >> ( num ) );
-
 	iterar.iniciar ( );
 	while ( iterar.continuar ( ) ) -> {
 		println ( "-> ", iterar.getValor ( ) );
 		iterar.proximo ( );
 	}
-
 	def Frutas : Lista >> ( Fruta ) = init Lista ( ) >> ( Fruta );
-
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
-    Frutas.adicionar ( init Fruta() );
-
+	Frutas.adicionar ( init Fruta ( ) );
+	
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 	
 	#invoke __COMPILER__ -> HEAP ( ) :: ALL;
 	
 }
-
-package Delicia{
-
-    struct Fruta {
-
-
-}
+package Delicia {
+	struct Fruta {
+		
+	}
+	
 }

@@ -18,6 +18,28 @@ public class AST_Implementador {
         return mExecute2;
     }
 
+    public AST criar_ExecuteFunction2Args(String eMaior, String eFuncao,String eArg1,String eValor1,String eArg2,String eValor2) {
+
+
+        AST mExecute2 = new AST("EXECUTE");
+        mExecute2.setNome(eMaior);
+        mExecute2.setValor("STRUCT");
+        AST mInternal2 = mExecute2.criarBranch("INTERNAL");
+        mInternal2.setNome(eFuncao);
+        mInternal2.setValor("STRUCT_FUNCT");
+       AST eArgs =  mInternal2.criarBranch("ARGUMENTS");
+
+        AST a1 = eArgs.criarBranch("ARGUMENT");
+        a1.setNome(eArg1);
+        a1.setValor(eValor1);
+
+        AST a2 = eArgs.criarBranch("ARGUMENT");
+        a2.setNome(eArg2);
+        a2.setValor(eValor2);
+
+        return mExecute2;
+    }
+
     public AST criar_Def(String eNome, AST eTipo) {
         AST mDefWhile = new AST("DEF");
         mDefWhile.setNome(eNome);

@@ -50,7 +50,6 @@ public class Alterador {
     }
 
 
-
     public void alterarTipo(AST ASTPai) {
 
         AST AST_Type = ASTPai.getBranch("TYPE");
@@ -60,7 +59,6 @@ public class Alterador {
     }
 
 
-
     public void alterarTipoDeType(AST ASTPai) {
 
         for (AItem eTipo : mAlterar) {
@@ -68,15 +66,15 @@ public class Alterador {
             if (ASTPai.mesmoValor("CONCRETE")) {
                 if (ASTPai.mesmoNome(eTipo.getAbstrato())) {
 
-                   // if (eTipo.getTipo().existeBranch("TYPE")){
-                     //   ASTPai.espelhar(eTipo.getTipo().getBranch("TYPE"));
-                  //  }else{
-                        ASTPai.espelhar(eTipo.getTipo());
+                    // if (eTipo.getTipo().existeBranch("TYPE")){
+                    //   ASTPai.espelhar(eTipo.getTipo().getBranch("TYPE"));
+                    //  }else{
+                    ASTPai.espelhar(eTipo.getTipo());
                     //}
 
                     break;
                 }
-            }else if(ASTPai.mesmoValor("GENERIC")){
+            } else if (ASTPai.mesmoValor("GENERIC")) {
                 for (AST eSub : ASTPai.getASTS()) {
                     alterarTipoDeType(eSub);
                 }
@@ -95,8 +93,8 @@ public class Alterador {
 
                 alterarTipo(eAST);
 
-                if (eAST.existeBranch("VALUE")){
-                    if (eAST.getBranch("VALUE").mesmoValor("INIT")){
+                if (eAST.existeBranch("VALUE")) {
+                    if (eAST.getBranch("VALUE").mesmoValor("INIT")) {
                         alterar(eAST.getBranch("VALUE"));
                     }
                 }
@@ -105,8 +103,8 @@ public class Alterador {
 
                 alterarTipo(eAST);
 
-                if (eAST.existeBranch("VALUE")){
-                    if (eAST.getBranch("VALUE").mesmoValor("INIT")){
+                if (eAST.existeBranch("VALUE")) {
+                    if (eAST.getBranch("VALUE").mesmoValor("INIT")) {
                         alterar(eAST.getBranch("VALUE"));
                     }
                 }
@@ -115,8 +113,8 @@ public class Alterador {
 
                 alterarTipo(eAST);
 
-                if (eAST.existeBranch("VALUE")){
-                    if (eAST.getBranch("VALUE").mesmoValor("INIT")){
+                if (eAST.existeBranch("VALUE")) {
+                    if (eAST.getBranch("VALUE").mesmoValor("INIT")) {
                         alterar(eAST.getBranch("VALUE"));
                     }
                 }
@@ -125,8 +123,8 @@ public class Alterador {
 
                 alterarTipo(eAST);
 
-                if (eAST.existeBranch("VALUE")){
-                    if (eAST.getBranch("VALUE").mesmoValor("INIT")){
+                if (eAST.existeBranch("VALUE")) {
+                    if (eAST.getBranch("VALUE").mesmoValor("INIT")) {
                         alterar(eAST.getBranch("VALUE"));
                     }
                 }
@@ -170,7 +168,7 @@ public class Alterador {
 
             } else if (eAST.mesmoTipo("ARGUMENTS")) {
 
-               // alterar(eAST);
+                // alterar(eAST);
 
 
             } else if (eAST.mesmoTipo("FUNCTION")) {
@@ -204,7 +202,7 @@ public class Alterador {
 
             } else if (eAST.mesmoTipo("RETURN")) {
 
-                if (eAST.existeBranch("GENERIC")){
+                if (eAST.existeBranch("GENERIC")) {
 
                     alterar(eAST.getBranch("GENERIC"));
 
@@ -212,16 +210,28 @@ public class Alterador {
 
             } else if (eAST.mesmoTipo("INIT")) {
 
-               if (eAST.existeBranch("ARGUMENTS")){
-                   for(AST sAST : eAST.getBranch("ARGUMENTS").getASTS()){
-                       if (sAST.mesmoTipo("ARGUMENT")) {
 
-                         //  System.out.println("Alt Argument: " + sAST.getTipo());
 
-                           alterarTipo(sAST);
-                       }
-                   }
-               }
+                for (AST oAST : eAST.getASTS()) {
+
+                    if (oAST.mesmoTipo("ARGUMENTS")) {
+
+                        for (AST sAST : eAST.getBranch("ARGUMENTS").getASTS()) {
+                            if (sAST.mesmoTipo("ARGUMENT")) {
+
+                                //  System.out.println("Alt Argument: " + sAST.getTipo());
+
+                                alterarTipo(sAST);
+                            }
+                        }
+
+                    } else if (oAST.mesmoTipo("BODY")) {
+
+                        alterar(oAST);
+
+                    }
+
+                }
 
             } else {
 

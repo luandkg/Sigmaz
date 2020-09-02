@@ -330,6 +330,8 @@ public class Escopo {
         }
     }
 
+
+
     public void criarItem(String eNome, Item eItem) {
 
         Item Novo = new Item(eNome);
@@ -506,8 +508,8 @@ public class Escopo {
 
     }
 
-    public void criarDefinicao(String eNome, String eTipo, String eValor) {
-        mEscopoStack.alocarPrimitivo(eNome, eTipo, false, true, eValor);
+    public Item criarDefinicao(String eNome, String eTipo, String eValor) {
+      return  mEscopoStack.alocarPrimitivo(eNome, eTipo, false, true, eValor);
     }
 
     public void criarConstante(String eNome, String eTipo, String eValor) {

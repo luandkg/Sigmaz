@@ -8,7 +8,7 @@ package Organismos {
 package Animais {
 	refer Organismos;
 	struct Gato with Mamifero {
-		init Gato ( idade : num ) -> Mamifero() {
+		init Gato ( idade : num ) -> Mamifero ( ) {
 			_idade = idade;
 		}
 		restrict : 

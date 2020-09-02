@@ -262,3 +262,12 @@ Linguagem de Programação Estruturada - Implementações
 		2020 07 23 -->> Inclusao do Run_Director
 		2020 07 23 -->> Implementação do Refer Oculto
 
+
+		2020 08 31 -->> LET : Definição de variável com inferência de Tipo
+		2020 08 31 -->> MOC : Definição de constante com inferência de Tipo
+
+
+		2020 09 02 -->> Biblioteca VETOR
+		2020 09 02 -->> Iterador VETOR
+		2020 09 02 -->> Each com VETOR
+

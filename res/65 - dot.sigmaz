@@ -1,16 +1,10 @@
 call iniciar -> inicio ( );
-
-
-package Outros{
-
-external Mundo {
-    define al : num = 12;
+package Outros {
+	external Mundo {
+		define al : num = 12;
+	}
+	
 }
-
-
-}
-
-
 type Pessoa {
 	define nome : string = "";
 	define idade : num = 0;
@@ -66,19 +60,16 @@ struct Bloco {
 		};
 		
 	}
-
-    #restrict
-	all:
-	    define re : num = 12;
 	
+	#restrict
+	all : 
+	define re : num = 12;
 }
 type Casal {
 	define P1 : Pessoa = null;
 	define P2 : Pessoa = null;
 }
-
 refer Outros;
-
 act inicio ( ) {
 	def a : Pessoa = start Pessoa {
 		nome = "Luan";
@@ -103,21 +94,17 @@ act inicio ( ) {
 	b1.modelo = "AC3";
 	def b1_modelo : string = b1.modelo;
 	def b1_peso : num = b1.peso;
-
-    def b1_re : num = b1.re;
-
+	def b1_re : num = b1.re;
 	b1.mudarPeso ( 50 );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
 	def b1_peso2 : num = b1.peso;
 	def b1_peso3 : num = b1.getPeso ( );
 	def b1_bloco : Bloco = b1.getBloco ( 32 );
 	def b1_b_peso : num = b1_bloco.getPeso ( );
 	def b1_b_peso2 : num = b1.getBloco ( 17 ).getPeso ( );
 	def dono : Pessoa = b1.getDono ( "lucas", 40 );
-
-		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	
 	#def dono_nome : string = dono.nome;
 	def dono2_nome : string = b1.getDono ( "Feh", 33 ).nome;
 	b1_bloco.modelo = "AZZ - 6";
@@ -135,21 +122,14 @@ act inicio ( ) {
 		valor = 1992;
 	};
 	def par1_valor : num = par1.valor;
-
-	def m : num = Mundo->al;
-   # def m2 : Mundo = init Mundo();
-
+	def m : num = Mundo -> al;
+	
+	# def m2 : Mundo = init Mundo();
+	
 	#algo(12) = 30;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	invoke __COMPILER__ -> TYPES ( ) :: INSTANCES;
-
-
-
 }
-
-
-
-
 type Par in ( T1 , T2 ) {
 	define chave : T1 = null;
 	define valor : T2 = null;

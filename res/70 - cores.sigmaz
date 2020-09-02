@@ -1,16 +1,9 @@
 import "libs/lib.sigmaz";
-
-
 refer Cores;
-
 call iniciar -> {
-
-    def cor1 : Cor = Cor->getCor(100,120,50);
-
-    def cor1_r : int = cor1.getR();
-    def cor1_g : int = cor1.getG();
-    def cor1_b : int = cor1.getB();
-
-    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
+	def cor1 : Cor = Cor -> getCor ( 100 , 120 , 50 );
+	def cor1_r : int = cor1.getR ( );
+	def cor1_g : int = cor1.getG ( );
+	def cor1_b : int = cor1.getB ( );
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }

@@ -1,0 +1,116 @@
+import "libs/lib.sigmaz";
+call iniciar -> inicio ( );
+refer Vetor;
+act inicio ( ) {
+	
+	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+	def vGeral : Vetor >> ( num ) = init Vetor ( 5 ) >> ( num );
+	println ( "Listar VETOR");
+	vGeral.mudarTodos ( 5 );
+	vGeral.listar ( );
+
+	println ( " Tamanho :: ", vGeral.getQuantidade ( ) );
+	def tt : num = 50;
+	vGeral.set ( 0 , 10 );
+	vGeral.set ( 1 , 20 );
+	vGeral.set ( 2 , 30 );
+	vGeral.set ( 3 , 40 );
+	vGeral.set ( 4 , tt );
+	vGeral.listar ( );
+
+	each a : num :: ( vGeral ) -> {
+		println ( "-> ", a );
+		
+		#invoke __COMPILER__ -> HEAP ( ) :: ALL;
+		
+	}
+	
+	#def v1 : Vetor >> (num ) = { };
+	def v2 : Vetor >> ( num ) = {
+		10 , 20 
+	};
+	v2.listar ( );
+	
+	#def v3 : Vetor >> ( num ) = { 10 , 20 ,"Oie" };
+	
+	#v3.listar();
+	def v4 : Vetor >> ( string ) = {
+		"A", "B", "C"
+	};
+	v4.listar ( );
+	def v5 : Vetor >> ( bool ) = {
+		true , false , false 
+	};
+
+	v5.listar ( );
+
+	def a1 : bool = true;
+	def a2 : bool = false;
+
+	def v6 : Vetor >> ( bool ) = {
+		a1 , a2 , a2 , a2 , a1 
+	};
+
+	v6.listar ( );
+
+	def v7 : Vetor >> ( Bloco ) = {
+		init Bloco ( 15 ) , init Bloco ( 16 ) 
+	};
+
+	each a : Bloco :: ( v7 ) -> {
+		println ( "-> ", a.getValor ( ) );
+	}
+
+	let vi  = { init Bloco(100) };
+
+	each a : Bloco :: ( vi ) -> {
+    		println ( "-> ", a.getValor ( ) );
+    }
+
+	let va  = { init RefBloco(500) >> (num) };
+
+    #trash(va);
+
+	each a : RefBloco >> (num) :: ( va ) -> {
+    		println ( "-> ", a.getValor ( ) );
+    }
+
+
+
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	invoke __COMPILER__ -> HEAP ( ) :: ALL;
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+}
+
+struct Bloco {
+	init Bloco ( ) {
+		
+	}
+	init Bloco ( aValor : num ) {
+		valor = aValor;
+	}
+	restrict : 
+	define valor : num = 0;
+	all : 
+	func getValor ( ) : num {
+		return valor;
+	}
+	
+}
+
+struct RefBloco in (T) {
+
+
+	init RefBloco ( aValor : T ) {
+		valor = aValor;
+	}
+
+	restrict :
+	define valor : T = 0;
+	all :
+	func getValor ( ) : T {
+		return valor;
+	}
+
+}

@@ -13,7 +13,7 @@ public class EscopoStack {
     }
 
 
-    public void alocarPrimitivo(String eNome, String eTipo, boolean econstante, boolean possuiValor, String eValor) {
+    public Item alocarPrimitivo(String eNome, String eTipo, boolean econstante, boolean possuiValor, String eValor) {
 
         boolean enc = existeAqui(eNome, mEscopo.getStacks());
 
@@ -44,9 +44,10 @@ public class EscopoStack {
 
             mEscopo.getStacks().add(eItem);
 
-
+return eItem;
         }
 
+        return null;
     }
 
 

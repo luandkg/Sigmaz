@@ -53,6 +53,7 @@
     -> Modelos
     -> Externos Estáticos
     -> Exceção
+    -> Inferência de Tipo
     
    ### BIBLIOTECA SIGMAZ
     

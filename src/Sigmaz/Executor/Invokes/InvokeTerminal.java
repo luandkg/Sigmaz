@@ -59,7 +59,7 @@ public class InvokeTerminal {
 
 
                 if(mRunTime.getExterno()){
-                    System.out.print(p1);
+                    System.out.print(p1 );
                 }
 
                 mEscopo.setDefinido(eSaida, "true");

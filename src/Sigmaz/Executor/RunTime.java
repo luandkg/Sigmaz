@@ -43,6 +43,7 @@ public class RunTime {
     private String mLocal;
 
     private long mHEAPID;
+    private long mVECTORID;
 
     private boolean mExterno;
 
@@ -90,6 +91,7 @@ public class RunTime {
         mErros.clear();
 
         mHEAPID = 0;
+        mVECTORID = 0;
 
 
         mHeap.clear();
@@ -131,6 +133,11 @@ public class RunTime {
     public long getHEAPID() {
         mHEAPID += 1;
         return mHEAPID;
+    }
+
+    public long getVECTORID() {
+        mVECTORID += 1;
+        return mVECTORID;
     }
 
     public ArrayList<Run_Struct> getHeap() {

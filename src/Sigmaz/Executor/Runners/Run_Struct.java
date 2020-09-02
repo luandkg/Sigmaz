@@ -304,7 +304,8 @@ public class Run_Struct {
                 mAlterador.alterar(mStructCorpo);
 
 
-                //System.out.println(mStructCorpo.ImprimirArvoreDeInstrucoes());
+              // System.out.println(mStructInits.ImprimirArvoreDeInstrucoes());
+               // System.out.println(mStructCorpo.ImprimirArvoreDeInstrucoes());
 
 
             } else {

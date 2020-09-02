@@ -40,7 +40,7 @@ struct Multicelular with Celulas {
 }
 
 struct Bacteria with Celula {
-	init Bacteria ( q:num ) -> Celula() {
+	init Bacteria ( q : num ) -> Celula ( ) {
 		
 	}
 	
@@ -54,14 +54,14 @@ struct Fungo with Multicelular {
 }
 
 struct Cocos with Bacteria {
-	init Cocos ( q:num) -> Bacteria ( q) {
+	init Cocos ( q : num ) -> Bacteria ( q ) {
 		
 	}
 	
 }
 
 struct EstreptoCocos with Bacteria {
-	init EstreptoCocos ( a:num) -> Bacteria (q ) {
+	init EstreptoCocos ( a : num ) -> Bacteria ( q ) {
 		
 	}
 	
@@ -69,8 +69,9 @@ struct EstreptoCocos with Bacteria {
 
 struct Animal with Qualidade {
 	define idade : num = 0;
-
-	init Animal()->Qualidade(){}
+	init Animal ( ) -> Qualidade ( ) {
+		
+	}
 
 	act setIdade ( a : num ) {
 		idade = a;

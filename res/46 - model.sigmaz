@@ -18,11 +18,9 @@ struct Contador at M_Contagem {
 	
 }
 model M_Contagem {
-
 	define Base : num;
 	mockiz Fluxo : num;
 	define val : vax >> ( num );
-
 	act contar ( num );
 	func retornar ( num ) : num;
 }

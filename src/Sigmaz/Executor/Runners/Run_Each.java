@@ -65,22 +65,45 @@ public class Run_Each {
         //System.out.println("Lista Tipo Ref : " + getTipo(mAST.getRetornoTipo()));
         //  System.out.println("Lista Tipo Sub : " + getSubTipo(mAST.getRetornoTipo()));
 
+
+        String realTipagem = "";
+
+        boolean eLista = false;
+        boolean eVetor = false;
+
+
         if (getTipo(mAST.getRetornoTipo()).contentEquals("Lista")) {
 
-        } else {
-            mRunTime.errar(mLocal,"O Iterable do Each precisa ser do tipo : Lista");
-            return;
-        }
-        String realTipagem = "Lista<>Lista<" + mTipagem + ">";
-        if (realTipagem.contentEquals((mAST.getRetornoTipo()))) {
+            realTipagem = "Lista<>Lista<" + mTipagem + ">";
+            if (realTipagem.contentEquals((mAST.getRetornoTipo()))) {
+
+            } else {
+                mRunTime.errar(mLocal, "O Tipo da variavel do Iterable nao e compativel : " + realTipagem + " vs " + (mAST.getRetornoTipo()));
+                return;
+            }
+
+            eLista = true;
+
+        } else if (getTipo(mAST.getRetornoTipo()).contentEquals("Vetor")) {
+
+            realTipagem = "Vetor<>Vetor<" + mTipagem + ">";
+            if (realTipagem.contentEquals((mAST.getRetornoTipo()))) {
+
+            } else {
+                mRunTime.errar(mLocal, "O Tipo da variavel do Iterable nao e compativel : " + realTipagem + " vs " + (mAST.getRetornoTipo()));
+                return;
+            }
+
+            eVetor = true;
 
         } else {
-            mRunTime.errar(mLocal,"O Tipo da variavel do Iterable nao e compativel : " + realTipagem + " vs " + (mAST.getRetornoTipo()));
+            mRunTime.errar(mLocal, "O Iterable do Each precisa ser do tipo : Lista ou Vetor");
             return;
         }
+
 
         if (mAST.getIsNulo()) {
-            mRunTime.errar(mLocal,"O Iterable nao poder ser nulo !");
+            mRunTime.errar(mLocal, "O Iterable nao poder ser nulo !");
             return;
         }
 
@@ -89,12 +112,25 @@ public class Run_Each {
         // System.out.println("  ERROS = " + mRunTime.getErros().size());
 
         long HEAPID = mRunTime.getHEAPID();
-        String eNome = "<Struct::" + "Lista<>Iterador<" + mTipagem + ">>" + ":" + HEAPID + ">";
+        String eNome = "";
+        String eTipado = "";
 
-      //  System.out.println(eNome);
+
+        if (eLista) {
+            eNome = "<Struct::" + "Lista<>Iterador<" + mTipagem + ">>" + ":" + HEAPID + ">";
+            eTipado = "Lista";
+        }
+        if (eVetor) {
+            eNome = "<Struct::" + "Vetor<>Iterador<" + mTipagem + ">>" + ":" + HEAPID + ">";
+            eTipado = "Vetor";
+
+        }
+
+
+        //  System.out.println(eNome);
         AST_Implementador mImplementador = new AST_Implementador();
 
-        AST eAST = mImplementador.criar_InitGenerico("Iterador","Lista<" + mTipagem + ">");
+        AST eAST = mImplementador.criar_InitGenerico("Iterador", eTipado + "<" + mTipagem + ">");
 
         AST eArgs = eAST.getBranch("ARGUMENTS");
 
@@ -106,7 +142,7 @@ public class Run_Each {
 
         Run_Struct mRun_Struct = new Run_Struct(mRunTime);
         mRun_Struct.setNome(eNome);
-        mRun_Struct.init("Iterador<Lista<" + mTipagem + ">>", eAST, EachEscopo);
+        mRun_Struct.init("Iterador<" + eTipado + "<" + mTipagem + ">>", eAST, EachEscopo);
 
         if (mRunTime.getErros().size() > 0) {
             return;
@@ -118,7 +154,7 @@ public class Run_Each {
 
         // System.out.println("  ERROS = " + mRunTime.getErros().size());
 
-        EachEscopo.criarDefinicao(eNomeEach, "Lista<>Iterador<Lista<" + mTipagem + ">>", eNome);
+        EachEscopo.criarDefinicao(eNomeEach, eTipado + "<>Iterador<" + eTipado + "<" + mTipagem + ">>", eNome);
 
         //  System.out.println(eNomeEach + " -->> PRONTA ");
 
@@ -131,23 +167,23 @@ public class Run_Each {
 
         //  System.out.println(eNomeEach + " -->> INICIAR ");
 
-        AST mCondition =   mImplementador.criar_CondicaoStruct_Func(eNomeEach,"continuar");
+        AST mCondition = mImplementador.criar_CondicaoStruct_Func(eNomeEach, "continuar");
 
         AST mBody2 = new AST("BODY");
 
 
-        AST mGetValor = mImplementador.criar_DefCom_ValueStructFunction(mDef.getNome(), mType,eNomeEach, "getValor");
+        AST mGetValor = mImplementador.criar_DefCom_ValueStructFunction(mDef.getNome(), mType, eNomeEach, "getValor");
 
         AST mProximo = mImplementador.criar_ExecuteFunction(eNomeEach, "proximo");
 
-        mImplementador.adicionar(mBody2,mGetValor);
+        mImplementador.adicionar(mBody2, mGetValor);
 
-        mImplementador. copiarBranches(mBody2,mBody);
+        mImplementador.copiarBranches(mBody2, mBody);
 
-        mImplementador.adicionar(mBody2,mProximo);
+        mImplementador.adicionar(mBody2, mProximo);
 
 
-     // System.out.println(  mBody2.ImprimirArvoreDeInstrucoes());
+        // System.out.println(  mBody2.ImprimirArvoreDeInstrucoes());
 
         initEach(mCondition, mBody2, EachEscopo);
 
@@ -214,7 +250,7 @@ public class Run_Each {
             }
 
         } else {
-            mRunTime.errar(mLocal,"O loop deve possuir tipo BOOL !");
+            mRunTime.errar(mLocal, "O loop deve possuir tipo BOOL !");
         }
 
     }

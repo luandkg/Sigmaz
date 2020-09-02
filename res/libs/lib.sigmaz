@@ -11,8 +11,10 @@ import "pos.sigmaz";
 import "neg.sigmaz";
 import "int.sigmaz";
 
-import "lista/lista.sigmaz";
-import "lista/iterador.sigmaz";
+import "container/lista.sigmaz";
+import "container/vetor.sigmaz";
+
+import "container/iterador.sigmaz";
 
 import "pacote_tempo.sigmaz";
 import "ecossistema.sigmaz";

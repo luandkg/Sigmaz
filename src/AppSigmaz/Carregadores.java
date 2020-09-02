@@ -21,8 +21,10 @@ public class Carregadores {
         mArquivos.add("res/libs/constant.sigmaz");
         mArquivos.add("res/libs/pacote_tempo.sigmaz");
 
-        mArquivos.add("res/libs/lista/lista.sigmaz");
-        mArquivos.add("res/libs/lista/iterador.sigmaz");
+        mArquivos.add("res/libs/container/lista.sigmaz");
+        mArquivos.add("res/libs/container/vetor.sigmaz");
+
+        mArquivos.add("res/libs/container/iterador.sigmaz");
 
         mArquivos.add("res/libs/ecossistema.sigmaz");
 
@@ -129,6 +131,7 @@ public class Carregadores {
         mArquivos.add("res/70 - cores.sigmaz");
         mArquivos.add("res/71 - refers.sigmaz");
         mArquivos.add("res/72 - inference.sigmaz");
+        mArquivos.add("res/73 - vetores.sigmaz");
 
         return mArquivos;
     }

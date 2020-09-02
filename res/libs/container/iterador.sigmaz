@@ -66,3 +66,72 @@ package Lista {
 	}
 	
 }
+
+package Vetor {
+	struct Iterador in ( T ) {
+		init Iterador ( eLista : T ) {
+			mLista = eLista;
+			mIndex = 0;
+			mTamanho = 0;
+			mIniciado = false;
+			mTerminou = false;
+		}
+		restrict :
+		define mLista : T = null;
+		define mIndex : int = 0;
+		define mTamanho : int = 0;
+		define mIniciado : bool = false;
+		define mTerminou : bool = false;
+		all :
+		act iniciar ( ) {
+			mIndex = 0;
+			mTamanho = mLista.getQuantidade ( );
+			mIniciado = true;
+			mTerminou = false;
+		}
+
+		act proximo ( ) {
+			if ( mIniciado ) -> {
+				if ( mTerminou == false ) -> {
+					if ( menor ( mIndex , mTamanho ) ) -> {
+						mIndex = somar ( mIndex , 1 );
+					}others {
+						mTerminou = true;
+					}
+
+				}
+
+			}
+
+		}
+		func continuar ( ) : bool {
+			def ret : bool = false;
+			if ( mIniciado ) -> {
+				if ( maior_igual ( mIndex , mTamanho ) ) -> {
+					mTerminou = true;
+				}others {
+					ret = true;
+				}
+
+			}others {
+				ret = false;
+			}
+			return ret;
+		}
+		func getIndex ( ) : int {
+			if ( mIniciado ) -> {
+
+			}others {
+				exception "O iterador nao foi iniciado !";
+			}
+			return mIndex;
+		}
+		func getValor ( ) : T {
+			def ii : int = getIndex ( );
+			def iinum : num = ii;
+			return mLista.getValor ( iinum );
+		}
+
+	}
+
+}

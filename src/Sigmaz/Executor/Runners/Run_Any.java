@@ -139,6 +139,7 @@ public class Run_Any {
         String sugestao = "";
         int sugestionando = -1;
 
+        //System.out.println(" Action --->> " + ASTCorrente.ImprimirArvoreDeInstrucoes());
 
         // System.out.println("\t - Executando Dentro :  " +this.getNome());
 
@@ -161,7 +162,7 @@ public class Run_Any {
 
             if (mIndex_Function.mesmoNome(eNome)) {
 
-               // System.out.println("Resolver Com :: " + BuscadorDeVariaveis.getNome());
+                // System.out.println("Resolver Com :: " + BuscadorDeVariaveis.getNome());
 
                 mIndex_Function.resolverTipagem(mRefers);
 
@@ -192,11 +193,10 @@ public class Run_Any {
 
                         mPreparadorDeArgumentos.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
 
+                        break;
 
                     } else {
                         if (contagem > sugestionando) {
-
-
 
 
                             sugestionando = contagem;
@@ -276,17 +276,17 @@ public class Run_Any {
         //  ArrayList<AST> mOperadores = mRun_Context.getOperatorsContexto(mEscopo.getRefers());
         ArrayList<AST> mOperadores = mRun_Context.getOperatorsContexto(mEscopo);
 
-      //  System.out.println("Procurando Operador :: " + eNome);
+        //  System.out.println("Procurando Operador :: " + eNome);
 
-      //  for (AST mAST : mOperadores) {
+        //  for (AST mAST : mOperadores) {
 
-       //     Index_Function mIndex_Function = new Index_Function(mRunTime, mEscopo, mAST);
+        //     Index_Function mIndex_Function = new Index_Function(mRunTime, mEscopo, mAST);
 
         //    mIndex_Function.resolverTipagem(mEscopo.getRefers());
 
         //    System.out.println("\t - Operador :  " + mIndex_Function.getDefinicao());
 
-       // }
+        // }
 
 
         String maisProxima = "";
@@ -372,7 +372,7 @@ public class Run_Any {
 
         String mTipagem = ve.getTipo();
 
-       // System.out.println("Procurando Diretor : " + eNome + " " +mTipagem );
+        // System.out.println("Procurando Diretor : " + eNome + " " +mTipagem );
 
         mArgumentos.add(ve);
 

@@ -199,12 +199,19 @@ public class OATrilha {
 
         BufferedImage IMG_ROAD = null;
 
-        try {
-            IMG_ROAD = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\road.png"));
+       // try {
+        //    IMG_ROAD = ImageIO.read(new File("res/imagens/struct.png"));
 
-        } catch (IOException e) {
+       // } catch (IOException e) {
+       // }
+
+        IMG_ROAD = new BufferedImage(50,50,1);
+
+        for(int x=0;x<IMG_ROAD.getWidth();x++){
+            for(int y=0;y<IMG_ROAD.getHeight();y++){
+                IMG_ROAD.setRGB(x,y,Color.WHITE.getRGB());
+            }
         }
-
 
         BlocoDeTrilha BDT = new BlocoDeTrilha(10);
         for (OA.Grupo<String> Grupo : mGrupos) {

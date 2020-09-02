@@ -1,148 +1,126 @@
-
 refer Pacote_C;
-
-stages Moradias -> {CASA,APARTAMENTO}
-
-struct G12 at Modelo {
-
-    act somar(){}
-
-    act contar(a:num){}
-    func retornar ( a:num ) : num{}
-
+stages Moradias -> {
+	CASA , APARTAMENTO 
 }
 
+struct G12 at Modelo {
+	act somar ( ) {
+		
+	}
+
+	act contar ( a : num ) {
+		
+	}
+	func retornar ( a : num ) : num {
+		
+	}
+	
+}
 func typeof ( a : any ) : string {
 	def ret : string = "";
 	invoke casting -> typeof ( a ) :: ret;
 	return ret;
 }
-
 type Par {
-
-    define P1 : num = 0;
-    define P2 : num = 0;
-
+	define P1 : num = 0;
+	define P2 : num = 0;
 }
-
 call iniciar -> {
-
-
-    def complexo_1 : Complexo = init Complexo();
-
-    complexo_1.chamar(5);
-
-	def tipo : string = typeof( complexo_1);
-
-    def G12C : G12 = init G12();
-
-    def m1 : Moradias = Moradias::CASA;
-
-    def e1 : Estados = Estados::DF;
-
-    def t1 : Par = start Par{};
-    def tc1 : CPar = start CPar{};
-
+	def complexo_1 : Complexo = init Complexo ( );
+	complexo_1.chamar ( 5 );
+	def tipo : string = typeof ( complexo_1 );
+	def G12C : G12 = init G12 ( );
+	def m1 : Moradias = Moradias :: CASA;
+	def e1 : Estados = Estados :: DF;
+	def t1 : Par = start Par {
+		
+	};
+	def tc1 : CPar = start CPar {
+		
+	};
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+}
+package Pacote_A {
+	refer Pacote_B;
+	struct Basico at ModeloTipo {
+		all : 
+		mockiz tipo : num = -5;
+	}
+
+	struct Medio with Basico {
+		init Medio ( ) -> Basico ( ) {
+			
+		}
+		
+	}
+
+	struct Avancado {
+		
+	}
 	
 }
+package Pacote_B {
+	refer Pacote_A;
+	model ModeloTipo {
+		mockiz tipo : num;
+	}
 
-package Pacote_A{
+	struct Simples with Basico {
+		init Simples ( ) -> Basico ( ) {
+			
+		}
+		all : 
+		define simplicidade : num = 12;
+	}
 
+	struct Simples_T2 {
+		
+	}
 
-refer Pacote_B;
+	struct Simples_T3 with Medio {
+		init Simples_T3 ( ) -> Medio ( ) {
+			
+		}
+		
+	}
 
-struct Basico at ModeloTipo  {
-
-    all:
-        mockiz tipo : num = -5;
-
+	struct Simples_T4 with Simples_T3 {
+		init Simples_T4 ( ) -> Simples_T3 ( ) {
+			
+		}
+		
+	}
+	
 }
-
-struct Medio with Basico {
-    init Medio() -> Basico(){}
+package Pacote_C {
+	refer Pacote_B;
+	struct Complexo with Simples {
+		init Complexo ( ) -> Simples ( ) {
+			
+		}
+		all : 
+		define complexidade : num = 15;
+		act chamar ( a : num ) {
+			def b : num = a;
+			this.passar ( b );
+		}
+		restrict : 
+		act passar ( a : num ) {
+			def b : num = a;
+			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+		}
+		
+	}
+	model Modelo {
+		act contar ( num );
+		func retornar ( num ) : num;
+	}
+	stages Estados -> {
+		DF , MG 
+	}
+	type CPar {
+		define P1 : num = 0;
+		define P2 : num = 0;
+	}
+	
 }
-
-struct Avancado {
-
-}
-
-}
-
-package Pacote_B{
-
-    refer Pacote_A;
-
-   model ModeloTipo {
-
-    	mockiz tipo : num;
-
-    }
-
-    struct Simples with Basico {
-
-        init Simples() -> Basico(){}
-
-        all:
-            define simplicidade : num = 12;
-
-
-    }
-
-    struct Simples_T2{
-
-    }
-
-    struct Simples_T3 with Medio {
-        init Simples_T3 () -> Medio(){}
-    }
-
-    struct Simples_T4 with Simples_T3 {
-        init Simples_T4 () -> Simples_T3(){}
-
-    }
-
-}
-
-package Pacote_C{
-
-    refer Pacote_B;
-
-    struct Complexo with Simples {
-        init Complexo () -> Simples(){}
-
-        all:
-            define complexidade : num = 15;
-            act chamar(a:num) {
-
-                def b : num = a;
-                this.passar(b);
-
-            }
-        restrict:
-            act passar(a:num){
-                def b : num = a;
-                invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-            }
-
-    }
-
-    model Modelo {
-
-    	act contar ( num );
-    	func retornar ( num ) : num;
-    }
-
-    stages Estados -> {DF,MG}
-
-type CPar {
-
-    define P1 : num = 0;
-    define P2 : num = 0;
-
-}
-
-}
-
-
-

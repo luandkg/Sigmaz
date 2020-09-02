@@ -23,7 +23,7 @@ package Blocos {
 	}
 
 	struct BGeral with XACC {
-		init BGeral ( a : num ) -> XACC() {
+		init BGeral ( a : num ) -> XACC ( ) {
 			_a = a;
 		}
 		restrict : 

@@ -1,34 +1,18 @@
 import "libs/lib.sigmaz";
-
 refer TesteUnitario;
-
-
 call iniciar -> {
-
-
 	println ( " --------- TESTES UNITARIOS --------- ");
 	println ( "");
-
-
 	def AssertC : Assert = init Assert ( );
-
 	AssertC.testar ( "Teste 1", true );
 	AssertC.testar ( "Teste 2", true );
 	AssertC.testar ( "Teste 3", false );
-
-    AssertC.listar();
-
+	AssertC.listar ( );
 	invoke __COMPILER__ -> HEAP ( ) :: ALL;
-
 	AssertC.limpar ( );
-	AssertC.limpar();
-
+	AssertC.limpar ( );
 	invoke __COMPILER__ -> HEAP ( ) :: ALL;
-
-    #def ASSERTABLE : Lista >> ( ASSERT_ITEM ) = AssertC.ASSERTABLE;
-
+	
+	#def ASSERTABLE : Lista >> ( ASSERT_ITEM ) = AssertC.ASSERTABLE;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
-
-
 }
