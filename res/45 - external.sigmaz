@@ -1,8 +1,11 @@
 call iniciar -> inicio ( );
-define A : num = 10;
+define A : int = 10;
 act inicio ( ) {
-	def valor : num = 1;
-	def T : num = COISAS -> CG ( 5 );
+
+	def valor : int = 1;
+		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+
+	def T : int = COISAS -> CG ( 5 );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
 stages DIAS -> {
@@ -12,9 +15,9 @@ stages JOGOS -> not {
 	PRIMEIRA , SEGUNDA 
 }
 external COISAS {
-	define CAZ : num = 10;
-	mockiz TREZ : num = 3;
-	func CG ( a : num ) : num {
+	define CAZ : int = 10;
+	mockiz TREZ : int = 3;
+	func CG ( a : int ) : int {
 		return a;
 	}
 	

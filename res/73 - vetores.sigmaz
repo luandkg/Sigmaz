@@ -1,17 +1,21 @@
 import "libs/lib.sigmaz";
-call iniciar -> inicio ( );
+call iniciar_tudo -> inicio ( );
+
+
+refer Iterador;
 refer Vetor;
+
 act inicio ( ) {
 	
 	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
-	def vGeral : Vetor >> ( num ) = init Vetor ( 5 ) >> ( num );
+	def vGeral : Vetor >> ( int ) = init Vetor ( 5 ) >> ( int );
 	println ( "Listar VETOR");
 	vGeral.mudarTodos ( 5 );
 	vGeral.listar ( );
 
 	println ( " Tamanho :: ", vGeral.getQuantidade ( ) );
-	def tt : num = 50;
+	def tt : int = 50;
 	vGeral.set ( 0 , 10 );
 	vGeral.set ( 1 , 20 );
 	vGeral.set ( 2 , 30 );
@@ -19,19 +23,31 @@ act inicio ( ) {
 	vGeral.set ( 4 , tt );
 	vGeral.listar ( );
 
-	each a : num :: ( vGeral ) -> {
-		println ( "-> ", a );
+    println("VAMOS LISTAR vGERAL  ------");
+
+	each a : int :: ( vGeral ) -> {
+
+
+		println ( " OBJETO -> ", a );
 		
-		#invoke __COMPILER__ -> HEAP ( ) :: ALL;
-		
+
 	}
-	
-	#def v1 : Vetor >> (num ) = { };
-	def v2 : Vetor >> ( num ) = {
+
+	    println("----- ----- ------  ------");
+
+
+
+		    println(" 2 ----- ----- ------  ------");
+
+	def v2 : Vetor >> ( int ) = {
 		10 , 20 
 	};
+
+	    println(" 3 ----- ----- ------  ------");
+
 	v2.listar ( );
-	
+
+	#def v1 : Vetor >> (num ) = { };
 	#def v3 : Vetor >> ( num ) = { 10 , 20 ,"Oie" };
 	
 	#v3.listar();
@@ -59,41 +75,48 @@ act inicio ( ) {
 	};
 
 	each a : Bloco :: ( v7 ) -> {
-		println ( "-> ", a.getValor ( ) );
+		println ( "Lista Bloco -> ", a.getValor ( ) );
 	}
 
 	let vi  = { init Bloco(100) };
 
 	each a : Bloco :: ( vi ) -> {
-    		println ( "-> ", a.getValor ( ) );
+    		println ( "Lista Bloco -> ", a.getValor ( ) );
     }
 
-	let va  = { init RefBloco(500) >> (num) };
+	let va  = { init RefBloco(500) >> (int) };
 
     #trash(va);
 
-	each a : RefBloco >> (num) :: ( va ) -> {
-    		println ( "-> ", a.getValor ( ) );
+	each a : RefBloco >> (int) :: ( va ) -> {
+    		println ( "Lista RefBloco -> ", a.getValor ( ) );
     }
 
+    def pla : Bloco = init Bloco();
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
+    def nn : Vetor >> ( Bloco ) = { pla };
+
+   	each a : Bloco  :: ( nn ) -> {
+       		println ( "Lista Bloco -> ", a.getValor ( ) );
+       }
 
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-	invoke __COMPILER__ -> HEAP ( ) :: ALL;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	#invoke __COMPILER__ -> HEAP ( ) :: ALL;
+	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }
 
 struct Bloco {
 	init Bloco ( ) {
 		
 	}
-	init Bloco ( aValor : num ) {
+	init Bloco ( aValor : int ) {
 		valor = aValor;
 	}
 	restrict : 
-	define valor : num = 0;
+	define valor : int = 0;
 	all : 
-	func getValor ( ) : num {
+	func getValor ( ) : int {
 		return valor;
 	}
 	

@@ -1,9 +1,9 @@
 struct Sacola {
-	define itens : num = 0;
-	act aumentar ( g : num ) {
+	define itens : int = 0;
+	act aumentar ( g : int ) {
 		itens = somar_inteiro ( itens , g );
 	}
-	func quantidade ( ) : num {
+	func quantidade ( ) : int {
 		return itens;
 	}
 
@@ -20,19 +20,19 @@ struct Sacola {
 	act mostrar_struct ( ) {
 		invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
 	}
-	func someisso ( a : num , b : num ) : num {
+	func someisso ( a : int , b : int ) : int {
 		return somar_inteiro ( a , b );
 	}
 	
 }
-func somar_inteiro ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sum ( a , b ) :: c;
-	invoke casting -> cast_integer ( c ) :: c;
+func somar_inteiro ( a : int , b : int ) : int {
+	def c : int;
+	invoke math -> operator_sum_int ( a , b ) :: c;
+	invoke casting -> cast_integer_int ( c ) :: c;
 	return c;
 }
 
-act println ( a : string , b : num ) {
+act println ( a : string , b : int ) {
 	def c : num;
 	invoke terminal -> change ( ) :: c;
 	invoke terminal -> print ( a ) :: c;

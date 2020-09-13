@@ -113,8 +113,11 @@ public class AST_Cast {
 
 
             AST AST_Func_Ret = AST_Func_Body.criarBranch("RETURN");
-            AST_Func_Ret.setNome("alfa");
-            AST_Func_Ret.setValor("ID");
+
+            AST AST_Func_Ret_Value= AST_Func_Ret.criarBranch("VALUE");
+
+            AST_Func_Ret_Value.setNome("alfa");
+            AST_Func_Ret_Value.setValor("ID");
 
             ASTAvo.getASTS().add(AST_Func_Get);
 
@@ -201,8 +204,12 @@ public class AST_Cast {
             criarInvoke(AST_Func_Body,"alfa",eNome,TokenC3.getConteudo());
 
             AST AST_Func_Ret = AST_Func_Body.criarBranch("RETURN");
-            AST_Func_Ret.setNome("alfa");
-            AST_Func_Ret.setValor("ID");
+
+            AST AST_Func_Ret_Value= AST_Func_Ret.criarBranch("VALUE");
+
+            AST_Func_Ret_Value.setNome("alfa");
+            AST_Func_Ret_Value.setValor("ID");
+
 
             ASTAvo.getASTS().add(AST_Func_Get);
 

@@ -1,0 +1,22 @@
+
+
+
+call iniciar -> operando ( );
+
+
+act operando ( ) {
+
+    def a : int = default;
+    def b : num = default;
+    def c : bool = default;
+    def e : string = default;
+
+    let f = default;
+    mut g = default;
+
+    moc W : int = default ++ default;
+    moc H : int = somar(default,default) ++ (3 ** default);
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+}

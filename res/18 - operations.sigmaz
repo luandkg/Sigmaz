@@ -1,36 +1,36 @@
 call iniciar -> pular ( );
 act pular ( ) {
-	def f : num = 13;
-	def a : bool = 13 == f;
+	def f : num = 13.0;
+	def a : bool = 13.0 == f;
 	def v : bool = ( true !! false );
 	def t : bool = "a"!! "ab";
-	def somatorio : num = 10 -- 12;
-	def m1 : num = 10 ** 2;
+	def somatorio : num = 10.0 -- 12.0;
+	def m1 : num = 10.0 ** 2.0;
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }
 func somar ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_sum ( a , b ) :: c;
+	invoke math -> operator_sum_num ( a , b ) :: c;
 	return c;
 }
 operator ++ ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_sum ( a , b ) :: c;
+	invoke math -> operator_sum_num ( a , b ) :: c;
 	return c;
 }
 operator -- ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_sub ( a , b ) :: c;
+	invoke math -> operator_sub_num ( a , b ) :: c;
 	return c;
 }
 operator == ( a : num , b : num ) : bool {
 	def c : bool;
-	invoke math -> operator_equal ( a , b ) :: c;
+	invoke math -> operator_equal_num ( a , b ) :: c;
 	return c;
 }
 operator !! ( a : num , b : num ) : bool {
 	def c : bool;
-	invoke math -> operator_not ( a , b ) :: c;
+	invoke math -> operator_not_num ( a , b ) :: c;
 	return c;
 }
 operator == ( a : bool , b : bool ) : bool {
@@ -55,6 +55,6 @@ operator !! ( a : string , b : string ) : bool {
 }
 operator ** ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_mux ( a , b ) :: c;
+	invoke math -> operator_mux_num ( a , b ) :: c;
 	return c;
 }

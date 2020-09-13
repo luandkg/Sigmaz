@@ -1,16 +1,17 @@
-package Sigmaz.Analisador;
+package Sigmaz.PosProcessamento;
 
+import Sigmaz.Analisador.Analisador;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
 
 public class Estagiador {
 
-    private Analisador mAnalisador;
+    private PosProcessador mAnalisador;
 
     private boolean mExterno;
 
-    public Estagiador(Analisador eAnalisador) {
+    public Estagiador(PosProcessador eAnalisador) {
 
         mAnalisador = eAnalisador;
         mExterno = true;
@@ -21,32 +22,66 @@ public class Estagiador {
     public void init(ArrayList<AST> mTodos) {
 
 
-        ArrayList<AST> mStages = new ArrayList<AST>();
+        mAnalisador.mensagem("");
+        mAnalisador.mensagem(" ------------------ FASE ESTAGIADOR ----------------------- ");
+        mAnalisador.mensagem("");
+
+
+        //ArrayList<AST> mStages = new ArrayList<AST>();
 
         for (AST mSigmaz : mTodos) {
 
             if (mSigmaz.mesmoTipo("SIGMAZ")) {
 
-                for (AST Struct_AST : mSigmaz.getASTS()) {
+                for (AST mStruct : mSigmaz.getASTS()) {
 
-                    if (Struct_AST.mesmoTipo("STRUCT")) {
+                    if (mStruct.mesmoTipo("STRUCT")) {
 
-                        if (Struct_AST.getBranch("EXTENDED").mesmoNome("STAGES")) {
-                            if (Struct_AST.getBranch("DEFINED").mesmoNome("TRUE")) {
-                                mStages.add(Struct_AST);
+                        if (mStruct.getBranch("EXTENDED").mesmoNome("STAGES")) {
+                            if (mStruct.getBranch("DEFINED").mesmoNome("TRUE")) {
+                              //  mStages.add(Struct_AST);
+
+                                AST mStageDef = mStruct;
+
+                                mAnalisador.mensagem(" Estagiar : " + mStageDef.getNome());
+
+                                AST mCorpo = mStageDef.getBranch("BODY");
+
+                                criarFunction_NameOf(mCorpo, mStageDef);
+                                criarFunction_ValueOf(mCorpo, mStageDef);
+
+                                criarOperador(mCorpo, mStageDef, "MATCH", "match");
+                                criarOperador(mCorpo, mStageDef, "UNMATCH", "unmatch");
+
+
                             }
                         }
 
 
-                    } else if (Struct_AST.mesmoTipo("PACKAGE")) {
+                    } else if (mStruct.mesmoTipo("PACKAGE")) {
 
-                        ArrayList<AST> mPackageEstruturas = new ArrayList<AST>();
+                        AST ePackage = mStruct;
 
-                        for (AST PackageStruct : Struct_AST.getASTS()) {
+                        //ArrayList<AST> mPackageEstruturas = new ArrayList<AST>();
+
+                        for (AST PackageStruct : ePackage.getASTS()) {
                             if (PackageStruct.mesmoTipo("STRUCT")) {
 
                                 if (PackageStruct.getBranch("EXTENDED").mesmoNome("STAGES")) {
-                                    mPackageEstruturas.add(PackageStruct);
+                                  //  mPackageEstruturas.add(PackageStruct);
+
+                                    AST mStageDef = PackageStruct;
+
+                                    mAnalisador.mensagem(" Estagiar : " + PackageStruct.getNome() + "<>" + mStageDef.getNome());
+
+                                    AST mCorpo = mStageDef.getBranch("BODY");
+
+                                    criarFunction_NameOf(mCorpo, mStageDef);
+                                    criarFunction_ValueOf(mCorpo, mStageDef);
+
+                                    criarOperador(mCorpo, mStageDef, "MATCH", "match");
+                                    criarOperador(mCorpo, mStageDef, "UNMATCH", "unmatch");
+
 
                                 }
 
@@ -54,7 +89,7 @@ public class Estagiador {
                             }
                         }
 
-                        estagiarAgora(Struct_AST, mPackageEstruturas);
+                     //   estagiarAgora(Struct_AST, mPackageEstruturas);
 
 
                     }
@@ -62,7 +97,7 @@ public class Estagiador {
                 }
 
 
-                estagiarAgora(mSigmaz, mStages);
+               // estagiarAgora(mSigmaz, mStages);
 
 
             }
@@ -74,27 +109,24 @@ public class Estagiador {
     public void estagiarAgora(AST mSigmaz, ArrayList<AST> mStages) {
 
         for (AST mStageDef : mStages) {
-            criarStructExtern(mSigmaz, mStageDef);
+
+            mAnalisador.mensagem(" Estagiar : " + mStageDef.getNome());
+
+            AST mCorpo = mStageDef.getBranch("BODY");
+
+            criarFunction_NameOf(mCorpo, mStageDef);
+            criarFunction_ValueOf(mCorpo, mStageDef);
+
+            criarOperador(mCorpo, mStageDef, "MATCH", "match");
+            criarOperador(mCorpo, mStageDef, "UNMATCH", "unmatch");
+
+
         }
 
     }
 
 
-    public void criarStructExtern(AST mSigmaz, AST mStageDef) {
 
-
-        AST mCorpo = mStageDef.getBranch("BODY");
-
-        criarFunction_NameOf(mCorpo, mStageDef);
-        criarFunction_ValueOf(mCorpo, mStageDef);
-
-     //   System.out.println("Criar operadores para " + mStageDef.getNome());
-
-        criarOperador(mCorpo, mStageDef, "MATCH", "match");
-        criarOperador(mCorpo, mStageDef, "UNMATCH", "unmatch");
-
-
-    }
 
     private void criarTipagemConcreta(AST ASTPai, String eTipo) {
 
@@ -172,8 +204,10 @@ public class Estagiador {
 
 
         AST mReturn = mBody.criarBranch("RETURN");
-        mReturn.setNome("BETA");
-        mReturn.setValor("ID");
+        AST mReturnValue = mReturn.criarBranch("VALUE");
+
+        mReturnValue.setNome("BETA");
+        mReturnValue.setValor("ID");
 
     }
 
@@ -250,8 +284,10 @@ public class Estagiador {
 
 
         AST mReturn = mBody.criarBranch("RETURN");
-        mReturn.setNome("BETA");
-        mReturn.setValor("ID");
+        AST mReturnValue = mReturn.criarBranch("VALUE");
+
+        mReturnValue.setNome("BETA");
+        mReturnValue.setValor("ID");
 
     }
 
@@ -314,8 +350,10 @@ public class Estagiador {
 
 
         AST mReturn = mBody.criarBranch("RETURN");
-        mReturn.setNome("GAMA");
-        mReturn.setValor("ID");
+        AST mReturnValue = mReturn.criarBranch("VALUE");
+
+        mReturnValue.setNome("GAMA");
+        mReturnValue.setValor("ID");
 
     }
 

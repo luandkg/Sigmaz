@@ -1,6 +1,8 @@
-package Sigmaz.Analisador;
+package Sigmaz.Analisador.Complementar;
 
+import Sigmaz.Analisador.Analisador;
 import Sigmaz.Utils.AST;
+import Sigmaz.Utils.ItemContador;
 
 import java.util.ArrayList;
 
@@ -108,7 +110,7 @@ public class Analisar_Outros {
 
             if (mAST.mesmoTipo("FUNCTION")) {
 
-                mAnalisador.mensagem("  -- Function " + mAST.getNome());
+               // mAnalisador.mensagem("  -- Function " + mAST.getNome());
 
                 mFunctions_Nomes.add(mAST.getNome());
 
@@ -120,7 +122,7 @@ public class Analisar_Outros {
 
             } else if (mAST.mesmoTipo("ACTION")) {
 
-                mAnalisador.mensagem("  -- Action " + mAST.getNome());
+             //   mAnalisador.mensagem("  -- Action " + mAST.getNome());
 
                 mActions_Nomes.add(mAST.getNome());
 

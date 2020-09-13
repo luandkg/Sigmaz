@@ -24,12 +24,12 @@ struct Qualidade {
 }
 
 struct Animal with Qualidade {
-	define idade : num = 0;
-	init Animal ( v2 : string , i : num ) -> Qualidade ( v2 ) {
+	define idade : int = 0;
+	init Animal ( v2 : string , i : int ) -> Qualidade ( v2 ) {
 		idade = i;
 	}
 
-	act setIdade ( a : num ) {
+	act setIdade ( a : int ) {
 		idade = a;
 	}
 
@@ -39,19 +39,19 @@ struct Animal with Qualidade {
 		println ( "     - IDADE : ", idade );
 		println ( "     - QUALIDADE : ", qualidade );
 	}
-	func somar_inteiro ( a : num , b : num ) : num {
+	func somar_inteiro ( a : int , b : int ) : int {
 		def c : num;
-		invoke math -> operator_sum ( a , b ) :: c;
-		invoke casting -> cast_integer ( c ) :: c;
+		invoke math -> operator_sum_int ( a , b ) :: c;
+		invoke casting -> cast_integer_int ( c ) :: c;
 		return c;
 	}
-	func menor ( a : num , b : num ) : bool {
+	func menor ( a : int , b : int ) : bool {
 		def c : bool;
-		invoke math -> operator_less ( a , b ) :: c;
+		invoke math -> operator_less_int ( a , b ) :: c;
 		return c;
 	}
 
-	act println ( a : string , b : num ) {
+	act println ( a : string , b : int ) {
 		def c : num;
 		invoke terminal -> change ( ) :: c;
 		invoke terminal -> print ( a ) :: c;

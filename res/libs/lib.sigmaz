@@ -1,15 +1,19 @@
 mockiz SIGMAZ : string = "SIGMAZ 1.0";
 mockiz VERSAO : num = 1.0;
+
 import "constant.sigmaz";
-import "operators.sigmaz";
 import "functions.sigmaz";
 import "comparators.sigmaz";
 import "terminal.sigmaz";
 import "cast.sigmaz";
 import "strings.sigmaz";
-import "pos.sigmaz";
-import "neg.sigmaz";
+
 import "int.sigmaz";
+import "num.sigmaz";
+import "int_num.sigmaz";
+
+#import "pos.sigmaz";
+#import "neg.sigmaz";
 
 import "container/lista.sigmaz";
 import "container/vetor.sigmaz";
@@ -20,8 +24,8 @@ import "pacote_tempo.sigmaz";
 import "ecossistema.sigmaz";
 
 
-import "cores.sigmaz";
 
+import "cores.sigmaz";
 import "unit.sigmaz";
 
 stages Numeros -> {
@@ -51,8 +55,8 @@ func typeof ( a : any ) : string {
 	return ret;
 }
 type Tipado {
-	define A : num = 0;
-	define B : num = 0;
+	define A : int = 0;
+	define B : int = 0;
 }
 operator ++ ( a : Tipado , b : Tipado ) : Tipado {
 	return start Tipado {
@@ -74,12 +78,45 @@ struct TesteGeral {
 	
 	#   define C : num = 0;
 	extern : 
-	define C : num = 0;
+	define C : int = 0;
 	act AumentarC ( ) {
-		TesteGeral -> C = somar_inteiro ( TesteGeral -> C , 1 );
+		TesteGeral -> C = somar ( TesteGeral -> C , 1 );
 	}
-	func ObterC ( ) : num {
+	func ObterC ( ) : int {
 		return TesteGeral -> C;
 	}
 	
+}
+
+struct Objeto {
+
+    all :
+        act trash(){ 	invoke __COMPILER__ -> OBJECT ( this ) :: REMOVE; }
+        func equal (ObjetoCorrente : Objeto ) : bool { return false; }
+        func hash () : string {return ""; }
+
+
+}
+
+struct O1 with Objeto { init O1 () -> Objeto() {} }
+struct O2 with Objeto { init O2 () -> Objeto() {} }
+
+struct O3 with Objeto {
+
+    restrict:
+        define mValor : int = 0;
+
+
+    all:
+        init O3 (eValor : int) -> Objeto() {  mValor = eValor; }
+
+
+        func equal (ObjetoCorrente : O3 ) : bool { return this.mValor == ObjetoCorrente.getValor(); }
+
+        func getValor() : int { return mValor; }
+
+    allow:
+        func hash () : string {return "@OBJETO::O3"; }
+
+
 }

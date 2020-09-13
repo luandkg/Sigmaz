@@ -4,24 +4,24 @@ import "ecologia.sigmaz";
 
 package Ecossistema {
 	external Populacao {
-		define Organismos : num = 0;
+		define Organismos : int = 0;
 	}
 
 	struct Animal at Organismo {
 		define nome : string = "";
-		define idade : num = 0;
+		define idade : int = 0;
 		mockiz Tipo : CelulaTipos = CelulaTipos :: EUCARIONTE;
 		act setNome ( aNome : string ) {
 			
 		}
 
-		act setIdade ( aIdade : num ) {
+		act setIdade ( aIdade : int ) {
 			
 		}
 		func getNome ( ) : string {
 			
 		}
-		func getIdade ( ) : num {
+		func getIdade ( ) : int {
 			
 		}
 
@@ -32,7 +32,7 @@ package Ecossistema {
 		act morrer ( ) {
 			
 		}
-		func alimentar ( comida : string ) : num {
+		func alimentar ( comida : string ) : int {
 			return 0;
 		}
 		
@@ -52,11 +52,11 @@ package Ecossistema {
 
 	model Organismo {
 		define nome : string;
-		define idade : num;
+		define idade : int;
 		mockiz Tipo : CelulaTipos;
 		act viver ( );
 		act morrer ( );
-		func alimentar ( string ) : num;
+		func alimentar ( string ) : int;
 	}
 
 	struct Vegetal {
@@ -65,7 +65,7 @@ package Ecossistema {
 
 	struct Planta with Vegetal at Organismo {
 		define nome : string = "";
-		define idade : num = 0;
+		define idade : int = 0;
 		mockiz Tipo : CelulaTipos = CelulaTipos :: EUCARIONTE;
 
 		init Planta() -> Vegetal () {}
@@ -74,13 +74,13 @@ package Ecossistema {
 			
 		}
 
-		act setIdade ( aIdade : num ) {
+		act setIdade ( aIdade : int ) {
 			
 		}
 		func getNome ( ) : string {
 			
 		}
-		func getIdade ( ) : num {
+		func getIdade ( ) : int {
 			
 		}
 
@@ -91,25 +91,25 @@ package Ecossistema {
 		act morrer ( ) {
 			
 		}
-		func alimentar ( comida : string ) : num {
+		func alimentar ( comida : string ) : int {
 			return 0;
 		}
 		
 	}
 	cast Contador {
-		getter a : num -> {
+		getter a : int -> {
 			return a;
 		}
-		setter b : num -> {
+		setter b : int -> {
 			return b;
 		}
 		
 	}
 	type Celula {
 		define Tipo : CelulaTipos = null;
-		define Tamanho : num = 0;
+		define Tamanho : int = 0;
 		define Estagio : string = "";
-		mockiz FORCA : num = 12;
+		mockiz FORCA : int = 12;
 	}
 
 	type Dupla in (T) {

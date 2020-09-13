@@ -1,7 +1,7 @@
 call iniciar -> inicio ( );
 type Pessoa {
 	define nome : string = "";
-	define idade : num = 0;
+	define idade : int = 0;
 	mockiz TAXA : num = 5.20;
 }
 type Casal {
@@ -23,7 +23,7 @@ act inicio ( ) {
 		idade = 50;
 	};
 	def a_nome : string = a.nome;
-	def a_idade : num = a.idade;
+	def a_idade : int = a.idade;
 	def b_nome : string = b.nome;
 	def CasalC : Casal = start Casal {
 		P1 = a;

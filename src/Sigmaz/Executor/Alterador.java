@@ -177,7 +177,10 @@ public class Alterador {
 
                 alterar(eAST.getBranch("ARGUMENTS"));
 
-                alterar(eAST.getBranch("BODY"));
+
+                if (eAST.existeBranch("BODY")) {
+                    alterar(eAST.getBranch("BODY"));
+                }
 
             } else if (eAST.mesmoTipo("OPERATOR")) {
 
@@ -192,12 +195,16 @@ public class Alterador {
 
                 alterar(eAST.getBranch("ARGUMENTS"));
 
-                alterar(eAST.getBranch("BODY"));
+                if (eAST.existeBranch("BODY")) {
+                    alterar(eAST.getBranch("BODY"));
+                }
+
 
             } else if (eAST.mesmoTipo("ACTION")) {
 
-
-                alterar(eAST.getBranch("BODY"));
+                if (eAST.existeBranch("BODY")) {
+                    alterar(eAST.getBranch("BODY"));
+                }
                 alterar(eAST.getBranch("ARGUMENTS"));
 
             } else if (eAST.mesmoTipo("RETURN")) {
@@ -206,10 +213,14 @@ public class Alterador {
 
                     alterar(eAST.getBranch("GENERIC"));
 
+                } else if (eAST.existeBranch("VALUE")) {
+
+                    alterar(eAST.getBranch("VALUE"));
+
+
                 }
 
             } else if (eAST.mesmoTipo("INIT")) {
-
 
 
                 for (AST oAST : eAST.getASTS()) {

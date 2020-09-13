@@ -16,6 +16,8 @@ public class OO {
     private ArrayList<AST> mStructGuardados;
 
     private ArrayList<Index_Action> mInits;
+    private ArrayList<Index_Action> mInits_All;
+
     private ArrayList<AST> mBases;
 
     private ArrayList<Index_Action> mActions;
@@ -61,6 +63,8 @@ public class OO {
         mStructGuardados = new ArrayList<>();
 
         mInits = new ArrayList<Index_Action>();
+        mInits_All = new ArrayList<Index_Action>();
+
         mBases = new ArrayList<AST>();
 
         mActions = new ArrayList<Index_Action>();
@@ -97,13 +101,15 @@ public class OO {
 
     }
 
-    public void limpar(){
+    public void limpar() {
 
         mGuardados = new ArrayList<>();
 
         mStructGuardados = new ArrayList<>();
 
         mInits = new ArrayList<Index_Action>();
+        mInits_All = new ArrayList<Index_Action>();
+
         mBases = new ArrayList<AST>();
 
         mActions = new ArrayList<Index_Action>();
@@ -139,7 +145,6 @@ public class OO {
         mOperations_Extern = new ArrayList<Index_Function>();
 
     }
-
 
 
     public Escopo getEscopo() {
@@ -147,17 +152,15 @@ public class OO {
     }
 
 
-
     public void guardar(AST eAST) {
 
 
         mGuardados.add(eAST);
-
         mStructGuardados.add(eAST);
 
         if (eAST.mesmoTipo("ACTION")) {
 
-            Index_Action mAct = new Index_Action(mRunTime,mEscopo,eAST);
+            Index_Action mAct = new Index_Action(mRunTime, mEscopo, eAST);
 
             mActions.add(mAct);
             mActionFunctions.add(mAct);
@@ -186,11 +189,11 @@ public class OO {
 
         } else if (eAST.mesmoTipo("FUNCTION")) {
 
-            Index_Function mFunc = new Index_Function(mRunTime,mEscopo,eAST);
+            Index_Function mFunc = new Index_Function(mRunTime, mEscopo, eAST);
 
             if (mFunc.isExtern()) {
 
-                Index_Action mAct = new Index_Action(mRunTime,mEscopo,eAST);
+                Index_Action mAct = new Index_Action(mRunTime, mEscopo, eAST);
 
                 mFunctions_Extern.add(mFunc);
                 mActionFunctions_Extern.add(mAct);
@@ -200,7 +203,7 @@ public class OO {
                 mFunctions.add(mFunc);
                 mFunctions_All.add(mFunc);
 
-                Index_Action mAct = new Index_Action(mRunTime,mEscopo,eAST);
+                Index_Action mAct = new Index_Action(mRunTime, mEscopo, eAST);
                 mActionFunctions.add(mAct);
                 mActionFunctions_All.add(mAct);
 
@@ -208,7 +211,7 @@ public class OO {
 
                 mFunctions_Restrict.add(mFunc);
 
-                Index_Action mAct = new Index_Action(mRunTime,mEscopo,eAST);
+                Index_Action mAct = new Index_Action(mRunTime, mEscopo, eAST);
                 mActionFunctions.add(mAct);
                 mActionFunctions_Restrict.add(mAct);
 
@@ -217,7 +220,7 @@ public class OO {
 
         } else if (eAST.mesmoTipo("OPERATOR")) {
 
-            Index_Function mFunc = new Index_Function(mRunTime,mEscopo,eAST);
+            Index_Function mFunc = new Index_Function(mRunTime, mEscopo, eAST);
 
             mOperations.add(mFunc);
 
@@ -237,7 +240,7 @@ public class OO {
             }
         } else if (eAST.mesmoTipo("DIRECTOR")) {
 
-            Index_Function mFunc = new Index_Function(mRunTime,mEscopo,eAST);
+            Index_Function mFunc = new Index_Function(mRunTime, mEscopo, eAST);
 
             mDirectors.add(mFunc);
 
@@ -260,9 +263,13 @@ public class OO {
             mCasts.add(eAST);
         } else if (eAST.mesmoTipo("INIT")) {
 
-            Index_Action mAct = new Index_Action(mRunTime,mEscopo,eAST);
+            Index_Action mAct = new Index_Action(mRunTime, mEscopo, eAST);
+
             mInits.add(mAct);
 
+            if (mAct.isAll()) {
+                mInits_All.add(mAct);
+            }
 
         } else if (eAST.mesmoTipo("TYPE")) {
 
@@ -273,7 +280,7 @@ public class OO {
             if (eAST.getBranch("EXTENDED").mesmoNome("STAGES")) {
                 mStages.add(eAST);
 
-               // AlocarStages(eAST, mEscopo);
+                // AlocarStages(eAST, mEscopo);
             } else {
                 mStructs.add(eAST);
             }
@@ -285,22 +292,6 @@ public class OO {
 
     }
 
-    public void AlocarStages(AST eAST, Escopo mEscopo) {
-
-
-        int i = 0;
-
-        for (AST AST_STAGE : eAST.getBranch("STAGES").getASTS()) {
-
-            if (AST_STAGE.mesmoTipo("STAGE")) {
-                mEscopo.criarDefinicao(eAST.getNome() + "::" + AST_STAGE.getNome(), eAST.getNome(), String.valueOf(i));
-                i += 1;
-            }
-
-
-        }
-
-    }
 
 
     public ArrayList<AST> getStruct() {
@@ -318,6 +309,7 @@ public class OO {
     public ArrayList<Index_Action> getActionsFunctions_All() {
         return mActionFunctions_All;
     }
+
     public ArrayList<Index_Action> getActionsFunctions_Extern() {
         return mActionFunctions_Extern;
     }
@@ -325,6 +317,10 @@ public class OO {
 
     public ArrayList<Index_Action> getInits() {
         return mInits;
+    }
+
+    public ArrayList<Index_Action> getInits_All() {
+        return mInits_All;
     }
 
     public ArrayList<Index_Function> getFunctions() {
@@ -493,6 +489,25 @@ public class OO {
         return gc;
    }*/
 
+
+    public ArrayList<Index_Action> getInitsCompleto() {
+
+        ArrayList<Index_Action> gc = new ArrayList<Index_Action>();
+
+        for (Index_Action mIndex_Function : getInits()) {
+            gc.add(mIndex_Function);
+        }
+
+        if (getEscopo().getEscopoAnterior() != null) {
+            for (Index_Action mIndex_Function : getEscopo().getEscopoAnterior().getInitsCompleto()) {
+                gc.add(mIndex_Function);
+            }
+        }
+
+        return gc;
+    }
+
+
     public ArrayList<AST> getGuardadosCompleto() {
 
         ArrayList<AST> gc = new ArrayList<AST>();
@@ -513,9 +528,6 @@ public class OO {
     public String getModo(AST eAST) {
         return eAST.getBranch("VISIBILITY").getNome();
     }
-
-
-
 
 
 }

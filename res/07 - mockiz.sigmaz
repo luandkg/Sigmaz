@@ -1,6 +1,6 @@
 call iniciar -> operando ( );
 mockiz MATEMATICA_PI : num = 3.14;
 act operando ( ) {
-	moc ZAC : num = 10;
+	moc ZAC : num = 10.0;
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }

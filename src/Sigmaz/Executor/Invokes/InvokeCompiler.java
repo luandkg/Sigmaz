@@ -32,6 +32,10 @@ public class InvokeCompiler {
 
             show_global(eAcao, eSaida, ASTArgumentos);
 
+        } else if (eAcao.contentEquals("SHOW_REGRESSIVE")) {
+
+            show_regressive(eAcao, eSaida, ASTArgumentos);
+
         } else if (eAcao.contentEquals("SHOW_HEAP")) {
 
             show_heap(eAcao, eSaida, ASTArgumentos);
@@ -294,7 +298,9 @@ public class InvokeCompiler {
                 if (mRunTime.getExterno()) {
 
                     Run_Struct mRun = mRunTime.getRun_Struct(a);
-
+                    if (mRunTime.getErros().size() > 0) {
+                        return ;
+                    }
 
                 }
 
@@ -538,5 +544,97 @@ public class InvokeCompiler {
 
     }
 
+    public void show_regressive(String eAcao, String eSaida, AST ASTArgumentos) {
+
+        int i = 0;
+
+
+        for (AST eAST : ASTArgumentos.getASTS()) {
+            if (eAST.mesmoTipo("ARGUMENT")) {
+                i += 1;
+            }
+        }
+
+        if (i == 0) {
+
+            if (eSaida.contentEquals("ALL")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.getDebug().ListarGlobalAll();
+                }
+
+            } else if (eSaida.contentEquals("STACK")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.getDebug().ListarRegressiveStack();
+                }
+
+
+            } else if (eSaida.contentEquals("ACTIONS")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.getDebug().ListarGlobalActions();
+                }
+            } else if (eSaida.contentEquals("FUNCTIONS")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.getDebug().ListarGlobalFunctions();
+                }
+            } else if (eSaida.contentEquals("OPERATIONS")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.getDebug().ListarGlobalOperations();
+                }
+            } else if (eSaida.contentEquals("STAGES")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.getDebug().ListarGlobalStages();
+                }
+            } else if (eSaida.contentEquals("STRUCTS")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.getDebug().ListarGlobalStructs();
+                }
+            } else if (eSaida.contentEquals("PACKAGES")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.getDebug().ListarGlobalPackages();
+                }
+            } else if (eSaida.contentEquals("EXTERNS")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.getDebug().ListarGlobalExterns();
+                }
+            } else if (eSaida.contentEquals("REFER")) {
+
+                if (mRunTime.getExterno()) {
+                    mEscopo.getDebug().ListarGlobalRefers();
+                }
+            } else if (eSaida.contentEquals("COUNT")) {
+
+                if (mRunTime.getExterno()) {
+
+                    System.out.println("\n Contando Escopos : " + mEscopo.getContagem());
+
+                }
+            } else if (eSaida.contentEquals("PATH")) {
+
+                if (mRunTime.getExterno()) {
+
+                    System.out.println("\n Caminho Escopos : " + mEscopo.getCaminho());
+
+                }
+            } else {
+                mRunTime.getErros().add("Invocacao : " + eAcao + " -> Problema com saida !");
+            }
+
+        } else {
+
+
+            mRunTime.getErros().add("Invocacao : " + eAcao + " -> Problema com argumentos !");
+        }
+
+
+    }
 
 }

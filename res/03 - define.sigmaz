@@ -1,4 +1,4 @@
-define INDICE : num = 50;
+define INDICE : num = 50.0;
 define VALIDACAO : bool = false;
 call passaro -> voar ( INDICE , VALIDACAO );
 act voar ( n : num , b : bool ) {

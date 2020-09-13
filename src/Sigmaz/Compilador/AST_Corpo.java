@@ -31,8 +31,9 @@ public class AST_Corpo {
 
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("def")){
 
-                AST_Alocador mAST = new AST_Alocador(mCompiler);
-                mAST.init("DEF",ASTPai);
+
+                AST_Def mAST = new AST_Def(mCompiler);
+                mAST.init_Def(ASTPai);
 
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("moc")){
 
@@ -47,6 +48,12 @@ public class AST_Corpo {
 
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
                 mAST.initSemTipagem("VOZ",ASTPai);
+
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("mut")){
+
+                AST_Mut mAST = new AST_Mut(mCompiler);
+                mAST.init_mut(ASTPai);
+
 
 
 
@@ -68,6 +75,11 @@ public class AST_Corpo {
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("while")){
 
                 AST_While mAST = new AST_While(mCompiler);
+                mAST.init(ASTPai);
+
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("loop")){
+
+                AST_Loop mAST = new AST_Loop(mCompiler);
                 mAST.init(ASTPai);
 
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("step")){
@@ -96,15 +108,34 @@ public class AST_Corpo {
 
                 AST mCancel = ASTPai.criarBranch("CANCEL");
                 Token TokenC2= mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado abrir ponto e virgula" );
+
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("continue")){
 
                 AST mCancel = ASTPai.criarBranch("CONTINUE");
                 Token TokenC2= mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado abrir ponto e virgula" );
 
+
             }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("exception")){
 
                 AST_Exception mAST = new AST_Exception(mCompiler);
                 mAST.init(ASTPai);
+
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("init")){
+
+
+                mCompiler.voltar();
+
+                AST_Value mASTValue = new AST_Value(mCompiler);
+                mASTValue.init(ASTPai.criarBranch("VALUE"));
+
+            }else if (TokenD.getTipo()==TokenTipo.ID && TokenD.mesmoConteudo("start")){
+
+
+                mCompiler.voltar();
+
+                AST_Value mASTValue = new AST_Value(mCompiler);
+                mASTValue.init(ASTPai.criarBranch("VALUE"));
+
 
 
             }else if (TokenD.getTipo()==TokenTipo.ID ){

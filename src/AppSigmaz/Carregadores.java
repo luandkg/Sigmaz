@@ -130,8 +130,16 @@ public class Carregadores {
         mArquivos.add("res/69 - options.sigmaz");
         mArquivos.add("res/70 - cores.sigmaz");
         mArquivos.add("res/71 - refers.sigmaz");
+
+        // NOVOS CONCEITOS
+
         mArquivos.add("res/72 - inference.sigmaz");
         mArquivos.add("res/73 - vetores.sigmaz");
+        mArquivos.add("res/74 - this2.sigmaz");
+        mArquivos.add("res/75 - objeto.sigmaz");
+        mArquivos.add("res/76 - loop.sigmaz");
+        mArquivos.add("res/77 - mutable.sigmaz");
+        mArquivos.add("res/78 - default.sigmaz");
 
         return mArquivos;
     }

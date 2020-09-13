@@ -54,37 +54,37 @@ public class Intellisense {
 
         try {
 
-            IMG_DEFINE_ALL = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\define_all.png"));
-            IMG_DEFINE_RESTRICT = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\define_restrict.png"));
-            IMG_DEFINE_EXTERN = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\define_extern.png"));
-            IMG_DEFINE_TYPE = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\define_type.png"));
+            IMG_DEFINE_ALL = ImageIO.read(new File("res/res/define_all.png"));
+            IMG_DEFINE_RESTRICT = ImageIO.read(new File("res/res/define_restrict.png"));
+            IMG_DEFINE_EXTERN = ImageIO.read(new File("res/res/define_extern.png"));
+            IMG_DEFINE_TYPE = ImageIO.read(new File("res/res/define_type.png"));
 
-            IMG_MOCKIZ_ALL = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\mockiz_all.png"));
-            IMG_MOCKIZ_RESTRICT = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\mockiz_restrict.png"));
-            IMG_MOCKIZ_EXTERN = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\mockiz_extern.png"));
-            IMG_MOCKIZ_TYPE = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\mockiz_type.png"));
+            IMG_MOCKIZ_ALL = ImageIO.read(new File("res/res/mockiz_all.png"));
+            IMG_MOCKIZ_RESTRICT = ImageIO.read(new File("res/res/mockiz_restrict.png"));
+            IMG_MOCKIZ_EXTERN = ImageIO.read(new File("res/res/mockiz_extern.png"));
+            IMG_MOCKIZ_TYPE = ImageIO.read(new File("res/res/mockiz_type.png"));
 
 
-            IMG_ACTION_ALL = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\action_all.png"));
-            IMG_ACTION_RESTRICT = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\action_restrict.png"));
-            IMG_ACTION_EXTERN = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\action_extern.png"));
+            IMG_ACTION_ALL = ImageIO.read(new File("res/res/action_all.png"));
+            IMG_ACTION_RESTRICT = ImageIO.read(new File("res/res/action_restrict.png"));
+            IMG_ACTION_EXTERN = ImageIO.read(new File("res/res/action_extern.png"));
 
-            IMG_FUNCTION_ALL = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\function_all.png"));
-            IMG_FUNCTION_RESTRICT = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\function_restrict.png"));
-            IMG_FUNCTION_EXTERN = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\function_extern.png"));
+            IMG_FUNCTION_ALL = ImageIO.read(new File("res/res/function_all.png"));
+            IMG_FUNCTION_RESTRICT = ImageIO.read(new File("res/res/function_restrict.png"));
+            IMG_FUNCTION_EXTERN = ImageIO.read(new File("res/res/function_extern.png"));
 
-            IMG_OPERATOR_ALL = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\operator.png"));
-            IMG_DIRECTOR_ALL = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\director.png"));
+            IMG_OPERATOR_ALL = ImageIO.read(new File("res/res/operator.png"));
+            IMG_DIRECTOR_ALL = ImageIO.read(new File("res/res/director.png"));
 
-            IMG_INIT = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\init.png"));
+            IMG_INIT = ImageIO.read(new File("res/res/init.png"));
 
-            IMG_STAGE = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\stage.png"));
-            IMG_GETTER = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\getter.png"));
-            IMG_SETTER = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\setter.png"));
-            IMG_MODEL = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\model.png"));
-            IMG_BASE = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\base.png"));
-            IMG_GENERIC = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\generic.png"));
-            IMG_GENERIC_TYPE = ImageIO.read(new File("C:\\Users\\Luand\\OneDrive\\Imagens\\Sigmaz Res\\generic_type.png"));
+            IMG_STAGE = ImageIO.read(new File("res/res/stage.png"));
+            IMG_GETTER = ImageIO.read(new File("res/res/getter.png"));
+            IMG_SETTER = ImageIO.read(new File("res/res/setter.png"));
+            IMG_MODEL = ImageIO.read(new File("res/res/model.png"));
+            IMG_BASE = ImageIO.read(new File("res/res/base.png"));
+            IMG_GENERIC = ImageIO.read(new File("res/res/generic.png"));
+            IMG_GENERIC_TYPE = ImageIO.read(new File("res/res/generic_type.png"));
 
         } catch (IOException e) {
         }

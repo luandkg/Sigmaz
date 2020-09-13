@@ -19,7 +19,7 @@ package Animais {
 			_a = a;
 		}
 		restrict : 
-		define _a : num = 0;
+		define _a : num = 0.0;
 		all : 
 		func getA ( ) : num {
 			return _a;
@@ -30,6 +30,6 @@ package Animais {
 }
 refer Animais;
 call iniciar -> {
-	def G : Gato = init Gato ( 12 );
+	def G : Gato = init Gato ( 12.0 );
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 }

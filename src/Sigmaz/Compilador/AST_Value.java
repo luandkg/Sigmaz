@@ -113,7 +113,6 @@ public class AST_Value {
 
         } else if (TokenD.getTipo() == TokenTipo.CHAVE_ABRE) {
 
-            System.out.println("Abrindo Chaves em AST_VALUE");
 
 
             ASTPai.setNome("");
@@ -152,7 +151,12 @@ public class AST_Value {
             ASTPai.setValor("Num");
 
             SegundaParte(ASTPai);
+        } else if (TokenD.getTipo() == TokenTipo.NUMERO_FLOAT) {
 
+            ASTPai.setNome(TokenD.getConteudo());
+            ASTPai.setValor("Float");
+
+            SegundaParte(ASTPai);
 
         } else if (TokenD.getTipo() == TokenTipo.SETA) {
 
@@ -286,6 +290,83 @@ public class AST_Value {
                 }
 
 
+            } else if (TokenD.mesmoConteudo("this")) {
+
+
+                ASTPai.setValor("THIS");
+                AST eThis = ASTPai.criarBranch("THIS");
+
+
+                Token TokenC2 = mCompiler.getTokenAvante();
+
+
+                if (TokenC2.getTipo() == mTerminar) {
+                    return;
+                } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
+                    operation_final("MATCH", ASTPai);
+                } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
+                    operation_final("UNMATCH", ASTPai);
+                } else if (TokenC2.getTipo() == TokenTipo.SOMADOR) {
+                    operation_final("SUM", ASTPai);
+                } else if (TokenC2.getTipo() == TokenTipo.DIMINUIDOR) {
+                    operation_final("SUB", ASTPai);
+                } else if (TokenC2.getTipo() == TokenTipo.MULTIPLICADOR) {
+                    operation_final("MUX", ASTPai);
+                } else if (TokenC2.getTipo() == TokenTipo.DIVISOR) {
+                    operation_final("DIV", ASTPai);
+
+                } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
+
+                    ASTPai.setValor("STAGE");
+                    Token TokenC3 = mCompiler.getTokenAvante();
+                    if (TokenC3.getTipo() == TokenTipo.ID) {
+                        eThis.criarBranch("STAGED").setNome(TokenC3.getConteudo());
+                    } else {
+                        System.out.println("Problema ZZ : " + TokenC3.getConteudo());
+                    }
+
+
+                    SegundaParte(ASTPai);
+
+
+                } else if (TokenC2.getTipo() == TokenTipo.PONTO) {
+
+                    // System.out.println("Vamos pontuar o escopo 1 !");
+
+
+                    eThis.setValor("STRUCT");
+
+                    ReceberNovoEscopo(eThis);
+
+                    SegundaParte(ASTPai);
+
+
+                } else if (TokenC2.getTipo() == TokenTipo.SETA) {
+
+                    // System.out.println("Vamos pontuar o escopo 1 !");
+
+
+                    eThis.setValor("STRUCT_EXTERN");
+
+                    ReceberNovoEscopo(eThis);
+
+                    SegundaParte(ASTPai);
+
+
+                } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_ABRE) {
+
+                    eThis.setValor("FUNCT");
+
+                    AST_Value_Argument gAST = new AST_Value_Argument(mCompiler);
+                    gAST.ReceberArgumentos(eThis);
+
+                    SegundaParte(ASTPai);
+
+
+                } else {
+                  //  System.out.println("Problema H : " + TokenD.getConteudo());
+                }
+
             } else {
 
 
@@ -359,7 +440,7 @@ public class AST_Value {
 
 
                 } else {
-                    System.out.println("Problema H : " + TokenD.getConteudo());
+                  //  System.out.println("Problema H : " + TokenD.getConteudo());
                 }
 
             }
@@ -367,7 +448,7 @@ public class AST_Value {
 
         } else {
 
-            System.out.println("Valorando : " + TokenD.getConteudo());
+         //   System.out.println("Valorando : " + TokenD.getConteudo());
 
 
         }
@@ -467,8 +548,6 @@ public class AST_Value {
     }
 
 
-
-
     public void initUltimo(AST ASTPai) {
 
         Token TokenD = mCompiler.getTokenAvante();
@@ -512,7 +591,18 @@ public class AST_Value {
             } else {
                 System.out.println("Problema 1 : " + TokenC2.getConteudo());
             }
+        } else if (TokenD.getTipo() == TokenTipo.NUMERO_FLOAT) {
 
+            ASTPai.setNome(TokenD.getConteudo());
+            ASTPai.setValor("Float");
+
+            Token TokenC2 = mCompiler.getTokenAvante();
+            if (TokenC2.getTipo() == mTerminar) {
+                return;
+
+            } else {
+                System.out.println("Problema 1 : " + TokenC2.getConteudo());
+            }
         } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
 
             ASTPai.setNome(TokenD.getConteudo());

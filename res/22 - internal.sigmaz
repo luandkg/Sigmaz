@@ -1,7 +1,7 @@
 call iniciar -> pular ( );
 struct Pessoa {
 	define nome : string = "";
-	define idade : num = 0;
+	define idade : int = 0;
 	act setNome ( _nome : string ) {
 		nome = _nome;
 	}
@@ -9,10 +9,10 @@ struct Pessoa {
 		return nome;
 	}
 
-	act setIdade ( _idade : num ) {
+	act setIdade ( _idade : int ) {
 		idade = _idade;
 	}
-	func getIdade ( ) : num {
+	func getIdade ( ) : int {
 		return idade;
 	}
 
@@ -34,8 +34,8 @@ act pular ( ) {
 	def igual : bool = p1.getIdade ( ) == p2.getIdade ( );
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }
-operator == ( a : num , b : num ) : bool {
+operator == ( a : int , b : int ) : bool {
 	def c : bool;
-	invoke math -> operator_equal ( a , b ) :: c;
+	invoke math -> operator_equal_int ( a , b ) :: c;
 	return c;
 }

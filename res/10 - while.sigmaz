@@ -1,16 +1,17 @@
 call iniciar -> operando ( );
+
 act operando ( ) {
-	def a1 : num = 0;
-	def raiz : num = 0;
-	while ( menor ( a1 , 10 ) ) -> {
+	def a1 : num = 0.0;
+	def raiz : num = 0.0;
+	while ( menor ( a1 , 10.0 ) ) -> {
 		println ( "Valor : ", inteiro ( a1 ) );
-		def cc : num = 121;
+		def cc : num = 121.0;
 		cc = somar ( inteiro ( cc ) , raiz );
 		raiz = somar ( raiz , 0.12 );
 		println ( "  - Numero : ", cc );
 		println ( "  - Inteiro : ", inteiro ( cc ) );
 		println ( "  - Decimal : ", decimal ( cc ) );
-		a1 = somar ( a1 , 1 );
+		a1 = somar ( a1 , 1.0 );
 	}
 	
 	# invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
@@ -18,7 +19,7 @@ act operando ( ) {
 }
 func somar ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_sum ( a , b ) :: c;
+	invoke math -> operator_sum_num ( a , b ) :: c;
 	return c;
 }
 
@@ -30,16 +31,16 @@ act println ( a : string , b : num ) {
 }
 func menor ( a : num , b : num ) : bool {
 	def c : bool;
-	invoke math -> operator_less ( a , b ) :: c;
+	invoke math -> operator_less_num ( a , b ) :: c;
 	return c;
 }
 func inteiro ( a : num ) : num {
 	def c : num;
-	invoke casting -> cast_integer ( a ) :: c;
+	invoke casting -> cast_integer_num ( a ) :: c;
 	return c;
 }
 func decimal ( a : num ) : num {
 	def c : num;
-	invoke casting -> cast_decimal ( a ) :: c;
+	invoke casting -> cast_decimal_num ( a ) :: c;
 	return c;
 }

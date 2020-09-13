@@ -23,53 +23,14 @@ public class InvokeCasting {
 
     public void init(String eAcao, String eSaida, AST ASTArgumentos) {
 
-
-        if (eAcao.contentEquals("cast_ns")) {
-
-
-            argumentos_1num(eAcao, eSaida, ASTArgumentos);
-
-        } else if (eAcao.contentEquals("cast_bs")) {
-
+        int i = mRun_Invoke.argumentosContagem(ASTArgumentos);
+        if (i == 1) {
 
             argumentos_1num(eAcao, eSaida, ASTArgumentos);
-        } else if (eAcao.contentEquals("cast_sb")) {
 
-
-            argumentos_1num(eAcao, eSaida, ASTArgumentos);
-        } else if (eAcao.contentEquals("cast_fns")) {
-
+        } else if (i == 2) {
 
             argumentos_2num(eAcao, eSaida, ASTArgumentos);
-
-
-        } else if (eAcao.contentEquals("cast_integer")) {
-
-
-            argumentos_1num(eAcao, eSaida, ASTArgumentos);
-        } else if (eAcao.contentEquals("cast_decimal")) {
-
-
-            argumentos_1num(eAcao, eSaida, ASTArgumentos);
-
-        } else if (eAcao.contentEquals("cast_isnull")) {
-
-
-            argumentos_1num(eAcao, eSaida, ASTArgumentos);
-
-        } else if (eAcao.contentEquals("inverse")) {
-
-
-            argumentos_1num(eAcao, eSaida, ASTArgumentos);
-
-
-        } else if (eAcao.contentEquals("cast_type")) {
-
-            mudartipo(eAcao, eSaida, ASTArgumentos);
-
-        } else if (eAcao.contentEquals("typeof")) {
-
-            typeof(eAcao, eSaida, ASTArgumentos);
 
         } else {
 
@@ -77,266 +38,227 @@ public class InvokeCasting {
 
         }
 
-    }
-
-
-    public void mudartipo(String eAcao, String eSaida, AST ASTArgumentos) {
-
-        String a1 = mRun_Invoke.getString(ASTArgumentos, 1);
-        String a2 = mRun_Invoke.getString(ASTArgumentos, 2);
-
-        mEscopo.alterarTipo(eSaida, a1, a2);
-
 
     }
 
-    public void typeof(String eAcao, String eSaida, AST ASTArgumentos) {
-
-        String tipo = "";
-
-        for (AST eAST : ASTArgumentos.getASTS()) {
-
-            if (eAST.mesmoTipo("ARGUMENT")) {
-                if (eAST.mesmoValor("ID")) {
-
-                    if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
-                        tipo = "bool";
-
-                    } else {
-                        tipo = mEscopo.getDefinidoTipo(eAST.getNome());
-                        if (tipo.contentEquals("<<ANY>>")) {
-                            tipo = "null";
-                        }
-                    }
 
 
-                } else if (eAST.mesmoValor("Num")) {
-                    tipo = "num";
-                } else if (eAST.mesmoValor("Text")) {
-                    tipo = "string";
-                    break;
-                }
 
-
-            }
-        }
-
-
-        mEscopo.setDefinido(eSaida, tipo);
-
-
-    }
 
 
     public void argumentos_1num(String eAcao, String eSaida, AST ASTArgumentos) {
 
 
-        int i = 0;
+        if (eAcao.contentEquals("print")) {
 
-        String p1 = "";
+            String p1 = mRun_Invoke.getQualquer(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            System.out.print(p1);
 
-        boolean isnull = false;
-
-        for (AST eAST : ASTArgumentos.getASTS()) {
-
-            if (eAST.mesmoTipo("ARGUMENT")) {
-
-                //System.out.println(" \t - Argumento : " + eAST.getNome() + " : " + eAST.getValor());
+            mEscopo.setDefinido(eSaida, "true");
 
 
-                if (eAST.mesmoValor("ID")) {
+        } else if (eAcao.contentEquals("cast_integer_num") ) {
 
-                    if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
-                        isnull = false;
-                    } else {
+            String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
 
-                        p1 = mEscopo.getDefinido(eAST.getNome());
+            String s = String.valueOf(p1);
+            String inteiro = "";
 
-                        isnull = mEscopo.getDefinidoNulo(eAST.getNome());
-
-                    }
-
-
-                    // System.out.println("Nulo :: " + isnull);
-
-
-                } else if (eAST.mesmoValor("Num")) {
-                    p1 = eAST.getNome();
-                } else if (eAST.mesmoValor("Text")) {
-
-                    mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
-
+            int index = 0;
+            int o = s.length();
+            while (index < o) {
+                String v = s.charAt(index) + "";
+                if (v.contentEquals(".")) {
                     break;
-                }
-
-                i += 1;
-
-            }
-
-        }
-
-        if (i == 1) {
-
-            if (eAcao.contentEquals("print")) {
-
-
-                System.out.print(p1);
-
-                mEscopo.setDefinido(eSaida, "true");
-
-            } else if (eAcao.contentEquals("cast_ns")) {
-
-                String s = String.valueOf(p1);
-
-                mEscopo.setDefinido(eSaida, s);
-
-            } else if (eAcao.contentEquals("cast_bs")) {
-
-                String s = String.valueOf(p1);
-
-
-                mEscopo.setDefinido(eSaida, s);
-
-            } else if (eAcao.contentEquals("cast_sb")) {
-
-                String s = String.valueOf(p1);
-
-                if (s.contentEquals("true") || s.contentEquals("false")) {
-                    mEscopo.setDefinido(eSaida, s);
                 } else {
-                    mRunTime.getErros().add("Conversao impossivel !");
-                }
-            } else if (eAcao.contentEquals("cast_integer")) {
-
-                String s = String.valueOf(p1);
-                String inteiro = "";
-
-                int index = 0;
-                int o = s.length();
-                while (index < o) {
-                    String v = s.charAt(index) + "";
-                    if (v.contentEquals(".")) {
-                        break;
-                    } else {
-                        inteiro += v;
-                    }
-                    index += 1;
-                }
-
-
-                mEscopo.setDefinido(eSaida, inteiro);
-            } else if (eAcao.contentEquals("cast_decimal")) {
-
-                String s = String.valueOf(p1);
-                String inteiro = "";
-
-                int index = 0;
-                int o = s.length();
-                while (index < o) {
-                    String v = s.charAt(index) + "";
-                    if (v.contentEquals(".")) {
-                        index += 1;
-                        break;
-                    } else {
-
-                    }
-                    index += 1;
-                }
-
-                while (index < o) {
-                    String v = s.charAt(index) + "";
-
                     inteiro += v;
-
-                    index += 1;
                 }
-                if (inteiro.length() == 0) {
-                    inteiro = "0";
-                }
-
-
-                mEscopo.setDefinido(eSaida, "0." + inteiro);
-
-            } else if (eAcao.contentEquals("cast_isnull")) {
-
-                if (isnull) {
-                    mEscopo.setDefinido(eSaida, "true");
-                } else {
-                    mEscopo.setDefinido(eSaida, "false");
-                }
-
-            } else if (eAcao.contentEquals("inverse")) {
-
-                String s = String.valueOf(p1);
-
-                if (s.contentEquals("true")) {
-                    mEscopo.setDefinido(eSaida, "false");
-                } else {
-                    mEscopo.setDefinido(eSaida, "true");
-                }
-
-            } else {
-
-                mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
-
+                index += 1;
             }
 
+
+            mEscopo.setDefinido(eSaida, inteiro + ".0");
+        } else if (eAcao.contentEquals("cast_integer_int") ) {
+
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+
+            String s = String.valueOf(p1);
+            String inteiro = "";
+
+            int index = 0;
+            int o = s.length();
+            while (index < o) {
+                String v = s.charAt(index) + "";
+                if (v.contentEquals(".")) {
+                    break;
+                } else {
+                    inteiro += v;
+                }
+                index += 1;
+            }
+
+
+            mEscopo.setDefinido(eSaida, inteiro);
+        } else if (eAcao.contentEquals("cast_decimal_num") ) {
+
+            String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            String s = String.valueOf(p1);
+            String inteiro = "";
+
+            int index = 0;
+            int o = s.length();
+            while (index < o) {
+                String v = s.charAt(index) + "";
+                if (v.contentEquals(".")) {
+                    index += 1;
+                    break;
+                } else {
+
+                }
+                index += 1;
+            }
+
+            while (index < o) {
+                String v = s.charAt(index) + "";
+
+                inteiro += v;
+
+                index += 1;
+            }
+            if (inteiro.length() == 0) {
+                inteiro = "0";
+            }
+
+
+            mEscopo.setDefinido(eSaida, "0." + inteiro);
+        } else if (eAcao.contentEquals("cast_decimal_int") ) {
+
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            String s = String.valueOf(p1);
+            String inteiro = "";
+
+            int index = 0;
+            int o = s.length();
+            while (index < o) {
+                String v = s.charAt(index) + "";
+                if (v.contentEquals(".")) {
+                    index += 1;
+                    break;
+                } else {
+
+                }
+                index += 1;
+            }
+
+            while (index < o) {
+                String v = s.charAt(index) + "";
+
+                inteiro += v;
+
+                index += 1;
+            }
+            if (inteiro.length() == 0) {
+                inteiro = "0";
+            }
+
+
+            mEscopo.setDefinido(eSaida, "0." + inteiro);
+        } else if (eAcao.contentEquals("cast_isnull")) {
+
+            boolean p1 = mRun_Invoke.isNulo(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+
+            if (p1) {
+                mEscopo.setDefinido(eSaida, "true");
+            } else {
+                mEscopo.setDefinido(eSaida, "false");
+            }
+
+        } else if (eAcao.contentEquals("inverse")) {
+
+            String p1 = mRun_Invoke.getBool(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+
+            if (p1.contentEquals("true")) {
+                mEscopo.setDefinido(eSaida, "false");
+            } else {
+                mEscopo.setDefinido(eSaida, "true");
+            }
+
+        } else if (eAcao.contentEquals("typeof") ) {
+            String tipo = "";
+
+            for (AST eAST : ASTArgumentos.getASTS()) {
+
+                if (eAST.mesmoTipo("ARGUMENT")) {
+                    if (eAST.mesmoValor("ID")) {
+
+                        if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
+                            tipo = "bool";
+
+                        } else {
+                            tipo = mEscopo.getDefinidoTipo(eAST.getNome());
+                            if (tipo.contentEquals("<<ANY>>")) {
+                                tipo = "null";
+                            }
+                        }
+
+
+                    } else if (eAST.mesmoValor("Num")) {
+                        tipo = "int";
+                        break;
+                    } else if (eAST.mesmoValor("Text")) {
+                        tipo = "string";
+                        break;
+                    } else if (eAST.mesmoValor("Float")) {
+                        tipo = "num";
+                        break;
+                    }
+
+
+                }
+            }
+
+
+            mEscopo.setDefinido(eSaida, tipo);
+        } else {
+
+            mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+
         }
+
     }
 
 
     public void argumentos_2num(String eAcao, String eSaida, AST ASTArgumentos) {
 
 
-        int i = 0;
 
-        String p1 = "";
-        String p2 = "";
-
-        for (AST eAST : ASTArgumentos.getASTS()) {
-
-            if (eAST.mesmoTipo("ARGUMENT")) {
-
-                //System.out.println(" \t - Argumento : " + eAST.getNome() + " : " + eAST.getValor());
-
-
-                if (eAST.mesmoValor("ID")) {
-
-                    String eRet = mEscopo.getDefinidoNum(eAST.getNome());
-
-                    if (i == 0) {
-                        p1 = eRet;
-                    } else {
-                        p2 = eRet;
-                    }
-
-
-                } else if (eAST.mesmoValor("Num")) {
-                    if (i == 0) {
-                        p1 = eAST.getNome();
-                    } else {
-                        p2 = eAST.getNome();
-                    }
-                } else if (eAST.mesmoValor("Text")) {
-
-                    mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
-
-                    break;
-                }
-
-                i += 1;
-
-            }
-
-        }
-
-        if (i == 2) {
 
             if (eAcao.contentEquals("cast_fns")) {
 
                 try {
-                    float f1 = Float.parseFloat(p1);
-                    float f2 = Float.parseFloat(p2);
+                    float f1 = Float.parseFloat(mRun_Invoke.getNum(ASTArgumentos,1));
+                    float f2 = Float.parseFloat(mRun_Invoke.getNum(ASTArgumentos,2));
 
                     if (f2 < 0) {
                         mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
@@ -369,6 +291,12 @@ public class InvokeCasting {
                 } catch (Exception e) {
                     mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
                 }
+            } else if (eAcao.contentEquals("cast_type")) {
+
+                String a1 = mRun_Invoke.getString(ASTArgumentos, 1);
+                String a2 = mRun_Invoke.getString(ASTArgumentos, 2);
+
+                mEscopo.alterarTipo(eSaida, a1, a2);
 
 
             } else {
@@ -378,7 +306,7 @@ public class InvokeCasting {
             }
 
         }
-    }
+
 }
 
 

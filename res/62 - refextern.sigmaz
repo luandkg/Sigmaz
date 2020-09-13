@@ -9,7 +9,7 @@ call iniciar -> {
 package ESTRELAS {
 	struct Sol {
 		extern : 
-		define mLuz : num = 12;
+		define mLuz : num = 12.0;
 		func Luminosidade ( ) : num {
 			return mLuz;
 		}
@@ -20,10 +20,10 @@ package ESTRELAS {
 package COISAS {
 	struct Pessoa {
 		extern : 
-		define mID : num = 0;
+		define mID : num = 0.0;
 		extern : 
 		func ID ( ) : num {
-			mID = somar_inteiro ( mID , 1 );
+			mID = somar_inteiro ( mID , 1.0 );
 			return mID;
 		}
 		
@@ -32,7 +32,7 @@ package COISAS {
 }
 func somar_inteiro ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_sum ( a , b ) :: c;
-	invoke casting -> cast_integer ( c ) :: c;
+	invoke math -> operator_sum_num ( a , b ) :: c;
+	invoke casting -> cast_integer_num ( c ) :: c;
 	return c;
 }

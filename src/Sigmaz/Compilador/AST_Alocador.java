@@ -149,7 +149,6 @@ public class AST_Alocador {
 
 
 
-
     public void init(String eTipo,  AST ASTPai,String Visibilidade) {
 
         String erro = "";

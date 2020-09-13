@@ -22,6 +22,6 @@ struct Bloco {
 	
 }
 type Pareamento {
-	define a : num = 12;
-	define b : num = 30;
+	define a : int = 12;
+	define b : int = 30;
 }

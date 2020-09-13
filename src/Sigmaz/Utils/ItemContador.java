@@ -1,4 +1,4 @@
-package Sigmaz.Analisador;
+package Sigmaz.Utils;
 
 public class ItemContador {
 

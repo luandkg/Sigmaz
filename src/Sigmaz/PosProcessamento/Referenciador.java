@@ -1,14 +1,15 @@
-package Sigmaz.Analisador;
+package Sigmaz.PosProcessamento;
 
+import Sigmaz.Analisador.Analisador;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
 
 public class Referenciador {
 
-    private Analisador mAnalisador;
+    private PosProcessador mAnalisador;
 
-    public Referenciador(Analisador eAnalisador) {
+    public Referenciador(PosProcessador eAnalisador) {
 
         mAnalisador = eAnalisador;
 
@@ -16,6 +17,12 @@ public class Referenciador {
 
 
     public void init(ArrayList<AST> mTodos) {
+
+
+        mAnalisador.mensagem("");
+        mAnalisador.mensagem(" ------------------ FASE REFERENCIADOR ----------------------- ");
+        mAnalisador.mensagem("");
+
 
         ArrayList<AST> mPacotes = new ArrayList<AST>();
         ArrayList<AST> mGlobalStruct = new ArrayList<AST>();

@@ -95,6 +95,23 @@ public class AST_Struct {
                     AST_Model.setNome(TokenP.getConteudo());
                     AST_Model.setValor("TRUE");
 
+                    AST AST_Gen = AST_Model.criarBranch("GENERIC");
+                    AST_Gen.setNome("FALSE");
+
+                    Token Futuro_AT2 = mCompiler.getTokenFuturo();
+                    if (Futuro_AT2.getTipo() == TokenTipo.ENVIAR ) {
+
+                        AST_Gen.setNome("TRUE");
+
+
+                        AST_Generic mg = new AST_Generic(mCompiler);
+                        mg.init(AST_Gen);
+
+
+                    }
+
+
+
                 }
             }
 

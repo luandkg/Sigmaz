@@ -1,14 +1,14 @@
 call iniciar -> recursao ( 10 );
 
 # PROBLEMA GRAVE COM RECURSAO EM OO - Transferencia de Escopo
-act recursao ( h : num ) {
+act recursao ( h : int ) {
 	def m : Matematica = init Matematica ( );
 	m.recursor ( 12 );
 }
 
 struct Matematica {
-	act recursor ( a : num ) {
-		def b : num = somar_inteiro ( a , 1 );
+	act recursor ( a : int ) {
+		def b : int = somar_inteiro ( a , 1 );
 		println ( "Valor B : ", b );
 		invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
 		if ( menor ( b , 20 ) ) -> {
@@ -16,19 +16,19 @@ struct Matematica {
 		}
 		
 	}
-	func somar_inteiro ( a : num , b : num ) : num {
-		def c : num;
-		invoke math -> operator_sum ( a , b ) :: c;
-		invoke casting -> cast_integer ( c ) :: c;
+	func somar_inteiro ( a : int , b : int ) : int {
+		def c : int;
+		invoke math -> operator_sum_int ( a , b ) :: c;
+		invoke casting -> cast_integer_int ( c ) :: c;
 		return c;
 	}
-	func menor ( a : num , b : num ) : bool {
+	func menor ( a : int , b : int ) : bool {
 		def c : bool;
-		invoke math -> operator_less ( a , b ) :: c;
+		invoke math -> operator_less_int ( a , b ) :: c;
 		return c;
 	}
 
-	act println ( a : string , b : num ) {
+	act println ( a : string , b : int ) {
 		def c : num;
 		invoke terminal -> change ( ) :: c;
 		invoke terminal -> print ( a ) :: c;

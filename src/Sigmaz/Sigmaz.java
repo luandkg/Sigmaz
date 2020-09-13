@@ -1,6 +1,7 @@
 package Sigmaz;
 
 import Sigmaz.Analisador.Analisador;
+import Sigmaz.PosProcessamento.PosProcessador;
 import Sigmaz.Utils.AST;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Compilador.Compiler;
@@ -20,7 +21,7 @@ import java.util.Calendar;
 
 public class Sigmaz {
 
-    private boolean geral(String eArquivo, String saida) {
+    private boolean geral(String eArquivo, String saida,boolean mostrarAST) {
 
         boolean ret = false;
 
@@ -115,8 +116,9 @@ public class Sigmaz {
             Analisador AnaliseC = new Analisador();
             String AI = CompilerC.getData().toString();
 
-
-           // System.out.println(CompilerC.getArvoreDeInstrucoes());
+if (mostrarAST){
+     System.out.println(CompilerC.getArvoreDeInstrucoes());
+}
 
 
             AnaliseC.init(CompilerC.getASTS(), mLocal);
@@ -140,7 +142,6 @@ public class Sigmaz {
                 }
 
 
-
                 //  System.out.println("");
                 // System.out.println("################ AST - COM DEFEITOS ################");
                 //  System.out.println("");
@@ -152,26 +153,60 @@ public class Sigmaz {
 
 
                 System.out.println("");
-                System.out.println("################ OBJETO ################");
+                System.out.println("################ POS-PROCESSAMENTO ################");
                 System.out.println("");
 
+                String AI_PosProcessamento = CompilerC.getData().toString();
 
-                // String instrucoes = CompilerC.ArvoreDeInstrucoes();
+                PosProcessador PosProcessadorC = new PosProcessador();
 
+                PosProcessadorC.init(CompilerC.getASTS(), mLocal);
 
-                CompilerC.Compilar(saida);
+                String AF_PosProcessamento = CompilerC.getData().toString();
 
-                Documentador DC2 = new Documentador();
-
-                System.out.println("\t Iniciado : " + CompilerC.getData().toString());
-                System.out.println("\t - Tamanho : " + DC2.tamanhoObjeto(saida));
-                System.out.println("\t - Saida : " + saida);
-                System.out.println("\t Finalizado : " + CompilerC.getData().toString());
-
-                System.out.println("");
+                System.out.println("\t - Iniciado : " + AI_PosProcessamento);
+                System.out.println("\t - Finalizado : " + AF_PosProcessamento);
 
 
-                ret = true;
+                PosProcessadorC.MostrarMensagens();
+
+
+                if (PosProcessadorC.getErros().size() > 0) {
+                    System.out.println("\n\t ERROS DE POS-PROCESSAMENTO : ");
+
+
+                    for (String Erro : PosProcessadorC.getErros()) {
+                        System.out.println("\t\t" + Erro);
+                    }
+                }else{
+
+
+                    System.out.println("");
+                    System.out.println("################ OBJETO ################");
+                    System.out.println("");
+
+
+                    // String instrucoes = CompilerC.ArvoreDeInstrucoes();
+
+
+                    CompilerC.Compilar(saida);
+
+                    Documentador DC2 = new Documentador();
+
+                    System.out.println("\t Iniciado : " + CompilerC.getData().toString());
+                    System.out.println("\t - Tamanho : " + DC2.tamanhoObjeto(saida));
+                 //   System.out.println("\t - Saida : " + saida);
+                    System.out.println("\t Finalizado : " + CompilerC.getData().toString());
+
+                    System.out.println("");
+
+
+                    ret = true;
+
+                }
+
+
+
 
 
             }
@@ -186,10 +221,10 @@ public class Sigmaz {
     }
 
 
-    public void init(String eArquivo, String saida) {
+    public void init(String eArquivo, String saida,boolean mostrarAST) {
 
 
-        if (geral(eArquivo, saida)) {
+        if (geral(eArquivo, saida, mostrarAST)) {
 
 
             System.out.println("");
@@ -208,7 +243,7 @@ public class Sigmaz {
             System.out.println("");
 
 
-           System.out.println(RunTimeC.getArvoreDeInstrucoes());
+         //   System.out.println(RunTimeC.getArvoreDeInstrucoes());
 
             System.out.println("");
             System.out.println("----------------------------------------------");
@@ -247,7 +282,7 @@ public class Sigmaz {
     public void estrutural(String eArquivo, String saida) {
 
 
-        if (geral(eArquivo, saida)) {
+        if (geral(eArquivo, saida,false)) {
 
 
             System.out.println("");
@@ -302,10 +337,10 @@ public class Sigmaz {
 
     }
 
-    public void interno(String eArquivo, String saida,String eLocal) {
+    public void interno(String eArquivo, String saida, String eLocal) {
 
 
-        if (geral(eArquivo, saida)) {
+        if (geral(eArquivo, saida,false)) {
 
 
             System.out.println("");
@@ -363,7 +398,7 @@ public class Sigmaz {
 
     public void uml(String eArquivo, String saida, String eGrafico) {
 
-        if (geral(eArquivo, saida)) {
+        if (geral(eArquivo, saida,false)) {
 
 
             System.out.println("");
@@ -410,7 +445,7 @@ public class Sigmaz {
 
     public void intellisense(String eArquivo, String saida, String eGrafico) {
 
-        if (geral(eArquivo, saida)) {
+        if (geral(eArquivo, saida,false)) {
 
 
             System.out.println("");
@@ -424,7 +459,6 @@ public class Sigmaz {
 
 
             RunTimeC.init(saida);
-
 
 
             System.out.println(RunTimeC.getArvoreDeInstrucoes());

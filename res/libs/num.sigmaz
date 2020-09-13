@@ -1,0 +1,139 @@
+
+# OPERADORES num
+
+func num(a : num) : num {
+	return a;
+}
+
+
+operator ++ ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_sum_num ( a , b ) :: c;
+	return c;
+}
+
+operator -- ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_sub_num ( a , b ) :: c;
+	return c;
+}
+operator ** ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_mux_num ( a , b ) :: c;
+	return c;
+}
+operator // ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_div_num ( a , b ) :: c;
+	return c;
+}
+
+
+operator == ( a : num , b : num ) : bool {
+	def c : bool;
+	def c1 : num = a;
+	def c2 : num = b;
+	invoke math -> operator_equal_num ( c1 , c2 ) :: c;
+	return c;
+}
+operator !! ( a : num , b : num ) : bool {
+	def c : bool;
+	def c1 : num = a;
+	def c2 : num = b;
+	invoke math -> operator_not_num ( c1 , c2 ) :: c;
+	return c;
+}
+director ! ( a : num ) : num {
+	def b : num = a ++ num ( ( -1 ) );
+	return b;
+}
+
+
+func somar ( a : num , b : num ) : num {
+	def c1 : num = null;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_sum_num ( a1 , b1 ) :: c1;
+	def c : num = c1;
+	return c;
+}
+
+func subtrair ( a : num , b : num ) : num {
+	def c1 : num = null;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_sub_num ( a1 , b1 ) :: c1;
+	def c : num = c1;
+	return c;
+}
+func multiplicar ( a : num , b : num ) : num {
+	def c1 : num = null;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_mux_num ( a1 , b1 ) :: c1;
+	def c : num = c1;
+	return c;
+}
+func dividir ( a : num , b : num ) : num {
+	def c1 : num = null;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_div_num ( a1 , b1 ) :: c1;
+	def c : num = c1;
+	return c;
+}
+
+func resto ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_mod_num( a , b ) :: c;
+	return c;
+}
+
+
+
+func menor ( a : num , b : num ) : bool {
+	def c : bool;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_less_num ( a1 , b1 ) :: c;
+	return c;
+}
+func maior ( a : num , b : num ) : bool {
+	def c : bool;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_great_num ( a1 , b1 ) :: c;
+	return c;
+}
+func menor_igual ( a : num , b : num ) : bool {
+	def c1 : bool = false;
+	def c2 : bool = false;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_less_num ( a1 , b1 ) :: c1;
+	invoke math -> operator_equal_num ( a1 , b1 ) :: c2;
+	return operador_ou ( c1 , c2 );
+}
+func maior_igual ( a : num , b : num ) : bool {
+	def c1 : bool = false;
+	def c2 : bool = false;
+	def a1 : num = a;
+	def b1 : num = b;
+	invoke math -> operator_great_num ( a1 , b1 ) :: c1;
+	invoke math -> operator_equal_num ( a1 , b1 ) :: c2;
+	return operador_ou ( c1 , c2 );
+}
+func igual ( a : num , b : num ) : bool {
+	def a1 : num = a;
+	def b1 : num = b;
+	def c : bool;
+	invoke math -> operator_equal_num ( a1 , b1 ) :: c;
+	return c;
+}
+func diferente ( a : num , b : num ) : bool {
+	def a1 : num = a;
+	def b1 : num = b;
+	def c : bool;
+	invoke math -> operator_not_num ( a1 , b1 ) :: c;
+	return c;
+}

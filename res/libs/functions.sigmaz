@@ -1,62 +1,14 @@
 
 #   FUNCTIONS
-func somar ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sum ( a , b ) :: c;
-	return c;
-}
-func somar_inteiro ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sum ( a , b ) :: c;
-	invoke casting -> cast_integer ( c ) :: c;
-	return c;
-}
-func subtrair ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sub ( a , b ) :: c;
-	return c;
-}
-func subtrair_inteiro ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sub ( a , b ) :: c;
-	invoke casting -> cast_integer ( c ) :: c;
-	return c;
-}
-func multiplicar ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_mux ( a , b ) :: c;
-	return c;
-}
-func multiplicar_inteiro ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_mux ( a , b ) :: c;
-	invoke casting -> cast_integer ( c ) :: c;
-	return c;
-}
-func dividir ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_div ( a , b ) :: c;
-	return c;
-}
-func dividir_inteiro ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_div ( a , b ) :: c;
-	invoke casting -> cast_integer ( c ) :: c;
-	return c;
-}
-func resto ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_trash ( a , b ) :: c;
-	return c;
-}
-func resto_inteiro ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_trash ( a , b ) :: c;
-	invoke casting -> cast_integer ( c ) :: c;
-	return c;
-}
+
 func aleatorio ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_random ( a , b ) :: c;
+	invoke math -> operator_random_num ( a , b ) :: c;
+	return c;
+}
+
+func aleatorio ( a : int , b : int ) : int {
+	def c : int;
+	invoke math -> operator_random_int ( a , b ) :: c;
 	return c;
 }

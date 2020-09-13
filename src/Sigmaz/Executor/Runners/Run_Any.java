@@ -33,6 +33,10 @@ public class Run_Any {
 
         String mTipagem = mPreparadorDeArgumentos.getTipagem(mArgumentos);
 
+        if (mRunTime.getErros().size() > 0) {
+            return null;
+        }
+
         //  System.out.println("Procurando FUNC " + ASTCorrente.getNome());
         //  System.out.println("\t - Argumentos :  " + mArgumentos.size());
 
@@ -92,7 +96,7 @@ public class Run_Any {
                         //   System.out.println(mEscopo.getNome() + " EA -> Structs : " + mEscopo.getStructs().size());
 
                         mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eRetorne);
-
+                        break;
 
                     } else {
                         if (contagem > sugestionando) {
@@ -126,6 +130,10 @@ public class Run_Any {
         ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, BuscadorDeVariaveis, ASTCorrente.getBranch("ARGUMENTS"));
 
         String mTipagem = mPreparadorDeArgumentos.getTipagem(mArgumentos);
+
+        if (mRunTime.getErros().size() > 0) {
+            return ;
+        }
 
         // System.out.println("\t - Action Teste :  " + ASTCorrente.getNome() + " Passando Args " + mArgumentos.size());
 
@@ -179,6 +187,10 @@ public class Run_Any {
                     algum = true;
 
                     int contagem = mRunArguments.conferirArgumentos(mRunTime, mEscopo, mIndex_Function.getArgumentos(), mArgumentos);
+
+                    if (mRunTime.getErros().size() > 0) {
+                        return ;
+                    }
 
                     if (contagem == mArgumentos.size()) {
 
@@ -459,6 +471,128 @@ public class Run_Any {
         }
 
         return mItem;
+
+    }
+
+    public void init_inits(AST ASTCorrente, Escopo BuscadorDeVariaveis, Escopo mEscopo, ArrayList<Index_Action> eInits) {
+
+        //   System.out.println(" -->> DENTRO : " + this.getStructNome() );
+        //  System.out.println(" -->> Procurando ACTION " + this.getStructNome() + "." + ASTCorrente.getNome());
+
+      //  System.out.println("Existem inits : " + eInits.size());
+
+      // for (Index_Action mIndex_Function : eInits) {
+       //    System.out.println("\t - Existe init : " + mIndex_Function.getNome());
+      //  }
+
+
+        String mLocal = "Run_Init";
+
+        ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, BuscadorDeVariaveis, ASTCorrente.getBranch("ARGUMENTS"));
+
+        String mTipagem = mPreparadorDeArgumentos.getTipagem(mArgumentos);
+
+        if (mRunTime.getErros().size() > 0) {
+            return ;
+        }
+
+        // System.out.println("\t - Action Teste :  " + ASTCorrente.getNome() + " Passando Args " + mArgumentos.size());
+
+        //  System.out.println("Procurando FUNC " + ASTCorrente.getNome());
+        //System.out.println("\t - Argumentos :  " + argumentos);
+
+        boolean enc = false;
+        boolean algum = false;
+        boolean realizada = false;
+
+        String sugestao = "";
+        int sugestionando = -1;
+
+        //System.out.println(" Action --->> " + ASTCorrente.ImprimirArvoreDeInstrucoes());
+
+        // System.out.println("\t - Executando Dentro :  " +this.getNome());
+
+
+
+
+        ArrayList<String> mRefers = new ArrayList<String>();
+        mRefers.addAll(mEscopo.getRefers());
+        mRefers.addAll(BuscadorDeVariaveis.getRefers());
+        mRefers.addAll(BuscadorDeVariaveis.getRefersOcultas());
+
+        String eNome = ASTCorrente.getNome();
+
+        Run_Arguments mRunArguments = new Run_Arguments();
+
+
+        for (Index_Action mIndex_Function : eInits) {
+
+            //  System.out.println("\t - Funcao :  " +mIndex_Function.getNome());
+            //  for (AST ArgumentoC : mArgumentos) {
+            //    System.out.println("\t\t - Arg :  " +ArgumentoC.getNome());
+            // }
+
+            if (mIndex_Function.mesmoNome(eNome)) {
+
+                // System.out.println("Resolver Com :: " + BuscadorDeVariaveis.getNome());
+
+                mIndex_Function.resolverTipagem(mRefers);
+
+                //  System.out.println("\t - Action Teste :  " + mIndex_Function.getNome() + " -> " + mIndex_Function.getParametragem());
+
+                if (mRunTime.getErros().size() > 0) {
+                    break;
+                }
+                enc = true;
+
+                if (mIndex_Function.getArgumentos().size() == mArgumentos.size()) {
+
+
+                    algum = true;
+
+                    int contagem = mRunArguments.conferirArgumentos(mRunTime, mEscopo, mIndex_Function.getArgumentos(), mArgumentos);
+
+                    if (mRunTime.getErros().size() > 0) {
+                        return ;
+                    }
+
+                    if (contagem == mArgumentos.size()) {
+
+                        realizada = true;
+                        if (mRunTime.getErros().size() > 0) {
+                            break;
+                        }
+
+                        // System.out.println("\t - Executando Dentro :  " +this.getNome());
+                        //  mPreparadorDeArgumentos.executar_Action(mRunTime,  mEscopo, mIndex_Function, mArgumentos);
+                        //   System.out.println(mEscopo.getNome() + " EA -> Structs : " + mEscopo.getStructs().size());
+
+                        mPreparadorDeArgumentos.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
+
+                        break;
+
+                    } else {
+                        if (contagem > sugestionando) {
+
+
+                            sugestionando = contagem;
+                            sugestao = mIndex_Function.getDefinicao();
+                        }
+                    }
+
+
+                } else {
+
+
+                }
+
+
+            }
+
+        }
+
+        errar("Init", eNome, mTipagem, sugestao, enc, algum, realizada, mLocal);
+
 
     }
 

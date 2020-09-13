@@ -47,6 +47,12 @@ public class EscopoDebug {
         mLocal.ListarLocalAll();
     }
 
+
+    public void ListarRegressiveStack() {
+        mGlobal.ListarRegressiveStack();
+    }
+
+
     public void mapear_stack() {
 
         System.out.println(" - PARAM : ");
@@ -74,7 +80,7 @@ public class EscopoDebug {
             }
         }
 
-
+        ArrayList<Item> ls_mutavel = new ArrayList<>();
         ArrayList<Item> ls_Defines = new ArrayList<>();
         ArrayList<Item> ls_Constants = new ArrayList<>();
 
@@ -84,54 +90,82 @@ public class EscopoDebug {
 
             } else if (i.getModo() == 1) {
                 ls_Constants.add(i);
+            } else if (i.getModo() == 2) {
+                ls_mutavel.add(i);
             }
 
            // System.out.println("DEFINICAO :: " + i.getNome());
         }
 
-        System.out.println(" - DEFINES : ");
+        if (ls_mutavel.size()>0){
+
+            System.out.println(" - MUTABLE : ");
+
+            System.out.println("\t - NAO NULOS : ");
+
+            for (Item i : ls_mutavel) {
+                if (!i.getNulo()) {
+                    mostrarItem(i);
+                }
+            }
+
+            System.out.println("\t - NULOS : ");
+            for (Item i : ls_mutavel) {
+
+                if (i.getNulo()) {
+                    mostrarItem(i);
+                }
+            }
+
+        }
+
+      //  if (ls_Defines.size()>0){
+
+            System.out.println(" - DEFINES : ");
+
+            System.out.println("\t - NAO NULOS : ");
+
+            for (Item i : ls_Defines) {
+                if (!i.getNulo()) {
+                    mostrarItem(i);
+
+                }
+            }
 
 
-        System.out.println("\t - NAO NULOS : ");
+            System.out.println("\t - NULOS : ");
+            for (Item i : ls_Defines) {
 
-        for (Item i : ls_Defines) {
-            if (!i.getNulo()) {
-                mostrarItem(i);
+                if (i.getNulo()) {
+                    mostrarItem(i);
 
+                }
+            }
+
+     //   }
+
+        if (ls_Constants.size()>0) {
+
+            System.out.println(" - CONSTANTS : ");
+            System.out.println("\t - NAO NULOS : ");
+
+            for (Item i : ls_Constants) {
+                if (i.getNulo() == false) {
+                    mostrarItem(i);
+
+                }
+            }
+
+            System.out.println("\t - NULOS : ");
+            for (Item i : ls_Constants) {
+
+                if (i.getNulo()) {
+                    mostrarItem(i);
+
+                }
             }
         }
 
-
-        System.out.println("\t - NULOS : ");
-        for (Item i : ls_Defines) {
-
-            if (i.getNulo()) {
-                mostrarItem(i);
-
-            }
-        }
-
-        System.out.println(" - CONSTANTS : ");
-
-
-        System.out.println("\t - NAO NULOS : ");
-
-        for (Item i : ls_Constants) {
-            if (i.getNulo() == false) {
-                mostrarItem(i);
-
-            }
-        }
-
-
-        System.out.println("\t - NULOS : ");
-        for (Item i : ls_Constants) {
-
-            if (i.getNulo()) {
-                mostrarItem(i);
-
-            }
-        }
 
     }
 
@@ -159,6 +193,10 @@ public class EscopoDebug {
         System.out.println(" - TYPE : " + eThis.getTipo());
 
         Run_Struct mRun = mEscopo.getRunTime().getRun_Struct(eThis.getValor());
+
+        if (mEscopo.getRunTime().getErros().size() > 0) {
+            return ;
+        }
 
         mRun.getEscopo().getDebug().ListarStructAll();
 
@@ -690,5 +728,94 @@ public class EscopoDebug {
         for (String mAST : mEscopo.getRefers()) {
             System.out.println("\t - " + mAST);
         }
+    }
+
+
+    public void mapear_regressive_stack() {
+
+        System.out.println(" - PARAM : ");
+        ArrayList<Item> ls_Param = new ArrayList<>();
+        for (Item i : mEscopo.getParametros()) {
+            ls_Param.add(i);
+        }
+
+        System.out.println("\t - NAO NULOS : ");
+
+        for (Item i : ls_Param) {
+            if (i.getNulo() == false) {
+                mostrarItem(i);
+
+            }
+        }
+
+
+        System.out.println("\t - NULOS : ");
+        for (Item i : ls_Param) {
+
+            if (i.getNulo()) {
+                mostrarItem(i);
+
+            }
+        }
+
+
+        ArrayList<Item> ls_Defines = new ArrayList<>();
+        ArrayList<Item> ls_Constants = new ArrayList<>();
+
+        for (Item i : mEscopo.getStacksAll()) {
+            if (i.getModo() == 0) {
+                ls_Defines.add(i);
+
+            } else if (i.getModo() == 1) {
+                ls_Constants.add(i);
+            }
+
+            // System.out.println("DEFINICAO :: " + i.getNome());
+        }
+
+        System.out.println(" - DEFINES : ");
+
+
+        System.out.println("\t - NAO NULOS : ");
+
+        for (Item i : ls_Defines) {
+            if (!i.getNulo()) {
+                mostrarItem(i);
+
+            }
+        }
+
+
+        System.out.println("\t - NULOS : ");
+        for (Item i : ls_Defines) {
+
+            if (i.getNulo()) {
+                mostrarItem(i);
+
+            }
+        }
+
+        System.out.println(" - CONSTANTS : ");
+
+
+        System.out.println("\t - NAO NULOS : ");
+
+        for (Item i : ls_Constants) {
+            if (i.getNulo() == false) {
+                mostrarItem(i);
+
+            }
+        }
+
+
+        System.out.println("\t - NULOS : ");
+        for (Item i : ls_Constants) {
+
+            if (i.getNulo()) {
+                mostrarItem(i);
+
+            }
+        }
+
     }
 }

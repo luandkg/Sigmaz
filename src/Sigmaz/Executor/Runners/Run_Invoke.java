@@ -2,6 +2,7 @@ package Sigmaz.Executor.Runners;
 
 import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.Invokes.*;
+import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
 
@@ -399,6 +400,119 @@ public class Run_Invoke {
         } else {
             return "";
         }
+
+    }
+
+    public String getInt(AST ASTArgumentos, int e) {
+
+        int i = 0;
+
+        String p1 = "";
+        String p2 = "";
+
+        for (AST eAST : ASTArgumentos.getASTS()) {
+
+            if (eAST.mesmoTipo("ARGUMENT")) {
+
+                //System.out.println(" \t - Argumento : " + eAST.getNome() + " : " + eAST.getValor());
+
+
+                if (eAST.mesmoValor("ID")) {
+                    String eRet = "";
+
+                    if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
+                        mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um int");
+                    } else {
+
+                        if (mEscopo.getDefinidoTipo(eAST.getNome()).contentEquals("int")) {
+                            eRet = mEscopo.getDefinido(eAST.getNome());
+                        } else {
+                            mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um num");
+                        }
+
+
+                    }
+
+                    if (i == 0) {
+                        p1 = eRet;
+                    } else {
+                        p2 = eRet;
+                    }
+
+
+                } else if (eAST.mesmoValor("Num")) {
+
+                    if (i == 0) {
+                        p1 = eAST.getNome();
+                    } else {
+                        p2 = eAST.getNome();
+                    }
+
+                } else if (eAST.mesmoValor("Text")) {
+                    mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um num");
+                }
+
+                i += 1;
+
+            }
+
+        }
+
+        if (e == 1) {
+            return p1;
+        } else if (e == 2) {
+            return p2;
+        } else {
+            return "";
+        }
+
+    }
+
+    public boolean isNulo(AST ASTArgumentos, int e) {
+
+        int i = 0;
+
+        boolean ret = false;
+
+        for (AST eAST : ASTArgumentos.getASTS()) {
+
+            if (eAST.mesmoTipo("ARGUMENT")) {
+
+                //System.out.println(" \t - Argumento : " + eAST.getNome() + " : " + eAST.getValor());
+
+
+                if (eAST.mesmoValor("ID")) {
+
+                    if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
+
+                    } else {
+
+                        if (mEscopo.getDefinidoTipo(eAST.getNome()).contentEquals("int")) {
+                            ret = mEscopo.getItem(eAST.getNome()).getNulo();
+                        } else {
+                            mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um num");
+                        }
+
+
+                    }
+
+
+
+                } else if (eAST.mesmoValor("Num")) {
+
+
+
+                } else if (eAST.mesmoValor("Text")) {
+
+                }
+
+                i += 1;
+
+            }
+
+        }
+
+        return ret;
 
     }
 

@@ -1,19 +1,19 @@
 call iniciar -> inicio ( );
 package Outros {
 	external Mundo {
-		define al : num = 12;
+		define al : num = 12.0;
 	}
 	
 }
 type Pessoa {
 	define nome : string = "";
-	define idade : num = 0;
+	define idade : num = 0.0;
 	mockiz TAXA : num = 5.20;
 }
 
 struct Alem {
 	extern : 
-	mockiz V : num = 33;
+	mockiz V : num = 33.0;
 	func getAnjo ( n : string ) : Pessoa {
 		return start Pessoa {
 			nome = n;
@@ -23,11 +23,11 @@ struct Alem {
 	func getCasal ( a : string , o : string ) : Casal {
 		def mP1 : Pessoa = start Pessoa {
 			nome = a;
-			idade = 20;
+			idade = 20.0;
 		};
 		def mP2 : Pessoa = start Pessoa {
 			nome = o;
-			idade = 30;
+			idade = 30.0;
 		};
 		return start Casal {
 			P1 = mP1;
@@ -41,7 +41,7 @@ struct Alem {
 struct Bloco {
 	all : 
 	define modelo : string = "";
-	define peso : num = 0;
+	define peso : num = 0.0;
 	act mudarPeso ( a : num ) {
 		peso = a;
 	}
@@ -63,7 +63,7 @@ struct Bloco {
 	
 	#restrict
 	all : 
-	define re : num = 12;
+	define re : num = 12.0;
 }
 type Casal {
 	define P1 : Pessoa = null;
@@ -73,11 +73,11 @@ refer Outros;
 act inicio ( ) {
 	def a : Pessoa = start Pessoa {
 		nome = "Luan";
-		idade = 20;
+		idade = 20.0;
 	};
 	def b : Pessoa = start Pessoa {
 		nome = "Fernando";
-		idade = 34;
+		idade = 34.0;
 	};
 	a.nome = "AlineC";
 	def a_nome : string = a.nome;
@@ -95,18 +95,18 @@ act inicio ( ) {
 	def b1_modelo : string = b1.modelo;
 	def b1_peso : num = b1.peso;
 	def b1_re : num = b1.re;
-	b1.mudarPeso ( 50 );
+	b1.mudarPeso ( 50.0 );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	def b1_peso2 : num = b1.peso;
 	def b1_peso3 : num = b1.getPeso ( );
-	def b1_bloco : Bloco = b1.getBloco ( 32 );
+	def b1_bloco : Bloco = b1.getBloco ( 32.0 );
 	def b1_b_peso : num = b1_bloco.getPeso ( );
-	def b1_b_peso2 : num = b1.getBloco ( 17 ).getPeso ( );
-	def dono : Pessoa = b1.getDono ( "lucas", 40 );
+	def b1_b_peso2 : num = b1.getBloco ( 17.0 ).getPeso ( );
+	def dono : Pessoa = b1.getDono ( "lucas", 40.0 );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	
 	#def dono_nome : string = dono.nome;
-	def dono2_nome : string = b1.getDono ( "Feh", 33 ).nome;
+	def dono2_nome : string = b1.getDono ( "Feh", 33.0 ).nome;
 	b1_bloco.modelo = "AZZ - 6";
 	def mc : string = b1_bloco.modelo;
 	def cs_p1 : Pessoa = CasalC.P1;
@@ -118,8 +118,8 @@ act inicio ( ) {
 	def pP1 : Pessoa = Alem -> getCasal ( "Sara", "Lucas").P1;
 	def pP1_nome : string = Alem -> getCasal ( "Sara", "Lucas").P1.nome;
 	def par1 : Par >> ( num , num ) = start Par >> ( num , num ) {
-		chave = 0;
-		valor = 1992;
+		chave = 0.0;
+		valor = 1992.0;
 	};
 	def par1_valor : num = par1.valor;
 	def m : num = Mundo -> al;

@@ -56,6 +56,7 @@ public class Run_While {
                     if(cAST.getCancelado()){
                         break;
                     }
+
                     if(cAST.getContinuar()){
 
                     }

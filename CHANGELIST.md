@@ -52,3 +52,8 @@ Linguagem de Programação Estruturada - Alterações
 		2020 07 23 -->> Inclusao do Run_Director
 		2020 07 23 -->> Exclusão do Run_Func
 
+
+		2020 09 13 -->> Novo Token no Lexer : NUMERO_FLOAT
+		2020 09 13 -->> Novo Tipo Primitivo : int
+		2020 09 13 -->> Adequação do sistema de testes
+

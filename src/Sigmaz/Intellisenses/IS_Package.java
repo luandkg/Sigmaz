@@ -101,7 +101,7 @@ public class IS_Package {
 
                 IS_Model mIC = new IS_Model(mIntellisense);
 
-                mais = mIC.continuar(g, Sub3, Sub3.getNome(), 0, mais, eLargura, h);
+                mais = mIC.continuar(g, Sub3, Sub3.getNome(), 50, mais, eLargura, h);
 
 
             } else {
@@ -161,6 +161,13 @@ public class IS_Package {
                 if (h>altura){
                     altura=h;
                 }
+            } else if (Sub3.mesmoTipo("MODEL")) {
+                int h = ((mIntellisense.getContagem(Sub3)) * 80);
+
+                colunas += 1;
+                if (h>altura){
+                    altura=h;
+                }
 
             } else {
             }
@@ -200,6 +207,7 @@ public class IS_Package {
 
         for (AST Sub3 : eTudo.getASTS()) {
 
+            System.out.println(eTitulo + " -> " + Sub3.getNome() + " :: " + colunando);
 
             if (Sub3.mesmoTipo("STRUCT")) {
 
@@ -218,7 +226,7 @@ public class IS_Package {
 
                 IS_Model mIC = new IS_Model(mIntellisense);
 
-                mais = mIC.continuar(g, Sub3, Sub3.getNome(), colunando * eLargura, 110, eLargura, altura);
+                mais = mIC.continuar(g, Sub3, Sub3.getNome(), (colunando * eLargura) + 20, 110, eLargura, altura);
 
                 colunando += 1;
             } else {

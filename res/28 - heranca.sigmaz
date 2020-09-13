@@ -1,12 +1,22 @@
 call iniciar -> vamos_herdar ( );
+
 act vamos_herdar ( ) {
+
+    escrever("Executando 1");
+
 	def a1 : Animal = init Animal ( );
+
+	escrever("Executando 2");
+
 	a1.setIdade ( 12 );
 	a1.setQualidade ( "Lindo");
 	a1.mostrar ( );
+
 	def f : Fungo = init Fungo ( 12 );
-	def g : num = f.Quantidade;
+	def g : int = f.Quantidade;
+
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
 }
 
 struct Qualidade {
@@ -25,55 +35,55 @@ struct Celula {
 }
 
 struct Celulas {
-	init Celulas ( q : num ) {
+	init Celulas ( q : int ) {
 		Quantidade = q;
 	}
 	all : 
-	define Quantidade : num = 0;
+	define Quantidade : int = 0;
 }
 
 struct Multicelular with Celulas {
-	init Multicelular ( q : num ) -> Celulas ( q ) {
+	init Multicelular ( q : int ) -> Celulas ( q ) {
 		
 	}
 	
 }
 
 struct Bacteria with Celula {
-	init Bacteria ( q : num ) -> Celula ( ) {
+	init Bacteria ( q : int ) -> Celula ( ) {
 		
 	}
 	
 }
 
 struct Fungo with Multicelular {
-	init Fungo ( fungo_quantidade : num ) -> Multicelular ( fungo_quantidade ) {
+	init Fungo ( fungo_quantidade : int ) -> Multicelular ( fungo_quantidade ) {
 		
 	}
 	
 }
 
 struct Cocos with Bacteria {
-	init Cocos ( q : num ) -> Bacteria ( q ) {
+	init Cocos ( q : int ) -> Bacteria ( q ) {
 		
 	}
 	
 }
 
 struct EstreptoCocos with Bacteria {
-	init EstreptoCocos ( a : num ) -> Bacteria ( q ) {
+	init EstreptoCocos ( a : int ) -> Bacteria ( q ) {
 		
 	}
 	
 }
 
 struct Animal with Qualidade {
-	define idade : num = 0;
+	define idade : int = 0;
 	init Animal ( ) -> Qualidade ( ) {
 		
 	}
 
-	act setIdade ( a : num ) {
+	act setIdade ( a : int ) {
 		idade = a;
 	}
 
@@ -83,19 +93,19 @@ struct Animal with Qualidade {
 		println ( "     - IDADE : ", idade );
 		println ( "     - QUALIDADE : ", qualidade );
 	}
-	func somar_inteiro ( a : num , b : num ) : num {
+	func somar_inteiro ( a : int , b : int ) : int {
 		def c : num;
-		invoke math -> operator_sum ( a , b ) :: c;
-		invoke casting -> cast_integer ( c ) :: c;
+		invoke math -> operator_sum_int ( a , b ) :: c;
+		invoke casting -> cast_integer_int ( c ) :: c;
 		return c;
 	}
-	func menor ( a : num , b : num ) : bool {
+	func menor ( a : int , b : int ) : bool {
 		def c : bool;
-		invoke math -> operator_less ( a , b ) :: c;
+		invoke math -> operator_less_int ( a , b ) :: c;
 		return c;
 	}
 
-	act println ( a : string , b : num ) {
+	act println ( a : string , b : int ) {
 		def c : num;
 		invoke terminal -> change ( ) :: c;
 		invoke terminal -> print ( a ) :: c;
@@ -118,13 +128,13 @@ struct Animal with Qualidade {
 }
 
 struct Base {
-	init Base ( a : num ) {
+	init Base ( a : int ) {
 		
 	}
 	all : 
-	define SAL : num = 0;
-	define BOC : num = 12;
-	mockiz VEZ : num = 15;
+	define SAL : int = 0;
+	define BOC : int = 12;
+	mockiz VEZ : int = 15;
 }
 
 struct ItemBase with Base {
@@ -133,3 +143,9 @@ struct ItemBase with Base {
 	}
 	
 }
+
+	act escrever ( a : string ) {
+		def c : num;
+		invoke terminal -> change ( ) :: c;
+		invoke terminal -> print ( a ) :: c;
+	}

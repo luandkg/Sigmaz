@@ -14,7 +14,7 @@ struct Item in ( T ) {
 		return mGuardar;
 	}
 
-	act cortar ( a : num ) {
+	act cortar ( a : int ) {
 		def b : num;
 		invoke terminal -> print ( a ) :: b;
 	}
@@ -30,10 +30,10 @@ act inicio ( ) {
 	def P2 : Padrao >> ( ) = init Padrao ( );
 	def P3 : Padrao >> ( ) = init Padrao ( ) >> ( );
 	def P4 : Padrao = init Padrao ( ) >> ( );
-	def N1 : Item >> ( num ) = init Item ( ) >> ( num );
-	def N2 : Item >> ( num ) = init Item ( ) >> ( num );
-	def G : Item >> ( Item >> ( num ) ) = init Item ( ) >> ( Item >> ( num ) );
-	def sa : Item >> ( num ) = init Item ( ) >> ( num );
+	def N1 : Item >> ( int ) = init Item ( ) >> ( int );
+	def N2 : Item >> ( int ) = init Item ( ) >> ( int );
+	def G : Item >> ( Item >> ( int ) ) = init Item ( ) >> ( Item >> ( int ) );
+	def sa : Item >> ( int ) = init Item ( ) >> ( int );
 	sa.nivelar ( 2 );
 	G.guardar ( sa );
 	G.passar ( ).cortar ( 5 );

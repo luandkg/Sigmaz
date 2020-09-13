@@ -271,3 +271,22 @@ Linguagem de Programação Estruturada - Implementações
 		2020 09 02 -->> Iterador VETOR
 		2020 09 02 -->> Each com VETOR
 
+
+		2020 09 03 -->> Unificação do Iterador
+
+
+		2020 09 09 -->> Pos-Processamento retirado da Fase de Analise
+
+
+		2020 09 10 -->> Checagem de tipo em valoramento de Struct com Herança
+		2020 09 10 -->> Allow em Struct
+		2020 09 10 -->> Instrução Loop
+
+
+		2020 09 11 -->> Separação do pos-processamento de argumentos opcionais
+		2020 09 11 -->> Definição Mutavel : MUT
+
+
+		2020 09 13 -->> Novo Tipo Primitivo : int
+		2020 09 13 -->> Organização da Biblioteca - Parte Matemática
+

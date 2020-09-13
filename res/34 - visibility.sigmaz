@@ -3,8 +3,8 @@ call iniciar -> pular ( );
 act pular ( ) {
 	def sacola1 : Sacola = init Sacola ( );
 	sacola1.aumentar ( 2 );
-	def t : num = sacola1.getQuantidade ( );
-	def s : num = somar ( 2 , sacola1.getQuantidade ( ) );
+	def t : int = sacola1.getQuantidade ( );
+	def s : int = somar ( 2 , sacola1.getQuantidade ( ) );
 	
 	#sacola1.tratar(3,3);
 	sacola1.mostrar_struct ( );
@@ -12,7 +12,6 @@ act pular ( ) {
 	sacola2.aumentar ( 2 );
 	sacola2.crivar ( 4 );
 	
-	#def mm : num = sacola2.tratar(2,2);
 	def rr : bool = sacola1 == sacola2;
 	invoke __COMPILER__ -> SHOW_HEAP ( ) :: ALL;
 	invoke __COMPILER__ -> OBJECT ( sacola2 ) :: REMOVE;
@@ -23,15 +22,15 @@ struct Sacola {
 	init Sacola ( ) {
 		
 	}
-	define itens : num = 0;
+	define itens : int = 0;
 	all : 
-	act aumentar ( g : num ) {
-		itens = somar_inteiro ( itens , g );
+	act aumentar ( g : int ) {
+		itens = somar ( itens , g );
 	}
-	func quantidade ( ) : num {
+	func quantidade ( ) : int {
 		return itens;
 	}
-	func getQuantidade ( ) : num {
+	func getQuantidade ( ) : int {
 		return itens;
 	}
 
@@ -48,8 +47,8 @@ struct Sacola {
 	act mostrar_struct ( ) {
 		invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
 	}
-	func someisso ( a : num , b : num ) : num {
-		return somar_inteiro ( a , b );
+	func someisso ( a : int , b : int ) : int {
+		return somar ( a , b );
 	}
 	all : 
 	extern : 
@@ -61,16 +60,16 @@ struct Sacola {
 	}
 	
 	#extern : operation !! (a : Sacola,b : Sacola) : bool { return a.itens !! b.itens; }
-	func someisso ( a : num , b : num ) : num {
-		return somar_inteiro ( a , b );
+	func someisso ( a : int , b : int ) : int {
+		return somar ( a , b );
 	}
 	all : 
-	func crivar ( a : num ) : num {
-		return somar_inteiro ( a , a );
+	func crivar ( a : int ) : int {
+		return somar ( a , a );
 	}
 	restrict : 
-	func tratar ( a : num , b : num ) : num {
-		return somar_inteiro ( a , b );
+	func tratar ( a : int , b : int ) : int {
+		return somar ( a , b );
 	}
 	
 }

@@ -1,13 +1,23 @@
 package Blocos {
-	struct CX in ( T ) {
-		restrict : 
+
+    struct VALORADO in ( T ) {
+		restrict :
 		define mValor : T = null;
+		all:
+		    init VALORADO(a : T) { mValor = a;}
+	}
+
+    struct CX in ( T ) with VALORADO {
+	#struct CX in ( T ) with VALORADO >> ( T ) {
+		all:
+		    init CX(a : T) -> VALORADO(a) {}
 	}
 
 	struct CXA in ( T ) with CX {
-		init CXA ( eValor : T ) -> CX ( ) {
-			this.mValor = eValor;
+		init CXA ( eValor : T ) -> CX ( eValor ) {
+
 		}
+
 		all : 
 		func getValor ( ) : T {
 			return this.mValor;
@@ -26,51 +36,60 @@ package Blocos {
 			return init CXA ( tt ) >> ( T );
 		}
 		director ! ( a : CXA >> ( T ) ) : CXA {
-			return init CXA ( a.getValor ( ) ** ( -1 ) ) >> ( T );
+			return init CXA ( a.getValor ( ) ** ( -1.0 ) ) >> ( T );
 		}
 		
 	}
 	
 }
-refer Blocos;
-call iniciar -> {
-	def a1 : CXA >> ( num ) = init CXA ( 12 ) >> ( num );
-	def a2 : CXA >> ( num ) = init CXA ( 18 ) >> ( num );
-	def a1_valor : num = a1.getValor ( );
-	def a2_valor : num = a2.getValor ( );
-	def tt : bool = true;
-	
-	# invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	def a3 : CXA >> ( num ) = a1 ++ a2;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	def a3_valor : num = a3.getValor ( );
-	def a4 : CXA >> ( num ) = ! a3;
-	def a4_valor : num = a4.getValor ( );
-	a4.aumentar ( 10 );
-	def a4_valor2 : num = a4.getValor ( );
-	
-	#  def a : string = a4;
-	def r : num = azucrinar ( 1 , 2 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-}
+
+
+
+
 func azucrinar ( a : bool ) : num {
-	return -1;
+	return -1.0;
 }
 func azucrinar ( a : num , b : num ) : num {
-	return -1;
+	return -1.0;
 }
 operator ++ ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_sum ( a , b ) :: c;
+	invoke math -> operator_sum_int ( a , b ) :: c;
 	return c;
 }
 operator -- ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_sub ( a , b ) :: c;
+	invoke math -> operator_sub_int ( a , b ) :: c;
 	return c;
 }
 operator ** ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_mux ( a , b ) :: c;
+	invoke math -> operator_mux_int ( a , b ) :: c;
 	return c;
+}
+
+
+refer Blocos;
+
+call iniciar -> {
+	def a1 : CXA >> ( num ) = init CXA ( 12.0 ) >> ( num );
+	def a2 : CXA >> ( num ) = init CXA ( 18.0 ) >> ( num );
+	def a1_valor : num = a1.getValor ( );
+	def a2_valor : num = a2.getValor ( );
+	def tt : bool = true;
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	def a3 : CXA >> ( num ) = a1 ++ a2;
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+
+	def a3_valor : num = a3.getValor ( );
+	def a4 : CXA >> ( num ) = ! a3;
+	def a4_valor : num = a4.getValor ( );
+	a4.aumentar ( 10.0 );
+	def a4_valor2 : num = a4.getValor ( );
+
+	#  def a : string = a4;
+	def r : num = azucrinar ( 1.0 , 2.0 );
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }

@@ -30,7 +30,7 @@ public class Run_Arrow {
             }
         }
         if (mEscopoExtern == null) {
-              mRunTime.errar(mLocal,"STRUCT EXTERN " + ASTCorrente.getNome() + " : Nao encontrada !");
+            mRunTime.errar(mLocal, "STRUCT EXTERN " + ASTCorrente.getNome() + " : Nao encontrada !");
             return null;
         }
         //   System.out.println(" - STRUCT EXTERN : " + mEscopoExtern.getNome());
@@ -72,17 +72,18 @@ public class Run_Arrow {
                 return null;
             }
 
+            //  if (eInternal.existeBranch("INTERNAL")) {
+            //  System.out.println("PONTEIRO :: " + eItem.getValor() + " Dentro de Function -> " + eInternal.getBranch("INTERNAL").getNome());
             if (eInternal.existeBranch("INTERNAL")) {
-                //  System.out.println("PONTEIRO :: " + eItem.getValor() + " Dentro de Function -> " + eInternal.getBranch("INTERNAL").getNome());
-
                 eItem = operadorPonto(eItem, eInternal.getBranch("INTERNAL"), mEscopo, eRetorno);
-
             }
+
+            //  }
 
 
         } else {
 
-              mRunTime.errar(mLocal,"AST_Value --> STRUCTURED VALUE !");
+            mRunTime.errar(mLocal, "AST_Value --> STRUCTURED VALUE !");
 
         }
 
@@ -91,6 +92,7 @@ public class Run_Arrow {
 
     public Item operadorPonto(Item eItem, AST ASTCorrente, Escopo mEscopo, String eRetorno) {
 
+       // System.out.println(ASTCorrente.ImprimirArvoreDeInstrucoes());
 
         String eQualificador = mRunTime.getQualificador(eItem.getTipo(), mEscopo.getRefers());
 
@@ -98,6 +100,10 @@ public class Run_Arrow {
 
         if (eQualificador.contentEquals("STRUCT")) {
             Run_Internal mRun_Internal = new Run_Internal(mRunTime);
+
+            if (mRunTime.getErros().size() > 0) {
+                return null;
+            }
 
             eItem = mRun_Internal.Struct_DentroStruct(eItem.getValor(), ASTCorrente, mEscopo, eRetorno);
 
@@ -108,7 +114,7 @@ public class Run_Arrow {
 
         } else {
 
-              mRunTime.errar(mLocal,"AST_Value --> STRUCTURED VALUE !");
+            mRunTime.errar(mLocal, "AST_Value --> STRUCTURED VALUE !" + eItem.getTipo());
 
         }
 

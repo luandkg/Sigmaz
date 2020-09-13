@@ -1,13 +1,13 @@
 call iniciar -> inicio ( );
 act inicio ( ) {
-	def valor : num = 1;
-	def alfa : num = -> ( maior ( valor , 2 ) ) :: ( +1 ) not ( -1 );
-	def beta : num = -> ( maior ( 5 , 2 ) ) :: ( +1 );
-	def gama : num = -> ( maior ( valor , 2 ) ) :: ( +1 );
+	def valor : num = 1.0;
+	def alfa : num = -> ( maior ( valor , 2.0 ) ) :: ( +1.0 ) not ( -1.0 );
+	def beta : num = -> ( maior ( 5.0 , 2.0 ) ) :: ( +1.0 );
+	def gama : num = -> ( maior ( valor , 2.0 ) ) :: ( +1.0 );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
 func maior ( a : num , b : num ) : bool {
 	def c : bool;
-	invoke math -> operator_great ( a , b ) :: c;
+	invoke math -> operator_great_num ( a , b ) :: c;
 	return c;
 }

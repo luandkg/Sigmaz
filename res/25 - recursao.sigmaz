@@ -1,5 +1,5 @@
 call iniciar -> recursao ( 10 );
-act recursao ( a : num ) {
+act recursao ( a : int ) {
 	println ( "Valor A : ", a );
 	a = somar_inteiro ( a , 1 );
 	if ( menor ( a , 20 ) ) -> {
@@ -7,19 +7,19 @@ act recursao ( a : num ) {
 	}
 	
 }
-func somar_inteiro ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sum ( a , b ) :: c;
-	invoke casting -> cast_integer ( c ) :: c;
+func somar_inteiro ( a : int , b : int ) : int {
+	def c : int;
+	invoke math -> operator_sum_int ( a , b ) :: c;
+	invoke casting -> cast_integer_int ( c ) :: c;
 	return c;
 }
-func menor ( a : num , b : num ) : bool {
+func menor ( a : int , b : int ) : bool {
 	def c : bool;
-	invoke math -> operator_less ( a , b ) :: c;
+	invoke math -> operator_less_int ( a , b ) :: c;
 	return c;
 }
 
-act println ( a : string , b : num ) {
+act println ( a : string , b : int ) {
 	def c : num;
 	invoke terminal -> change ( ) :: c;
 	invoke terminal -> print ( a ) :: c;

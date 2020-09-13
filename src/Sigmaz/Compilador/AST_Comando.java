@@ -110,6 +110,13 @@ public class AST_Comando {
 
                     ASTDireita.setValor("STRUCT");
 
+                    if (ASTDireita.mesmoNome("this")){
+                      if (ASTDireita.existeBranch("INTERNAL")){
+                          ASTDireita.getBranch("INTERNAL").setTipo("INTERNAL_THIS");
+                      }
+                    }
+
+
                 } else {
                     mCompiler.errarCompilacao("Era esperado um ponto e virgula ! : " + P3.getConteudo(), P3);
                 }
@@ -185,6 +192,9 @@ public class AST_Comando {
                     AST_Value mAST = new AST_Value(mCompiler);
 
                     mAST.init(ASTC);
+
+
+
 
                 } else {
                     mCompiler.errarCompilacao("Era esperado um ponto e virgula ! : " + P3.getConteudo(), P3);

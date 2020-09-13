@@ -149,6 +149,11 @@ public class Run_Body {
                 Run_Moc mAST = new Run_Moc(mRunTime, mEscopo);
                 mAST.initVoz(fAST);
 
+            } else if (fAST.mesmoTipo("MUT")) {
+
+                Run_Mut mAST = new Run_Mut(mRunTime, mEscopo);
+                mAST.init(fAST);
+
             } else if (fAST.mesmoTipo("INVOKE")) {
 
                 Run_Invoke mAST = new Run_Invoke(mRunTime, mEscopo);
@@ -175,6 +180,11 @@ public class Run_Body {
             } else if (fAST.mesmoTipo("WHILE")) {
 
                 Run_While mAST = new Run_While(mRunTime, mEscopo);
+                mAST.init(fAST);
+
+            } else if (fAST.mesmoTipo("LOOP")) {
+
+                Run_Loop mAST = new Run_Loop(mRunTime, mEscopo);
                 mAST.init(fAST);
 
             } else if (fAST.mesmoTipo("STEP")) {
@@ -216,7 +226,7 @@ public class Run_Body {
                 //   System.out.println("Iniciando Retorando de Corpo ");
 
                 Run_Value mAST = new Run_Value(mRunTime, mEscopo);
-                mAST.init(fAST, "<<ANY>>");
+                mAST.init(fAST.getBranch("VALUE"), "<<ANY>>");
 
                 // System.out.println("Retorando de Corpo -> " + mAST.getConteudo() + "  Tipo : " + mAST.getRetornoTipo());
 
@@ -254,6 +264,21 @@ public class Run_Body {
 
                 Run_Exception mAST = new Run_Exception(mRunTime, mEscopo);
                 mAST.init(fAST);
+
+            } else if (fAST.mesmoTipo("VALUE")) {
+
+
+                Run_Value mAST = new Run_Value(mRunTime, mEscopo);
+                mAST.init(fAST,"<<ANY>>");
+            } else if (fAST.mesmoTipo("EXECUTE_INIT")) {
+
+              //  System.out.println("Bora Aqui");
+
+               // System.out.println(fAST.ImprimirArvoreDeInstrucoes());
+
+                Run_Any mAST = new Run_Any(mRunTime);
+                mAST.init_inits(fAST,mEscopo,mEscopo,mEscopo.getAO().getInitsCompleto());
+
 
             } else {
 

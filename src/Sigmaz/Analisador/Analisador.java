@@ -73,6 +73,7 @@ public class Analisador {
         mPrimitivos.add("num");
         mPrimitivos.add("string");
         mPrimitivos.add("bool");
+        mPrimitivos.add("int");
 
 
     }
@@ -195,17 +196,7 @@ public class Analisador {
 
         }
 
-        Heranca mHeranca = new Heranca(this);
-        mHeranca.init(mASTS);
 
-        Modelagem  mModelagem = new Modelagem(this);
-        mModelagem.init(mASTS);
-
-        Estagiador  mEstagiador = new Estagiador(this);
-        mEstagiador.init(mASTS);
-
-        Referenciador mReferenciador = new Referenciador(this);
-        mReferenciador.init(mASTS);
 
     }
 

@@ -325,6 +325,9 @@ public class Run_Arguments {
 
                 i += 1;
 
+                if (mRunTime.getErros().size() > 0) {
+                    return v;
+                }
 
             }
 

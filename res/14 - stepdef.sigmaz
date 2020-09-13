@@ -1,19 +1,59 @@
-import "libs/lib.sigmaz";
+
 call iniciar -> operando ( );
 act operando ( ) {
-	moc PARAR : num = 10;
-	moc PASSO : num = 1;
+	moc PARAR : num = 10.0;
+	moc PASSO : num = 1.0;
 	moc MSG_PAR : string = " : PAR ";
 	moc MSG_IMPAR : string = " : IMPAR ";
-	step def numero : num :: ( 0 , PARAR , somar_inteiro ( numero , PASSO ) ) -> {
-		def resto : num = resto_inteiro ( numero , 2 );
-		if ( resto == 0 ) -> {
+	step def numero : num :: ( 0.0 , PARAR , somar( numero , PASSO ) ) -> {
+		def resto : num = resto ( numero , 2.0 );
+		if ( resto == 0.0 ) -> {
 			println ( numero , MSG_PAR );
 		}
-		if ( resto == 1 ) -> {
+		if ( resto == 1.0 ) -> {
 			println ( numero , MSG_IMPAR );
 		}
 		
 	}
 	
+}
+
+
+func somar ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_sum_num ( a , b ) :: c;
+	return c;
+}
+
+func resto ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_mod_num ( a , b ) :: c;
+	return c;
+}
+
+act println ( a : num , b : string ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
+}
+
+act println ( a : string , b : num ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
+}
+func menor ( a : num , b : num ) : bool {
+	def c : bool;
+	invoke math -> operator_less_num ( a , b ) :: c;
+	return c;
+}
+
+operator == ( a : num , b : num ) : bool {
+	def c : bool;
+	def c1 : num = a;
+	def c2 : num = b;
+	invoke math -> operator_equal_num ( c1 , c2 ) :: c;
+	return c;
 }

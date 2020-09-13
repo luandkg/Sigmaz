@@ -57,8 +57,19 @@ public class AST_StructInit {
 
 
 
-                AST_Transferencia mRA = new AST_Transferencia(mCompiler);
-                mRA.init(AST_Call);
+               // AST_Transferencia mRA = new AST_Transferencia(mCompiler);
+               // mRA.init(AST_Call);
+
+                Token TokenI = mCompiler.getTokenAvante();
+                if (TokenI.getTipo() == TokenTipo.PARENTESES_ABRE) {
+
+
+                }else{
+                    mCompiler.errarCompilacao("Era esperado abrir parenteses",   TokenI);
+                }
+
+                AST_Recebimentos mRA = new AST_Recebimentos(mCompiler);
+                mRA.init(AST_Call.criarBranch("ARGUMENTS"));
 
 
             }
@@ -66,6 +77,7 @@ public class AST_StructInit {
 
             AST_Corpo mCorpo = new AST_Corpo(mCompiler);
             mCorpo.init(AST_BODY);
+
 
 
         } else {

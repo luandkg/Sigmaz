@@ -21,7 +21,7 @@ act pular ( ) {
 	sacola1.aumentar ( 2 );
 	p1.sacola_aumentar ( );
 	p1.sacola.aumentar ( 3 );
-	def gg : num = p1.sacola.quantidade ( );
+	def gg : int = p1.sacola.quantidade ( );
 	p1.mostrar_detalhes ( );
 	
 	#sacola1.mostrar_detalhes();
@@ -29,9 +29,9 @@ act pular ( ) {
 	#invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
 	
 	#invoke __COMPILER__ -> SHOW_HEAP () :: ALL;
-	def zz : num = sacola1.someisso ( 2 , 2 );
-	def c : num = 30;
-	def ss : num = somar ( 2 , 3 );
+	def zz : int = sacola1.someisso ( 2 , 2 );
+	def c : int = 30;
+	def ss : int = somar ( 2 , 3 );
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 	
 	# sacola1.mostrar_struct();

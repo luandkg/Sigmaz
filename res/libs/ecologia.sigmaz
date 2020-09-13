@@ -11,7 +11,7 @@ package Ecologia{
     struct Organismo with Especie {
 
         define nome : string;
-        define idade : num;
+        define idade : int;
 
         init Organismo () -> Especie() {}
 
@@ -19,10 +19,10 @@ package Ecologia{
          act morrer(){}
 
          func getNome() : string {return nome;}
-         func getIdade() : num {return idade;}
+         func getIdade() : int {return idade;}
 
          act setNome(eNome:string) { nome=eNome;}
-         act setIdade(eIdade:num) { idade=eIdade;}
+         act setIdade(eIdade:int) { idade=eIdade;}
 
     }
 
@@ -32,9 +32,9 @@ package Ecologia{
 
         define velocidade : num;
         define velocidadeMax : num;
-        mockiz idadeMax : num;
+        mockiz idadeMax : int;
 
-        init Gato(eNome:string,eIdade:num) -> Organismo() {
+        init Gato(eNome:string,eIdade:int) -> Organismo() {
             especie="GATO";
             nome=eNome;
             idade=eIdade;
@@ -42,11 +42,11 @@ package Ecologia{
 
         func getVelocidade() : num {return velocidade;}
         func getVelocidadeMax() : num {return velocidadeMax;}
-        func getIdadeMax() : num {return idadeMax;}
+        func getIdadeMax() : int {return idadeMax;}
 
          act setVelocidade(eVelocidade:num) { velocidade=eVelocidade;}
          act setVelocidadeMax(eVelocidadeMax:num) { velocidadeMax=eVelocidadeMax;}
-         act setIdadeMax(eIdadeMax:num) { idadeMax=eIdadeMax;}
+         act setIdadeMax(eIdadeMax:int) { idadeMax=eIdadeMax;}
 
     }
 
@@ -54,7 +54,7 @@ package Ecologia{
 
         define velocidadeSuper : num;
 
-        init SuperGato(eNome:string,eIdade:num) -> Gato(eNome,eIdade) {
+        init SuperGato(eNome:string,eIdade:int) -> Gato(eNome,eIdade) {
             especie="SUPERGATO";
         }
 

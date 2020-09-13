@@ -37,11 +37,11 @@ func operador_ou ( a : bool , b : bool ) : bool {
 	}
 	return c;
 }
-func maior_igual ( a : num , b : num ) : bool {
+func maior_igual ( a : int , b : int ) : bool {
 	def c1 : bool = false;
 	def c2 : bool = false;
-	invoke math -> operator_great ( a , b ) :: c1;
-	invoke math -> operator_equal ( a , b ) :: c2;
+	invoke math -> operator_great_int ( a , b ) :: c1;
+	invoke math -> operator_equal_int ( a , b ) :: c2;
 	return operador_ou ( c1 , c2 );
 }
 

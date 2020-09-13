@@ -1,7 +1,7 @@
 package Sigmaz.Analisador.ASTS;
 
 import Sigmaz.Analisador.Analisador;
-import Sigmaz.Analisador.Analisador_Bloco;
+import Sigmaz.Analisador.Complementar.Analisador_Bloco;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
@@ -41,8 +41,7 @@ public class Analisar_Global {
 
         mAnalisador_Bloco.getAnalisar_Outros().inclusao(ASTPai);
 
-
-        //mAnalisador.mensagem("Global Actions : " + mAnalisador_Bloco.getAnalisar_Outros().getActions_ApenasNomes().toString());
+        mAnalisador.mensagem("Global Actions : " + mAnalisador_Bloco.getAnalisar_Outros().getActions_ApenasNomes().toString());
         mAnalisador.mensagem("Global Functions : " + mAnalisador_Bloco.getAnalisar_Outros().getFunctions_ApenasNomes().toString());
 
 
@@ -77,7 +76,6 @@ public class Analisar_Global {
 
         }
 
-        ArrayList<AST> mInserirActions = new ArrayList<AST>();
 
         for (AST mAST : ASTPai.getASTS()) {
 
@@ -90,16 +88,6 @@ public class Analisar_Global {
                 mAnalisador_Bloco.getAnalisar_Action().analisarAction(mAST, mAlocados);
 
 
-                if (mAnalisador_Bloco.getAnalisar_Action().getOpcionais(mAST.getBranch("ARGUMENTS"))>0){
-
-                    mAnalisador.mensagem("Action " + mAST.getNome() + " :: OPT " +mAnalisador_Bloco.getAnalisar_Action().getOpcionais(mAST.getBranch("ARGUMENTS")) );
-
-
-                    mAnalisador_Bloco.getAnalisar_Action().desopcionar(mAST.copiar(),mInserirActions);
-
-                    mAnalisador_Bloco.getAnalisar_Action().removerOpcionais(mAST.getBranch("ARGUMENTS"));
-
-                }
 
 
 
@@ -112,16 +100,7 @@ public class Analisar_Global {
                 mAnalisador_Bloco.getAnalisar_Function().analisarFunction(mAST, mAlocados);
 
 
-                if (mAnalisador_Bloco.getAnalisar_Function().getOpcionais(mAST.getBranch("ARGUMENTS"))>0){
 
-                    mAnalisador.mensagem("Function " + mAST.getNome() + " :: OPT " +mAnalisador_Bloco.getAnalisar_Action().getOpcionais(mAST.getBranch("ARGUMENTS")) );
-
-
-                    mAnalisador_Bloco.getAnalisar_Function().desopcionar(mAST.copiar(),mInserirActions);
-
-                    mAnalisador_Bloco.getAnalisar_Function().removerOpcionais(mAST.getBranch("ARGUMENTS"));
-
-                }
 
             } else if (mAST.mesmoTipo("CALL")) {
 
@@ -195,9 +174,8 @@ public class Analisar_Global {
 
             } else if (mAST.mesmoTipo("REFER")) {
 
-            } else {
+            } else if (mAST.mesmoTipo("VALUE")) {
 
-                mAnalisador.getErros().add("AST x : " + mAST.getTipo());
 
 
             }
@@ -209,9 +187,7 @@ public class Analisar_Global {
 
         mAnalisador_Bloco.getAnalisar_Outros().exportarOperadores(ASTPai);
 
-        for (AST mAST : mInserirActions) {
-            ASTPai.getASTS().add(mAST);
-        }
+
 
     }
 

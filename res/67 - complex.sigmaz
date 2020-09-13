@@ -8,10 +8,10 @@ struct G12 at Modelo {
 		
 	}
 
-	act contar ( a : num ) {
+	act contar ( a : int ) {
 		
 	}
-	func retornar ( a : num ) : num {
+	func retornar ( a : int ) : int {
 		
 	}
 	
@@ -22,8 +22,8 @@ func typeof ( a : any ) : string {
 	return ret;
 }
 type Par {
-	define P1 : num = 0;
-	define P2 : num = 0;
+	define P1 : int = 0;
+	define P2 : int = 0;
 }
 call iniciar -> {
 	def complexo_1 : Complexo = init Complexo ( );
@@ -44,7 +44,7 @@ package Pacote_A {
 	refer Pacote_B;
 	struct Basico at ModeloTipo {
 		all : 
-		mockiz tipo : num = -5;
+		mockiz tipo : int = -5;
 	}
 
 	struct Medio with Basico {
@@ -62,7 +62,7 @@ package Pacote_A {
 package Pacote_B {
 	refer Pacote_A;
 	model ModeloTipo {
-		mockiz tipo : num;
+		mockiz tipo : int;
 	}
 
 	struct Simples with Basico {
@@ -70,7 +70,7 @@ package Pacote_B {
 			
 		}
 		all : 
-		define simplicidade : num = 12;
+		define simplicidade : int = 12;
 	}
 
 	struct Simples_T2 {
@@ -99,28 +99,28 @@ package Pacote_C {
 			
 		}
 		all : 
-		define complexidade : num = 15;
-		act chamar ( a : num ) {
-			def b : num = a;
+		define complexidade : int = 15;
+		act chamar ( a : int ) {
+			def b : int = a;
 			this.passar ( b );
 		}
 		restrict : 
-		act passar ( a : num ) {
-			def b : num = a;
+		act passar ( a : int ) {
+			def b : int = a;
 			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 		}
 		
 	}
 	model Modelo {
-		act contar ( num );
-		func retornar ( num ) : num;
+		act contar ( int );
+		func retornar ( int ) : int;
 	}
 	stages Estados -> {
 		DF , MG 
 	}
 	type CPar {
-		define P1 : num = 0;
-		define P2 : num = 0;
+		define P1 : int = 0;
+		define P2 : int = 0;
 	}
 	
 }

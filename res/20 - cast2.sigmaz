@@ -1,7 +1,7 @@
 call iniciar -> pular ( );
 cast pos {
 	getter a : num -> {
-		if ( menor ( a , 0 ) ) -> {
+		if ( menor ( a ,0 ) ) -> {
 			exception "Nao e possivel obter valores negativos !";
 		}
 		return a;
@@ -41,62 +41,89 @@ cast neg {
 	}
 	
 }
-cast int {
-	getter a1 : num -> {
-		return a1;
-	}
-	getter a2 : pos -> {
-		return a2;
-	}
-	getter a3 : neg -> {
-		return a3;
-	}
-	setter b : num -> {
-		return b;
-	}
-	
-}
-func menor ( a : int , b : num ) : bool {
+
+func menor ( a : int , b : int ) : bool {
 	def c : bool;
-	def a1 : num = num ( a );
-	invoke math -> operator_less ( a1 , b ) :: c;
+	invoke math -> operator_less_int ( a , b ) :: c;
 	return c;
 }
-func maior ( a : int , b : num ) : bool {
+func menor ( a : num , b : int ) : bool {
 	def c : bool;
-	def a1 : num = num ( a );
-	invoke math -> operator_great ( a1 , b ) :: c;
+	def a1 : int = int(a);
+	invoke math -> operator_less_int ( a1 , b ) :: c;
+	return c;
+}
+func maior ( a : int , b : int ) : bool {
+	def c : bool;
+	invoke math -> operator_great_int ( a , b ) :: c;
 	return c;
 }
 func menor ( a : num , b : num ) : bool {
 	def c : bool;
-	invoke math -> operator_less ( a , b ) :: c;
+	invoke math -> operator_less_num ( a , b ) :: c;
 	return c;
 }
 func maior ( a : num , b : num ) : bool {
 	def c : bool;
-	invoke math -> operator_great ( a , b ) :: c;
+	invoke math -> operator_great_num ( a , b ) :: c;
+	return c;
+}
+func maior ( a : num , b : int ) : bool {
+	def c : bool;
+	def a1 : int = int(a);
+	invoke math -> operator_great_int ( a1 , b ) :: c;
 	return c;
 }
 operator == ( a : pos , b : pos ) : bool {
 	def c : bool;
 	def c1 : num = a;
 	def c2 : num = b;
-	invoke math -> operator_equal ( c1 , c2 ) :: c;
+	invoke math -> operator_equal_num ( c1 , c2 ) :: c;
 	return c;
 }
 operator !! ( a : pos , b : pos ) : bool {
 	def c : bool;
 	def c1 : num = a;
 	def c2 : num = b;
-	invoke math -> operator_not ( c1 , c2 ) :: c;
+	invoke math -> operator_not_num ( c1 , c2 ) :: c;
 	return c;
 }
 operator == ( a : num , b : num ) : bool {
 	def c : bool;
-	invoke math -> operator_equal ( a , b ) :: c;
+	invoke math -> operator_equal_num ( a , b ) :: c;
 	return c;
 }
+
+func int(a : int) : int {
+	return a;
+}
+func int(a : num) : int {
+	def b : int;
+	invoke math -> operator_num_to_int ( a ) :: b;
+	return b;
+}
+
+
+func num(a : int) : num {
+	def b : num;
+	invoke math -> operator_int_to_num ( a  ) :: b;
+	return b;
+}
+
+func somar ( a : int , b : num ) : num {
+	def c : num;
+    def x : num = num(a);
+	invoke math -> operator_sum_num ( x , b ) :: c;
+	return c;
+}
+
+func somar  ( a : num , b : int ) : num {
+	def c : num;
+    def x : num = num(b);
+	invoke math -> operator_sum_num ( a , x ) :: c;
+	return c;
+}
+
 
 act pular ( ) {
 	def P1 : pos = 13;

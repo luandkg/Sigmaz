@@ -1,6 +1,6 @@
 call iniciar -> inicio ( );
 act inicio ( ) {
-	def a : num = 12;
+	def a : num = 12.0;
 	
 	#exception a;
 	

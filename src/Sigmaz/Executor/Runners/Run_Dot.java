@@ -5,13 +5,15 @@ import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
 
+import java.util.ArrayList;
+
 public class Run_Dot {
 
     private RunTime mRunTime;
     private String mLocal;
 
     public Run_Dot(RunTime eRunTime) {
-        
+
         mRunTime = eRunTime;
         mLocal = "Run_Dot";
 
@@ -20,7 +22,6 @@ public class Run_Dot {
 
     public Item operadorPonto(AST ASTCorrente, Escopo mEscopo, String eRetorno) {
 
-        //  System.out.println("OPERANTE : " + ASTCorrente.getNome());
 
         Item mItem = mEscopo.getItem(ASTCorrente.getNome());
 
@@ -28,22 +29,37 @@ public class Run_Dot {
             return null;
         }
 
-        String eQualificador = mRunTime.getQualificador(mItem.getTipo(), mEscopo.getRefers());
 
-        //  System.out.println("OPERANTE : " + mItem.getNome() + " : " + mItem.getTipo() + " -> " + eQualificador);
+        ArrayList<String> aRefers = mEscopo.getRefers();
+        aRefers.addAll(mEscopo.getRefersOcultas());
+
+        String eQualificador = mRunTime.getQualificador(mItem.getTipo(), aRefers);
+
 
         if (eQualificador.contentEquals("STRUCT")) {
 
 
-            if (mItem.getNome().contentEquals("this")) {
-                Run_Internal mRun_Internal = new Run_Internal(mRunTime);
-
-                mItem = mRun_Internal.Struct_DentroDiretoStruct(mItem.getValor(), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
-            } else {
+            if (ASTCorrente.existeBranch("INTERNAL")) {
                 Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
                 mItem = mRun_Internal.Struct_DentroStruct(mItem.getValor(), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
+
+            } else if (ASTCorrente.existeBranch("INTERNAL_THIS")) {
+                Run_Internal mRun_Internal = new Run_Internal(mRunTime);
+
+                mItem = mRun_Internal.Struct_DentroDiretoStruct(mItem.getValor(), ASTCorrente.getBranch("INTERNAL_THIS"), mEscopo, eRetorno);
+
             }
+
+            // if (mItem.getNome().contentEquals("this")) {
+            //     Run_Internal mRun_Internal = new Run_Internal(mRunTime);
+
+            //     mItem = mRun_Internal.Struct_DentroDiretoStruct(mItem.getValor(), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
+            //  } else {
+            //     Run_Internal mRun_Internal = new Run_Internal(mRunTime);
+
+            //    mItem = mRun_Internal.Struct_DentroStruct(mItem.getValor(), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
+            //  }
 
 
         } else if (eQualificador.contentEquals("TYPE")) {
@@ -52,7 +68,7 @@ public class Run_Dot {
             mItem = mRun_Internal.Struct_DentroType(mItem.getValor(), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
 
         } else {
-            mRunTime.errar(mLocal,"CAST nao possui operador PONTO !");
+            mRunTime.errar(mLocal, "CAST nao possui operador PONTO !" + eQualificador + " :: " + mItem.getTipo());
         }
 
         return mItem;
@@ -63,8 +79,6 @@ public class Run_Dot {
 
 
         String eQualificador = mRunTime.getQualificador(eItem.getTipo(), mEscopo.getRefers());
-
-        //  System.out.println("OPERANTE EM TYPE : " + eItem.getNome() + " -> " + eQualificador);
 
 
         if (eQualificador.contentEquals("STRUCT")) {

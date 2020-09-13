@@ -97,7 +97,11 @@ public class Lexer {
                 String eTokenConteudo = ObterNUM();
                 int eFim = mPosicao;
 
-                mTokens.add(new Token(TokenTipo.NUMERO, eTokenConteudo, eInicio, eFim, mLinha));
+                if (eTokenConteudo.contains(".")){
+                    mTokens.add(new Token(TokenTipo.NUMERO_FLOAT, eTokenConteudo, eInicio, eFim, mLinha));
+                }else{
+                    mTokens.add(new Token(TokenTipo.NUMERO, eTokenConteudo, eInicio, eFim, mLinha));
+                }
             } else if (charC.contentEquals("+") && charP.contentEquals("+")) {
                 int eInicio = mPosicao;
                 int eFim = mPosicao;
@@ -111,7 +115,12 @@ public class Lexer {
                 String eTokenConteudo = "+" + ObterNUM();
                 int eFim = mPosicao;
 
-                mTokens.add(new Token(TokenTipo.NUMERO, eTokenConteudo, eInicio, eFim, mLinha));
+                if (eTokenConteudo.contains(".")){
+                    mTokens.add(new Token(TokenTipo.NUMERO_FLOAT, eTokenConteudo, eInicio, eFim, mLinha));
+                }else{
+                    mTokens.add(new Token(TokenTipo.NUMERO, eTokenConteudo, eInicio, eFim, mLinha));
+                }
+
             } else if (charC.contentEquals("-") && charP.contentEquals(">")) {
                 int eInicio = mPosicao;
                 int eFim = mPosicao;
@@ -133,7 +142,12 @@ public class Lexer {
                 String eTokenConteudo = "-" + ObterNUM();
                 int eFim = mPosicao;
 
-                mTokens.add(new Token(TokenTipo.NUMERO, eTokenConteudo, eInicio, eFim, mLinha));
+                if (eTokenConteudo.contains(".")){
+                    mTokens.add(new Token(TokenTipo.NUMERO_FLOAT, eTokenConteudo, eInicio, eFim, mLinha));
+                }else{
+                    mTokens.add(new Token(TokenTipo.NUMERO, eTokenConteudo, eInicio, eFim, mLinha));
+                }
+
             } else if (charC.contentEquals("*") && charP.contentEquals("*")) {
                 int eInicio = mPosicao;
                 int eFim = mPosicao;

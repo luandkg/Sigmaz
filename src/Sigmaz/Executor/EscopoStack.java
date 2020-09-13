@@ -44,7 +44,74 @@ public class EscopoStack {
 
             mEscopo.getStacks().add(eItem);
 
-return eItem;
+            return eItem;
+        }
+
+        return null;
+    }
+
+    public Item alocarMutavelPrimitivo(String eNome, String eTipo,  boolean possuiValor, String eValor) {
+
+        boolean enc = existeAqui(eNome, mEscopo.getStacks());
+
+        if (enc) {
+            mRunTime.getErros().add("Definicao Duplicada : " + eNome);
+        } else {
+
+
+            Item eItem = new Item(eNome);
+            eItem.setTipo(eTipo);
+            eItem.setPrimitivo(true);
+            eItem.setIsEstrutura(false);
+
+            if (possuiValor) {
+                eItem.setNulo(false);
+            } else {
+                eItem.setNulo(true);
+            }
+
+            eItem.setModo(2);
+
+
+            eItem.setValor(eValor);
+
+
+            mEscopo.getStacks().add(eItem);
+
+            return eItem;
+        }
+
+        return null;
+    }
+
+    public Item alocarMutavelStruct(String eNome, String eTipo,  boolean possuiValor, String eValor) {
+
+        boolean enc = existeAqui(eNome, mEscopo.getStacks());
+
+        if (enc) {
+            mRunTime.getErros().add("Definicao Duplicada : " + eNome);
+        } else {
+
+
+            Item eItem = new Item(eNome);
+            eItem.setTipo(eTipo);
+            eItem.setPrimitivo(false);
+            eItem.setIsEstrutura(true);
+
+            if (possuiValor) {
+                eItem.setNulo(false);
+            } else {
+                eItem.setNulo(true);
+            }
+
+            eItem.setModo(2);
+
+            eItem.setValor(eValor);
+
+
+            mEscopo.getStacks().add(eItem);
+
+            return eItem;
         }
 
         return null;
@@ -139,7 +206,7 @@ return eItem;
             //   mRunTime.getErros().add("Variavel Duplicada : " + eNome);
         } else {
             Item Novo = new Item(eNome);
-            Novo.setModo(0);
+            Novo.setModo(1);
             Novo.setTipo(eTipo);
             Novo.setNulo(false);
             Novo.setPrimitivo(false);
@@ -172,7 +239,7 @@ return eItem;
             //   mRunTime.getErros().add("Variavel Duplicada : " + eNome);
         } else {
             Item Novo = new Item(eNome);
-            Novo.setModo(0);
+            Novo.setModo(1);
             Novo.setTipo(eTipo);
             Novo.setNulo(true);
             Novo.setPrimitivo(false);

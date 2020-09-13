@@ -231,6 +231,10 @@ public class Escopo {
     }
 
 
+    public ArrayList<Index_Action> getInitsCompleto() {
+        return mAO.getInitsCompleto();
+    }
+
     public ArrayList<Item> getStacks() {
         return mStacks;
     }
@@ -496,6 +500,18 @@ public class Escopo {
         return mEscopoStack.BuscarAnterior(eNome);
     }
 
+    // MUTAVEL
+
+
+    public void criarMutavelNula(String eNome, String eTipo) {
+        mEscopoStack.alocarMutavelPrimitivo(eNome, eTipo, false, "");
+    }
+    public void criarMutavelPrimitivo(String eNome, String eTipo,String eValor) {
+        mEscopoStack.alocarMutavelPrimitivo(eNome, eTipo, true, eValor);
+    }
+    public void criarMutavelStruct(String eNome, String eTipo,String eValor) {
+        mEscopoStack.alocarMutavelStruct(eNome, eTipo, true, eValor);
+    }
 
     // PRIMITIVO
 

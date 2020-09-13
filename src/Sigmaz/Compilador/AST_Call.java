@@ -106,6 +106,25 @@ public class AST_Call {
                 }else{
                     mCompiler.errarCompilacao("Era esperado um argumento : " + P2.getConteudo(),   P2);
                 }
+            } else if (TokenD.getTipo() == TokenTipo.NUMERO_FLOAT) {
+
+                mais=false;
+
+
+                AST ASTCorrente =   ASTPai.criarBranch("ARGUMENT");
+                ASTCorrente.setNome(TokenD.getConteudo());
+                ASTCorrente.setValor("Float");
+
+                Token P2 = mCompiler.getTokenAvante();
+
+                if(P2.getTipo()==TokenTipo.VIRGULA) {
+                    mais=true;
+                } else  if (P2.getTipo() == TokenTipo.PARENTESES_FECHA) {
+                    saiu = true;
+                    break;
+                }else{
+                    mCompiler.errarCompilacao("Era esperado um argumento : " + P2.getConteudo(),   P2);
+                }
             } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
 
                 mais=false;

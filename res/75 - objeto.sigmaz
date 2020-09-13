@@ -1,0 +1,80 @@
+#import "libs/lib.sigmaz";
+
+
+struct Objeto {
+
+    all :
+        init Objeto() {}
+        act trash(){ 	invoke __COMPILER__ -> OBJECT ( this ) :: REMOVE; }
+        func equal (ObjetoCorrente : Objeto ) : bool { return false; }
+        func hash () : string {return ""; }
+
+
+}
+
+struct O1 with Objeto { init O1 () -> Objeto() {} }
+struct O2 with Objeto { init O2 () -> Objeto() {} }
+
+struct O3 with Objeto {
+
+    restrict:
+        define mValor : int = 0;
+
+
+    all:
+        init O3 (eValor : int) -> Objeto() {  mValor = eValor; }
+
+
+        func equal (ObjetoCorrente : O3 ) : bool { return this.mValor == ObjetoCorrente.getValor(); }
+
+        func getValor() : int { return mValor; }
+
+    allow:
+        func hash () : string {return "@OBJETO::O3"; }
+
+
+}
+
+operator == ( a : int , b : int ) : bool {
+	def c : bool;
+	invoke math -> operator_equal_int ( a , b ) :: c;
+	return c;
+}
+
+
+call iniciar -> {
+
+	def obj_1 : Objeto = init Objeto() ;
+	def obj_2 : Objeto = init Objeto() ;
+
+	def obj_3 : O1 = init O1() ;
+	def obj_4 : O1 = init O1() ;
+
+	def obj_5 : Objeto = obj_4 ;
+    def obj_6 : O1 = obj_5;
+    #def obj_7 : O2 = obj_5;
+
+    def igual : bool = obj_1.equal(obj_2);
+    def igual2 : bool = obj_3.equal(obj_5);
+
+
+    def obj_8 : O3 = init O3(12);
+    def obj_9 : O3 = init O3(13);
+
+    def igual3 : bool = obj_8.equal(obj_9);
+
+    def hash_o8 : string = obj_8.hash();
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	invoke __COMPILER__ -> HEAP ( ) :: ALL;
+
+    obj_1.trash();
+    obj_2.trash();
+    obj_3.trash();
+    obj_4.trash();
+    #obj_5.trash();
+    obj_8.trash();
+    obj_9.trash();
+
+	invoke __COMPILER__ -> HEAP ( ) :: ALL;
+}

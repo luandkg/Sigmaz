@@ -1,26 +1,26 @@
-operator ++ ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sum ( a , b ) :: c;
+operator ++ ( a : int , b : int ) : int {
+	def c : int;
+	invoke math -> operator_sum_int ( a , b ) :: c;
 	return c;
 }
-operator -- ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sub ( a , b ) :: c;
+operator -- ( a : int , b : int ) : int {
+	def c : int;
+	invoke math -> operator_sub_int ( a , b ) :: c;
 	return c;
 }
-operator ** ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_mux ( a , b ) :: c;
+operator ** ( a : int , b : int ) : int {
+	def c : int;
+	invoke math -> operator_mux_int ( a , b ) :: c;
 	return c;
 }
-operator // ( a : num , b : num ) : num {
+operator // ( a : int , b : int ) : int {
 	def c : num;
-	invoke math -> operator_div ( a , b ) :: c;
+	invoke math -> operator_div_int ( a , b ) :: c;
 	return c;
 }
-operator == ( a : num , b : num ) : bool {
+operator == ( a : int , b : int ) : bool {
 	def c : bool;
-	invoke math -> operator_equal ( a , b ) :: c;
+	invoke math -> operator_equal_int ( a , b ) :: c;
 	return c;
 }
 operator == ( a : bool , b : bool ) : bool {
@@ -30,17 +30,17 @@ operator == ( a : bool , b : bool ) : bool {
 }
 call iniciar -> inicio ( );
 act inicio ( ) {
-	def a : num = 10 ++ 20;
-	def b : num = ( 10 ++ 20 ) ++ 10;
-	def c : num = 50 -- ( ( 30 ++ 20 ) -- 10 );
-	def d : num = acionar ( 10 ++ 10 , 20 ++ 20 );
-	def e : num = acionar ( 10 ++ ( 10 ++ 30 ) , 20 ++ 20 );
+	def a : int = 10 ++ 20;
+	def b : int = ( 10 ++ 20 ) ++ 10;
+	def c : int = 50 -- ( ( 30 ++ 20 ) -- 10 );
+	def d : int = acionar ( 10 ++ 10 , 20 ++ 20 );
+	def e : int = acionar ( 10 ++ ( 10 ++ 30 ) , 20 ++ 20 );
 	def f : bool = ! true;
 	def g : bool = ! 10 == 10;
 	def h : bool = ! false == ( 10 == 20 );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
-func acionar ( a : num , b : num ) : num {
+func acionar ( a : int , b : int ) : int {
 	return a ++ b;
 }
 director ! ( a : bool ) : bool {

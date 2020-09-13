@@ -1,13 +1,13 @@
 import "libs/lib.sigmaz";
 call iniciar -> inicio ( );
 refer Lista;
-define GX : num = 10;
+define GX : num = 10.0;
 act inicio ( ) {
 	
 	# FIXME : Lista Generica
 	def ListaNumerica : Lista >> ( num ) = init Lista ( ) >> ( num );
 	def t : string = typeof ( ListaNumerica );
-	def t2 : string = typeof ( 12 );
+	def t2 : string = typeof ( 12.0 );
 	def t3 : string = typeof ( false );
 	def t4 : string = typeof ( null );
 	def t5 : string = typeof ( "Oi");

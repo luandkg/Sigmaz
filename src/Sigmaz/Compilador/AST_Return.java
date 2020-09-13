@@ -16,10 +16,12 @@ public class AST_Return {
     public void init(AST ASTPai){
 
         AST ASTReturn = ASTPai.criarBranch("RETURN");
-        AST_Value mAST = new AST_Value(mCompiler);
-        mAST.init(ASTReturn);
+        AST AST_VALUE = ASTReturn.criarBranch("VALUE");
 
-        ASTReturn.setTipo("RETURN");
+        AST_Value mAST = new AST_Value(mCompiler);
+        mAST.init(AST_VALUE);
+
+     //   ASTReturn.setTipo("RETURN");
 
     }
 

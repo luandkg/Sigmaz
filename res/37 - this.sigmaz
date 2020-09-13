@@ -1,7 +1,7 @@
 struct Pessoa {
-	define idade : num = 0;
+	define idade : num = 0.0;
 	act aumentar ( ) {
-		idade = somar_inteiro ( idade , 1 );
+		idade = somar_inteiro ( idade , 1.0 );
 	}
 
 	act aumentar_comigo ( ) {
@@ -11,7 +11,7 @@ struct Pessoa {
 		return somar_inteiro ( idade , Pessoa -> TGR );
 	}
 	extern : 
-	mockiz TGR : num = 2;
+	mockiz TGR : num = 2.0;
 }
 call iniciar -> inicio ( );
 act inicio ( ) {
@@ -23,7 +23,7 @@ act inicio ( ) {
 }
 func somar_inteiro ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_sum ( a , b ) :: c;
-	invoke casting -> cast_integer ( c ) :: c;
+	invoke math -> operator_sum_num ( a , b ) :: c;
+	invoke casting -> cast_integer_num ( c ) :: c;
 	return c;
 }

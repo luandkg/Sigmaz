@@ -1,7 +1,7 @@
-import "libs/lib.sigmaz";
+#import "libs/lib.sigmaz";
 call iniciar -> operando ( );
 act operando ( ) {
-	def escolha : num = 2;
+	def escolha : int = 2;
 	def resposta : string = "";
 	when ( escolha ) -> {
 		case 3 -> {
@@ -27,4 +27,11 @@ act operando ( ) {
 		
 	}
 	
+}
+
+act println ( a : string , b : string ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
 }

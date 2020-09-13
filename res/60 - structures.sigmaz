@@ -1,17 +1,21 @@
 import "libs/lib.sigmaz";
+
 call iniciar -> inicio ( );
+
 refer Lista;
+refer Iterador;
+
 act inicio ( ) {
-	def ig : Lista >> ( num ) = init Lista ( ) >> ( num );
-	ig.adicionar ( 10 );
+	def ig : Lista >> ( int ) = init Lista ( ) >> ( int );
+	ig.adicionar ( 10);
 	ig.adicionar ( 20 );
-	def a : num = ig.getQuantidade ( );
+	def a : int = ig.getQuantidade ( );
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 	ig.adicionar ( 30 );
 	ig.adicionar ( 40 );
 	ig.adicionar ( 50 );
 	ig.adicionar ( 60 );
-	def b : num = ig.getQuantidade ( );
+	def b : int = ig.getQuantidade ( );
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 	ig.listar ( );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
@@ -31,16 +35,16 @@ act inicio ( ) {
 	ig.listar ( );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
 	ig.remover ( 50 );
-	ig.remover ( 20 );
+	ig.remover ( 20);
 	ig.adicionar ( 15 );
 	ig.remover ( 70 );
 	ig.remover ( 15 );
 	ig.remover ( 30 );
-	ig.remover ( 15 );
+	ig.remover ( 15);
 	ig.listar ( );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
-	ig.adicionar ( 5 );
-	ig.adicionar ( 2 );
+	ig.adicionar ( 5);
+	ig.adicionar ( 2);
 	ig.adicionar ( 3 );
 	ig.listar ( );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
@@ -53,12 +57,15 @@ act inicio ( ) {
 	ig.adicionar ( 40 );
 	ig.adicionar ( 12 );
 	ig.adicionar ( 60 );
-	ig.adicionar ( 87 );
-	ig.adicionar ( 90 );
+	ig.adicionar ( 87);
+	ig.adicionar ( 90);
 	ig.listar ( );
+
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
+
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
-	def iterar : Iterador >> ( Lista >> ( num ) ) = init Iterador ( ig ) >> ( Lista >> ( num ) );
+
+	def iterar : Iterador >> ( Lista >> ( int ) ) = init Iterador ( ig ) >> ( Lista >> ( int ) );
 	iterar.iniciar ( );
 	while ( iterar.continuar ( ) ) -> {
 		println ( "-> ", iterar.getValor ( ) );

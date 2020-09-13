@@ -2,6 +2,7 @@
 package TesteUnitario {
 
 	refer Lista;
+    refer Iterador;
 
 	type Assertiva {
 		define nome : string = "";

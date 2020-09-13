@@ -1,27 +1,6 @@
 
 #   COMPARATORS
 
-func igual ( a : num , b : num ) : bool {
-	def c : bool;
-	invoke math -> operator_equal ( a , b ) :: c;
-	return c;
-}
-func diferente ( a : num , b : num ) : bool {
-	def c : bool;
-	invoke math -> operator_not ( a , b ) :: c;
-	return c;
-}
-func menor ( a : num , b : num ) : bool {
-	def c : bool;
-	invoke math -> operator_less ( a , b ) :: c;
-	return c;
-}
-func maior ( a : num , b : num ) : bool {
-	def c : bool;
-	invoke math -> operator_great ( a , b ) :: c;
-	return c;
-}
-
 func operador_e ( a : bool , b : bool ) : bool {
 	def c : bool = false;
 	if(a==true) -> {
@@ -35,29 +14,6 @@ func operador_ou ( a : bool , b : bool ) : bool {
 	if(a==true) -> {c = true;}
 	if(b==true) -> {c = true;}
 	return c;
-}
-
-
-func maior_igual ( a : num , b : num ) : bool {
-
-	def c1 : bool = false;
-	def c2 : bool = false;
-
-	invoke math -> operator_great ( a , b ) :: c1;
-	invoke math -> operator_equal ( a , b ) :: c2;
-
-	return operador_ou(c1,c2);
-}
-
-func menor_igual ( a : num , b : num ) : bool {
-
-	def c1 : bool = false;
-	def c2 : bool = false;
-
-	invoke math -> operator_less ( a , b ) :: c1;
-	invoke math -> operator_equal ( a , b ) :: c2;
-
-	return operador_ou(c1,c2);
 }
 
 

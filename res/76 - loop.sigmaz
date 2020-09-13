@@ -1,0 +1,67 @@
+call iniciar -> operando ( );
+
+act operando ( ) {
+
+	def a1 : num = 0.0;
+	def raiz : num = 0.0;
+
+	loop -> {
+		println ( "Valor : ", inteiro ( a1 ) );
+		def cc : num = 121.0;
+		cc = somar ( inteiro ( cc ) , raiz );
+		raiz = somar ( raiz , 0.12 );
+		println ( "  - Numero : ", cc );
+		println ( "  - Inteiro : ", inteiro ( cc ) );
+		println ( "  - Decimal : ", decimal ( cc ) );
+		a1 = somar ( a1 , 1.0 );
+
+		if (maior(a1,5.0) ) -> { cancel; }
+	}
+
+
+	def aa : num = 12.7;
+    def bb : num = 8.0;
+
+    def ss : num = somar(aa,bb);
+
+	invoke __COMPILER__ -> SHOW_SCOPE () :: STACK;
+
+}
+
+
+
+func somar ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_sum_num ( a , b ) :: c;
+	return c;
+}
+
+act println ( a : string , b : num ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
+}
+func menor ( a : num , b : num ) : bool {
+	def c : bool;
+	invoke math -> operator_less_num ( a , b ) :: c;
+	return c;
+}
+
+func maior ( a : num , b : num ) : bool {
+	def c : bool;
+	invoke math -> operator_great_num ( a , b ) :: c;
+	return c;
+}
+
+
+func inteiro ( a : num ) : num {
+	def c : num;
+	invoke casting -> cast_integer_num ( a ) :: c;
+	return c;
+}
+func decimal ( a : num ) : num {
+	def c : num;
+	invoke casting -> cast_decimal_num ( a ) :: c;
+	return c;
+}

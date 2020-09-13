@@ -78,7 +78,7 @@ public class AppUtils {
 
     }
 
-    public static void EXECUTAR(int eIndice, ArrayList<String> mArquivos, String eCompilado) {
+    public static void EXECUTAR(int eIndice, ArrayList<String> mArquivos, String eCompilado,boolean mostrarAST) {
 
 
         int iContando = 0;
@@ -93,7 +93,7 @@ public class AppUtils {
 
                 Sigmaz SigmazC = new Sigmaz();
 
-                SigmazC.init(mArquivo, eCompilado);
+                SigmazC.init(mArquivo, eCompilado, mostrarAST);
 
 
 
@@ -272,7 +272,7 @@ public class AppUtils {
 
     }
 
-    public static void TESTE_GERAL(ArrayList<String> mArquivos, String eCompilado) {
+    public static void TESTE_GERAL(ArrayList<String> mArquivos, String eCompilado,String mLocal) {
 
         System.out.println("");
 
@@ -283,7 +283,7 @@ public class AppUtils {
             mSigmazTestes.adicionar(mArquivo);
         }
 
-        mSigmazTestes.init();
+        mSigmazTestes.init(mLocal);
 
     }
 

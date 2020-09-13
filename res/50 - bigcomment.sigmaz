@@ -8,6 +8,6 @@ act inicio ( ) {
                 muitas
                         linhas
     ##
-	def a : num = 10;
+	def a : int = 10;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }

@@ -4,7 +4,7 @@ package Vetor {
 	struct Vetor in ( T ) {
 
 
-	    init Vetor( eTamanho : num ) {
+	    init Vetor( eTamanho : int ) {
 
 	        if ( maior_igual ( eTamanho , 0 ) ) -> {
 			mQuantidade = 0;
@@ -30,10 +30,10 @@ package Vetor {
 		restrict :
 			define mPrimeiro : Item >> ( T ) = null;
 			define mUltimo : Item >> ( T ) = null;
-			define mQuantidade : num = 0;
+			define mQuantidade : int = 0;
 
 		all :
-			func getQuantidade ( ) : num {
+			func getQuantidade ( ) : int {
 				return mQuantidade;
 			}
 
@@ -43,7 +43,7 @@ package Vetor {
 
 				def mCorrente : Item >> ( T ) = mPrimeiro;
 
-				def mID : num = 0;
+				def mID : int = 0;
 
 				while ( isNull ( mCorrente ) == false ) -> {
 
@@ -51,7 +51,7 @@ package Vetor {
 
 					mCorrente = mCorrente.getProximo ( );
 
-					mID = somar_inteiro ( mID , 1 );
+					mID = somar ( mID , 1 );
 
 				}
 
@@ -65,7 +65,7 @@ package Vetor {
 
         				def mCorrente : Item >> ( T ) = mPrimeiro;
 
-        				def mID : num = 0;
+        				def mID : int = 0;
 
         				while ( isNull ( mCorrente ) == false ) -> {
 
@@ -73,7 +73,7 @@ package Vetor {
 
         					mCorrente = mCorrente.getProximo ( );
 
-        					mID = somar_inteiro ( mID , 1 );
+        					mID = somar ( mID , 1 );
 
         				}
 
@@ -82,10 +82,10 @@ package Vetor {
         		}
 
 
-		func get ( indice : num ) : T {
+		func get ( indice : int ) : T {
 			def ret : T = null;
 			if ( maior_igual ( indice , 0 ) ) -> {
-				def contando : num = 0;
+				def contando : int = 0;
 				def enc : bool = false;
 				if ( isNull ( mPrimeiro ) == false ) -> {
 					def mCorrente : Item >> ( T ) = mPrimeiro;
@@ -94,7 +94,7 @@ package Vetor {
 							ret = mCorrente.getValor ( );
 							enc = true;
 						}
-						contando = somar_inteiro ( contando , 1 );
+						contando = somar ( contando , 1 );
 						mCorrente = mCorrente.getProximo ( );
 					}
 
@@ -109,10 +109,10 @@ package Vetor {
 			return ret;
 		}
 
-		func getValor ( indice : num ) : T {
+		func getValor ( indice : int ) : T {
 			def ret : T = null;
 			if ( maior_igual ( indice , 0 ) ) -> {
-				def contando : num = 0;
+				def contando : int = 0;
 				def enc : bool = false;
 				if ( isNull ( mPrimeiro ) == false ) -> {
 					def mCorrente : Item >> ( T ) = mPrimeiro;
@@ -121,7 +121,7 @@ package Vetor {
 							ret = mCorrente.getValor ( );
 							enc = true;
 						}
-						contando = somar_inteiro ( contando , 1 );
+						contando = somar ( contando , 1 );
 						mCorrente = mCorrente.getProximo ( );
 					}
 
@@ -136,11 +136,11 @@ package Vetor {
 			return ret;
 		}
 
-		act set ( indice : num , valor : T )  {
+		act set ( indice : int , valor : T )  {
 
 
 			if ( maior_igual ( indice , 0 ) ) -> {
-				def contando : num = 0;
+				def contando : int = 0;
 				def enc : bool = false;
 				if ( isNull ( mPrimeiro ) == false ) -> {
 					def mCorrente : Item >> ( T ) = mPrimeiro;
@@ -149,7 +149,7 @@ package Vetor {
 							mCorrente.setValor(valor);
 							enc = true;
 						}
-						contando = somar_inteiro ( contando , 1 );
+						contando = somar ( contando , 1 );
 						mCorrente = mCorrente.getProximo ( );
 					}
 
@@ -188,7 +188,7 @@ package Vetor {
 
 				mUltimo = mCorrente;
 
-				mQuantidade = somar_inteiro ( mQuantidade , 1 );
+				mQuantidade = somar ( mQuantidade , 1 );
 			}
 
 		}
@@ -200,8 +200,8 @@ package Vetor {
 			}others {
 				def mAnterior : Item >> ( T ) = null;
 				def mCorrente : Item >> ( T ) = mPrimeiro;
-				def mIndice : num = 0;
-				def mUltimoIndice : num = subtrair_inteiro ( mQuantidade , 1 );
+				def mIndice : int = 0;
+				def mUltimoIndice : int = subtrair_inteiro ( mQuantidade , 1 );
 				while ( isNull ( mCorrente ) == false ) -> {
 					if ( mCorrente.getValor ( ) == a ) -> {
 						#println ( "Removendo : ", a );
@@ -227,7 +227,7 @@ package Vetor {
 					#println("Passando Por : ",mCorrente.getValor());
 					mAnterior = mCorrente;
 					mCorrente = mCorrente.getProximo ( );
-					mIndice = somar_inteiro ( mIndice , 1 );
+					mIndice = somar ( mIndice , 1 );
 				}
 
 			}

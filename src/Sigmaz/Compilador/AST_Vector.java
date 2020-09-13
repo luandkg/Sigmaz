@@ -34,7 +34,10 @@ public class AST_Vector {
 
                 mais = false;
 
+                Token P1 = mCompiler.getTokenCorrente();
+
                 mCompiler.voltar();
+
 
                 AST_Value mAST = new AST_Value(mCompiler);
                 mAST.init(ASTPai.criarBranch("VALUE"));

@@ -27,7 +27,12 @@ public class AST_Value_Argument {
 
 
             ParteFinal(ASTPai);
+        } else if (TokenD.getTipo() == TokenTipo.NUMERO_FLOAT) {
 
+            ASTPai.setNome(TokenD.getConteudo());
+            ASTPai.setValor("Float");
+
+            ParteFinal(ASTPai);
         } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
 
             ASTPai.setNome(TokenD.getConteudo());
@@ -270,7 +275,27 @@ public class AST_Value_Argument {
                     saiu = true;
                     break;
                 }
+            } else if (TokenD.getTipo() == TokenTipo.NUMERO_FLOAT) {
 
+                mais = false;
+
+
+                AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
+
+                AST_Value_Argument mAST = new AST_Value_Argument(mCompiler);
+                mCompiler.voltar();
+                mAST.initArgumento(ASTCorrente);
+                ASTCorrente.setTipo("ARGUMENT");
+
+                Token P2 = mCompiler.getTokenCorrente();
+
+
+                if (P2.getTipo() == TokenTipo.VIRGULA) {
+                    mais = true;
+                } else if (P2.getTipo() == TokenTipo.PARENTESES_FECHA) {
+                    saiu = true;
+                    break;
+                }
 
             } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
 

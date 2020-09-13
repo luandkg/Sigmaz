@@ -11,24 +11,25 @@ public class InvokeMath {
     private Escopo mEscopo;
     private Run_Invoke mRun_Invoke;
 
-    public InvokeMath(RunTime eRunTime, Escopo eEscopo,Run_Invoke eRun_Invoke) {
+    public InvokeMath(RunTime eRunTime, Escopo eEscopo, Run_Invoke eRun_Invoke) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
-        mRun_Invoke=eRun_Invoke;
+        mRun_Invoke = eRun_Invoke;
 
     }
 
     public void init(String eAcao, String eSaida, AST ASTArgumentos) {
 
 
-
         int i = mRun_Invoke.argumentosContagem(ASTArgumentos);
 
-        if (i == 2) {
+        if (i == 1) {
 
+            argumentos_1num(eAcao, eSaida, ASTArgumentos);
+
+        } else if (i == 2) {
             argumentos_2num(eAcao, eSaida, ASTArgumentos);
-
 
         } else {
 
@@ -39,25 +40,59 @@ public class InvokeMath {
     }
 
 
-    public String getP1(AST ASTArgumentos) {
-        return mRun_Invoke.getQualquer(ASTArgumentos, 1);
-    }
+    public void argumentos_1num(String eAcao, String eSaida, AST ASTArgumentos) {
+        String mErro = "Invocacao : Ação inconsistente ->  " + eAcao;
 
-    public String getP2(AST ASTArgumentos) {
-        return mRun_Invoke.getQualquer(ASTArgumentos, 2);
-    }
+        if (eAcao.contentEquals("operator_int_to_num")) {
 
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            try {
+                long f1 = Long.parseLong(p1);
+                float f2 = (float) f1;
+
+                mEscopo.setDefinido(eSaida, String.valueOf(f2));
+            } catch (Exception e) {
+                mRunTime.getErros().add(mErro);
+            }
+        } else if (eAcao.contentEquals("operator_num_to_int")) {
+
+            String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            try {
+                float f1 = Float.parseFloat(p1);
+                long f2 = (long) f1;
+
+                mEscopo.setDefinido(eSaida, String.valueOf(f2));
+            } catch (Exception e) {
+                mRunTime.getErros().add(mErro);
+            }
+        } else {
+
+            mRunTime.getErros().add("Invocacao : Ação nao encontrada  ->  " + eAcao);
+
+        }
+    }
 
 
     public void argumentos_2num(String eAcao, String eSaida, AST ASTArgumentos) {
 
+        String mErro = "Invocacao : Ação inconsistente ->  " + eAcao;
 
-
-        if (eAcao.contentEquals("operator_sum")) {
+        if (eAcao.contentEquals("operator_sum_num")) {
 
             String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             String p2 = mRun_Invoke.getNum(ASTArgumentos, 2);
-
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             try {
                 float f1 = Float.parseFloat(p1);
                 float f2 = Float.parseFloat(p2);
@@ -65,13 +100,38 @@ public class InvokeMath {
                 float f3 = f1 + f2;
                 mEscopo.setDefinido(eSaida, String.valueOf(f3));
             } catch (Exception e) {
-                mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + e.toString());
+                mRunTime.getErros().add(mErro);
+            }
+        } else if (eAcao.contentEquals("operator_sum_int")) {
+
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            String p2 = mRun_Invoke.getInt(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            try {
+                long f1 = Long.parseLong(p1);
+                long f2 = Long.parseLong(p2);
+
+                long f3 = f1 + f2;
+                mEscopo.setDefinido(eSaida, String.valueOf(f3));
+            } catch (Exception e) {
+                mRunTime.getErros().add(mErro);
             }
 
-        } else if (eAcao.contentEquals("operator_sub")) {
+        } else if (eAcao.contentEquals("operator_sub_num")) {
 
             String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             String p2 = mRun_Invoke.getNum(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             try {
                 float f1 = Float.parseFloat(p1);
                 float f2 = Float.parseFloat(p2);
@@ -79,13 +139,37 @@ public class InvokeMath {
                 float f3 = f1 - f2;
                 mEscopo.setDefinido(eSaida, String.valueOf(f3));
             } catch (Exception e) {
-                mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                mRunTime.getErros().add(mErro);
+            }
+        } else if (eAcao.contentEquals("operator_sub_int")) {
+
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            String p2 = mRun_Invoke.getInt(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            try {
+                long f1 = Long.parseLong(p1);
+                long f2 = Long.parseLong(p2);
+
+                long f3 = f1 - f2;
+                mEscopo.setDefinido(eSaida, String.valueOf(f3));
+            } catch (Exception e) {
+                mRunTime.getErros().add(mErro);
             }
 
-
-        } else if (eAcao.contentEquals("operator_mux")) {
+        } else if (eAcao.contentEquals("operator_mux_num")) {
             String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             String p2 = mRun_Invoke.getNum(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             try {
                 float f1 = Float.parseFloat(p1);
                 float f2 = Float.parseFloat(p2);
@@ -93,48 +177,129 @@ public class InvokeMath {
                 float f3 = f1 * f2;
                 mEscopo.setDefinido(eSaida, String.valueOf(f3));
             } catch (Exception e) {
-                mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                mRunTime.getErros().add(mErro);
+            }
+        } else if (eAcao.contentEquals("operator_mux_int")) {
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            String p2 = mRun_Invoke.getInt(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            try {
+                long f1 = Long.parseLong(p1);
+                long f2 = Long.parseLong(p2);
+
+                long f3 = f1 * f2;
+                mEscopo.setDefinido(eSaida, String.valueOf(f3));
+            } catch (Exception e) {
+                mRunTime.getErros().add(mErro);
             }
 
 
-        } else if (eAcao.contentEquals("operator_div")) {
+        } else if (eAcao.contentEquals("operator_div_num")) {
             String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             String p2 = mRun_Invoke.getNum(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             try {
                 float f1 = Float.parseFloat(p1);
                 float f2 = Float.parseFloat(p2);
 
                 if (f2 == 0) {
-                    mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                    mRunTime.getErros().add(mErro);
                 } else {
                     float f3 = f1 / f2;
                     mEscopo.setDefinido(eSaida, String.valueOf(f3));
                 }
 
             } catch (Exception e) {
-                mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                mRunTime.getErros().add(mErro);
             }
-        } else if (eAcao.contentEquals("operator_trash")) {
+        } else if (eAcao.contentEquals("operator_div_int")) {
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            String p2 = mRun_Invoke.getInt(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            try {
+                long f1 = Long.parseLong(p1);
+                long f2 = Long.parseLong(p2);
+
+                if (f2 == 0) {
+                    mRunTime.getErros().add(mErro);
+                } else {
+                    long f3 = f1 / f2;
+                    mEscopo.setDefinido(eSaida, String.valueOf(f3));
+                }
+
+            } catch (Exception e) {
+                mRunTime.getErros().add(mErro);
+            }
+        } else if (eAcao.contentEquals("operator_mod_num")) {
             String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             String p2 = mRun_Invoke.getNum(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             try {
                 float f1 = Float.parseFloat(p1);
                 float f2 = Float.parseFloat(p2);
 
                 if (f2 == 0) {
-                    mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                    mRunTime.getErros().add(mErro);
                 } else {
                     float f3 = f1 % f2;
                     mEscopo.setDefinido(eSaida, String.valueOf(f3));
                 }
 
             } catch (Exception e) {
-                mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                mRunTime.getErros().add(mErro);
             }
+        } else if (eAcao.contentEquals("operator_mod_int")) {
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            String p2 = mRun_Invoke.getInt(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            try {
+                long f1 = Long.parseLong(p1);
+                long f2 = Long.parseLong(p2);
 
-        } else if (eAcao.contentEquals("operator_less")) {
+                if (f2 == 0) {
+                    mRunTime.getErros().add(mErro);
+                } else {
+                    long f3 = f1 % f2;
+                    mEscopo.setDefinido(eSaida, String.valueOf(f3));
+                }
+
+            } catch (Exception e) {
+                mRunTime.getErros().add(mErro);
+            }
+        } else if (eAcao.contentEquals("operator_less_num")) {
             String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             String p2 = mRun_Invoke.getNum(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             try {
                 float f1 = Float.parseFloat(p1);
                 float f2 = Float.parseFloat(p2);
@@ -145,11 +310,38 @@ public class InvokeMath {
 
 
             } catch (Exception e) {
-                mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                mRunTime.getErros().add(mErro);
             }
-        } else if (eAcao.contentEquals("operator_great")) {
+        } else if (eAcao.contentEquals("operator_less_int")) {
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            String p2 = mRun_Invoke.getInt(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            try {
+                long f1 = Long.parseLong(p1);
+                long f2 = Long.parseLong(p2);
+
+
+                boolean f3 = f1 < f2;
+                mEscopo.setDefinido(eSaida, String.valueOf(f3));
+
+
+            } catch (Exception e) {
+                mRunTime.getErros().add(mErro);
+            }
+        } else if (eAcao.contentEquals("operator_great_num")) {
             String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             String p2 = mRun_Invoke.getNum(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             try {
                 float f1 = Float.parseFloat(p1);
                 float f2 = Float.parseFloat(p2);
@@ -160,11 +352,38 @@ public class InvokeMath {
 
 
             } catch (Exception e) {
-                mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                mRunTime.getErros().add(mErro);
             }
-        } else if (eAcao.contentEquals("operator_equal")) {
+        } else if (eAcao.contentEquals("operator_great_int")) {
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            String p2 = mRun_Invoke.getInt(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            try {
+                long f1 = Long.parseLong(p1);
+                long f2 = Long.parseLong(p2);
+
+
+                boolean f3 = f1 > f2;
+                mEscopo.setDefinido(eSaida, String.valueOf(f3));
+
+
+            } catch (Exception e) {
+                mRunTime.getErros().add(mErro);
+            }
+        } else if (eAcao.contentEquals("operator_equal_num")) {
             String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             String p2 = mRun_Invoke.getNum(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             try {
                 float f1 = Float.parseFloat(p1);
                 float f2 = Float.parseFloat(p2);
@@ -175,12 +394,38 @@ public class InvokeMath {
 
 
             } catch (Exception e) {
-                mRunTime.getErros().add("P1 ->  " + p1);
-                mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                mRunTime.getErros().add(mErro);
             }
-        } else if (eAcao.contentEquals("operator_not")) {
+        } else if (eAcao.contentEquals("operator_equal_int")) {
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            String p2 = mRun_Invoke.getInt(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            try {
+                long f1 = Long.parseLong(p1);
+                long f2 = Long.parseLong(p2);
+
+
+                boolean f3 = f1 == f2;
+                mEscopo.setDefinido(eSaida, String.valueOf(f3));
+
+
+            } catch (Exception e) {
+                mRunTime.getErros().add(mErro);
+            }
+        } else if (eAcao.contentEquals("operator_not_num")) {
             String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             String p2 = mRun_Invoke.getNum(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             try {
                 float f1 = Float.parseFloat(p1);
                 float f2 = Float.parseFloat(p2);
@@ -191,11 +436,39 @@ public class InvokeMath {
 
 
             } catch (Exception e) {
-                mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                mRunTime.getErros().add(mErro);
             }
-        } else if (eAcao.contentEquals("operator_random")) {
+        } else if (eAcao.contentEquals("operator_not_int")) {
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            String p2 = mRun_Invoke.getInt(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            try {
+                long f1 = Long.parseLong(p1);
+                long f2 = Long.parseLong(p2);
+
+
+                boolean f3 = f1 != f2;
+                mEscopo.setDefinido(eSaida, String.valueOf(f3));
+
+
+            } catch (Exception e) {
+                mRunTime.getErros().add(mErro);
+            }
+
+        } else if (eAcao.contentEquals("operator_random_num")) {
             String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             String p2 = mRun_Invoke.getNum(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
 
             try {
                 float f1 = Float.parseFloat(p1);
@@ -227,13 +500,18 @@ public class InvokeMath {
 
 
             } catch (Exception e) {
-                mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                mRunTime.getErros().add(mErro);
             }
         } else if (eAcao.contentEquals("operator_match")) {
 
             String p1 = mRun_Invoke.getBool(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             String p2 = mRun_Invoke.getBool(ASTArgumentos, 2);
-
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             if (p1.contentEquals("true") || p1.contentEquals("false")) {
                 if (p2.contentEquals("true") || p2.contentEquals("false")) {
 
@@ -244,15 +522,21 @@ public class InvokeMath {
                     }
 
                 } else {
-                    mRunTime.getErros().add("Invocacao : Ação nao encontrada  ->  " + eAcao);
+                    mRunTime.getErros().add(mErro);
                 }
             } else {
-                mRunTime.getErros().add("Invocacao : Ação nao encontrada  ->  " + eAcao);
+                mRunTime.getErros().add(mErro);
             }
         } else if (eAcao.contentEquals("operator_unmatch")) {
 
             String p1 = mRun_Invoke.getBool(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
             String p2 = mRun_Invoke.getBool(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
 
             if (p1.contentEquals("true") || p1.contentEquals("false")) {
                 if (p2.contentEquals("true") || p2.contentEquals("false")) {

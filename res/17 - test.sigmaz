@@ -1,21 +1,21 @@
 func somar ( b1 : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_sum ( b1 , b ) :: c;
+	invoke math -> operator_sum_num ( b1 , b ) :: c;
 	return c;
 }
 func menor ( a : num , b : num ) : bool {
 	def c : bool;
-	invoke math -> operator_less ( a , b ) :: c;
+	invoke math -> operator_less_num ( a , b ) :: c;
 	return c;
 }
 func inteiro ( a : num ) : num {
 	def c : num;
-	invoke casting -> cast_integer ( a ) :: c;
+	invoke casting -> cast_integer_num( a ) :: c;
 	return c;
 }
 func decimal ( a : num ) : num {
 	def c : num;
-	invoke casting -> cast_decimal ( a ) :: c;
+	invoke casting -> cast_decimal_num ( a ) :: c;
 	return c;
 }
 
@@ -27,89 +27,97 @@ act println ( a : string , b : num ) {
 }
 operator == ( a : num , b : num ) : bool {
 	def c : bool;
-	invoke math -> operator_equal ( a , b ) :: c;
+	invoke math -> operator_equal_num ( a , b ) :: c;
 	return c;
 }
 
 act operando ( geral : num ) {
-	def w : num = 0;
+
+	def w : num = 0.0;
 	invoke terminal -> change ( ) :: w;
-	def a1 : num = 0;
-	def raiz : num = 0;
-	while ( menor ( a1 , 10 ) ) -> {
+	def a1 : num = 0.0;
+	def raiz : num = 0.0;
+
+	while ( menor ( a1 , 10.0 ) ) -> {
 		println ( "Valor : ", inteiro ( a1 ) );
+
 		def cc : num = somar ( a1 , a1 );
 		cc = somar ( geral , cc );
 		cc = somar ( inteiro ( cc ) , raiz );
 		raiz = somar ( raiz , 0.12 );
+
 		def auxiliar : num;
-		if ( inteiro ( cc ) == 15 ) -> {
-			auxiliar = 5;
+		if ( inteiro ( cc ) == 15.0 ) -> {
+			auxiliar = 5.0;
 		}
-		if ( inteiro ( cc ) == 17 ) -> {
+		if ( inteiro ( cc ) == 17.0 ) -> {
 			
-		}other ( inteiro ( cc ) == 11 ) -> {
-			auxiliar = -1;
+		}other ( inteiro ( cc ) == 11.0 ) -> {
+			auxiliar = -1.0;
 		}others {
-			if ( inteiro ( cc ) == 21 ) -> {
-				auxiliar = 7;
+			if ( inteiro ( cc ) == 21.0 ) -> {
+				auxiliar = 7.0;
 			}
 			
 		}
-		if ( inteiro ( cc ) == 19 ) -> {
-			def passador : num = 1;
-			def acumulando : num = 0;
-			step passador :: ( 0 , 10 , inteiro ( somar ( passador , 1 ) ) ) -> {
-				acumulando = somar ( acumulando , 2 );
+		if ( inteiro ( cc ) == 19.0 ) -> {
+
+			def passador : num = 1.0;
+			def acumulando : num = 0.0;
+			step passador :: ( 0.0 , 10.0 , inteiro ( somar ( passador , 1.0 ) ) ) -> {
+				acumulando = somar ( acumulando , 2.0 );
 			}
 			auxiliar = acumulando;
+
 		}others {
 			
 		}
-		if ( inteiro ( cc ) == 21 ) -> {
-			def passador : num = 1;
-			def acumulando : num = 0;
-			step passador :: ( 0 , 10 , inteiro ( somar ( passador , 1 ) ) ) -> {
-				if ( passador == 8 ) -> {
+		if ( inteiro ( cc ) == 21.0 ) -> {
+			def passador : num = 1.0;
+			def acumulando : num = 0.0;
+			step passador :: ( 0.0 , 10.0 , inteiro ( somar ( passador , 1.0 ) ) ) -> {
+				if ( passador == 8.0 ) -> {
 					cancel;
 				}
-				if ( passador == 5 ) -> {
+				if ( passador == 5.0 ) -> {
 					continue;
 				}
-				acumulando = somar ( acumulando , 2 );
+				acumulando = somar ( acumulando , 2.0 );
 			}
 			auxiliar = acumulando;
 		}
-		if ( inteiro ( cc ) == 24 ) -> {
-			def acumulando : num = 0;
-			step def passador : num :: ( 0 , 10 , inteiro ( somar ( passador , 1 ) ) ) -> {
-				if ( passador == 8 ) -> {
+		if ( inteiro ( cc ) == 24.0 ) -> {
+
+			def acumulando : num = 0.0;
+
+			step def passador : num :: ( 0.0 , 10.0 , inteiro ( somar ( passador , 1.0 ) ) ) -> {
+				if ( passador == 8.0 ) -> {
 					cancel;
 				}
-				if ( passador == 5 ) -> {
+				if ( passador == 5.0 ) -> {
 					continue;
 				}
-				acumulando = somar ( acumulando , somar ( 2 , passador ) );
+				acumulando = somar ( acumulando , somar ( 2.0 , passador ) );
 			}
 			auxiliar = acumulando;
 		}
 		when ( inteiro ( cc ) ) -> {
-			case 13 -> {
-				auxiliar = 1313;
+			case 13.0 -> {
+				auxiliar = 1313.0;
 			}
-			case 7 -> {
-				auxiliar = 7070;
+			case 7.0 -> {
+				auxiliar = 7070.0;
 			}others {
-				if ( inteiro ( cc ) == 9 ) -> {
-					auxiliar = 9090;
+				if ( inteiro ( cc ) == 9.0 ) -> {
+					auxiliar = 9090.0;
 				}
 				
 			}
 			
 		}
 		daz ( inteiro ( cc ) ) -> {
-			extrem ( 0 , 5 ) -> {
-				auxiliar = 55555;
+			extrem ( 0.0 , 5.0 ) -> {
+				auxiliar = 55555.0;
 			}
 			
 		}
@@ -117,15 +125,16 @@ act operando ( geral : num ) {
 		println ( "  - Inteiro : ", inteiro ( cc ) );
 		println ( "  - Decimal : ", decimal ( cc ) );
 		println ( "  - Auxilar : ", auxiliar );
-		a1 = somar ( a1 , 1 );
+		a1 = somar ( a1 , 1.0 );
+
 	}
 	invoke terminal -> change ( ) :: w;
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }
 
 act operar ( geral : num ) {
-	operando ( somar ( 3 , geral ) );
+	operando ( somar ( 3.0 , geral ) );
 }
-mockiz OPERANTE : num = 2;
-define SGeral : num = somar ( 2 , 2 );
+mockiz OPERANTE : num = 2.0;
+define SGeral : num = somar ( 2.0 , 2.0 );
 call iniciar -> operar ( OPERANTE );

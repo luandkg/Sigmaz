@@ -1,153 +1,138 @@
-cast int {
-	getter a : num -> {
-		invoke casting -> cast_integer ( a ) :: a;
-		return a;
-	}
-	setter b : num -> {
-		invoke casting -> cast_integer ( b ) :: b;
-		return b;
-	}
 
+# OPERADORES INT
+
+func int(a : int) : int {
+	return a;
 }
-func somar ( a : int , b : int ) : int {
-	def c1 : num = null;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_sum ( a1 , b1 ) :: c1;
-	def c : int = c1;
-	return c;
-}
-func somar ( a : int , b : num ) : int {
-	def c1 : num = null;
-	def a1 : num = a;
-	invoke math -> operator_sum ( a1 , b ) :: c1;
-	def c : int = c1;
-	return c;
-}
-func somar ( a : num , b : int ) : int {
-	def c1 : num = null;
-	def b1 : num = b;
-	invoke math -> operator_sum ( a , b1 ) :: c1;
-	def c : int = c1;
-	return c;
-}
-func subtrair ( a : int , b : int ) : int {
-	def c1 : num = null;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_sub ( a1 , b1 ) :: c1;
-	def c : int = c1;
-	return c;
-}
-func multiplicar ( a : int , b : int ) : int {
-	def c1 : num = null;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_mux ( a1 , b1 ) :: c1;
-	def c : int = c1;
-	return c;
-}
-func dividir ( a : int , b : int ) : int {
-	def c1 : num = null;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_div ( a1 , b1 ) :: c1;
-	def c : int = c1;
-	return c;
-}
+
+
 operator ++ ( a : int , b : int ) : int {
-	def c1 : num = null;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_sum ( a1 , b1 ) :: c1;
-	def c : int = c1;
+	def c : int;
+	invoke math -> operator_sum_int ( a , b ) :: c;
 	return c;
 }
+
 operator -- ( a : int , b : int ) : int {
-	def c1 : num = null;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_sub ( a1 , b1 ) :: c1;
-	def c : int = c1;
+	def c : int;
+	invoke math -> operator_sub_int ( a , b ) :: c;
 	return c;
 }
 operator ** ( a : int , b : int ) : int {
-	def c1 : num = null;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_mux ( a1 , b1 ) :: c1;
-	def c : int = c1;
+	def c : int;
+	invoke math -> operator_mux_int ( a , b ) :: c;
 	return c;
 }
 operator // ( a : int , b : int ) : int {
-	def c1 : num = null;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_div ( a1 , b1 ) :: c1;
-	def c : int = c1;
+	def c : int;
+	invoke math -> operator_div_int ( a , b ) :: c;
 	return c;
 }
+
+
 operator == ( a : int , b : int ) : bool {
 	def c : bool;
-	def c1 : num = a;
-	def c2 : num = b;
-	invoke math -> operator_equal ( c1 , c2 ) :: c;
+	def c1 : int = a;
+	def c2 : int = b;
+	invoke math -> operator_equal_int ( c1 , c2 ) :: c;
 	return c;
 }
 operator !! ( a : int , b : int ) : bool {
 	def c : bool;
-	def c1 : num = a;
-	def c2 : num = b;
-	invoke math -> operator_not ( c1 , c2 ) :: c;
+	def c1 : int = a;
+	def c2 : int = b;
+	invoke math -> operator_not_int ( c1 , c2 ) :: c;
 	return c;
 }
 director ! ( a : int ) : int {
 	def b : int = a ++ int ( ( -1 ) );
 	return b;
 }
+
+
+func somar ( a : int , b : int ) : int {
+	def c1 : int = null;
+	def a1 : int = a;
+	def b1 : int = b;
+	invoke math -> operator_sum_int ( a1 , b1 ) :: c1;
+	def c : int = c1;
+	return c;
+}
+
+func subtrair ( a : int , b : int ) : int {
+	def c1 : int = null;
+	def a1 : int = a;
+	def b1 : int = b;
+	invoke math -> operator_sub_int ( a1 , b1 ) :: c1;
+	def c : int = c1;
+	return c;
+}
+func multiplicar ( a : int , b : int ) : int {
+	def c1 : int = null;
+	def a1 : int = a;
+	def b1 : int = b;
+	invoke math -> operator_mux_int ( a1 , b1 ) :: c1;
+	def c : int = c1;
+	return c;
+}
+func dividir ( a : int , b : int ) : int {
+	def c1 : int = null;
+	def a1 : int = a;
+	def b1 : int = b;
+	invoke math -> operator_div_int ( a1 , b1 ) :: c1;
+	def c : int = c1;
+	return c;
+}
+
+func resto ( a : int , b : int ) : int {
+	def c : int;
+	invoke math -> operator_mod_int ( a , b ) :: c;
+	return c;
+}
+
+
 func menor ( a : int , b : int ) : bool {
 	def c : bool;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_less ( a1 , b1 ) :: c;
+	def a1 : int = a;
+	def b1 : int = b;
+	invoke math -> operator_less_int ( a1 , b1 ) :: c;
 	return c;
 }
 func maior ( a : int , b : int ) : bool {
 	def c : bool;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_great ( a1 , b1 ) :: c;
+	def a1 : int = a;
+	def b1 : int = b;
+	invoke math -> operator_great_int ( a1 , b1 ) :: c;
 	return c;
 }
 func menor_igual ( a : int , b : int ) : bool {
 	def c1 : bool = false;
 	def c2 : bool = false;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_less ( a1 , b1 ) :: c1;
-	invoke math -> operator_equal ( a1 , b1 ) :: c2;
+	def a1 : int = a;
+	def b1 : int = b;
+	invoke math -> operator_less_int ( a1 , b1 ) :: c1;
+	invoke math -> operator_equal_int ( a1 , b1 ) :: c2;
 	return operador_ou ( c1 , c2 );
 }
 func maior_igual ( a : int , b : int ) : bool {
 	def c1 : bool = false;
 	def c2 : bool = false;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_great ( a1 , b1 ) :: c1;
-	invoke math -> operator_equal ( a1 , b1 ) :: c2;
+	def a1 : int = a;
+	def b1 : int = b;
+	invoke math -> operator_great_int ( a1 , b1 ) :: c1;
+	invoke math -> operator_equal_int ( a1 , b1 ) :: c2;
 	return operador_ou ( c1 , c2 );
 }
 func igual ( a : int , b : int ) : bool {
-	def a1 : num = a;
-	def b1 : num = b;
+	def a1 : int = a;
+	def b1 : int = b;
 	def c : bool;
-	invoke math -> operator_equal ( a1 , b1 ) :: c;
+	invoke math -> operator_equal_int ( a1 , b1 ) :: c;
 	return c;
 }
 func diferente ( a : int , b : int ) : bool {
-	def a1 : num = a;
-	def b1 : num = b;
+	def a1 : int = a;
+	def b1 : int = b;
 	def c : bool;
-	invoke math -> operator_not ( a1 , b1 ) :: c;
+	invoke math -> operator_not_int ( a1 , b1 ) :: c;
 	return c;
 }

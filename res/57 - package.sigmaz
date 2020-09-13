@@ -1,8 +1,8 @@
 package Terminal {
 	struct Terminal {
 		extern : 
-		act println ( a : string , b : num ) {
-			def c : num;
+		act println ( a : string , b : int ) {
+			def c : int;
 			invoke terminal -> change ( ) :: c;
 			invoke terminal -> print ( a ) :: c;
 			invoke terminal -> print ( b ) :: c;
@@ -19,17 +19,17 @@ package Blocos {
 
 	struct XACC {
 		all : 
-		mockiz XAT : num = 12;
+		mockiz XAT : int = 12;
 	}
 
 	struct BGeral with XACC {
-		init BGeral ( a : num ) -> XACC ( ) {
+		init BGeral ( a : int ) -> XACC ( ) {
 			_a = a;
 		}
 		restrict : 
-		define _a : num = 0;
+		define _a : int = 0;
 		all : 
-		func getA ( ) : num {
+		func getA ( ) : int {
 			return _a;
 		}
 		
@@ -37,7 +37,7 @@ package Blocos {
 
 	struct Blocos {
 		extern : 
-		act Blocar ( a : num , b : num ) {
+		act Blocar ( a : int , b : int ) {
 			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: EXTERNS;
 			Terminal -> println ( " -->> Valor A : ", a );
 		}
@@ -75,6 +75,6 @@ call iniciar -> {
 	Blocos -> Blocar ( 5 , 1 );
 	def bg : BGeral = init BGeral ( 15 );
 	Blocos -> Blocar ( 7 , 1 );
-	def bga : num = bg.getA ( );
+	def bga : int = bg.getA ( );
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 }

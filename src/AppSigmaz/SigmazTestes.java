@@ -3,6 +3,7 @@ package AppSigmaz;
 import Sigmaz.Analisador.Analisador;
 import Sigmaz.Compilador.Compiler;
 import Sigmaz.Executor.RunTime;
+import Sigmaz.PosProcessamento.PosProcessador;
 import Sigmaz.Utils.Erro;
 import Sigmaz.Utils.GrupoDeErro;
 import Sigmaz.Utils.Tempo;
@@ -32,7 +33,7 @@ public class SigmazTestes {
         mArquivos.add(eArquivo);
     }
 
-    public void init() {
+    public void init(String mLocal) {
 
 
         System.out.println("################ SIGMAZ - TESTES UNITARIOS ################");
@@ -77,34 +78,54 @@ public class SigmazTestes {
 
                     Analisador AnaliseC = new Analisador();
 
-                    AnaliseC.init(CompilerC.getASTS(), "res/");
+                    AnaliseC.init(CompilerC.getASTS(), mLocal);
 
                     if (AnaliseC.getErros().size() == 0) {
 
-                        CompilerC.Compilar(mSaida);
-                        RunTime RunTimeC = new RunTime();
 
-                        RunTimeC.internalizar();
+                        PosProcessador PosProcessadorC = new PosProcessador();
 
-                        RunTimeC.init(mSaida);
+                        PosProcessadorC.init(CompilerC.getASTS(), mLocal);
+
+                        if (PosProcessadorC.getErros().size()==0){
+
+                            CompilerC.Compilar(mSaida);
+                            RunTime RunTimeC = new RunTime();
+
+                            RunTimeC.internalizar();
+
+                            RunTimeC.init(mSaida);
 
 
-                        //  System.out.println("################ " + Arquivo + " ################");
+                            //  System.out.println("################ " + Arquivo + " ################");
 
-                        RunTimeC.run();
+                            RunTimeC.run();
 
 
-                        if (RunTimeC.getErros().size() == 0) {
-                            passou = true;
-                        } else {
+                            if (RunTimeC.getErros().size() == 0) {
+                                passou = true;
+                            } else {
 
-                            for (String Erro : RunTimeC.getErros()) {
+                                for (String Erro : RunTimeC.getErros()) {
+                                    mTemp.add("\t\t" + Erro);
+                                }
+
+                                parou = "Executor";
+
+                            }
+
+                        }else{
+
+                            for (String Erro : PosProcessadorC.getErros()) {
                                 mTemp.add("\t\t" + Erro);
                             }
 
-                            parou = "Executor";
+                            parou = "Pos Processador";
 
                         }
+
+
+
 
                     } else {
                         parou = "Analisador";

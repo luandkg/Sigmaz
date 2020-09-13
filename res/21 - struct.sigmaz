@@ -1,7 +1,7 @@
 call iniciar -> pular ( );
 struct Pessoa {
 	define nome : string;
-	define idade : num;
+	define idade : int;
 	func getNome ( ) : string {
 		nome = "Luan Alves";
 		return nome;
@@ -19,7 +19,7 @@ act pular ( ) {
 	alterador_Pessoa ( P1 );
 	P1.nome = "Alice";
 	P1.mostrar ( );
-	def t : num = somar ( 2 , 2 );
+	def t : int = somar ( 2 , 2 );
 }
 
 act alterador_Pessoa ( az : Pessoa ) {
@@ -32,8 +32,8 @@ act alterador_Pessoa ( az : Pessoa ) {
 	def nome2 : string = az.nome;
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }
-func somar ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sum ( a , b ) :: c;
+func somar ( a : int , b : int ) : int {
+	def c : int;
+	invoke math -> operator_sum_int ( a , b ) :: c;
 	return c;
 }

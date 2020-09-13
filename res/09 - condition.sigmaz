@@ -1,7 +1,7 @@
 call iniciar -> operando ( );
 act operando ( ) {
-	def a1 : num = 10;
-	def a2 : num = 5;
+	def a1 : num = 10.0;
+	def a2 : num = 5.0;
 	def t : bool = a1 == a2;
 	println ( "A1 : : ", a1 );
 	println ( "A2 : : ", a2 );
@@ -21,12 +21,12 @@ act operando ( ) {
 	}
 	println ( "Comparacao : ", modo );
 	println ( "");
-	def cai1 : bool = maior_igual ( 4 , 6 );
-	def cai2 : bool = maior_igual ( 4 , 2 );
-	def cai3 : bool = maior_igual ( 4 , 4 );
-	def cei1 : bool = menor_igual ( 4 , 2 );
-	def cei2 : bool = menor_igual ( 4 , 4 );
-	def cei3 : bool = menor_igual ( 4 , 6 );
+	def cai1 : bool = maior_igual ( 4.0 , 6.0 );
+	def cai2 : bool = maior_igual ( 4.0 , 2.0 );
+	def cai3 : bool = maior_igual ( 4.0 , 4.0 );
+	def cei1 : bool = menor_igual ( 4.0 , 2.0 );
+	def cei2 : bool = menor_igual ( 4.0 , 4.0 );
+	def cei3 : bool = menor_igual ( 4.0 , 6.0 );
 	println ( "Operador Maior Igual");
 	println ( "4 >= 6 : ", cai1 );
 	println ( "4 >= 2 : ", cai2 );
@@ -36,7 +36,7 @@ act operando ( ) {
 	println ( "4 <= 2 : ", cei1 );
 	println ( "4 <= 4 : ", cei2 );
 	println ( "4 <= 6 : ", cei3 );
-	def CC : bool = ( 10 == 12 ) == false;
+	def CC : bool = ( 10.0 == 12.0 ) == false;
 	def w : string = ( "Luan");
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
@@ -44,8 +44,8 @@ func maior_igual ( a : num , b : num ) : bool {
 	def c1 : bool;
 	def c2 : bool;
 	def c3 : bool = false;
-	invoke math -> operator_great ( a , b ) :: c1;
-	invoke math -> operator_equal ( a , b ) :: c2;
+	invoke math -> operator_great_num ( a , b ) :: c1;
+	invoke math -> operator_equal_num ( a , b ) :: c2;
 	if ( c1 ) -> {
 		c3 = true;
 	}
@@ -56,14 +56,14 @@ func maior_igual ( a : num , b : num ) : bool {
 }
 func menor ( a : num , b : num ) : bool {
 	def c : bool;
-	invoke math -> operator_less ( a , b ) :: c;
+	invoke math -> operator_less_num ( a , b ) :: c;
 	return c;
 }
 func menor_igual ( a : num , b : num ) : bool {
 	def c1 : bool;
 	def c2 : bool;
-	invoke math -> operator_less ( a , b ) :: c1;
-	invoke math -> operator_equal ( a , b ) :: c2;
+	invoke math -> operator_less_num ( a , b ) :: c1;
+	invoke math -> operator_equal_num ( a , b ) :: c2;
 	def c3 : bool = false;
 	if ( c1 ) -> {
 		c3 = true;
@@ -75,12 +75,12 @@ func menor_igual ( a : num , b : num ) : bool {
 }
 func igual ( a : num , b : num ) : bool {
 	def c : bool;
-	invoke math -> operator_equal ( a , b ) :: c;
+	invoke math -> operator_equal_num ( a , b ) :: c;
 	return c;
 }
 operator == ( a : num , b : num ) : bool {
 	def c : bool;
-	invoke math -> operator_equal ( a , b ) :: c;
+	invoke math -> operator_equal_num ( a , b ) :: c;
 	return c;
 }
 operator == ( a : bool , b : bool ) : bool {

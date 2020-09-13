@@ -68,13 +68,15 @@ public class Run_Each {
 
         String realTipagem = "";
 
-        boolean eLista = false;
-        boolean eVetor = false;
+
+        String eTiparIterador = "Iterador";
+        String eTipado = "";
 
 
         if (getTipo(mAST.getRetornoTipo()).contentEquals("Lista")) {
 
             realTipagem = "Lista<>Lista<" + mTipagem + ">";
+
             if (realTipagem.contentEquals((mAST.getRetornoTipo()))) {
 
             } else {
@@ -82,7 +84,7 @@ public class Run_Each {
                 return;
             }
 
-            eLista = true;
+            eTipado="Lista";
 
         } else if (getTipo(mAST.getRetornoTipo()).contentEquals("Vetor")) {
 
@@ -94,7 +96,7 @@ public class Run_Each {
                 return;
             }
 
-            eVetor = true;
+            eTipado="Vetor";
 
         } else {
             mRunTime.errar(mLocal, "O Iterable do Each precisa ser do tipo : Lista ou Vetor");
@@ -112,22 +114,13 @@ public class Run_Each {
         // System.out.println("  ERROS = " + mRunTime.getErros().size());
 
         long HEAPID = mRunTime.getHEAPID();
-        String eNome = "";
-        String eTipado = "";
+        String eNome = "<Struct::" + "Iterador<>Iterador<" + mTipagem + ">>" + ":" + HEAPID + ">";
 
 
-        if (eLista) {
-            eNome = "<Struct::" + "Lista<>Iterador<" + mTipagem + ">>" + ":" + HEAPID + ">";
-            eTipado = "Lista";
-        }
-        if (eVetor) {
-            eNome = "<Struct::" + "Vetor<>Iterador<" + mTipagem + ">>" + ":" + HEAPID + ">";
-            eTipado = "Vetor";
-
+        if (mRunTime.getErros().size() > 0) {
+            return ;
         }
 
-
-        //  System.out.println(eNome);
         AST_Implementador mImplementador = new AST_Implementador();
 
         AST eAST = mImplementador.criar_InitGenerico("Iterador", eTipado + "<" + mTipagem + ">");
@@ -138,11 +131,17 @@ public class Run_Each {
         eArg.setTipo("ARGUMENT");
         eArgs.getASTS().add(eArg);
 
-        //  eArgs.ImprimirArvoreDeInstrucoes();
 
         Run_Struct mRun_Struct = new Run_Struct(mRunTime);
         mRun_Struct.setNome(eNome);
+
+        for (String Referencia : mEscopo.getRefers()) {
+            mRun_Struct.adicionar_refer(Referencia);
+        }
+
+
         mRun_Struct.init("Iterador<" + eTipado + "<" + mTipagem + ">>", eAST, EachEscopo);
+
 
         if (mRunTime.getErros().size() > 0) {
             return;
@@ -152,11 +151,8 @@ public class Run_Each {
 
         String eNomeEach = "{{EACH}}::" + HEAPID;
 
-        // System.out.println("  ERROS = " + mRunTime.getErros().size());
 
-        EachEscopo.criarDefinicao(eNomeEach, eTipado + "<>Iterador<" + eTipado + "<" + mTipagem + ">>", eNome);
-
-        //  System.out.println(eNomeEach + " -->> PRONTA ");
+        EachEscopo.criarDefinicao(eNomeEach, eTiparIterador + "<>Iterador<" + eTipado + "<" + mTipagem + ">>", eNome);
 
 
         AST mExecute = mImplementador.criar_ExecuteFunction(eNomeEach, "iniciar");
@@ -164,8 +160,6 @@ public class Run_Each {
 
         Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
         mASTExecute.init(mExecute);
-
-        //  System.out.println(eNomeEach + " -->> INICIAR ");
 
         AST mCondition = mImplementador.criar_CondicaoStruct_Func(eNomeEach, "continuar");
 
@@ -183,9 +177,7 @@ public class Run_Each {
         mImplementador.adicionar(mBody2, mProximo);
 
 
-        // System.out.println(  mBody2.ImprimirArvoreDeInstrucoes());
-
-        initEach(mCondition, mBody2, EachEscopo);
+       initEach(mCondition, mBody2, EachEscopo);
 
 
         mRunTime.removerHeap(eNome);

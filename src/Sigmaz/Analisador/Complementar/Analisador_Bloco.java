@@ -1,6 +1,8 @@
-package Sigmaz.Analisador;
+package Sigmaz.Analisador.Complementar;
 
 import Sigmaz.Analisador.ASTS.*;
+import Sigmaz.Analisador.Analisador;
+import Sigmaz.Analisador.Complementar.Analisar_Outros;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
@@ -9,8 +11,7 @@ public class Analisador_Bloco {
 
     private Analisador mAnalisador;
 
-  //  private Analisar_Function mAnalisar_Function;
-   // private Analisar_Action mAnalisar_Action;
+
     private Analisar_Execute mAnalisar_Execute;
     private Analisar_Cast mAnalisar_Cast;
     private Analisar_Daz mAnalisar_Daz;
@@ -18,6 +19,8 @@ public class Analisador_Bloco {
     private Analisar_Step mAnalisar_Step;
     private Analisar_Condition mAnalisar_Condition;
     private Analisar_While mAnalisar_While;
+    private Analisar_Loop mAnalisar_Loop;
+
     private Analisar_Argumentos mAnalisar_Argumentos;
     private Analisar_Apply mAnalisar_Apply;
     private Analisar_Stage mAnalisar_Stage;
@@ -39,9 +42,6 @@ public class Analisador_Bloco {
 
         mAnalisador=eAnalisador;
 
-       // mAnalisar_Function = new Analisar_Function(mAnalisador,this);
-      //  mAnalisar_Action = new Analisar_Action(mAnalisador,this);
-
         mAnalisar_Execute = new Analisar_Execute(mAnalisador,this);
         mAnalisar_Cast = new Analisar_Cast(mAnalisador,this);
 
@@ -50,6 +50,7 @@ public class Analisador_Bloco {
         mAnalisar_Step = new Analisar_Step(mAnalisador,this);
         mAnalisar_Condition = new Analisar_Condition(mAnalisador,this);
         mAnalisar_While = new Analisar_While(mAnalisador,this);
+        mAnalisar_Loop= new Analisar_Loop(mAnalisador,this);
         mAnalisar_Argumentos = new Analisar_Argumentos(mAnalisador,this);
         mAnalisar_Apply = new Analisar_Apply(mAnalisador,this);
         mAnalisar_Stage = new Analisar_Stage(mAnalisador,this);
@@ -67,10 +68,11 @@ public class Analisador_Bloco {
         mTipados.add("bool");
         mTipados.add("auto");
         mTipados.add("functor");
+        mTipados.add("int");
 
-        mPrimitivos.add("num");
-        mPrimitivos.add("string");
-        mPrimitivos.add("bool");
+        mPrimitivos=eAnalisador.getPrimitivos();
+
+
 
     }
 
@@ -118,6 +120,11 @@ public class Analisador_Bloco {
     public Analisar_While getAnalisar_While() {
         return mAnalisar_While;
     }
+
+    public Analisar_Loop getAnalisar_Loop() {
+        return mAnalisar_Loop;
+    }
+
 
     public Analisar_Argumentos getAnalisar_Argumentos() {
         return mAnalisar_Argumentos;

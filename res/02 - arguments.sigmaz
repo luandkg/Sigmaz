@@ -1,6 +1,10 @@
-define INA : string = "luan";
-call passaro -> voar ( 50 , false );
-call rapina -> rapina ( 12 , -450.12 , "Eaer", INA );
+
+define NOME : string = "luan";
+
+call passaro -> voar ( 50.0 , false );
+
+call rapina -> rapina ( 12.0 , -450.12 , "Eaer", NOME );
+
 act voar ( n : num , b : bool ) {
 	
 }

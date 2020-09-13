@@ -32,6 +32,8 @@ public class Run_Cast {
         String mEntrada = mAST.getRetornoTipo();
         String eConteudo = mAST.getConteudo();
 
+
+
         if (mEntrada.contentEquals(mSaida)) {
             return eConteudo;
         } else if (mEntrada.contentEquals("num")) {

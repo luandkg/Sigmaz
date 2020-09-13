@@ -180,8 +180,15 @@ public class Run_Execute {
                     mItem = mEscopoStruct.init_Object(eInternal, mEscopo, "<<ANY>>");
                 }
 
+                if (mRunTime.getErros().size() > 0) {
+                    return;
+                }
+
                 mEscopoStruct = mRunTime.getRun_Struct(mItem.getValor());
 
+                if (mRunTime.getErros().size() > 0) {
+                    return;
+                }
 
             }
 

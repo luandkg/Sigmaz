@@ -31,10 +31,14 @@ public class Run_Internal {
         }
         Item eItem = null;
 
+
         if (eInternal.mesmoValor("STRUCT_OBJECT")) {
 
             //  System.out.println("\t - ESTRUTURA OBJECT : " + eInternal.getNome());
 
+            if (mRunTime.getErros().size() > 0) {
+                return null;
+            }
 
             eItem = mEstruturador.init_Object(eInternal, mEscopo, "<<ANY>>");
 

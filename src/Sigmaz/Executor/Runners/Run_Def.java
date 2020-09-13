@@ -43,6 +43,11 @@ public class Run_Def {
         }
 
 
+        if (mAST.getRetornoTipo().contentEquals("<<ANY>>")){
+            mAST.setRetornoTipo(mTipagem);
+        }
+
+
         if (mAST.getIsNulo()) {
 
 
@@ -95,6 +100,7 @@ public class Run_Def {
         if (mAST.getRetornoTipo().contentEquals("<<ANY>>")){
             mRunTime.getErros().add("O retorno de uma variavel definida a partir de LET nao pode ser nula");
         }
+
 
 
 

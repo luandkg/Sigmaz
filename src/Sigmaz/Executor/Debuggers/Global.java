@@ -80,4 +80,18 @@ public class Global {
 
     }
 
+
+    public void ListarRegressiveStack() {
+
+
+        System.out.println(" ######################### STACK - REGRESSIVE STACK ############################ ");
+
+
+        getEscopo().getDebug().mapear_regressive_stack();
+
+
+        System.out.println(" ######################### ##### ############################ ");
+
+    }
+
 }

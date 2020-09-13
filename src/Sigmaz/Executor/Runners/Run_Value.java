@@ -96,6 +96,10 @@ public class Run_Value {
 
         //  System.out.println("INIT VALUE " + ASTCorrente.getNome());
 
+        if (mRunTime.getErros().size() > 0) {
+            return ;
+        }
+
         if (ASTCorrente.mesmoValor("NULL")) {
 
             mIsNulo = true;
@@ -114,6 +118,14 @@ public class Run_Value {
             mConteudo = ASTCorrente.getNome();
 
         } else if (ASTCorrente.mesmoValor("Num")) {
+
+
+            mIsNulo = false;
+            mIsPrimitivo = true;
+            mRetornoTipo = "int";
+            mConteudo = ASTCorrente.getNome();
+
+        } else if (ASTCorrente.mesmoValor("Float")) {
 
 
             mIsNulo = false;
@@ -180,6 +192,23 @@ public class Run_Value {
             mIsReferenciavel = true;
             mReferencia = mRetorno;
 
+        } else if (ASTCorrente.getValor().contentEquals("THIS")) {
+
+            Run_This mRun_This = new Run_This(mRunTime);
+            Item mRetorno = mRun_This.operadorPonto(ASTCorrente.getBranch("THIS"), mEscopo, eRetorno);
+
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+
+            this.setNulo(mRetorno.getNulo());
+            this.setPrimitivo(mRetorno.getPrimitivo());
+            this.setConteudo(mRetorno.getValor());
+            this.setRetornoTipo(mRetorno.getTipo());
+
+            mIsReferenciavel = true;
+            mReferencia = mRetorno;
+
         } else if (ASTCorrente.getValor().contentEquals("STRUCT_EXTERN")) {
 
 
@@ -214,6 +243,7 @@ public class Run_Value {
         } else if (ASTCorrente.getValor().contentEquals("VECTOR")) {
 
             vector(ASTCorrente, eRetorno);
+
 
         } else {
 
@@ -261,7 +291,12 @@ public class Run_Value {
 
             mIsNulo = true;
             mRetornoTipo = eRetorno;
-            mIsPrimitivo = true;
+            mIsPrimitivo = false;
+
+            if (mRetornoTipo.contentEquals("num") || mRetornoTipo.contentEquals("bool") || mRetornoTipo.contentEquals("string")) {
+                mIsPrimitivo = true;
+            }
+
 
         } else {
 
@@ -653,9 +688,9 @@ public class Run_Value {
     public void vector(AST ASTCorrente, String eRetorno) {
 
 
-        Escopo tmp = new Escopo(mRunTime,mEscopo);
+        Escopo tmp = new Escopo(mRunTime, mEscopo);
 
-       // System.out.println("VECTOR  -> ");
+        // System.out.println("VECTOR  -> ");
 
         long VECTORID = mRunTime.getVECTORID();
 
@@ -689,6 +724,8 @@ public class Run_Value {
         }
 
         eNome = "<Struct::" + "Vetor<>Vetor<" + eTipado + ">>" + ":" + HEAPID + ">";
+
+        // System.out.println(eNome);
 
         Item mItem = tmp.criarDefinicao(eNomeVector, "Vetor<>Vetor<" + eTipado + ">", eNome);
         AST_Implementador mImplementador = new AST_Implementador();
@@ -729,35 +766,71 @@ public class Run_Value {
             eRV.init(oAST, "<<ANY>>");
 
 
-            if (eRV.getIsPrimitivo()){
+            if (eRV.getIsPrimitivo()) {
 
                 if (eRV.getRetornoTipo().contentEquals("num")) {
 
-                    AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", eRV.getConteudo(), "Num");
+                    if (eRV.getIsNulo()) {
 
-                    // System.out.println(mExecute.ImprimirArvoreDeInstrucoes());
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", "null", "ID");
+                        Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
+                        mASTExecute.init(mExecute);
 
-                    Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
-                    mASTExecute.init(mExecute);
+                    } else {
+
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", eRV.getConteudo(), "Num");
+                        Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
+                        mASTExecute.init(mExecute);
+
+                    }
+
+                    if (mRunTime.getErros().size() > 0) {
+                        return;
+                    }
 
                 } else if (eRV.getRetornoTipo().contentEquals("string")) {
 
-                    AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", eRV.getConteudo(), "Text");
+                    if (eRV.getIsNulo()) {
 
-                   // System.out.println(mExecute.ImprimirArvoreDeInstrucoes());
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", "null", "ID");
+                        Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
+                        mASTExecute.init(mExecute);
 
-                    Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
-                    mASTExecute.init(mExecute);
+                    } else {
+
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", eRV.getConteudo(), "Text");
+                        Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
+                        mASTExecute.init(mExecute);
+
+                    }
+
+                    if (mRunTime.getErros().size() > 0) {
+                        return;
+                    }
+
+
                 } else if (eRV.getRetornoTipo().contentEquals("bool")) {
 
-                    AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", eRV.getConteudo(), "ID");
+                    if (eRV.getIsNulo()) {
 
-                   // System.out.println(mExecute.ImprimirArvoreDeInstrucoes());
 
-                    Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
-                    mASTExecute.init(mExecute);
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", "null", "ID");
+                        Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
+                        mASTExecute.init(mExecute);
 
-                }else{
+                    } else {
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", eRV.getConteudo(), "ID");
+                        Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
+                        mASTExecute.init(mExecute);
+                    }
+
+                    // System.out.println(mExecute.ImprimirArvoreDeInstrucoes());
+
+                    if (mRunTime.getErros().size() > 0) {
+                        return;
+                    }
+
+                } else {
 
                     mRunTime.errar(mLocal, "Tipo primitivo desconhecido : " + eRV.getRetornoTipo());
 
@@ -766,24 +839,38 @@ public class Run_Value {
 
                 }
 
-            }else{
+            } else {
 
-               // System.out.println(" OBJ NAO PRIMITIVO :: " + eRV.getRetornoTipo());
+                // System.out.println(" OBJ NAO PRIMITIVO :: " + eRV.getRetornoTipo());
 
-                String eNomeRef = "{REF}::" + mRunTime.getVECTORID();
+                if (eRV.getIsNulo()) {
 
-                Escopo gEscopo = new Escopo(mRunTime,EachEscopo);
-                EachEscopo.criarDefinicaoStruct(eNomeRef,eRV.getRetornoTipo(),eRV.getConteudo());
+                    AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", "null", "ID");
+                    Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
+                    mASTExecute.init(mExecute);
 
-               // System.out.println(" -->> " + eRV.getConteudo());
+                } else {
 
-                AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", eNomeRef, "ID");
+                    String eNomeRef = "{REF}::" + mRunTime.getVECTORID();
 
-                //System.out.println(mExecute.ImprimirArvoreDeInstrucoes());
+                    Escopo gEscopo = new Escopo(mRunTime, EachEscopo);
+                    EachEscopo.criarDefinicaoStruct(eNomeRef, eRV.getRetornoTipo(), eRV.getConteudo());
 
-                Run_Execute mASTExecute = new Run_Execute(mRunTime, gEscopo);
-                mASTExecute.init(mExecute);
+                    // System.out.println(" -->> " + eRV.getConteudo());
 
+                    AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", eNomeRef, "ID");
+
+                    //System.out.println(mExecute.ImprimirArvoreDeInstrucoes());
+
+                    Run_Execute mASTExecute = new Run_Execute(mRunTime, gEscopo);
+                    mASTExecute.init(mExecute);
+
+
+                }
+
+                if (mRunTime.getErros().size() > 0) {
+                    return ;
+                }
             }
 
 

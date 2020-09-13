@@ -243,7 +243,11 @@ public class RunTime {
         }
 
         if (!enc) {
-            mErros.add("Nao foi possivel encontrar a struct : " + eNome);
+            if (eNome.contentEquals("")) {
+                mErros.add("Nao foi possivel encontrar a struct - PONTEIRO NULO");
+            } else {
+                mErros.add("Nao foi possivel encontrar a struct : " + eNome);
+            }
         }
 
         return mRet;
@@ -554,7 +558,6 @@ public class RunTime {
 
         ret = "PRIMITIVE";
 
-        //  System.out.println("Tipando --> " + eNome);
 
         ArrayList<AST> mCasts = new ArrayList<AST>();
         ArrayList<AST> mTipos = new ArrayList<AST>();
@@ -574,14 +577,12 @@ public class RunTime {
 
             if (existePacote(Referencia)) {
 
-                for (AST eAST : getPacote(Referencia).getASTS()) {
 
-                    //  System.out.println("Tipando " + eAST.getNome() + "....");
+                for (AST eAST : getPacote(Referencia).getASTS()) {
 
 
                     if (eAST.mesmoTipo("CAST")) {
                         mCasts.add(eAST);
-                        //  } else if (eAST.mesmoTipo("TYPE")) {
 
                     } else if (eAST.mesmoTipo("STRUCT")) {
 
@@ -618,7 +619,6 @@ public class RunTime {
         }
 
         for (AST eAST : mStructs) {
-
 
             if (eAST.mesmoNome(eNome)) {
                 String eExtended = eAST.getBranch("EXTENDED").getNome();
@@ -775,7 +775,7 @@ public class RunTime {
 
         }
 
-        if(!enc){
+        if (!enc) {
             mErros.add("Sigmaz Vazio !");
         }
 
@@ -800,7 +800,7 @@ public class RunTime {
 
     }
 
-    public void errar(String eLocal,String eMensagem){
+    public void errar(String eLocal, String eMensagem) {
         getErros().add(eLocal + " -->> " + eMensagem);
     }
 

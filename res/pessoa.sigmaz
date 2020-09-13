@@ -1,7 +1,7 @@
 struct Pessoa{
 
     define nome : string = "";
-    define idade : num = 0;
+    define idade : int = 0;
 
     define sacola : Sacola;
 
@@ -13,11 +13,11 @@ struct Pessoa{
         return nome;
     }
 
-    act setIdade(_idade : num)  {
+    act setIdade(_idade : int)  {
          idade=_idade;
     }
 
-    func getIdade() : num {
+    func getIdade() : int {
         return idade;
     }
 

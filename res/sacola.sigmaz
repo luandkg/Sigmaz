@@ -1,14 +1,14 @@
 struct Sacola {
 
-    define itens : num = 0;
+    define itens : int = 0;
 
-    act aumentar( g : num)  {
-         itens= somar_inteiro(itens,g);
+    act aumentar( g : int)  {
+         itens= somar(itens,g);
     }
 
-    func quantidade() : num { return itens; }
+    func quantidade() : int { return itens; }
 
-    func getQuantidade() : num { return itens; }
+    func getQuantidade() : int { return itens; }
 
 
 
@@ -33,8 +33,8 @@ struct Sacola {
 
     }
 
-    func someisso(a:num,b:num) : num {
-        return somar_inteiro(a,b);
+    func someisso(a:int,b:int) : int {
+        return somar(a,b);
     }
 
 }

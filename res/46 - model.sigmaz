@@ -1,14 +1,14 @@
 call iniciar -> inicio ( );
-define A : num = 10;
+define A : num = 10.0;
 act inicio ( ) {
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
 
 #struct Relator at Relax {}
 struct Contador at M_Contagem {
-	define Base : num = 10;
-	mockiz Fluxo : num = 12;
-	define val : vax >> ( num ) = 12;
+	define Base : num = 10.0;
+	mockiz Fluxo : num = 12.0;
+	define val : vax >> ( num ) = 12.0;
 	act contar ( a : num ) {
 		
 	}

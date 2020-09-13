@@ -1,16 +1,18 @@
-package Sigmaz.Analisador;
+package Sigmaz.PosProcessamento;
 
+import Sigmaz.Analisador.Analisador;
+import Sigmaz.Executor.Alterador;
 import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
 
 public class Modelagem {
 
-    private Analisador mAnalisador;
+    private PosProcessador mAnalisador;
 
     private boolean mExterno;
 
-    public Modelagem(Analisador eAnalisador) {
+    public Modelagem(PosProcessador eAnalisador) {
 
         mAnalisador = eAnalisador;
         mExterno = true;
@@ -33,6 +35,9 @@ public class Modelagem {
 
     public void init(ArrayList<AST> mTodos) {
 
+        mAnalisador.mensagem("");
+        mAnalisador.mensagem(" ------------------ FASE MODELAGEM ----------------------- ");
+        mAnalisador.mensagem("");
 
         ArrayList<AST> mPacotes = new ArrayList<AST>();
 
@@ -63,7 +68,7 @@ public class Modelagem {
                     mModelosSigmaz.add(eModelo);
                 }
 
-                modelador(mAST, mModelosSigmaz);
+                modelador(true, "SIGMAZ", mAST, mModelosSigmaz);
 
 
                 for (AST ePacote : mPacotes) {
@@ -83,7 +88,7 @@ public class Modelagem {
                         mModelosPacote.add(eModelo);
                     }
 
-                    modelador(ePacote, mModelosPacote);
+                    modelador(false, ePacote.getNome(), ePacote, mModelosPacote);
 
                 }
 
@@ -95,18 +100,10 @@ public class Modelagem {
     }
 
 
-    public void modelador(AST ASTPai, ArrayList<AST> modelos) {
+    public void modelador(boolean eRaiz, String eNome, AST ASTPai, ArrayList<AST> modelos) {
 
-        mAnalisador.mensagem("------------------------- MODEL --------------------------");
-
-        mAnalisador.mensagem(" MODELS : ");
 
         ArrayList<String> mNomes = new ArrayList<String>();
-
-        for (AST Struct_AST : modelos) {
-            mAnalisador.mensagem("\t - " + Struct_AST.getNome());
-            mNomes.add(Struct_AST.getNome());
-        }
 
         ArrayList<AST> mEstruturasComModelos = new ArrayList<AST>();
 
@@ -122,33 +119,57 @@ public class Modelagem {
 
 
         }
-
-        mAnalisador.mensagem(" STRUCTS : ");
-        for (AST Struct_AST : mEstruturasComModelos) {
-            mAnalisador.mensagem("\t - " + Struct_AST.getNome() + " -> " + Struct_AST.getBranch("MODEL").getNome());
+        for (AST Struct_AST : modelos) {
+            mNomes.add(Struct_AST.getNome());
         }
 
-        mAnalisador.mensagem("");
 
-        for (AST Struct_AST : mEstruturasComModelos) {
+        if (modelos.size() == 0 && mEstruturasComModelos.size() == 0) {
 
-            String eModel_Nome = Struct_AST.getBranch("MODEL").getNome();
 
-            mAnalisador.mensagem(" MODELANDO : " + Struct_AST.getNome());
-            mAnalisador.mensagem("\t - " + Struct_AST.getNome());
+        } else {
 
-            if (mNomes.contains(eModel_Nome)) {
-
-                modelar(Struct_AST, eModel_Nome, modelos);
-
+            if (eRaiz) {
+                mAnalisador.mensagem("------------------------- MODEL " + eNome + " --------------------------");
             } else {
-                mAnalisador.getErros().add("  - Model " + eModel_Nome + " : Nao encontrado ");
+                mAnalisador.mensagem("------------------------- MODEL - PACKAGE : " + eNome + " --------------------------");
             }
 
+            mAnalisador.mensagem(" MODELS : " + modelos.size());
+
+            for (AST Struct_AST : modelos) {
+                mAnalisador.mensagem("\t - " + Struct_AST.getNome());
+            }
+
+            mAnalisador.mensagem(" STRUCTS : " + mEstruturasComModelos.size());
+            for (AST Struct_AST : mEstruturasComModelos) {
+                mAnalisador.mensagem("\t - " + Struct_AST.getNome() + " -> " + Struct_AST.getBranch("MODEL").getNome());
+            }
+
+            mAnalisador.mensagem("");
+
+            for (AST Struct_AST : mEstruturasComModelos) {
+
+                String eModel_Nome = Struct_AST.getBranch("MODEL").getNome();
+
+                mAnalisador.mensagem(" MODELANDO : " + Struct_AST.getNome());
+                mAnalisador.mensagem("\t - " + Struct_AST.getNome());
+
+                if (mNomes.contains(eModel_Nome)) {
+
+                    modelar(Struct_AST, eModel_Nome, modelos);
+
+                } else {
+                    mAnalisador.getErros().add("  - Model " + eModel_Nome + " : Nao encontrado ");
+                }
+
+
+            }
+
+            mAnalisador.mensagem("---------------------------------------------------------------------------");
+
 
         }
-
-        mAnalisador.mensagem("---------------------------------------------------");
 
 
     }
@@ -193,8 +214,94 @@ public class Modelagem {
 
     public void modelar(AST Struct, String eModelo, ArrayList<AST> mModelos) {
 
-        AST Modelo = ProcurarModelo(eModelo, mModelos);
 
+
+        AST Modelo = ProcurarModelo(eModelo, mModelos).copiar();
+
+
+
+        AST mStruct_Generic = Struct.getBranch("MODEL").getBranch("GENERIC");
+
+
+        AST mModelo_Generic = Modelo.getBranch("GENERIC");
+
+
+
+
+
+        if (mModelo_Generic.mesmoNome("TRUE") && mStruct_Generic.mesmoNome("TRUE")) {
+
+            int initContagem = 0;
+            int StructContagem = 0;
+
+            for (AST ASTC : mModelo_Generic.getASTS()) {
+                initContagem += 1;
+            }
+            for (AST ASTC : mStruct_Generic.getASTS()) {
+                StructContagem += 1;
+            }
+
+
+            if (StructContagem == initContagem) {
+
+                Alterador mAlterador = new Alterador();
+
+
+                //  System.out.println("ALTERADOR " + eNome);
+
+                int i = 0;
+                //      for (AST eSub : mStructGeneric.getASTS()) {
+                for (AST eSub : mModelo_Generic.getASTS()) {
+
+                    AST sInit = mStruct_Generic.getASTS().get(i);
+
+                   //    mAnalisador.mensagem("Alterando " + eSub.getNome() + " -> " + sInit.getNome());
+
+                    mAlterador.adicionar(eSub.getNome(), sInit);
+
+
+                    i += 1;
+                }
+
+                mAlterador.alterar(Modelo);
+
+
+
+
+            } else {
+
+                mAnalisador.errar("Modelagem de " + Struct.getNome() + " com " + Modelo.getNome() + " : Precisa de " +initContagem + " Tipos Abstratos   !");
+
+            }
+
+
+        } else if (mModelo_Generic.mesmoNome("FALSE") && mStruct_Generic.mesmoNome("FALSE")) {
+
+        } else if (mModelo_Generic.mesmoNome("FALSE") && mStruct_Generic.mesmoNome("TRUE")) {
+            mAnalisador.errar("O Modelo  " + Modelo.getNome() + " : Nao e generico !");
+        } else if (mModelo_Generic.mesmoNome("TRUE") && mStruct_Generic.mesmoNome("FALSE")) {
+
+
+            if (mModelo_Generic.getASTS().size() == 0) {
+
+            } else {
+                mAnalisador.errar("O Modelo  " + Modelo.getNome() + " : precisa de Tipos Abstratos na Struct " + Struct.getNome());
+            }
+
+
+        } else {
+            mAnalisador.errar("Struct " + Struct.getNome() + " : Nao e Generica !");
+        }
+
+        if (mAnalisador.getErros().size()>0){
+            return;
+        }
+
+
+
+        if (mAnalisador.getErros().size()>0){
+            return;
+        }
 
         for (AST Parte : Modelo.getASTS()) {
 
@@ -212,10 +319,6 @@ public class Modelagem {
             } else if (Parte.mesmoTipo("FUNCTION")) {
 
                 Verificar_Function(Struct, Parte);
-
-            } else {
-
-                mAnalisador.mensagem("\t - Precisa : " + Parte.getTipo() + " " + Parte.getNome());
 
 
             }

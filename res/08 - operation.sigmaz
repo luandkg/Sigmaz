@@ -1,18 +1,18 @@
 call iniciar -> operando ( );
 act operando ( ) {
-	def a1 : num = 10;
-	def a2 : num = 10;
+	def a1 : num = 10.0;
+	def a2 : num = 10.0;
 	def a3 : num = a1 ++ a2;
 	def t1 : bool = a1 == a2;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
 operator ++ ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_sum ( a , b ) :: c;
+	invoke math -> operator_sum_num ( a , b ) :: c;
 	return c;
 }
 operator == ( a : num , b : num ) : bool {
 	def c : bool;
-	invoke math -> operator_equal ( a , b ) :: c;
+	invoke math -> operator_equal_num ( a , b ) :: c;
 	return c;
 }

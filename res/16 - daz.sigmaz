@@ -1,7 +1,8 @@
-import "libs/lib.sigmaz";
+
+#import "libs/lib.sigmaz";
 call iniciar -> operando ( );
 act operando ( ) {
-	def x : num = 10;
+	def x : int = 10;
 	def resposta : string = "";
 	daz ( x ) -> {
 		inside ( 0 , 10 ) -> {
@@ -24,4 +25,10 @@ act operando ( ) {
 		
 	}
 	println ( "Escolheu : = ", resposta );
+}
+act println ( a : string , b : string ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
 }

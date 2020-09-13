@@ -2,7 +2,7 @@ struct Bloco {
 	all : 
 	define Proximo : Caixa = null;
 	define PNumeral : Numeral = null;
-	act setValor ( a : num ) {
+	act setValor ( a : int ) {
 		valor = a;
 	}
 
@@ -14,20 +14,20 @@ struct Bloco {
 		PNumeral = c;
 	}
 	restrict : 
-	define valor : num = 0;
+	define valor : int = 0;
 }
 
 struct Caixa {
 	all : 
-	act gravar ( a : num ) {
+	act gravar ( a : int ) {
 		valor = a;
 	}
 	restrict : 
-	define valor : num = 0;
+	define valor : int = 0;
 }
 type Numeral {
-	define A : num = 0;
-	define B : num = 0;
+	define A : int = 0;
+	define B : int = 0;
 }
 
 #call iniciar -> criv ( );
@@ -53,6 +53,6 @@ call iniciar -> {
 		B = 5;
 	}
 	);
-	def na : num = P1.PNumeral.A;
+	def na : int = P1.PNumeral.A;
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 }
