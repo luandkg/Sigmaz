@@ -290,3 +290,10 @@ Linguagem de Programação Estruturada - Implementações
 		2020 09 13 -->> Novo Tipo Primitivo : int
 		2020 09 13 -->> Organização da Biblioteca - Parte Matemática
 
+
+		2020 09 14 -->> DEFAULT para primitivos
+
+
+		2020 09 16 -->> EXTERN REFERED
+		2020 09 16 -->> Função Anônima
+

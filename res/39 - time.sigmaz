@@ -11,7 +11,7 @@ act inicio ( ) {
 }
 func num_to_string ( a : num ) : string {
 	def c : string;
-	invoke casting -> cast_ns ( a ) :: c;
+	invoke casting -> num_to_string ( a ) :: c;
 	return c;
 }
 func string_length ( a : string ) : num {
@@ -47,7 +47,7 @@ func string_append ( a : string , b : string , c : string , d : string , e : str
 }
 func menor ( a : num , b : num ) : bool {
 	def c : bool;
-	invoke math -> operator_less ( a , b ) :: c;
+	invoke math -> operator_less_num ( a , b ) :: c;
 	return c;
 }
 func getTempo ( ) : Tempo {
@@ -64,7 +64,7 @@ func getTempo_Formatado ( ) : string {
 	def f1 : string = num_to_string ( mHora );
 	def f2 : string = num_to_string ( mMinuto );
 	def f3 : string = num_to_string ( mSegundo );
-	if ( menor ( string_length ( f1 ) , 2 ) ) -> {
+	if ( menor ( string_length ( f1 ) , 2.0 ) ) -> {
 		f1 = string_append ( "0", f1 );
 	}
 	if ( menor ( string_length ( f2 ) , 2.0 ) ) -> {

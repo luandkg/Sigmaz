@@ -22,9 +22,11 @@ public class Run_Any {
 
     }
 
-    public Item init_Function(AST ASTCorrente, Escopo BuscadorDeVariaveis, Escopo mEscopo, String eRetorne, String eMensagem, ArrayList<Index_Function> eFunctions) {
+    public Item init_Function(AST ASTCorrente, Escopo BuscadorDeVariaveis, Escopo mEscopo, String eRetorne, ArrayList<Index_Function> eFunctions) {
 
-        //System.out.println("Procurando FUNC " + this.getStructNome() + "." + ASTCorrente.getNome());
+       // System.out.println("Procurando FUNC "  + ASTCorrente.getNome() + " com passado DEFAULT " + eAntepassado);
+
+
         String mLocal = "Run_Function";
 
         Item mRet = null;
@@ -254,19 +256,21 @@ public class Run_Any {
         ve.setNulo(Esquerda.getIsNulo());
         ve.setPrimitivo(Esquerda.getIsPrimitivo());
         ve.setIsEstrutura(Esquerda.getIsStruct());
-        ve.setValor(Esquerda.getConteudo());
+        ve.setValor(Esquerda.getConteudo(),mRunTime,mEscopo);
         ve.setTipo(Esquerda.getRetornoTipo());
 
 
         vd.setNulo(Direita.getIsNulo());
         vd.setPrimitivo(Direita.getIsPrimitivo());
         vd.setIsEstrutura(Direita.getIsStruct());
-        vd.setValor(Direita.getConteudo());
+        vd.setValor(Direita.getConteudo(),mRunTime,mEscopo);
         vd.setTipo(Direita.getRetornoTipo());
 
 
-        // System.out.println("DENTRO OPERADOR DIREITA -> " + vd.getTipo());
+       //  System.out.println("DENTRO OPERADOR DIREITA -> " + vd.getTipo());
         //  System.out.println("DENTRO OPERADOR ESQUERDA -> " + ve.getTipo());
+      //  System.out.println("DENTRO OPERADOR DIREITA -> " + vd.getValor());
+       // System.out.println("DENTRO OPERADOR ESQUERDA -> " + ve.getValor());
 
 
         String mTipagem = ve.getTipo() + " e " + vd.getTipo();
@@ -285,20 +289,7 @@ public class Run_Any {
 
         Run_Context mRun_Context = new Run_Context(mRunTime);
 
-        //  ArrayList<AST> mOperadores = mRun_Context.getOperatorsContexto(mEscopo.getRefers());
         ArrayList<AST> mOperadores = mRun_Context.getOperatorsContexto(mEscopo);
-
-        //  System.out.println("Procurando Operador :: " + eNome);
-
-        //  for (AST mAST : mOperadores) {
-
-        //     Index_Function mIndex_Function = new Index_Function(mRunTime, mEscopo, mAST);
-
-        //    mIndex_Function.resolverTipagem(mEscopo.getRefers());
-
-        //    System.out.println("\t - Operador :  " + mIndex_Function.getDefinicao());
-
-        // }
 
 
         String maisProxima = "";
@@ -378,7 +369,7 @@ public class Run_Any {
         ve.setNulo(Esquerda.getIsNulo());
         ve.setPrimitivo(Esquerda.getIsPrimitivo());
         ve.setIsEstrutura(Esquerda.getIsStruct());
-        ve.setValor(Esquerda.getConteudo());
+        ve.setValor(Esquerda.getConteudo(),mRunTime,mEscopo);
         ve.setTipo(Esquerda.getRetornoTipo());
 
 

@@ -1,10 +1,16 @@
 package Sigmaz;
 
+import Sigmaz.Utils.Documentador;
+import Sigmaz.Utils.Documento;
+import Sigmaz.Utils.Texto;
+
 import java.util.ArrayList;
 
 public class Gerador {
 
     private ArrayList<String> eTipos;
+
+    private Documento mDocumento;
 
     public Gerador() {
 
@@ -12,22 +18,26 @@ public class Gerador {
         eTipos.add("string");
         eTipos.add("num");
         eTipos.add("bool");
-
+        eTipos.add("int");
 
     }
 
-    public void gerarPrint(){
+    public void gerarPrint(String eArquivo){
 
-        System.out.println(" # PRINT - 1 ARGUMENTO");
+        mDocumento = new Documento();
+
+        mDocumento.adicionarLinha(" # PRINT - 1 ARGUMENTO");
         print_1();
-        System.out.println(" # PRINTLN - 1 ARGUMENTO");
+         mDocumento.adicionarLinha(" # PRINTLN - 1 ARGUMENTO");
         println_1();
-        System.out.println(" # PRINTLN - 2 ARGUMENTOS");
+         mDocumento.adicionarLinha(" # PRINTLN - 2 ARGUMENTOS");
         println_2();
-        System.out.println(" # PRINTLN - 3 ARGUMENTOS");
+         mDocumento.adicionarLinha(" # PRINTLN - 3 ARGUMENTOS");
         println_3();
-        System.out.println(" # PRINTLN - 4 ARGUMENTOS");
+         mDocumento.adicionarLinha(" # PRINTLN - 4 ARGUMENTOS");
         println_4();
+
+        Texto.Escrever(eArquivo,   mDocumento.getConteudo());
     }
 
     public void print_1() {
@@ -36,14 +46,14 @@ public class Gerador {
            // for (String b : eTipos) {
                // for (String c : eTipos) {
 
-                    System.out.println("act print ( a : " + a +  " ) {");
+                     mDocumento.adicionarLinha("act print ( a : " + a +  " ) {");
 
 
-                    System.out.println("def retorno: num;");
-                    System.out.println("invoke terminal -> print ( a ) ::  retorno;");
+                     mDocumento.adicionarLinha("def retorno: int = 0;");
+                     mDocumento.adicionarLinha("invoke terminal -> print ( a ) ::  retorno;");
 
 
-                    System.out.println("}");
+                     mDocumento.adicionarLinha("}");
 
 
            //     }
@@ -61,15 +71,15 @@ public class Gerador {
            // for (String b : eTipos) {
                // for (String c : eTipos) {
 
-                    System.out.println("act println ( a : " + a +  " ) {");
+                     mDocumento.adicionarLinha("act println ( a : " + a +  " ) {");
 
 
-                    System.out.println("def retorno: num;");
-                    System.out.println("invoke terminal -> change ( ) :: retorno;");
-                    System.out.println("invoke terminal -> print ( a ) ::  retorno;");
+                     mDocumento.adicionarLinha("def retorno: num;");
+                     mDocumento.adicionarLinha("invoke terminal -> change ( ) :: retorno;");
+                     mDocumento.adicionarLinha("invoke terminal -> print ( a ) ::  retorno;");
 
 
-                    System.out.println("}");
+                     mDocumento.adicionarLinha("}");
 
 
              //   }
@@ -86,16 +96,16 @@ public class Gerador {
             for (String b : eTipos) {
                // for (String c : eTipos) {
 
-                    System.out.println("act println ( a : " + a + " , b : " + b + " ) {");
+                     mDocumento.adicionarLinha("act println ( a : " + a + " , b : " + b + " ) {");
 
 
-                    System.out.println("def retorno: num;");
-                    System.out.println("invoke terminal -> change ( ) :: retorno;");
-                    System.out.println("invoke terminal -> print ( a ) ::  retorno;");
-                    System.out.println("invoke terminal -> print ( b ) :: retorno;");
+                     mDocumento.adicionarLinha("def retorno: num;");
+                     mDocumento.adicionarLinha("invoke terminal -> change ( ) :: retorno;");
+                     mDocumento.adicionarLinha("invoke terminal -> print ( a ) ::  retorno;");
+                     mDocumento.adicionarLinha("invoke terminal -> print ( b ) :: retorno;");
 
 
-                    System.out.println("}");
+                     mDocumento.adicionarLinha("}");
 
 
               //  }
@@ -112,16 +122,16 @@ public class Gerador {
             for (String b : eTipos) {
                 for (String c : eTipos) {
 
-                        System.out.println("act println ( a : " + a + " , b : " + b + " ,c : " + c + " ) {");
+                         mDocumento.adicionarLinha("act println ( a : " + a + " , b : " + b + " ,c : " + c + " ) {");
 
 
-                        System.out.println("def retorno: num;");
-                        System.out.println("invoke terminal -> change ( ) :: retorno;");
-                        System.out.println("invoke terminal -> print ( a ) ::  retorno;");
-                        System.out.println("invoke terminal -> print ( b ) :: retorno;");
-                        System.out.println("invoke terminal -> print ( c ) ::  retorno;");
+                         mDocumento.adicionarLinha("def retorno: num;");
+                         mDocumento.adicionarLinha("invoke terminal -> change ( ) :: retorno;");
+                         mDocumento.adicionarLinha("invoke terminal -> print ( a ) ::  retorno;");
+                         mDocumento.adicionarLinha("invoke terminal -> print ( b ) :: retorno;");
+                         mDocumento.adicionarLinha("invoke terminal -> print ( c ) ::  retorno;");
 
-                        System.out.println("}");
+                         mDocumento.adicionarLinha("}");
 
 
                 }
@@ -139,17 +149,17 @@ public class Gerador {
                 for (String c : eTipos) {
                     for (String d : eTipos) {
 
-                        System.out.println("act println ( a : " + a + " , b : " + b + " ,c : " + c + " , d : " + d + " ) {");
+                         mDocumento.adicionarLinha("act println ( a : " + a + " , b : " + b + " ,c : " + c + " , d : " + d + " ) {");
 
 
-                        System.out.println("def retorno: num;");
-                        System.out.println("invoke terminal -> change ( ) :: retorno;");
-                        System.out.println("invoke terminal -> print ( a ) ::  retorno;");
-                        System.out.println("invoke terminal -> print ( b ) :: retorno;");
-                        System.out.println("invoke terminal -> print ( c ) ::  retorno;");
-                        System.out.println("invoke terminal -> print ( d ) ::  retorno;");
+                         mDocumento.adicionarLinha("def retorno: num;");
+                         mDocumento.adicionarLinha("invoke terminal -> change ( ) :: retorno;");
+                         mDocumento.adicionarLinha("invoke terminal -> print ( a ) ::  retorno;");
+                         mDocumento.adicionarLinha("invoke terminal -> print ( b ) :: retorno;");
+                         mDocumento.adicionarLinha("invoke terminal -> print ( c ) ::  retorno;");
+                         mDocumento.adicionarLinha("invoke terminal -> print ( d ) ::  retorno;");
 
-                        System.out.println("}");
+                         mDocumento.adicionarLinha("}");
 
                     }
                 }

@@ -1,5 +1,8 @@
 package Sigmaz.Executor;
 
+import Sigmaz.Executor.Runners.Run_Arrow;
+import Sigmaz.Utils.AST;
+
 public class Item {
 
     private String mNome;
@@ -14,6 +17,9 @@ public class Item {
     private boolean mIsReferenciavel;
     private Item mReferencia;
 
+    private String mReferStruct;
+    private String mReferCampo;
+
 
     public Item(String eNome) {
         this.mNome = eNome;
@@ -21,11 +27,11 @@ public class Item {
         mModo = 0;
         mTipo = "";
         mNulo = false;
-        mPrimitivo=true;
-        mEstrutura=false;
+        mPrimitivo = true;
+        mEstrutura = false;
 
-        mIsReferenciavel=false;
-        mReferencia=null;
+        mIsReferenciavel = false;
+        mReferencia = null;
     }
 
     public void setNome(String eNome) {
@@ -49,12 +55,50 @@ public class Item {
         return mModo;
     }
 
-    public void setValor(String eValor) {
-        mValor = eValor;
+    public void setValor(String eValor,RunTime eRunTime,Escopo eEscopo) {
+
+        if (this.getModo() == 5) {
+          //  System.out.println("SET EXTERNAMENTE -->> " + this.getNome() + " para " + this.mReferStruct + " -> " + mReferCampo);
+
+            //   LEFT -> XA : STRUCT_EXTERN
+            //   INTERNAL -> mValor : STRUCT_OBJECT
+
+            AST mV = new AST("VALUE");
+            mV.setNome(mReferStruct);
+            mV.setValor("STRUCT_EXTERN");
+            AST mInternal = mV.criarBranch("INTERNAL");
+            mInternal.setNome(mReferCampo);
+            mInternal.setValor("STRUCT_OBJECT");
+
+            Run_Arrow mRun_Arrow = new Run_Arrow(eRunTime);
+            mRun_Arrow.operadorSeta(mV,eEscopo,this.getTipo()).setValor(eValor,eRunTime,eEscopo);
+
+        } else {
+            mValor = eValor;
+        }
+
     }
 
-    public String getValor() {
-        return mValor;
+    public String getValor(RunTime eRunTime,Escopo eEscopo) {
+
+        if (this.getModo() == 5) {
+           // System.out.println("GET EXTERNAMENTE -->> " + this.getNome() + " para " + this.mReferStruct + " -> " + mReferCampo);
+
+            AST mV = new AST("VALUE");
+            mV.setNome(mReferStruct);
+            mV.setValor("STRUCT_EXTERN");
+            AST mInternal = mV.criarBranch("INTERNAL");
+            mInternal.setNome(mReferCampo);
+            mInternal.setValor("STRUCT_OBJECT");
+
+            Run_Arrow mRun_Arrow = new Run_Arrow(eRunTime);
+            return  mRun_Arrow.operadorSeta(mV,eEscopo,this.getTipo()).getValor(eRunTime,eEscopo);
+
+        } else {
+            return mValor;
+        }
+
+
     }
 
     public String getNome() {
@@ -89,6 +133,7 @@ public class Item {
     public boolean getIsReferenciavel() {
         return mIsReferenciavel;
     }
+
     public void setIsReferenciavel(boolean eIsReferenciavel) {
         mIsReferenciavel = eIsReferenciavel;
     }
@@ -96,9 +141,16 @@ public class Item {
     public Item getReferencia() {
         return mReferencia;
     }
+
     public void setReferencia(Item eReferencia) {
         mReferencia = eReferencia;
     }
 
+
+    public void setRefer(String eStruct, String eCampo) {
+        this.mReferStruct = eStruct;
+        this.mReferCampo = eCampo;
+        this.setModo(5);
+    }
 
 }

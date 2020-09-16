@@ -83,6 +83,7 @@ public class EscopoDebug {
         ArrayList<Item> ls_mutavel = new ArrayList<>();
         ArrayList<Item> ls_Defines = new ArrayList<>();
         ArrayList<Item> ls_Constants = new ArrayList<>();
+        ArrayList<Item> ls_refereds = new ArrayList<>();
 
         for (Item i : mEscopo.getStacks()) {
             if (i.getModo() == 0) {
@@ -92,6 +93,8 @@ public class EscopoDebug {
                 ls_Constants.add(i);
             } else if (i.getModo() == 2) {
                 ls_mutavel.add(i);
+            } else if (i.getModo() == 5) {
+                ls_refereds.add(i);
             }
 
            // System.out.println("DEFINICAO :: " + i.getNome());
@@ -111,6 +114,28 @@ public class EscopoDebug {
 
             System.out.println("\t - NULOS : ");
             for (Item i : ls_mutavel) {
+
+                if (i.getNulo()) {
+                    mostrarItem(i);
+                }
+            }
+
+        }
+
+        if (ls_refereds.size()>0){
+
+            System.out.println(" - REFEREDS : ");
+
+            System.out.println("\t - NAO NULOS : ");
+
+            for (Item i : ls_refereds) {
+                if (!i.getNulo()) {
+                    mostrarItem(i);
+                }
+            }
+
+            System.out.println("\t - NULOS : ");
+            for (Item i : ls_refereds) {
 
                 if (i.getNulo()) {
                     mostrarItem(i);
@@ -189,10 +214,10 @@ public class EscopoDebug {
         System.out.println(" ######################### STRUCT - " + mEscopo.getNome() + " ############################ ");
         System.out.println("");
 
-        System.out.println(" - HEAP : " + eThis.getValor());
+        System.out.println(" - HEAP : " + eThis.getValor(mEscopo.getRunTime(),mEscopo));
         System.out.println(" - TYPE : " + eThis.getTipo());
 
-        Run_Struct mRun = mEscopo.getRunTime().getRun_Struct(eThis.getValor());
+        Run_Struct mRun = mEscopo.getRunTime().getRun_Struct(eThis.getValor(mEscopo.getRunTime(),mEscopo));
 
         if (mEscopo.getRunTime().getErros().size() > 0) {
             return ;
@@ -244,11 +269,11 @@ public class EscopoDebug {
             if (eItem.getIsEstrutura()) {
 
 
-                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " -> " + eItem.getValor());
+                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " -> " + eItem.getValor(mEscopo.getRunTime(),mEscopo));
 
 
             } else {
-                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " = " + eItem.getValor());
+                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " = " + eItem.getValor(mEscopo.getRunTime(),mEscopo));
             }
 
         }
@@ -432,9 +457,9 @@ public class EscopoDebug {
             for (Item i : ls) {
                 if (i.getNulo() == false) {
                     if (i.getIsEstrutura()) {
-                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getValor());
+                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getValor(mEscopo.getRunTime(),mEscopo));
                     } else {
-                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor(mEscopo.getRunTime(),mEscopo));
                     }
                 }
             }
@@ -482,9 +507,9 @@ public class EscopoDebug {
             for (Item i : ls) {
                 if (i.getNulo() == false) {
                     if (i.getIsEstrutura()) {
-                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getValor());
+                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " -> " + i.getValor(mEscopo.getRunTime(),mEscopo));
                     } else {
-                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor());
+                        System.out.println("\t\t - " + i.getNome() + " : " + i.getTipo() + " = " + i.getValor(mEscopo.getRunTime(),mEscopo));
                     }
                 }
             }

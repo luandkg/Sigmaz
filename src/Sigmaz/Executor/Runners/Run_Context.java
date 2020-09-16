@@ -323,7 +323,7 @@ public class Run_Context {
                     if (tmp.contentEquals(eStage)) {
 
                         retStage.setNulo(false);
-                        retStage.setValor(String.valueOf(i));
+                        retStage.setValor(String.valueOf(i),mRunTime,null);
                         retStage.setTipo(mAST.getValor());
                         break;
                     }

@@ -1,12 +1,10 @@
 
 #   FUNCTIONS
-
 func aleatorio ( a : num , b : num ) : num {
 	def c : num;
 	invoke math -> operator_random_num ( a , b ) :: c;
 	return c;
 }
-
 func aleatorio ( a : int , b : int ) : int {
 	def c : int;
 	invoke math -> operator_random_int ( a , b ) :: c;

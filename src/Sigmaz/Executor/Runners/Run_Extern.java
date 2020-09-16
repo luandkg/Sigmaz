@@ -225,7 +225,7 @@ public class Run_Extern {
     }
 
 
-    public Item init_Function_Extern(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
+    public Item init_Function_Extern(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne ) {
 
         if (mRunTime.getErros().size() > 0) {
             return null;

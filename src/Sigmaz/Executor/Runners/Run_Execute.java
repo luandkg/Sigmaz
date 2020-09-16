@@ -85,14 +85,14 @@ public class Run_Execute {
     }
 
 
-    public void struct_chamada(AST ASTCorrente, Item mItem) {
+    public void struct_chamada(AST ASTCorrente, Item mItem ) {
 
         if (mRunTime.getErros().size() > 0) {
             return;
         }
 
 
-        Run_Struct mEscopoStruct = mRunTime.getRun_Struct(mItem.getValor());
+        Run_Struct mEscopoStruct = mRunTime.getRun_Struct(mItem.getValor(mRunTime,mEscopo));
 
         if (mRunTime.getErros().size() > 0) {
             return;
@@ -126,7 +126,7 @@ public class Run_Execute {
                 //System.out.println("STRUCT FUNCT Estou : " + eInternal.getNome());
 
                 // if (!mItem.getTipo().contentEquals(eRetorno)) {
-                mEscopoStruct = mRunTime.getRun_Struct(mItem.getValor());
+                mEscopoStruct = mRunTime.getRun_Struct(mItem.getValor(mRunTime,mEscopo));
 
                 if (mRunTime.getErros().size() > 0) {
                     return;
@@ -184,7 +184,7 @@ public class Run_Execute {
                     return;
                 }
 
-                mEscopoStruct = mRunTime.getRun_Struct(mItem.getValor());
+                mEscopoStruct = mRunTime.getRun_Struct(mItem.getValor(mRunTime,mEscopo));
 
                 if (mRunTime.getErros().size() > 0) {
                     return;

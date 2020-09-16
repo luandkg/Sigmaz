@@ -11,7 +11,6 @@ public class Carregadores {
         mArquivos.add("res/libs/cast.sigmaz");
         mArquivos.add("res/libs/lib.sigmaz");
         mArquivos.add("res/libs/neg.sigmaz");
-        mArquivos.add("res/libs/operators.sigmaz");
         mArquivos.add("res/libs/pos.sigmaz");
         mArquivos.add("res/libs/strings.sigmaz");
         mArquivos.add("res/libs/tempo.sigmaz");
@@ -140,6 +139,7 @@ public class Carregadores {
         mArquivos.add("res/76 - loop.sigmaz");
         mArquivos.add("res/77 - mutable.sigmaz");
         mArquivos.add("res/78 - default.sigmaz");
+        mArquivos.add("res/79 - refered.sigmaz");
 
         return mArquivos;
     }

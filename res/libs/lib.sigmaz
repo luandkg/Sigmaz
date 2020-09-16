@@ -1,30 +1,23 @@
 mockiz SIGMAZ : string = "SIGMAZ 1.0";
 mockiz VERSAO : num = 1.0;
-
 import "constant.sigmaz";
 import "functions.sigmaz";
 import "comparators.sigmaz";
 import "terminal.sigmaz";
 import "cast.sigmaz";
 import "strings.sigmaz";
-
 import "int.sigmaz";
 import "num.sigmaz";
 import "int_num.sigmaz";
 
-#import "pos.sigmaz";
-#import "neg.sigmaz";
+import "pos.sigmaz";
+import "neg.sigmaz";
 
 import "container/lista.sigmaz";
 import "container/vetor.sigmaz";
-
 import "container/iterador.sigmaz";
-
 import "pacote_tempo.sigmaz";
 import "ecossistema.sigmaz";
-
-
-
 import "cores.sigmaz";
 import "unit.sigmaz";
 
@@ -45,6 +38,16 @@ type Par in ( T1 , T2 ) {
 act trash ( a : any ) {
 	invoke __COMPILER__ -> OBJECT ( a ) :: REMOVE;
 }
+
+
+func isNull ( ObjetoNulo : any ) : bool {
+	def c : bool;
+	invoke casting -> cast_isnull ( ObjetoNulo ) :: c;
+	return c;
+}
+
+
+
 director ! ( a : bool ) : bool {
 	invoke casting -> inverse ( a ) :: a;
 	return a;
@@ -60,8 +63,8 @@ type Tipado {
 }
 operator ++ ( a : Tipado , b : Tipado ) : Tipado {
 	return start Tipado {
-		A = somar_inteiro ( a.A , b.A );
-		B = somar_inteiro ( a.B , b.B );
+		A = somar ( a.A , b.A );
+		B = somar ( a.B , b.B );
 	};
 	
 }
@@ -89,34 +92,48 @@ struct TesteGeral {
 }
 
 struct Objeto {
-
-    all :
-        act trash(){ 	invoke __COMPILER__ -> OBJECT ( this ) :: REMOVE; }
-        func equal (ObjetoCorrente : Objeto ) : bool { return false; }
-        func hash () : string {return ""; }
-
-
+	all : 
+	act trash ( ) {
+		invoke __COMPILER__ -> OBJECT ( this ) :: REMOVE;
+	}
+	func equal ( ObjetoCorrente : Objeto ) : bool {
+		return false;
+	}
+	func hash ( ) : string {
+		return "";
+	}
+	
 }
 
-struct O1 with Objeto { init O1 () -> Objeto() {} }
-struct O2 with Objeto { init O2 () -> Objeto() {} }
+struct O1 with Objeto {
+	init O1 ( ) -> Objeto ( ) {
+		
+	}
+	
+}
+
+struct O2 with Objeto {
+	init O2 ( ) -> Objeto ( ) {
+		
+	}
+	
+}
 
 struct O3 with Objeto {
-
-    restrict:
-        define mValor : int = 0;
-
-
-    all:
-        init O3 (eValor : int) -> Objeto() {  mValor = eValor; }
-
-
-        func equal (ObjetoCorrente : O3 ) : bool { return this.mValor == ObjetoCorrente.getValor(); }
-
-        func getValor() : int { return mValor; }
-
-    allow:
-        func hash () : string {return "@OBJETO::O3"; }
-
-
+	restrict : 
+	define mValor : int = 0;
+	all : 
+	init O3 ( eValor : int ) -> Objeto ( ) {
+		mValor = eValor;
+	}
+	func equal ( ObjetoCorrente : O3 ) : bool {
+		return this.mValor == ObjetoCorrente.getValor ( );
+	}
+	func getValor ( ) : int {
+		return mValor;
+	}
+	allow : func hash ( ) : string {
+		return "@OBJETO::O3";
+	}
+	
 }

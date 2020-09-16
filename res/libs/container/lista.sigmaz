@@ -1,5 +1,3 @@
-
-
 package Lista {
 	struct Lista in ( T ) {
 		restrict : 
@@ -28,6 +26,7 @@ package Lista {
 		}
 
 		act remover ( a : T ) {
+			
 			#println ( "Remover : ", a );
 			if ( isNull ( mPrimeiro ) ) -> {
 				
@@ -35,9 +34,10 @@ package Lista {
 				def mAnterior : Item >> ( T ) = null;
 				def mCorrente : Item >> ( T ) = mPrimeiro;
 				def mIndice : int = 0;
-				def mUltimoIndice : int = subtrair( mQuantidade , 1 );
+				def mUltimoIndice : int = subtrair ( mQuantidade , 1 );
 				while ( isNull ( mCorrente ) == false ) -> {
 					if ( mCorrente.getValor ( ) == a ) -> {
+						
 						#println ( "Removendo : ", a );
 						if ( mIndice == 0 ) -> {
 							if ( mQuantidade == 1 ) -> {
@@ -53,7 +53,7 @@ package Lista {
 						}others {
 							mAnterior.setProximo ( mCorrente.getProximo ( ) );
 						}
-						mQuantidade = subtrair_inteiro ( mQuantidade , 1 );
+						mQuantidade = subtrair ( mQuantidade , 1 );
 						trash ( mCorrente );
 						cancel;
 					}
@@ -70,21 +70,27 @@ package Lista {
 
 		act listar ( ) {
 
+			invoke __COMPILER__ -> STRUCTS ( ) :: INSTANCES;
+
+
 			if ( isNull ( mPrimeiro ) == false ) -> {
 				def mCorrente : Item >> ( T ) = mPrimeiro;
 				while ( isNull ( mCorrente ) == false ) -> {
 					println ( " - Valor : ", mCorrente.getValor ( ) );
 					mCorrente = mCorrente.getProximo ( );
+
+					println ( " - Prox : ", isNull ( mCorrente ) );
+
+
 				}
-				
+				println ( " - Saindo ");
 			}
-			
+			println ( " - Terminou ");
 		}
 
 		act limpar ( ) {
-
-		#println ( "QT : ", mQuantidade );
-
+			
+			#println ( "QT : ", mQuantidade );
 			if ( isNull ( mPrimeiro ) == false ) -> {
 				def mCorrente : Item >> ( T ) = mPrimeiro;
 				def mAnterior : Item >> ( T ) = mPrimeiro;
@@ -134,17 +140,20 @@ package Lista {
 	}
 
 	struct Item in ( T ) {
-		restrict :
-
-
+		restrict : 
 		define mValor : T = null;
 		define mProximo : Item >> ( T ) = null;
-
-        all:
-		init Item(){}
-		init Item(eValor : T) {mValor = eValor;}
-		init Item(eValor : T,eProximo : T) {mValor = eValor; mProximo = eProximo;}
-
+		all : 
+		init Item ( ) {
+			
+		}
+		init Item ( eValor : T ) {
+			mValor = eValor;
+		}
+		init Item ( eValor : T , eProximo : T ) {
+			mValor = eValor;
+			mProximo = eProximo;
+		}
 		all : 
 		func getValor ( ) : T {
 			return mValor;

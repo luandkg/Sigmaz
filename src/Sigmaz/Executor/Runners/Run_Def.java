@@ -35,7 +35,7 @@ public class Run_Def {
 
 
         Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mEscopo);
-        Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, mTipagem);
+        Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, mTipagem,mTipagem);
 
 
         if (mRunTime.getErros().size() > 0) {
@@ -91,7 +91,7 @@ public class Run_Def {
 
 
         Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mEscopo);
-        Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, "<<ANY>>");
+        Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, "<<ANY>>","<<ANY>>");
 
         if (mRunTime.getErros().size() > 0) {
             return;

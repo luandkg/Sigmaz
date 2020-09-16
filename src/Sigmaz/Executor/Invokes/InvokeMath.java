@@ -414,6 +414,7 @@ public class InvokeMath {
                 mEscopo.setDefinido(eSaida, String.valueOf(f3));
 
 
+
             } catch (Exception e) {
                 mRunTime.getErros().add(mErro);
             }
@@ -512,21 +513,17 @@ public class InvokeMath {
             if (mRunTime.getErros().size() > 0) {
                 return;
             }
-            if (p1.contentEquals("true") || p1.contentEquals("false")) {
-                if (p2.contentEquals("true") || p2.contentEquals("false")) {
 
-                    if (p1.contentEquals(p2)) {
-                        mEscopo.setDefinido(eSaida, "true");
-                    } else {
-                        mEscopo.setDefinido(eSaida, "false");
-                    }
+            mEscopo.setDefinido(eSaida, "false");
 
-                } else {
-                    mRunTime.getErros().add(mErro);
-                }
-            } else {
-                mRunTime.getErros().add(mErro);
+            if (p1.contentEquals("true") && p2.contentEquals("true")) {
+                mEscopo.setDefinido(eSaida, "true");
+            } else if (p1.contentEquals("false") && p2.contentEquals("false")) {
+                mEscopo.setDefinido(eSaida, "true");
             }
+
+
+
         } else if (eAcao.contentEquals("operator_unmatch")) {
 
             String p1 = mRun_Invoke.getBool(ASTArgumentos, 1);

@@ -8,38 +8,17 @@ func getData ( ) : Data {
 }
 
 # Comentario dfgfdg func 
-func getTempo_Formatado ( ) : string {
-	def mHora : num = 0;
-	def mMinuto : num = 0;
-	def mSegundo : num = 0;
-	invoke __UTILS__ -> Time_getHour ( ) :: mHora;
-	invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
-	invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
-	def f1 : string = num_to_string ( mHora );
-	def f2 : string = num_to_string ( mMinuto );
-	def f3 : string = num_to_string ( mSegundo );
-	if ( menor ( string_length ( f1 ) , 2 ) ) -> {
-		f1 = string_append ( "0", f1 );
-	}
-	if ( menor ( string_length ( f2 ) , 2 ) ) -> {
-		f2 = string_append ( "0", f2 );
-	}
-	if ( menor ( string_length ( f3 ) , 2 ) ) -> {
-		f3 = string_append ( "0", f3 );
-	}
-	def formatado : string = string_append ( f1 , ":", f2 , ":", f3 );
-	return formatado;
-}
+
 func getData_Formatado ( ) : string {
-	def mDia : num = 0;
-	def mMes : num = 0;
-	def mAno : num = 0;
+	def mDia : int = 0;
+	def mMes : int = 0;
+	def mAno : int = 0;
 	invoke __UTILS__ -> Date_getDay ( ) :: mDia;
 	invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
 	invoke __UTILS__ -> Date_getYear ( ) :: mAno;
-	def f1 : string = num_to_string ( mDia );
-	def f2 : string = num_to_string ( mMes );
-	def f3 : string = num_to_string ( mAno );
+	def f1 : string = int_to_string ( mDia );
+	def f2 : string = int_to_string ( mMes );
+	def f3 : string = int_to_string ( mAno );
 	if ( menor ( string_length ( f1 ) , 2 ) ) -> {
 		f1 = string_append ( "0", f1 );
 	}
@@ -50,21 +29,21 @@ func getData_Formatado ( ) : string {
 	return formatado;
 }
 func getTempoData_Formatado ( ) : string {
-	def mHora : num = 0;
-	def mMinuto : num = 0;
-	def mSegundo : num = 0;
-	def mDia : num = 0;
-	def mMes : num = 0;
-	def mAno : num = 0;
+	def mHora : int = 0;
+	def mMinuto : int = 0;
+	def mSegundo : int = 0;
+	def mDia : int = 0;
+	def mMes : int = 0;
+	def mAno : int = 0;
 	invoke __UTILS__ -> Time_getHour ( ) :: mHora;
 	invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
 	invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
 	invoke __UTILS__ -> Date_getDay ( ) :: mDia;
 	invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
 	invoke __UTILS__ -> Date_getYear ( ) :: mAno;
-	def f1 : string = num_to_string ( mDia );
-	def f2 : string = num_to_string ( mMes );
-	def f3 : string = num_to_string ( mAno );
+	def f1 : string = int_to_string ( mDia );
+	def f2 : string = int_to_string ( mMes );
+	def f3 : string = int_to_string ( mAno );
 	if ( menor ( string_length ( f1 ) , 2 ) ) -> {
 		f1 = string_append ( "0", f1 );
 	}
@@ -72,9 +51,9 @@ func getTempoData_Formatado ( ) : string {
 		f2 = string_append ( "0", f2 );
 	}
 	def alfa : string = string_append ( f1 , "/", f2 , "/", f3 );
-	def p1 : string = num_to_string ( mHora );
-	def p2 : string = num_to_string ( mMinuto );
-	def p3 : string = num_to_string ( mSegundo );
+	def p1 : string = int_to_string ( mHora );
+	def p2 : string = int_to_string ( mMinuto );
+	def p3 : string = int_to_string ( mSegundo );
 	if ( menor ( string_length ( p1 ) , 2 ) ) -> {
 		p1 = string_append ( "0", p1 );
 	}
@@ -89,21 +68,21 @@ func getTempoData_Formatado ( ) : string {
 	return formatado;
 }
 func getDataTempo_Formatado ( ) : string {
-	def mHora : num = 0;
-	def mMinuto : num = 0;
-	def mSegundo : num = 0;
-	def mDia : num = 0;
-	def mMes : num = 0;
-	def mAno : num = 0;
+	def mHora : int = 0;
+	def mMinuto : int = 0;
+	def mSegundo : int = 0;
+	def mDia : int = 0;
+	def mMes : int = 0;
+	def mAno : int = 0;
 	invoke __UTILS__ -> Time_getHour ( ) :: mHora;
 	invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
 	invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
 	invoke __UTILS__ -> Date_getDay ( ) :: mDia;
 	invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
 	invoke __UTILS__ -> Date_getYear ( ) :: mAno;
-	def f1 : string = num_to_string ( mDia );
-	def f2 : string = num_to_string ( mMes );
-	def f3 : string = num_to_string ( mAno );
+	def f1 : string = int_to_string ( mDia );
+	def f2 : string = int_to_string ( mMes );
+	def f3 : string = int_to_string ( mAno );
 	if ( menor ( string_length ( f1 ) , 2 ) ) -> {
 		f1 = string_append ( "0", f1 );
 	}
@@ -111,9 +90,9 @@ func getDataTempo_Formatado ( ) : string {
 		f2 = string_append ( "0", f2 );
 	}
 	def alfa : string = string_append ( f1 , "/", f2 , "/", f3 );
-	def p1 : string = num_to_string ( mHora );
-	def p2 : string = num_to_string ( mMinuto );
-	def p3 : string = num_to_string ( mSegundo );
+	def p1 : string = int_to_string ( mHora );
+	def p2 : string = int_to_string ( mMinuto );
+	def p3 : string = int_to_string ( mSegundo );
 	if ( menor ( string_length ( p1 ) , 2 ) ) -> {
 		p1 = string_append ( "0", p1 );
 	}
@@ -130,11 +109,11 @@ func getDataTempo_Formatado ( ) : string {
 
 struct Tempo {
 	restrict : 
-	define mHora : num = 0;
-	define mMinuto : num = 0;
-	define mSegundo : num = 0;
+	define mHora : int = 0;
+	define mMinuto : int = 0;
+	define mSegundo : int = 0;
 	all : 
-	init Tempo ( h : num , m : num , s : num ) {
+	init Tempo ( h : int , m : int , s : int ) {
 		mHora = h;
 		mMinuto = m;
 		mSegundo = s;
@@ -144,19 +123,23 @@ struct Tempo {
 		invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
 		invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
 	}
-	func getHora ( ) : num {
+	func getHora ( ) : int {
 		return mHora;
 	}
-	func getMinuto ( ) : num {
+	func getMinuto ( ) : int {
 		return mMinuto;
 	}
-	func getSegundo ( ) : num {
+	func getSegundo ( ) : int {
 		return mSegundo;
 	}
 	func getFormatado ( ) : string {
-		def f1 : string = num_to_string ( mHora );
-		def f2 : string = num_to_string ( mMinuto );
-		def f3 : string = num_to_string ( mSegundo );
+		def f1 : string = int_to_string ( mHora );
+		def f2 : string = int_to_string ( mMinuto );
+		def f3 : string = int_to_string ( mSegundo );
+
+			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+
+
 		if ( menor ( string_length ( f1 ) , 2 ) ) -> {
 			f1 = string_append ( "0", f1 );
 		}
@@ -169,16 +152,44 @@ struct Tempo {
 		def formatado : string = string_append ( f1 , ":", f2 , ":", f3 );
 		return formatado;
 	}
+
+	extern:
+	func getTempo_Formatado ( ) : string {
+	    		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+
+    	def mHora : int = 0;
+    	def mMinuto : int = 0;
+    	def mSegundo : int = 0;
+    		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+
+    	invoke __UTILS__ -> Time_getHour ( ) :: mHora;
+    	invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
+    	invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
+    	def f1 : string = int_to_string ( mHora );
+    	def f2 : string = int_to_string ( mMinuto );
+    	def f3 : string = int_to_string ( mSegundo );
+    	if ( menor ( string_length ( f1 ) , 2 ) ) -> {
+    		f1 = string_append ( "0", f1 );
+    	}
+    	if ( menor ( string_length ( f2 ) , 2 ) ) -> {
+    		f2 = string_append ( "0", f2 );
+    	}
+    	if ( menor ( string_length ( f3 ) , 2 ) ) -> {
+    		f3 = string_append ( "0", f3 );
+    	}
+    	def formatado : string = string_append ( f1 , ":", f2 , ":", f3 );
+    	return formatado;
+    }
 	
 }
 
 struct Data {
 	restrict : 
-	define mDia : num = 0;
-	define mMes : num = 0;
-	define mAno : num = 0;
+	define mDia : int = 0;
+	define mMes : int = 0;
+	define mAno : int = 0;
 	all : 
-	init Data ( d : num , m : num , a : num ) {
+	init Data ( d : int , m : int , a : int ) {
 		mDia = d;
 		mMes = m;
 		mAno = a;
@@ -188,18 +199,18 @@ struct Data {
 		invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
 		invoke __UTILS__ -> Date_getYear ( ) :: mAno;
 	}
-	func getDia ( ) : num {
+	func getDia ( ) : int {
 		return mDia;
 	}
-	func getMes ( ) : num {
+	func getMes ( ) : int {
 		return mMes;
 	}
-	func getAno ( ) : num {
+	func getAno ( ) : int {
 		return mAno;
 	}
 	func getFormatado ( ) : string {
-		def f1 : string = num_to_string ( mDia );
-		def f2 : string = num_to_string ( mMes );
+		def f1 : string = int_to_string ( mDia );
+		def f2 : string = int_to_string ( mMes );
 		if ( menor ( string_length ( f1 ) , 2 ) ) -> {
 			f1 = string_append ( "0", f1 );
 		}
@@ -214,14 +225,14 @@ struct Data {
 
 struct TempoData {
 	restrict : 
-	define mHora : num = 0;
-	define mMinuto : num = 0;
-	define mSegundo : num = 0;
-	define mDia : num = 0;
-	define mMes : num = 0;
-	define mAno : num = 0;
+	define mHora : int = 0;
+	define mMinuto : int = 0;
+	define mSegundo : int = 0;
+	define mDia : int = 0;
+	define mMes : int = 0;
+	define mAno : int = 0;
 	all : 
-	init TempoData ( h : num , mi : num , s : num , d : num , me : num , a : num ) {
+	init TempoData ( h : int , mi : int , s : int , d : int , me : int , a : int ) {
 		mHora = h;
 		mMinuto = mi;
 		mSegundo = s;
@@ -237,28 +248,28 @@ struct TempoData {
 		invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
 		invoke __UTILS__ -> Date_getYear ( ) :: mAno;
 	}
-	func getHora ( ) : num {
+	func getHora ( ) : int {
 		return mHora;
 	}
-	func getMinuto ( ) : num {
+	func getMinuto ( ) : int {
 		return mMinuto;
 	}
-	func getSegundo ( ) : num {
+	func getSegundo ( ) : int {
 		return mSegundo;
 	}
-	func getDia ( ) : num {
+	func getDia ( ) : int {
 		return mDia;
 	}
-	func getMes ( ) : num {
+	func getMes ( ) : int {
 		return mMes;
 	}
-	func getAno ( ) : num {
+	func getAno ( ) : int {
 		return mAno;
 	}
 	func getFormatado ( ) : string {
-		def f1 : string = num_to_string ( mDia );
-		def f2 : string = num_to_string ( mMes );
-		def f3 : string = num_to_string ( mAno );
+		def f1 : string = int_to_string ( mDia );
+		def f2 : string = int_to_string ( mMes );
+		def f3 : string = int_to_string ( mAno );
 		if ( menor ( string_length ( f1 ) , 2 ) ) -> {
 			f1 = string_append ( "0", f1 );
 		}
@@ -266,9 +277,9 @@ struct TempoData {
 			f2 = string_append ( "0", f2 );
 		}
 		def alfa : string = string_append ( f1 , "/", f2 , "/", f3 );
-		def p1 : string = num_to_string ( mHora );
-		def p2 : string = num_to_string ( mMinuto );
-		def p3 : string = num_to_string ( mSegundo );
+		def p1 : string = int_to_string ( mHora );
+		def p2 : string = int_to_string ( mMinuto );
+		def p3 : string = int_to_string ( mSegundo );
 		if ( menor ( string_length ( p1 ) , 2 ) ) -> {
 			p1 = string_append ( "0", p1 );
 		}
@@ -284,21 +295,21 @@ struct TempoData {
 	}
 	extern : 
 	func getTempoData_Formatado ( ) : string {
-		def mHora : num = 0;
-		def mMinuto : num = 0;
-		def mSegundo : num = 0;
-		def mDia : num = 0;
-		def mMes : num = 0;
-		def mAno : num = 0;
+		def mHora : int = 0;
+		def mMinuto : int = 0;
+		def mSegundo : int = 0;
+		def mDia : int = 0;
+		def mMes : int = 0;
+		def mAno : int = 0;
 		invoke __UTILS__ -> Time_getHour ( ) :: mHora;
 		invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
 		invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
 		invoke __UTILS__ -> Date_getDay ( ) :: mDia;
 		invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
 		invoke __UTILS__ -> Date_getYear ( ) :: mAno;
-		def f1 : string = num_to_string ( mDia );
-		def f2 : string = num_to_string ( mMes );
-		def f3 : string = num_to_string ( mAno );
+		def f1 : string = int_to_string ( mDia );
+		def f2 : string = int_to_string ( mMes );
+		def f3 : string = int_to_string ( mAno );
 		if ( menor ( string_length ( f1 ) , 2 ) ) -> {
 			f1 = string_append ( "0", f1 );
 		}
@@ -306,9 +317,9 @@ struct TempoData {
 			f2 = string_append ( "0", f2 );
 		}
 		def alfa : string = string_append ( f1 , "/", f2 , "/", f3 );
-		def p1 : string = num_to_string ( mHora );
-		def p2 : string = num_to_string ( mMinuto );
-		def p3 : string = num_to_string ( mSegundo );
+		def p1 : string = int_to_string ( mHora );
+		def p2 : string = int_to_string ( mMinuto );
+		def p3 : string = int_to_string ( mSegundo );
 		if ( menor ( string_length ( p1 ) , 2 ) ) -> {
 			p1 = string_append ( "0", p1 );
 		}
@@ -323,21 +334,21 @@ struct TempoData {
 		return formatado;
 	}
 	func getDataTempo_Formatado ( ) : string {
-		def mHora : num = 0;
-		def mMinuto : num = 0;
-		def mSegundo : num = 0;
-		def mDia : num = 0;
-		def mMes : num = 0;
-		def mAno : num = 0;
+		def mHora : int = 0;
+		def mMinuto : int = 0;
+		def mSegundo : int = 0;
+		def mDia : int = 0;
+		def mMes : int = 0;
+		def mAno : int = 0;
 		invoke __UTILS__ -> Time_getHour ( ) :: mHora;
 		invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
 		invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
 		invoke __UTILS__ -> Date_getDay ( ) :: mDia;
 		invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
 		invoke __UTILS__ -> Date_getYear ( ) :: mAno;
-		def f1 : string = num_to_string ( mDia );
-		def f2 : string = num_to_string ( mMes );
-		def f3 : string = num_to_string ( mAno );
+		def f1 : string = int_to_string ( mDia );
+		def f2 : string = int_to_string ( mMes );
+		def f3 : string = int_to_string ( mAno );
 		if ( menor ( string_length ( f1 ) , 2 ) ) -> {
 			f1 = string_append ( "0", f1 );
 		}
@@ -345,9 +356,9 @@ struct TempoData {
 			f2 = string_append ( "0", f2 );
 		}
 		def alfa : string = string_append ( f1 , "/", f2 , "/", f3 );
-		def p1 : string = num_to_string ( mHora );
-		def p2 : string = num_to_string ( mMinuto );
-		def p3 : string = num_to_string ( mSegundo );
+		def p1 : string = int_to_string ( mHora );
+		def p2 : string = int_to_string ( mMinuto );
+		def p3 : string = int_to_string ( mSegundo );
 		if ( menor ( string_length ( p1 ) , 2 ) ) -> {
 			p1 = string_append ( "0", p1 );
 		}

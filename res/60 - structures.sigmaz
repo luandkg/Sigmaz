@@ -15,9 +15,22 @@ act inicio ( ) {
 	ig.adicionar ( 40 );
 	ig.adicionar ( 50 );
 	ig.adicionar ( 60 );
+
+		println ( "TESTE : ", 1 );
+
 	def b : int = ig.getQuantidade ( );
+
+			println ( "TESTE : ", 2 );
+
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+
+			println ( "TESTE : ", 3 );
+
 	ig.listar ( );
+    	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+
+			println ( "TESTE : ", 4 );
+
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
 	ig.remover ( 10 );
 	ig.listar ( );

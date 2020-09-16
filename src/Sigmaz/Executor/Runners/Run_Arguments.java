@@ -26,7 +26,7 @@ public class Run_Arguments {
                 Run_Value mAST = new Run_Value(mRunTime, mBuscadorDeVariaveis);
                 mAST.init(a, "<<ANY>>");
 
-                // System.out.println("\t - Iniciando Parametro : " + a.getTipo());
+             //   System.out.println("\t - Iniciando Parametro : " + a.ImprimirArvoreDeInstrucoes());
 
                 //  Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mBuscadorDeVariaveis);
                 // Run_Value mAST = mRun_Valoramento.init(a.getNome(), a, "<<ANY>>");
@@ -39,13 +39,16 @@ public class Run_Arguments {
                 //  }
 
 
+
+                //System.out.println("Argumento : " + mAST.getRetornoTipo());
+
                 Item v = new Item("");
                 v.setModo(0);
                 v.setNulo(mAST.getIsNulo());
                 v.setPrimitivo(mAST.getIsPrimitivo());
                 v.setIsEstrutura(mAST.getIsStruct());
                 v.setTipo(mAST.getRetornoTipo());
-                v.setValor(mAST.getConteudo());
+                v.setValor(mAST.getConteudo(),mRunTime,mBuscadorDeVariaveis);
 
                 if (mAST.getIsReferenciavel()) {
                     v.setIsReferenciavel(true);
@@ -118,7 +121,7 @@ public class Run_Arguments {
 
     }
 
-    public Item executar_Function(RunTime mRunTime, Escopo mStructEscopo, Index_Function mFunction, ArrayList<Item> mArgumentos, String eReturne) {
+    public Item executar_Function(RunTime mRunTime, Escopo mStructEscopo, Index_Function mFunction, ArrayList<Item> mArgumentos, String eReturne ) {
 
 
         Item Saida = new Item("");
@@ -151,7 +154,7 @@ public class Run_Arguments {
 
         Saida.setNulo(mAST.getIsNulo());
         Saida.setPrimitivo(mAST.getIsPrimitivo());
-        Saida.setValor(mAST.getConteudo());
+        Saida.setValor(mAST.getConteudo(),mRunTime,mEscopoInterno);
         Saida.setTipo(mAST.getRetornoTipo());
 
         if (Saida.getNulo()) {
@@ -179,6 +182,69 @@ public class Run_Arguments {
 
         return Saida;
     }
+
+    public Item executar_ActionComRetorno(RunTime mRunTime, Escopo mStructEscopo, Index_Action mFunction, ArrayList<Item> mArgumentos, String eReturne ) {
+
+
+        Item Saida = new Item("");
+
+       // Saida.setTipo(mFunction.getTipo());
+
+        //   System.out.println(" EXECUTAR Function " + mFunction.getNome() + " : " + mFunction.getTipo());
+
+
+        Escopo mEscopoInterno = new Escopo(mRunTime, mStructEscopo);
+        mEscopoInterno.setNome(mFunction.getNome());
+
+
+        for (String eRefer : mStructEscopo.getRefers()) {
+
+
+            //  System.out.println("REFER " + eRefer);
+
+            mEscopoInterno.adicionarRefer(eRefer);
+
+        }
+
+
+        passarParametros(mEscopoInterno, mFunction.getArgumentos(), mArgumentos);
+
+        AST mASTBody = mFunction.getPonteiro().getBranch("BODY");
+
+        Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
+        mAST.init(mASTBody);
+
+        Saida.setNulo(mAST.getIsNulo());
+        Saida.setPrimitivo(mAST.getIsPrimitivo());
+        Saida.setValor(mAST.getConteudo(),mRunTime,mEscopoInterno);
+        Saida.setTipo(mAST.getRetornoTipo());
+
+        if (Saida.getNulo()) {
+            Saida.setTipo(eReturne);
+        }
+
+        //  System.out.println( mFunction.getNome() + "  Retornando -> " + mAST.getConteudo() + " :: " +mAST.getRetornoTipo() );
+
+
+        if (mRunTime.getErros().size() > 0) {
+            return null;
+        }
+
+
+        if (Saida.getTipo().contentEquals("bool")) {
+            Saida.setPrimitivo(true);
+        } else if (Saida.getTipo().contentEquals("num")) {
+            Saida.setPrimitivo(true);
+        } else if (Saida.getTipo().contentEquals("string")) {
+            Saida.setPrimitivo(true);
+        }
+
+
+        // System.out.println("  Retornando -> " + mAST.getConteudo());
+
+        return Saida;
+    }
+
 
     public void executar_Action(RunTime mRunTime, Escopo mStructEscopo, Index_Action mFunction, ArrayList<Item> mArgumentos) {
 
@@ -219,7 +285,7 @@ public class Run_Arguments {
 
     }
 
-    public Item executar_FunctionGlobal(RunTime mRunTime, Index_Function mFunction, ArrayList<Item> mArgumentos, String eReturne) {
+    public Item executar_FunctionGlobal(RunTime mRunTime, Index_Function mFunction, ArrayList<Item> mArgumentos, String eReturne ) {
 
 
         return executar_Function(mRunTime, mRunTime.getEscopoGlobal(), mFunction, mArgumentos, eReturne);

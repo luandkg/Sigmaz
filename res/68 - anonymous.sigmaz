@@ -1,64 +1,29 @@
 call iniciar -> {
+
+
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
-	def a : auto = @ ( a : num ) {
-		def a1 : num = 10.0;
-		def a2 : num = 20.0;
-		
-		#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-		
-	};
-	def teste : bool = true;
-	if ( teste ) -> {
-		a ( 10.0 );
-		def passador : auto = @ ( a : num ) {
-			def p1 : num = 5.0;
-			def p2 : num = 11.0;
-			
-			#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-			
-		};
-		passador ( 5.0 );
-	}
-	a ( 2.0 );
-	
-	#a =null;
-	a = @ ( pa : num , pb : num ) {
-		def a1 : num = pa;
-		def a2 : num = pb;
-		
-		#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-		
-	};
-	a ( 13.0 , 15.0 );
-	def b : auto = a;
-	
-	#def c : auto = b;
-	def c : auto = null;
-	c = a;
-	
-	# a= null;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
-	a ( 11.0 , 1.0 );
-	b ( 22.0 , 2.0 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
-	
-	#def chamar : auto = a;
-	
-	#chamar(16);
-	def autosoma : functor = @ ( a : num , b : num ) : num {
-		def c : num;
-		invoke math -> operator_sum_num ( a , b ) :: c;
-		return c;
-	};
-	def fa : num = autosoma ( 5.0 , 2.0);
-	def mastigar : functor = autosoma;
-	autosoma = null;
-	def mastigado : num = mastigar ( 1.0 , 3.0 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: FUNCTIONS;
-	moc rel : auto = @ ( p : num ) {
-		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	};
-	rel ( 12.0 );
-	moc tgu : num = 12.0;
+
+
+    local -> (){
+
+        def t : int = -12;
+
+    	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    }
+
+    @();
+
+	local -> (a:num,b:num) {
+
+        def c : num = 0.0;
+
+        invoke math -> operator_sum_num ( a , b ) :: c;
+
+        return c;
+    }
+
+    def t : num = @(20.0,50.0);
+
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }

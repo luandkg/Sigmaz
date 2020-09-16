@@ -8,9 +8,16 @@ public class AST_Value_Argument {
 
     private CompilerUnit mCompiler;
 
+    private boolean mTemTipo;
+    private AST mTipo;
 
     public AST_Value_Argument(CompilerUnit eCompiler) {
         mCompiler = eCompiler;
+    }
+
+    public void sePrecisarTipar(AST eTipo) {
+        mTipo = eTipo;
+        mTemTipo=true;
     }
 
     public void initArgumento(AST ASTPai) {
@@ -46,7 +53,7 @@ public class AST_Value_Argument {
             ASTPai.setNome(TokenD.getConteudo());
             ASTPai.setValor("ID");
 
-            if (TokenD.mesmoConteudo("init")){
+            if (TokenD.mesmoConteudo("init")) {
 
                 ASTPai.setValor("INIT");
 
@@ -118,6 +125,19 @@ public class AST_Value_Argument {
                     System.out.println("Problema IC : " + TokenC2.getConteudo());
                 }
                 return;
+            } else if (TokenD.mesmoConteudo("default")) {
+
+                ASTPai.setNome("");
+                ASTPai.setValor("DEFAULT");
+
+                if (mTemTipo) {
+                    ASTPai.getASTS().add(mTipo);
+                } else {
+                    mCompiler.errarCompilacao("O DEFAULT precisa ser definido em alocacoes !", TokenD);
+                }
+
+                ParteFinal(ASTPai);
+                return;
             }
 
 
@@ -179,19 +199,18 @@ public class AST_Value_Argument {
                 ParteFinal(ASTPai);
 
 
-
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                Matcher.final_argumento("MATCH",ASTPai);
+                Matcher.final_argumento("MATCH", ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                Matcher.final_argumento("UNMATCH",ASTPai);
+                Matcher.final_argumento("UNMATCH", ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.SOMADOR) {
-                Matcher.final_argumento("SUM",ASTPai);
+                Matcher.final_argumento("SUM", ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.DIMINUIDOR) {
-                Matcher.final_argumento("SUB",ASTPai);
+                Matcher.final_argumento("SUB", ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.MULTIPLICADOR) {
-                Matcher.final_argumento("MUX",ASTPai);
+                Matcher.final_argumento("MUX", ASTPai);
             } else if (TokenC2.getTipo() == TokenTipo.DIVISOR) {
-                Matcher.final_argumento("DIV",ASTPai);
+                Matcher.final_argumento("DIV", ASTPai);
             } else {
                 System.out.println("Problema : " + TokenD.getConteudo());
             }
@@ -208,32 +227,34 @@ public class AST_Value_Argument {
     }
 
 
-    public void ParteFinal(AST ASTPai){
+    public void ParteFinal(AST ASTPai) {
 
         AST_Value_Operator Matcher = new AST_Value_Operator(mCompiler);
+
+        if(mTemTipo){
+            Matcher.sePrecisarTipar(mTipo);
+        }
 
         Token TokenC2 = mCompiler.getTokenAvante();
         if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA || TokenC2.getTipo() == TokenTipo.VIRGULA) {
             return;
         } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-            Matcher.final_argumento("MATCH",ASTPai);
+            Matcher.final_argumento("MATCH", ASTPai);
         } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-            Matcher.final_argumento("UNMATCH",ASTPai);
+            Matcher.final_argumento("UNMATCH", ASTPai);
         } else if (TokenC2.getTipo() == TokenTipo.SOMADOR) {
-            Matcher.final_argumento("SUM",ASTPai);
+            Matcher.final_argumento("SUM", ASTPai);
         } else if (TokenC2.getTipo() == TokenTipo.DIMINUIDOR) {
-            Matcher.final_argumento("SUB",ASTPai);
+            Matcher.final_argumento("SUB", ASTPai);
         } else if (TokenC2.getTipo() == TokenTipo.MULTIPLICADOR) {
-            Matcher.final_argumento("MUX",ASTPai);
+            Matcher.final_argumento("MUX", ASTPai);
         } else if (TokenC2.getTipo() == TokenTipo.DIVISOR) {
-            Matcher.final_argumento("DIV",ASTPai);
+            Matcher.final_argumento("DIV", ASTPai);
         } else {
             System.out.println("Problema : " + TokenC2.getConteudo());
         }
 
     }
-
-
 
 
     public void ReceberArgumentos(AST ASTAvo) {
@@ -263,6 +284,10 @@ public class AST_Value_Argument {
 
                 AST_Value_Argument mAST = new AST_Value_Argument(mCompiler);
                 mCompiler.voltar();
+
+                if(mTemTipo){
+                    mAST.sePrecisarTipar(mTipo);
+                }
                 mAST.initArgumento(ASTCorrente);
                 ASTCorrente.setTipo("ARGUMENT");
 
@@ -284,6 +309,11 @@ public class AST_Value_Argument {
 
                 AST_Value_Argument mAST = new AST_Value_Argument(mCompiler);
                 mCompiler.voltar();
+
+                if(mTemTipo){
+                    mAST.sePrecisarTipar(mTipo);
+                }
+
                 mAST.initArgumento(ASTCorrente);
                 ASTCorrente.setTipo("ARGUMENT");
 
@@ -307,6 +337,10 @@ public class AST_Value_Argument {
                 AST_Value_Argument mAST = new AST_Value_Argument(mCompiler);
                 mCompiler.voltar();
 
+                if(mTemTipo){
+                    mAST.sePrecisarTipar(mTipo);
+                }
+
                 mAST.initArgumento(ASTCorrente);
                 ASTCorrente.setTipo("ARGUMENT");
 
@@ -329,6 +363,9 @@ public class AST_Value_Argument {
                 mCompiler.voltar();
 
                 AST_Value_Argument mAST = new AST_Value_Argument(mCompiler);
+                if(mTemTipo){
+                    mAST.sePrecisarTipar(mTipo);
+                }
                 mAST.initArgumento(ASTCorrente);
 
                 ASTCorrente.setTipo("ARGUMENT");
@@ -349,10 +386,13 @@ public class AST_Value_Argument {
                 AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
                 ASTCorrente.setValor("CONTAINER");
 
-                AST ASTV= ASTCorrente.criarBranch("VALUE");
+                AST ASTV = ASTCorrente.criarBranch("VALUE");
 
 
                 AST_Value_Parenteses mAST = new AST_Value_Parenteses(mCompiler);
+                if(mTemTipo){
+                    mAST.sePrecisarTipar(mTipo);
+                }
                 mAST.initArgumento(ASTV);
                 ASTV.setTipo("VALUE");
 
@@ -365,7 +405,6 @@ public class AST_Value_Argument {
                     saiu = true;
                     break;
                 }
-
 
 
             } else {

@@ -8,9 +8,16 @@ public class AST_Value_Parenteses {
 
     private CompilerUnit mCompiler;
 
+    private boolean mTemTipo;
+    private AST mTipo;
 
     public AST_Value_Parenteses(CompilerUnit eCompiler) {
         mCompiler = eCompiler;
+    }
+
+    public void sePrecisarTipar(AST eTipo) {
+        mTipo = eTipo;
+        mTemTipo=true;
     }
 
     public void initArgumento(AST ASTPai) {

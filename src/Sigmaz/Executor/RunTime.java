@@ -15,9 +15,9 @@ public class RunTime {
 
     private Escopo mEscopoGlobal;
 
-    private ArrayList<Run_Struct> mHeap;
     private ArrayList<Run_Extern> mExtern;
     private ArrayList<Run_Type> mTypes_Instances;
+    private ArrayList<Run_Struct> mStructs_Instances;
 
 
     private ArrayList<AST> mGlobalActions;
@@ -72,7 +72,7 @@ public class RunTime {
         mGlobalStructs = new ArrayList<AST>();
         mGlobalPackages = new ArrayList<AST>();
 
-        mHeap = new ArrayList<Run_Struct>();
+        mStructs_Instances = new ArrayList<Run_Struct>();
         mTypes_Instances = new ArrayList<Run_Type>();
         mExtern = new ArrayList<Run_Extern>();
 
@@ -94,7 +94,7 @@ public class RunTime {
         mVECTORID = 0;
 
 
-        mHeap.clear();
+        mStructs_Instances.clear();
         mTypes_Instances.clear();
 
         mT_Primitivos.clear();
@@ -141,7 +141,7 @@ public class RunTime {
     }
 
     public ArrayList<Run_Struct> getHeap() {
-        return mHeap;
+        return mStructs_Instances;
     }
 
     public ArrayList<Run_Extern> getExtern() {
@@ -197,7 +197,7 @@ public class RunTime {
 
 
     public void adicionarHeap(Run_Struct eEscopo) {
-        mHeap.add(eEscopo);
+        mStructs_Instances.add(eEscopo);
     }
 
     public void adicionarType(Run_Type eEscopo) {
@@ -207,9 +207,9 @@ public class RunTime {
 
     public void removerHeap(String eNome) {
 
-        for (Run_Struct mRun_Struct : mHeap) {
+        for (Run_Struct mRun_Struct : mStructs_Instances) {
             if (mRun_Struct.mesmoNome(eNome)) {
-                mHeap.remove(mRun_Struct);
+                mStructs_Instances.remove(mRun_Struct);
                 break;
             }
         }
@@ -229,12 +229,36 @@ public class RunTime {
     }
 
 
+    public boolean existeStruct(String eNome) {
+        boolean ret = false;
+
+        for (Run_Struct mRun_Struct : mStructs_Instances) {
+            if (mRun_Struct.mesmoNome(eNome)) {
+                ret = true;
+                break;
+            }
+        }
+        return ret;
+    }
+
+    public boolean existeType(String eNome) {
+        boolean ret = false;
+
+        for (Run_Type mRun_Struct : mTypes_Instances) {
+            if (mRun_Struct.mesmoNome(eNome)) {
+                ret = true;
+                break;
+            }
+        }
+        return ret;
+    }
+
     public Run_Struct getRun_Struct(String eNome) {
 
         Run_Struct mRet = null;
         boolean enc = false;
 
-        for (Run_Struct mRun_Struct : mHeap) {
+        for (Run_Struct mRun_Struct : mStructs_Instances) {
             if (mRun_Struct.mesmoNome(eNome)) {
                 mRet = mRun_Struct;
                 enc = true;
@@ -244,7 +268,7 @@ public class RunTime {
 
         if (!enc) {
             if (eNome.contentEquals("")) {
-                mErros.add("Nao foi possivel encontrar a struct - PONTEIRO NULO");
+                mErros.add("Nao foi possivel encontrar a struct - PONTEIRO NULO " + eNome);
             } else {
                 mErros.add("Nao foi possivel encontrar a struct : " + eNome);
             }
@@ -268,8 +292,13 @@ public class RunTime {
         }
 
         if (!enc) {
-            mErros.add("Nao foi possivel encontrar a type : " + eNome);
+            if (eNome.contentEquals("")) {
+                mErros.add("Nao foi possivel encontrar a type - PONTEIRO NULO " + eNome);
+            } else {
+                mErros.add("Nao foi possivel encontrar a type : " + eNome);
+            }
         }
+
 
         return mRet;
 

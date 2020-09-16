@@ -6,11 +6,22 @@ act println ( a : string , b : int ) {
 	invoke terminal -> print ( a ) :: c;
 	invoke terminal -> print ( b ) :: c;
 }
-
+act println ( a : string , b : bool ) {
+	def c : int;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+	invoke terminal -> print ( b ) :: c;
+}
 
 func isNull ( ObjetoNulo : any ) : bool {
+
+
+
 	def c : bool;
 	invoke casting -> cast_isnull ( ObjetoNulo ) :: c;
+
+
+
 	return c;
 }
 
@@ -122,21 +133,18 @@ func menor_igual ( a : int , b : int ) : bool {
 
 	invoke math -> operator_less_int ( a , b ) :: c1;
 	invoke math -> operator_equal_int ( a , b ) :: c2;
-	return operador_ou ( c1 , c2 );
-}
-func maior_igual ( a : int , b : int ) : bool {
-	def c1 : bool = false;
-	def c2 : bool = false;
 
-	invoke math -> operator_great_int ( a , b ) :: c1;
-	invoke math -> operator_equal_int ( a , b ) :: c2;
+
 	return operador_ou ( c1 , c2 );
 }
+
+
 func igual ( a : int , b : int ) : bool {
 	def c : bool;
 	invoke math -> operator_equal_int ( a , b ) :: c;
 	return c;
 }
+
 func diferente ( a : int , b : int ) : bool {
 	def a1 : int = a;
 	def b1 : int = b;
@@ -145,8 +153,24 @@ func diferente ( a : int , b : int ) : bool {
 	return c;
 }
 
+operator !! ( a : bool , b : bool ) : bool {
+	def c : bool;
+	invoke math -> operator_unmatch ( a , b ) :: c;
+	return c;
+}
 
+act trash ( a : any ) {
+    def existe : bool = false;
 
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    invoke __COMPILER__ -> EXISTS ( a ) :: existe;
+
+    invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    if(existe) -> { invoke __COMPILER__ -> OBJECT ( a ) :: REMOVE; }
+
+}
 
 struct Lista in ( T ) {
 	restrict : 
@@ -159,23 +183,38 @@ struct Lista in ( T ) {
 	}
 
 	act adicionar ( novo : T ) {
+
+			#println ( "Adicionando : ", novo );
+
 		if ( isNull ( mPrimeiro ) ) -> {
+
+								#println ( "Adicionando EM NULO : ", novo );
+
 			mPrimeiro = init Item ( ) >> ( T );
 			mPrimeiro.setValor ( novo );
 			mUltimo = mPrimeiro;
 			mQuantidade = 1;
+
+						#println ( "Adicionado EM NULO : ", novo );
+
 		}others {
+											#println ( "Adicionando NAO NULO : ", novo );
+
 			def mCorrente : Item >> ( T ) = init Item ( ) >> ( T );
 			mCorrente.setValor ( novo );
 			mUltimo.setProximo ( mCorrente );
 			mUltimo = mCorrente;
 			mQuantidade = somar ( mQuantidade , 1 );
+
+									#println ( "Adicionado NAO NULO : ", novo );
+
 		}
-		
+					#println ( "Adicionado : ", novo );
+
 	}
 
 	act remover ( a : T ) {
-		println ( "Remover : ", a );
+		#println ( "Removendo : ", a );
 		if ( isNull ( mPrimeiro ) ) -> {
 			
 		}others {
@@ -208,7 +247,7 @@ struct Lista in ( T ) {
 				#println("Passando Por : ",mCorrente.getValor());
 				mAnterior = mCorrente;
 				mCorrente = mCorrente.getProximo ( );
-				mIndice = somar_inteiro ( mIndice , 1 );
+				mIndice = somar ( mIndice , 1 );
 			}
 			
 		}
@@ -222,7 +261,6 @@ struct Lista in ( T ) {
 				println ( " - Valor : ", mCorrente.getValor ( ) );
 				mCorrente = mCorrente.getProximo ( );
 			}
-			
 		}
 		
 	}
@@ -316,9 +354,13 @@ struct Iterador in ( T ) {
 		mTamanho = mLista.getQuantidade ( );
 		mIniciado = true;
 		mTerminou = false;
+
+
+
 	}
 
 	act proximo ( ) {
+
 		if ( mIniciado ) -> {
 			if ( mTerminou == false ) -> {
 				if ( menor ( mIndex , mTamanho ) ) -> {
@@ -331,11 +373,20 @@ struct Iterador in ( T ) {
 			}
 			
 		}
-		
+
+
+
 	}
 	func continuar ( ) : bool {
+
+
+
 		def ret : bool = false;
+
+
 		if ( mIniciado ) -> {
+
+
 			if ( maior_igual ( mIndex , mTamanho ) ) -> {
 				mTerminou = true;
 			}others {
@@ -345,6 +396,8 @@ struct Iterador in ( T ) {
 		}others {
 			ret = false;
 		}
+
+
 		return ret;
 	}
 	func getIndex ( ) : int {
@@ -363,24 +416,48 @@ struct Iterador in ( T ) {
 }
 refer Delicia;
 act inicio ( ) {
+
+
+
+
+
 	def ls : Lista >> ( string ) = init Lista ( ) >> ( string );
 	def lsi : Iterador >> ( Lista >> ( string ) ) = init Iterador ( ls ) >> ( Lista >> ( string ) );
+
 	def ig : Lista >> ( int ) = init Lista ( ) >> ( int );
 	ig.adicionar ( 10 );
 	ig.adicionar ( 20 );
 	def a : int = ig.getQuantidade ( );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 	ig.adicionar ( 30 );
 	ig.adicionar ( 40 );
 	ig.adicionar ( 50 );
 	ig.adicionar ( 60 );
+
 	def b : int = ig.getQuantidade ( );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-	ig.listar ( );
+
+    println ( "Quantidade : ", ig.getQuantidade ( ) );
+	#ig.listar ( );
+    println ( " DEBUG  ", 0  );
+
+	def iterando : Iterador >> ( Lista >> ( int ) ) = init Iterador ( ig ) >> ( Lista >> ( int ) );
+	iterando.iniciar ( );
+
+	    println ( " DEBUG  ", 1  );
+
+
+	while ( iterando.continuar ( ) ) -> {
+		println ( "-> ", iterando.getValor ( ) );
+		iterando.proximo ( );
+	}
+
+    println ( " DEBUG  ", 2  );
+
+
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
-	ig.remover ( 10 );
+
+    ig.remover ( 10 );
 	ig.listar ( );
-	println ( "Quantidade : ", ig.getQuantidade ( ) );
+	println ( "Quantidade  : ", ig.getQuantidade ( ) );
 	ig.remover ( 40 );
 	ig.listar ( );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
@@ -389,9 +466,16 @@ act inicio ( ) {
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
 	ig.remover ( 15 );
 	ig.listar ( );
-	println ( "Quantidade : ", ig.getQuantidade ( ) );
+	println ( "Quantidade # : ", ig.getQuantidade ( ) );
 	ig.adicionar ( 70 );
-	ig.listar ( );
+	#ig.listar ( );
+
+	iterando.iniciar();
+		while ( iterando.continuar ( ) ) -> {
+    		println ( "-> ", iterando.getValor ( ) );
+    		iterando.proximo ( );
+    	}
+
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
 	ig.remover ( 50 );
 	ig.remover ( 20 );
@@ -427,9 +511,9 @@ act inicio ( ) {
 	def Frutas : Lista >> ( Fruta ) = init Lista ( ) >> ( Fruta );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	Frutas.adicionar ( init Fruta ( ) );
-	
+
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-	
+
 	#invoke __COMPILER__ -> HEAP ( ) :: ALL;
 	
 }
@@ -438,4 +522,51 @@ package Delicia {
 		
 	}
 	
+}
+
+
+func operador_e ( a : bool , b : bool ) : bool {
+	def c : bool = false;
+	if(a==true) -> {
+	    if(b==true) -> {c = true;}
+	}
+	return c;
+}
+
+
+
+func operador_ou ( a : bool , b : bool ) : bool {
+	def c : bool = false;
+
+
+	if(a==true) -> {c = true;}
+	if(b==true) -> {c = true;}
+
+
+
+	return c;
+}
+
+operator == ( a : bool , b : bool ) : bool {
+	def c : bool;
+
+
+
+
+	invoke math -> operator_match ( a , b ) :: c;
+	return c;
+}
+
+func maior_igual ( a : int , b : int ) : bool {
+	def c1 : bool = false;
+	def c2 : bool = false;
+
+	invoke math -> operator_great_int ( a , b ) :: c1;
+	invoke math -> operator_equal_int ( a , b ) :: c2;
+
+    def c3 : bool = operador_ou ( c1 , c2 );
+
+
+
+	return c3;
 }

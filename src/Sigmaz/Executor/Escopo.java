@@ -250,7 +250,7 @@ public class Escopo {
             if (eItem.getNulo()) {
                 this.criarParametroStructNula(eNome, eItem.getTipo());
             } else {
-                this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor());
+                this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime,this));
             }
 
 
@@ -259,7 +259,7 @@ public class Escopo {
             if (eItem.getNulo()) {
                 this.criarParametroNulo(eNome, eItem.getTipo());
             } else {
-                this.criarParametro(eNome, eItem.getTipo(), eItem.getValor());
+                this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime,this));
             }
 
 
@@ -285,9 +285,9 @@ public class Escopo {
                 }
             } else {
                 if (eItem.getIsReferenciavel()) {
-                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor());
+                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime,this));
                 } else {
-                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor());
+                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime,this));
                 }
             }
 
@@ -301,9 +301,9 @@ public class Escopo {
                 }
             } else {
                 if (eItem.getIsReferenciavel()) {
-                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor());
+                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime,this));
                 } else {
-                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor());
+                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime,this));
                 }
             }
 
@@ -344,11 +344,31 @@ public class Escopo {
         Novo.setNulo(eItem.getNulo());
         Novo.setPrimitivo(eItem.getPrimitivo());
         Novo.setIsEstrutura(eItem.getIsEstrutura());
-        Novo.setValor(eItem.getValor());
+        Novo.setValor(eItem.getValor(mRunTime,this),mRunTime,this);
         mStacks.add(Novo);
 
 
     }
+
+
+
+    public void criarExternRefered(String eNome,String mTipagem, String eStruct,String eCampo) {
+
+        Item Novo = new Item(eNome);
+        Novo.setModo(0);
+        Novo.setTipo(mTipagem);
+        Novo.setNulo(false);
+        Novo.setPrimitivo(false);
+        Novo.setIsEstrutura(false);
+
+        Novo.setRefer(eStruct,eCampo);
+
+        mStacks.add(Novo);
+
+
+    }
+
+
 
     public void alterarTipo(String eNome, String eTipoAtual, String eTipoNovo) {
         mEscopoStack.alterarTipo(eNome, eTipoAtual, eTipoNovo);
@@ -615,5 +635,48 @@ public class Escopo {
         return mEscopoStack.getItem(eNome);
     }
 
+
+
+    // FUNCAO LOCAL
+    private boolean mTemLocal=false;
+    private AST mLocal;
+
+    public void definirLocal(AST eLocal){
+
+        mLocal=eLocal;
+        mTemLocal=true;
+
+    }
+
+    public boolean temLocal(){return mTemLocal;}
+    public AST getLocal(){return mLocal;}
+
+    public boolean temLocalAnteriormente(){
+
+        if (mTemLocal){
+            return mTemLocal;
+        }else{
+            if (mEscopoAnterior !=null){
+                return mEscopoAnterior.temLocalAnteriormente();
+            }else{
+                return false;
+            }
+        }
+
+    }
+
+    public AST getLocalAnteriormente(){
+
+        if (mTemLocal){
+            return getLocal();
+        }else{
+            if (mEscopoAnterior !=null){
+                return mEscopoAnterior.getLocal();
+            }else{
+                return null;
+            }
+        }
+
+    }
 
 }

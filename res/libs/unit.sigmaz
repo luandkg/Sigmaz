@@ -1,21 +1,15 @@
-
 package TesteUnitario {
-
 	refer Lista;
-    refer Iterador;
-
+	refer Iterador;
 	type Assertiva {
 		define nome : string = "";
 		define resultado : bool = false;
 	}
 
 	struct Assert {
-
-	    restrict:
-		    define Assertivas : Lista >> ( Assertiva ) = init Lista ( ) >> ( Assertiva );
-
-        all:
-
+		restrict : 
+		define Assertivas : Lista >> ( Assertiva ) = init Lista ( ) >> ( Assertiva );
+		all : 
 		act limpar ( ) {
 			each a : Assertiva :: ( Assertivas ) -> {
 				trash ( a );
@@ -24,25 +18,22 @@ package TesteUnitario {
 		}
 
 		act testar ( teste : string , a : bool ) {
-
-		    def aa : Assertiva = start Assertiva {
-                                   				nome = teste;
-                                   				resultado = a;
-                                   			};
-            #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
-			Assertivas.adicionar ( aa);
+			def aa : Assertiva = start Assertiva {
+				nome = teste;
+				resultado = a;
+			};
+			
+			#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+			Assertivas.adicionar ( aa );
 		}
 
-
-		act listar(){
-
+		act listar ( ) {
 			each AssertivaC : Assertiva :: ( Assertivas ) -> {
-        		println ( "ASSERT : ", AssertivaC.nome , " -->> ", AssertivaC.resultado );
-        	}
-
+				println ( "ASSERT : ", AssertivaC.nome , " -->> ", AssertivaC.resultado );
+			}
+			
 		}
-
+		
 	}
-
+	
 }

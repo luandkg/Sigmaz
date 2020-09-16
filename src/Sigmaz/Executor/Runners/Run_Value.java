@@ -2,6 +2,8 @@ package Sigmaz.Executor.Runners;
 
 import Sigmaz.Executor.AST_Implementador;
 import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.Indexador.Index_Action;
+import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
@@ -97,7 +99,7 @@ public class Run_Value {
         //  System.out.println("INIT VALUE " + ASTCorrente.getNome());
 
         if (mRunTime.getErros().size() > 0) {
-            return ;
+            return;
         }
 
         if (ASTCorrente.mesmoValor("NULL")) {
@@ -186,7 +188,7 @@ public class Run_Value {
 
             this.setNulo(mRetorno.getNulo());
             this.setPrimitivo(mRetorno.getPrimitivo());
-            this.setConteudo(mRetorno.getValor());
+            this.setConteudo(mRetorno.getValor(mRunTime, mEscopo));
             this.setRetornoTipo(mRetorno.getTipo());
 
             mIsReferenciavel = true;
@@ -203,7 +205,7 @@ public class Run_Value {
 
             this.setNulo(mRetorno.getNulo());
             this.setPrimitivo(mRetorno.getPrimitivo());
-            this.setConteudo(mRetorno.getValor());
+            this.setConteudo(mRetorno.getValor(mRunTime, mEscopo));
             this.setRetornoTipo(mRetorno.getTipo());
 
             mIsReferenciavel = true;
@@ -221,7 +223,7 @@ public class Run_Value {
 
             this.setNulo(mRetorno.getNulo());
             this.setPrimitivo(mRetorno.getPrimitivo());
-            this.setConteudo(mRetorno.getValor());
+            this.setConteudo(mRetorno.getValor(mRunTime, mEscopo));
             this.setRetornoTipo(mRetorno.getTipo());
 
             mIsReferenciavel = true;
@@ -244,6 +246,15 @@ public class Run_Value {
 
             vector(ASTCorrente, eRetorno);
 
+        } else if (ASTCorrente.getValor().contentEquals("DEFAULT")) {
+
+
+            defaultx(ASTCorrente, eRetorno);
+
+
+        } else if (ASTCorrente.getValor().contentEquals("EXECUTE_LOCAL")) {
+
+            executeLocal(ASTCorrente, eRetorno);
 
         } else {
 
@@ -268,6 +279,72 @@ public class Run_Value {
 
 
     }
+
+    public void defaultx(AST ASTCorrente, String eRetorno) {
+
+
+        Run_GetType mRun_GetType = new Run_GetType(mRunTime, mEscopo);
+        mRun_GetType.adicionarRefers(mEscopo.getRefersOcultas());
+
+        if (ASTCorrente.existeBranch("TYPE")) {
+            String mTipo = mRun_GetType.getTipagem(ASTCorrente.getBranch("TYPE"));
+
+            if (mTipo.contentEquals("int")) {
+                mIsNulo = false;
+                mRetornoTipo = mTipo;
+                mIsPrimitivo = true;
+                mIsEstrutura = false;
+                mConteudo = "0";
+            } else if (mTipo.contentEquals("num")) {
+                mIsNulo = false;
+                mRetornoTipo = mTipo;
+                mIsPrimitivo = true;
+                mIsEstrutura = false;
+                mConteudo = "0.0";
+            } else if (mTipo.contentEquals("string")) {
+                mIsNulo = false;
+                mRetornoTipo = mTipo;
+                mIsPrimitivo = true;
+                mIsEstrutura = false;
+                mConteudo = "";
+            } else if (mTipo.contentEquals("bool")) {
+                mIsNulo = false;
+                mRetornoTipo = mTipo;
+                mIsPrimitivo = true;
+                mIsEstrutura = false;
+                mConteudo = "true";
+            } else {
+
+                mRunTime.errar(mLocal, "RETORNO DEFAULT DESCONHECIDO para o Tipo: " + eRetorno);
+
+            }
+        } else {
+            mRunTime.errar(mLocal, "DEFAULT precisa ser tipado !");
+        }
+
+
+    }
+
+
+    public void executeLocal(AST ASTCorrente, String eRetorno) {
+
+        Run_ExecuteLocal mRun_ExecuteLocal = new Run_ExecuteLocal(mRunTime, mEscopo);
+        Item mItem = mRun_ExecuteLocal.initComRetorno(ASTCorrente);
+
+        mIsNulo = mItem.getNulo();
+        mRetornoTipo = mItem.getTipo();
+        mConteudo = mItem.getValor(mRunTime, mEscopo);
+
+
+        mIsPrimitivo = mItem.getPrimitivo();
+        mIsEstrutura = mItem.getIsEstrutura();
+
+        mIsReferenciavel = true;
+        mReferencia = mItem;
+
+
+    }
+
 
     public void Variavel(AST ASTCorrente, String eRetorno) {
 
@@ -296,6 +373,9 @@ public class Run_Value {
             if (mRetornoTipo.contentEquals("num") || mRetornoTipo.contentEquals("bool") || mRetornoTipo.contentEquals("string")) {
                 mIsPrimitivo = true;
             }
+            //} else if (ASTCorrente.mesmoNome("default")) {
+
+            //   defaultx(ASTCorrente,eRetorno);
 
 
         } else {
@@ -313,7 +393,7 @@ public class Run_Value {
 
                 mIsNulo = mItem.getNulo();
                 mRetornoTipo = mItem.getTipo();
-                mConteudo = mItem.getValor();
+                mConteudo = mItem.getValor(mRunTime, mEscopo);
 
 
                 mIsPrimitivo = mItem.getPrimitivo();
@@ -350,16 +430,25 @@ public class Run_Value {
 
         //System.out.println("OPERATOR  -> " + eModo.getNome());
 
-
         Run_Value mRun_Esquerda = new Run_Value(mRunTime, mEscopo);
-        mRun_Esquerda.init(ASTCorrente.getBranch("LEFT"), "<<ANY>>");
+
+        if (ASTCorrente.getBranch("LEFT").mesmoValor("DEFAULT")) {
+            mRun_Esquerda.init(ASTCorrente.getBranch("LEFT"), eRetorno);
+        } else {
+            mRun_Esquerda.init(ASTCorrente.getBranch("LEFT"), "<<ANY>>");
+        }
+
 
         if (mRunTime.getErros().size() > 0) {
             return;
         }
 
         Run_Value mRun_Direita = new Run_Value(mRunTime, mEscopo);
-        mRun_Direita.init(ASTCorrente.getBranch("RIGHT"), "<<ANY>>");
+        if (ASTCorrente.getBranch("RIGHT").mesmoValor("DEFAULT")) {
+            mRun_Direita.init(ASTCorrente.getBranch("RIGHT"), eRetorno);
+        } else {
+            mRun_Direita.init(ASTCorrente.getBranch("RIGHT"), "<<ANY>>");
+        }
 
         if (mRunTime.getErros().size() > 0) {
             return;
@@ -369,6 +458,7 @@ public class Run_Value {
         // System.out.println("OPERATOR  DIREITA -> " + mRun_Direita.getRetornoTipo());
         // System.out.println("OPERATOR  ESQUERDA -> " + mRun_Esquerda.getRetornoTipo());
 
+        //System.out.println(ASTCorrente.ImprimirArvoreDeInstrucoes());
 
         if (eModo.mesmoNome("MATCH")) {
 
@@ -435,7 +525,7 @@ public class Run_Value {
         // System.out.println("Valorando  -> FUNCT " + ASTCorrente.getNome());
 
         Run_Any mAST = new Run_Any(mRunTime);
-        Item eItem = mAST.init_Function(ASTCorrente, mEscopo, mEscopo, eRetorno, "", mEscopo.getFunctionsCompleto());
+        Item eItem = mAST.init_Function(ASTCorrente, mEscopo, mEscopo, eRetorno, mEscopo.getFunctionsCompleto());
 
         // System.out.println("Ent ->> " + eRetorno);
 
@@ -445,7 +535,7 @@ public class Run_Value {
 
         this.setNulo(eItem.getNulo());
         this.setPrimitivo(eItem.getPrimitivo());
-        this.setConteudo(eItem.getValor());
+        this.setConteudo(eItem.getValor(mRunTime, mEscopo));
         this.setRetornoTipo(eItem.getTipo());
 
 
@@ -599,7 +689,7 @@ public class Run_Value {
 
                 this.setNulo(eItem.getNulo());
                 this.setPrimitivo(eItem.getPrimitivo());
-                this.setConteudo(eItem.getValor());
+                this.setConteudo(eItem.getValor(mRunTime, mEscopo));
                 this.setRetornoTipo(eItem.getTipo());
             } else {
 
@@ -636,10 +726,10 @@ public class Run_Value {
 
         mIsNulo = mItem.getNulo();
         mIsPrimitivo = mItem.getPrimitivo();
-        mConteudo = mItem.getValor();
+        mConteudo = mItem.getValor(mRunTime, mEscopo);
         mRetornoTipo = mItem.getTipo();
 
-        // System.out.println("Realizado Operacao : " + eOperacao + " :: " + mRetornoTipo);
+        //System.out.println("Realizado Operacao : " + eOperacao + " :: " + mRetornoTipo);
 
 
         if (mRunTime.getErros().size() > 0) {
@@ -668,7 +758,7 @@ public class Run_Value {
 
         mIsNulo = mItem.getNulo();
         mIsPrimitivo = mItem.getPrimitivo();
-        mConteudo = mItem.getValor();
+        mConteudo = mItem.getValor(mRunTime, mEscopo);
         mRetornoTipo = mItem.getTipo();
 
         if (mRunTime.getErros().size() > 0) {
@@ -787,7 +877,25 @@ public class Run_Value {
                     if (mRunTime.getErros().size() > 0) {
                         return;
                     }
+                } else if (eRV.getRetornoTipo().contentEquals("int")) {
 
+                    if (eRV.getIsNulo()) {
+
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", "null", "ID");
+                        Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
+                        mASTExecute.init(mExecute);
+
+                    } else {
+
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", eRV.getConteudo(), "Num");
+                        Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
+                        mASTExecute.init(mExecute);
+
+                    }
+
+                    if (mRunTime.getErros().size() > 0) {
+                        return;
+                    }
                 } else if (eRV.getRetornoTipo().contentEquals("string")) {
 
                     if (eRV.getIsNulo()) {
@@ -869,7 +977,7 @@ public class Run_Value {
                 }
 
                 if (mRunTime.getErros().size() > 0) {
-                    return ;
+                    return;
                 }
             }
 
@@ -893,7 +1001,7 @@ public class Run_Value {
 
         mIsNulo = mItem.getNulo();
         mIsPrimitivo = mItem.getPrimitivo();
-        mConteudo = mItem.getValor();
+        mConteudo = mItem.getValor(mRunTime, mEscopo);
         mRetornoTipo = mItem.getTipo();
 
 

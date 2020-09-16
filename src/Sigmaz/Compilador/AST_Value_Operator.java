@@ -5,6 +5,8 @@ import Sigmaz.Utils.AST;
 public class AST_Value_Operator {
 
     private CompilerUnit mCompiler;
+    private boolean mTemTipo;
+    private AST mTipo;
 
     public AST_Value_Operator(CompilerUnit eCompiler) {
 
@@ -12,6 +14,10 @@ public class AST_Value_Operator {
 
     }
 
+    public void sePrecisarTipar(AST eTipo) {
+        mTipo = eTipo;
+        mTemTipo=true;
+    }
 
     public void final_argumento(String eTipo,AST ASTPai) {
 
@@ -31,6 +37,9 @@ public class AST_Value_Operator {
         ASTPai.getASTS().add(ASTDireita);
 
         AST_Value mAST = new AST_Value(mCompiler);
+        if(mTemTipo){
+            mAST.sePrecisarTipar(mTipo);
+        }
         mAST.initUltimoArgumento(ASTDireita);
 
         ASTDireita.setTipo("RIGHT");
@@ -55,6 +64,9 @@ public class AST_Value_Operator {
         ASTPai.getASTS().add(ASTDireita);
 
         AST_Value mAST = new AST_Value(mCompiler);
+        if(mTemTipo){
+            mAST.sePrecisarTipar(mTipo);
+        }
         mAST.initUltimoArgumentoParenteses(ASTDireita);
 
         ASTDireita.setTipo("RIGHT");

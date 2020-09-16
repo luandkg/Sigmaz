@@ -57,13 +57,17 @@ public class InvokeCompiler {
         } else if (eAcao.contentEquals("OBJECT")) {
 
             object(eAcao, eSaida, ASTArgumentos);
+        } else if (eAcao.contentEquals("EXISTS")) {
+
+            exists(eAcao, eSaida, ASTArgumentos);
 
         } else if (eAcao.contentEquals("TYPES")) {
 
             types(eAcao, eSaida, ASTArgumentos);
-        } else if (eAcao.contentEquals("HEAP")) {
 
-            heap(eAcao, eSaida, ASTArgumentos);
+        } else if (eAcao.contentEquals("STRUCTS")) {
+
+            structs(eAcao, eSaida, ASTArgumentos);
 
         } else {
 
@@ -120,7 +124,7 @@ public class InvokeCompiler {
 
     }
 
-    public void heap(String eAcao, String eSaida, AST ASTArgumentos) {
+    public void structs(String eAcao, String eSaida, AST ASTArgumentos) {
 
         int i = 0;
 
@@ -132,11 +136,11 @@ public class InvokeCompiler {
         }
 
         if (i == 0) {
-            if (eSaida.contentEquals("ALL")) {
+            if (eSaida.contentEquals("INSTANCES")) {
 
                 if (mRunTime.getExterno()) {
 
-                    System.out.println("\n ######################### SIGMAZ - HEAP ############################ ");
+                    System.out.println("\n ######################### SIGMAZ - STRUCTS : INSTANCES ############################ ");
 
                     for (Run_Struct mRun_Struct : mRunTime.getHeap()) {
 
@@ -358,6 +362,59 @@ public class InvokeCompiler {
             } else {
                 mRunTime.getErros().add("Invocacao : " + eAcao + " -> Problema com saida !");
             }
+
+        } else {
+
+
+            mRunTime.getErros().add("Invocacao : " + eAcao + " -> Problema com argumentos !");
+        }
+
+
+    }
+
+    public void exists(String eAcao, String eSaida, AST ASTArgumentos) {
+
+        int i = 0;
+
+
+        for (AST eAST : ASTArgumentos.getASTS()) {
+            if (eAST.mesmoTipo("ARGUMENT")) {
+                i += 1;
+            }
+        }
+
+        if (i == 1) {
+
+
+
+                String eTipo = mRun_Invoke.getTipo(ASTArgumentos, 1);
+                String eNome = mRun_Invoke.getQualquer(ASTArgumentos, 1);
+
+                String eQualificador = mRunTime.getQualificador(eTipo,mEscopo.getRefers());
+
+                // System.out.println("Removendo : " + eNome + " :: " + eQualificador);
+            mEscopo.setDefinido(eSaida, "false");
+
+                if (eQualificador.contentEquals("STRUCT")) {
+
+                    if (mRunTime.existeStruct(eNome)){
+                        mEscopo.setDefinido(eSaida, "true");
+
+                    }
+
+
+                } else if (eQualificador.contentEquals("TYPE")) {
+
+                    if (mRunTime.existeType(eNome)){
+                        mEscopo.setDefinido(eSaida, "true");
+
+                    }
+
+                }
+
+                //  System.out.println("Removendo : " + eNome);
+
+
 
         } else {
 

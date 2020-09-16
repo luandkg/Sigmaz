@@ -61,6 +61,7 @@ public class Analisar_Action {
             mAnalisador_Bloco.analisarValoracao(ASTPai, mAlocadosAntes);
 
             mAnalisador_Bloco.getAnalisar_Outros().analisarTipagem(ASTPai);
+
         } else if (ASTPai.mesmoTipo("MOC")) {
 
             if (mAlocadoAqui.contains(ASTPai.getNome())) {
@@ -187,6 +188,10 @@ public class Analisar_Action {
         } else if (ASTPai.mesmoTipo("EXCEPTION")) {
         } else if (ASTPai.mesmoTipo("EACH")) {
         } else if (ASTPai.mesmoTipo("VALUE")) {
+        } else if (ASTPai.mesmoTipo("EXTERN_REFERED")) {
+
+        } else if (ASTPai.mesmoTipo("LOCAL")) {
+        } else if (ASTPai.mesmoTipo("EXECUTE_LOCAL")) {
 
         } else {
             mAnalisador.getErros().add("AST : " + ASTPai.getTipo());

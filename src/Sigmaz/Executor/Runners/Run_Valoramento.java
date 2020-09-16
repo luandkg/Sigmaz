@@ -19,9 +19,9 @@ public class Run_Valoramento {
 
     }
 
-    public Run_Value init(String eNome, AST mValor, String mTipagem) {
+    public Run_Value init(String eNome, AST mValor, String mTipagem,String mTipoAntepassado) {
 
-        // System.out.println("Valorando  -> Def " + mValor.getValor());
+       //  System.out.println("Valorando  ->  " + mValor.getValor()+ " com DEFAULT " +mTipoAntepassado );
 
         // System.out.println("Pas Retorno : " + mTipagem);
 
@@ -199,7 +199,7 @@ public class Run_Valoramento {
 
     }
 
-    public Run_Value initSemCast(String eNome, AST mValor, String mTipagem) {
+    public Run_Value initSemCast(String eNome, AST mValor, String mTipagem,String mTipoAntepassado) {
 
         // System.out.println("Valorando  -> Def " + mValor.getValor());
 

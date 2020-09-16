@@ -49,7 +49,7 @@ public class Run_Moc{
         String mTipagem = mRun_GetType.getTipagem(eAST.getBranch("TYPE"));
 
         Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mEscopo);
-        Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, mTipagem);
+        Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, mTipagem,mTipagem);
 
         if (mRunTime.getErros().size() > 0) {
             return;
@@ -95,7 +95,7 @@ public class Run_Moc{
 
 
         Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mEscopo);
-        Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, "<<ANY>>");
+        Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, "<<ANY>>","<<ANY>>");
 
         if (mAST.getRetornoTipo().contentEquals("<<ANY>>")){
             mRunTime.getErros().add("O retorno de uma constante definida a partir de VOZ nao pode ser nula");

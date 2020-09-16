@@ -58,6 +58,7 @@ public class Analisar_Apply {
 
     public void valore(AST mValue, ArrayList<String> mAlocadosAntes) {
 
+
         if (mValue.mesmoValor("ID")) {
 
             if (mValue.mesmoNome("true") || mValue.mesmoNome("false") || mValue.mesmoNome("null")) {

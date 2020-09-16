@@ -57,3 +57,6 @@ Linguagem de Programação Estruturada - Alterações
 		2020 09 13 -->> Novo Tipo Primitivo : int
 		2020 09 13 -->> Adequação do sistema de testes
 
+
+		2020 09 16 -->> Função Anônima
+

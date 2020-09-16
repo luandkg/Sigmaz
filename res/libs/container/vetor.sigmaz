@@ -1,87 +1,56 @@
-
-
 package Vetor {
 	struct Vetor in ( T ) {
-
-
-	    init Vetor( eTamanho : int ) {
-
-	        if ( maior_igual ( eTamanho , 0 ) ) -> {
-			mQuantidade = 0;
-
-        		def vazio : T = null;
-
-        		while ( menor(mQuantidade,eTamanho) ) -> {
-
-        		   # println("Comecar Vetorizar :: ",mQuantidade);
-
-               	 	adicionar(vazio);
-        		}
-        	
-        	}others {
-        		exception "O vetor precisa ser um tamanho maior ou igual a 0 !";
-        	}
-
-        
-
-	    }
-
-
-		restrict :
-			define mPrimeiro : Item >> ( T ) = null;
-			define mUltimo : Item >> ( T ) = null;
-			define mQuantidade : int = 0;
-
-		all :
-			func getQuantidade ( ) : int {
-				return mQuantidade;
+		init Vetor ( eTamanho : int ) {
+			if ( maior_igual ( eTamanho , 0 ) ) -> {
+				mQuantidade = 0;
+				def vazio : T = null;
+				while ( menor ( mQuantidade , eTamanho ) ) -> {
+					
+					# println("Comecar Vetorizar :: ",mQuantidade);
+					adicionar ( vazio );
+				}
+				
+			}others {
+				exception "O vetor precisa ser um tamanho maior ou igual a 0 !";
 			}
+			
+		}
+		restrict : 
+		define mPrimeiro : Item >> ( T ) = null;
+		define mUltimo : Item >> ( T ) = null;
+		define mQuantidade : int = 0;
+		all : 
+		func getQuantidade ( ) : int {
+			return mQuantidade;
+		}
 
 		act listar ( ) {
-
 			if ( isNull ( mPrimeiro ) == false ) -> {
-
 				def mCorrente : Item >> ( T ) = mPrimeiro;
-
 				def mID : int = 0;
-
 				while ( isNull ( mCorrente ) == false ) -> {
-
-					println ( " - Valor : ",mID, " -->> ", mCorrente.getValor ( ) );
-
+					println ( " - Valor : ", mID , " -->> ", mCorrente.getValor ( ) );
 					mCorrente = mCorrente.getProximo ( );
-
 					mID = somar ( mID , 1 );
-
 				}
-
+				
 			}
-
+			
 		}
 
 		act mudarTodos ( eValor : T ) {
-
-        			if ( isNull ( mPrimeiro ) == false ) -> {
-
-        				def mCorrente : Item >> ( T ) = mPrimeiro;
-
-        				def mID : int = 0;
-
-        				while ( isNull ( mCorrente ) == false ) -> {
-
-        					mCorrente.setValor(eValor);
-
-        					mCorrente = mCorrente.getProximo ( );
-
-        					mID = somar ( mID , 1 );
-
-        				}
-
-        			}
-
-        		}
-
-
+			if ( isNull ( mPrimeiro ) == false ) -> {
+				def mCorrente : Item >> ( T ) = mPrimeiro;
+				def mID : int = 0;
+				while ( isNull ( mCorrente ) == false ) -> {
+					mCorrente.setValor ( eValor );
+					mCorrente = mCorrente.getProximo ( );
+					mID = somar ( mID , 1 );
+				}
+				
+			}
+			
+		}
 		func get ( indice : int ) : T {
 			def ret : T = null;
 			if ( maior_igual ( indice , 0 ) ) -> {
@@ -97,18 +66,17 @@ package Vetor {
 						contando = somar ( contando , 1 );
 						mCorrente = mCorrente.getProximo ( );
 					}
-
+					
 				}
 				if ( enc == false ) -> {
 					exception "Indice invalido !";
 				}
-
+				
 			}others {
 				exception "Indice invalido !";
 			}
 			return ret;
 		}
-
 		func getValor ( indice : int ) : T {
 			def ret : T = null;
 			if ( maior_igual ( indice , 0 ) ) -> {
@@ -124,21 +92,19 @@ package Vetor {
 						contando = somar ( contando , 1 );
 						mCorrente = mCorrente.getProximo ( );
 					}
-
+					
 				}
 				if ( enc == false ) -> {
 					exception "Indice invalido !";
 				}
-
+				
 			}others {
 				exception "Indice invalido !";
 			}
 			return ret;
 		}
 
-		act set ( indice : int , valor : T )  {
-
-
+		act set ( indice : int , valor : T ) {
 			if ( maior_igual ( indice , 0 ) ) -> {
 				def contando : int = 0;
 				def enc : bool = false;
@@ -146,64 +112,59 @@ package Vetor {
 					def mCorrente : Item >> ( T ) = mPrimeiro;
 					while ( isNull ( mCorrente ) == false ) -> {
 						if ( contando == indice ) -> {
-							mCorrente.setValor(valor);
+							mCorrente.setValor ( valor );
 							enc = true;
 						}
 						contando = somar ( contando , 1 );
 						mCorrente = mCorrente.getProximo ( );
 					}
-
+					
 				}
 				if ( enc == false ) -> {
 					exception "Indice invalido !";
 				}
-
+				
 			}others {
 				exception "Indice invalido !";
 			}
-
+			
 		}
 
 		act mostrarStruct ( ) {
 			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
 		}
-
-		restrict :
+		restrict : 
 		act adicionar ( novo : T ) {
-
-					    #println("Adicionando :: ",mQuantidade);
-
-
+			
+			#println("Adicionando :: ",mQuantidade);
 			if ( isNull ( mPrimeiro ) ) -> {
 				mPrimeiro = init Item ( ) >> ( T );
 				mPrimeiro.setValor ( novo );
 				mUltimo = mPrimeiro;
 				mQuantidade = 1;
 			}others {
-
-
 				def mCorrente : Item >> ( T ) = init Item ( ) >> ( T );
 				mCorrente.setValor ( novo );
 				mUltimo.setProximo ( mCorrente );
-
 				mUltimo = mCorrente;
-
 				mQuantidade = somar ( mQuantidade , 1 );
 			}
-
+			
 		}
 
 		act remover ( a : T ) {
+			
 			#println ( "Remover : ", a );
 			if ( isNull ( mPrimeiro ) ) -> {
-
+				
 			}others {
 				def mAnterior : Item >> ( T ) = null;
 				def mCorrente : Item >> ( T ) = mPrimeiro;
 				def mIndice : int = 0;
-				def mUltimoIndice : int = subtrair_inteiro ( mQuantidade , 1 );
+				def mUltimoIndice : int = subtrair ( mQuantidade , 1 );
 				while ( isNull ( mCorrente ) == false ) -> {
 					if ( mCorrente.getValor ( ) == a ) -> {
+						
 						#println ( "Removendo : ", a );
 						if ( mIndice == 0 ) -> {
 							if ( mQuantidade == 1 ) -> {
@@ -212,37 +173,35 @@ package Vetor {
 							}others {
 								mPrimeiro = mPrimeiro.getProximo ( );
 							}
-
+							
 						}other ( mIndice == mUltimoIndice ) -> {
 							mAnterior.setProximo ( null );
 							mUltimo = mAnterior;
 						}others {
 							mAnterior.setProximo ( mCorrente.getProximo ( ) );
 						}
-						mQuantidade = subtrair_inteiro ( mQuantidade , 1 );
+						mQuantidade = subtrair ( mQuantidade , 1 );
 						trash ( mCorrente );
 						cancel;
 					}
-
+					
 					#println("Passando Por : ",mCorrente.getValor());
 					mAnterior = mCorrente;
 					mCorrente = mCorrente.getProximo ( );
 					mIndice = somar ( mIndice , 1 );
 				}
-
+				
 			}
-
+			
 		}
-
-
-
+		
 	}
 
 	struct Item in ( T ) {
-		restrict :
+		restrict : 
 		define mValor : T = null;
 		define mProximo : Item >> ( T ) = null;
-		all :
+		all : 
 		func getValor ( ) : T {
 			return mValor;
 		}
@@ -260,7 +219,7 @@ package Vetor {
 		func getProximo ( ) : Item >> ( T ) {
 			return mProximo;
 		}
-
+		
 	}
-
+	
 }

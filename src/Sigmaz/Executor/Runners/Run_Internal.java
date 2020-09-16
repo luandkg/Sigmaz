@@ -17,7 +17,7 @@ public class Run_Internal {
     }
 
 
-    public Item Struct_DentroStruct(String eLocal, AST eInternal, Escopo mEscopo, String eRetorno) {
+    public Item Struct_DentroStruct(String eLocal, AST eInternal, Escopo mEscopo, String eRetorno ) {
 
         Run_Struct mEstruturador = mRunTime.getRun_Struct(eLocal);
 
@@ -84,7 +84,7 @@ public class Run_Internal {
         return eItem;
     }
 
-    public Item Struct_DentroDiretoStruct(String eLocal, AST eInternal, Escopo mEscopo, String eRetorno) {
+    public Item Struct_DentroDiretoStruct(String eLocal, AST eInternal, Escopo mEscopo, String eRetorno ) {
 
         Run_Struct mEstruturador = mRunTime.getRun_Struct(eLocal);
 

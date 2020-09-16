@@ -1,6 +1,5 @@
 
 #       CONSTANTES
-
 mockiz ZERO : int = 0;
 mockiz PI : num = 3.1415926535;
 mockiz EULER : num = 2.71828;

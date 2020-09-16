@@ -16,7 +16,7 @@ public class Run_Arrow {
 
     }
 
-    public Item operadorSeta(AST ASTCorrente, Escopo mEscopo, String eRetorno) {
+    public Item operadorSeta(AST ASTCorrente, Escopo mEscopo, String eRetorno ) {
 
         Item eItem = null;
 
@@ -90,7 +90,7 @@ public class Run_Arrow {
         return eItem;
     }
 
-    public Item operadorPonto(Item eItem, AST ASTCorrente, Escopo mEscopo, String eRetorno) {
+    public Item operadorPonto(Item eItem, AST ASTCorrente, Escopo mEscopo, String eRetorno ) {
 
        // System.out.println(ASTCorrente.ImprimirArvoreDeInstrucoes());
 
@@ -105,12 +105,12 @@ public class Run_Arrow {
                 return null;
             }
 
-            eItem = mRun_Internal.Struct_DentroStruct(eItem.getValor(), ASTCorrente, mEscopo, eRetorno);
+            eItem = mRun_Internal.Struct_DentroStruct(eItem.getValor(mRunTime,mEscopo), ASTCorrente, mEscopo, eRetorno);
 
         } else if (eQualificador.contentEquals("TYPE")) {
             Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
-            eItem = mRun_Internal.Struct_DentroType(eItem.getValor(), ASTCorrente, mEscopo, eRetorno);
+            eItem = mRun_Internal.Struct_DentroType(eItem.getValor(mRunTime,mEscopo), ASTCorrente, mEscopo, eRetorno);
 
         } else {
 

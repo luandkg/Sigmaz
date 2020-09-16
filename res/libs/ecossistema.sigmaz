@@ -1,7 +1,4 @@
-
 import "ecologia.sigmaz";
-
-
 package Ecossistema {
 	external Populacao {
 		define Organismos : int = 0;
@@ -44,12 +41,6 @@ package Ecossistema {
 	struct Bacteria {
 		mockiz Tipo : CelulaTipos = CelulaTipos :: PROCARIONTE;
 	}
-
-
-
-
-
-
 	model Organismo {
 		define nome : string;
 		define idade : int;
@@ -67,8 +58,9 @@ package Ecossistema {
 		define nome : string = "";
 		define idade : int = 0;
 		mockiz Tipo : CelulaTipos = CelulaTipos :: EUCARIONTE;
-
-		init Planta() -> Vegetal () {}
+		init Planta ( ) -> Vegetal ( ) {
+			
+		}
 
 		act setNome ( aNome : string ) {
 			
@@ -111,35 +103,27 @@ package Ecossistema {
 		define Estagio : string = "";
 		mockiz FORCA : int = 12;
 	}
-
-	type Dupla in (T) {
-
-	    define P1 : T = null;
-	    define P2 : T = null;
-
+	type Dupla in ( T ) {
+		define P1 : T = null;
+		define P2 : T = null;
 	}
 	
 }
-
-package Fungos{
-
-    refer Ecossistema;
-
+package Fungos {
+	refer Ecossistema;
 	struct Fungo {
-
 		mockiz Tipo : CelulaTipos = CelulaTipos :: EUCARIONTE;
-
 		init Fungo ( ) {
-
+			
 		}
+		
 	}
 
 	struct Saccharomyces with Fungo {
 		init Saccharomyces ( ) -> Fungo ( ) {
-
+			
 		}
-
+		
 	}
-
-
+	
 }

@@ -46,7 +46,7 @@ public class Run_Invoke {
 
         } else if (eNome.contentEquals("casting")) {
 
-            InvokeCasting mCor = new InvokeCasting(mRunTime, mEscopo,this);
+            InvokeCasting mCor = new InvokeCasting(mRunTime, mEscopo, this);
             mCor.init(eAcao, eSaida, mArgumentos);
 
 
@@ -67,7 +67,7 @@ public class Run_Invoke {
 
         } else {
 
-            mRunTime.errar(mLocal,"Invocacao : Biblioteca nao encontrada ->  " + eNome);
+            mRunTime.errar(mLocal, "Invocacao : Biblioteca nao encontrada ->  " + eNome);
 
         }
 
@@ -184,7 +184,7 @@ public class Run_Invoke {
                     if (i == 0) {
                         p1 = "num";
                     } else {
-                        p2 ="num";
+                        p2 = "num";
                     }
                 } else if (eAST.mesmoValor("Text")) {
 
@@ -236,7 +236,7 @@ public class Run_Invoke {
                         if (mEscopo.getDefinidoTipo(eAST.getNome()).contentEquals("bool")) {
                             eRet = mEscopo.getDefinido(eAST.getNome());
                         } else {
-                            mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um bool");
+                            mRunTime.errar(mLocal, "Invocacao : Ação inconsistente -> Era esperado um bool");
                         }
 
 
@@ -246,14 +246,15 @@ public class Run_Invoke {
                         p1 = eRet;
                     } else {
                         p2 = eRet;
+                        break;
                     }
 
 
                 } else if (eAST.mesmoValor("Num")) {
-                    mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um bool");
+                    mRunTime.errar(mLocal, "Invocacao : Ação inconsistente -> Era esperado um bool");
 
                 } else if (eAST.mesmoValor("Text")) {
-                    mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um bool");
+                    mRunTime.errar(mLocal, "Invocacao : Ação inconsistente -> Era esperado um bool");
                 }
 
                 i += 1;
@@ -290,13 +291,13 @@ public class Run_Invoke {
                     String eRet = "";
 
                     if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
-                        mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado uma string");
+                        mRunTime.errar(mLocal, "Invocacao : Ação inconsistente -> Era esperado uma string");
                     } else {
 
                         if (mEscopo.getDefinidoTipo(eAST.getNome()).contentEquals("string")) {
                             eRet = mEscopo.getDefinido(eAST.getNome());
                         } else {
-                            mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado uma string");
+                            mRunTime.errar(mLocal, "Invocacao : Ação inconsistente -> Era esperado uma string");
                         }
 
 
@@ -310,7 +311,7 @@ public class Run_Invoke {
 
 
                 } else if (eAST.mesmoValor("Num")) {
-                    mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um string");
+                    mRunTime.errar(mLocal, "Invocacao : Ação inconsistente -> Era esperado um string");
 
                 } else if (eAST.mesmoValor("Text")) {
 
@@ -356,13 +357,13 @@ public class Run_Invoke {
                     String eRet = "";
 
                     if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
-                        mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um num");
+                        mRunTime.errar(mLocal, "Invocacao : Ação inconsistente -> Era esperado um num");
                     } else {
 
                         if (mEscopo.getDefinidoTipo(eAST.getNome()).contentEquals("num")) {
                             eRet = mEscopo.getDefinido(eAST.getNome());
                         } else {
-                            mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um num");
+                            mRunTime.errar(mLocal, "Invocacao : Ação inconsistente -> Era esperado um num");
                         }
 
 
@@ -384,7 +385,7 @@ public class Run_Invoke {
                     }
 
                 } else if (eAST.mesmoValor("Text")) {
-                    mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um num");
+                    mRunTime.errar(mLocal, "Invocacao : Ação inconsistente -> Era esperado um num");
                 }
 
                 i += 1;
@@ -421,13 +422,13 @@ public class Run_Invoke {
                     String eRet = "";
 
                     if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
-                        mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um int");
+                        mRunTime.errar(mLocal, "Invocacao : Ação inconsistente -> Era esperado um int");
                     } else {
 
                         if (mEscopo.getDefinidoTipo(eAST.getNome()).contentEquals("int")) {
                             eRet = mEscopo.getDefinido(eAST.getNome());
                         } else {
-                            mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um num");
+                            mRunTime.errar(mLocal, "Invocacao : Ação inconsistente -> Era esperado um num");
                         }
 
 
@@ -449,7 +450,7 @@ public class Run_Invoke {
                     }
 
                 } else if (eAST.mesmoValor("Text")) {
-                    mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um num");
+                    mRunTime.errar(mLocal, "Invocacao : Ação inconsistente -> Era esperado um num");
                 }
 
                 i += 1;
@@ -472,9 +473,11 @@ public class Run_Invoke {
 
         int i = 0;
 
-        boolean ret = false;
+        boolean sret = false;
 
         for (AST eAST : ASTArgumentos.getASTS()) {
+
+            boolean ret = false;
 
             if (eAST.mesmoTipo("ARGUMENT")) {
 
@@ -487,19 +490,13 @@ public class Run_Invoke {
 
                     } else {
 
-                        if (mEscopo.getDefinidoTipo(eAST.getNome()).contentEquals("int")) {
-                            ret = mEscopo.getItem(eAST.getNome()).getNulo();
-                        } else {
-                            mRunTime.errar(mLocal,"Invocacao : Ação inconsistente -> Era esperado um num");
-                        }
+                        ret = mEscopo.getItem(eAST.getNome()).getNulo();
 
 
                     }
 
 
-
                 } else if (eAST.mesmoValor("Num")) {
-
 
 
                 } else if (eAST.mesmoValor("Text")) {
@@ -507,12 +504,14 @@ public class Run_Invoke {
                 }
 
                 i += 1;
-
+                if (i == e) {
+                    sret = ret;
+                }
             }
 
         }
 
-        return ret;
+        return sret;
 
     }
 

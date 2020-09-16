@@ -681,7 +681,7 @@ public class Run_Struct {
 
 
         for (Item ArgumentoC : mArgumentos) {
-            tmpEscopo.criarDefinicao(ArgumentoC.getNome(), ArgumentoC.getTipo(), ArgumentoC.getValor());
+            tmpEscopo.criarDefinicao(ArgumentoC.getNome(), ArgumentoC.getTipo(), ArgumentoC.getValor(mRunTime,mEscopo));
         }
 
         // System.out.println("\t - Chamador : :  " + mInitCall.getNome());
@@ -802,7 +802,7 @@ public class Run_Struct {
 
 
                         for (Item ArgumentoC : mArgumentos) {
-                            tmpEscopo.criarDefinicao(ArgumentoC.getNome(), ArgumentoC.getTipo(), ArgumentoC.getValor());
+                            tmpEscopo.criarDefinicao(ArgumentoC.getNome(), ArgumentoC.getTipo(), ArgumentoC.getValor(mRunTime,mEscopo));
                         }
 
                         // System.out.println("\t - Chamador : :  " + mInitCall.getNome());
@@ -932,19 +932,20 @@ public class Run_Struct {
     }
 
 
-    public Item init_Function(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
+    public Item init_Function(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne ) {
 
         Run_Any mRun_Any = new Run_Any(mRunTime);
 
-        return mRun_Any.init_Function(ASTCorrente, BuscadorDeVariaveis, mEscopo, eRetorne, mStructNome + "." + ASTCorrente.getNome(), mEscopo.getOO().getFunctions_All());
+        return mRun_Any.init_Function(ASTCorrente, BuscadorDeVariaveis, mEscopo, eRetorne, mEscopo.getOO().getFunctions_All());
+       // return mRun_Any.init_Function(ASTCorrente, BuscadorDeVariaveis, mEscopo, eRetorne,mStructNome + "." + ASTCorrente.getNome(), mEscopo.getOO().getFunctions_All());
 
     }
 
-    public Item init_FunctionDireto(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
+    public Item init_FunctionDireto(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne ) {
 
         Run_Any mRun_Any = new Run_Any(mRunTime);
 
-        return mRun_Any.init_Function(ASTCorrente, BuscadorDeVariaveis, mEscopo, eRetorne, mStructNome + "." + ASTCorrente.getNome(), mEscopo.getOO().getFunctions());
+        return mRun_Any.init_Function(ASTCorrente, BuscadorDeVariaveis, mEscopo, eRetorne,mEscopo.getOO().getFunctions());
 
     }
 

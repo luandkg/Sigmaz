@@ -11,10 +11,10 @@ call iniciar -> {
 	AssertC.testar ( "Teste 2", true );
 	AssertC.testar ( "Teste 3", false );
 	AssertC.listar ( );
-	invoke __COMPILER__ -> HEAP ( ) :: ALL;
+	invoke __COMPILER__ -> STRUCTS ( ) :: INSTANCES;
 	AssertC.limpar ( );
 	AssertC.limpar ( );
-	invoke __COMPILER__ -> HEAP ( ) :: ALL;
+	invoke __COMPILER__ -> STRUCTS ( ) :: INSTANCES;
 	
 	#def ASSERTABLE : Lista >> ( ASSERT_ITEM ) = AssertC.ASSERTABLE;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;

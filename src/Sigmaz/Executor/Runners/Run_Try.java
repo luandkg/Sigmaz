@@ -64,8 +64,8 @@ public class Run_Try {
             return;
         }
 
-        if(L){ eLogic.setValor("false");}
-        if(M){ eMensagem.setValor("ok");}
+        if(L){ eLogic.setValor("false",mRunTime,mEscopo);}
+        if(M){ eMensagem.setValor("ok",mRunTime,mEscopo);}
 
 
         Escopo EscopoInterno = new Escopo(mRunTime, mEscopo);
@@ -79,8 +79,8 @@ public class Run_Try {
 
 
 
-            if(L){ eLogic.setValor("true");}
-            if(M){ eMensagem.setValor(mRunTime.getErros().get(0));}
+            if(L){ eLogic.setValor("true",mRunTime,mEscopo);}
+            if(M){ eMensagem.setValor(mRunTime.getErros().get(0),mRunTime,mEscopo);}
 
             mRunTime.getErros().clear();
 

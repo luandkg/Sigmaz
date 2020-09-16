@@ -220,6 +220,10 @@ public class Analisar_Function {
 
         } else if (ASTPai.mesmoTipo("EACH")) {
         } else if (ASTPai.mesmoTipo("VALUE")) {
+        } else if (ASTPai.mesmoTipo("EXTERN_REFERED")) {
+
+        } else if (ASTPai.mesmoTipo("LOCAL")) {
+        } else if (ASTPai.mesmoTipo("EXECUTE_LOCAL")) {
 
         } else {
             mAnalisador.getErros().add("AST : " + ASTPai.getTipo());

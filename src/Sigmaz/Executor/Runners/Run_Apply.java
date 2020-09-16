@@ -44,9 +44,9 @@ public class Run_Apply {
         Run_Value mAST = null;
 
         if (mAplicador.getReferencia().getModo() == 2) {
-            mAST = mRun_Valoramento.initSemCast(mAplicador.getReferencia().getNome(), mValue, mAplicador.getRetornoTipo());
+            mAST = mRun_Valoramento.initSemCast(mAplicador.getReferencia().getNome(), mValue, mAplicador.getRetornoTipo(),"<<ANY>>");
         } else {
-            mAST = mRun_Valoramento.init(mAplicador.getReferencia().getNome(), mValue, mAplicador.getRetornoTipo());
+            mAST = mRun_Valoramento.init(mAplicador.getReferencia().getNome(), mValue, mAplicador.getRetornoTipo(),"<<ANY>>");
         }
 
 
@@ -61,14 +61,14 @@ public class Run_Apply {
             }
 
             if (mAplicador.getReferencia().getModo() == 2) {
-                mAplicador.getReferencia().setValor(mAST.getConteudo());
+                mAplicador.getReferencia().setValor(mAST.getConteudo(),mRunTime,mEscopo);
                 mAplicador.getReferencia().setNulo(mAST.getIsNulo());
                 mAplicador.getReferencia().setIsEstrutura(mAST.getIsStruct());
                 mAplicador.getReferencia().setTipo(mAST.getRetornoTipo());
             } else {
 
 
-                mAplicador.getReferencia().setValor(mAST.getConteudo());
+                mAplicador.getReferencia().setValor(mAST.getConteudo(),mRunTime,mEscopo);
                 mAplicador.getReferencia().setNulo(mAST.getIsNulo());
             }
 

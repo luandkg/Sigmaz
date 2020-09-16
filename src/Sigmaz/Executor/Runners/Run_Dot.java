@@ -20,7 +20,7 @@ public class Run_Dot {
     }
 
 
-    public Item operadorPonto(AST ASTCorrente, Escopo mEscopo, String eRetorno) {
+    public Item operadorPonto(AST ASTCorrente, Escopo mEscopo, String eRetorno ) {
 
 
         Item mItem = mEscopo.getItem(ASTCorrente.getNome());
@@ -42,12 +42,12 @@ public class Run_Dot {
             if (ASTCorrente.existeBranch("INTERNAL")) {
                 Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
-                mItem = mRun_Internal.Struct_DentroStruct(mItem.getValor(), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
+                mItem = mRun_Internal.Struct_DentroStruct(mItem.getValor(mRunTime,mEscopo), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
 
             } else if (ASTCorrente.existeBranch("INTERNAL_THIS")) {
                 Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
-                mItem = mRun_Internal.Struct_DentroDiretoStruct(mItem.getValor(), ASTCorrente.getBranch("INTERNAL_THIS"), mEscopo, eRetorno);
+                mItem = mRun_Internal.Struct_DentroDiretoStruct(mItem.getValor(mRunTime,mEscopo), ASTCorrente.getBranch("INTERNAL_THIS"), mEscopo, eRetorno);
 
             }
 
@@ -65,7 +65,7 @@ public class Run_Dot {
         } else if (eQualificador.contentEquals("TYPE")) {
             Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
-            mItem = mRun_Internal.Struct_DentroType(mItem.getValor(), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
+            mItem = mRun_Internal.Struct_DentroType(mItem.getValor(mRunTime,mEscopo), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
 
         } else {
             mRunTime.errar(mLocal, "CAST nao possui operador PONTO !" + eQualificador + " :: " + mItem.getTipo());
@@ -88,7 +88,7 @@ public class Run_Dot {
         } else if (eQualificador.contentEquals("TYPE")) {
             Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
-            eItem = mRun_Internal.Struct_DentroType(eItem.getValor(), ASTCorrente, mEscopo, eRetorno);
+            eItem = mRun_Internal.Struct_DentroType(eItem.getValor(mRunTime,mEscopo), ASTCorrente, mEscopo, eRetorno);
 
         } else {
 
@@ -109,7 +109,7 @@ public class Run_Dot {
     }
 
 
-    public Item operadorPontoStruct(Run_Struct mEscopoType, Item eItem, AST ASTCorrente, Escopo mEscopo, String eRetorno) {
+    public Item operadorPontoStruct(Run_Struct mEscopoType, Item eItem, AST ASTCorrente, Escopo mEscopo, String eRetorno ) {
 
 
         String eQualificador = mRunTime.getQualificador(eItem.getTipo(), mEscopo.getRefers());
@@ -119,12 +119,12 @@ public class Run_Dot {
         if (eQualificador.contentEquals("STRUCT")) {
             Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
-            eItem = mRun_Internal.Struct_DentroStruct(eItem.getValor(), ASTCorrente, mEscopo, eRetorno);
+            eItem = mRun_Internal.Struct_DentroStruct(eItem.getValor(mRunTime,mEscopo), ASTCorrente, mEscopo, eRetorno);
 
         } else if (eQualificador.contentEquals("TYPE")) {
             Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
-            eItem = mRun_Internal.Struct_DentroType(eItem.getValor(), ASTCorrente, mEscopo, eRetorno);
+            eItem = mRun_Internal.Struct_DentroType(eItem.getValor(mRunTime,mEscopo), ASTCorrente, mEscopo, eRetorno);
 
         } else {
 

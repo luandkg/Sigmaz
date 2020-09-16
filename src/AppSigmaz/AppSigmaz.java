@@ -5,14 +5,15 @@ import OA.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
+import Sigmaz.Gerador;
 
 public class AppSigmaz {
 
     public static void main(String[] args) {
 
 
-        //  Gerador G = new Gerador();
-        //  G.gerarPrint();
+       //  Gerador G = new Gerador();
+        // G.gerarPrint("res/libs/terminal.sigmaz");
 
         AUTO();
 
@@ -31,9 +32,9 @@ public class AppSigmaz {
 
         boolean mostrarAST = true;
 
-        int ARQUIVO = 51;
+        int ARQUIVO = 68;
 
-        switch (Fases.TESTES) {
+        switch (Fases.EXECUTAR) {
 
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado,mostrarAST);
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);

@@ -18,7 +18,12 @@ cast pos {
 		}
 		return b;
 	}
-	
+		setter b : int -> {
+    		if ( menor ( b , 0 ) ) -> {
+    			exception "Nao e possivel obter valores negativos !";
+    		}
+    		return b;
+    	}
 }
 cast neg {
 	getter a : num -> {
@@ -39,7 +44,12 @@ cast neg {
 		}
 		return b;
 	}
-	
+		setter b : int -> {
+    		if ( maior ( b , 0 ) ) -> {
+    			exception "Nao e possivel obter valores positivos !";
+    		}
+    		return b;
+    	}
 }
 
 func menor ( a : int , b : int ) : bool {

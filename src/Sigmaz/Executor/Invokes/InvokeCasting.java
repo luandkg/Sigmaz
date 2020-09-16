@@ -42,10 +42,6 @@ public class InvokeCasting {
     }
 
 
-
-
-
-
     public void argumentos_1num(String eAcao, String eSaida, AST ASTArgumentos) {
 
 
@@ -60,7 +56,21 @@ public class InvokeCasting {
             mEscopo.setDefinido(eSaida, "true");
 
 
-        } else if (eAcao.contentEquals("cast_integer_num") ) {
+        } else if (eAcao.contentEquals("num_to_string")) {
+
+            String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
+            mEscopo.setDefinido(eSaida, p1);
+        } else if (eAcao.contentEquals("bool_to_string")) {
+
+            String p1 = mRun_Invoke.getBool(ASTArgumentos, 1);
+            mEscopo.setDefinido(eSaida, p1);
+        } else if (eAcao.contentEquals("int_to_string")) {
+
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            mEscopo.setDefinido(eSaida, p1);
+
+
+        } else if (eAcao.contentEquals("cast_integer_num")) {
 
             String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
             if (mRunTime.getErros().size() > 0) {
@@ -84,7 +94,7 @@ public class InvokeCasting {
 
 
             mEscopo.setDefinido(eSaida, inteiro + ".0");
-        } else if (eAcao.contentEquals("cast_integer_int") ) {
+        } else if (eAcao.contentEquals("cast_integer_int")) {
 
             String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
             if (mRunTime.getErros().size() > 0) {
@@ -108,7 +118,7 @@ public class InvokeCasting {
 
 
             mEscopo.setDefinido(eSaida, inteiro);
-        } else if (eAcao.contentEquals("cast_decimal_num") ) {
+        } else if (eAcao.contentEquals("cast_decimal_num")) {
 
             String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
             if (mRunTime.getErros().size() > 0) {
@@ -143,7 +153,7 @@ public class InvokeCasting {
 
 
             mEscopo.setDefinido(eSaida, "0." + inteiro);
-        } else if (eAcao.contentEquals("cast_decimal_int") ) {
+        } else if (eAcao.contentEquals("cast_decimal_int")) {
 
             String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
             if (mRunTime.getErros().size() > 0) {
@@ -180,7 +190,10 @@ public class InvokeCasting {
             mEscopo.setDefinido(eSaida, "0." + inteiro);
         } else if (eAcao.contentEquals("cast_isnull")) {
 
+
             boolean p1 = mRun_Invoke.isNulo(ASTArgumentos, 1);
+
+
             if (mRunTime.getErros().size() > 0) {
                 return;
             }
@@ -190,6 +203,8 @@ public class InvokeCasting {
             } else {
                 mEscopo.setDefinido(eSaida, "false");
             }
+
+           // System.out.println("VERIFICANDO NULIDADE :: " + p1 + " ERROS : " + mRunTime.getErros().size());
 
         } else if (eAcao.contentEquals("inverse")) {
 
@@ -204,7 +219,7 @@ public class InvokeCasting {
                 mEscopo.setDefinido(eSaida, "true");
             }
 
-        } else if (eAcao.contentEquals("typeof") ) {
+        } else if (eAcao.contentEquals("typeof")) {
             String tipo = "";
 
             for (AST eAST : ASTArgumentos.getASTS()) {
@@ -252,60 +267,58 @@ public class InvokeCasting {
     public void argumentos_2num(String eAcao, String eSaida, AST ASTArgumentos) {
 
 
+        if (eAcao.contentEquals("cast_fns")) {
 
+            try {
+                float f1 = Float.parseFloat(mRun_Invoke.getNum(ASTArgumentos, 1));
+                float f2 = Float.parseFloat(mRun_Invoke.getNum(ASTArgumentos, 2));
 
-            if (eAcao.contentEquals("cast_fns")) {
-
-                try {
-                    float f1 = Float.parseFloat(mRun_Invoke.getNum(ASTArgumentos,1));
-                    float f2 = Float.parseFloat(mRun_Invoke.getNum(ASTArgumentos,2));
-
-                    if (f2 < 0) {
-                        mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
-                        return;
-                    }
-                    if (f2 > 3) {
-                        mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
-                        return;
-                    }
-
-                    String f3 = String.valueOf(f1);
-
-
-                    if (f2 == 0) {
-
-                    }
-                    if (f2 == 1) {
-                        f3 = String.format("%.1f", f1);
-                    }
-                    if (f2 == 2) {
-                        f3 = String.format("%.2f", f1);
-                    }
-                    if (f2 == 3) {
-                        f3 = String.format("%.3f", f1);
-                    }
-
-                    f3 = f3.replace(",", ".");
-
-                    mEscopo.setDefinido(eSaida, String.valueOf(f3));
-                } catch (Exception e) {
+                if (f2 < 0) {
                     mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                    return;
                 }
-            } else if (eAcao.contentEquals("cast_type")) {
+                if (f2 > 3) {
+                    mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
+                    return;
+                }
 
-                String a1 = mRun_Invoke.getString(ASTArgumentos, 1);
-                String a2 = mRun_Invoke.getString(ASTArgumentos, 2);
-
-                mEscopo.alterarTipo(eSaida, a1, a2);
+                String f3 = String.valueOf(f1);
 
 
-            } else {
+                if (f2 == 0) {
 
+                }
+                if (f2 == 1) {
+                    f3 = String.format("%.1f", f1);
+                }
+                if (f2 == 2) {
+                    f3 = String.format("%.2f", f1);
+                }
+                if (f2 == 3) {
+                    f3 = String.format("%.3f", f1);
+                }
+
+                f3 = f3.replace(",", ".");
+
+                mEscopo.setDefinido(eSaida, String.valueOf(f3));
+            } catch (Exception e) {
                 mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
-
             }
+        } else if (eAcao.contentEquals("cast_type")) {
+
+            String a1 = mRun_Invoke.getString(ASTArgumentos, 1);
+            String a2 = mRun_Invoke.getString(ASTArgumentos, 2);
+
+            mEscopo.alterarTipo(eSaida, a1, a2);
+
+
+        } else {
+
+            mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);
 
         }
+
+    }
 
 }
 

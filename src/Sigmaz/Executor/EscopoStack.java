@@ -39,7 +39,7 @@ public class EscopoStack {
                 eItem.setModo(0);
             }
 
-            eItem.setValor(eValor);
+            eItem.setValor(eValor,mRunTime,mEscopo);
 
 
             mEscopo.getStacks().add(eItem);
@@ -73,7 +73,7 @@ public class EscopoStack {
             eItem.setModo(2);
 
 
-            eItem.setValor(eValor);
+            eItem.setValor(eValor,mRunTime,mEscopo);
 
 
             mEscopo.getStacks().add(eItem);
@@ -106,7 +106,7 @@ public class EscopoStack {
 
             eItem.setModo(2);
 
-            eItem.setValor(eValor);
+            eItem.setValor(eValor,mRunTime,mEscopo);
 
 
             mEscopo.getStacks().add(eItem);
@@ -145,7 +145,7 @@ public class EscopoStack {
             Novo.setNulo(false);
             Novo.setPrimitivo(false);
             Novo.setIsEstrutura(true);
-            Novo.setValor(eRef);
+            Novo.setValor(eRef,mRunTime,mEscopo);
             mEscopo.getStacks().add(Novo);
 
         }
@@ -179,7 +179,7 @@ public class EscopoStack {
             Novo.setNulo(true);
             Novo.setPrimitivo(false);
             Novo.setIsEstrutura(true);
-            Novo.setValor("");
+            Novo.setValor("",mRunTime,mEscopo);
             mEscopo.getStacks().add(Novo);
 
         }
@@ -211,7 +211,7 @@ public class EscopoStack {
             Novo.setNulo(false);
             Novo.setPrimitivo(false);
             Novo.setIsEstrutura(true);
-            Novo.setValor(eRef);
+            Novo.setValor(eRef,mRunTime,mEscopo);
             mEscopo.getStacks().add(Novo);
 
         }
@@ -244,7 +244,7 @@ public class EscopoStack {
             Novo.setNulo(true);
             Novo.setPrimitivo(false);
             Novo.setIsEstrutura(true);
-            Novo.setValor("");
+            Novo.setValor("",mRunTime,mEscopo);
             mEscopo.getStacks().add(Novo);
 
         }
@@ -260,7 +260,7 @@ public class EscopoStack {
             Item Novo = new Item(eNome);
             Novo.setModo(0);
             Novo.setTipo(eTipo);
-            Novo.setValor(eValor);
+            Novo.setValor(eValor,mRunTime,mEscopo);
             Novo.setNulo(false);
 
             mEscopo.getParametros().add(Novo);
@@ -278,7 +278,7 @@ public class EscopoStack {
             Item Novo = new Item(eNome);
             Novo.setModo(0);
             Novo.setTipo(eTipo);
-            Novo.setValor("");
+            Novo.setValor("",mRunTime,mEscopo);
             Novo.setNulo(true);
 
             mEscopo.getParametros().add(Novo);
@@ -313,7 +313,7 @@ public class EscopoStack {
             Novo.setNulo(false);
             Novo.setIsEstrutura(true);
             Novo.setPrimitivo(false);
-            Novo.setValor(eRef);
+            Novo.setValor(eRef,mRunTime,mEscopo);
 
             //   System.out.println("\t - Passando Parametro Struct : " + eRef );
 
@@ -336,7 +336,7 @@ public class EscopoStack {
             Novo.setNulo(true);
             Novo.setIsEstrutura(true);
             Novo.setPrimitivo(false);
-            Novo.setValor("");
+            Novo.setValor("",mRunTime,mEscopo);
 
             //   System.out.println("\t - Passando Parametro Struct : " + eRef );
 
@@ -351,13 +351,13 @@ public class EscopoStack {
 
         Item mItem = getItem(eNome);
         if (mItem.getModo() == 0) {
-            mItem.setValor(eValor);
+            mItem.setValor(eValor,mRunTime,mEscopo);
             mItem.setNulo(false);
             //System.out.println("Aplicando Valor em : " + eNome + " -->> " + eValor);
 
             if (mItem.getIsReferenciavel()) {
                 if (mItem.getReferencia().getModo() == 0) {
-                    mItem.getReferencia().setValor(eValor);
+                    mItem.getReferencia().setValor(eValor,mRunTime,mEscopo);
                     mItem.getReferencia().setNulo(false);
                 } else {
                     mRunTime.getErros().add("A constante referenciada nao pode ser alterada : " + mItem.getReferencia().getNome());
@@ -399,12 +399,12 @@ public class EscopoStack {
         }
 
         if (mItem.getModo() == 0) {
-            mItem.setValor(eValor);
+            mItem.setValor(eValor,mRunTime,mEscopo);
             mItem.setNulo(false);
 
             if (mItem.getIsReferenciavel()) {
                 if (mItem.getReferencia().getModo() == 0) {
-                    mItem.getReferencia().setValor(eValor);
+                    mItem.getReferencia().setValor(eValor,mRunTime,mEscopo);
                     mItem.getReferencia().setNulo(false);
                 } else {
                     mRunTime.getErros().add("A constante referenciada nao pode ser alterada : " + mItem.getReferencia().getNome());
@@ -421,12 +421,12 @@ public class EscopoStack {
 
         Item mItem = getItem(eNome);
         if (mItem.getModo() == 0) {
-            mItem.setValor("");
+            mItem.setValor("",mRunTime,mEscopo);
             mItem.setNulo(true);
 
             if (mItem.getIsReferenciavel()) {
                 if (mItem.getReferencia().getModo() == 0) {
-                    mItem.getReferencia().setValor("");
+                    mItem.getReferencia().setValor("",mRunTime,mEscopo);
                     mItem.getReferencia().setNulo(true);
                 } else {
                     mRunTime.getErros().add("A constante referenciada nao pode ser alterada : " + mItem.getReferencia().getNome());
@@ -527,7 +527,7 @@ public class EscopoStack {
         if (t == null) {
             return "";
         } else {
-            return t.getValor();
+            return t.getValor(mRunTime,mEscopo);
         }
 
     }
@@ -539,7 +539,7 @@ public class EscopoStack {
         if (t == null) {
             return "";
         } else {
-            return t.getValor();
+            return t.getValor(mRunTime,mEscopo);
         }
 
     }
@@ -558,7 +558,7 @@ public class EscopoStack {
                 mRunTime.getErros().add("Era esperado uma variavel do tipo num !");
             }
 
-            return t.getValor();
+            return t.getValor(mRunTime,mEscopo);
         }
 
     }

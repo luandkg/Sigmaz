@@ -10,12 +10,21 @@ public class AST_Value {
     private TokenTipo mTerminar;
     private String mTerminarErro;
 
+    private boolean mTemTipo;
+    private AST mTipo;
+
     public AST_Value(CompilerUnit eCompiler) {
 
         mCompiler = eCompiler;
         mTerminar = TokenTipo.PONTOVIRGULA;
         mTerminarErro = "Era esperado um ponto e virgula ! : ";
+        mTemTipo = false;
+        mTipo = null;
+    }
 
+    public void sePrecisarTipar(AST eTipo) {
+        mTipo = eTipo;
+        mTemTipo = true;
     }
 
 
@@ -57,6 +66,9 @@ public class AST_Value {
         mAST.mTerminar = mTerminar;
         mAST.mTerminarErro = mTerminarErro;
 
+        if (mTemTipo) {
+            mAST.sePrecisarTipar(mTipo);
+        }
 
         mAST.initUltimo(ASTDireita);
 
@@ -70,7 +82,7 @@ public class AST_Value {
 
         Token TokenD = mCompiler.getTokenAvante();
 
-       // System.out.println("Pre Valor : " + TokenD.getConteudo());
+        // System.out.println("Pre Valor : " + TokenD.getConteudo());
 
 
         if (TokenD.getTipo() == TokenTipo.PARENTESES_ABRE) {
@@ -81,6 +93,10 @@ public class AST_Value {
             AST_Value mAST = new AST_Value(mCompiler);
             mAST.mTerminar = TokenTipo.PARENTESES_FECHA;
             mAST.mTerminarErro = "Era esperado )";
+
+            if (mTemTipo) {
+                mAST.sePrecisarTipar(mTipo);
+            }
 
             mAST.init(ASTPai.criarBranch("VALUE"));
 
@@ -114,7 +130,6 @@ public class AST_Value {
         } else if (TokenD.getTipo() == TokenTipo.CHAVE_ABRE) {
 
 
-
             ASTPai.setNome("");
             ASTPai.setValor("VECTOR");
 
@@ -136,10 +151,15 @@ public class AST_Value {
 
         } else if (TokenD.getTipo() == TokenTipo.ARROBA) {
 
-            ASTPai.setNome("");
+            ASTPai.setValor("EXECUTE_LOCAL");
 
-            AST_Auto mAST = new AST_Auto(mCompiler);
-            mAST.init(ASTPai);
+           // AST_Auto mAST = new AST_Auto(mCompiler);
+           // mAST.init(ASTPai);
+
+            Token TokenP2 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado ABRIR PARESENTESES !");
+
+            AST_Value_Argument mAVA = new AST_Value_Argument(mCompiler);
+            mAVA.ReceberArgumentos(ASTPai);
 
 
             SegundaParte(ASTPai);
@@ -181,11 +201,11 @@ public class AST_Value {
             AST_True.setTipo("TRUE");
 
 
-            if (mCompiler.getTokenFuturo().getTipo()==TokenTipo.PONTOVIRGULA){
+            if (mCompiler.getTokenFuturo().getTipo() == TokenTipo.PONTOVIRGULA) {
 
                 mCompiler.Proximo();
 
-            }else{
+            } else {
 
                 Token TokenQ2 = mCompiler.getTokenAvanteIDStatus("not", "Era esperado not");
                 Token TokenC_2 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
@@ -198,8 +218,6 @@ public class AST_Value {
                 SegundaParte(ASTPai);
 
             }
-
-
 
 
         } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
@@ -216,8 +234,6 @@ public class AST_Value {
             if (TokenD.mesmoConteudo("init")) {
 
                 ASTPai.setValor("INIT");
-
-
 
 
                 Token TokenC2 = mCompiler.getTokenAvante();
@@ -364,8 +380,24 @@ public class AST_Value {
 
 
                 } else {
-                  //  System.out.println("Problema H : " + TokenD.getConteudo());
+                    //  System.out.println("Problema H : " + TokenD.getConteudo());
                 }
+
+
+            } else if (TokenD.mesmoConteudo("default")) {
+
+                ASTPai.setNome("");
+                ASTPai.setValor("DEFAULT");
+
+                if (mTemTipo) {
+                    ASTPai.getASTS().add(mTipo);
+                } else {
+                    mCompiler.errarCompilacao("O DEFAULT precisa ser definido em alocacoes !", TokenD);
+                }
+
+
+                SegundaParte(ASTPai);
+
 
             } else {
 
@@ -434,13 +466,16 @@ public class AST_Value {
                     ASTPai.setValor("FUNCT");
 
                     AST_Value_Argument gAST = new AST_Value_Argument(mCompiler);
+                    if (mTemTipo) {
+                        gAST.sePrecisarTipar(mTipo);
+                    }
                     gAST.ReceberArgumentos(ASTPai);
 
                     SegundaParte(ASTPai);
 
 
                 } else {
-                  //  System.out.println("Problema H : " + TokenD.getConteudo());
+                    //  System.out.println("Problema H : " + TokenD.getConteudo());
                 }
 
             }
@@ -448,7 +483,7 @@ public class AST_Value {
 
         } else {
 
-         //   System.out.println("Valorando : " + TokenD.getConteudo());
+            //   System.out.println("Valorando : " + TokenD.getConteudo());
 
 
         }
@@ -461,6 +496,8 @@ public class AST_Value {
 
 
         Token TokenC3 = mCompiler.getTokenAvante();
+
+
         if (TokenC3.getTipo() == mTerminar) {
             return;
         } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
@@ -561,7 +598,9 @@ public class AST_Value {
             AST_Value mAST = new AST_Value(mCompiler);
             mAST.mTerminar = TokenTipo.PARENTESES_FECHA;
             mAST.mTerminarErro = "Era esperado )";
-
+            if (mTemTipo) {
+                mAST.sePrecisarTipar(mTipo);
+            }
             mAST.initParam(ASTPai.criarBranch("VALUE"));
 
             Token TokenC2 = mCompiler.getTokenAvante();
@@ -620,6 +659,20 @@ public class AST_Value {
 
             ASTPai.setNome(TokenD.getConteudo());
             ASTPai.setValor("ID");
+
+            if (TokenD.mesmoConteudo("default")) {
+
+                ASTPai.setNome("");
+                ASTPai.setValor("DEFAULT");
+
+                if (mTemTipo) {
+                    ASTPai.getASTS().add(mTipo);
+                } else {
+                    mCompiler.errarCompilacao("O DEFAULT precisa ser definido em alocacoes !", TokenD);
+                }
+
+
+            }
 
             Token TokenC2 = mCompiler.getTokenAvante();
             if (TokenC2.getTipo() == mTerminar) {
@@ -783,7 +836,7 @@ public class AST_Value {
                 Token TokenC3 = mCompiler.getTokenAvante();
                 if (TokenC3.getTipo() == mTerminar) {
                     return;
-                }  else if (TokenC3.getTipo() == TokenTipo.VIRGULA || TokenC3.getTipo() == TokenTipo.PARENTESES_FECHA) {
+                } else if (TokenC3.getTipo() == TokenTipo.VIRGULA || TokenC3.getTipo() == TokenTipo.PARENTESES_FECHA) {
                     return;
                 } else {
                     System.out.println("Problema A : " + TokenC3.getConteudo());

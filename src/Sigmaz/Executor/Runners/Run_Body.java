@@ -241,6 +241,7 @@ public class Run_Body {
 
                 Run_Execute mAST = new Run_Execute(mRunTime, mEscopo);
                 mAST.init(fAST);
+
             } else if (fAST.mesmoTipo("TRY")) {
 
 
@@ -270,6 +271,7 @@ public class Run_Body {
 
                 Run_Value mAST = new Run_Value(mRunTime, mEscopo);
                 mAST.init(fAST,"<<ANY>>");
+
             } else if (fAST.mesmoTipo("EXECUTE_INIT")) {
 
               //  System.out.println("Bora Aqui");
@@ -278,6 +280,23 @@ public class Run_Body {
 
                 Run_Any mAST = new Run_Any(mRunTime);
                 mAST.init_inits(fAST,mEscopo,mEscopo,mEscopo.getAO().getInitsCompleto());
+
+
+
+            } else if (fAST.mesmoTipo("EXTERN_REFERED")) {
+
+                Run_ExternRefered mRER = new Run_ExternRefered(mRunTime,mEscopo);
+                mRER.init(fAST);
+
+
+            } else if (fAST.mesmoTipo("LOCAL")) {
+
+                mEscopo.definirLocal(fAST);
+
+            } else if (fAST.mesmoTipo("EXECUTE_LOCAL")) {
+
+                Run_ExecuteLocal mRun_ExecuteLocal = new Run_ExecuteLocal(mRunTime, mEscopo);
+               mRun_ExecuteLocal.initSemRetorno(fAST);
 
 
             } else {

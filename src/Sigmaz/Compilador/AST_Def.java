@@ -54,8 +54,9 @@ public class AST_Def {
         } else if (TokenP3.getTipo() == TokenTipo.IGUAL) {
 
             AST_Value mAST = new AST_Value(mCompiler);
-
+            mAST.sePrecisarTipar(AST_Corrente.getBranch("TYPE"));
             mAST.init(AST_Valor);
+
         } else {
 
             mCompiler.errarCompilacao("Era esperado o valor da " + erro + " !", TokenC);

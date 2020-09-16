@@ -54,17 +54,17 @@ func azucrinar ( a : num , b : num ) : num {
 }
 operator ++ ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_sum_int ( a , b ) :: c;
+	invoke math -> operator_sum_num ( a , b ) :: c;
 	return c;
 }
 operator -- ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_sub_int ( a , b ) :: c;
+	invoke math -> operator_sub_num ( a , b ) :: c;
 	return c;
 }
 operator ** ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_mux_int ( a , b ) :: c;
+	invoke math -> operator_mux_num ( a , b ) :: c;
 	return c;
 }
 

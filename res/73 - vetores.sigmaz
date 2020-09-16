@@ -33,15 +33,15 @@ act inicio ( ) {
 
 	}
 
-	    println("----- ----- ------  ------");
+	println("----- ----- ------  ------");
 
+    println(" 2 ----- ----- ------  ------");
 
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
-		    println(" 2 ----- ----- ------  ------");
+	def v2 : Vetor >> ( int ) = { 10 , 20 };
 
-	def v2 : Vetor >> ( int ) = {
-		10 , 20 
-	};
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
 	    println(" 3 ----- ----- ------  ------");
 
@@ -114,11 +114,11 @@ struct Bloco {
 		valor = aValor;
 	}
 	restrict : 
-	define valor : int = 0;
+	    define valor : int = 0;
 	all : 
-	func getValor ( ) : int {
-		return valor;
-	}
+	    func getValor ( ) : int {
+	    	return valor;
+	    }
 	
 }
 
@@ -130,7 +130,7 @@ struct RefBloco in (T) {
 	}
 
 	restrict :
-	define valor : T = 0;
+	    define valor : T = 0;
 	all :
 	func getValor ( ) : T {
 		return valor;
