@@ -4,14 +4,13 @@ import Sigmaz.Analisador.Analisador;
 import Sigmaz.Compilador.Compiler;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.PosProcessamento.PosProcessador;
-import Sigmaz.Utils.Erro;
-import Sigmaz.Utils.GrupoDeErro;
-import Sigmaz.Utils.Tempo;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import Sigmaz.Utils.GrupoDeErro;
+import Sigmaz.Utils.Erro;
+import Sigmaz.Utils.Tempo;
 
 public class SigmazTestes {
 
@@ -67,7 +66,7 @@ public class SigmazTestes {
             String parou = "";
 
             Compiler CompilerC = new Compiler();
-            CompilerC.init(Arquivo);
+            CompilerC.init(Arquivo,1);
 
             ArrayList<String> mTemp = new ArrayList<String>();
 

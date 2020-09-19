@@ -1,7 +1,5 @@
 package OA;
 
-import Sigmaz.Utils.Tempo;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
@@ -11,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import Sigmaz.Utils.Tempo;
 
 public class OAQuadrum {
 

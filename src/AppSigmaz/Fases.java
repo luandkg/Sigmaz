@@ -2,6 +2,8 @@ package AppSigmaz;
 
 public enum Fases {
     LEXER,
+    COMPILAR_EXECUTAVEL,
+    COMPILAR_BIBLIOTECA,
     EXECUTAR,
     IDENTAR,
     IDENTAR_TUDO,
@@ -14,5 +16,7 @@ public enum Fases {
     INTELLISENSE_BIBLIOTECA,
     COMENTARIOS,
     TODO,
-    INTERNO
+    INTERNO,
+    MAKE_LEXER,
+    MAKE_EXECUTAR
 }

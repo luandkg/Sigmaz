@@ -7,9 +7,9 @@ import Sigmaz.Executor.Item;
 import Sigmaz.Executor.Runners.Run_Context;
 import Sigmaz.Executor.Runners.Run_Extern;
 import Sigmaz.Executor.Runners.Run_Struct;
-import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class EscopoDebug {
 
@@ -83,7 +83,8 @@ public class EscopoDebug {
         ArrayList<Item> ls_mutavel = new ArrayList<>();
         ArrayList<Item> ls_Defines = new ArrayList<>();
         ArrayList<Item> ls_Constants = new ArrayList<>();
-        ArrayList<Item> ls_refereds = new ArrayList<>();
+        ArrayList<Item> ls_refereds_extern = new ArrayList<>();
+        ArrayList<Item> ls_refereds_implicit = new ArrayList<>();
 
         for (Item i : mEscopo.getStacks()) {
             if (i.getModo() == 0) {
@@ -94,7 +95,13 @@ public class EscopoDebug {
             } else if (i.getModo() == 2) {
                 ls_mutavel.add(i);
             } else if (i.getModo() == 5) {
-                ls_refereds.add(i);
+                ls_refereds_extern.add(i);
+            } else if (i.getModo() == 6) {
+                ls_refereds_extern.add(i);
+            } else if (i.getModo() == 7) {
+                ls_refereds_implicit.add(i);
+            } else if (i.getModo() == 8) {
+                ls_refereds_implicit.add(i);
             }
 
            // System.out.println("DEFINICAO :: " + i.getNome());
@@ -122,20 +129,42 @@ public class EscopoDebug {
 
         }
 
-        if (ls_refereds.size()>0){
+        if (ls_refereds_extern.size()>0){
 
-            System.out.println(" - REFEREDS : ");
+            System.out.println(" - REFEREDS EXTERN : ");
 
             System.out.println("\t - NAO NULOS : ");
 
-            for (Item i : ls_refereds) {
+            for (Item i : ls_refereds_extern) {
                 if (!i.getNulo()) {
                     mostrarItem(i);
                 }
             }
 
             System.out.println("\t - NULOS : ");
-            for (Item i : ls_refereds) {
+            for (Item i : ls_refereds_extern) {
+
+                if (i.getNulo()) {
+                    mostrarItem(i);
+                }
+            }
+
+        }
+
+        if (ls_refereds_implicit.size()>0){
+
+            System.out.println(" - REFEREDS IMPLICIT : ");
+
+            System.out.println("\t - NAO NULOS : ");
+
+            for (Item i : ls_refereds_implicit) {
+                if (!i.getNulo()) {
+                    mostrarItem(i);
+                }
+            }
+
+            System.out.println("\t - NULOS : ");
+            for (Item i : ls_refereds_implicit) {
 
                 if (i.getNulo()) {
                     mostrarItem(i);

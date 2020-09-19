@@ -1,10 +1,10 @@
 package Sigmaz.PosProcessamento;
 
 import Sigmaz.Executor.RunTime;
-import Sigmaz.Utils.AST;
 
 import java.io.File;
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class PosProcessador {
 
@@ -104,7 +104,12 @@ public class PosProcessador {
 
         }
 
+        Alocador mAlocador = new Alocador(this);
+        mAlocador.init(mASTS);
 
+
+        Tipador mTipador = new Tipador(this);
+        mTipador.init(mASTS);
 
         Heranca mHeranca = new Heranca(this);
         mHeranca.init(mASTS);

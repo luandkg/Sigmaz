@@ -3,11 +3,10 @@ package Sigmaz.Executor;
 import Sigmaz.Executor.Debuggers.EscopoDebug;
 import Sigmaz.Executor.Indexador.Index_Action;
 import Sigmaz.Executor.Indexador.Index_Function;
-import Sigmaz.Executor.Runners.Run_Context;
 import Sigmaz.Executor.Runners.Run_Extern;
-import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class Escopo {
 
@@ -354,6 +353,10 @@ public class Escopo {
 
     public void criarExternRefered(String eNome,String mTipagem, String eStruct,String eCampo) {
 
+        if (mEscopoStack.existeAqui(eNome,mStacks)){
+            mRunTime.getErros().add("Definicao Duplicada : " + eNome);
+        }
+
         Item Novo = new Item(eNome);
         Novo.setModo(0);
         Novo.setTipo(mTipagem);
@@ -368,6 +371,59 @@ public class Escopo {
 
     }
 
+
+    public void criarExternRefered_Const(String eNome,String mTipagem, String eStruct,String eCampo) {
+
+        if (mEscopoStack.existeAqui(eNome,mStacks)){
+            mRunTime.getErros().add("Definicao Duplicada : " + eNome);
+        }
+
+        Item Novo = new Item(eNome);
+        Novo.setModo(0);
+        Novo.setTipo(mTipagem);
+        Novo.setNulo(false);
+        Novo.setPrimitivo(false);
+        Novo.setIsEstrutura(false);
+
+        Novo.setReferConst(eStruct,eCampo);
+
+        mStacks.add(Novo);
+
+
+    }
+
+
+    public void criarImplicitRefered(String eNome,String mTipagem, String eStruct,String eCampo) {
+
+        Item Novo = new Item(eNome);
+        Novo.setModo(0);
+        Novo.setTipo(mTipagem);
+        Novo.setNulo(false);
+        Novo.setPrimitivo(false);
+        Novo.setIsEstrutura(false);
+
+        Novo.setImplicit(eStruct,eCampo);
+
+        mStacks.add(Novo);
+
+
+    }
+
+    public void criarImplicitRefered_Const(String eNome,String mTipagem, String eStruct,String eCampo) {
+
+        Item Novo = new Item(eNome);
+        Novo.setModo(0);
+        Novo.setTipo(mTipagem);
+        Novo.setNulo(false);
+        Novo.setPrimitivo(false);
+        Novo.setIsEstrutura(false);
+
+        Novo.setImplicitConst(eStruct,eCampo);
+
+        mStacks.add(Novo);
+
+
+    }
 
 
     public void alterarTipo(String eNome, String eTipoAtual, String eTipoNovo) {
@@ -393,69 +449,6 @@ public class Escopo {
     }
 
 
-    public String getAnonimoAuto() {
-        mAutoID += 1;
-        return "@AUTO_" + mAutoID;
-    }
-
-    public String getAnonimoFunctor() {
-        mFunctorID += 1;
-        return "@FUNCTOR_" + mFunctorID;
-    }
-
-
-    public void removerAuto(String eNome) {
-
-        for (Index_Action eAST : this.getActionsCompleto()) {
-            if (eAST.getPonteiro().mesmoValor(eNome)) {
-                System.out.println("Remover Auto : " + eNome);
-
-                eAST.setNome("");
-                eAST.getPonteiro().setTipo("");
-            }
-        }
-
-    }
-
-    public void removerFunctor(String eNome) {
-
-        for (Index_Function eAST : this.getFunctionsCompleto()) {
-            if (eAST.getPonteiro().mesmoValor(eNome)) {
-                // System.out.println("Removendo Functor : " + eNome);
-                eAST.setNome("");
-                eAST.getPonteiro().setTipo("");
-            }
-        }
-
-    }
-
-    public AST obterAuto(String eNome) {
-        AST mRet = null;
-
-        for (Index_Action eAST : this.getActionsCompleto()) {
-            if (eAST.getPonteiro().mesmoValor(eNome)) {
-
-                mRet = eAST.getPonteiro().copiar();
-                break;
-
-            }
-        }
-        return mRet;
-    }
-
-    public AST obterFunctor(String eNome) {
-        AST mRet = null;
-
-        for (Index_Function eAST : this.getFunctionsCompleto()) {
-            if (eAST.getPonteiro().mesmoValor(eNome)) {
-
-                mRet = eAST.getPonteiro().copiar();
-                break;
-
-            }
-        }
-        return mRet;
-    }
 
 
     public int getContagem() {

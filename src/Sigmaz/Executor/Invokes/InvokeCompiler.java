@@ -223,12 +223,7 @@ public class InvokeCompiler {
 
                         System.out.println("\t - Struct : " + mRun_Struct.getNome());
                         System.out.println("");
-                        System.out.println("\t\t -  Defines : " + mRun_Struct.getDefines());
-                        System.out.println("\t\t -  Mockizes : " + mRun_Struct.getMockizes());
-                        System.out.println("\t\t -  Actions : " + mRun_Struct.getActions());
-                        System.out.println("\t\t -  Functions : " + mRun_Struct.getFunctions());
-                        System.out.println("\t\t -  Tamanho : " + mRun_Struct.getTamanho());
-                        System.out.println("");
+                   System.out.println("");
 
                     }
 

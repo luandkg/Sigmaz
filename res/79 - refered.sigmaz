@@ -1,61 +1,118 @@
-
-
-
 call iniciar -> operando ( );
 
 
 act operando ( ) {
 
+    def oo : int = XA -> mValor;
 
+	def axa : int = XA -> mValor;
+	XA -> aumentar ( );
+	XA -> aumentar ( );
+	XA -> aumentar ( );
 
-    def axa : int = XA -> mValor;
+	#XA -> reduzir ( );
 
-    XA -> aumentar();
-    XA -> aumentar();
-    XA -> aumentar();
+	def axb : int = XA -> mValor;
+	extern_refered XA_VALOR :: XA-> mValor ;
 
-    def axb : int = XA -> mValor;
+    def igual : bool = 4 == 4;
 
-    extern_refered<XA> XA_VALOR :: mValor;
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    def ma : Fases = Fases::A;
+    def mb : Fases = Fases::B;
+    def mc: Fases = Fases::C;
+
+    def t : int = Fases->valueOf(ma);
+
+    def ts : string = Fases->nameOf(ma);
+
+    def rt : Fases = Fases->get(t);
+
 
 
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
+
 }
 
-struct XA{
+stages Fases -> { A,B,C }
 
-   extern:
+struct XA {
 
-        define mValor : int = 0;
+    implicit:
+        define mOculto : int = 100;
 
-        act aumentar() {
+        act reduzir() {
 
-            extern_refered<XA> AQUI_VALOR :: mValor;
+            mValor = mValor -- 50;
+            def mv : int = mValor;
 
-            AQUI_VALOR = AQUI_VALOR ++ 1;
-
-            invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+		    invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
 
         }
 
+        func ral(a:int) : int {
+            return a ++ 5 ;
+        }
+
+
+	extern :
+
+	    define mValor : int = 100;
+	    mockiz mSegredo : int = 33;
+
+	act aumentar ( ) {
+
+        extern_refered AQUI_VALOR :: XA->mValor;
+		extern_refered AQUI_VALOR_2 ::  XA -> mValor;
+
+
+		AQUI_VALOR = AQUI_VALOR ++ 1;
+
+        if (AQUI_VALOR == AQUI_VALOR_2) -> { AQUI_VALOR_2 = AQUI_VALOR_2 ** 2;}
+
+		extern_refered SEGREDO ::  XA -> mSegredo;
+
+
+        def maa : int = AQUI_VALOR_2;
+
+        def te : int = SEGREDO;
+
+        def trall : int = ral(10);
+
+        mOculto = 200;
+        mValor = 100;
+
+        reduzir();
+
+		invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
+	}
+	
 }
-
-
 operator ++ ( a : int , b : int ) : int {
 	def c : int = 0;
 	invoke math -> operator_sum_int ( a , b ) :: c;
 	return c;
 }
-
+operator -- ( a : int , b : int ) : int {
+	def c : int = 0;
+	invoke math -> operator_sub_int ( a , b ) :: c;
+	return c;
+}
 operator ** ( a : int , b : int ) : int {
 	def c : int = 0;
 	invoke math -> operator_mux_int ( a , b ) :: c;
 	return c;
 }
-
-func somar( a : int , b : int ) : int {
+func somar ( a : int , b : int ) : int {
 	def c : int = 0;
 	invoke math -> operator_sum_int ( a , b ) :: c;
+	return c;
+}
+
+operator == ( a : int , b : int ) : bool {
+	def c : bool = false;
+	invoke math -> operator_equal_int ( a , b ) :: c;
 	return c;
 }

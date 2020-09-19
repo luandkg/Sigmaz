@@ -3,13 +3,14 @@ package Sigmaz.Compilador;
 import Sigmaz.Lexer.Lexer;
 import Sigmaz.Lexer.Token;
 import Sigmaz.Lexer.TokenTipo;
-import Sigmaz.Utils.AST;
-import Sigmaz.Utils.Erro;
-import Sigmaz.Utils.GrupoDeComentario;
-import Sigmaz.Utils.GrupoDeErro;
 
 import java.io.File;
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
+import Sigmaz.Utils.GrupoDeErro;
+import Sigmaz.Utils.GrupoDeComentario;
+import Sigmaz.Utils.Erro;
+import Sigmaz.Utils.GrupoDeErro;
 
 public class CompilerUnit {
 

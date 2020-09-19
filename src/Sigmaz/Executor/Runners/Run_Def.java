@@ -52,25 +52,17 @@ public class Run_Def {
 
 
             if (mAST.getIsPrimitivo()) {
-
                 mEscopo.criarDefinicaoNula(eAST.getNome(), mAST.getRetornoTipo());
-
             } else if (mAST.getIsStruct()) {
-
                 mEscopo.criarDefinicaoStructNula(eAST.getNome(), mAST.getRetornoTipo());
-
             }
 
         }else{
 
             if (mAST.getIsPrimitivo()) {
-
                 mEscopo.criarDefinicao(eAST.getNome(), mAST.getRetornoTipo(), mAST.getConteudo());
-
             } else if (mAST.getIsStruct()) {
-
                 mEscopo.criarDefinicaoStruct(eAST.getNome(), mAST.getRetornoTipo(), mAST.getConteudo());
-
             }
 
         }

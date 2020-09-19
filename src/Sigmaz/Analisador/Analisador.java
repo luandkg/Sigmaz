@@ -3,11 +3,11 @@ package Sigmaz.Analisador;
 import Sigmaz.Analisador.ASTS.Analisar_Global;
 import Sigmaz.Analisador.ASTS.Analisar_Package;
 import Sigmaz.Executor.RunTime;
-import Sigmaz.Utils.AST;
-import Sigmaz.Utils.Tempo;
 
 import java.io.File;
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
+import Sigmaz.Utils.Tempo;
 
 public class Analisador {
 

@@ -2,13 +2,9 @@ package Sigmaz.Executor.Runners;
 
 import Sigmaz.Executor.AST_Implementador;
 import Sigmaz.Executor.Escopo;
-import Sigmaz.Executor.Indexador.Index_Action;
-import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
-
-import java.util.ArrayList;
 
 public class Run_Value {
 
@@ -315,7 +311,47 @@ public class Run_Value {
                 mConteudo = "true";
             } else {
 
-                mRunTime.errar(mLocal, "RETORNO DEFAULT DESCONHECIDO para o Tipo: " + eRetorno);
+                String eQual = mRunTime.getQualificador(eRetorno, mEscopo.getRefers());
+                if (eQual.contentEquals("CAST")) {
+
+                    Run_Context mRun_Context = new Run_Context(mRunTime);
+                    boolean enc = false;
+                    for (AST mCast : mRun_Context.getCastsContexto(mEscopo.getRefers())) {
+                        if (mCast.mesmoNome(eRetorno)) {
+
+                            if (mCast.existeBranch("DEFAULT")){
+
+                                Run_Body mRB = new Run_Body(mRunTime, mEscopo);
+                                mRB.init(mCast.getBranch("DEFAULT"));
+
+                                mIsNulo = mRB.getIsNulo();
+                                mRetornoTipo = mRB.getRetornoTipo();
+                                mIsPrimitivo = mRB.getIsPrimitivo();
+                                mIsEstrutura = mRB.getIsStruct();
+                                mConteudo = mRB.getConteudo();
+
+
+                            }else{
+                                mRunTime.errar(mLocal, "RETORNO DEFAULT DESCONHECIDO para a CAST : " + eRetorno);
+                            }
+
+
+                            enc = true;
+                            break;
+                        }
+
+                    }
+                    if (!enc) {
+                        mRunTime.errar(mLocal, "RETORNO DEFAULT DESCONHECIDO para a CAST : " + eRetorno);
+                    }
+                } else if (eQual.contentEquals("STRUCT")) {
+                    mRunTime.errar(mLocal, "RETORNO DEFAULT DESCONHECIDO para a STRUCT : " + eRetorno);
+                } else {
+
+                    mRunTime.errar(mLocal, "RETORNO DEFAULT DESCONHECIDO para o Tipo: " + eRetorno);
+
+                }
+
 
             }
         } else {

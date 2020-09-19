@@ -144,4 +144,13 @@ public class Carregadores {
         return mArquivos;
     }
 
+    public static ArrayList<String> Carregar_Makes() {
+
+        ArrayList<String> mArquivos = new ArrayList<String>();
+
+        mArquivos.add("res/MAKE 01 - init.make");
+
+        return mArquivos;
+    }
+
 }

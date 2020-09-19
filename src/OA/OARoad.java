@@ -1,16 +1,10 @@
 package OA;
 
-import Sigmaz.Utils.Texto;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import Sigmaz.Utils.Texto;
 
 public class OARoad {
 

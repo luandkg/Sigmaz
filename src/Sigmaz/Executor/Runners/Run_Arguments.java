@@ -4,13 +4,9 @@ import Sigmaz.Executor.*;
 import Sigmaz.Executor.Indexador.Index_Action;
 import Sigmaz.Executor.Indexador.Index_Argument;
 import Sigmaz.Executor.Indexador.Index_Function;
-import Sigmaz.Executor.Runners.Run_Body;
-import Sigmaz.Executor.Runners.Run_GetType;
-import Sigmaz.Executor.Runners.Run_Valoramento;
-import Sigmaz.Executor.Runners.Run_Value;
-import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class Run_Arguments {
 
@@ -248,26 +244,19 @@ public class Run_Arguments {
 
     public void executar_Action(RunTime mRunTime, Escopo mStructEscopo, Index_Action mFunction, ArrayList<Item> mArgumentos) {
 
-
         //   System.out.println(" -->> ACTION CALL : " + mFunction.getNome() );
         //  System.out.println("\t - Escopo : " + mStructEscopo.getNome() );
 
         //  System.out.println(mStructEscopo.getNome() + " -> Structs : " + mStructEscopo.getStructs().size() );
 
 
-
-
         Escopo mEscopoInterno = new Escopo(mRunTime, mStructEscopo);
         mEscopoInterno.setNome(mFunction.getNome());
-
-
 
         passarParametros(mEscopoInterno, mFunction.getArgumentos(), mArgumentos);
 
 
-
         //  mEscopoInterno.ListarAll();
-
 
         AST mASTBody = mFunction.getPonteiro().getBranch("BODY");
 
@@ -276,12 +265,6 @@ public class Run_Arguments {
 
 
         //   System.out.println( mFunction.getNome() + "  Retornando -> " + mAST.getConteudo() + " :: " +mRetornoTipo );
-
-
-        if (mRunTime.getErros().size() > 0) {
-
-        }
-
 
     }
 
@@ -404,6 +387,7 @@ public class Run_Arguments {
 
         return v;
     }
+
 
 
 }

@@ -1,40 +1,27 @@
-
 call iniciar_tudo -> inicio ( );
-
-
-
 act inicio ( ) {
-
-    def q1 : Quadro = init Quadro(15);
-
-   # q1.this.mudar();
+	def q1 : Quadro = init Quadro ( 15 );
+	
+	# q1.this.mudar();
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
-    def v1 : int = q1.getValor();
-
+	def v1 : int = q1.getValor ( );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
 }
 
 struct Quadro {
-
-    restrict :
-        define valor : int = 0;
-
-        act mudar(){
-            this.valor = -1;
-        }
-
-    all:
-        init Quadro(aValor : int ){
-
-            invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
-
-            this.valor = aValor;
-
-            this.mudar();
-
-        }
-
-        func getValor() : int {return this.valor; }
+	restrict : 
+	define valor : int = 0;
+	act mudar ( ) {
+		this.valor = -1;
+	}
+	all : 
+	init Quadro ( aValor : int ) {
+		invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
+		this.valor = aValor;
+		this.mudar ( );
+	}
+	func getValor ( ) : int {
+		return this.valor;
+	}
+	
 }

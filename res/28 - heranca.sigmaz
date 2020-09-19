@@ -1,22 +1,14 @@
 call iniciar -> vamos_herdar ( );
-
 act vamos_herdar ( ) {
-
-    escrever("Executando 1");
-
+	escrever ( "Executando 1");
 	def a1 : Animal = init Animal ( );
-
-	escrever("Executando 2");
-
+	escrever ( "Executando 2");
 	a1.setIdade ( 12 );
 	a1.setQualidade ( "Lindo");
 	a1.mostrar ( );
-
 	def f : Fungo = init Fungo ( 12 );
 	def g : int = f.Quantidade;
-
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
 }
 
 struct Qualidade {
@@ -144,8 +136,8 @@ struct ItemBase with Base {
 	
 }
 
-	act escrever ( a : string ) {
-		def c : num;
-		invoke terminal -> change ( ) :: c;
-		invoke terminal -> print ( a ) :: c;
-	}
+act escrever ( a : string ) {
+	def c : num;
+	invoke terminal -> change ( ) :: c;
+	invoke terminal -> print ( a ) :: c;
+}

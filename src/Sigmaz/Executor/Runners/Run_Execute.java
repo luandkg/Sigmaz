@@ -73,7 +73,6 @@ public class Run_Execute {
 
             // Struct_Extern(ASTCorrente, eRetorno);
             Run_Extern Run_ExternC = new Run_Extern(mRunTime);
-
             Run_ExternC.Struct_Execute(ASTCorrente,mEscopo);
 
 

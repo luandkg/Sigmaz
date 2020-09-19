@@ -1,9 +1,7 @@
 import "libs/lib.sigmaz";
 call iniciar -> inicio ( );
-
 refer Lista;
 refer Iterador;
-
 act inicio ( ) {
 	def aa : int = -1;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;

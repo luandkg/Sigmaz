@@ -35,15 +35,18 @@ public class OO {
     private ArrayList<Index_Action> mActionFunctions_All;
     private ArrayList<Index_Action> mActionFunctions_Restrict;
     private ArrayList<Index_Action> mActionFunctions_Extern;
+    private ArrayList<Index_Action> mActionFunctions_Implicit;
 
 
     private ArrayList<Index_Function> mFunctions_All;
     private ArrayList<Index_Function> mFunctions_Restrict;
     private ArrayList<Index_Function> mFunctions_Extern;
+    private ArrayList<Index_Function> mFunctions_Implicit;
 
     private ArrayList<Index_Action> mActions_All;
     private ArrayList<Index_Action> mActions_Restrict;
     private ArrayList<Index_Action> mActions_Extern;
+    private ArrayList<Index_Action> mActions_Implicit;
 
     private ArrayList<Index_Function> mOperations_All;
     private ArrayList<Index_Function> mOperations_Restrict;
@@ -82,14 +85,17 @@ public class OO {
         mActionFunctions_All = new ArrayList<Index_Action>();
         mActionFunctions_Restrict = new ArrayList<Index_Action>();
         mActionFunctions_Extern = new ArrayList<Index_Action>();
+        mActionFunctions_Implicit = new ArrayList<Index_Action>();
 
         mActions_All = new ArrayList<Index_Action>();
         mActions_Restrict = new ArrayList<Index_Action>();
         mActions_Extern = new ArrayList<Index_Action>();
+        mActions_Implicit = new ArrayList<Index_Action>();
 
         mFunctions_All = new ArrayList<Index_Function>();
         mFunctions_Restrict = new ArrayList<Index_Function>();
         mFunctions_Extern = new ArrayList<Index_Function>();
+        mFunctions_Implicit = new ArrayList<Index_Function>();
 
         mDirectors_All = new ArrayList<Index_Function>();
         mDirectors_Restrict = new ArrayList<Index_Function>();
@@ -127,14 +133,17 @@ public class OO {
         mActionFunctions_All = new ArrayList<Index_Action>();
         mActionFunctions_Restrict = new ArrayList<Index_Action>();
         mActionFunctions_Extern = new ArrayList<Index_Action>();
+        mActions_Implicit = new ArrayList<Index_Action>();
 
         mActions_All = new ArrayList<Index_Action>();
         mActions_Restrict = new ArrayList<Index_Action>();
         mActions_Extern = new ArrayList<Index_Action>();
+        mActions_Implicit = new ArrayList<Index_Action>();
 
         mFunctions_All = new ArrayList<Index_Function>();
         mFunctions_Restrict = new ArrayList<Index_Function>();
         mFunctions_Extern = new ArrayList<Index_Function>();
+        mFunctions_Implicit = new ArrayList<Index_Function>();
 
         mDirectors_All = new ArrayList<Index_Function>();
         mDirectors_Restrict = new ArrayList<Index_Function>();
@@ -172,17 +181,12 @@ public class OO {
 
             } else if (mAct.isAll()) {
 
-                mActions.add(mAct);
                 mActions_All.add(mAct);
-
-                mActionFunctions.add(mAct);
                 mActionFunctions_All.add(mAct);
 
             } else if (mAct.isRestrict()) {
 
                 mActions_Restrict.add(mAct);
-
-                mActionFunctions.add(mAct);
                 mActionFunctions_Restrict.add(mAct);
 
             }
@@ -190,29 +194,25 @@ public class OO {
         } else if (eAST.mesmoTipo("FUNCTION")) {
 
             Index_Function mFunc = new Index_Function(mRunTime, mEscopo, eAST);
+            Index_Action mAct = new Index_Action(mRunTime, mEscopo, eAST);
+
+            mFunctions.add(mFunc);
+            mActionFunctions.add(mAct);
+
 
             if (mFunc.isExtern()) {
-
-                Index_Action mAct = new Index_Action(mRunTime, mEscopo, eAST);
 
                 mFunctions_Extern.add(mFunc);
                 mActionFunctions_Extern.add(mAct);
 
             } else if (mFunc.isAll()) {
 
-                mFunctions.add(mFunc);
                 mFunctions_All.add(mFunc);
-
-                Index_Action mAct = new Index_Action(mRunTime, mEscopo, eAST);
-                mActionFunctions.add(mAct);
                 mActionFunctions_All.add(mAct);
 
             } else if (mFunc.isRestrict()) {
 
                 mFunctions_Restrict.add(mFunc);
-
-                Index_Action mAct = new Index_Action(mRunTime, mEscopo, eAST);
-                mActionFunctions.add(mAct);
                 mActionFunctions_Restrict.add(mAct);
 
             }

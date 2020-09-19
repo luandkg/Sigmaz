@@ -1,59 +1,54 @@
-
 call iniciar -> operando ( );
 act operando ( ) {
-	moc PARAR : num = 10.0;
-	moc PASSO : num = 1.0;
+	moc PARAR : int = 10;
+	moc PASSO : int = 1;
 	moc MSG_PAR : string = " : PAR ";
 	moc MSG_IMPAR : string = " : IMPAR ";
-	step def numero : num :: ( 0.0 , PARAR , somar( numero , PASSO ) ) -> {
-		def resto : num = resto ( numero , 2.0 );
-		if ( resto == 0.0 ) -> {
+	step def numero : int :: ( 0 , PARAR , somar ( numero , PASSO ) ) -> {
+		def resto : int = resto ( numero , 2 );
+		if ( resto == 0 ) -> {
 			println ( numero , MSG_PAR );
 		}
-		if ( resto == 1.0 ) -> {
+		if ( resto == 1 ) -> {
 			println ( numero , MSG_IMPAR );
 		}
 		
 	}
 	
 }
-
-
-func somar ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sum_num ( a , b ) :: c;
+func somar ( a : int , b : int ) : int {
+	def c : int;
+	invoke math -> operator_sum_int ( a , b ) :: c;
+	return c;
+}
+func resto ( a : int , b : int ) : int {
+	def c : int;
+	invoke math -> operator_mod_int ( a , b ) :: c;
 	return c;
 }
 
-func resto ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_mod_num ( a , b ) :: c;
-	return c;
-}
-
-act println ( a : num , b : string ) {
-	def c : num;
+act println ( a : int , b : string ) {
+	def c : int;
 	invoke terminal -> change ( ) :: c;
 	invoke terminal -> print ( a ) :: c;
 	invoke terminal -> print ( b ) :: c;
 }
 
-act println ( a : string , b : num ) {
-	def c : num;
+act println ( a : string , b : int ) {
+	def c : int;
 	invoke terminal -> change ( ) :: c;
 	invoke terminal -> print ( a ) :: c;
 	invoke terminal -> print ( b ) :: c;
 }
-func menor ( a : num , b : num ) : bool {
+func menor ( a : int , b : int ) : bool {
 	def c : bool;
-	invoke math -> operator_less_num ( a , b ) :: c;
+	invoke math -> operator_less_int ( a , b ) :: c;
 	return c;
 }
-
-operator == ( a : num , b : num ) : bool {
+operator == ( a : int , b : int ) : bool {
 	def c : bool;
-	def c1 : num = a;
-	def c2 : num = b;
-	invoke math -> operator_equal_num ( c1 , c2 ) :: c;
+	def c1 : int = a;
+	def c2 : int = b;
+	invoke math -> operator_equal_int ( c1 , c2 ) :: c;
 	return c;
 }

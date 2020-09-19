@@ -52,14 +52,23 @@ public class AST_Cast {
 
                     setter(TokenC.getConteudo(), AST_Corrente, ASTPai);
 
+                } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo("default")) {
+
+                    defaultx( AST_Corrente, ASTPai);
+
                 } else {
                     mCompiler.errarCompilacao("Comando Deconhecido : " + TokenD.getConteudo(), TokenD);
                 }
             }
 
+            if (!saiu){
+                mCompiler.errarCompilacao("Era esperado fechar parenteses !",TokenC);
+            }
+
         } else {
             mCompiler.errarCompilacao("Era esperado o nome para uma CAST !", TokenC);
         }
+
 
 
     }
@@ -217,6 +226,26 @@ public class AST_Cast {
         } else {
             mCompiler.errarCompilacao("Era esperado o nome da SETTER !", TokenC);
         }
+
+    }
+
+    public void defaultx( AST ASTPai, AST ASTAvo) {
+
+
+
+            AST AST_Corrente = new AST("DEFAULT");
+            ASTPai.getASTS().add(AST_Corrente);
+
+
+            Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado -> ");
+
+
+            AST_Corpo mCorpo = new AST_Corpo(mCompiler);
+            mCorpo.init(AST_Corrente);
+
+
+
+
 
     }
 

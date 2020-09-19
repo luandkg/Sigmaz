@@ -2,11 +2,8 @@ package Sigmaz.Executor.Runners;
 
 import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.Invokes.*;
-import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
-
-import java.util.ArrayList;
 
 public class Run_Invoke {
 

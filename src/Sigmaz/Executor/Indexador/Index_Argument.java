@@ -1,6 +1,7 @@
 package Sigmaz.Executor.Indexador;
 
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class Index_Argument {
 

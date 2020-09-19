@@ -1,5 +1,4 @@
 package Sigmaz.Compilador;
-
 import Sigmaz.Utils.Documento;
 
 public class Bibliotecas {

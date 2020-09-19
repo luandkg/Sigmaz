@@ -205,6 +205,7 @@
 2020 07 15  -->>  Inicializador padrão de Struct
 2020 07 15  -->>  Reorganização do Casting
 2020 07 15  -->>  Correção do Releaser no AOVersion
+
 2020 07 16  -->>  Visualizador Interno
 2020 07 16  -->>  Trilha de Desenvolvimento
 2020 07 16  -->>  Trilhas para Roadmap
@@ -212,20 +213,26 @@
 2020 07 16  -->>  Trilhas para AOVersion com Branches
 2020 07 16  -->>  Trilhas para AOVersion com Releases
 2020 07 16  -->>  Operador Ternario sem parte FALSE
+
 2020 07 17  -->>  Ações Anônimas
 2020 07 17  -->>  Funções Anônimas
+
 2020 07 18  -->>  Run_Anonymous
 2020 07 18  -->>  Simplificação do Run_Apply
 2020 07 18  -->>  Argumentos Opcionais
 2020 07 18  -->>  Argumentos Referenciados Opcionais
+
 2020 07 19  -->>  Processamento de Importações em Fila
 2020 07 19  -->>  Compiler Unit
+
 2020 07 20  -->>  Trilhador Horizontal_Vertical
+
 2020 07 21  -->>  Organizador Todo 2.0
 2020 07 21  -->>  Analisar Action por Contexto
 2020 07 21  -->>  Analisar Function por Contexto
 2020 07 21  -->>  Run_Context Director
 2020 07 22  -->>  RunTime - Personalização da Mensagem de Erro
+
 2020 07 23  -->>  Index_Argument
 2020 07 23  -->>  Conferir Argumentos
 2020 07 23  -->>  Unificação em Run_Any
@@ -235,20 +242,39 @@
 2020 07 23  -->>  Inclusao do Run_Operator
 2020 07 23  -->>  Inclusao do Run_Director
 2020 07 23  -->>  Implementação do Refer Oculto
+
 2020 08 31  -->>  LET : Definição de variável com inferência de Tipo
 2020 08 31  -->>  MOC : Definição de constante com inferência de Tipo
+
 2020 09 02  -->>  Biblioteca VETOR
 2020 09 02  -->>  Iterador VETOR
 2020 09 02  -->>  Each com VETOR
+
 2020 09 03  -->>  Unificação do Iterador
+
 2020 09 09  -->>  Pos-Processamento retirado da Fase de Analise
+
 2020 09 10  -->>  Checagem de tipo em valoramento de Struct com Herança
 2020 09 10  -->>  Allow em Struct
 2020 09 10  -->>  Instrução Loop
 2020 09 11  -->>  Separação do pos-processamento de argumentos opcionais
 2020 09 11  -->>  Definição Mutavel : MUT
+
 2020 09 13  -->>  Novo Tipo Primitivo : int
 2020 09 13  -->>  Organização da Biblioteca - Parte Matemática
+
 2020 09 14  -->>  DEFAULT para primitivos
+
 2020 09 16  -->>  EXTERN REFERED
-2020 09 16  -->>  Função Anônima
+2020 09 16  -->>  Função Anônima Local
+2020 09 16  -->>  Função Stage -> Get () em Estagiadores
+
+2020 09 17  -->>  Implicit : Define e Mockiz
+2020 09 17  -->>  Implicit : Actions e Functions
+2020 09 17  -->>  DEFAULT para CAST
+2020 09 18  -->>  Pos Processamento : Tipador
+2020 09 18  -->>  Pos Processamento : Alocador
+2020 09 19  -->>  Linguagem de Montagem : MAKE
+2020 09 19  -->>  MAKE - Lexer
+2020 09 19  -->>  MAKE - Compilador
+2020 09 19  -->>  MAKE - Run

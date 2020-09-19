@@ -14,12 +14,11 @@ public class AST_ExternRefered {
 
     public void init(AST ASTPai) {
 
-
-        Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.MENOR, "Era esperado sinal de menor");
-        Token TokenC3 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de uma STRUCT");
-        Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.MAIOR, "Era esperado sinal de maior");
         Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome para o campo REFERED");
         Token TokenC6 = mCompiler.getTokenAvanteStatus(TokenTipo.QUAD, "Era esperado um QUAD");
+        Token TokenC3 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de uma STRUCT");
+
+        Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma SETA");
         Token TokenC7 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de uma campo externo da STRUCT " + TokenC3.getConteudo());
         Token TokenC8 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA, "Era esperado ponto e virgula");
 

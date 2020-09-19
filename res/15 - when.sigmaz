@@ -1,3 +1,4 @@
+
 #import "libs/lib.sigmaz";
 call iniciar -> operando ( );
 act operando ( ) {

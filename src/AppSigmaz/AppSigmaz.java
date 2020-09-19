@@ -20,6 +20,7 @@ public class AppSigmaz {
 
         ArrayList<String> mArquivos = Carregadores.Carregar_Arquivos();
         ArrayList<String> mBibliotecas = Carregadores.Carregar_Bibliotecas();
+        ArrayList<String> mMakes = Carregadores.Carregar_Makes();
 
         String mCompilado = "res/Sigmaz.sigmad";
         String mBiblioteca_Fonte = "res/libs/lib.sigmaz";
@@ -32,14 +33,20 @@ public class AppSigmaz {
 
         boolean mostrarAST = true;
 
-        int ARQUIVO = 68;
+        int ARQUIVO = 1;
 
-        switch (Fases.EXECUTAR) {
+        switch (Fases.MAKE_EXECUTAR) {
+
+            case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
+            case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos, mCompilado,mostrarAST);
+            case INTERNO -> AppUtils.INTERNO(ARQUIVO, mArquivos, mCompilado, mInternos);
+
+
+            case COMPILAR_BIBLIOTECA -> AppUtils.COMPILAR_BIBLIOTECA(ARQUIVO, mArquivos, mCompilado,mostrarAST);
+            case COMPILAR_EXECUTAVEL -> AppUtils.COMPILAR_EXECUTAVEL(ARQUIVO, mArquivos, mCompilado,mostrarAST);
 
             case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado,mostrarAST);
-            case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
-            case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos, mCompilado);
-            case INTERNO -> AppUtils.INTERNO(ARQUIVO, mArquivos, mCompilado, mInternos);
+
 
             case TESTES -> AppUtils.TESTE_GERAL(mArquivos, mCompilado, mLocal);
 
@@ -47,7 +54,7 @@ public class AppSigmaz {
             case IDENTAR_TUDO -> AppUtils.IDENTAR_LOTE("ARQUIVOS", mArquivos);
             case IDENTAR_BIBLIOTECAS -> AppUtils.IDENTAR_LOTE("BIBLIOTECAS", mBibliotecas);
 
-            case MONTAR_BIBLIOTECAS -> AppUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad);
+            case MONTAR_BIBLIOTECAS -> AppUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad,mostrarAST);
 
             case INTELLISENSE -> AppUtils.INTELISENSE(ARQUIVO, mArquivos, mCompilado, mIntellisense);
             case INTELLISENSE_BIBLIOTECA -> AppUtils.INTELISENSE_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad, mIntellisense);
@@ -55,6 +62,9 @@ public class AppSigmaz {
             case LEXER -> AppUtils.LEXER(ARQUIVO, mArquivos);
             case TODO -> AppUtils.TODO(ARQUIVO, mArquivos);
             case COMENTARIOS -> AppUtils.COMENTARIOS(ARQUIVO, mArquivos);
+
+            case MAKE_LEXER -> AppMake.MAKE_LEXER(ARQUIVO, mMakes);
+            case MAKE_EXECUTAR -> AppMake.MAKE_EXECUTAR(ARQUIVO, mMakes, mCompilado,mostrarAST);
 
             default -> System.out.println("\t - Fases : Desconhecida !");
         }

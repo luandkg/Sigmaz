@@ -60,18 +60,8 @@ public class Run_Valoramento {
             if (mTipagem.contentEquals(mAST.getRetornoTipo()) || mTipagem.contentEquals("<<ANY>>")) {
 
 
-                if (mAST.getRetornoTipo().contentEquals("auto")) {
-
-                    Run_Anonymous mRun_Anonymous = new Run_Anonymous(mRunTime, mEscopo);
-                    mRun_Anonymous.criarAuto(eNome, mAST, mValor);
-
-                } else if (mAST.getRetornoTipo().contentEquals("functor")) {
 
 
-                    Run_Anonymous mRun_Anonymous = new Run_Anonymous(mRunTime, mEscopo);
-                    mRun_Anonymous.criarFunctor(eNome, mAST, mValor);
-
-                }
             } else if (mTipagem.contentEquals("int") && mAST.getRetornoTipo().contentEquals("num")) {
                 mAST.setRetornoTipo("int");
 
@@ -136,10 +126,11 @@ public class Run_Valoramento {
 
             if (mTipagem.contentEquals(mAST.getRetornoTipo()) || mTipagem.contentEquals("<<ANY>>")) {
 
+            } else  if (mRunTime.getQualificador(mAST.getRetornoTipo(), mEscopo.getRefers()).contentEquals("CAST")) {
 
-            } else {
+                mRunTime.errar(mLocal, "Retorno incompativel  : " + mTipagem + " x7 " + mAST.getRetornoTipo());
 
-                if (mRunTime.getQualificador(mAST.getRetornoTipo(), mEscopo.getRefers()).contentEquals("STRUCT")) {
+            } else  if (mRunTime.getQualificador(mAST.getRetornoTipo(), mEscopo.getRefers()).contentEquals("STRUCT")) {
 
                     boolean temHeranca = false;
 
@@ -179,10 +170,11 @@ public class Run_Valoramento {
                     }
 
                 } else {
-                    mRunTime.errar(mLocal, "Retorno incompativel  : " + mTipagem + " x3 " + mAST.getRetornoTipo());
+
+
+                    mRunTime.errar(mLocal, "Retorno incompativel  : " + mTipagem + " xc " + mAST.getRetornoTipo());
                 }
 
-            }
 
         } else {
 

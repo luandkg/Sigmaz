@@ -1,25 +1,24 @@
-#import "libs/lib.sigmaz";
 call iniciar -> operando ( );
 act operando ( ) {
-	def cc : num = 0.0;
-	step cc :: ( 0.0 , 10.0 , somar ( cc , 1.0 ) ) -> {
-		def ac : num = cc;
+	def cc : int = 0.0;
+	step cc :: ( 0 , 10 , somar ( cc , 1 ) ) -> {
+		def ac : int = cc;
 		println ( "ANTES : ", ac );
-		if ( ac == 8.0 ) -> {
+		if ( ac == 8 ) -> {
 			println ( " - SAINDO : ", ac );
 			cancel;
 		}
-		if ( ac == 5.0 ) -> {
+		if ( ac == 5 ) -> {
 			println ( " - PULANDO : ", ac );
 			continue;
 		}
-		if ( ac == 3.0 ) -> {
+		if ( ac == 3 ) -> {
 			println ( " - TERCERIZANDO : ", ac );
-		}other ( ac == 4.0 ) -> {
+		}other ( ac == 4 ) -> {
 			println ( " - QUARTANDO : ", ac );
 		}others {
 			println ( " - OUTROS : ", ac );
-			if ( ac == 7.0 ) -> {
+			if ( ac == 7 ) -> {
 				println ( " - SEPTANDO : ", ac );
 				continue;
 			}
@@ -29,29 +28,27 @@ act operando ( ) {
 	}
 	
 }
-
-func somar ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sum_num ( a , b ) :: c;
+func somar ( a : int , b : int ) : int {
+	def c : int = null;
+	invoke math -> operator_sum_int ( a , b ) :: c;
 	return c;
 }
 
-act println ( a : string , b : num ) {
-	def c : num;
+act println ( a : string , b : int ) {
+	def c : int = null;
 	invoke terminal -> change ( ) :: c;
 	invoke terminal -> print ( a ) :: c;
 	invoke terminal -> print ( b ) :: c;
 }
-func menor ( a : num , b : num ) : bool {
-	def c : bool;
-	invoke math -> operator_less_num ( a , b ) :: c;
+func menor ( a : int , b : int ) : bool {
+	def c : bool = null;
+	invoke math -> operator_less_int ( a , b ) :: c;
 	return c;
 }
-
-operator == ( a : num , b : num ) : bool {
-	def c : bool;
-	def c1 : num = a;
-	def c2 : num = b;
-	invoke math -> operator_equal_num ( c1 , c2 ) :: c;
+operator == ( a : int , b : int ) : bool {
+	def c : bool = null;
+	def c1 : int = a;
+	def c2 : int = b;
+	invoke math -> operator_equal_int ( c1 , c2 ) :: c;
 	return c;
 }

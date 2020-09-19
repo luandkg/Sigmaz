@@ -1,8 +1,6 @@
 import "libs/lib.sigmaz";
-
 refer TesteUnitario;
 refer Iterador;
-
 call iniciar -> {
 	println ( " --------- TESTES UNITARIOS --------- ");
 	println ( "");

@@ -20,8 +20,6 @@ public class AST_Step {
 
             if (TokenC.mesmoConteudo("def")) {
 
-                //mCompiler.errarCompilacao("Função Complexa !", TokenC.getInicio());
-
                 complexo(ASTPai);
 
             } else {

@@ -5,9 +5,9 @@ import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Executor.Runners.Run_Arguments;
 import Sigmaz.Executor.Runners.Run_GetType;
-import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class Index_Function {
 

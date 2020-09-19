@@ -1,10 +1,7 @@
 package Sigmaz.Executor;
 
-import Sigmaz.Executor.Indexador.Index_Action;
-import Sigmaz.Executor.Indexador.Index_Function;
-import Sigmaz.Utils.AST;
-
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class Estrutural {
 

@@ -1,7 +1,6 @@
 package Sigmaz.Executor.Invokes;
 
 import Sigmaz.Executor.Escopo;
-import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Executor.Runners.Run_Invoke;
 import Sigmaz.Utils.AST;

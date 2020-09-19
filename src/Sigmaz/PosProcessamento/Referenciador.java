@@ -1,9 +1,7 @@
 package Sigmaz.PosProcessamento;
 
-import Sigmaz.Analisador.Analisador;
-import Sigmaz.Utils.AST;
-
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class Referenciador {
 

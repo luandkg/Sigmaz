@@ -9,10 +9,10 @@ public class Analisar_Cast {
     private Analisador mAnalisador;
     private Analisador_Bloco mAnalisador_Bloco;
 
-    public Analisar_Cast(Analisador eAnalisador,Analisador_Bloco eAnalisador_Bloco) {
+    public Analisar_Cast(Analisador eAnalisador, Analisador_Bloco eAnalisador_Bloco) {
 
         mAnalisador = eAnalisador;
-        mAnalisador_Bloco=eAnalisador_Bloco;
+        mAnalisador_Bloco = eAnalisador_Bloco;
 
     }
 
@@ -21,12 +21,15 @@ public class Analisar_Cast {
 
         for (AST mAST : ASTPai.getASTS()) {
 
+            if (mAST.mesmoTipo("GETTER") || mAST.mesmoTipo("SETTER")) {
+                if (mAnalisador_Bloco.getPrimitivos().contains(mAST.getValor())) {
 
-            if (mAnalisador_Bloco.getPrimitivos().contains(mAST.getValor())){
+                } else {
+                    mAnalisador.getErros().add("CAST " + ASTPai.getNome() + " de " + mAST.getValor() + " : Impossivel !");
+                }
 
-            }else{
-                mAnalisador.getErros().add("CAST " + ASTPai.getNome() + " de " + mAST.getValor() + " : Impossivel !");
             }
+
 
         }
 

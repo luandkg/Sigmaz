@@ -4,8 +4,6 @@ import Sigmaz.Lexer.Token;
 import Sigmaz.Lexer.TokenTipo;
 import Sigmaz.Utils.AST;
 
-import java.io.File;
-
 public class AST_Require {
 
     private CompilerUnit mCompiler;

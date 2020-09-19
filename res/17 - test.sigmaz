@@ -10,7 +10,7 @@ func menor ( a : num , b : num ) : bool {
 }
 func inteiro ( a : num ) : num {
 	def c : num;
-	invoke casting -> cast_integer_num( a ) :: c;
+	invoke casting -> cast_integer_num ( a ) :: c;
 	return c;
 }
 func decimal ( a : num ) : num {
@@ -32,20 +32,16 @@ operator == ( a : num , b : num ) : bool {
 }
 
 act operando ( geral : num ) {
-
 	def w : num = 0.0;
 	invoke terminal -> change ( ) :: w;
 	def a1 : num = 0.0;
 	def raiz : num = 0.0;
-
 	while ( menor ( a1 , 10.0 ) ) -> {
 		println ( "Valor : ", inteiro ( a1 ) );
-
 		def cc : num = somar ( a1 , a1 );
 		cc = somar ( geral , cc );
 		cc = somar ( inteiro ( cc ) , raiz );
 		raiz = somar ( raiz , 0.12 );
-
 		def auxiliar : num;
 		if ( inteiro ( cc ) == 15.0 ) -> {
 			auxiliar = 5.0;
@@ -61,14 +57,12 @@ act operando ( geral : num ) {
 			
 		}
 		if ( inteiro ( cc ) == 19.0 ) -> {
-
 			def passador : num = 1.0;
 			def acumulando : num = 0.0;
 			step passador :: ( 0.0 , 10.0 , inteiro ( somar ( passador , 1.0 ) ) ) -> {
 				acumulando = somar ( acumulando , 2.0 );
 			}
 			auxiliar = acumulando;
-
 		}others {
 			
 		}
@@ -87,9 +81,7 @@ act operando ( geral : num ) {
 			auxiliar = acumulando;
 		}
 		if ( inteiro ( cc ) == 24.0 ) -> {
-
 			def acumulando : num = 0.0;
-
 			step def passador : num :: ( 0.0 , 10.0 , inteiro ( somar ( passador , 1.0 ) ) ) -> {
 				if ( passador == 8.0 ) -> {
 					cancel;
@@ -126,7 +118,6 @@ act operando ( geral : num ) {
 		println ( "  - Decimal : ", decimal ( cc ) );
 		println ( "  - Auxilar : ", auxiliar );
 		a1 = somar ( a1 , 1.0 );
-
 	}
 	invoke terminal -> change ( ) :: w;
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;

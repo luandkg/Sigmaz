@@ -2,26 +2,24 @@ package Sigmaz;
 
 import Sigmaz.Analisador.Analisador;
 import Sigmaz.PosProcessamento.PosProcessador;
-import Sigmaz.Utils.AST;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Compilador.Compiler;
-import Sigmaz.Utils.Documentador;
-import Sigmaz.Utils.Erro;
-import Sigmaz.Utils.GrupoDeErro;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import Sigmaz.Utils.GrupoDeErro;
+import Sigmaz.Utils.Erro;
+import Sigmaz.Utils.Documentador;
 
 // COMPILADOR OLIMPUS
 
 // DESENVOLVEDOR : LUAN FREITAS
 
-import java.util.Calendar;
-
 
 public class Sigmaz {
 
-    private boolean geral(String eArquivo, String saida,boolean mostrarAST) {
+    public boolean geral(String eArquivo, String saida, boolean mostrarAST,int mOpcao) {
 
         boolean ret = false;
 
@@ -40,7 +38,7 @@ public class Sigmaz {
 
 
         Compiler CompilerC = new Compiler();
-        CompilerC.init(eArquivo);
+        CompilerC.init(eArquivo,mOpcao);
 
         System.out.println("############## PROCESSAMENTO ###############");
         System.out.println("");
@@ -116,9 +114,9 @@ public class Sigmaz {
             Analisador AnaliseC = new Analisador();
             String AI = CompilerC.getData().toString();
 
-if (mostrarAST){
-     System.out.println(CompilerC.getArvoreDeInstrucoes());
-}
+            if (mostrarAST) {
+                System.out.println(CompilerC.getArvoreDeInstrucoes());
+            }
 
 
             AnaliseC.init(CompilerC.getASTS(), mLocal);
@@ -140,14 +138,6 @@ if (mostrarAST){
                 for (String Erro : AnaliseC.getErros()) {
                     System.out.println("\t\t" + Erro);
                 }
-
-
-                //  System.out.println("");
-                // System.out.println("################ AST - COM DEFEITOS ################");
-                //  System.out.println("");
-
-                //  Documentador DC = new Documentador();
-                //  System.out.println(CompilerC.getArvoreDeInstrucoes());
 
             } else {
 
@@ -178,15 +168,12 @@ if (mostrarAST){
                     for (String Erro : PosProcessadorC.getErros()) {
                         System.out.println("\t\t" + Erro);
                     }
-                }else{
+                } else {
 
 
                     System.out.println("");
                     System.out.println("################ OBJETO ################");
                     System.out.println("");
-
-
-                    // String instrucoes = CompilerC.ArvoreDeInstrucoes();
 
 
                     CompilerC.Compilar(saida);
@@ -195,18 +182,19 @@ if (mostrarAST){
 
                     System.out.println("\t Iniciado : " + CompilerC.getData().toString());
                     System.out.println("\t - Tamanho : " + DC2.tamanhoObjeto(saida));
-                 //   System.out.println("\t - Saida : " + saida);
+                    System.out.println("\t - Saida : " + saida);
                     System.out.println("\t Finalizado : " + CompilerC.getData().toString());
 
                     System.out.println("");
+
+                    if (mostrarAST) {
+                        System.out.println(CompilerC.imprimirArvore());
+                    }
 
 
                     ret = true;
 
                 }
-
-
-
 
 
             }
@@ -221,10 +209,26 @@ if (mostrarAST){
     }
 
 
-    public void init(String eArquivo, String saida,boolean mostrarAST) {
+    public void compilar_executavel(String eArquivo, String saida, boolean mostrarAST) {
+
+        if (geral(eArquivo, saida, mostrarAST,1)) {
+
+        }
+
+    }
+
+    public void compilar_biblioteca(String eArquivo, String saida, boolean mostrarAST) {
+
+        if (geral(eArquivo, saida, mostrarAST,2)) {
+
+        }
+
+    }
+
+    public void init(String eArquivo, String saida, boolean mostrarAST,int mOpcao) {
 
 
-        if (geral(eArquivo, saida, mostrarAST)) {
+        if (geral(eArquivo, saida, mostrarAST,mOpcao)) {
 
 
             System.out.println("");
@@ -243,11 +247,10 @@ if (mostrarAST){
             System.out.println("");
 
 
-         //   System.out.println(RunTimeC.getArvoreDeInstrucoes());
+            //   System.out.println(RunTimeC.getArvoreDeInstrucoes());
 
             System.out.println("");
             System.out.println("----------------------------------------------");
-            System.out.println("");
 
             RunTimeC.run();
 
@@ -255,7 +258,7 @@ if (mostrarAST){
             System.out.println("----------------------------------------------");
             System.out.println("");
 
-            String DF = RunTimeC.getData().toString();
+            String DF = RunTimeC.getData();
 
             System.out.println("\t - Iniciado : " + DI);
             System.out.println("\t - Finalizado : " + DF);
@@ -279,10 +282,10 @@ if (mostrarAST){
     }
 
 
-    public void estrutural(String eArquivo, String saida) {
+    public void estrutural(String eArquivo, String saida, boolean mostrarAST) {
 
 
-        if (geral(eArquivo, saida,false)) {
+        if (geral(eArquivo, saida, mostrarAST,0)) {
 
 
             System.out.println("");
@@ -340,7 +343,7 @@ if (mostrarAST){
     public void interno(String eArquivo, String saida, String eLocal) {
 
 
-        if (geral(eArquivo, saida,false)) {
+        if (geral(eArquivo, saida, false,0)) {
 
 
             System.out.println("");
@@ -398,7 +401,7 @@ if (mostrarAST){
 
     public void uml(String eArquivo, String saida, String eGrafico) {
 
-        if (geral(eArquivo, saida,false)) {
+        if (geral(eArquivo, saida, false,0)) {
 
 
             System.out.println("");
@@ -445,7 +448,7 @@ if (mostrarAST){
 
     public void intellisense(String eArquivo, String saida, String eGrafico) {
 
-        if (geral(eArquivo, saida,false)) {
+        if (geral(eArquivo, saida, false,0)) {
 
 
             System.out.println("");
@@ -491,7 +494,7 @@ if (mostrarAST){
 
 
         Compiler CompilerC = new Compiler();
-        CompilerC.init(eArquivo);
+        CompilerC.init(eArquivo,0);
 
 
         System.out.println("");

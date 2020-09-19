@@ -3,10 +3,12 @@ package Sigmaz.Executor;
 import Sigmaz.Executor.Runners.*;
 import Sigmaz.Intellisenses.Intellisense;
 import Sigmaz.Internal;
-import Sigmaz.Utils.*;
 
 import java.io.File;
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
+import Sigmaz.Utils.Documentador;
+import Sigmaz.Utils.Tempo;
 
 public class RunTime {
 

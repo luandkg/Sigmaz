@@ -1,14 +1,15 @@
 package Sigmaz.Compilador;
 
-import Sigmaz.Lexer.Lexer;
-import Sigmaz.Lexer.Token;
-import Sigmaz.Lexer.TokenTipo;
-import Sigmaz.Utils.*;
-
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 
+import Sigmaz.Utils.AST;
+import Sigmaz.Utils.GrupoDeErro;
+import Sigmaz.Utils.GrupoDeComentario;
+import Sigmaz.Utils.Enfileirador;
+import Sigmaz.Utils.Documentador;
+import Sigmaz.Utils.Documento;
+import Sigmaz.Utils.Tempo;
 
 public class Compiler {
 
@@ -79,11 +80,23 @@ public class Compiler {
         return mProcessamento;
     }
 
-    public void init(String eArquivo) {
+    public void init(String eArquivo, int mOpcao) {
 
 
         AST AST_Raiz = new AST("SIGMAZ");
         mASTS.add(AST_Raiz);
+
+
+        if (mOpcao == 1) {
+
+            AST_Raiz.criarBranch("SIGMAZ_TYPE").setNome("EXECUTABLE");
+
+        } else if (mOpcao == 2) {
+
+            AST_Raiz.criarBranch("SIGMAZ_TYPE").setNome("LIBRARY");
+
+        }
+
 
         Enfileirador mFila = new Enfileirador();
 
@@ -96,7 +109,7 @@ public class Compiler {
 
             String mLocalRequisicao = mFila.processar();
 
-            if (mLocalRequisicao!=null){
+            if (mLocalRequisicao != null) {
 
 
                 getRequisitados().add(mLocalRequisicao);
@@ -132,7 +145,6 @@ public class Compiler {
                 }
 
             }
-
 
 
             mFila.organizar();
@@ -215,6 +227,16 @@ public class Compiler {
         return Tempo.getData();
 
 
+    }
+
+    public String imprimirArvore() {
+        String e = "";
+
+        for (AST eAST : mASTS) {
+            e += eAST.ImprimirArvoreDeInstrucoes() + "\n";
+        }
+
+        return e;
     }
 
 

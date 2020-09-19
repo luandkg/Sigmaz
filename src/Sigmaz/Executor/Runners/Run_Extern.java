@@ -12,8 +12,9 @@ import java.util.ArrayList;
 public class Run_Extern {
 
     private RunTime mRunTime;
-    private Escopo mEscopo;
     private String mLocal;
+
+    private Escopo mEscopo;
 
     private String mPacote;
     private String mNome;
@@ -21,13 +22,13 @@ public class Run_Extern {
     private Run_Arguments mPreparadorDeArgumentos;
     private AST mStructCorpo;
 
-    private int CA;
-    private int CF;
-    private int CM;
-    private int CD;
 
     private ArrayList<String> mDesseExtern;
-    private  ArrayList<String> dRefers;
+    private ArrayList<String> dRefers;
+
+    private ArrayList<String> mExterns;
+    private ArrayList<String> mImplicits;
+
 
     public Run_Extern(RunTime eRunTime) {
         mRunTime = eRunTime;
@@ -39,6 +40,9 @@ public class Run_Extern {
         mDesseExtern = new ArrayList<String>();
         dRefers = new ArrayList<String>();
         mLocal = "Run_Extern";
+
+        mExterns = new ArrayList<String>();
+        mImplicits = new ArrayList<String>();
 
     }
 
@@ -69,23 +73,18 @@ public class Run_Extern {
 
     public void init(String ePacote, String eNome, AST ASTPai, AST ASTAvo) {
 
-        CA = 0;
-        CF = 0;
-        CM = 0;
-        CD = 0;
-
 
         mPacote = ePacote;
         mNome = eNome;
 
         // System.out.println("Externalizando : " + mNome);
 
+        //  System.out.println("INICIANDO EXTERN :: " + ePacote + "<>" + eNome);
+
+
         mEscopo = new Escopo(mRunTime, null);
         mEscopo.setNome(mNome);
         mEscopo.setEstrutura(true);
-
-
-
 
         for (AST ASTC : mRunTime.getSigmaz().getASTS()) {
 
@@ -109,7 +108,7 @@ public class Run_Extern {
 
 
         AST ASTRefers = ASTPai.getBranch("REFERS");
-       dRefers = new ArrayList<String>();
+        dRefers = new ArrayList<String>();
 
         for (AST ASTC : ASTRefers.getASTS()) {
             String eRefer = ASTC.getNome();
@@ -118,25 +117,33 @@ public class Run_Extern {
         }
 
 
-
-
-
         for (AST ASTC : mStructCorpo.getASTS()) {
 
             if (ASTC.mesmoTipo("FUNCTION")) {
 
                 if (getModo(ASTC).contentEquals("EXTERN")) {
-
                     mEscopo.guardarStruct(ASTC);
-                    CF += 1;
+                    mEscopo.guardar(ASTC);
+
+                } else if (getModo(ASTC).contentEquals("IMPLICIT")) {
+                    mEscopo.guardarStruct(ASTC);
+                    mEscopo.guardar(ASTC);
+
                 }
+
             } else if (ASTC.mesmoTipo("ACTION")) {
 
                 if (getModo(ASTC).contentEquals("EXTERN")) {
-
                     mEscopo.guardarStruct(ASTC);
-                    CA += 1;
+                    mEscopo.guardar(ASTC);
+
+                } else if (getModo(ASTC).contentEquals("IMPLICIT")) {
+                    mEscopo.guardarStruct(ASTC);
+                    mEscopo.guardar(ASTC);
+
                 }
+
+
             }
         }
 
@@ -144,12 +151,14 @@ public class Run_Extern {
     }
 
 
-
     public void run() {
 
-       // System.out.println("Externo :: " + this.getNomeCompleto());
+        // System.out.println("Externo :: " + this.getNomeCompleto());
+
+        //    System.out.println("INICIANDO EXTERN :: " + mPacote + "<>" + mNome);
 
         mEscopo.externalizar(this.getNomeCompleto());
+
 
         for (AST ASTC : mStructCorpo.getASTS()) {
 
@@ -159,10 +168,23 @@ public class Run_Extern {
                     Run_Def mAST = new Run_Def(mRunTime, mEscopo);
                     mAST.init(ASTC);
 
+                    //System.out.println("\t EXTERN -->> " + ASTC.getNome());
+
                     mDesseExtern.add(ASTC.getNome());
 
                     mEscopo.guardarStruct(ASTC);
-                    CD += 1;
+
+                    mExterns.add(ASTC.getNome());
+
+                } else if (getModo(ASTC).contentEquals("IMPLICIT")) {
+
+                    //System.out.println("\t IMPLICIT -->> " + ASTC.getNome());
+
+
+                    Run_Def mAST = new Run_Def(mRunTime, mEscopo);
+                    mAST.init(ASTC);
+
+
                 }
 
 
@@ -175,8 +197,19 @@ public class Run_Extern {
 
                     mDesseExtern.add(ASTC.getNome());
 
+                    //  System.out.println("\t EXTERN -->> " + ASTC.getNome());
+
                     mEscopo.guardarStruct(ASTC);
-                    CM += 1;
+
+                    mExterns.add(ASTC.getNome());
+
+                } else if (getModo(ASTC).contentEquals("IMPLICIT")) {
+
+                    //  System.out.println("\t IMPLICIT -->> " + ASTC.getNome());
+
+                    Run_Def mAST = new Run_Def(mRunTime, mEscopo);
+                    mAST.init(ASTC);
+
 
                 }
 
@@ -184,6 +217,7 @@ public class Run_Extern {
             }
 
         }
+
 
     }
 
@@ -195,37 +229,43 @@ public class Run_Extern {
     public Item init_ObjectExtern(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
 
         if (BuscadorDeVariaveis == null) {
-            mRunTime.errar(mLocal,getNome() + "." + ASTCorrente.getNome() + " : Membro Extern nao encontrado !");
+            mRunTime.errar(mLocal, getNome() + "." + ASTCorrente.getNome() + " : Membro Extern nao encontrado !");
             return null;
         }
 
         boolean enc = false;
         Item mRet = null;
 
-      //  System.out.println(" --> Escopo Externo : " + mEscopo.getNome());
+        //  System.out.println(" --> Escopo Externo : " + mEscopo.getNome());
 
+        if (mExterns.contains(ASTCorrente.getNome())) {
 
-        for (Item mItem : mEscopo.getOO().getStacks()) {
+            for (Item mItem : mEscopo.getOO().getStacks()) {
 
-           // System.out.println(" --> Membro Externo : " + mItem.getNome());
+                // System.out.println(" --> Membro Externo : " + mItem.getNome());
 
-            if (mItem.getNome().contentEquals(ASTCorrente.getNome())) {
-                mRet = mItem;
-                enc = true;
-                break;
+                if (mItem.getNome().contentEquals(ASTCorrente.getNome())) {
+                    mRet = mItem;
+                    enc = true;
+                    break;
+                }
+
             }
 
+            if (!enc) {
+                mRunTime.errar(mLocal, getNome() + "->" + ASTCorrente.getNome() + " :  Membro Extern nao encontrado !");
+            }
+
+        } else {
+            mRunTime.errar(mLocal, getNome() + "->" + ASTCorrente.getNome() + " :  Membro Extern nao existente !");
         }
 
-        if (!enc) {
-            mRunTime.errar(mLocal,getNome() + "." + ASTCorrente.getNome() + " :  Membro Extern nao encontrado !");
-        }
 
         return mRet;
     }
 
 
-    public Item init_Function_Extern(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne ) {
+    public Item init_Function_Extern(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
 
         if (mRunTime.getErros().size() > 0) {
             return null;
@@ -245,7 +285,7 @@ public class Run_Extern {
 
             if (mIndex_Function.mesmoNome(ASTCorrente.getNome())) {
 
-                if ( !mIndex_Function.getEstaResolvido()){
+                if (!mIndex_Function.getEstaResolvido()) {
                     mIndex_Function.resolverTipagem(BuscadorDeVariaveis.getRefers());
                 }
 
@@ -253,27 +293,27 @@ public class Run_Extern {
                     break;
                 }
                 enc = true;
-                if (mIndex_Function.mesmoArgumentos(mEscopo,mArgumentos)) {
+                if (mIndex_Function.mesmoArgumentos(mEscopo, mArgumentos)) {
 
-                   // System.out.println("\t - Executar :  " + mIndex_Function.getNome());
+                    // System.out.println("\t - Executar :  " + mIndex_Function.getNome());
 
                     algum = true;
-                   // System.out.println("\t - Executar :  " + mIndex_Function.getNome() + " ANTES :: " + eRetorne);
+                    // System.out.println("\t - Executar :  " + mIndex_Function.getNome() + " ANTES :: " + eRetorne);
 
                     //if (mIndex_Function.getPonteiro().mesmoValor(eRetorne) || eRetorne.contentEquals("<<ANY>>")) {
 
-                        if (mRunTime.getErros().size() > 0) {
-                            break;
-                        }
+                    if (mRunTime.getErros().size() > 0) {
+                        break;
+                    }
 
 
-                        mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eRetorne);
+                    mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eRetorne);
 
-                      //  System.out.println("\t - Executar :  " + mIndex_Function.getNome() + " RET ::: " + mRet);
+                    //  System.out.println("\t - Executar :  " + mIndex_Function.getNome() + " RET ::: " + mRet);
 
-                   // } else {
-                   //     mRunTime.errar(mLocal,"Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Retorno incompativel !");
-                   // }
+                    // } else {
+                    //     mRunTime.errar(mLocal,"Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Retorno incompativel !");
+                    // }
 
                     break;
                 }
@@ -286,10 +326,10 @@ public class Run_Extern {
 
         if (enc) {
             if (!algum) {
-                mRunTime.errar(mLocal,"Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Argumentos incompativeis !");
+                mRunTime.errar(mLocal, "Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Argumentos incompativeis !");
             }
         } else {
-            mRunTime.errar(mLocal,"Function  Extern " + mNome + "." + ASTCorrente.getNome() + " : Nao Encontrada !");
+            mRunTime.errar(mLocal, "Function  Extern " + mNome + "." + ASTCorrente.getNome() + " : Nao Encontrada !");
 
         }
 
@@ -298,6 +338,7 @@ public class Run_Extern {
     }
 
     public void init_ActionFunction_Extern(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
+
 
         if (mRunTime.getErros().size() > 0) {
             return;
@@ -313,11 +354,11 @@ public class Run_Extern {
 
         for (Index_Action mIndex_Function : mEscopo.getOO().getActionsFunctions_Extern()) {
 
-           //System.out.println("\t - Procurar Extern :  " + mIndex_Function.getNome());
+            //System.out.println("\t - Procurar Extern :  " + mIndex_Function.getNome());
 
             if (mIndex_Function.mesmoNome(ASTCorrente.getNome())) {
 
-                if (! mIndex_Function.getEstaResolvido()){
+                if (!mIndex_Function.getEstaResolvido()) {
                     mIndex_Function.resolverTipagem(BuscadorDeVariaveis.getRefers());
                 }
 
@@ -325,9 +366,9 @@ public class Run_Extern {
                     break;
                 }
                 enc = true;
-                if (mIndex_Function.mesmoArgumentos(mEscopo,mArgumentos)) {
+                if (mIndex_Function.mesmoArgumentos(mEscopo, mArgumentos)) {
 
-                   // System.out.println("\t - Executar Extern :  " + mIndex_Function.getNome());
+                    // System.out.println("\t - Executar Extern :  " + mIndex_Function.getNome());
 
                     algum = true;
 
@@ -338,10 +379,12 @@ public class Run_Extern {
                         }
 
 
-                        mPreparadorDeArgumentos.executar_Action(mRunTime, BuscadorDeVariaveis, mIndex_Function, mArgumentos);
+                     //   mEscopo.getDebug().ListarActions();
+
+                        mPreparadorDeArgumentos.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
 
                     } else {
-                        mRunTime.errar(mLocal,"Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Retorno incompativel !");
+                        mRunTime.errar(mLocal, "Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Retorno incompativel !");
                     }
 
                     break;
@@ -355,10 +398,10 @@ public class Run_Extern {
 
         if (enc) {
             if (!algum) {
-                mRunTime.errar(mLocal,"Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Argumentos incompativeis !");
+                mRunTime.errar(mLocal, "Function Extern " + mNome + "." + ASTCorrente.getNome() + " : Argumentos incompativeis !");
             }
         } else {
-            mRunTime.errar(mLocal,"Function  Extern " + mNome + "." + ASTCorrente.getNome() + " : Nao Encontrada !");
+            mRunTime.errar(mLocal, "Function  Extern " + mNome + "." + ASTCorrente.getNome() + " : Nao Encontrada !");
 
         }
 
@@ -366,40 +409,19 @@ public class Run_Extern {
     }
 
 
-    public int getDefines() {
-        return CD;
-    }
-
-    public int getMockizes() {
-        return CM;
-    }
-
-    public int getActions() {
-        return CA;
-    }
-
-    public int getFunctions() {
-        return CF;
-    }
-
-    public int getTamanho() {
-        return CA + CF + CD + CM;
-    }
-
-
     public void Struct_Execute(AST ASTCorrente, Escopo gEscopo) {
 
-      //  System.out.println("GET EXTERN  CALL -> " + gEscopo.getNome() + " : " + ASTCorrente.getNome());
+        //  System.out.println("GET EXTERN  CALL -> " + gEscopo.getNome() + " : " + ASTCorrente.getNome());
 
-      //  for (String r : gEscopo.getRefers()) {
-       //     System.out.println("\t -  REFER : " + r);
-      //  }
+        //  for (String r : gEscopo.getRefers()) {
+        //     System.out.println("\t -  REFER : " + r);
+        //  }
         Run_Context mRun_Context = new Run_Context(mRunTime);
-
         Run_Extern mEscopoExtern = null;
+
         for (Run_Extern mRun_Struct : mRun_Context.getRunExternContexto(gEscopo.getRefers())) {
 
-        //    System.out.println("\t - PASS EXTERN : " + mRun_Struct.getNome());
+            //    System.out.println("\t - PASS EXTERN : " + mRun_Struct.getNome());
 
             if (mRun_Struct.getNome().contentEquals(ASTCorrente.getNome())) {
                 mEscopoExtern = mRun_Struct;
@@ -407,7 +429,7 @@ public class Run_Extern {
             }
         }
 
-      //  System.out.println("ENC EXTERN : " + ASTCorrente.getNome());
+        //  System.out.println("ENC EXTERN : " + ASTCorrente.getNome());
 
         if (mRunTime.getErros().size() > 0) {
             return;
@@ -423,7 +445,7 @@ public class Run_Extern {
                 return;
             }
 
-          //  System.out.println("Mudando Para EXTERN - STRUCT_FUNCT " + eInternal.getNome());
+            //  System.out.println("Mudando Para EXTERN - STRUCT_FUNCT " + eInternal.getNome());
 
 
             mEscopoExtern.init_ActionFunction_Extern(eInternal, gEscopo, "<<ANY>>");
@@ -460,6 +482,7 @@ public class Run_Extern {
                             return;
                         }
 
+
                         mEscopoExtern.init_ActionFunction_Extern(sInternal, gEscopo, "<<ANY>>");
 
                         if (mRunTime.getErros().size() > 0) {
@@ -484,12 +507,13 @@ public class Run_Extern {
 
         } else {
 
-            mRunTime.errar(mLocal,"AST_Value --> STRUCTURED VALUE !");
+            mRunTime.errar(mLocal, "AST_Value --> STRUCTURED VALUE !");
 
         }
 
 
     }
+
 
 }
 

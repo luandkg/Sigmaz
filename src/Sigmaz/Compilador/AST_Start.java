@@ -3,6 +3,7 @@ package Sigmaz.Compilador;
 import Sigmaz.Lexer.Token;
 import Sigmaz.Lexer.TokenTipo;
 import Sigmaz.Utils.AST;
+import Sigmaz.Utils.AST;
 
 public class AST_Start {
 

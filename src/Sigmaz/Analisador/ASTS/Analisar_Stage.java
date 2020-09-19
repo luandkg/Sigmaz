@@ -2,9 +2,9 @@ package Sigmaz.Analisador.ASTS;
 
 import Sigmaz.Analisador.Analisador;
 import Sigmaz.Analisador.Complementar.Analisador_Bloco;
-import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class Analisar_Stage {
 

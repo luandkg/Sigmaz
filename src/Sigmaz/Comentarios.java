@@ -2,10 +2,9 @@ package Sigmaz;
 
 import Sigmaz.Compilador.Compiler;
 import Sigmaz.Lexer.Token;
-import Sigmaz.Utils.Documentador;
 import Sigmaz.Utils.Erro;
-import Sigmaz.Utils.GrupoDeComentario;
 import Sigmaz.Utils.GrupoDeErro;
+import Sigmaz.Utils.GrupoDeComentario;
 
 import java.io.File;
 
@@ -30,7 +29,7 @@ public class Comentarios {
 
 
         Compiler CompilerC = new Compiler();
-        CompilerC.init(eArquivo);
+        CompilerC.init(eArquivo,0);
 
         System.out.println("################# LEXER ##################");
         System.out.println("");

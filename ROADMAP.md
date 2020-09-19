@@ -295,5 +295,21 @@ Linguagem de Programação Estruturada - Implementações
 
 
 		2020 09 16 -->> EXTERN REFERED
-		2020 09 16 -->> Função Anônima
+		2020 09 16 -->> Função Anônima Local
+		2020 09 16 -->> Função Stage -> Get () em Estagiadores
+
+
+		2020 09 17 -->> Implicit : Define e Mockiz
+		2020 09 17 -->> Implicit : Actions e Functions
+		2020 09 17 -->> DEFAULT para CAST
+
+
+		2020 09 18 -->> Pos Processamento : Tipador
+		2020 09 18 -->> Pos Processamento : Alocador
+
+
+		2020 09 19 -->> Linguagem de Montagem : MAKE
+		2020 09 19 -->> MAKE - Lexer
+		2020 09 19 -->> MAKE - Compilador
+		2020 09 19 -->> MAKE - Run
 

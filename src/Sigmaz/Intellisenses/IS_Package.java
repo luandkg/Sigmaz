@@ -1,13 +1,14 @@
 package Sigmaz.Intellisenses;
 
 import Sigmaz.Executor.Utils;
-import Sigmaz.Utils.AST;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import Sigmaz.Utils.AST;
+import Sigmaz.Utils.AST;
 
 public class IS_Package {
 

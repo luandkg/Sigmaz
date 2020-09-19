@@ -55,10 +55,10 @@ public class Item {
         return mModo;
     }
 
-    public void setValor(String eValor,RunTime eRunTime,Escopo eEscopo) {
+    public void setValor(String eValor, RunTime eRunTime, Escopo eEscopo) {
 
         if (this.getModo() == 5) {
-          //  System.out.println("SET EXTERNAMENTE -->> " + this.getNome() + " para " + this.mReferStruct + " -> " + mReferCampo);
+            //  System.out.println("SET EXTERNAMENTE -->> " + this.getNome() + " para " + this.mReferStruct + " -> " + mReferCampo);
 
             //   LEFT -> XA : STRUCT_EXTERN
             //   INTERNAL -> mValor : STRUCT_OBJECT
@@ -71,18 +71,24 @@ public class Item {
             mInternal.setValor("STRUCT_OBJECT");
 
             Run_Arrow mRun_Arrow = new Run_Arrow(eRunTime);
-            mRun_Arrow.operadorSeta(mV,eEscopo,this.getTipo()).setValor(eValor,eRunTime,eEscopo);
+            mRun_Arrow.operadorSeta(mV, eEscopo, this.getTipo()).setValor(eValor, eRunTime, eEscopo);
 
+            mValor = eValor;
+
+        } else if (this.getModo() == 6) {
+            eRunTime.getErros().add("O valor de uma CONSTANTE REFERED nao pode ser alterado : " + this.getNome() + " :: " + this.mReferStruct + "->" + this.mReferCampo);
         } else {
             mValor = eValor;
         }
 
     }
 
-    public String getValor(RunTime eRunTime,Escopo eEscopo) {
+    public String getValor(RunTime eRunTime, Escopo eEscopo) {
 
-        if (this.getModo() == 5) {
-           // System.out.println("GET EXTERNAMENTE -->> " + this.getNome() + " para " + this.mReferStruct + " -> " + mReferCampo);
+        // System.out.println("RET :: " + this.getModo() + " ->> " + this.getNome());
+
+        if (this.getModo() == 5 || this.getModo() == 6) {
+            // System.out.println("GET EXTERNAMENTE -->> " + this.getNome() + " para " + this.mReferStruct + " -> " + mReferCampo);
 
             AST mV = new AST("VALUE");
             mV.setNome(mReferStruct);
@@ -92,7 +98,10 @@ public class Item {
             mInternal.setValor("STRUCT_OBJECT");
 
             Run_Arrow mRun_Arrow = new Run_Arrow(eRunTime);
-            return  mRun_Arrow.operadorSeta(mV,eEscopo,this.getTipo()).getValor(eRunTime,eEscopo);
+            return mRun_Arrow.operadorSeta(mV, eEscopo, this.getTipo()).getValor(eRunTime, eEscopo);
+
+
+
 
         } else {
             return mValor;
@@ -151,6 +160,25 @@ public class Item {
         this.mReferStruct = eStruct;
         this.mReferCampo = eCampo;
         this.setModo(5);
+    }
+
+    public void setReferConst(String eStruct, String eCampo) {
+        this.mReferStruct = eStruct;
+        this.mReferCampo = eCampo;
+        this.setModo(6);
+    }
+
+
+    public void setImplicit(String eStruct, String eCampo) {
+        this.mReferStruct = eStruct;
+        this.mReferCampo = eCampo;
+        this.setModo(7);
+    }
+
+    public void setImplicitConst(String eStruct, String eCampo) {
+        this.mReferStruct = eStruct;
+        this.mReferCampo = eCampo;
+        this.setModo(8);
     }
 
 }

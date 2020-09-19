@@ -4,9 +4,9 @@ import Sigmaz.Executor.Alterador;
 import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
-import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class Run_Type {
 

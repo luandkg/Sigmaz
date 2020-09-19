@@ -2,12 +2,12 @@ package Sigmaz;
 
 import Sigmaz.Compilador.Compiler;
 import Sigmaz.Lexer.Token;
-import Sigmaz.Utils.Erro;
-import Sigmaz.Utils.GrupoDeComentario;
-import Sigmaz.Utils.GrupoDeErro;
 
 import java.io.File;
 import java.util.ArrayList;
+import Sigmaz.Utils.Erro;
+import Sigmaz.Utils.GrupoDeErro;
+import Sigmaz.Utils.GrupoDeComentario;
 
 public class Todos {
 
@@ -30,7 +30,7 @@ public class Todos {
 
 
         Compiler CompilerC = new Compiler();
-        CompilerC.init(eArquivo);
+        CompilerC.init(eArquivo,0);
 
         System.out.println("################# LEXER ##################");
         System.out.println("");

@@ -3,11 +3,29 @@ package Vetor {
 		init Vetor ( eTamanho : int ) {
 			if ( maior_igual ( eTamanho , 0 ) ) -> {
 				mQuantidade = 0;
-				def vazio : T = null;
+				def novo : T = null;
 				while ( menor ( mQuantidade , eTamanho ) ) -> {
 					
 					# println("Comecar Vetorizar :: ",mQuantidade);
-					adicionar ( vazio );
+
+
+							#println("Adicionando :: ",mQuantidade);
+                    			if ( isNull ( mPrimeiro ) ) -> {
+                    				mPrimeiro = init Item ( ) >> ( T );
+                    				mPrimeiro.setValor ( novo );
+                    				mUltimo = mPrimeiro;
+                    				mQuantidade = 1;
+                    			}others {
+                    				def mCorrente : Item >> ( T ) = init Item ( ) >> ( T );
+                    				mCorrente.setValor ( novo );
+                    				mUltimo.setProximo ( mCorrente );
+                    				mUltimo = mCorrente;
+                    				mQuantidade = somar ( mQuantidade , 1 );
+                    			}
+
+
+
+
 				}
 				
 			}others {
@@ -133,67 +151,29 @@ package Vetor {
 		act mostrarStruct ( ) {
 			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
 		}
-		restrict : 
-		act adicionar ( novo : T ) {
-			
-			#println("Adicionando :: ",mQuantidade);
-			if ( isNull ( mPrimeiro ) ) -> {
-				mPrimeiro = init Item ( ) >> ( T );
-				mPrimeiro.setValor ( novo );
-				mUltimo = mPrimeiro;
-				mQuantidade = 1;
-			}others {
-				def mCorrente : Item >> ( T ) = init Item ( ) >> ( T );
-				mCorrente.setValor ( novo );
-				mUltimo.setProximo ( mCorrente );
-				mUltimo = mCorrente;
-				mQuantidade = somar ( mQuantidade , 1 );
-			}
-			
-		}
 
-		act remover ( a : T ) {
-			
-			#println ( "Remover : ", a );
-			if ( isNull ( mPrimeiro ) ) -> {
-				
-			}others {
-				def mAnterior : Item >> ( T ) = null;
-				def mCorrente : Item >> ( T ) = mPrimeiro;
-				def mIndice : int = 0;
-				def mUltimoIndice : int = subtrair ( mQuantidade , 1 );
-				while ( isNull ( mCorrente ) == false ) -> {
-					if ( mCorrente.getValor ( ) == a ) -> {
-						
-						#println ( "Removendo : ", a );
-						if ( mIndice == 0 ) -> {
-							if ( mQuantidade == 1 ) -> {
-								mPrimeiro = null;
-								mUltimo = null;
-							}others {
-								mPrimeiro = mPrimeiro.getProximo ( );
-							}
-							
-						}other ( mIndice == mUltimoIndice ) -> {
-							mAnterior.setProximo ( null );
-							mUltimo = mAnterior;
-						}others {
-							mAnterior.setProximo ( mCorrente.getProximo ( ) );
-						}
-						mQuantidade = subtrair ( mQuantidade , 1 );
-						trash ( mCorrente );
-						cancel;
-					}
-					
-					#println("Passando Por : ",mCorrente.getValor());
-					mAnterior = mCorrente;
-					mCorrente = mCorrente.getProximo ( );
-					mIndice = somar ( mIndice , 1 );
-				}
-				
-			}
-			
-		}
+				act destruir ( ) {
+
+        			#println ( "QT : ", mQuantidade );
+        			if ( isNull ( mPrimeiro ) == false ) -> {
+        				def mCorrente : Item >> ( T ) = mPrimeiro;
+        				def mAnterior : Item >> ( T ) = mPrimeiro;
+        				while ( isNull ( mCorrente ) == false ) -> {
+        					mAnterior = mCorrente;
+        					mCorrente = mCorrente.getProximo ( );
+        					trash ( mAnterior );
+        					mQuantidade = subtrair ( mQuantidade , 1 );
+        				}
+        				trash ( mAnterior );
+        			}
+        			mPrimeiro = null;
+        			mUltimo = null;
+        		}
+
+		restrict : 
+
+
+
 		
 	}
 

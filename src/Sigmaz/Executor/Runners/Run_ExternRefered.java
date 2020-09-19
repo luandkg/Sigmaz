@@ -37,7 +37,7 @@ public class Run_ExternRefered {
             if (ASTC.mesmoTipo("STRUCT")) {
                 if (ASTC.mesmoNome(eStruct)) {
 
-                    System.out.println(ASTC.ImprimirArvoreDeInstrucoes());
+                    //   System.out.println(ASTC.ImprimirArvoreDeInstrucoes());
 
                     boolean campo = false;
                     for (AST eCampo : ASTC.getBranch("BODY").getASTS()) {
@@ -50,8 +50,11 @@ public class Run_ExternRefered {
                                     mRun_GetType.adicionarRefers(mEscopo.getRefersOcultas());
 
                                     String mTipagem = mRun_GetType.getTipagem(eCampo.getBranch("TYPE"));
-
-                                    mEscopo.criarExternRefered(eNome,mTipagem,eStruct,eExtern);
+                                    if (eCampo.mesmoTipo("MOCKIZ")) {
+                                        mEscopo.criarExternRefered_Const(eNome, mTipagem, eStruct, eExtern);
+                                    }else{
+                                        mEscopo.criarExternRefered(eNome, mTipagem, eStruct, eExtern);
+                                    }
 
                                     campo = true;
                                     break;
@@ -61,7 +64,7 @@ public class Run_ExternRefered {
                     }
 
                     if (!campo) {
-                        mRunTime.getErros().add("Campo Externo nao encontrado " + eExtern + " na STRUCT " + eStruct);
+                        mRunTime.getErros().add(mLocal + " - Campo Externo nao encontrado na STRUCT " + eStruct + " -> " + eExtern);
                     }
 
                     enc = true;
@@ -71,7 +74,7 @@ public class Run_ExternRefered {
         }
 
         if (!enc) {
-            mRunTime.getErros().add("STRUCT nao encontrada : " + eStruct);
+            mRunTime.getErros().add(mLocal + " - STRUCT nao encontrada : " + eStruct);
         }
 
 

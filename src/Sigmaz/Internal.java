@@ -1,7 +1,5 @@
 package Sigmaz;
 
-import Sigmaz.Utils.AST;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.font.FontRenderContext;
@@ -9,6 +7,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import Sigmaz.Utils.AST;
 
 public class Internal {
 

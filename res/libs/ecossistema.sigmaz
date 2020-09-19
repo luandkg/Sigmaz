@@ -9,7 +9,9 @@ package Ecossistema {
 		define idade : int = 0;
 		mockiz Tipo : CelulaTipos = CelulaTipos :: EUCARIONTE;
 		act setNome ( aNome : string ) {
-			
+
+
+
 		}
 
 		act setIdade ( aIdade : int ) {
@@ -19,7 +21,18 @@ package Ecossistema {
 			
 		}
 		func getIdade ( ) : int {
-			
+				  if(true) -> {
+            			    if(true) -> {
+            			        # def a : int = 0;
+            			       #  def a : int = -1;
+            			     } other ( true ) -> {
+            			       #  def b : int = 0;
+                             	# def b : int = -1;
+            			     } others {
+            			       #  def c : int = 0;
+                               # def c : int = -1;
+            			     }
+            			  }
 		}
 
 		act viver ( ) {

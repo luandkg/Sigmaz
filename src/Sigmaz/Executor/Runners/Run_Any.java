@@ -5,9 +5,9 @@ import Sigmaz.Executor.Indexador.Index_Action;
 import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
-import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class Run_Any {
 
@@ -161,6 +161,10 @@ public class Run_Any {
         String eNome = ASTCorrente.getNome();
 
         Run_Arguments mRunArguments = new Run_Arguments();
+
+      //  for (Index_Action mIndex_Function : eActions) {
+    //          System.out.println("\t - Funcao :  " +mIndex_Function.getNome());
+      //  }
 
 
         for (Index_Action mIndex_Function : eActions) {
@@ -332,6 +336,10 @@ public class Run_Any {
 
                         mItem = mPreparadorDeArgumentos.executar_FunctionGlobal(mRunTime, mIndex_Function, mArgumentos, eReturne);
                         realizada = true;
+
+                        if (mRunTime.getErros().size() > 0) {
+                            return null;
+                        }
 
                         break;
                     } else {

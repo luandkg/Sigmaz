@@ -1,5 +1,4 @@
 package Sigmaz.Executor;
-
 import Sigmaz.Utils.AST;
 
 public class Utils {

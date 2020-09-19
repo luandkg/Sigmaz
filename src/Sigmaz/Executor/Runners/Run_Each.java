@@ -2,8 +2,9 @@ package Sigmaz.Executor.Runners;
 
 import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.RunTime;
-import Sigmaz.Utils.AST;
 import Sigmaz.Executor.AST_Implementador;
+import Sigmaz.Utils.AST;
+import Sigmaz.Utils.AST;
 
 public class Run_Each {
 

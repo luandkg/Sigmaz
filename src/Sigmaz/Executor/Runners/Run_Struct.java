@@ -5,9 +5,9 @@ import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.Indexador.Index_Action;
 import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
-import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class Run_Struct {
 
@@ -22,6 +22,8 @@ public class Run_Struct {
 
     private AST mStructGeneric;
     private AST mStructCorpo;
+    private AST mStructInits;
+
     private AST mBases;
     private String mBaseado;
 
@@ -112,6 +114,7 @@ public class Run_Struct {
         mEscopo.setEstrutura(true);
 
         mStructCorpo = null;
+        mStructInits = null;
 
         mStructNome = ASTCorrente.getNome();
 
@@ -300,7 +303,7 @@ public class Run_Struct {
 
 
         mStructCorpo = mAST_Struct.getBranch("BODY").copiar();
-        AST mStructInits = mAST_Struct.getBranch("INITS").copiar();
+         mStructInits = mAST_Struct.getBranch("INITS").copiar();
 
 
         AST mBase = mAST_Struct.getBranch("BASES");
@@ -523,8 +526,8 @@ public class Run_Struct {
 
 
 
-        //System.out.println(mStructInits.ImprimirArvoreDeInstrucoes());
-        //System.out.println(mAST_Struct.ImprimirArvoreDeInstrucoes());
+    //    System.out.println(mStructInits.ImprimirArvoreDeInstrucoes());
+      //  System.out.println(mStructCorpo.ImprimirArvoreDeInstrucoes());
 
 
         if (mStructInits.getASTS().size() > 0) {

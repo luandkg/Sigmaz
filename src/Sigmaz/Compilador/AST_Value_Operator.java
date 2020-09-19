@@ -1,5 +1,4 @@
 package Sigmaz.Compilador;
-
 import Sigmaz.Utils.AST;
 
 public class AST_Value_Operator {

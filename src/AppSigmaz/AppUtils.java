@@ -2,17 +2,15 @@ package AppSigmaz;
 
 import Sigmaz.Lexer.Lexer;
 import Sigmaz.Lexer.Token;
-import Sigmaz.Lexer.TokenTipo;
 import Sigmaz.Sigmaz;
-import Sigmaz.Utils.Erro;
-import Sigmaz.Utils.GrupoDeErro;
-import Sigmaz.Utils.Identador;
 import Sigmaz.Comentarios;
 import Sigmaz.Todos;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import Sigmaz.Utils.Erro;
+import Sigmaz.Utils.Identador;
 
 public class AppUtils {
 
@@ -78,6 +76,64 @@ public class AppUtils {
 
     }
 
+    public static void COMPILAR_BIBLIOTECA(int eIndice, ArrayList<String> mArquivos, String eCompilado,boolean mostrarAST) {
+
+
+        int iContando = 0;
+        boolean enc = false;
+
+        for (String mArquivo : mArquivos) {
+            iContando += 1;
+            if (iContando == eIndice) {
+
+                enc = true;
+
+
+                Sigmaz SigmazC = new Sigmaz();
+
+                SigmazC.compilar_biblioteca(mArquivo, eCompilado, mostrarAST);
+
+
+                break;
+            }
+        }
+
+        if (!enc) {
+            System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+    }
+
+    public static void COMPILAR_EXECUTAVEL(int eIndice, ArrayList<String> mArquivos, String eCompilado,boolean mostrarAST) {
+
+
+        int iContando = 0;
+        boolean enc = false;
+
+        for (String mArquivo : mArquivos) {
+            iContando += 1;
+            if (iContando == eIndice) {
+
+                enc = true;
+
+
+                Sigmaz SigmazC = new Sigmaz();
+
+                SigmazC.compilar_executavel(mArquivo, eCompilado, mostrarAST);
+
+
+                break;
+            }
+        }
+
+        if (!enc) {
+            System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+    }
+
     public static void EXECUTAR(int eIndice, ArrayList<String> mArquivos, String eCompilado,boolean mostrarAST) {
 
 
@@ -93,10 +149,7 @@ public class AppUtils {
 
                 Sigmaz SigmazC = new Sigmaz();
 
-                SigmazC.init(mArquivo, eCompilado, mostrarAST);
-
-
-
+                SigmazC.init(mArquivo, eCompilado, mostrarAST,1);
 
 
                 break;
@@ -110,11 +163,11 @@ public class AppUtils {
 
     }
 
-    public static void MONTAR_BIBLIOTECA(String eArquivo, String eSaida) {
+    public static void MONTAR_BIBLIOTECA(String eArquivo, String eSaida,boolean mostrarAST) {
 
         Sigmaz SigmazC = new Sigmaz();
 
-        SigmazC.estrutural(eArquivo, eSaida);
+        SigmazC.estrutural(eArquivo, eSaida,mostrarAST);
 
     }
 
@@ -146,7 +199,7 @@ public class AppUtils {
     }
 
 
-    public static void ESTRUTURAL(int eIndice, ArrayList<String> mArquivos, String eSaida) {
+    public static void ESTRUTURAL(int eIndice, ArrayList<String> mArquivos, String eSaida,boolean mostrarAST) {
 
 
         int iContando = 0;
@@ -161,7 +214,7 @@ public class AppUtils {
 
                 Sigmaz SigmazC = new Sigmaz();
 
-                SigmazC.estrutural(mArquivo, eSaida);
+                SigmazC.estrutural(mArquivo, eSaida,mostrarAST);
 
                 break;
             }

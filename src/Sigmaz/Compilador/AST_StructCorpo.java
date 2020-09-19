@@ -81,6 +81,11 @@ public class AST_StructCorpo {
                 Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado :");
 
                 VISIBILIDADE = "EXTERN";
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("implicit")) {
+
+                Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado :");
+
+                VISIBILIDADE = "IMPLICIT";
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("restrict")) {
 

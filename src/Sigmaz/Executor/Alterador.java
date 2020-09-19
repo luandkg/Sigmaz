@@ -1,8 +1,7 @@
 package Sigmaz.Executor;
 
-import Sigmaz.Utils.AST;
-
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class Alterador {
 
@@ -151,9 +150,18 @@ public class Alterador {
 
                 alterar(eAST);
 
+            } else if (eAST.mesmoTipo("WHILE")) {
+
+                alterar(eAST);
+
             } else if (eAST.mesmoTipo("APPLY")) {
 
                 alterar(eAST);
+
+                if (eAST.existeBranch("VALUE")) {
+                    alterar(eAST.getBranch("VALUE"));
+                }
+
 
             } else if (eAST.mesmoTipo("VALUE")) {
 
@@ -166,9 +174,9 @@ public class Alterador {
 
                 alterarTipo(eAST);
 
-            } else if (eAST.mesmoTipo("ARGUMENTS")) {
+            } else if (eAST.mesmoTipo("GENERIC")) {
 
-                // alterar(eAST);
+                 alterar(eAST);
 
 
             } else if (eAST.mesmoTipo("FUNCTION")) {

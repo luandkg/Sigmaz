@@ -1,10 +1,9 @@
 package Sigmaz.Executor;
 
+import java.util.ArrayList;
 import Sigmaz.Utils.AST;
 import Sigmaz.Utils.Documento;
 import Sigmaz.Utils.Texto;
-
-import java.util.ArrayList;
 
 public class UML {
 

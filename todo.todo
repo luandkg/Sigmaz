@@ -76,6 +76,7 @@ note "Sigmaz" : t ( ) {
 		page "Quinta Fase" {
 			task "Anonymous" : t ;
 			task "Inferência de Tipo" : t ;
+			task "Implicitos" : i ;
 		}
 }
 note "Visualizadores" : t ( ) {

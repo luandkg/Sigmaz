@@ -1,9 +1,6 @@
 package Sigmaz.Executor.Debuggers;
 
 import Sigmaz.Executor.Escopo;
-import Sigmaz.Executor.Indexador.Index_Action;
-import Sigmaz.Executor.Indexador.Index_Function;
-import Sigmaz.Utils.AST;
 
 public class Global {
 

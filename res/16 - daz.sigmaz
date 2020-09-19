@@ -26,6 +26,7 @@ act operando ( ) {
 	}
 	println ( "Escolheu : = ", resposta );
 }
+
 act println ( a : string , b : string ) {
 	def c : num;
 	invoke terminal -> change ( ) :: c;

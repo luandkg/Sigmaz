@@ -1,10 +1,8 @@
 package Sigmaz;
 
-import Sigmaz.Utils.Documentador;
+import java.util.ArrayList;
 import Sigmaz.Utils.Documento;
 import Sigmaz.Utils.Texto;
-
-import java.util.ArrayList;
 
 public class Gerador {
 

@@ -1,13 +1,8 @@
-
 call iniciar -> operando ( );
 act operando ( ) {
-
-	invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
-
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 	def cc : num = 0.0;
 	while ( menor ( cc , 20.0 ) ) -> {
-
-
 		def ac : num = cc;
 		cc = somar ( cc , 1.0 );
 		if ( ac == 8.0 ) -> {
@@ -22,7 +17,6 @@ act operando ( ) {
 	}
 	
 }
-
 func somar ( a : num , b : num ) : num {
 	def c : num;
 	invoke math -> operator_sum_num ( a , b ) :: c;
@@ -40,7 +34,6 @@ func menor ( a : num , b : num ) : bool {
 	invoke math -> operator_less_num ( a , b ) :: c;
 	return c;
 }
-
 operator == ( a : num , b : num ) : bool {
 	def c : bool;
 	def c1 : num = a;

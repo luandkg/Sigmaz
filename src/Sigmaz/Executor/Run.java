@@ -1,10 +1,9 @@
 package Sigmaz.Executor;
 
 import Sigmaz.Executor.Runners.*;
-import Sigmaz.Utils.AST;
 
-import java.io.File;
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class Run {
 

@@ -3,9 +3,9 @@ package Sigmaz.Executor.Indexador;
 import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Executor.Runners.Run_GetType;
-import Sigmaz.Utils.AST;
 
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class Tipificador {
 

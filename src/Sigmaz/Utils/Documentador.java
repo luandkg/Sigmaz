@@ -1,9 +1,6 @@
 package Sigmaz.Utils;
 
 
-import Sigmaz.Utils.LuanDKG.LuanDKG;
-import Sigmaz.Utils.LuanDKG.Pacote;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -11,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import Sigmaz.Utils.LuanDKG.LuanDKG;
+import Sigmaz.Utils.LuanDKG.Pacote;
 
 public class Documentador {
 

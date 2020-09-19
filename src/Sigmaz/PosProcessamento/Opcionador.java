@@ -1,8 +1,7 @@
 package Sigmaz.PosProcessamento;
 
-import Sigmaz.Utils.AST;
-
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
 
 public class Opcionador {
 

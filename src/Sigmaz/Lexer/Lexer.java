@@ -1,12 +1,10 @@
 package Sigmaz.Lexer;
 
-import Sigmaz.Utils.Erro;
-import Sigmaz.Utils.Tempo;
-import Sigmaz.Utils.Texto;
-
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
+import Sigmaz.Utils.Erro;
+import Sigmaz.Utils.Texto;
+import Sigmaz.Utils.Tempo;
 
 public class Lexer {
 
@@ -235,7 +233,7 @@ public class Lexer {
                 int eInicio = mPosicao;
                 int eFim = mPosicao;
 
-                mTokens.add(new Token(TokenTipo.MENOR, "=", eInicio, eFim, mLinha));
+                mTokens.add(new Token(TokenTipo.MENOR, "<", eInicio, eFim, mLinha));
             } else if (charC.contentEquals(">") && charP.contentEquals(">")) {
                 int eInicio = mPosicao;
                 int eFim = mPosicao;
@@ -249,7 +247,7 @@ public class Lexer {
                 int eInicio = mPosicao;
                 int eFim = mPosicao;
 
-                mTokens.add(new Token(TokenTipo.MAIOR, "=", eInicio, eFim, mLinha));
+                mTokens.add(new Token(TokenTipo.MAIOR, ">", eInicio, eFim, mLinha));
 
             } else if (charC.contentEquals("#") && charP.contentEquals("#")) {
                 int eInicio = mPosicao;

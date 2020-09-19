@@ -229,12 +229,18 @@ public class Run_Body {
                 mAST.init(fAST.getBranch("VALUE"), "<<ANY>>");
 
                 // System.out.println("Retorando de Corpo -> " + mAST.getConteudo() + "  Tipo : " + mAST.getRetornoTipo());
-
+                if (mRunTime.getErros().size() > 0) {
+                    return ;
+                }
 
                 mIsNulo = mAST.getIsNulo();
                 mIsPrimitivo = mAST.getIsPrimitivo();
                 mConteudo = mAST.getConteudo();
                 mRetornoTipo = mAST.getRetornoTipo();
+
+
+                return ;
+
 
             } else if (fAST.mesmoTipo("EXECUTE")) {
 
@@ -297,6 +303,14 @@ public class Run_Body {
 
                 Run_ExecuteLocal mRun_ExecuteLocal = new Run_ExecuteLocal(mRunTime, mEscopo);
                mRun_ExecuteLocal.initSemRetorno(fAST);
+
+            } else if (fAST.mesmoTipo("IMPLICIT_REF")) {
+
+                System.out.println(fAST.ImprimirArvoreDeInstrucoes());
+
+             //   Run_Implicit mRun_Implicit = new Run_Implicit(mRunTime);
+              //  Item mRetorno = mRun_Implicit.operadorSeta(fAST, mEscopo, "<<ANY>>");
+
 
 
             } else {

@@ -1,10 +1,10 @@
 package Sigmaz.Analisador.Complementar;
 
 import Sigmaz.Analisador.Analisador;
-import Sigmaz.Utils.AST;
-import Sigmaz.Utils.ItemContador;
 
 import java.util.ArrayList;
+import Sigmaz.Utils.AST;
+import Sigmaz.Utils.ItemContador;
 
 public class Analisar_Outros {
 
@@ -242,7 +242,7 @@ public class Analisar_Outros {
 
                 } else {
 
-                    mAnalisador.getErros().add("Tipo deconhecido y3 : " + mTipo.getNome());
+                 //   mAnalisador.getErros().add("Tipo deconhecido y3 : " + mTipo.getNome());
                 }
 
             }
@@ -266,9 +266,9 @@ public class Analisar_Outros {
 
                 } else {
 
-                    mAnalisador.getErros().add("Global Tipos : " + mAnalisador_Bloco.getTipados().toString());
+                 //   mAnalisador.getErros().add("Global Tipos : " + mAnalisador_Bloco.getTipados().toString());
 
-                    mAnalisador.getErros().add("Tipo deconhecido y5 : " + mTipo.getNome());
+                   // mAnalisador.getErros().add("Tipo deconhecido y5 : " + mTipo.getNome());
                 }
 
             }

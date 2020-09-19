@@ -1,7 +1,7 @@
 call iniciar -> pular ( );
 cast pos {
 	getter a : num -> {
-		if ( menor ( a ,0 ) ) -> {
+		if ( menor ( a , 0 ) ) -> {
 			exception "Nao e possivel obter valores negativos !";
 		}
 		return a;
@@ -18,12 +18,13 @@ cast pos {
 		}
 		return b;
 	}
-		setter b : int -> {
-    		if ( menor ( b , 0 ) ) -> {
-    			exception "Nao e possivel obter valores negativos !";
-    		}
-    		return b;
-    	}
+	setter b : int -> {
+		if ( menor ( b , 0 ) ) -> {
+			exception "Nao e possivel obter valores negativos !";
+		}
+		return b;
+	}
+	
 }
 cast neg {
 	getter a : num -> {
@@ -44,14 +45,14 @@ cast neg {
 		}
 		return b;
 	}
-		setter b : int -> {
-    		if ( maior ( b , 0 ) ) -> {
-    			exception "Nao e possivel obter valores positivos !";
-    		}
-    		return b;
-    	}
+	setter b : int -> {
+		if ( maior ( b , 0 ) ) -> {
+			exception "Nao e possivel obter valores positivos !";
+		}
+		return b;
+	}
+	
 }
-
 func menor ( a : int , b : int ) : bool {
 	def c : bool;
 	invoke math -> operator_less_int ( a , b ) :: c;
@@ -59,7 +60,7 @@ func menor ( a : int , b : int ) : bool {
 }
 func menor ( a : num , b : int ) : bool {
 	def c : bool;
-	def a1 : int = int(a);
+	def a1 : int = int ( a );
 	invoke math -> operator_less_int ( a1 , b ) :: c;
 	return c;
 }
@@ -80,7 +81,7 @@ func maior ( a : num , b : num ) : bool {
 }
 func maior ( a : num , b : int ) : bool {
 	def c : bool;
-	def a1 : int = int(a);
+	def a1 : int = int ( a );
 	invoke math -> operator_great_int ( a1 , b ) :: c;
 	return c;
 }
@@ -103,37 +104,31 @@ operator == ( a : num , b : num ) : bool {
 	invoke math -> operator_equal_num ( a , b ) :: c;
 	return c;
 }
-
-func int(a : int) : int {
+func int ( a : int ) : int {
 	return a;
 }
-func int(a : num) : int {
+func int ( a : num ) : int {
 	def b : int;
 	invoke math -> operator_num_to_int ( a ) :: b;
 	return b;
 }
-
-
-func num(a : int) : num {
+func num ( a : int ) : num {
 	def b : num;
-	invoke math -> operator_int_to_num ( a  ) :: b;
+	invoke math -> operator_int_to_num ( a ) :: b;
 	return b;
 }
-
 func somar ( a : int , b : num ) : num {
 	def c : num;
-    def x : num = num(a);
+	def x : num = num ( a );
 	invoke math -> operator_sum_num ( x , b ) :: c;
 	return c;
 }
-
-func somar  ( a : num , b : int ) : num {
+func somar ( a : num , b : int ) : num {
 	def c : num;
-    def x : num = num(b);
+	def x : num = num ( b );
 	invoke math -> operator_sum_num ( a , x ) :: c;
 	return c;
 }
-
 
 act pular ( ) {
 	def P1 : pos = 13;
