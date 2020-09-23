@@ -28,12 +28,14 @@
     -> Data
     -> TempoData
     -> Lista
+    -> Vetor
     -> Iterador
     -> Unit
 
     
  ### IMPLEMENTAÇÕES
  
+    -> Controle de Fluxo : If While Step Loop
     -> Ações
     -> Funções
     -> Operadores  ++ -- ** // == !!
@@ -42,10 +44,11 @@
     -> Stages : Enumeradores
         -> valueOf
         -> nameOf
+        -> get
         -> Igualdade e Diferença
     -> Tipos Complexos : Types e Structs
     -> Orientação a Objeto : Structs
-        -> Escopo de Visibilidade : ALL, RESTRICT e EXTERN
+        -> Escopo de Visibilidade : ALL, RESTRICT , IMPLICIT e EXTERN
         -> Inicializadores
         -> Herança
         -> Polimorfismo
@@ -55,6 +58,20 @@
     -> Externos Estáticos
     -> Exceção
     -> Inferência de Tipo
+    -> Vetor
+    -> Linguagem de Montagem - MAKE
+    
+   ### FUTURAMENTE
+   
+    -> Auto    : Ações Genéricas
+    -> Functor : Funções Genéricas
+    
+  ### FERRAMENTAS
+    
+    -> MAKE         : Linguagem de Montagem
+    -> INTELLISENSE : Geração de Imagens SIGMAZ
+    -> IDENTADOR    : Sistema de correção de sintaxe
+    -> TESTS        : Sistema de testes automatizados
     
    ### BIBLIOTECA SIGMAZ
     
