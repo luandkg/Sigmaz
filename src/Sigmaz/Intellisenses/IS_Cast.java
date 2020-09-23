@@ -10,9 +10,11 @@ import Sigmaz.Utils.AST;
 public class IS_Cast {
 
     private Intellisense mIntellisense;
+    private IntellisenseTheme mIntellisenseTheme;
 
-    public IS_Cast(Intellisense eIntellisense) {
+    public IS_Cast(Intellisense eIntellisense,IntellisenseTheme eIntellisenseTheme) {
         mIntellisense = eIntellisense;
+        mIntellisenseTheme=eIntellisenseTheme;
 
     }
 
@@ -40,10 +42,13 @@ public class IS_Cast {
     public int continuar(Graphics g, AST eTudo, String eTitulo, int x, int mais, int eLargura, int altura) {
 
 
-        Color eBarra = new Color(241, 196, 15);
+     // new Color(241, 196, 15);
 
+        Color eBarra=mIntellisenseTheme.getCast();
+        Color eTexto=mIntellisenseTheme.getTexto();
+        Color eBox=mIntellisenseTheme.getBox();
 
-        g.setColor(Color.WHITE);
+        g.setColor(mIntellisenseTheme.getFundo());
         g.fillRect(x, mais,  mIntellisense.getLargura(), altura);
 
 
@@ -52,6 +57,7 @@ public class IS_Cast {
 
 
         g.setColor(Color.BLACK);
+        g.setColor(eTexto);
 
         mIntellisense.centerString(g, new Rectangle(x, mais, eLargura, 100), eTitulo, new Font("TimesRoman", Font.BOLD, 50));
 
@@ -59,15 +65,20 @@ public class IS_Cast {
         mais += 110;
 
 
-        g.setColor(Color.BLACK);
 
 
         for (AST Sub2 : eTudo.getASTS()) {
 
             if (Sub2.mesmoTipo("GETTER")) {
+
+              //  System.out.println("\t -> GETTER Y : " + mais);
+
+                g.setColor(eTexto);
+
                 String eConteudo =  eTudo.getNome() + " <<-- " + Sub2.getValor() ;
                 mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_GETTER);
                 mais += 30;
+
             }
 
         }
@@ -76,9 +87,16 @@ public class IS_Cast {
         for (AST Sub2 : eTudo.getASTS()) {
 
             if (Sub2.mesmoTipo("SETTER")) {
+
+              //  System.out.println("\t -> SETTER Y : " + mais);
+
+                g.setColor(eTexto);
+
                 String eConteudo =eTudo.getNome()+ " -->> " + Sub2.getValor();
                 mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_SETTER);
                 mais += 30;
+
+
             }
 
         }

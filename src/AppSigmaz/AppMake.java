@@ -68,7 +68,7 @@ public class AppMake {
 
     }
 
-    public static void MAKE_EXECUTAR(int eIndice, ArrayList<String> mArquivos, String eCompilado,boolean mostrarAST) {
+    public static void MAKE_EXECUTAR(int eIndice, ArrayList<String> mArquivos ) {
 
 
         int iContando = 0;
@@ -83,7 +83,7 @@ public class AppMake {
 
                 Make MakeC = new Make();
 
-                MakeC.init(mArquivo, mostrarAST);
+                MakeC.init(mArquivo, true);
 
 
 

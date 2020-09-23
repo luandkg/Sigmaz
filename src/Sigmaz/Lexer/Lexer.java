@@ -286,6 +286,16 @@ public class Lexer {
                 int eFim = mPosicao;
 
                 mTokens.add(new Token(TokenTipo.CHAVE_FECHA, "}", eInicio, eFim, mLinha));
+            } else if (charC.contentEquals("[")) {
+                int eInicio = mPosicao;
+                int eFim = mPosicao;
+
+                mTokens.add(new Token(TokenTipo.COLCHETE_ABRE, "[", eInicio, eFim, mLinha));
+            } else if (charC.contentEquals("]")) {
+                int eInicio = mPosicao;
+                int eFim = mPosicao;
+
+                mTokens.add(new Token(TokenTipo.COLCHETE_FECHA, "]", eInicio, eFim, mLinha));
             } else if (charC.contentEquals(";")) {
                 int eInicio = mPosicao;
                 int eFim = mPosicao;
@@ -331,15 +341,22 @@ public class Lexer {
     }
 
     public String ObterID() {
+
         String ret = String.valueOf(mConteudo.charAt(mIndex));
         mIndex += 1;
+        mPosicao += 1;
+
         while (Continuar()) {
             String charC = String.valueOf(mConteudo.charAt(mIndex));
 
             if (ALFANUM.contains(charC)) {
                 ret += charC;
+                mPosicao += 1;
+
             } else {
                 mIndex -= 1;
+                mPosicao -= 1;
+
                 break;
             }
             mIndex += 1;

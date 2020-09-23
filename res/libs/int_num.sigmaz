@@ -1,29 +1,22 @@
-
-
-func int(a : num) : int {
+func int ( a : num ) : int {
 	def b : int;
 	invoke math -> operator_num_to_int ( a ) :: b;
 	return b;
 }
-
-
-
-func num(a : int) : num {
+func num ( a : int ) : num {
 	def b : num;
-	invoke math -> operator_int_to_num ( a  ) :: b;
+	invoke math -> operator_int_to_num ( a ) :: b;
 	return b;
 }
-
 operator ++ ( a : int , b : num ) : num {
 	def c : num;
-    def x : num = num(a);
+	def x : num = num ( a );
 	invoke math -> operator_sum_num ( x , b ) :: c;
 	return c;
 }
-
 operator ++ ( a : num , b : int ) : num {
 	def c : num;
-    def x : num = num(b);
+	def x : num = num ( b );
 	invoke math -> operator_sum_num ( a , x ) :: c;
 	return c;
 }

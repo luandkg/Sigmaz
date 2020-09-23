@@ -1,6 +1,7 @@
 call iniciar -> operando ( );
 
 
+
 act operando ( ) {
 
     def oo : int = XA -> mValor;
@@ -66,6 +67,7 @@ struct XA {
 
         extern_refered AQUI_VALOR :: XA->mValor;
 		extern_refered AQUI_VALOR_2 ::  XA -> mValor;
+
 
 
 		AQUI_VALOR = AQUI_VALOR ++ 1;

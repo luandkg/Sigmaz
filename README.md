@@ -17,7 +17,8 @@
     
  ### TIPOS PRIMITIVOS
  
-    -> num       : Representação Numérica
+    -> int       : Representação Numérica - Inteiro
+    -> num       : Representação Numérica - Real
     -> bool      : Representação Lógica
     -> string    : Representação Textual
     

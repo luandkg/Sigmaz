@@ -1,14 +1,18 @@
 package AppSigmaz;
 
+import Sigmaz.Intellisenses.IntellisenseTheme;
 import Sigmaz.Lexer.Lexer;
 import Sigmaz.Lexer.Token;
 import Sigmaz.Sigmaz;
+import Sigmaz.Sigmaz_Fases;
+
 import Sigmaz.Comentarios;
 import Sigmaz.Todos;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+
 import Sigmaz.Utils.Erro;
 import Sigmaz.Utils.Identador;
 
@@ -48,23 +52,21 @@ public class AppUtils {
 
                     System.out.println("\n\t ERROS DE LEXICOGRAFICA : ");
 
-                        for (Erro eErro : LexerC.getErros()) {
-                            System.out.println("\t\t    ->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem()); }
+                    for (Erro eErro : LexerC.getErros()) {
+                        System.out.println("\t\t    ->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem());
+                    }
 
 
-                }else{
+                } else {
 
 
                     for (Token TokenC : LexerC.getTokens()) {
-                      System.out.println(" -->> " + TokenC.getTipo() + " = " + TokenC.getConteudo());
+                        System.out.println(" -->> " + TokenC.getTipo() + " = " + TokenC.getConteudo());
                     }
 
                 }
 
 
-
-
-
                 break;
             }
         }
@@ -76,7 +78,7 @@ public class AppUtils {
 
     }
 
-    public static void COMPILAR_BIBLIOTECA(int eIndice, ArrayList<String> mArquivos, String eCompilado,boolean mostrarAST) {
+    public static void COMPILAR_BIBLIOTECA(int eIndice, ArrayList<String> mArquivos, String eCompilado) {
 
 
         int iContando = 0;
@@ -90,8 +92,9 @@ public class AppUtils {
 
 
                 Sigmaz SigmazC = new Sigmaz();
+                SigmazC.setObject(true);
 
-                SigmazC.compilar_biblioteca(mArquivo, eCompilado, mostrarAST);
+                SigmazC.compilar_biblioteca(mArquivo, eCompilado);
 
 
                 break;
@@ -105,7 +108,7 @@ public class AppUtils {
 
     }
 
-    public static void COMPILAR_EXECUTAVEL(int eIndice, ArrayList<String> mArquivos, String eCompilado,boolean mostrarAST) {
+    public static void COMPILAR_EXECUTAVEL(int eIndice, ArrayList<String> mArquivos, String eCompilado) {
 
 
         int iContando = 0;
@@ -119,8 +122,9 @@ public class AppUtils {
 
 
                 Sigmaz SigmazC = new Sigmaz();
+                SigmazC.setObject(true);
 
-                SigmazC.compilar_executavel(mArquivo, eCompilado, mostrarAST);
+                SigmazC.compilar_executavel(mArquivo, eCompilado);
 
 
                 break;
@@ -134,7 +138,7 @@ public class AppUtils {
 
     }
 
-    public static void EXECUTAR(int eIndice, ArrayList<String> mArquivos, String eCompilado,boolean mostrarAST) {
+    public static void EXECUTAR(int eIndice, ArrayList<String> mArquivos, String eCompilado) {
 
 
         int iContando = 0;
@@ -148,8 +152,9 @@ public class AppUtils {
 
 
                 Sigmaz SigmazC = new Sigmaz();
+                SigmazC.setObject(true);
 
-                SigmazC.init(mArquivo, eCompilado, mostrarAST,1);
+                SigmazC.init(mArquivo, eCompilado, 1);
 
 
                 break;
@@ -163,11 +168,72 @@ public class AppUtils {
 
     }
 
-    public static void MONTAR_BIBLIOTECA(String eArquivo, String eSaida,boolean mostrarAST) {
+    public static void EXECUTAR_SIMPLES(int eIndice, ArrayList<String> mArquivos, String eCompilado) {
+
+
+        Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
+
+        if (mOpcional.estaValido()) {
+
+            Sigmaz SigmazC = new Sigmaz();
+
+            SigmazC.init_simples(mOpcional.getConteudo(), eCompilado, 1);
+
+
+        } else {
+            System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+    }
+
+    public static void EXECUTAR_FASES(int eIndice, ArrayList<String> mArquivos, String eCompilado) {
+
+
+        Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
+
+        if (mOpcional.estaValido()) {
+
+            Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+
+            SigmazC.mostrarDebug(false);
+
+            SigmazC.init(mOpcional.getConteudo(), eCompilado, 1);
+
+
+        } else {
+            System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+    }
+
+    public static Opcional OBTER_ARQUIVO(int eIndice, ArrayList<String> mArquivos) {
+
+
+        Opcional mOpcional = new Opcional();
+
+        int iContando = 0;
+
+        for (String mArquivo : mArquivos) {
+            iContando += 1;
+            if (iContando == eIndice) {
+
+                mOpcional.validar(mArquivo);
+
+                break;
+            }
+        }
+
+
+        return mOpcional;
+    }
+
+    public static void MONTAR_BIBLIOTECA(String eArquivo, String eSaida) {
 
         Sigmaz SigmazC = new Sigmaz();
-
-        SigmazC.estrutural(eArquivo, eSaida,mostrarAST);
+        SigmazC.setObject(true);
+        SigmazC.estrutural(eArquivo, eSaida, false);
 
     }
 
@@ -199,7 +265,7 @@ public class AppUtils {
     }
 
 
-    public static void ESTRUTURAL(int eIndice, ArrayList<String> mArquivos, String eSaida,boolean mostrarAST) {
+    public static void ESTRUTURAL(int eIndice, ArrayList<String> mArquivos, String eSaida) {
 
 
         int iContando = 0;
@@ -213,8 +279,9 @@ public class AppUtils {
 
 
                 Sigmaz SigmazC = new Sigmaz();
+                SigmazC.setObject(true);
 
-                SigmazC.estrutural(mArquivo, eSaida,mostrarAST);
+                SigmazC.estrutural(mArquivo, eSaida, true);
 
                 break;
             }
@@ -227,7 +294,7 @@ public class AppUtils {
 
     }
 
-    public static void INTERNO(int eIndice, ArrayList<String> mArquivos, String eSaida,String eLocal) {
+    public static void INTERNO(int eIndice, ArrayList<String> mArquivos, String eSaida, String eLocal) {
 
 
         int iContando = 0;
@@ -242,7 +309,7 @@ public class AppUtils {
 
                 Sigmaz SigmazC = new Sigmaz();
 
-                SigmazC.interno(mArquivo, eSaida,eLocal);
+                SigmazC.interno(mArquivo, eSaida, eLocal);
 
                 break;
             }
@@ -293,8 +360,10 @@ public class AppUtils {
 
                 enc = true;
 
+                IntellisenseTheme mIntellisenseTheme = new IntellisenseTheme();
+
                 Sigmaz SigmazC = new Sigmaz();
-                SigmazC.intellisense(mArquivo, eSaida, eGrafico);
+                SigmazC.intellisense(mArquivo, eSaida, true, mIntellisenseTheme, eGrafico);
 
                 break;
             }
@@ -309,9 +378,10 @@ public class AppUtils {
 
     public static void INTELISENSE_BIBLIOTECA(String eFonte, String eSaida, String eGrafico) {
 
+        IntellisenseTheme mIntellisenseTheme = new IntellisenseTheme();
 
         Sigmaz SigmazC = new Sigmaz();
-        SigmazC.intellisense(eFonte, eSaida, eGrafico);
+        SigmazC.intellisense(eFonte, eSaida, true, mIntellisenseTheme, eGrafico);
 
 
     }
@@ -325,7 +395,7 @@ public class AppUtils {
 
     }
 
-    public static void TESTE_GERAL(ArrayList<String> mArquivos, String eCompilado,String mLocal) {
+    public static void TESTE_GERAL(ArrayList<String> mArquivos, String eCompilado, String mLocal) {
 
         System.out.println("");
 
@@ -336,7 +406,7 @@ public class AppUtils {
             mSigmazTestes.adicionar(mArquivo);
         }
 
-        mSigmazTestes.init(mLocal);
+        mSigmazTestes.init(mLocal, "SIGMAZ - TESTES UNITARIOS");
 
     }
 

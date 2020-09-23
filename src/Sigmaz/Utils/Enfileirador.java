@@ -46,6 +46,11 @@ public class Enfileirador {
         return mFila.get(eIndex);
     }
 
+    public void terminar(){
+        mFila.clear();
+        mAdicionar.clear();
+        mRemover.clear();
+    }
 
     public void iniciar() {
 
@@ -56,6 +61,18 @@ public class Enfileirador {
         mAdicionar = new ArrayList<String>();
         mRemover = new ArrayList<String>();
         mRemovido = new ArrayList<String>();
+
+        mProcessamento += "PRE-PROCESSAMENTO \n";
+        mProcessamento += "\n";
+
+        mProcessamento += "INICIAR COM : \n";
+
+        for (String ea : mFila) {
+            mProcessamento += "\t - " + ea + "\n";
+        }
+
+        mProcessamento += "\n";
+
     }
 
     public boolean estaExecutando() {
@@ -162,9 +179,17 @@ public class Enfileirador {
         }
 
 
-        int o = this.getTamanho();
-        //i+=1;
-        mProcessamento += "\tREENFILEIRAR :: " + mAntes + " -->> " + o + "\n";
+        int mDepois = this.getTamanho();
+        String mStatus = "";
+        if (mAntes==mDepois){
+            mStatus="Constante";
+        }else if(mDepois>mAntes){
+            mStatus="Aumentando";
+        }else{
+            mStatus="Diminuindo";
+        }
+
+        mProcessamento += "\tREENFILEIRAR :: " + mStatus + " -->> " + mAntes + " -->> " + mDepois + "\n";
 
     }
 }

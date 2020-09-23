@@ -12,9 +12,11 @@ import Sigmaz.Utils.AST;
 public class IS_Sigmaz {
 
     private Intellisense mIntellisense;
+    private IntellisenseTheme mIntellisenseTheme;
 
-    public IS_Sigmaz(Intellisense eIntellisense) {
+    public IS_Sigmaz(Intellisense eIntellisense,IntellisenseTheme eIntellisenseTheme) {
         mIntellisense = eIntellisense;
+        mIntellisenseTheme=eIntellisenseTheme;
 
     }
 
@@ -28,7 +30,7 @@ public class IS_Sigmaz {
         BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
         Graphics g = img.getGraphics();
 
-        g.setColor(Color.WHITE);
+        g.setColor(mIntellisenseTheme.getFundo());
         g.fillRect(0, 0, w, h);
 
 
@@ -180,6 +182,11 @@ public class IS_Sigmaz {
 
     public void sigmaz_raiz_horizontal(String eLocal, String eTitulo, AST eTudo, int eLargura) {
 
+        Color eBarraSigmaz = mIntellisenseTheme.getSigmaz();
+        Color eTexto=mIntellisenseTheme.getTexto();
+        Color eBox=mIntellisenseTheme.getBox();
+        Color eFundo=mIntellisenseTheme.getFundo();
+
 
         int w = eLargura;
         int c = mIntellisense.getContagem(eTudo);
@@ -206,15 +213,15 @@ public class IS_Sigmaz {
         BufferedImage img = new BufferedImage(w * colunas, h, BufferedImage.TYPE_INT_ARGB);
         Graphics g = img.getGraphics();
 
-        g.setColor(Color.WHITE);
+        g.setColor(eFundo);
         g.fillRect(0, 0, w* colunas, h);
 
 
-        g.setColor(Color.RED);
+        g.setColor(eBarraSigmaz);
         g.fillRect(0, 0, w* colunas, 100);
 
 
-        g.setColor(Color.BLACK);
+        g.setColor(eTexto);
         mIntellisense.centerString(g, new Rectangle(0, 0, w * colunas, 100), eTitulo, new Font("TimesRoman", Font.BOLD, 50));
 
 
@@ -280,7 +287,7 @@ public class IS_Sigmaz {
         if (p > 0 && ne > 0) {
             mais += 70;
 
-            g.setColor(Color.BLACK);
+            g.setColor(eBox);
             g.fillRect((colunador*eLargura) + (eLargura / 4), mais, eLargura / 2, 15);
 
 
@@ -300,6 +307,8 @@ public class IS_Sigmaz {
                     mais=110;
                 }
 
+                g.setColor(eTexto);
+
                 mais = mIntellisense.algum(Sub2,g, (colunador*eLargura)+30, mais, eConteudo, mIntellisense.IMG_ACTION_ALL);
                 p2 += 1;
                 indexador += 1;
@@ -318,6 +327,7 @@ public class IS_Sigmaz {
                     colunador += 1;
                     mais=110;
                 }
+                g.setColor(eTexto);
 
                 mais = mIntellisense.algum(Sub2,g, (colunador*eLargura)+30, mais, eConteudo, mIntellisense.IMG_FUNCTION_ALL);
                 p2 += 1;
@@ -346,7 +356,7 @@ public class IS_Sigmaz {
 
             mais += 70;
 
-            g.setColor(Color.BLACK);
+            g.setColor(eBox);
             g.fillRect((colunador*eLargura) + (eLargura / 4), mais, eLargura / 2, 15);
 
         }
@@ -364,7 +374,7 @@ public class IS_Sigmaz {
                     mais=110;
                 }
 
-                g.setColor(Color.BLACK);
+                g.setColor(eTexto);
                 mIntellisense.leftString(g, new Rectangle((colunador*eLargura)+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_DIRECTOR_ALL);
 
                 mais += 30;
@@ -385,7 +395,7 @@ public class IS_Sigmaz {
                     mais=110;
                 }
 
-                g.setColor(Color.BLACK);
+                g.setColor(eTexto);
                 mIntellisense.leftString(g, new Rectangle((colunador*eLargura)+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_OPERATOR_ALL);
 
                 mais += 30;

@@ -139,7 +139,7 @@ public class Alocador {
                 AST mExtended = mAST.getBranch("EXTENDED");
                 if (mExtended.mesmoNome("STRUCT")) {
 
-                    System.out.println(eCaminho + " " +ePrefixo + "STRUCT : "+ mAST.getNome());
+                   mensagem(eCaminho + " " +ePrefixo + "STRUCT : "+ mAST.getNome());
                     checarAlocacao(eCaminho + " " +"STRUCT " + mAST.getNome() + " -> ",ePrefixo + "\t", mAST.getBranch("BODY"));
 
 

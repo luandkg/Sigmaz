@@ -60,3 +60,6 @@ Linguagem de Programação Estruturada - Alterações
 
 		2020 09 16 -->> Função Anônima
 
+
+		2020 09 22 -->> Pre Processamento
+

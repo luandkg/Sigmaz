@@ -9,10 +9,8 @@ import "strings.sigmaz";
 import "int.sigmaz";
 import "num.sigmaz";
 import "int_num.sigmaz";
-
 import "pos.sigmaz";
 import "neg.sigmaz";
-
 import "container/lista.sigmaz";
 import "container/vetor.sigmaz";
 import "container/iterador.sigmaz";
@@ -20,7 +18,6 @@ import "pacote_tempo.sigmaz";
 import "ecossistema.sigmaz";
 import "cores.sigmaz";
 import "unit.sigmaz";
-
 stages Numeros -> {
 	POSITIVO , NEGATIVO , ZERO 
 }
@@ -38,16 +35,11 @@ type Par in ( T1 , T2 ) {
 act trash ( a : any ) {
 	invoke __COMPILER__ -> OBJECT ( a ) :: REMOVE;
 }
-
-
 func isNull ( ObjetoNulo : any ) : bool {
 	def c : bool;
 	invoke casting -> cast_isnull ( ObjetoNulo ) :: c;
 	return c;
 }
-
-
-
 director ! ( a : bool ) : bool {
 	invoke casting -> inverse ( a ) :: a;
 	return a;

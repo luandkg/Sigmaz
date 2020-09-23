@@ -2,6 +2,7 @@ package Sigmaz.Executor;
 
 import Sigmaz.Executor.Runners.*;
 import Sigmaz.Intellisenses.Intellisense;
+import Sigmaz.Intellisenses.IntellisenseTheme;
 import Sigmaz.Internal;
 
 import java.io.File;
@@ -739,8 +740,10 @@ public class RunTime {
 
         limpar();
 
+        IntellisenseTheme mIntellisenseTheme = new IntellisenseTheme();
+
         Intellisense IntellisenseC = new Intellisense();
-        IntellisenseC.run(mASTS, eLocal);
+        IntellisenseC.run(mASTS,mIntellisenseTheme, eLocal);
 
     }
 

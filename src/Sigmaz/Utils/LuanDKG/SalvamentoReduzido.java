@@ -5,10 +5,14 @@ import java.util.ArrayList;
 public class SalvamentoReduzido {
 
     public String Codifica(String e) {
-        e = e.replace("@", "@A");
-        e = e.replace("'", "@S");
-        e = e.replace("\"", "@D");
-        e = e.replace("-", "@H");
+        if(e==null){
+            e= "";
+        }else{
+            e = e.replace("@", "@A");
+            e = e.replace("'", "@S");
+            e = e.replace("\"", "@D");
+            e = e.replace("-", "@H");
+        }
 
         return e;
     }

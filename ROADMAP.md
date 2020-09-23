@@ -312,4 +312,29 @@ Linguagem de Programação Estruturada - Implementações
 		2020 09 19 -->> MAKE - Lexer
 		2020 09 19 -->> MAKE - Compilador
 		2020 09 19 -->> MAKE - Run
+		2020 09 19 -->> MAKE - Make Library
+		2020 09 19 -->> MAKE - Make Executable
+
+
+		2020 09 20 -->> MAKE - Intellisense
+		2020 09 20 -->> MAKE - Tema para Intellisense
+		2020 09 20 -->> MAKE - Ident
+		2020 09 20 -->> MAKE - Tests
+		2020 09 20 -->> MAKE - AST
+		2020 09 20 -->> MAKE - SET Author
+		2020 09 20 -->> MAKE - SET Version
+		2020 09 20 -->> MAKE - SET Comppany
+		2020 09 20 -->> SIGMAZ Cabecalho
+		2020 09 20 -->> MAKE - AST
+
+
+		2020 09 22 -->> MAKE - Remove
+		2020 09 22 -->> MAKE - Dependency
+		2020 09 22 -->> MAKE - Variaveis SOURCE, BUILD e INTELLISENSE
+		2020 09 22 -->> Compilacao em Etapas
+		2020 09 22 -->> Fase Pre-Processamento
+
+
+		2020 09 23 -->> Compilador UI
+		2020 09 23 -->> Compilador em Etapas
 

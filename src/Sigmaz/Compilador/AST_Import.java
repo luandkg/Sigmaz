@@ -5,6 +5,7 @@ import Sigmaz.Lexer.TokenTipo;
 
 import java.io.File;
 import Sigmaz.Utils.AST;
+import Sigmaz.Utils.Importacao;
 
 public class AST_Import {
 
@@ -24,7 +25,7 @@ public class AST_Import {
 
             String mLocalRequisicao = mCompiler.getLocal() + TokenC.getConteudo();
 
-            mCompiler.enfileirar(mLocalRequisicao);
+            mCompiler.enfileirar(new Importacao(mCompiler.getArquivo(),mLocalRequisicao,TokenC.getLinha(),TokenC.getPosicao()));
 
           //  importarAntigo(ASTPai,mLocalRequisicao);
 
@@ -43,11 +44,11 @@ public class AST_Import {
             //System.out.println("Importando :: " + mLocalRequisicao);
 
             if (!mCompiler.getRequisitados().contains(mLocalRequisicao)) {
-                mCompiler.getRequisitados().add(mLocalRequisicao);
+              //  mCompiler.getRequisitados().add(mLocalRequisicao);
 
 
                 CompilerUnit CompilerC = new CompilerUnit();
-                CompilerC.init(mLocalRequisicao,ASTPai, mCompiler.getRequisitados());
+              //  CompilerC.init(mLocalRequisicao,ASTPai, mCompiler.getRequisitados());
 
                 mCompiler.getErros_Lexer().addAll(CompilerC.getErros_Lexer());
                 mCompiler.getErros_Compiler().addAll(CompilerC.getErros_Compiler());

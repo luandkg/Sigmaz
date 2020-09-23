@@ -3,13 +3,8 @@ package Sigmaz.Compilador;
 import java.io.File;
 import java.util.ArrayList;
 
-import Sigmaz.Utils.AST;
-import Sigmaz.Utils.GrupoDeErro;
-import Sigmaz.Utils.GrupoDeComentario;
-import Sigmaz.Utils.Enfileirador;
-import Sigmaz.Utils.Documentador;
-import Sigmaz.Utils.Documento;
-import Sigmaz.Utils.Tempo;
+import Sigmaz.PreProcessamento;
+import Sigmaz.Utils.*;
 
 public class Compiler {
 
@@ -19,6 +14,7 @@ public class Compiler {
 
     private ArrayList<String> mRequisitados;
 
+    private ArrayList<GrupoDeErro> mErros_PreProcessamento;
     private ArrayList<GrupoDeErro> mErros_Lexer;
     private ArrayList<GrupoDeErro> mErros_Compiler;
 
@@ -27,7 +23,16 @@ public class Compiler {
     private int mIChars;
     private int mITokens;
 
-    private String mProcessamento;
+    private String mPreProcessamento;
+    private String mLexer_Processamento;
+
+    private boolean mPre;
+    PreProcessamento mPreProcessador;
+    private String mPreProcessando;
+
+    private boolean mCorrentePreprocessando;
+    private boolean mCorrenteParseando;
+    private boolean mCorrenteCompilando;
 
     public Compiler() {
 
@@ -36,6 +41,7 @@ public class Compiler {
 
         mRequisitados = new ArrayList<>();
 
+        mErros_PreProcessamento = new ArrayList<>();
         mErros_Lexer = new ArrayList<>();
         mErros_Compiler = new ArrayList<>();
 
@@ -44,10 +50,24 @@ public class Compiler {
 
         mIChars = 0;
         mITokens = 0;
-        mProcessamento = "";
+        mPreProcessamento = "";
+        mLexer_Processamento = "";
+
+        mPre = false;
 
     }
 
+    public boolean getPre() {
+        return mPre;
+    }
+
+    public String getPreProcessando() {
+        return mPreProcessando;
+    }
+
+    public boolean estaPre() {
+        return mCorrentePreprocessando;
+    }
 
     public ArrayList<AST> getASTS() {
         return mASTS;
@@ -76,86 +96,195 @@ public class Compiler {
         return mRequisitados;
     }
 
-    public String getProcessamento() {
-        return mProcessamento;
+    public String getPreProcessamento() {
+        return mPreProcessamento;
+    }
+
+    public String getLexer_Processamento() {
+        return mLexer_Processamento;
     }
 
     public void init(String eArquivo, int mOpcao) {
 
 
-        AST AST_Raiz = new AST("SIGMAZ");
-        mASTS.add(AST_Raiz);
+        ArrayList<String> eArquivos = new ArrayList<String>();
+        eArquivos.add(eArquivo);
 
-
-        if (mOpcao == 1) {
-
-            AST_Raiz.criarBranch("SIGMAZ_TYPE").setNome("EXECUTABLE");
-
-        } else if (mOpcao == 2) {
-
-            AST_Raiz.criarBranch("SIGMAZ_TYPE").setNome("LIBRARY");
-
-        }
-
-
-        Enfileirador mFila = new Enfileirador();
-
-        mFila.adicionar(eArquivo);
-
-        mFila.iniciar();
-
-        while (mFila.estaExecutando()) {
-
-
-            String mLocalRequisicao = mFila.processar();
-
-            if (mLocalRequisicao != null) {
-
-
-                getRequisitados().add(mLocalRequisicao);
-
-                File arq = new File(mLocalRequisicao);
-
-
-                if (arq.exists()) {
-
-                    CompilerUnit mCompilerUnit = new CompilerUnit();
-                    mCompilerUnit.init(mLocalRequisicao, AST_Raiz, mRequisitados);
-
-                    mITokens += mCompilerUnit.getITokens();
-                    mIChars += mCompilerUnit.getIChars();
-
-
-                    for (String a : mCompilerUnit.getFila()) {
-                        mFila.momentoAdicionar(a);
-                    }
-
-
-                    getErros_Lexer().addAll(mCompilerUnit.getErros_Lexer());
-                    getErros_Compiler().addAll(mCompilerUnit.getErros_Compiler());
-                    getComentarios().addAll(mCompilerUnit.getComentarios());
-
-
-                } else {
-
-                    GrupoDeErro nG = new GrupoDeErro("SIGMAZ");
-                    nG.adicionarErro("Importacao nao encontrada : " + mLocalRequisicao, 0, 0);
-                    mErros_Compiler.add(nG);
-                    break;
-                }
-
-            }
-
-
-            mFila.organizar();
-
-
-        }
-
-        mProcessamento = mFila.getProcessamento();
+        initvarios(eArquivos, mOpcao);
 
     }
 
+    public void limpar() {
+
+        mRequisitados.clear();
+
+        mErros_PreProcessamento.clear();
+        mErros_Lexer.clear();
+        mErros_Compiler.clear();
+
+        mComentarios.clear();
+
+        mIChars = 0;
+        mITokens = 0;
+        mPreProcessamento = "";
+        mLexer_Processamento = "";
+
+    }
+
+    public void initvarios(ArrayList<String> eArquivos, int mOpcao) {
+
+        limpar();
+
+        mPre = false;
+
+        AST AST_Raiz = new AST("SIGMAZ");
+
+
+        mASTS.add(AST_Raiz);
+
+        UUID mUUIDC = new UUID();
+
+        AST_Raiz.setValor(mUUIDC.getUUID());
+
+        if (mOpcao == 1) {
+
+            AST_Raiz.setNome("EXECUTABLE");
+
+        } else if (mOpcao == 2) {
+
+            AST_Raiz.setNome("LIBRARY");
+
+        }
+
+
+        PreProcessamento mPreProcessador = new PreProcessamento();
+        mPreProcessador.init(eArquivos, AST_Raiz);
+
+        mPreProcessamento = mPreProcessador.getPreProcessamento();
+        mLexer_Processamento = mPreProcessador.getLexer_Processamento();
+
+        mIChars = mPreProcessador.getIChars();
+        mITokens = mPreProcessador.getITokens();
+
+
+        for (String mRequisicao : mPreProcessador.getRequisitados()) {
+            mRequisitados.add(mRequisicao);
+        }
+
+        for (GrupoDeComentario mGrupoDeComentario : mPreProcessador.getComentarios()) {
+            mComentarios.add(mGrupoDeComentario);
+        }
+
+        for (GrupoDeErro mGrupoDeErro : mPreProcessador.getErros_Processamento()) {
+            mErros_PreProcessamento.add(mGrupoDeErro);
+        }
+
+        for (GrupoDeErro mGrupoDeErro : mPreProcessador.getErros_Lexer()) {
+            mErros_Lexer.add(mGrupoDeErro);
+        }
+
+
+        for (GrupoDeErro mGrupoDeErro : mPreProcessador.getErros_Compiler()) {
+            mErros_Compiler.add(mGrupoDeErro);
+        }
+
+    }
+
+
+    public void initPreProcessamento(String eArquivo, int mOpcao) {
+
+        mPre = false;
+        mPreProcessando="";
+
+        ArrayList<String> eArquivos = new ArrayList<String>();
+        eArquivos.add(eArquivo);
+
+        initprevarios(eArquivos, mOpcao);
+
+    }
+
+
+    public void initprevarios(ArrayList<String> eArquivos, int mOpcao) {
+
+        limpar();
+
+        mPre = false;
+
+        AST AST_Raiz = new AST("SIGMAZ");
+
+
+        mASTS.add(AST_Raiz);
+
+        UUID mUUIDC = new UUID();
+
+        AST_Raiz.setValor(mUUIDC.getUUID());
+
+        if (mOpcao == 1) {
+
+            AST_Raiz.setNome("EXECUTABLE");
+
+        } else if (mOpcao == 2) {
+
+            AST_Raiz.setNome("LIBRARY");
+
+        }
+
+
+        mPreProcessador = new PreProcessamento();
+        mPreProcessador.initPassos(eArquivos, AST_Raiz);
+        mPreProcessando=mPreProcessador.getProcessando();
+
+
+    }
+
+
+    public void continuarPreProcessamento() {
+
+        if (mPreProcessador.getTerminou()) {
+
+            mPre = true;
+
+            mPreProcessamento = mPreProcessador.getPreProcessamento();
+            mLexer_Processamento = mPreProcessador.getLexer_Processamento();
+
+            mIChars = mPreProcessador.getIChars();
+            mITokens = mPreProcessador.getITokens();
+
+
+            for (String mRequisicao : mPreProcessador.getRequisitados()) {
+                mRequisitados.add(mRequisicao);
+            }
+
+            for (GrupoDeComentario mGrupoDeComentario : mPreProcessador.getComentarios()) {
+                mComentarios.add(mGrupoDeComentario);
+            }
+
+            for (GrupoDeErro mGrupoDeErro : mPreProcessador.getErros_Processamento()) {
+                mErros_PreProcessamento.add(mGrupoDeErro);
+            }
+
+            for (GrupoDeErro mGrupoDeErro : mPreProcessador.getErros_Lexer()) {
+                mErros_Lexer.add(mGrupoDeErro);
+            }
+
+
+            for (GrupoDeErro mGrupoDeErro : mPreProcessador.getErros_Compiler()) {
+                mErros_Compiler.add(mGrupoDeErro);
+            }
+
+        } else {
+
+            mPreProcessador.continuar();
+            mPreProcessando=mPreProcessador.getProcessando();
+
+            mCorrentePreprocessando=mPreProcessador.estaPreProcessando();
+            mCorrenteParseando=mPreProcessador.estaParseando();
+            mCorrenteCompilando=mPreProcessador.estaCompilando();
+
+        }
+
+
+    }
 
     public void Compilar(String eArquivo) {
 
@@ -166,6 +295,9 @@ public class Compiler {
 
     }
 
+    public ArrayList<GrupoDeErro> getErros_PreProcessamento() {
+        return mErros_PreProcessamento;
+    }
 
     public ArrayList<GrupoDeErro> getErros_Lexer() {
         return mErros_Lexer;
@@ -239,5 +371,16 @@ public class Compiler {
         return e;
     }
 
+    public boolean estaPreProcessando() {
+        return mCorrentePreprocessando;
+    }
+
+    public boolean estaParseando() {
+        return mCorrenteParseando;
+    }
+
+    public boolean estaCompilando() {
+        return mCorrenteCompilando;
+    }
 
 }

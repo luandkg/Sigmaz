@@ -69,19 +69,13 @@ package Lista {
 		}
 
 		act listar ( ) {
-
 			invoke __COMPILER__ -> STRUCTS ( ) :: INSTANCES;
-
-
 			if ( isNull ( mPrimeiro ) == false ) -> {
 				def mCorrente : Item >> ( T ) = mPrimeiro;
 				while ( isNull ( mCorrente ) == false ) -> {
 					println ( " - Valor : ", mCorrente.getValor ( ) );
 					mCorrente = mCorrente.getProximo ( );
-
 					println ( " - Prox : ", isNull ( mCorrente ) );
-
-
 				}
 				println ( " - Saindo ");
 			}
@@ -105,7 +99,6 @@ package Lista {
 			mPrimeiro = null;
 			mUltimo = null;
 		}
-
 		func getValor ( indice : int ) : T {
 			def ret : T = null;
 			if ( maior_igual ( indice , 0 ) ) -> {

@@ -1,68 +1,85 @@
+package Ecologia {
+	struct Especie {
+		define especie : string;
+	}
 
-package Ecologia{
+	struct Organismo with Especie {
+		define nome : string;
+		define idade : int;
+		init Organismo ( ) -> Especie ( ) {
+			
+		}
 
-    struct Especie{
+		act viver ( ) {
+			
+		}
 
-        define especie : string;
+		act morrer ( ) {
+			
+		}
+		func getNome ( ) : string {
+			return nome;
+		}
+		func getIdade ( ) : int {
+			return idade;
+		}
 
+		act setNome ( eNome : string ) {
+			nome = eNome;
+		}
 
-    }
+		act setIdade ( eIdade : int ) {
+			idade = eIdade;
+		}
+		
+	}
 
-    struct Organismo with Especie {
+	struct Gato with Organismo {
+		define velocidade : num;
+		define velocidadeMax : num;
+		mockiz idadeMax : int;
+		init Gato ( eNome : string , eIdade : int ) -> Organismo ( ) {
+			especie = "GATO";
+			nome = eNome;
+			idade = eIdade;
+		}
+		func getVelocidade ( ) : num {
+			return velocidade;
+		}
+		func getVelocidadeMax ( ) : num {
+			return velocidadeMax;
+		}
+		func getIdadeMax ( ) : int {
+			return idadeMax;
+		}
 
-        define nome : string;
-        define idade : int;
+		act setVelocidade ( eVelocidade : num ) {
+			velocidade = eVelocidade;
+		}
 
-        init Organismo () -> Especie() {}
+		act setVelocidadeMax ( eVelocidadeMax : num ) {
+			velocidadeMax = eVelocidadeMax;
+		}
 
-         act viver(){}
-         act morrer(){}
+		act setIdadeMax ( eIdadeMax : int ) {
+			idadeMax = eIdadeMax;
+		}
+		
+	}
 
-         func getNome() : string {return nome;}
-         func getIdade() : int {return idade;}
+	struct SuperGato with Gato {
+		define velocidadeSuper : num;
+		init SuperGato ( eNome : string , eIdade : int ) -> Gato ( eNome , eIdade ) {
+			especie = "SUPERGATO";
+		}
 
-         act setNome(eNome:string) { nome=eNome;}
-         act setIdade(eIdade:int) { idade=eIdade;}
-
-    }
-
-
-
-    struct Gato with Organismo {
-
-        define velocidade : num;
-        define velocidadeMax : num;
-        mockiz idadeMax : int;
-
-        init Gato(eNome:string,eIdade:int) -> Organismo() {
-            especie="GATO";
-            nome=eNome;
-            idade=eIdade;
-        }
-
-        func getVelocidade() : num {return velocidade;}
-        func getVelocidadeMax() : num {return velocidadeMax;}
-        func getIdadeMax() : int {return idadeMax;}
-
-         act setVelocidade(eVelocidade:num) { velocidade=eVelocidade;}
-         act setVelocidadeMax(eVelocidadeMax:num) { velocidadeMax=eVelocidadeMax;}
-         act setIdadeMax(eIdadeMax:int) { idadeMax=eIdadeMax;}
-
-    }
-
-  struct SuperGato with Gato {
-
-        define velocidadeSuper : num;
-
-        init SuperGato(eNome:string,eIdade:int) -> Gato(eNome,eIdade) {
-            especie="SUPERGATO";
-        }
-
-        act setVelocidadeSuper(eVelocidadeSuper:num) { velocidadeSuper=eVelocidadeSuper;}
-        func getVelocidadeSuper() : num {return velocidadeSuper;}
-
-    }
-
-
-
+		act setVelocidadeSuper ( eVelocidadeSuper : num ) {
+			velocidadeSuper = eVelocidadeSuper;
+		}
+		func getVelocidadeSuper ( ) : num {
+			return velocidadeSuper;
+		}
+		
+	}
+	
 }

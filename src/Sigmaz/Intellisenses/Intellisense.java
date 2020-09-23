@@ -96,15 +96,15 @@ public class Intellisense {
         return eLargura;
     }
 
-    public void run(ArrayList<AST> eASTS, String eLocal) {
+    public void run(ArrayList<AST> eASTS,IntellisenseTheme mIntellisenseTheme, String eLocal) {
 
 
         for (AST ASTCGlobal : eASTS) {
 
             if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
 
-                IS_Sigmaz mISig = new IS_Sigmaz(this);
-                IS_Package mIP = new IS_Package(this);
+                IS_Sigmaz mISig = new IS_Sigmaz(this,mIntellisenseTheme);
+                IS_Package mIP = new IS_Package(this,mIntellisenseTheme);
 
               //  mISig.sigmaz_raiz(eLocal, "SIGMAZ_1", ASTCGlobal, eLargura);
 
@@ -130,18 +130,18 @@ public class Intellisense {
 
                             if (Sub3.mesmoTipo("TYPE")) {
 
-                                IS_Struct mIS = new IS_Struct(this);
+                                IS_Struct mIS = new IS_Struct(this,mIntellisenseTheme);
 
                                 //    mIT.sigmaz_type(eLocal, Pacote.getNome() + "." + Sub3.getNome(), Sub3,eLargura);
 
                             } else if (Sub3.mesmoTipo("STRUCT")) {
 
-                                IS_Struct mIS = new IS_Struct(this);
+                                IS_Struct mIS = new IS_Struct(this,mIntellisenseTheme);
 
                                 //  mIS.sigmaz_estrutura(eLocal, Pacote.getNome() + "." + Sub3.getNome(), Sub3,eLargura);
                             } else if (Sub3.mesmoTipo("CAST")) {
 
-                                IS_Cast mIS = new IS_Cast(this);
+                                IS_Cast mIS = new IS_Cast(this,mIntellisenseTheme);
 
                                 //   mIS.sigmaz_cast(eLocal, Pacote.getNome() + "." + Sub3.getNome(), Sub3,eLargura);
 
@@ -152,25 +152,25 @@ public class Intellisense {
                         }
                     } else if (Pacote.mesmoTipo("STRUCT")) {
 
-                        IS_Struct mIS = new IS_Struct(this);
+                        IS_Struct mIS = new IS_Struct(this,mIntellisenseTheme);
 
                    //     mIS.sigmaz_estrutura(eLocal, "GLOBAL SIGMAZ - " + Pacote.getNome(), Pacote, eLargura);
 
                     } else if (Pacote.mesmoTipo("TYPE")) {
 
-                        IS_Struct mIS = new IS_Struct(this);
+                        IS_Struct mIS = new IS_Struct(this,mIntellisenseTheme);
 
                      //   mIT.sigmaz_type(eLocal, "GLOBAL SIGMAZ - " + Pacote.getNome(), Pacote, eLargura);
 
                     } else if (Pacote.mesmoTipo("CAST")) {
 
-                        IS_Cast mIC = new IS_Cast(this);
+                        IS_Cast mIC = new IS_Cast(this,mIntellisenseTheme);
 
                       //  mIC.sigmaz_cast(eLocal, "GLOBAL SIGMAZ - " + Pacote.getNome(), Pacote, eLargura);
 
                     } else if (Pacote.mesmoTipo("MODEL")) {
 
-                        IS_Model mIC = new IS_Model(this);
+                        IS_Model mIC = new IS_Model(this,mIntellisenseTheme);
 
                      //   mIC.model(eLocal, "GLOBAL SIGMAZ - " + Pacote.getNome(), Pacote, eLargura);
 
@@ -511,8 +511,7 @@ public class Intellisense {
     }
 
 
-    public void centerString(Graphics g, Rectangle r, String s,
-                             Font font) {
+    public void centerString(Graphics g, Rectangle r, String s, Font font) {
         FontRenderContext frc =
                 new FontRenderContext(null, true, true);
 
@@ -529,8 +528,7 @@ public class Intellisense {
         g.drawString(s, r.x + a, r.y + b);
     }
 
-    public void leftString(Graphics g, Rectangle r, String s,
-                           Font font, BufferedImage ePino) {
+    public void leftString(Graphics g, Rectangle r, String s, Font font, BufferedImage ePino) {
         FontRenderContext frc =
                 new FontRenderContext(null, true, true);
 
@@ -551,8 +549,7 @@ public class Intellisense {
         g.drawString(s, r.x + 40, r.y + b);
     }
 
-    public void leftString(Graphics g, Rectangle r, String s,
-                           Font font) {
+    public void leftString(Graphics g, Rectangle r, String s, Font font) {
         FontRenderContext frc =
                 new FontRenderContext(null, true, true);
 
@@ -569,4 +566,5 @@ public class Intellisense {
         g.setFont(font);
         g.drawString(s, r.x + 20, r.y + b);
     }
+
 }

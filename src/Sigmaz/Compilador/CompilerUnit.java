@@ -6,10 +6,8 @@ import Sigmaz.Lexer.TokenTipo;
 
 import java.io.File;
 import java.util.ArrayList;
-import Sigmaz.Utils.AST;
-import Sigmaz.Utils.GrupoDeErro;
-import Sigmaz.Utils.GrupoDeComentario;
-import Sigmaz.Utils.Erro;
+
+import Sigmaz.Utils.*;
 import Sigmaz.Utils.GrupoDeErro;
 
 public class CompilerUnit {
@@ -23,7 +21,7 @@ public class CompilerUnit {
     private ArrayList<GrupoDeErro> mErros_Lexer;
     private ArrayList<GrupoDeErro> mErros_Compiler;
 
-    private ArrayList<String> mRequisitados;
+    private ArrayList<Importacao> mRequisitados;
 
     private ArrayList<GrupoDeComentario> mComentarios;
 
@@ -39,7 +37,7 @@ public class CompilerUnit {
     private int mFim = 0;
     private int mLinha = 0;
 
-    private ArrayList<String> mFila;
+    private ArrayList<Importacao> mFila;
 
     public CompilerUnit() {
 
@@ -51,7 +49,7 @@ public class CompilerUnit {
         mIChars = 0;
         mITokens = 0;
 
-        mFila = new ArrayList<String>();
+        mFila = new ArrayList<Importacao>();
 
         mTokens = new ArrayList<>();
         mASTS = new ArrayList<>();
@@ -63,12 +61,16 @@ public class CompilerUnit {
         mComentarios = new ArrayList<>();
     }
 
+    public String getArquivo() {
+        return mArquivo;
+    }
 
-    public void init(String eArquivo,AST AST_Raiz,ArrayList<String> eRequisitados) {
+
+    public void limpar() {
 
         mIndex = 0;
 
-        mArquivo = eArquivo;
+        mArquivo = "";
         mTokens.clear();
         mASTS.clear();
         mErros_Lexer.clear();
@@ -79,7 +81,28 @@ public class CompilerUnit {
         mITokens = 0;
         mComentarios.clear();
 
-        mRequisitados=eRequisitados;
+    }
+
+
+    public void init(String eArquivo, AST AST_Raiz, ArrayList<String> eRequisitados) {
+
+        primeitaParte(eArquivo, eRequisitados);
+
+        segundaParte(AST_Raiz);
+
+    }
+
+
+    public void primeitaParte(String eArquivo, ArrayList<String> eRequisitados) {
+
+        limpar();
+
+        mArquivo = eArquivo;
+
+
+        for (String eReq : eRequisitados) {
+            mRequisitados.add(new Importacao("SIGMAZ", eReq, 0, 0));
+        }
 
         Lexer LexerC = new Lexer();
 
@@ -110,15 +133,20 @@ public class CompilerUnit {
         File arq = new File(eArquivo);
         mLocal = arq.getParent() + "/";
 
+    }
+
+    public void segundaParte(AST AST_Raiz) {
+
         compilando(AST_Raiz);
 
     }
 
-    public void enfileirar(String eArquivo) {
-        mFila.add(eArquivo);
+
+    public void enfileirar(Importacao eImportacao) {
+        mFila.add(eImportacao);
     }
 
-    public ArrayList<String> getFila() {
+    public ArrayList<Importacao> getFila() {
         return mFila;
     }
 
@@ -229,7 +257,7 @@ public class CompilerUnit {
         return mErros_Compiler;
     }
 
-    public ArrayList<String> getRequisitados() {
+    public ArrayList<Importacao> getRequisitados() {
         return mRequisitados;
     }
 
@@ -357,6 +385,10 @@ public class CompilerUnit {
                 return;
             }
 
+            if (mErros_Compiler.size() > 0) {
+                return;
+            }
+
             Proximo();
         }
 
@@ -452,5 +484,6 @@ public class CompilerUnit {
             mErros_Compiler.add(nG);
         }
     }
+
 
 }

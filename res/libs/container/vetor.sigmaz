@@ -7,25 +7,21 @@ package Vetor {
 				while ( menor ( mQuantidade , eTamanho ) ) -> {
 					
 					# println("Comecar Vetorizar :: ",mQuantidade);
-
-
-							#println("Adicionando :: ",mQuantidade);
-                    			if ( isNull ( mPrimeiro ) ) -> {
-                    				mPrimeiro = init Item ( ) >> ( T );
-                    				mPrimeiro.setValor ( novo );
-                    				mUltimo = mPrimeiro;
-                    				mQuantidade = 1;
-                    			}others {
-                    				def mCorrente : Item >> ( T ) = init Item ( ) >> ( T );
-                    				mCorrente.setValor ( novo );
-                    				mUltimo.setProximo ( mCorrente );
-                    				mUltimo = mCorrente;
-                    				mQuantidade = somar ( mQuantidade , 1 );
-                    			}
-
-
-
-
+					
+					#println("Adicionando :: ",mQuantidade);
+					if ( isNull ( mPrimeiro ) ) -> {
+						mPrimeiro = init Item ( ) >> ( T );
+						mPrimeiro.setValor ( novo );
+						mUltimo = mPrimeiro;
+						mQuantidade = 1;
+					}others {
+						def mCorrente : Item >> ( T ) = init Item ( ) >> ( T );
+						mCorrente.setValor ( novo );
+						mUltimo.setProximo ( mCorrente );
+						mUltimo = mCorrente;
+						mQuantidade = somar ( mQuantidade , 1 );
+					}
+					
 				}
 				
 			}others {
@@ -152,28 +148,24 @@ package Vetor {
 			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
 		}
 
-				act destruir ( ) {
-
-        			#println ( "QT : ", mQuantidade );
-        			if ( isNull ( mPrimeiro ) == false ) -> {
-        				def mCorrente : Item >> ( T ) = mPrimeiro;
-        				def mAnterior : Item >> ( T ) = mPrimeiro;
-        				while ( isNull ( mCorrente ) == false ) -> {
-        					mAnterior = mCorrente;
-        					mCorrente = mCorrente.getProximo ( );
-        					trash ( mAnterior );
-        					mQuantidade = subtrair ( mQuantidade , 1 );
-        				}
-        				trash ( mAnterior );
-        			}
-        			mPrimeiro = null;
-        			mUltimo = null;
-        		}
-
+		act destruir ( ) {
+			
+			#println ( "QT : ", mQuantidade );
+			if ( isNull ( mPrimeiro ) == false ) -> {
+				def mCorrente : Item >> ( T ) = mPrimeiro;
+				def mAnterior : Item >> ( T ) = mPrimeiro;
+				while ( isNull ( mCorrente ) == false ) -> {
+					mAnterior = mCorrente;
+					mCorrente = mCorrente.getProximo ( );
+					trash ( mAnterior );
+					mQuantidade = subtrair ( mQuantidade , 1 );
+				}
+				trash ( mAnterior );
+			}
+			mPrimeiro = null;
+			mUltimo = null;
+		}
 		restrict : 
-
-
-
 		
 	}
 

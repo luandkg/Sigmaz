@@ -3,6 +3,7 @@ package AppSigmaz;
 import Sigmaz.Analisador.Analisador;
 import Sigmaz.Compilador.Compiler;
 import Sigmaz.Executor.RunTime;
+import Sigmaz.PosProcessamento.Cabecalho;
 import Sigmaz.PosProcessamento.PosProcessador;
 
 import java.text.DecimalFormat;
@@ -16,11 +17,13 @@ public class SigmazTestes {
 
     private ArrayList<String> mArquivos;
     private String mSaida;
+    private Cabecalho mCabecalho;
 
     public SigmazTestes() {
 
         mArquivos = new ArrayList<String>();
         mSaida = "Compiled.sigmad";
+        mCabecalho = new Cabecalho();
 
     }
 
@@ -32,10 +35,10 @@ public class SigmazTestes {
         mArquivos.add(eArquivo);
     }
 
-    public void init(String mLocal) {
+    public void init(String mLocal,String eTitulo) {
 
 
-        System.out.println("################ SIGMAZ - TESTES UNITARIOS ################");
+        System.out.println("################ " + eTitulo + " ################");
 
 
         String DDI = getData();
@@ -84,7 +87,7 @@ public class SigmazTestes {
 
                         PosProcessador PosProcessadorC = new PosProcessador();
 
-                        PosProcessadorC.init(CompilerC.getASTS(), mLocal);
+                        PosProcessadorC.init(mCabecalho,CompilerC.getASTS(), mLocal);
 
                         if (PosProcessadorC.getErros().size()==0){
 

@@ -1,40 +1,40 @@
 
 #   COMPARATORS
-
 func operador_e ( a : bool , b : bool ) : bool {
 	def c : bool = false;
-	if(a==true) -> {
-	    if(b==true) -> {c = true;}
+	if ( a == true ) -> {
+		if ( b == true ) -> {
+			c = true;
+		}
+		
 	}
 	return c;
 }
-
 func operador_ou ( a : bool , b : bool ) : bool {
 	def c : bool = false;
-	if(a==true) -> {c = true;}
-	if(b==true) -> {c = true;}
+	if ( a == true ) -> {
+		c = true;
+	}
+	if ( b == true ) -> {
+		c = true;
+	}
 	return c;
 }
-
-
 func igual ( a : bool , b : bool ) : bool {
 	def c : bool;
 	invoke math -> operator_match ( a , b ) :: c;
 	return c;
 }
-
 func diferente ( a : bool , b : bool ) : bool {
 	def c : bool;
 	invoke math -> operator_unmatch ( a , b ) :: c;
 	return c;
 }
-
 operator == ( a : bool , b : bool ) : bool {
 	def c : bool;
 	invoke math -> operator_match ( a , b ) :: c;
 	return c;
 }
-
 operator !! ( a : bool , b : bool ) : bool {
 	def c : bool;
 	invoke math -> operator_unmatch ( a , b ) :: c;

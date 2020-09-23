@@ -1,17 +1,13 @@
 
 # OPERADORES num
-
-func num(a : num) : num {
+func num ( a : num ) : num {
 	return a;
 }
-
-
 operator ++ ( a : num , b : num ) : num {
 	def c : num;
 	invoke math -> operator_sum_num ( a , b ) :: c;
 	return c;
 }
-
 operator -- ( a : num , b : num ) : num {
 	def c : num;
 	invoke math -> operator_sub_num ( a , b ) :: c;
@@ -27,8 +23,6 @@ operator // ( a : num , b : num ) : num {
 	invoke math -> operator_div_num ( a , b ) :: c;
 	return c;
 }
-
-
 operator == ( a : num , b : num ) : bool {
 	def c : bool;
 	def c1 : num = a;
@@ -47,8 +41,6 @@ director ! ( a : num ) : num {
 	def b : num = a ++ num ( ( -1 ) );
 	return b;
 }
-
-
 func somar ( a : num , b : num ) : num {
 	def c1 : num = null;
 	def a1 : num = a;
@@ -57,7 +49,6 @@ func somar ( a : num , b : num ) : num {
 	def c : num = c1;
 	return c;
 }
-
 func subtrair ( a : num , b : num ) : num {
 	def c1 : num = null;
 	def a1 : num = a;
@@ -82,15 +73,11 @@ func dividir ( a : num , b : num ) : num {
 	def c : num = c1;
 	return c;
 }
-
 func resto ( a : num , b : num ) : num {
 	def c : num;
-	invoke math -> operator_mod_num( a , b ) :: c;
+	invoke math -> operator_mod_num ( a , b ) :: c;
 	return c;
 }
-
-
-
 func menor ( a : num , b : num ) : bool {
 	def c : bool;
 	def a1 : num = a;

@@ -1,8 +1,6 @@
 package Make;
 
-import Make.Run.Run;
-import Sigmaz.Executor.RunTime;
-import Sigmaz.Lexer.Token;
+import Make.Run.RunMake;
 import Sigmaz.Utils.Erro;
 import Sigmaz.Utils.GrupoDeErro;
 
@@ -60,7 +58,7 @@ public class Make {
             if (mostrarAST){
 
 
-                System.out.println(CompilerC.getAST().ImprimirArvoreDeInstrucoes());
+               // System.out.println(CompilerC.getAST().ImprimirArvoreDeInstrucoes());
 
 
             }
@@ -108,7 +106,7 @@ public class Make {
 
 
             System.out.println("");
-            System.out.println("################ RUNTIME ################");
+            System.out.println("################ RUNTIME MAKE ################");
             System.out.println("");
             System.out.println("\t - Executando : " + eArquivo);
             System.out.println("");
@@ -120,13 +118,13 @@ public class Make {
             String mLocal = arq.getParent() + "/";
 
 
-            Run RunC = new Run();
-            String DI = RunC.getData().toString();
+            RunMake runMakeC = new RunMake();
+            String DI = runMakeC.getData().toString();
 
 
-            RunC.init(CompilerC.getAST());
+            runMakeC.init(CompilerC.getAST());
 
-            System.out.println("\t - Instrucoes : " + RunC.getInstrucoes());
+            System.out.println("\t - Instrucoes : " + runMakeC.getInstrucoes());
             System.out.println("");
 
 
@@ -135,23 +133,23 @@ public class Make {
             System.out.println("");
             System.out.println("----------------------------------------------");
 
-            RunC.run(mLocal);
+            runMakeC.run(mLocal);
 
             System.out.println("");
             System.out.println("----------------------------------------------");
             System.out.println("");
 
-            String DF = RunC.getData();
+            String DF = runMakeC.getData();
 
             System.out.println("\t - Iniciado : " + DI);
             System.out.println("\t - Finalizado : " + DF);
 
-            System.out.println("\t - Erros : " + RunC.getErros().size());
+            System.out.println("\t - Erros : " + runMakeC.getErros().size());
 
-            if (RunC.getErros().size() > 0) {
+            if (runMakeC.getErros().size() > 0) {
                 System.out.println("\n\t ERROS DE EXECUCAO : ");
 
-                for (String Erro : RunC.getErros()) {
+                for (String Erro : runMakeC.getErros()) {
                     System.out.println("\t\t" + Erro);
                 }
             }

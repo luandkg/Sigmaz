@@ -1,18 +1,19 @@
 package AppSigmaz;
 
+import AppUI.App.SigmazCompilador;
+import AppUI.Mottum.Windows;
 import OA.*;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
-import Sigmaz.Gerador;
 
 public class AppSigmaz {
 
     public static void main(String[] args) {
 
 
-       //  Gerador G = new Gerador();
+        //  Gerador G = new Gerador();
         // G.gerarPrint("res/libs/terminal.sigmaz");
 
         AUTO();
@@ -22,30 +23,33 @@ public class AppSigmaz {
         ArrayList<String> mBibliotecas = Carregadores.Carregar_Bibliotecas();
         ArrayList<String> mMakes = Carregadores.Carregar_Makes();
 
-        String mCompilado = "res/Sigmaz.sigmad";
+        String mCompilado = "res/build/Sigmaz.sigmad";
+
         String mBiblioteca_Fonte = "res/libs/lib.sigmaz";
-        String mBiblioteca_Sigmad = "res/lib.sigmad";
+        String mBiblioteca_Sigmad = "res/build/lib.sigmad";
+
 
         String mUML = "res/uml/uml.txt";
         String mIntellisense = "res/intellisenses/";
         String mInternos = "res/internos/";
         String mLocal = "res/";
 
-        boolean mostrarAST = true;
 
-        int ARQUIVO = 1;
+        int ARQUIVO = 73;
 
-        switch (Fases.MAKE_EXECUTAR) {
+        switch (Fases.APP) {
 
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
-            case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos, mCompilado,mostrarAST);
+            case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos, mCompilado);
             case INTERNO -> AppUtils.INTERNO(ARQUIVO, mArquivos, mCompilado, mInternos);
 
 
-            case COMPILAR_BIBLIOTECA -> AppUtils.COMPILAR_BIBLIOTECA(ARQUIVO, mArquivos, mCompilado,mostrarAST);
-            case COMPILAR_EXECUTAVEL -> AppUtils.COMPILAR_EXECUTAVEL(ARQUIVO, mArquivos, mCompilado,mostrarAST);
+            case COMPILAR_BIBLIOTECA -> AppUtils.COMPILAR_BIBLIOTECA(ARQUIVO, mArquivos, mCompilado);
+            case COMPILAR_EXECUTAVEL -> AppUtils.COMPILAR_EXECUTAVEL(ARQUIVO, mArquivos, mCompilado);
 
-            case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado,mostrarAST);
+            case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
+            case EXECUTAR_SIMPLES -> AppUtils.EXECUTAR_SIMPLES(ARQUIVO, mArquivos, mCompilado);
+            case EXECUTAR_FASES -> AppUtils.EXECUTAR_FASES(ARQUIVO, mArquivos, mCompilado);
 
 
             case TESTES -> AppUtils.TESTE_GERAL(mArquivos, mCompilado, mLocal);
@@ -54,7 +58,7 @@ public class AppSigmaz {
             case IDENTAR_TUDO -> AppUtils.IDENTAR_LOTE("ARQUIVOS", mArquivos);
             case IDENTAR_BIBLIOTECAS -> AppUtils.IDENTAR_LOTE("BIBLIOTECAS", mBibliotecas);
 
-            case MONTAR_BIBLIOTECAS -> AppUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad,mostrarAST);
+            case MONTAR_BIBLIOTECAS -> AppUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad);
 
             case INTELLISENSE -> AppUtils.INTELISENSE(ARQUIVO, mArquivos, mCompilado, mIntellisense);
             case INTELLISENSE_BIBLIOTECA -> AppUtils.INTELISENSE_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad, mIntellisense);
@@ -64,11 +68,28 @@ public class AppSigmaz {
             case COMENTARIOS -> AppUtils.COMENTARIOS(ARQUIVO, mArquivos);
 
             case MAKE_LEXER -> AppMake.MAKE_LEXER(ARQUIVO, mMakes);
-            case MAKE_EXECUTAR -> AppMake.MAKE_EXECUTAR(ARQUIVO, mMakes, mCompilado,mostrarAST);
+            case MAKE_EXECUTAR -> AppMake.MAKE_EXECUTAR(ARQUIVO, mMakes);
+
+            case APP ->APP();
 
             default -> System.out.println("\t - Fases : Desconhecida !");
         }
 
+
+    }
+
+    public static void APP() {
+
+        Windows mWindows = new Windows("Sigmaz - Compilador", 720, 600);
+
+        //  mWindows.setIconImage(Imaginador.CarregarStream(Local.Carregar("editor.png")));
+
+        SigmazCompilador eSigmazCompilador = new SigmazCompilador(mWindows);
+
+        mWindows.CriarCenarioAplicavel(eSigmazCompilador);
+
+        Thread mThread = new Thread(mWindows);
+        mThread.start();
 
     }
 

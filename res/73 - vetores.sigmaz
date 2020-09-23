@@ -3,9 +3,11 @@ call iniciar_tudo -> inicio ( );
 refer Iterador;
 refer Vetor;
 act inicio ( ) {
-	
+
+	def i : int = 12 ;
+
 	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	def vGeral : Vetor >> ( int ) = init Vetor ( 5 ) >> ( int );
+	def vGeral : Vetor  >> ( int ) = init Vetor ( 5 ) >> ( int );
 	println ( "Listar VETOR");
 	vGeral.mudarTodos ( 5 );
 	vGeral.listar ( );

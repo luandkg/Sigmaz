@@ -36,13 +36,17 @@ public class AST_Vector {
 
                 Token P1 = mCompiler.getTokenCorrente();
 
+                //System.out.println("CORRENTE INICIAR :: " + P1.getConteudo()+ " :: " + P1.getLinha());
+
                 mCompiler.voltar();
 
 
-                AST_Value mAST = new AST_Value(mCompiler);
-                mAST.init(ASTPai.criarBranch("VALUE"));
+                AST_Value_ItemVector mAST = new AST_Value_ItemVector(mCompiler);
+                mAST.initArgumento(ASTPai.criarBranch("VALUE"));
 
                 Token P2 = mCompiler.getTokenCorrente();
+
+              //  System.out.println("CORRENTE SAIR :: " + P2.getConteudo() + " :: " + P2.getLinha());
 
 
                 if (P2.getTipo() == TokenTipo.VIRGULA) {
@@ -51,7 +55,7 @@ public class AST_Vector {
                     saiu = true;
                     break;
                 } else {
-                    mCompiler.errarCompilacao("Era esperado um argumento : " + P2.getConteudo(), P2);
+                    mCompiler.errarCompilacao("Era esperado um argumento 3 : " + P2.getConteudo(), P2);
                 }
 
             }

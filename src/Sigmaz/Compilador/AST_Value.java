@@ -513,7 +513,12 @@ public class AST_Value {
         } else if (TokenC3.getTipo() == TokenTipo.DIVISOR) {
             operation_final("DIV", ASTPai);
         } else {
-            System.out.println("Problema G : " + TokenC3.getConteudo());
+            System.out.println("Problema G2 : " + TokenC3.getConteudo());
+
+            Token TKF = mCompiler.getTokenFuturo();
+
+            System.out.println("-> : " + TKF.getConteudo());
+
         }
 
     }

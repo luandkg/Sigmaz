@@ -8,10 +8,11 @@ import Sigmaz.Utils.AST;
 public class IS_Struct {
 
     private Intellisense mIntellisense;
+    private IntellisenseTheme mIntellisenseTheme;
 
-    public IS_Struct(Intellisense eIntellisense) {
+    public IS_Struct(Intellisense eIntellisense,IntellisenseTheme eIntellisenseTheme) {
         mIntellisense = eIntellisense;
-
+        mIntellisenseTheme=eIntellisenseTheme;
     }
 
     public int getContagem(AST eTudo) {
@@ -52,25 +53,32 @@ public class IS_Struct {
 
         Color eBarra = Color.RED;
 
+        Color eTexto=mIntellisenseTheme.getTexto();
+        Color eBox=mIntellisenseTheme.getBox();
+
         if (eTudo.getBranch("EXTENDED").mesmoNome("STAGES")) {
 
 
             eBarra = new Color(255, 110, 64);
+            eBarra=mIntellisenseTheme.getStage();
 
 
         } else if (eTudo.getBranch("EXTENDED").mesmoNome("TYPE")) {
 
             eBarra = new Color(64, 196, 255);
+            eBarra=mIntellisenseTheme.getType();
 
 
         } else if (eTudo.getBranch("EXTENDED").mesmoNome("STRUCT")) {
 
             eBarra = new Color(124, 179, 66);
+            eBarra=mIntellisenseTheme.getStruct();
 
 
         } else if (eTudo.getBranch("EXTENDED").mesmoNome("EXTERNAL")) {
 
             eBarra = new Color(22, 160, 133);
+            eBarra=mIntellisenseTheme.getExternal();
 
 
         } else {
@@ -79,7 +87,8 @@ public class IS_Struct {
         }
 
 
-        g.setColor(Color.WHITE);
+        g.setColor(mIntellisenseTheme.getFundo());
+
         g.fillRect(x, mais, mIntellisense.getLargura(), altura - mais);
 
 
@@ -99,7 +108,7 @@ public class IS_Struct {
             for (AST Sub2 : eTudo.getBranch("STAGES").getASTS()) {
                 String eConteudo = Sub2.getNome();
 
-                g.setColor(Color.BLACK);
+                g.setColor(eTexto);
                 mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_STAGE);
 
                 mais += 30;
@@ -108,7 +117,7 @@ public class IS_Struct {
 
             mais += 50;
 
-            g.setColor(Color.BLACK);
+            g.setColor(eBox);
             g.fillRect(x+ 50, mais, eLargura / 2, 15);
 
             g.setColor(Color.BLACK);
@@ -128,7 +137,7 @@ public class IS_Struct {
 
                     String eConteudo = Sub2.getNome();
 
-                    g.setColor(Color.BLACK);
+                    g.setColor(eTexto);
                     mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_GENERIC_TYPE);
 
                     mais += 30;
@@ -137,7 +146,7 @@ public class IS_Struct {
 
                 mais += 70;
 
-                g.setColor(Color.BLACK);
+                g.setColor(eBox);
                 g.fillRect(x+ 50, mais, eLargura / 2, 15);
 
 
@@ -147,6 +156,8 @@ public class IS_Struct {
             for (AST Sub2 : eTudo.getBranch("BODY").getASTS()) {
 
                 if (Sub2.mesmoTipo("DEFINE")) {
+
+                    g.setColor(eTexto);
                     String eConteudo = mUtils.getDefine(Sub2);
                     mais = mIntellisense. algum(Sub2, g, x,mais, "ALL", eConteudo, mIntellisense.IMG_DEFINE_TYPE);
                   //  p += 1;
@@ -158,6 +169,8 @@ public class IS_Struct {
             for (AST Sub2 : eTudo.getBranch("BODY").getASTS()) {
 
                 if (Sub2.mesmoTipo("MOCKIZ")) {
+                    g.setColor(eTexto);
+
                     String eConteudo = mUtils.getMockiz(Sub2);
                     mais = mIntellisense.algum(Sub2, g, mais, x,"ALL", eConteudo, mIntellisense.IMG_MOCKIZ_TYPE);
                     //p += 1;
@@ -175,14 +188,14 @@ public class IS_Struct {
 
                 String eConteudo = eTudo.getBranch("MODEL").getNome();
 
-                g.setColor(Color.BLACK);
+                g.setColor(eTexto);
                 mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_MODEL);
 
                 mais += 30;
 
                 mais += 70;
 
-                g.setColor(Color.BLACK);
+                g.setColor(eBox);
                 g.fillRect(x+ 50, mais, eLargura / 2, 15);
 
 
@@ -194,7 +207,8 @@ public class IS_Struct {
 
                     String eConteudo = Sub2.getNome();
 
-                    g.setColor(Color.BLACK);
+                    g.setColor(eTexto);
+
                     mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_BASE);
 
                     mais += 30;
@@ -203,7 +217,7 @@ public class IS_Struct {
 
                 mais += 70;
 
-                g.setColor(Color.BLACK);
+                g.setColor(eBox);
                 g.fillRect(x+ 50, mais, eLargura / 2, 15);
 
 
@@ -216,7 +230,8 @@ public class IS_Struct {
 
                     String eConteudo = Sub2.getNome();
 
-                    g.setColor(Color.BLACK);
+                    g.setColor(eTexto);
+
                     mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_GENERIC);
 
                     mais += 30;
@@ -225,7 +240,7 @@ public class IS_Struct {
 
                 mais += 70;
 
-                g.setColor(Color.BLACK);
+                g.setColor(eBox);
                 g.fillRect(x+ 50, mais, eLargura / 2, 15);
 
 
@@ -242,7 +257,8 @@ public class IS_Struct {
 
                         String eConteudo = mUtils.getAction(Sub2);
 
-                        g.setColor(Color.BLACK);
+                        g.setColor(eTexto);
+
                         mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_INIT);
 
                         mais += 30;
@@ -257,7 +273,7 @@ public class IS_Struct {
             if (inits > 0) {
                 mais += 70;
 
-                g.setColor(Color.BLACK);
+                g.setColor(eBox);
                 g.fillRect(x+ 50, mais, eLargura / 2, 15);
 
             }

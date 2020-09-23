@@ -149,6 +149,7 @@ public class Carregadores {
         ArrayList<String> mArquivos = new ArrayList<String>();
 
         mArquivos.add("res/MAKE 01 - init.make");
+        mArquivos.add("res/MAKE 02 - geradores.make");
 
         return mArquivos;
     }

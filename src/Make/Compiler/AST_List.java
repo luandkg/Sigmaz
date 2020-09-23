@@ -21,7 +21,7 @@ public class AST_List {
         boolean aberto = true;
         boolean mais = true;
 
-        while (aberto = true) {
+        while (aberto) {
 
             Token TokenProximo = mCompiler.getTokenAvante();
 

@@ -5,6 +5,8 @@ public enum Fases {
     COMPILAR_EXECUTAVEL,
     COMPILAR_BIBLIOTECA,
     EXECUTAR,
+    EXECUTAR_SIMPLES,
+    EXECUTAR_FASES,
     IDENTAR,
     IDENTAR_TUDO,
     IDENTAR_BIBLIOTECAS,
@@ -18,5 +20,6 @@ public enum Fases {
     TODO,
     INTERNO,
     MAKE_LEXER,
-    MAKE_EXECUTAR
+    MAKE_EXECUTAR,
+    APP
 }

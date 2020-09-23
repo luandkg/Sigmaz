@@ -5,6 +5,7 @@ import Sigmaz.Executor.RunTime;
 import java.io.File;
 import java.util.ArrayList;
 import Sigmaz.Utils.AST;
+import Sigmaz.Utils.UUID;
 
 public class PosProcessador {
 
@@ -26,7 +27,7 @@ public class PosProcessador {
     }
 
 
-    public void init(ArrayList<AST> eASTs, String mLocal){
+    public void init(Cabecalho mCabecalho,ArrayList<AST> eASTs, String mLocal){
 
         mASTS = eASTs;
         mErros.clear();
@@ -125,6 +126,81 @@ public class PosProcessador {
 
         Opcionador mOpcionador = new Opcionador(this);
         mOpcionador.init(mASTS);
+
+        gravarCabecalho(mCabecalho,mASTS);
+
+
+    }
+
+    public void gravarCabecalho(Cabecalho eCabecalho,ArrayList<AST> mASTS) {
+
+        UUID mUUID = new UUID();
+
+
+        for (AST eAST : mASTS) {
+
+
+            AST mCabecalho = new AST("HEADER");
+            mCabecalho.setNome("1");
+            mCabecalho.setValor("Num");
+
+            AST ma = mCabecalho.criarBranch("AUTHORES");
+
+            for (String eAutor : eCabecalho.getAutores()) {
+
+                AST tmpA = ma.criarBranch("AUTHOR");
+                tmpA.setNome(eAutor);
+                tmpA.setValor("ID");
+
+            }
+
+            AST AVersao = mCabecalho.criarBranch("VERSION");
+            AVersao.setNome(eCabecalho.getVersao());
+            AVersao.setValor("ID");
+
+            AST AC = mCabecalho.criarBranch("COMPANY");
+            AC.setNome(eCabecalho.getCompanhia());
+            AC.setValor("ID");
+
+            AST ePrivado = mCabecalho.criarBranch("PRIVATE");
+            ePrivado.setNome(mUUID.getUUID());
+            ePrivado.setValor("ID");
+
+            AST ePublico = mCabecalho.criarBranch("PUBLIC");
+            ePublico.setNome(mUUID.getUUID());
+            ePublico.setValor("ID");
+
+            AST eShared = mCabecalho.criarBranch("SHARED");
+            eShared.setNome(mUUID.getUUID());
+            eShared.setValor("ID");
+
+            AST eDevelopment = mCabecalho.criarBranch("DEVELOPMENT");
+
+            AST ePre = eDevelopment.criarBranch("PREPROCESSOR");
+            ePre.setNome(eCabecalho.getPreProcessor());
+            ePre.setValor(eCabecalho.getPreProcessor_UUID());
+
+
+            AST eLexer = eDevelopment.criarBranch("LEXER");
+            eLexer.setNome(eCabecalho.getLexer());
+            eLexer.setValor(eCabecalho.getLexer_UUID());
+
+            AST eParser = eDevelopment.criarBranch("PARSER");
+            eParser.setNome(eCabecalho.getParser());
+            eParser.setValor(eCabecalho.getParser_UUID());
+
+            AST eCompiler = eDevelopment.criarBranch("COMPILER");
+            eCompiler.setNome(eCabecalho.getCompiler());
+            eCompiler.setValor(eCabecalho.getCompiler_UUID());
+
+            AST ePosProcessor = eDevelopment.criarBranch("POSPROCESSOR");
+            ePosProcessor.setNome(eCabecalho.getPosProcessor());
+            ePosProcessor.setValor(eCabecalho.getPosProcessor_UUID());
+
+            eAST.getASTS().add(0, mCabecalho);
+
+        }
+
 
     }
 

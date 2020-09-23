@@ -101,6 +101,7 @@ public class Compiler {
 
         mIndex = 0;
         mTamanho = mTokens.size();
+        mITokens = mTokens.size();
 
 
         File arq = new File(eArquivo);
@@ -127,11 +128,53 @@ public class Compiler {
                 AST_Source ePeca = new AST_Source(this);
                 ePeca.init(mAST);
 
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("intellisenses")) {
+
+                AST_Intellisenses ePeca = new AST_Intellisenses(this);
+                ePeca.init(mAST);
+
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("options")) {
+
+                AST_Options ePeca = new AST_Options(this);
+                ePeca.init(mAST);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("ident")) {
+
+                AST_Ident ePeca = new AST_Ident(this);
+                ePeca.init(mAST);
+
+
+
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("make")) {
 
                 AST_Make ePeca = new AST_Make(this);
                 ePeca.init(mAST);
 
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("generate")) {
+
+                AST_Generate ePeca = new AST_Generate(this);
+                ePeca.init(mAST);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("tests")) {
+
+                AST_Tests ePeca = new AST_Tests(this);
+                ePeca.init(mAST);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("ast")) {
+
+                AST_AST ePeca = new AST_AST(this);
+                ePeca.init(mAST);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("set")) {
+
+                AST_Set ePeca = new AST_Set(this);
+                ePeca.init(mAST);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("remove")) {
+
+                AST_Remove ePeca = new AST_Remove(this);
+                ePeca.init(mAST);
 
             } else {
                 errarCompilacao("Token Desconhecido : " + TokenC.getTipo() + " " + TokenC.getConteudo(), TokenC);
