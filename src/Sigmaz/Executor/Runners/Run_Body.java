@@ -304,13 +304,11 @@ public class Run_Body {
                 Run_ExecuteLocal mRun_ExecuteLocal = new Run_ExecuteLocal(mRunTime, mEscopo);
                mRun_ExecuteLocal.initSemRetorno(fAST);
 
-            } else if (fAST.mesmoTipo("IMPLICIT_REF")) {
+            } else if (fAST.mesmoTipo("EXECUTE_AUTO")) {
 
-                System.out.println(fAST.ImprimirArvoreDeInstrucoes());
 
-             //   Run_Implicit mRun_Implicit = new Run_Implicit(mRunTime);
-              //  Item mRetorno = mRun_Implicit.operadorSeta(fAST, mEscopo, "<<ANY>>");
-
+                Run_ExecuteAuto mRun_ExecuteAuto = new Run_ExecuteAuto(mRunTime, mEscopo);
+                mRun_ExecuteAuto.init(fAST);
 
 
             } else {

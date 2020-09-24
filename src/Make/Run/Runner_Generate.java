@@ -1,10 +1,13 @@
 package Make.Run;
 
 import Sigmaz.Ferramentas.Dependenciador;
+import Sigmaz.Intellisenses.Intellisense;
+import Sigmaz.Intellisenses.IntellisenseTheme;
 import Sigmaz.Sigmaz;
 import Sigmaz.Utils.AST;
 import Sigmaz.Utils.Erro;
 import Sigmaz.Utils.GrupoDeErro;
+import Sigmaz.Sigmaz_SemObjeto;
 
 import java.util.ArrayList;
 
@@ -38,11 +41,11 @@ public class Runner_Generate {
 
     private void intellisense(AST ASTCGlobal) {
 
-        Sigmaz SigmazC = new Sigmaz();
+        Sigmaz_SemObjeto SigmazC = new Sigmaz_SemObjeto();
 
-        SigmazC.setObject(mRunMake.getObject());
-        SigmazC.setPosProcess(mRunMake.getPosProcess());
-        SigmazC.setStackProcess(mRunMake.getStackProcess());
+      //  SigmazC.setObject(mRunMake.getObject());
+      //  SigmazC.setPosProcess(mRunMake.getPosProcess());
+      //  SigmazC.setStackProcess(mRunMake.getStackProcess());
 
 
         ArrayList<String> mCaminhos = mRunMake.getCaminhos(ASTCGlobal);
@@ -56,7 +59,18 @@ public class Runner_Generate {
 
               //  System.out.println("\t - INTELLISENSE -->> " + TempSource_Item);
 
-                SigmazC.intellisense(TempSource_Item, TempIntellisenses, false, mRunMake.getIntellienseTheme(), TempIntellisenses);
+             //   SigmazC.intellisense(TempSource_Item, TempIntellisenses, false, mRunMake.getIntellienseTheme(), TempIntellisenses);
+
+                SigmazC.init(TempSource_Item,TempIntellisenses,false);
+
+                if (!SigmazC.temErros())
+                {
+
+                    Intellisense IntellisenseC = new Intellisense();
+                    IntellisenseC.run(SigmazC.getASTS(),  mRunMake.getIntellienseTheme(), TempIntellisenses);
+
+
+                }
 
 
             }

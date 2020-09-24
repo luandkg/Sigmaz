@@ -305,6 +305,32 @@ public class AST_Value {
                     System.out.println("Problema IC : " + TokenC2.getConteudo());
                 }
 
+            } else if (TokenD.mesmoConteudo("functor")){
+
+
+                ASTPai.setValor("EXECUTE_FUNCTOR");
+                AST AST_Generico = ASTPai.criarBranch("GENERICS");
+
+
+                AST_Generic mg = new AST_Generic(mCompiler);
+                mg.init_receberProto(AST_Generico);
+
+
+                Token TokenC3 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um FUNCTOR!");
+
+                ASTPai.setNome(TokenC3.getConteudo());
+
+                Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado abrir paresenteses !");
+
+                AST_Value_Argument mAVA = new AST_Value_Argument(mCompiler);
+                mAVA.ReceberArgumentos(ASTPai);
+
+                //System.out.println("VAL :: " + mCompiler.getTokenCorrente().getConteudo());
+
+              //  Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA, "Era esperado ponto e vinrgula !");
+
+                SegundaParte(ASTPai);
+
 
             } else if (TokenD.mesmoConteudo("this")) {
 

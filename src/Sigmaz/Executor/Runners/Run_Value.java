@@ -230,9 +230,6 @@ public class Run_Value {
 
             init(ASTCorrente.getBranch("VALUE"), eRetorno);
 
-        } else if (ASTCorrente.getValor().contentEquals("AUTO")) {
-
-            auto(ASTCorrente, eRetorno);
 
         } else if (ASTCorrente.getValor().contentEquals("FUNCTOR")) {
 
@@ -251,6 +248,10 @@ public class Run_Value {
         } else if (ASTCorrente.getValor().contentEquals("EXECUTE_LOCAL")) {
 
             executeLocal(ASTCorrente, eRetorno);
+
+        } else if (ASTCorrente.getValor().contentEquals("EXECUTE_FUNCTOR")) {
+
+            functor(ASTCorrente, eRetorno);
 
         } else {
 
@@ -319,7 +320,7 @@ public class Run_Value {
                     for (AST mCast : mRun_Context.getCastsContexto(mEscopo.getRefers())) {
                         if (mCast.mesmoNome(eRetorno)) {
 
-                            if (mCast.existeBranch("DEFAULT")){
+                            if (mCast.existeBranch("DEFAULT")) {
 
                                 Run_Body mRB = new Run_Body(mRunTime, mEscopo);
                                 mRB.init(mCast.getBranch("DEFAULT"));
@@ -331,7 +332,7 @@ public class Run_Value {
                                 mConteudo = mRB.getConteudo();
 
 
-                            }else{
+                            } else {
                                 mRunTime.errar(mLocal, "RETORNO DEFAULT DESCONHECIDO para a CAST : " + eRetorno);
                             }
 
@@ -682,28 +683,23 @@ public class Run_Value {
 
     }
 
-    public void auto(AST ASTCorrente, String eRetorno) {
 
-
-        mIsNulo = false;
-        mIsPrimitivo = true;
-        mRetornoTipo = "auto";
-        mIsEstrutura = false;
-        mConteudo = "auto";
-
-
-    }
 
 
     public void functor(AST ASTCorrente, String eRetorno) {
 
 
-        mIsNulo = false;
-        mIsPrimitivo = true;
-        mRetornoTipo = "functor";
-        mIsEstrutura = false;
-        mConteudo = "functor";
+        Run_ExecuteFunctor mRun_ExecuteAuto = new Run_ExecuteFunctor(mRunTime, mEscopo);
+        Item eItem = mRun_ExecuteAuto.init(ASTCorrente, eRetorno);
 
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
+
+        this.setNulo(eItem.getNulo());
+        this.setPrimitivo(eItem.getPrimitivo());
+        this.setConteudo(eItem.getValor(mRunTime, mEscopo));
+        this.setRetornoTipo(eItem.getTipo());
 
     }
 

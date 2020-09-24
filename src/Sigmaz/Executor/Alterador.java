@@ -1,6 +1,7 @@
 package Sigmaz.Executor;
 
 import java.util.ArrayList;
+
 import Sigmaz.Utils.AST;
 
 public class Alterador {
@@ -60,26 +61,29 @@ public class Alterador {
 
     public void alterarTipoDeType(AST ASTPai) {
 
-        for (AItem eTipo : mAlterar) {
+        if (ASTPai != null) {
+            for (AItem eTipo : mAlterar) {
 
-            if (ASTPai.mesmoValor("CONCRETE")) {
-                if (ASTPai.mesmoNome(eTipo.getAbstrato())) {
+                if (ASTPai.mesmoValor("CONCRETE")) {
+                    if (ASTPai.mesmoNome(eTipo.getAbstrato())) {
 
-                    // if (eTipo.getTipo().existeBranch("TYPE")){
-                    //   ASTPai.espelhar(eTipo.getTipo().getBranch("TYPE"));
-                    //  }else{
-                    ASTPai.espelhar(eTipo.getTipo());
-                    //}
+                        // if (eTipo.getTipo().existeBranch("TYPE")){
+                        //   ASTPai.espelhar(eTipo.getTipo().getBranch("TYPE"));
+                        //  }else{
+                        ASTPai.espelhar(eTipo.getTipo());
+                        //}
 
-                    break;
+                        break;
+                    }
+                } else if (ASTPai.mesmoValor("GENERIC")) {
+                    for (AST eSub : ASTPai.getASTS()) {
+                        alterarTipoDeType(eSub);
+                    }
                 }
-            } else if (ASTPai.mesmoValor("GENERIC")) {
-                for (AST eSub : ASTPai.getASTS()) {
-                    alterarTipoDeType(eSub);
-                }
+
             }
-
         }
+
 
 
     }
@@ -169,14 +173,20 @@ public class Alterador {
             } else if (eAST.mesmoTipo("GENERIC")) {
 
                 alterar(eAST);
+            } else if (eAST.mesmoTipo("GENERICS")) {
+
+                alterar(eAST);
 
             } else if (eAST.mesmoTipo("ARGUMENT")) {
 
                 alterarTipo(eAST);
+            } else if (eAST.mesmoTipo("ARGUMENTS")) {
+
+                alterar(eAST);
 
             } else if (eAST.mesmoTipo("GENERIC")) {
 
-                 alterar(eAST);
+                alterar(eAST);
 
 
             } else if (eAST.mesmoTipo("FUNCTION")) {

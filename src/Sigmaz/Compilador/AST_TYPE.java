@@ -15,10 +15,19 @@ public class AST_TYPE {
     public void init(AST ASTPai) {
 
 
-        AST AST_Tipo = ASTPai.criarBranch("TYPE");
 
 
         Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado Dois Pontos");
+
+        initDireto(ASTPai);
+
+    }
+
+    public void initDireto(AST ASTPai) {
+
+        AST AST_Tipo = ASTPai.criarBranch("TYPE");
+
+
         Token TokenC3 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado uma Tipagem");
 
 
@@ -39,9 +48,11 @@ public class AST_TYPE {
 
         }
 
+
     }
 
-    public void init_Definicao(AST ASTPai) {
+
+        public void init_Definicao(AST ASTPai) {
 
 
         AST AST_Tipo = ASTPai.criarBranch("TYPE");

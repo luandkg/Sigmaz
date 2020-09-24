@@ -145,6 +145,10 @@ public class AST_Corpo {
                 AST_Local mLocal = new AST_Local(mCompiler);
                 mLocal.init(ASTPai);
 
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo("auto")) {
+
+                AST_ExecuteAuto mAST = new AST_ExecuteAuto(mCompiler);
+                mAST.init(ASTPai);
 
             } else if (TokenD.getTipo() == TokenTipo.ID) {
 
@@ -166,6 +170,8 @@ public class AST_Corpo {
                 ASTPai.getASTS().add(ASTCorrente);
 
                 Token TokenP3 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA, "Era esperado PONTO E VIRGULA !");
+
+
 
 
             } else {

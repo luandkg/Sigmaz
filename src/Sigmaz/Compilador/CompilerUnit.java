@@ -379,6 +379,16 @@ public class CompilerUnit {
                 AST_Model mAST = new AST_Model(this);
                 mAST.init(AST_Raiz);
 
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("auto")) {
+
+                AST_PrototypeAuto mAST = new AST_PrototypeAuto(this);
+                mAST.init(AST_Raiz);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("functor")) {
+
+                AST_PrototypeFunctor mAST = new AST_PrototypeFunctor(this);
+                mAST.init(AST_Raiz);
+
 
             } else {
                 errarCompilacao("Token Desconhecido : " + TokenC.getTipo() + " " + TokenC.getConteudo(), TokenC);

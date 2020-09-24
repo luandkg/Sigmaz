@@ -140,6 +140,8 @@ public class Carregadores {
         mArquivos.add("res/77 - mutable.sigmaz");
         mArquivos.add("res/78 - default.sigmaz");
         mArquivos.add("res/79 - refered.sigmaz");
+        mArquivos.add("res/80 - auto.sigmaz");
+        mArquivos.add("res/81 - functor.sigmaz");
 
         return mArquivos;
     }

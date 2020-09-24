@@ -338,3 +338,9 @@ Linguagem de Programação Estruturada - Implementações
 		2020 09 23 -->> Compilador UI
 		2020 09 23 -->> Compilador em Etapas
 
+
+		2020 09 24 -->> Implementação AUTO
+		2020 09 24 -->> Implementação FUNCTOR
+		2020 09 24 -->> Implementação EXECUTE_AUTO
+		2020 09 24 -->> Implementação EXECUTE_FUNCTOR
+

@@ -1,5 +1,8 @@
 package AppSigmaz;
 
+import Sigmaz.Executor.UML;
+import Sigmaz.Ferramentas.Dependenciador;
+import Sigmaz.Intellisenses.Intellisense;
 import Sigmaz.Intellisenses.IntellisenseTheme;
 import Sigmaz.Lexer.Lexer;
 import Sigmaz.Lexer.Token;
@@ -15,6 +18,8 @@ import java.util.ArrayList;
 
 import Sigmaz.Utils.Erro;
 import Sigmaz.Utils.Identador;
+import Sigmaz.Sigmaz_SemObjeto;
+import Sigmaz.Internal;
 
 public class AppUtils {
 
@@ -111,27 +116,18 @@ public class AppUtils {
     public static void COMPILAR_EXECUTAVEL(int eIndice, ArrayList<String> mArquivos, String eCompilado) {
 
 
-        int iContando = 0;
-        boolean enc = false;
+        Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
 
-        for (String mArquivo : mArquivos) {
-            iContando += 1;
-            if (iContando == eIndice) {
-
-                enc = true;
+        if (mOpcional.estaValido()) {
 
 
-                Sigmaz SigmazC = new Sigmaz();
-                SigmazC.setObject(true);
+            Sigmaz SigmazC = new Sigmaz();
+            SigmazC.setObject(true);
 
-                SigmazC.compilar_executavel(mArquivo, eCompilado);
+            SigmazC.compilar_executavel(mOpcional.getConteudo(), eCompilado);
 
 
-                break;
-            }
-        }
-
-        if (!enc) {
+        } else {
             System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
         }
 
@@ -141,27 +137,18 @@ public class AppUtils {
     public static void EXECUTAR(int eIndice, ArrayList<String> mArquivos, String eCompilado) {
 
 
-        int iContando = 0;
-        boolean enc = false;
+        Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
 
-        for (String mArquivo : mArquivos) {
-            iContando += 1;
-            if (iContando == eIndice) {
-
-                enc = true;
+        if (mOpcional.estaValido()) {
 
 
-                Sigmaz SigmazC = new Sigmaz();
-                SigmazC.setObject(true);
+            Sigmaz SigmazC = new Sigmaz();
+            SigmazC.setObject(false);
 
-                SigmazC.init(mArquivo, eCompilado, 1);
+            SigmazC.init(mOpcional.getConteudo(), eCompilado, 1);
 
 
-                break;
-            }
-        }
-
-        if (!enc) {
+        } else {
             System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
         }
 
@@ -196,7 +183,7 @@ public class AppUtils {
 
             Sigmaz_Fases SigmazC = new Sigmaz_Fases();
 
-            SigmazC.mostrarDebug(false);
+            SigmazC.mostrarDebug(true);
 
             SigmazC.init(mOpcional.getConteudo(), eCompilado, 1);
 
@@ -231,9 +218,12 @@ public class AppUtils {
 
     public static void MONTAR_BIBLIOTECA(String eArquivo, String eSaida) {
 
+
         Sigmaz SigmazC = new Sigmaz();
-        SigmazC.setObject(true);
-        SigmazC.estrutural(eArquivo, eSaida, false);
+        SigmazC.setObject(false);
+
+        SigmazC.estrutura(eArquivo, eSaida, 1);
+
 
     }
 
@@ -249,9 +239,10 @@ public class AppUtils {
 
                 enc = true;
 
-                Sigmaz SigmazC = new Sigmaz();
 
-                SigmazC.initDependencia(mArquivo);
+                Dependenciador mDependenciador = new Dependenciador();
+                mDependenciador.init_debug(mArquivo);
+
 
                 break;
             }
@@ -268,28 +259,22 @@ public class AppUtils {
     public static void ESTRUTURAL(int eIndice, ArrayList<String> mArquivos, String eSaida) {
 
 
-        int iContando = 0;
-        boolean enc = false;
 
-        for (String mArquivo : mArquivos) {
-            iContando += 1;
-            if (iContando == eIndice) {
+        Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
 
-                enc = true;
+        if (mOpcional.estaValido()) {
 
 
-                Sigmaz SigmazC = new Sigmaz();
-                SigmazC.setObject(true);
+            Sigmaz SigmazC = new Sigmaz();
+            SigmazC.setObject(false);
 
-                SigmazC.estrutural(mArquivo, eSaida, true);
+            SigmazC.estrutura(mOpcional.getConteudo(), eSaida, 1);
 
-                break;
-            }
+
+        } else {
+            System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
         }
 
-        if (!enc) {
-            System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
-        }
 
 
     }
@@ -307,9 +292,15 @@ public class AppUtils {
                 enc = true;
 
 
-                Sigmaz SigmazC = new Sigmaz();
+                Sigmaz_SemObjeto SigmazC = new Sigmaz_SemObjeto();
+                SigmazC.init(mArquivo, eSaida, false);
 
-                SigmazC.interno(mArquivo, eSaida, eLocal);
+                if (!SigmazC.temErros()) {
+
+                    Internal mInternal = new Internal(SigmazC.getASTS());
+                    mInternal.exportar(eLocal);
+
+                }
 
                 break;
             }
@@ -317,6 +308,60 @@ public class AppUtils {
 
         if (!enc) {
             System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+
+    }
+
+
+    public static void INTELISENSE(int eIndice, ArrayList<String> mArquivos, String eSaida, String eGrafico) {
+
+
+        int iContando = 0;
+        boolean enc = false;
+
+        for (String mArquivo : mArquivos) {
+            iContando += 1;
+            if (iContando == eIndice) {
+
+                enc = true;
+
+
+                Sigmaz_SemObjeto SigmazC = new Sigmaz_SemObjeto();
+                SigmazC.init(mArquivo, eSaida, false);
+
+                if (!SigmazC.temErros()) {
+
+                    Intellisense IntellisenseC = new Intellisense();
+                    IntellisenseC.run(SigmazC.getASTS(), new IntellisenseTheme(), eGrafico);
+
+
+                }
+
+                break;
+            }
+        }
+
+        if (!enc) {
+            System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+    }
+
+    public static void INTELISENSE_BIBLIOTECA(String eFonte, String eSaida, String eGrafico) {
+
+
+        Sigmaz_SemObjeto SigmazC = new Sigmaz_SemObjeto();
+        SigmazC.init(eFonte, eSaida, false);
+
+        if (!SigmazC.temErros()) {
+
+            Intellisense IntellisenseC = new Intellisense();
+            IntellisenseC.run(SigmazC.getASTS(), new IntellisenseTheme(), eGrafico);
+
+
         }
 
 
@@ -334,8 +379,17 @@ public class AppUtils {
 
                 enc = true;
 
-                Sigmaz SigmazC = new Sigmaz();
-                SigmazC.uml(mArquivo, eSaida, eGrafico);
+
+                Sigmaz_SemObjeto SigmazC = new Sigmaz_SemObjeto();
+                SigmazC.init(mArquivo, eSaida, false);
+
+                if (!SigmazC.temErros()) {
+
+                    UML UMLC = new UML();
+                    UMLC.run(SigmazC.getASTS(), eGrafico);
+
+
+                }
 
                 break;
             }
@@ -348,49 +402,20 @@ public class AppUtils {
 
     }
 
-    public static void INTELISENSE(int eIndice, ArrayList<String> mArquivos, String eSaida, String eGrafico) {
-
-
-        int iContando = 0;
-        boolean enc = false;
-
-        for (String mArquivo : mArquivos) {
-            iContando += 1;
-            if (iContando == eIndice) {
-
-                enc = true;
-
-                IntellisenseTheme mIntellisenseTheme = new IntellisenseTheme();
-
-                Sigmaz SigmazC = new Sigmaz();
-                SigmazC.intellisense(mArquivo, eSaida, true, mIntellisenseTheme, eGrafico);
-
-                break;
-            }
-        }
-
-        if (!enc) {
-            System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
-        }
-
-
-    }
-
-    public static void INTELISENSE_BIBLIOTECA(String eFonte, String eSaida, String eGrafico) {
-
-        IntellisenseTheme mIntellisenseTheme = new IntellisenseTheme();
-
-        Sigmaz SigmazC = new Sigmaz();
-        SigmazC.intellisense(eFonte, eSaida, true, mIntellisenseTheme, eGrafico);
-
-
-    }
 
     public static void UML_BIBLIOTECA(String eFonte, String eSaida, String eGrafico) {
 
 
-        Sigmaz SigmazC = new Sigmaz();
-        SigmazC.uml(eFonte, eSaida, eGrafico);
+        Sigmaz_SemObjeto SigmazC = new Sigmaz_SemObjeto();
+        SigmazC.init(eFonte, eSaida, false);
+
+        if (!SigmazC.temErros()) {
+
+            UML UMLC = new UML();
+            UMLC.run(SigmazC.getASTS(), eGrafico);
+
+
+        }
 
 
     }

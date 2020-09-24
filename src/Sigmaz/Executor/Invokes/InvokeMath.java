@@ -503,6 +503,48 @@ public class InvokeMath {
             } catch (Exception e) {
                 mRunTime.getErros().add(mErro);
             }
+        } else if (eAcao.contentEquals("operator_random_int")) {
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            String p2 = mRun_Invoke.getInt(ASTArgumentos, 2);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+
+            try {
+                long f1 = Long.parseLong(p1);
+                long f2 = Long.parseLong(p2);
+                long f3 = 0;
+
+                if (f1 == f2) {
+
+                    f3 = f1;
+
+                } else {
+
+                    if (f1 > f2) {
+                        long t = f1;
+                        f1 = f2;
+                        f2 = t;
+                    }
+
+
+                    long delta = f2 - f1;
+
+                    f3 = f1 + (long) (Math.random() * delta);
+
+
+                }
+
+
+                mEscopo.setDefinido(eSaida, String.valueOf(f3));
+
+
+            } catch (Exception e) {
+                mRunTime.getErros().add(mErro);
+            }
         } else if (eAcao.contentEquals("operator_match")) {
 
             String p1 = mRun_Invoke.getBool(ASTArgumentos, 1);

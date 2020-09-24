@@ -1,0 +1,22 @@
+call iniciar -> operando ( );
+
+
+
+act operando ( ) {
+
+    def a : int = 12;
+
+    auto <int> correr(12,5);
+
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+
+}
+
+auto <T> correr(a : T, b : T) {
+
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+}

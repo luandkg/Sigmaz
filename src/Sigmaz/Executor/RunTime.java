@@ -379,6 +379,12 @@ public class RunTime {
 
                 mGlobalPackages.add(ASTC);
 
+            } else if (ASTC.mesmoTipo("PROTOTYPE_AUTO")) {
+
+                Global.guardar(ASTC);
+            } else if (ASTC.mesmoTipo("PROTOTYPE_FUNCTOR")) {
+
+                Global.guardar(ASTC);
 
             }
 
@@ -801,8 +807,7 @@ public class RunTime {
 
             if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
 
-                Internal mInternal = new Internal(ASTCGlobal);
-                mInternal.exportar(eLocal);
+
                 enc = true;
 
             }

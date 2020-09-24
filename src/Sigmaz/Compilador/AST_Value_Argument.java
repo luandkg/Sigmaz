@@ -85,7 +85,7 @@ public class AST_Value_Argument {
                 AST AST_Generico = ASTPai.criarBranch("GENERIC");
                 AST_Generico.setNome("FALSE");
 
-                Token TokenFuturo = mCompiler.getTokenFuturo();
+                Token TokenFuturo = mCompiler.getTokenCorrente();
                 if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
 
                     AST_Generico.setNome("TRUE");
@@ -93,6 +93,8 @@ public class AST_Value_Argument {
                     AST_Generic mg = new AST_Generic(mCompiler);
                     mg.init(AST_Generico);
 
+                }else{
+                    mCompiler.voltar();
                 }
 
                 if (mCompiler.getTokenCorrente().getTipo() == TokenTipo.VIRGULA) {
@@ -267,7 +269,7 @@ public class AST_Value_Argument {
         } else if (TokenC2.getTipo() == TokenTipo.DIVISOR) {
             Matcher.final_argumento("DIV", ASTPai);
         } else {
-            System.out.println("Problema : " + TokenC2.getConteudo() + " -->> " + TokenC2.getPosicao());
+            System.out.println("Problema FF : " + TokenC2.getConteudo() + " -->> " + TokenC2.getLinha() + ":" + TokenC2.getPosicao());
         }
 
     }

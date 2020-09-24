@@ -55,6 +55,7 @@ public class Sigmaz_Fases {
         mDebug = false;
         mDebugMensagens = new ArrayList<String>();
 
+        mErros_Mensagens = new ArrayList<String>();
     }
 
 
@@ -366,11 +367,12 @@ public class Sigmaz_Fases {
         System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
         System.out.println("");
 
+      //  System.out.println(RunTimeC.getArvoreDeInstrucoes());
 
         System.out.println("");
         System.out.println("----------------------------------------------");
 
-       RunTimeC.run();
+        RunTimeC.run();
 
         System.out.println("");
         System.out.println("----------------------------------------------");

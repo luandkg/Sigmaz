@@ -1,0 +1,39 @@
+call iniciar -> operando ( );
+
+
+
+act operando ( ) {
+
+    def a : int = 12;
+
+
+    def c : int = functor<int>somatorio(12,8);
+    def d : num = functor<num>somatorio(12.4,8.6);
+    #def e : bool = functor<bool>somatorio(true,false);
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+
+}
+
+
+functor <T> somatorio(a : T, b : T) : T {
+
+    def c : T = a ++ b;
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    return c;
+}
+
+operator ++ ( a : int , b : int ) : int {
+	def c : int;
+	invoke math -> operator_sum_int ( a , b ) :: c;
+	return c;
+}
+
+operator ++ ( a : num , b : num ) : num {
+	def c : num;
+	invoke math -> operator_sum_num ( a , b ) :: c;
+	return c;
+}

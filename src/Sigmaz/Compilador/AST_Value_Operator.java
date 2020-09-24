@@ -43,6 +43,8 @@ public class AST_Value_Operator {
 
         ASTDireita.setTipo("RIGHT");
 
+      //  System.out.println("Terminei :: " + mCompiler.getTokenCorrente().getConteudo());
+
     }
 
     public void final_argumento_parenteses(String eTipo,AST ASTPai) {
