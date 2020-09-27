@@ -33,6 +33,9 @@ public class AST_Generate {
 
             AST_Corrente.setNome("DEPENDENCY");
 
+        } else if (TokenID.mesmoConteudo("highlight")) {
+
+            AST_Corrente.setNome("HIGH_LIGHT");
 
         } else {
             mCompiler.errarCompilacao("Tipo de generate desconhecido : " + TokenID.getConteudo(), TokenID);

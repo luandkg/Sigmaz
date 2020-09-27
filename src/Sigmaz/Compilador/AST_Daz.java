@@ -18,13 +18,18 @@ public class AST_Daz {
         AST AST_Corrente = new AST("DAZ");
         ASTPai.getASTS().add(AST_Corrente);
 
-        mCompiler.Proximo();
+       // mCompiler.Proximo();
 
         AST AST_Arguments = AST_Corrente.criarBranch("CHOOSABLE");
         AST AST_Casos = AST_Corrente.criarBranch("CASES");
 
+        Token TokenPrimeiro = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
+
         AST_Value mAST = new AST_Value(mCompiler);
-        mAST.initParam(AST_Arguments);
+      //  mAST.initParam(AST_Arguments);
+        mAST.setBloco();
+        mAST.init(AST_Arguments);
+
 
         Token TokenC6 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado -> ");
 
@@ -97,12 +102,15 @@ public class AST_Daz {
 
         Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado ( ");
 
+       // mVal.setSeta();
+     //   mVal.init(AST_CASE);
 
+      //  AST_Value_Argument mAST = new AST_Value_Argument(mCompiler);
+       // mVal.ReceberArgumentos(AST_CASE);
+        AST_ValueTypes mAVA = new AST_ValueTypes(mCompiler);
+        mAVA.ReceberArgumentos(AST_CASE,false,null);
 
-        AST_Value_Argument mAST = new AST_Value_Argument(mCompiler);
-        mAST.ReceberArgumentos(AST_CASE);
-
-       // AST_CONDITION.setTipo("CONDITION");
+        AST_CASE.setTipo(eTitulo);
 
 
         Token TokenC7 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado -> ");

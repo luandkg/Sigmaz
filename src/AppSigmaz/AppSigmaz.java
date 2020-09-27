@@ -31,13 +31,15 @@ public class AppSigmaz {
 
         String mUML = "res/uml/uml.txt";
         String mIntellisense = "res/intellisenses/";
+        String mSyntax_HighLights = "res/highlights/";
+
         String mInternos = "res/internos/";
         String mLocal = "res/";
 
 
-        int ARQUIVO = 44;
+        int ARQUIVO = 1;
 
-        switch (Fases.EXECUTAR) {
+        switch (Fases.MAKE_EXECUTAR) {
 
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
             case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos, mCompilado);
@@ -55,6 +57,8 @@ public class AppSigmaz {
             case TESTES -> AppUtils.TESTE_GERAL(mArquivos, mCompilado, mLocal);
 
             case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);
+            case SYNTAX_HIGHLIGHT -> AppUtils.SYNTAX_HIGHLIGHT(ARQUIVO, mArquivos,mSyntax_HighLights);
+
             case IDENTAR_TUDO -> AppUtils.IDENTAR_LOTE("ARQUIVOS", mArquivos);
             case IDENTAR_BIBLIOTECAS -> AppUtils.IDENTAR_LOTE("BIBLIOTECAS", mBibliotecas);
 

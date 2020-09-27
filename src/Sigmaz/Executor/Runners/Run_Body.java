@@ -310,6 +310,19 @@ public class Run_Body {
                 Run_ExecuteAuto mRun_ExecuteAuto = new Run_ExecuteAuto(mRunTime, mEscopo);
                 mRun_ExecuteAuto.init(fAST);
 
+            } else if (fAST.mesmoTipo("CHANGE")) {
+
+
+                Run_Change nRun_Change = new Run_Change(mRunTime, mEscopo);
+                nRun_Change.init(fAST);
+
+            } else if (fAST.mesmoTipo("USING")) {
+
+
+                Run_Using mRun_Using = new Run_Using(mRunTime, mEscopo);
+                mRun_Using.init(fAST);
+
+
 
             } else {
 

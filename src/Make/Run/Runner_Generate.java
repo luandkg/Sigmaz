@@ -8,6 +8,7 @@ import Sigmaz.Utils.AST;
 import Sigmaz.Utils.Erro;
 import Sigmaz.Utils.GrupoDeErro;
 import Sigmaz.Sigmaz_SemObjeto;
+import Sigmaz.Utils.Syntax_HighLight;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,11 @@ public class Runner_Generate {
         } else if (ASTCGlobal.mesmoNome("DEPENDENCY")) {
 
             dep(ASTCGlobal);
+
+        } else if (ASTCGlobal.mesmoNome("HIGH_LIGHT")) {
+
+            highlight(ASTCGlobal);
+
 
         } else {
             mRunMake.errar(mRunMake.getLocal(), "Comando Generate Desconhecido : " + ASTCGlobal.getNome());
@@ -158,6 +164,35 @@ public class Runner_Generate {
         } else {
 
             mRunMake.errar(mRunMake.getLocal(), "Generate dependency source vazio ! ");
+
+        }
+
+    }
+
+    private void highlight(AST ASTCGlobal) {
+
+
+
+        ArrayList<String> mCaminhos = mRunMake.getCaminhos(ASTCGlobal);
+
+        if (mCaminhos.size() > 0) {
+
+            String eLocal_Hight = mRunMake.getHighLights() + ASTCGlobal.getValor();
+
+            for (String TempSource_Item : mCaminhos) {
+
+
+                Syntax_HighLight mSyntax_HighLight = new Syntax_HighLight();
+                mSyntax_HighLight.setSyntaxTheme(mRunMake.getSyntaxTheme());
+                mSyntax_HighLight.highlight_simples(TempSource_Item,eLocal_Hight);
+
+
+
+            }
+
+        } else {
+
+            mRunMake.errar(mRunMake.getLocal(), "Generate hightlight source vazio ! ");
 
         }
 

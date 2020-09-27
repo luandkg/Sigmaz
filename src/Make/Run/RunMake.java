@@ -4,6 +4,7 @@ import Sigmaz.Executor.RunTime;
 import Sigmaz.Intellisenses.IntellisenseTheme;
 import Sigmaz.Utils.AST;
 import Sigmaz.Utils.Documentador;
+import Sigmaz.Utils.SyntaxTheme;
 import Sigmaz.Utils.Tempo;
 
 import java.util.ArrayList;
@@ -17,7 +18,10 @@ public class RunMake {
     private String eBuild;
     private String eSource;
     private String eIntellisenses;
+    private String eHighLights;
+
     private IntellisenseTheme mIntellisenseTheme;
+    private SyntaxTheme mSyntaxTheme;
 
     private boolean mObject;
     private boolean mPosProcess;
@@ -38,6 +42,8 @@ public class RunMake {
         eBuild = "";
         eSource = "";
         eIntellisenses = "";
+        eHighLights = "";
+
         mIntellisenseTheme = new IntellisenseTheme();
 
         mAutores = new ArrayList<String>();
@@ -149,12 +155,20 @@ public class RunMake {
         return eIntellisenses;
     }
 
+    public String getHighLights() {
+        return eHighLights;
+    }
+
     public String getLocal() {
         return mLocal;
     }
 
     public IntellisenseTheme getIntellienseTheme() {
         return mIntellisenseTheme;
+    }
+
+    public SyntaxTheme getSyntaxTheme() {
+        return mSyntaxTheme;
     }
 
     public void run(String eLocal) {
@@ -167,6 +181,7 @@ public class RunMake {
         mErros.clear();
 
         mIntellisenseTheme = new IntellisenseTheme();
+        mSyntaxTheme = new SyntaxTheme();
 
 
         for (AST ASTCGlobal : mAST.getASTS()) {
@@ -179,6 +194,10 @@ public class RunMake {
             } else if (ASTCGlobal.mesmoTipo("SOURCE")) {
 
                 eSource = ASTCGlobal.getValor();
+
+            } else if (ASTCGlobal.mesmoTipo("HIGH_LIGHT")) {
+
+                eHighLights = ASTCGlobal.getValor();
 
             } else if (ASTCGlobal.mesmoTipo("INTELLISENSES")) {
 

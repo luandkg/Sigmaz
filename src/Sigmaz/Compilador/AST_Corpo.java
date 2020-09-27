@@ -149,6 +149,20 @@ public class AST_Corpo {
 
                 AST_ExecuteAuto mAST = new AST_ExecuteAuto(mCompiler);
                 mAST.init(ASTPai);
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo("functor")) {
+
+                AST_ExecuteAuto mAST = new AST_ExecuteAuto(mCompiler);
+                mAST.init(ASTPai);
+
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo("change")) {
+
+                AST_Change mAST = new AST_Change(mCompiler);
+                mAST.init(ASTPai);
+
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo("using")) {
+
+                AST_Using mAST = new AST_Using(mCompiler);
+                mAST.init(ASTPai);
 
             } else if (TokenD.getTipo() == TokenTipo.ID) {
 
@@ -164,8 +178,8 @@ public class AST_Corpo {
 
                 AST ASTCorrente = new AST("EXECUTE_LOCAL");
 
-                AST_Value_Argument mAVA = new AST_Value_Argument(mCompiler);
-                mAVA.ReceberArgumentos(ASTCorrente);
+                AST_ValueTypes mAVA = new AST_ValueTypes(mCompiler);
+                mAVA.ReceberArgumentos(ASTCorrente,false,null);
 
                 ASTPai.getASTS().add(ASTCorrente);
 

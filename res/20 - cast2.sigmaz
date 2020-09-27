@@ -4,25 +4,25 @@ cast pos {
 		if ( menor ( a , 0 ) ) -> {
 			exception "Nao e possivel obter valores negativos !";
 		}
-		return a;
+
 	}
 	getter a2 : int -> {
 		if ( menor ( a2 , 0 ) ) -> {
 			exception "Nao e possivel obter valores negativos !";
 		}
-		return a2;
+
 	}
 	setter b : num -> {
 		if ( menor ( b , 0 ) ) -> {
 			exception "Nao e possivel obter valores negativos !";
 		}
-		return b;
+
 	}
 	setter b : int -> {
 		if ( menor ( b , 0 ) ) -> {
 			exception "Nao e possivel obter valores negativos !";
 		}
-		return b;
+
 	}
 	
 }
@@ -31,25 +31,25 @@ cast neg {
 		if ( maior ( a , 0 ) ) -> {
 			exception "Nao e possivel obter valores positivos !";
 		}
-		return a;
+
 	}
 	getter a2 : int -> {
 		if ( maior ( a2 , 0 ) ) -> {
 			exception "Nao e possivel obter valores positivos !";
 		}
-		return a2;
+
 	}
 	setter b : num -> {
 		if ( maior ( b , 0 ) ) -> {
 			exception "Nao e possivel obter valores positivos !";
 		}
-		return b;
+
 	}
 	setter b : int -> {
 		if ( maior ( b , 0 ) ) -> {
 			exception "Nao e possivel obter valores positivos !";
 		}
-		return b;
+
 	}
 	
 }

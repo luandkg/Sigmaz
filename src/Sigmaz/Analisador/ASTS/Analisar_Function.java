@@ -226,6 +226,8 @@ public class Analisar_Function {
         } else if (ASTPai.mesmoTipo("EXECUTE_LOCAL")) {
         } else if (ASTPai.mesmoTipo("EXECUTE_AUTO")) {
         } else if (ASTPai.mesmoTipo("EXECUTE_FUNCTOR")) {
+        } else if (ASTPai.mesmoTipo("CHANGE")) {
+        } else if (ASTPai.mesmoTipo("USING")) {
 
         } else {
             mAnalisador.getErros().add("AST : " + ASTPai.getTipo());

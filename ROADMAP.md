@@ -343,4 +343,22 @@ Linguagem de Programação Estruturada - Implementações
 		2020 09 24 -->> Implementação FUNCTOR
 		2020 09 24 -->> Implementação EXECUTE_AUTO
 		2020 09 24 -->> Implementação EXECUTE_FUNCTOR
+		2020 09 24 -->> Re-Estruturação da AST_VALUE
+		2020 09 24 -->> Re-Organização do AST_VALUE
+
+
+		2020 09 25 -->> Alteração do Operador Ternário
+		2020 09 25 -->> Re-Organização do AST_VALUE
+		2020 09 25 -->> Implementação Run_Default
+		2020 09 25 -->> Implementação Change Type
+		2020 09 25 -->> Implementação Using Struct
+
+
+		2020 09 26 -->> Novo Sistema de CAST : Getter
+		2020 09 26 -->> Novo Sistema de CAST : Setter
+		2020 09 26 -->> Implementação do Syntax HighLight
+
+
+		2020 09 27 -->> Syntax HighLight - Dark Theme
+		2020 09 27 -->> Syntax HighLight - Light Theme
 

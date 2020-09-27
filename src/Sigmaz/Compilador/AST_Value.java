@@ -7,20 +7,66 @@ import Sigmaz.Utils.AST;
 public class AST_Value {
 
     private CompilerUnit mCompiler;
-    private TokenTipo mTerminar;
+
+    //   private TokenTipo mTerminar;
     private String mTerminarErro;
 
     private boolean mTemTipo;
     private AST mTipo;
 
+
+    private TokenTipo mTerminadorPrimario;
+    private TokenTipo mTerminadorSecundario;
+    private String mTerminadorErro;
+
+
     public AST_Value(CompilerUnit eCompiler) {
 
         mCompiler = eCompiler;
-        mTerminar = TokenTipo.PONTOVIRGULA;
+        // mTerminar = TokenTipo.PONTOVIRGULA;
         mTerminarErro = "Era esperado um ponto e virgula ! : ";
         mTemTipo = false;
         mTipo = null;
+
+
+        mTerminadorPrimario = TokenTipo.PONTOVIRGULA;
+        mTerminadorSecundario = TokenTipo.PONTOVIRGULA;
+        mTerminadorErro = "Era esperado um ponto e virgula !";
+
     }
+
+    public void setBuscadorDeArgumentos() {
+
+        mTerminadorPrimario = TokenTipo.VIRGULA;
+        mTerminadorSecundario = TokenTipo.PARENTESES_FECHA;
+        mTerminadorErro = "Era esperado uma virgula ou um fechador de paresenteses !";
+
+    }
+
+    public void setBuscadorDeItensDeVetor() {
+
+        mTerminadorPrimario = TokenTipo.VIRGULA;
+        mTerminadorSecundario = TokenTipo.CHAVE_FECHA;
+        mTerminadorErro = "Era esperado uma virgula ou um fechador de chaves !";
+
+    }
+
+    public void setBloco() {
+
+        mTerminadorPrimario = TokenTipo.PARENTESES_FECHA;
+        mTerminadorSecundario = TokenTipo.PARENTESES_FECHA;
+        mTerminadorErro = "Era esperado fechar parenteses !";
+
+    }
+
+    public void setSeta() {
+
+        mTerminadorPrimario = TokenTipo.SETA;
+        mTerminadorSecundario = TokenTipo.SETA;
+        mTerminadorErro = "Era esperado uma SETA !";
+
+    }
+
 
     public void sePrecisarTipar(AST eTipo) {
         mTipo = eTipo;
@@ -30,16 +76,10 @@ public class AST_Value {
 
     public void initParam(AST ASTPai) {
 
-        mTerminar = TokenTipo.PARENTESES_FECHA;
+        mTerminadorPrimario = TokenTipo.PARENTESES_FECHA;
+        mTerminadorSecundario = TokenTipo.PARENTESES_FECHA;
+
         mTerminarErro = "Era esperado  fechar  parenteses ! : ";
-
-        init(ASTPai);
-    }
-
-    public void initSeta(AST ASTPai) {
-
-        mTerminar = TokenTipo.SETA;
-        mTerminarErro = "Era esperado -> ";
 
         init(ASTPai);
     }
@@ -63,8 +103,11 @@ public class AST_Value {
         ASTPai.getASTS().add(ASTDireita);
 
         AST_Value mAST = new AST_Value(mCompiler);
-        mAST.mTerminar = mTerminar;
+        //  mAST.mTerminar = mTerminar;
         mAST.mTerminarErro = mTerminarErro;
+        mAST.mTerminadorPrimario = mTerminadorPrimario;
+        mAST.mTerminadorSecundario = mTerminadorSecundario;
+        mAST.mTerminadorErro = mTerminadorErro;
 
         if (mTemTipo) {
             mAST.sePrecisarTipar(mTipo);
@@ -80,6 +123,9 @@ public class AST_Value {
 
     public void init(AST ASTPai) {
 
+
+        AST_ValueTypes mAST_ValueTypes = new AST_ValueTypes(mCompiler);
+
         Token TokenD = mCompiler.getTokenAvante();
 
         // System.out.println("Pre Valor : " + TokenD.getConteudo());
@@ -87,45 +133,11 @@ public class AST_Value {
 
         if (TokenD.getTipo() == TokenTipo.PARENTESES_ABRE) {
 
-            ASTPai.setNome("");
-            ASTPai.setValor("BLOCK");
 
-            AST_Value mAST = new AST_Value(mCompiler);
-            mAST.mTerminar = TokenTipo.PARENTESES_FECHA;
-            mAST.mTerminarErro = "Era esperado )";
+            mAST_ValueTypes.dentro_block(ASTPai, mTemTipo, mTipo);
 
-            if (mTemTipo) {
-                mAST.sePrecisarTipar(mTipo);
-            }
+            SegundaParte(ASTPai);
 
-            mAST.init(ASTPai.criarBranch("VALUE"));
-
-            Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                Token TokenC3 = mCompiler.getTokenAvante();
-                if (TokenC3.getTipo() == mTerminar) {
-
-                } else {
-                    System.out.println("Problema C : " + TokenD.getConteudo());
-                }
-
-            } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
-                operation_final("MATCH", ASTPai);
-            } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
-                operation_final("UNMATCH", ASTPai);
-            } else if (TokenC2.getTipo() == TokenTipo.SOMADOR) {
-                operation_final("SUM", ASTPai);
-            } else if (TokenC2.getTipo() == TokenTipo.DIMINUIDOR) {
-                operation_final("SUB", ASTPai);
-            } else if (TokenC2.getTipo() == TokenTipo.MULTIPLICADOR) {
-                operation_final("MUX", ASTPai);
-            } else if (TokenC2.getTipo() == TokenTipo.DIVISOR) {
-                operation_final("DIV", ASTPai);
-            } else if (TokenC2.getTipo() == mTerminar) {
-
-            } else {
-                System.out.println("Problema D : " + TokenC2.getConteudo());
-            }
 
         } else if (TokenD.getTipo() == TokenTipo.CHAVE_ABRE) {
 
@@ -147,77 +159,37 @@ public class AST_Value {
             ASTPai.setValor("DIRECTOR");
 
             AST_Value mAST = new AST_Value(mCompiler);
+            mAST.mTerminadorPrimario = mTerminadorPrimario;
+            mAST.mTerminadorSecundario = mTerminadorSecundario;
+            mAST.mTerminadorErro = mTerminadorErro;
+
             mAST.init(ASTPai.criarBranch("VALUE"));
+
+            mCompiler.voltar();
+
+            Token TokenC3 = mCompiler.getTokenCorrente();
+
+            SegundaParte(ASTPai);
+
 
         } else if (TokenD.getTipo() == TokenTipo.ARROBA) {
 
-            ASTPai.setValor("EXECUTE_LOCAL");
-
-           // AST_Auto mAST = new AST_Auto(mCompiler);
-           // mAST.init(ASTPai);
-
-            Token TokenP2 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado ABRIR PARESENTESES !");
-
-            AST_Value_Argument mAVA = new AST_Value_Argument(mCompiler);
-            mAVA.ReceberArgumentos(ASTPai);
-
+            mAST_ValueTypes.dentro_local(ASTPai, mTemTipo, mTipo);
 
             SegundaParte(ASTPai);
 
 
         } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
 
-            ASTPai.setNome(TokenD.getConteudo());
-            ASTPai.setValor("Num");
+            mAST_ValueTypes.dentro_num(TokenD, ASTPai);
 
             SegundaParte(ASTPai);
+
         } else if (TokenD.getTipo() == TokenTipo.NUMERO_FLOAT) {
 
-            ASTPai.setNome(TokenD.getConteudo());
-            ASTPai.setValor("Float");
+            mAST_ValueTypes.dentro_float(TokenD, ASTPai);
 
             SegundaParte(ASTPai);
-
-        } else if (TokenD.getTipo() == TokenTipo.SETA) {
-
-            ASTPai.setValor("TERNAL");
-
-
-            Token TokenC = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
-
-
-            AST AST_Condicao = ASTPai.criarBranch("CONDITION");
-            AST_Value mAST = new AST_Value(mCompiler);
-            mAST.initParam(AST_Condicao);
-            AST_Condicao.setTipo("CONDITION");
-
-
-            Token TokenQ1 = mCompiler.getTokenAvanteStatus(TokenTipo.QUAD, "Era esperado ::");
-            Token TokenC_1 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
-
-            AST AST_True = ASTPai.criarBranch("TRUE");
-            AST_Value mAST_TRUE = new AST_Value(mCompiler);
-            mAST_TRUE.initParam(AST_True);
-            AST_True.setTipo("TRUE");
-
-
-            if (mCompiler.getTokenFuturo().getTipo() == TokenTipo.PONTOVIRGULA) {
-
-                mCompiler.Proximo();
-
-            } else {
-
-                Token TokenQ2 = mCompiler.getTokenAvanteIDStatus("not", "Era esperado not");
-                Token TokenC_2 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
-
-                AST AST_False = ASTPai.criarBranch("FALSE");
-                AST_Value mAST_False = new AST_Value(mCompiler);
-                mAST_False.initParam(AST_False);
-                AST_False.setTipo("FALSE");
-
-                SegundaParte(ASTPai);
-
-            }
 
 
         } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
@@ -231,44 +203,21 @@ public class AST_Value {
         } else if (TokenD.getTipo() == TokenTipo.ID) {
 
 
-            if (TokenD.mesmoConteudo("init")) {
+            if (TokenD.mesmoConteudo("if")) {
 
-                ASTPai.setValor("INIT");
+                mAST_ValueTypes.dentro_ternal(ASTPai, mTerminadorPrimario, mTerminadorSecundario);
 
+                SegundaParte(ASTPai);
 
-                Token TokenC2 = mCompiler.getTokenAvante();
-                if (TokenC2.getTipo() == TokenTipo.ID) {
+            } else if (TokenD.mesmoConteudo("null")) {
 
-                    ASTPai.setNome(TokenC2.getConteudo());
-                    Token TokenC3 = mCompiler.getTokenAvante();
+                ASTPai.setValor("NULL");
 
+                SegundaParte(ASTPai);
 
-                    if (TokenC3.getTipo() == TokenTipo.PARENTESES_ABRE) {
+            } else if (TokenD.mesmoConteudo("init")) {
 
-                        AST_Value_Argument gAST = new AST_Value_Argument(mCompiler);
-                        gAST.ReceberArgumentos(ASTPai);
-
-                    } else {
-                        System.out.println("Problema IP : " + TokenC3.getConteudo());
-                    }
-
-                } else {
-                    System.out.println("Problema IC : " + TokenC2.getConteudo());
-                }
-
-
-                AST AST_Generico = ASTPai.criarBranch("GENERIC");
-                AST_Generico.setNome("FALSE");
-
-                Token TokenFuturo = mCompiler.getTokenFuturo();
-                if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
-
-                    AST_Generico.setNome("TRUE");
-
-                    AST_Generic mg = new AST_Generic(mCompiler);
-                    mg.init(AST_Generico);
-
-                }
+                mAST_ValueTypes.dentro_init(ASTPai, mTemTipo, mTipo);
 
                 SegundaParte(ASTPai);
 
@@ -276,58 +225,16 @@ public class AST_Value {
             } else if (TokenD.mesmoConteudo("start")) {
 
 
-                ASTPai.setValor("START");
+                mAST_ValueTypes.dentro_start(ASTPai);
 
-                Token TokenC2 = mCompiler.getTokenAvante();
-                if (TokenC2.getTipo() == TokenTipo.ID) {
-
-                    ASTPai.setNome(TokenC2.getConteudo());
-
-                    AST AST_Generico = ASTPai.criarBranch("GENERIC");
-                    AST_Generico.setNome("FALSE");
-
-                    Token TokenFuturo = mCompiler.getTokenFuturo();
-                    if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
-
-                        AST_Generico.setNome("TRUE");
-
-                        AST_Generic mg = new AST_Generic(mCompiler);
-                        mg.init(AST_Generico);
-
-                    }
-
-                    AST_Start mAST = new AST_Start(mCompiler);
-                    mAST.init(ASTPai);
-
-                    SegundaParte(ASTPai);
-
-                } else {
-                    System.out.println("Problema IC : " + TokenC2.getConteudo());
-                }
-
-            } else if (TokenD.mesmoConteudo("functor")){
+                SegundaParte(ASTPai);
 
 
-                ASTPai.setValor("EXECUTE_FUNCTOR");
-                AST AST_Generico = ASTPai.criarBranch("GENERICS");
+            } else if (TokenD.mesmoConteudo("functor")) {
 
 
-                AST_Generic mg = new AST_Generic(mCompiler);
-                mg.init_receberProto(AST_Generico);
+                mAST_ValueTypes.dentro_functor(ASTPai, mTemTipo, mTipo);
 
-
-                Token TokenC3 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um FUNCTOR!");
-
-                ASTPai.setNome(TokenC3.getConteudo());
-
-                Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado abrir paresenteses !");
-
-                AST_Value_Argument mAVA = new AST_Value_Argument(mCompiler);
-                mAVA.ReceberArgumentos(ASTPai);
-
-                //System.out.println("VAL :: " + mCompiler.getTokenCorrente().getConteudo());
-
-              //  Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA, "Era esperado ponto e vinrgula !");
 
                 SegundaParte(ASTPai);
 
@@ -341,8 +248,9 @@ public class AST_Value {
 
                 Token TokenC2 = mCompiler.getTokenAvante();
 
-
-                if (TokenC2.getTipo() == mTerminar) {
+                if (TokenC2.getTipo() == mTerminadorPrimario) {
+                    return;
+                } else if (TokenC2.getTipo() == mTerminadorSecundario) {
                     return;
                 } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
                     operation_final("MATCH", ASTPai);
@@ -357,70 +265,46 @@ public class AST_Value {
                 } else if (TokenC2.getTipo() == TokenTipo.DIVISOR) {
                     operation_final("DIV", ASTPai);
 
-                } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
-
-                    ASTPai.setValor("STAGE");
-                    Token TokenC3 = mCompiler.getTokenAvante();
-                    if (TokenC3.getTipo() == TokenTipo.ID) {
-                        eThis.criarBranch("STAGED").setNome(TokenC3.getConteudo());
-                    } else {
-                        System.out.println("Problema ZZ : " + TokenC3.getConteudo());
-                    }
-
-
-                    SegundaParte(ASTPai);
-
 
                 } else if (TokenC2.getTipo() == TokenTipo.PONTO) {
 
-                    // System.out.println("Vamos pontuar o escopo 1 !");
 
+                    mAST_ValueTypes.dentro_dot(eThis, mTemTipo, mTipo);
 
-                    eThis.setValor("STRUCT");
-
-                    ReceberNovoEscopo(eThis);
 
                     SegundaParte(ASTPai);
 
 
                 } else if (TokenC2.getTipo() == TokenTipo.SETA) {
 
-                    // System.out.println("Vamos pontuar o escopo 1 !");
 
+                    mAST_ValueTypes.dentro_extern(eThis, mTemTipo, mTipo);
 
-                    eThis.setValor("STRUCT_EXTERN");
-
-                    ReceberNovoEscopo(eThis);
 
                     SegundaParte(ASTPai);
 
 
                 } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_ABRE) {
 
-                    eThis.setValor("FUNCT");
 
-                    AST_Value_Argument gAST = new AST_Value_Argument(mCompiler);
-                    gAST.ReceberArgumentos(eThis);
+                    mAST_ValueTypes.dentro_funct(eThis, mTemTipo, mTipo);
 
                     SegundaParte(ASTPai);
 
 
                 } else {
+
                     //  System.out.println("Problema H : " + TokenD.getConteudo());
                 }
+
+            } else if (TokenD.mesmoConteudo("auto")) {
+
+                mCompiler.errarCompilacao("O AUTO nao retornara uma resposta !", TokenD);
 
 
             } else if (TokenD.mesmoConteudo("default")) {
 
-                ASTPai.setNome("");
-                ASTPai.setValor("DEFAULT");
-
-                if (mTemTipo) {
-                    ASTPai.getASTS().add(mTipo);
-                } else {
-                    mCompiler.errarCompilacao("O DEFAULT precisa ser definido em alocacoes !", TokenD);
-                }
-
+                mAST_ValueTypes.dentro_default(TokenD, ASTPai, mTemTipo, mTipo);
 
                 SegundaParte(ASTPai);
 
@@ -434,7 +318,9 @@ public class AST_Value {
                 Token TokenC2 = mCompiler.getTokenAvante();
 
 
-                if (TokenC2.getTipo() == mTerminar) {
+                if (TokenC2.getTipo() == mTerminadorPrimario) {
+                    return;
+                } else if (TokenC2.getTipo() == mTerminadorSecundario) {
                     return;
                 } else if (TokenC2.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
                     operation_final("MATCH", ASTPai);
@@ -451,51 +337,30 @@ public class AST_Value {
 
                 } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
 
-                    ASTPai.setValor("STAGE");
-                    Token TokenC3 = mCompiler.getTokenAvante();
-                    if (TokenC3.getTipo() == TokenTipo.ID) {
-                        ASTPai.criarBranch("STAGED").setNome(TokenC3.getConteudo());
-                    } else {
-                        System.out.println("Problema ZZ : " + TokenC3.getConteudo());
-                    }
-
+                    mAST_ValueTypes.dentro_stages(ASTPai);
 
                     SegundaParte(ASTPai);
 
 
                 } else if (TokenC2.getTipo() == TokenTipo.PONTO) {
 
-                    // System.out.println("Vamos pontuar o escopo 1 !");
 
-
-                    ASTPai.setValor("STRUCT");
-
-                    ReceberNovoEscopo(ASTPai);
+                    mAST_ValueTypes.dentro_struct(ASTPai, mTemTipo, mTipo);
 
                     SegundaParte(ASTPai);
 
 
                 } else if (TokenC2.getTipo() == TokenTipo.SETA) {
 
-                    // System.out.println("Vamos pontuar o escopo 1 !");
 
-
-                    ASTPai.setValor("STRUCT_EXTERN");
-
-                    ReceberNovoEscopo(ASTPai);
+                    mAST_ValueTypes.dentro_extern(ASTPai, mTemTipo, mTipo);
 
                     SegundaParte(ASTPai);
 
 
                 } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_ABRE) {
 
-                    ASTPai.setValor("FUNCT");
-
-                    AST_Value_Argument gAST = new AST_Value_Argument(mCompiler);
-                    if (mTemTipo) {
-                        gAST.sePrecisarTipar(mTipo);
-                    }
-                    gAST.ReceberArgumentos(ASTPai);
+                    mAST_ValueTypes.dentro_funct(ASTPai, mTemTipo, mTipo);
 
                     SegundaParte(ASTPai);
 
@@ -524,9 +389,7 @@ public class AST_Value {
         Token TokenC3 = mCompiler.getTokenAvante();
 
 
-        if (TokenC3.getTipo() == mTerminar) {
-            return;
-        } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
+        if (TokenC3.getTipo() == TokenTipo.COMPARADOR_IGUALDADE) {
             operation_final("MATCH", ASTPai);
         } else if (TokenC3.getTipo() == TokenTipo.COMPARADOR_DIFERENTE) {
             operation_final("UNMATCH", ASTPai);
@@ -538,152 +401,93 @@ public class AST_Value {
             operation_final("MUX", ASTPai);
         } else if (TokenC3.getTipo() == TokenTipo.DIVISOR) {
             operation_final("DIV", ASTPai);
+
+        } else if (TokenC3.getTipo() == mTerminadorPrimario) {
+
+        } else if (TokenC3.getTipo() == mTerminadorSecundario) {
+
         } else {
-            System.out.println("Problema G2 : " + TokenC3.getConteudo());
 
-            Token TKF = mCompiler.getTokenFuturo();
-
-            System.out.println("-> : " + TKF.getConteudo());
-
+            mCompiler.errarCompilacao(mTerminadorErro, TokenC3);
         }
 
     }
 
+    public void terminar() {
 
-    public void ReceberNovoEscopo(AST ASTPai) {
+        Token TokenC2 = mCompiler.getTokenAvante();
 
-        Token TokenD = mCompiler.getTokenAvante();
-
-
-        if (TokenD.getTipo() == TokenTipo.ID) {
-
-            AST mASTSub = ASTPai.criarBranch("INTERNAL");
-            mASTSub.setNome(TokenD.getConteudo());
-
-            mASTSub.setValor("STRUCT_OBJECT");
-
-            Token TokenF = mCompiler.getTokenAvante();
-            if (TokenF.getTipo() == TokenTipo.PARENTESES_ABRE) {
-
-                mASTSub.setValor("STRUCT_FUNCT");
-
-
-                AST_Value_Argument gAST = new AST_Value_Argument(mCompiler);
-                gAST.ReceberArgumentos(mASTSub);
-
-                Token TokenF2 = mCompiler.getTokenAvante();
-
-
-                if (TokenF2.getTipo() == TokenTipo.PONTO) {
-                    //  System.out.println("Vamos pontuar o escopo 2 !");
-
-
-                    mASTSub.setValor("STRUCT");
-
-                    ReceberNovoEscopo(mASTSub);
-
-                    if (mASTSub.existeBranch("ARGUMENTS")) {
-                        if (mASTSub.mesmoValor("STRUCT")) {
-                            mASTSub.setValor("STRUCT_FUNCT");
-                        }
-                    }
-
-
-                } else {
-                    mCompiler.voltar();
-                }
-
-
-            } else if (TokenF.getTipo() == TokenTipo.PONTO) {
-
-
-                // System.out.println("Vamos pontuar o escopo 2 !");
-
-
-                mASTSub.setValor("STRUCT_OBJECT");
-
-                ReceberNovoEscopo(mASTSub);
-
-            } else {
-                mCompiler.voltar();
-            }
-
-
+        if (TokenC2.getTipo() == mTerminadorPrimario) {
+            return;
+        } else if (TokenC2.getTipo() == mTerminadorSecundario) {
+            return;
         } else {
-            System.out.println("Era esperado um ID : " + TokenD.getConteudo());
+            System.out.println("Problema 1 : " + mTerminadorErro + " -->> " + TokenC2.getLinha() + ":" + TokenC2.getPosicao() + " com " + TokenC2.getConteudo());
         }
 
     }
-
 
     public void initUltimo(AST ASTPai) {
 
         Token TokenD = mCompiler.getTokenAvante();
 
+        AST_ValueTypes mAST_ValueTypes = new AST_ValueTypes(mCompiler);
 
         if (TokenD.getTipo() == TokenTipo.PARENTESES_ABRE) {
 
-            ASTPai.setNome("");
-            ASTPai.setValor("BLOCK");
 
-            AST_Value mAST = new AST_Value(mCompiler);
-            mAST.mTerminar = TokenTipo.PARENTESES_FECHA;
-            mAST.mTerminarErro = "Era esperado )";
-            if (mTemTipo) {
-                mAST.sePrecisarTipar(mTipo);
-            }
-            mAST.initParam(ASTPai.criarBranch("VALUE"));
+            mAST_ValueTypes.dentro_block(ASTPai, mTemTipo, mTipo);
 
-            Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                Token TokenC3 = mCompiler.getTokenAvante();
-                if (TokenC3.getTipo() == mTerminar) {
-
-                } else {
-                    System.out.println("Problema C : " + TokenD.getConteudo());
-                }
+            terminar();
 
 
-            } else if (TokenC2.getTipo() == mTerminar) {
-
-            } else {
-                System.out.println("Problema D : " + TokenC2.getConteudo());
-            }
         } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
 
-            ASTPai.setNome(TokenD.getConteudo());
-            ASTPai.setValor("Num");
 
-            Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == mTerminar) {
-                return;
+            mAST_ValueTypes.dentro_num(TokenD, ASTPai);
 
-            } else {
-                System.out.println("Problema 1 : " + TokenC2.getConteudo());
-            }
+
+            terminar();
+
         } else if (TokenD.getTipo() == TokenTipo.NUMERO_FLOAT) {
 
-            ASTPai.setNome(TokenD.getConteudo());
-            ASTPai.setValor("Float");
+            mAST_ValueTypes.dentro_float(TokenD, ASTPai);
 
-            Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == mTerminar) {
-                return;
 
-            } else {
-                System.out.println("Problema 1 : " + TokenC2.getConteudo());
-            }
+            terminar();
+
         } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
 
             ASTPai.setNome(TokenD.getConteudo());
             ASTPai.setValor("Text");
 
-            Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == mTerminar) {
-                return;
-            } else {
-                System.out.println("Problema 2 : " + TokenD.getConteudo());
-            }
+            terminar();
+
+        } else if (TokenD.getTipo() == TokenTipo.NEGADOR) {
+
+            ASTPai.criarBranch("MODE").setNome("INVERSE");
+
+            ASTPai.setNome("");
+            ASTPai.setValor("DIRECTOR");
+
+            AST_Value mAST = new AST_Value(mCompiler);
+            mAST.init(ASTPai.criarBranch("VALUE"));
+
+            mCompiler.voltar();
+
+            //  Token TokenC3 = mCompiler.getTokenCorrente();
+
+            // System.out.println("apos negador : " + TokenC3.getConteudo());
+
+            terminar();
+
+
+        } else if (TokenD.getTipo() == TokenTipo.ARROBA) {
+
+            mAST_ValueTypes.dentro_local(ASTPai, mTemTipo, mTipo);
+
+            terminar();
+
 
         } else if (TokenD.getTipo() == TokenTipo.ID) {
 
@@ -693,71 +497,95 @@ public class AST_Value {
 
             if (TokenD.mesmoConteudo("default")) {
 
-                ASTPai.setNome("");
-                ASTPai.setValor("DEFAULT");
+                mAST_ValueTypes.dentro_default(TokenD, ASTPai, mTemTipo, mTipo);
 
-                if (mTemTipo) {
-                    ASTPai.getASTS().add(mTipo);
-                } else {
-                    mCompiler.errarCompilacao("O DEFAULT precisa ser definido em alocacoes !", TokenD);
-                }
-
-
-            }
-
-            Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == mTerminar) {
+                terminar();
                 return;
-            } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_ABRE) {
 
-                ASTPai.setValor("FUNCT");
+            } else if (TokenD.mesmoConteudo("null")) {
 
-                AST_Value_Argument gAST = new AST_Value_Argument(mCompiler);
-                gAST.ReceberArgumentos(ASTPai);
+                ASTPai.setValor("NULL");
 
-                Token TokenC3 = mCompiler.getTokenAvante();
-                if (TokenC3.getTipo() == mTerminar) {
-                    return;
-                } else {
-                    System.out.println("Problema 6 : " + TokenC3.getConteudo());
-                }
-            } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
+                terminar();
+                return;
 
+            } else if (TokenD.mesmoConteudo("if")) {
 
-                ASTPai.setValor("STAGE");
-                Token TokenC3 = mCompiler.getTokenAvante();
-                if (TokenC3.getTipo() == TokenTipo.ID) {
-                    ASTPai.criarBranch("STAGED").setNome(TokenC3.getConteudo());
-                } else {
-                    System.out.println("Problema ZZ : " + TokenC3.getConteudo());
-                }
+                mAST_ValueTypes.dentro_ternal(ASTPai, mTerminadorPrimario, mTerminadorSecundario);
 
-                Token TokenC4 = mCompiler.getTokenAvante();
-                if (TokenC4.getTipo() == mTerminar) {
-                    return;
-                } else {
-                    System.out.println("Problema EE :  " + TokenC4.getConteudo());
-                }
+                terminar();
+                return;
 
-            } else if (TokenC2.getTipo() == TokenTipo.PONTO) {
+            } else if (TokenD.mesmoConteudo("functor")) {
 
+                mAST_ValueTypes.dentro_functor(ASTPai, mTemTipo, mTipo);
 
-                ASTPai.setValor("STRUCT");
+                terminar();
+                return;
 
-                ReceberNovoEscopo(ASTPai);
+            } else if (TokenD.mesmoConteudo("init")) {
 
-                Token TokenC3 = mCompiler.getTokenAvante();
-                if (TokenC3.getTipo() == mTerminar) {
-                    return;
+                mAST_ValueTypes.dentro_init(ASTPai, mTemTipo, mTipo);
 
-                } else {
-                    System.out.println("Problema A : " + TokenC3.getConteudo());
-                }
+                terminar();
+                return;
 
+            } else if (TokenD.mesmoConteudo("start")) {
+
+                mAST_ValueTypes.dentro_start(ASTPai);
+
+                terminar();
+                return;
 
             } else {
-                System.out.println("Problema 4 : " + TokenC2.getConteudo());
+
+
+                Token TokenC2 = mCompiler.getTokenAvante();
+                if (TokenC2.getTipo() == mTerminadorPrimario) {
+                    return;
+                } else if (TokenC2.getTipo() == mTerminadorSecundario) {
+                    return;
+                } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_ABRE) {
+
+
+                    mAST_ValueTypes.dentro_funct(ASTPai, mTemTipo, mTipo);
+
+
+                    terminar();
+
+                } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
+
+
+                    mAST_ValueTypes.dentro_stages(ASTPai);
+
+
+                    terminar();
+
+
+                } else if (TokenC2.getTipo() == TokenTipo.PONTO) {
+
+
+                    mAST_ValueTypes.dentro_dot(ASTPai, mTemTipo, mTipo);
+
+                    terminar();
+
+
+                } else if (TokenC2.getTipo() == TokenTipo.SETA) {
+
+
+                    mAST_ValueTypes.dentro_extern(ASTPai, mTemTipo, mTipo);
+
+                    terminar();
+
+
+                } else {
+                    System.out.println("Problema XX4 : " + TokenC2.getConteudo());
+                }
+
+                return;
+
             }
+
 
         } else {
 
@@ -769,224 +597,5 @@ public class AST_Value {
 
     }
 
-    public void initUltimoArgumento(AST ASTPai) {
-
-        Token TokenD = mCompiler.getTokenAvante();
-
-
-        if (TokenD.getTipo() == TokenTipo.PARENTESES_ABRE) {
-
-            ASTPai.setNome("");
-            ASTPai.setValor("BLOCK");
-
-            AST_Value mAST = new AST_Value(mCompiler);
-            mAST.mTerminar = TokenTipo.PARENTESES_FECHA;
-            mAST.mTerminarErro = "Era esperado )";
-
-            mAST.init(ASTPai.criarBranch("VALUE"));
-
-            Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == TokenTipo.VIRGULA || TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                return;
-
-            } else {
-                System.out.println("Problema : " + TokenD.getConteudo());
-            }
-
-        } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
-
-            ASTPai.setNome(TokenD.getConteudo());
-            ASTPai.setValor("Num");
-
-            Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == TokenTipo.VIRGULA || TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                return;
-
-            } else {
-                System.out.println("Problema : " + TokenD.getConteudo());
-            }
-
-        } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
-
-            ASTPai.setNome(TokenD.getConteudo());
-            ASTPai.setValor("Text");
-
-            Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == TokenTipo.VIRGULA || TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                return;
-            } else {
-                System.out.println("Problema : " + TokenD.getConteudo());
-            }
-
-        } else if (TokenD.getTipo() == TokenTipo.ID) {
-
-            ASTPai.setNome(TokenD.getConteudo());
-            ASTPai.setValor("ID");
-
-            Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == TokenTipo.VIRGULA || TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                return;
-            } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_ABRE) {
-
-                ASTPai.setValor("FUNCT");
-
-                AST_Value_Argument gAST = new AST_Value_Argument(mCompiler);
-                gAST.ReceberArgumentos(ASTPai);
-
-                Token TokenC3 = mCompiler.getTokenAvante();
-                if (TokenC3.getTipo() == TokenTipo.VIRGULA || TokenC3.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                    return;
-                } else {
-                    System.out.println("Problema x2 : " + TokenC3.getConteudo());
-                }
-
-            } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
-
-                ASTPai.setValor("STAGE");
-                Token TokenC3 = mCompiler.getTokenAvante();
-                if (TokenC3.getTipo() == TokenTipo.ID) {
-                    ASTPai.criarBranch("STAGED").setNome(TokenC3.getConteudo());
-                } else {
-                    System.out.println("Problema ZZ : " + TokenC3.getConteudo());
-                }
-
-                Token TokenC4 = mCompiler.getTokenAvante();
-                if (TokenC4.getTipo() == mTerminar) {
-                    return;
-                } else {
-                    System.out.println("Problema EE :  " + TokenC4.getConteudo());
-                }
-
-            } else if (TokenC2.getTipo() == TokenTipo.PONTO) {
-
-
-                ASTPai.setValor("STRUCT");
-
-                ReceberNovoEscopo(ASTPai);
-
-                Token TokenC3 = mCompiler.getTokenAvante();
-                if (TokenC3.getTipo() == mTerminar) {
-                    return;
-                } else if (TokenC3.getTipo() == TokenTipo.VIRGULA || TokenC3.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                    return;
-                } else {
-                    System.out.println("Problema A : " + TokenC3.getConteudo());
-                }
-
-            } else {
-                System.out.println("Problema : " + TokenD.getConteudo());
-            }
-
-        } else {
-
-            System.out.println("Valorando : " + TokenD.getConteudo());
-
-
-        }
-
-
-    }
-
-    public void initUltimoArgumentoParenteses(AST ASTPai) {
-
-        Token TokenD = mCompiler.getTokenAvante();
-
-
-        if (TokenD.getTipo() == TokenTipo.PARENTESES_ABRE) {
-
-            ASTPai.setNome("");
-            ASTPai.setValor("BLOCK");
-
-            AST_Value mAST = new AST_Value(mCompiler);
-            mAST.mTerminar = TokenTipo.PARENTESES_FECHA;
-            mAST.mTerminarErro = "Era esperado )";
-
-            mAST.init(ASTPai.criarBranch("VALUE"));
-
-            Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                return;
-
-            } else {
-                System.out.println("Problema : " + TokenD.getConteudo());
-            }
-
-        } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
-
-            ASTPai.setNome(TokenD.getConteudo());
-            ASTPai.setValor("Num");
-
-            Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                return;
-
-            } else {
-                System.out.println("Problema : " + TokenD.getConteudo());
-            }
-
-        } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
-
-            ASTPai.setNome(TokenD.getConteudo());
-            ASTPai.setValor("Text");
-
-            Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                return;
-            } else {
-                System.out.println("Problema : " + TokenD.getConteudo());
-            }
-
-        } else if (TokenD.getTipo() == TokenTipo.ID) {
-
-            ASTPai.setNome(TokenD.getConteudo());
-            ASTPai.setValor("ID");
-
-            Token TokenC2 = mCompiler.getTokenAvante();
-            if (TokenC2.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                return;
-            } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_ABRE) {
-
-                ASTPai.setValor("FUNCT");
-
-                AST_Value_Argument gAST = new AST_Value_Argument(mCompiler);
-                gAST.ReceberArgumentos(ASTPai);
-
-                Token TokenC3 = mCompiler.getTokenAvante();
-                if (TokenC3.getTipo() == TokenTipo.PARENTESES_FECHA) {
-                    return;
-                } else {
-                    System.out.println("Problema x2 : " + TokenC3.getConteudo());
-                }
-
-            } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
-
-                ASTPai.setValor("STAGE");
-                Token TokenC3 = mCompiler.getTokenAvante();
-                if (TokenC3.getTipo() == TokenTipo.ID) {
-                    ASTPai.criarBranch("STAGED").setNome(TokenC3.getConteudo());
-                } else {
-                    System.out.println("Problema ZZ : " + TokenC3.getConteudo());
-                }
-
-                Token TokenC4 = mCompiler.getTokenAvante();
-                if (TokenC4.getTipo() == mTerminar) {
-                    return;
-                } else {
-                    System.out.println("Problema EE :  " + TokenC4.getConteudo());
-                }
-
-            } else {
-                System.out.println("Problema : " + TokenD.getConteudo());
-            }
-
-        } else {
-
-            System.out.println("Valorando : " + TokenD.getConteudo());
-
-
-        }
-
-
-    }
 
 }

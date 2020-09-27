@@ -386,6 +386,10 @@ public class RunTime {
 
                 Global.guardar(ASTC);
 
+            } else if (ASTC.mesmoTipo("DEFAULT")) {
+
+                Global.guardar(ASTC);
+
             }
 
         }

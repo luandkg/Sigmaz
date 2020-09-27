@@ -30,6 +30,10 @@ public class AST_Atribuicao {
             AST_Corrente.setValor("VALUE");
             AST_Corrente.setNome(TokenC.getConteudo());
 
+        } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+            AST_Corrente.setValor("VALUE");
+            AST_Corrente.setNome(TokenC.getConteudo());
 
         } else {
             mCompiler.errarCompilacao("Atribuicao desconhecida : " + TokenC.getConteudo(), TokenC);

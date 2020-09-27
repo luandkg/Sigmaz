@@ -23,15 +23,20 @@ public class AST_While {
 
         AST AST_Condicao = AST_Corrente.criarBranch("CONDITION");
         AST_Value mAST = new AST_Value(mCompiler);
-        mAST.initParam(AST_Condicao);
+       // mAST.initParam(AST_Condicao);
+
+        mAST.setBloco();
+        mAST.init(AST_Condicao);
+
+
         AST_Condicao.setTipo("CONDITION");
 
 
-        if (mCompiler.getTokenCorrente().getTipo() == TokenTipo.PARENTESES_FECHA) {
+     //   if (mCompiler.getTokenCorrente().getTipo() == TokenTipo.PARENTESES_FECHA) {
 
-        }else{
-            mCompiler.errarCompilacao("Era esperado fechar paresenteses",mCompiler.getTokenCorrente());
-        }
+       // }else{
+       //     mCompiler.errarCompilacao("Era esperado fechar paresenteses",mCompiler.getTokenCorrente());
+       // }
 
 
         Token TokenSeta = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma SETA");

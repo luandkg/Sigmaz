@@ -56,8 +56,12 @@ public class AST_Step {
             Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.QUAD, "Era esperado :: ");
             Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado ( ");
 
-            AST_Value_Argument mAST = new AST_Value_Argument(mCompiler);
-            mAST.ReceberArgumentos(AST_Corrente);
+          //  AST_Value mAST = new AST_Value(mCompiler);
+          //  mAST.ReceberArgumentos(AST_Corrente);
+
+            AST_ValueTypes mAVA = new AST_ValueTypes(mCompiler);
+            mAVA.ReceberArgumentos(AST_Corrente,false,null);
+
 
             Token TokenC6 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado -> ");
 
@@ -86,8 +90,12 @@ public class AST_Step {
         Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.QUAD, "Era esperado :: ");
         Token TokenC3 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado ( ");
 
-        AST_Value_Argument mAST = new AST_Value_Argument(mCompiler);
-        mAST.ReceberArgumentos(AST_Corrente);
+      //  AST_Value mAST = new AST_Value(mCompiler);
+       // mAST.ReceberArgumentos(AST_Corrente);
+
+        AST_ValueTypes mAVA = new AST_ValueTypes(mCompiler);
+        mAVA.ReceberArgumentos(AST_Corrente,false,null);
+
 
         Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado -> ");
 

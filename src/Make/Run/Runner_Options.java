@@ -20,12 +20,12 @@ public class Runner_Options {
                 if (ASTCGlobal.getBranch("MODE").mesmoNome("default")) {
 
                     mRunMake.getIntellienseTheme().padrao();
-                   // System.out.println("INTELLISENSE THEME -->> PADRAO");
+                    // System.out.println("INTELLISENSE THEME -->> PADRAO");
 
                 }
             } else {
 
-             //   System.out.println("INTELLISENSE THEME -->> PERSONALIZADO ");
+                //   System.out.println("INTELLISENSE THEME -->> PERSONALIZADO ");
 
                 AST eBloco = ASTCGlobal.getBranch("BLOCK");
 
@@ -67,7 +67,7 @@ public class Runner_Options {
 
                     } else {
 
-                   //     System.out.println("Tema para " + eItem.getNome());
+                        //     System.out.println("Tema para " + eItem.getNome());
                     }
 
 
@@ -81,17 +81,17 @@ public class Runner_Options {
                 if (ASTCGlobal.getBranch("MODE").mesmoNome("default")) {
 
                     mRunMake.getIntellienseTheme().padrao();
-                  //  System.out.println("BUILD -->> PADRAO");
+                    //  System.out.println("BUILD -->> PADRAO");
 
                 }
             } else {
 
-              //  System.out.println("BUILD  -->> PERSONALIZADO ");
+                //  System.out.println("BUILD  -->> PERSONALIZADO ");
 
                 AST eBloco = ASTCGlobal.getBranch("BLOCK");
 
                 for (AST eItem : eBloco.getASTS()) {
-                  //  System.out.println("BUILD CONFIG :: " + eItem.getNome());
+                    //  System.out.println("BUILD CONFIG :: " + eItem.getNome());
 
 
                     if (eItem.mesmoNome("object")) {
@@ -102,28 +102,28 @@ public class Runner_Options {
                             mRunMake.setObject(false);
                         }
 
-                    } else   if (eItem.mesmoNome("pos_process")) {
+                    } else if (eItem.mesmoNome("pos_process")) {
 
                         if (eItem.mesmoValor("true")) {
                             mRunMake.setPosProcess(true);
                         } else {
                             mRunMake.setPosProcess(false);
                         }
-                    } else   if (eItem.mesmoNome("stack_process")) {
+                    } else if (eItem.mesmoNome("stack_process")) {
 
                         if (eItem.mesmoValor("true")) {
                             mRunMake.setStackProcess(true);
                         } else {
                             mRunMake.setStackProcess(false);
                         }
-                    } else   if (eItem.mesmoNome("analysis_process")) {
+                    } else if (eItem.mesmoNome("analysis_process")) {
 
                         if (eItem.mesmoValor("true")) {
                             mRunMake.setAnalysisProcess(true);
                         } else {
                             mRunMake.setAnalysisProcess(false);
                         }
-                    } else   if (eItem.mesmoNome("ident_process")) {
+                    } else if (eItem.mesmoNome("ident_process")) {
 
                         if (eItem.mesmoValor("true")) {
                             mRunMake.setIdentProcess(true);
@@ -139,6 +139,37 @@ public class Runner_Options {
             }
 
 
+        } else if (ASTCGlobal.mesmoNome("HIGH_LIGHT")) {
+
+
+            if (ASTCGlobal.getBranch("MODE").mesmoValor("WITH")) {
+                if (ASTCGlobal.getBranch("MODE").mesmoNome("default")) {
+
+                    mRunMake.getSyntaxTheme().padrao();
+
+
+                }
+            } else {
+
+                AST eBloco = ASTCGlobal.getBranch("BLOCK");
+
+                for (AST eItem : eBloco.getASTS()) {
+
+                    if (eItem.mesmoNome("theme")) {
+
+
+                        if (eItem.getBranch("VALUE").getNome().contentEquals("dark")){
+                            mRunMake.getSyntaxTheme().dark();
+                        }else  if (eItem.getBranch("VALUE").getNome().contentEquals("light")){
+                            mRunMake.getSyntaxTheme().light();
+                        }
+
+                    }
+
+                }
+
+            }
+
         }
 
 
@@ -146,7 +177,7 @@ public class Runner_Options {
 
     public Color getCor(AST eItem) {
 
-   //     System.out.println(eItem.ImprimirArvoreDeInstrucoes());
+        //     System.out.println(eItem.ImprimirArvoreDeInstrucoes());
 
         if (eItem.getASTS().size() == 3) {
 

@@ -71,6 +71,35 @@ public class InvokeMath {
             } catch (Exception e) {
                 mRunTime.getErros().add(mErro);
             }
+
+        } else if (eAcao.contentEquals("director_inverse_int")) {
+
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            try {
+                long f1 = Long.parseLong(p1) * (-1);
+
+                mEscopo.setDefinido(eSaida, String.valueOf(f1));
+            } catch (Exception e) {
+                mRunTime.getErros().add(mErro);
+            }
+
+        } else if (eAcao.contentEquals("director_inverse_num")) {
+
+            String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            try {
+                double f1 = Float.parseFloat(p1) * (-1.0);
+
+                mEscopo.setDefinido(eSaida, String.valueOf(f1));
+            } catch (Exception e) {
+                mRunTime.getErros().add(mErro);
+            }
+
         } else {
 
             mRunTime.getErros().add("Invocacao : Ação nao encontrada  ->  " + eAcao);

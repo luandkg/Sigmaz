@@ -6,6 +6,7 @@ import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Executor.Runners.Run_Extern;
 
 import java.util.ArrayList;
+
 import Sigmaz.Utils.AST;
 
 public class Escopo {
@@ -61,8 +62,6 @@ public class Escopo {
     }
 
 
-
-
     public Escopo(RunTime eRunTime, Escopo eEscopoAnterior) {
 
 
@@ -85,7 +84,7 @@ public class Escopo {
         mDebug = new EscopoDebug(this);
         mEscopoStack = new EscopoStack(mRunTime, this);
         mRefers = new ArrayList<String>();
-        mRefersOcultas= new ArrayList<String>();
+        mRefersOcultas = new ArrayList<String>();
 
         mExternos = new ArrayList<Run_Extern>();
 
@@ -93,6 +92,10 @@ public class Escopo {
         mFunctorID = 0;
     }
 
+
+    public void setAnterior(Escopo aEscopo) {
+        mEscopoAnterior=aEscopo;
+    }
 
     public Escopo getEscopoAnterior() {
         return mEscopoAnterior;
@@ -249,7 +252,7 @@ public class Escopo {
             if (eItem.getNulo()) {
                 this.criarParametroStructNula(eNome, eItem.getTipo());
             } else {
-                this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime,this));
+                this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
             }
 
 
@@ -258,7 +261,7 @@ public class Escopo {
             if (eItem.getNulo()) {
                 this.criarParametroNulo(eNome, eItem.getTipo());
             } else {
-                this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime,this));
+                this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
             }
 
 
@@ -284,9 +287,9 @@ public class Escopo {
                 }
             } else {
                 if (eItem.getIsReferenciavel()) {
-                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime,this));
+                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
                 } else {
-                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime,this));
+                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
                 }
             }
 
@@ -300,9 +303,9 @@ public class Escopo {
                 }
             } else {
                 if (eItem.getIsReferenciavel()) {
-                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime,this));
+                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
                 } else {
-                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime,this));
+                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
                 }
             }
 
@@ -333,6 +336,48 @@ public class Escopo {
         }
     }
 
+    public void passarParametroByRefObrigatorio(String eNome, Item eItem) {
+
+//        System.out.println("Ref :: " + eNome + " de " + eItem.getReferencia().getNome());
+
+        if (eItem.getIsEstrutura()) {
+
+            if (eItem.getNulo()) {
+                if (eItem.getIsReferenciavel()) {
+                    this.criarParametroStructNula(eNome, eItem.getTipo());
+                } else {
+                    this.criarParametroStructNula(eNome, eItem.getTipo());
+                }
+            } else {
+                if (eItem.getIsReferenciavel()) {
+                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
+                } else {
+                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
+                }
+            }
+
+        } else {
+
+            if (eItem.getNulo()) {
+                if (eItem.getIsReferenciavel()) {
+                    this.criarParametroNulo(eNome, eItem.getTipo());
+                } else {
+                    this.criarParametroNulo(eNome, eItem.getTipo());
+                }
+            } else {
+                if (eItem.getIsReferenciavel()) {
+                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
+                } else {
+                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
+                }
+            }
+
+
+        }
+
+        this.referenciar(eNome, eItem.getReferencia());
+
+    }
 
 
     public void criarItem(String eNome, Item eItem) {
@@ -343,17 +388,16 @@ public class Escopo {
         Novo.setNulo(eItem.getNulo());
         Novo.setPrimitivo(eItem.getPrimitivo());
         Novo.setIsEstrutura(eItem.getIsEstrutura());
-        Novo.setValor(eItem.getValor(mRunTime,this),mRunTime,this);
+        Novo.setValor(eItem.getValor(mRunTime, this), mRunTime, this);
         mStacks.add(Novo);
 
 
     }
 
 
+    public void criarExternRefered(String eNome, String mTipagem, String eStruct, String eCampo) {
 
-    public void criarExternRefered(String eNome,String mTipagem, String eStruct,String eCampo) {
-
-        if (mEscopoStack.existeAqui(eNome,mStacks)){
+        if (mEscopoStack.existeAqui(eNome, mStacks)) {
             mRunTime.getErros().add("Definicao Duplicada : " + eNome);
         }
 
@@ -364,7 +408,7 @@ public class Escopo {
         Novo.setPrimitivo(false);
         Novo.setIsEstrutura(false);
 
-        Novo.setRefer(eStruct,eCampo);
+        Novo.setRefer(eStruct, eCampo);
 
         mStacks.add(Novo);
 
@@ -372,9 +416,9 @@ public class Escopo {
     }
 
 
-    public void criarExternRefered_Const(String eNome,String mTipagem, String eStruct,String eCampo) {
+    public void criarExternRefered_Const(String eNome, String mTipagem, String eStruct, String eCampo) {
 
-        if (mEscopoStack.existeAqui(eNome,mStacks)){
+        if (mEscopoStack.existeAqui(eNome, mStacks)) {
             mRunTime.getErros().add("Definicao Duplicada : " + eNome);
         }
 
@@ -385,7 +429,7 @@ public class Escopo {
         Novo.setPrimitivo(false);
         Novo.setIsEstrutura(false);
 
-        Novo.setReferConst(eStruct,eCampo);
+        Novo.setReferConst(eStruct, eCampo);
 
         mStacks.add(Novo);
 
@@ -393,7 +437,7 @@ public class Escopo {
     }
 
 
-    public void criarImplicitRefered(String eNome,String mTipagem, String eStruct,String eCampo) {
+    public void criarImplicitRefered(String eNome, String mTipagem, String eStruct, String eCampo) {
 
         Item Novo = new Item(eNome);
         Novo.setModo(0);
@@ -402,14 +446,14 @@ public class Escopo {
         Novo.setPrimitivo(false);
         Novo.setIsEstrutura(false);
 
-        Novo.setImplicit(eStruct,eCampo);
+        Novo.setImplicit(eStruct, eCampo);
 
         mStacks.add(Novo);
 
 
     }
 
-    public void criarImplicitRefered_Const(String eNome,String mTipagem, String eStruct,String eCampo) {
+    public void criarImplicitRefered_Const(String eNome, String mTipagem, String eStruct, String eCampo) {
 
         Item Novo = new Item(eNome);
         Novo.setModo(0);
@@ -418,7 +462,7 @@ public class Escopo {
         Novo.setPrimitivo(false);
         Novo.setIsEstrutura(false);
 
-        Novo.setImplicitConst(eStruct,eCampo);
+        Novo.setImplicitConst(eStruct, eCampo);
 
         mStacks.add(Novo);
 
@@ -449,8 +493,6 @@ public class Escopo {
     }
 
 
-
-
     public int getContagem() {
         int i = 0;
 
@@ -479,9 +521,6 @@ public class Escopo {
     public ArrayList<AST> getGuardadosCompleto() {
         return mAO.getGuardadosCompleto();
     }
-
-
-
 
 
     public void setCancelar(boolean eCancelar) {
@@ -519,10 +558,12 @@ public class Escopo {
     public void criarMutavelNula(String eNome, String eTipo) {
         mEscopoStack.alocarMutavelPrimitivo(eNome, eTipo, false, "");
     }
-    public void criarMutavelPrimitivo(String eNome, String eTipo,String eValor) {
+
+    public void criarMutavelPrimitivo(String eNome, String eTipo, String eValor) {
         mEscopoStack.alocarMutavelPrimitivo(eNome, eTipo, true, eValor);
     }
-    public void criarMutavelStruct(String eNome, String eTipo,String eValor) {
+
+    public void criarMutavelStruct(String eNome, String eTipo, String eValor) {
         mEscopoStack.alocarMutavelStruct(eNome, eTipo, true, eValor);
     }
 
@@ -538,7 +579,7 @@ public class Escopo {
     }
 
     public Item criarDefinicao(String eNome, String eTipo, String eValor) {
-      return  mEscopoStack.alocarPrimitivo(eNome, eTipo, false, true, eValor);
+        return mEscopoStack.alocarPrimitivo(eNome, eTipo, false, true, eValor);
     }
 
     public void criarConstante(String eNome, String eTipo, String eValor) {
@@ -585,9 +626,6 @@ public class Escopo {
     }
 
 
-
-
-
     public void setDefinido(String eNome, String eValor) {
         mEscopoStack.setDefinido(eNome, eValor);
     }
@@ -629,43 +667,47 @@ public class Escopo {
     }
 
 
-
     // FUNCAO LOCAL
-    private boolean mTemLocal=false;
+    private boolean mTemLocal = false;
     private AST mLocal;
 
-    public void definirLocal(AST eLocal){
+    public void definirLocal(AST eLocal) {
 
-        mLocal=eLocal;
-        mTemLocal=true;
+        mLocal = eLocal;
+        mTemLocal = true;
 
     }
 
-    public boolean temLocal(){return mTemLocal;}
-    public AST getLocal(){return mLocal;}
+    public boolean temLocal() {
+        return mTemLocal;
+    }
 
-    public boolean temLocalAnteriormente(){
+    public AST getLocal() {
+        return mLocal;
+    }
 
-        if (mTemLocal){
+    public boolean temLocalAnteriormente() {
+
+        if (mTemLocal) {
             return mTemLocal;
-        }else{
-            if (mEscopoAnterior !=null){
+        } else {
+            if (mEscopoAnterior != null) {
                 return mEscopoAnterior.temLocalAnteriormente();
-            }else{
+            } else {
                 return false;
             }
         }
 
     }
 
-    public AST getLocalAnteriormente(){
+    public AST getLocalAnteriormente() {
 
-        if (mTemLocal){
+        if (mTemLocal) {
             return getLocal();
-        }else{
-            if (mEscopoAnterior !=null){
+        } else {
+            if (mEscopoAnterior != null) {
                 return mEscopoAnterior.getLocal();
-            }else{
+            } else {
                 return null;
             }
         }

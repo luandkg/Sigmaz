@@ -26,10 +26,13 @@ public class AST_Options {
             AST_Corrente.setNome("INTELLISENSE");
         } else   if (TokenNome.mesmoConteudo("build")) {
             AST_Corrente.setNome("BUILD");
-
+        } else   if (TokenNome.mesmoConteudo("highlight")) {
+            AST_Corrente.setNome("HIGH_LIGHT");
         } else {
             mCompiler.errarCompilacao("Tipo de opcao desconhecido : " + TokenNome.getConteudo(), TokenNome);
         }
+
+
 
         Token efuturo = mCompiler.getTokenFuturo();
 

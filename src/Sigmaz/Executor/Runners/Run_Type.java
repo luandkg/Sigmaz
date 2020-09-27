@@ -23,12 +23,16 @@ public class Run_Type {
     private String mTipoCompleto;
     private  ArrayList<String> dRefers;
 
+    private ArrayList<String> mAlocados;
+
     public Run_Type(RunTime eRunTime) {
 
         mRunTime = eRunTime;
         mTipoCompleto = "";
         dRefers=new  ArrayList<String>();
         mLocal = "Run_Type";
+
+        mAlocados = new ArrayList<>();
 
     }
 
@@ -56,19 +60,21 @@ public class Run_Type {
         return mTipoCompleto;
     }
 
-    public void init(String eNome, AST ASTCorrente, Escopo BuscadorDeArgumentos) {
+    public void init( AST ASTCorrente, Escopo BuscadorDeArgumentos) {
 
         mEscopo = new Escopo(mRunTime, BuscadorDeArgumentos);
-        mEscopo.setNome(eNome);
         mEscopo.setEstrutura(true);
 
         mStructCorpo = null;
          mStructGeneric = null;
 
-        mNome = ASTCorrente.getNome();
+
         mStructNome = ASTCorrente.getNome();
 
-        mEscopo.setNome(eNome);
+          long HEAPID = mRunTime.getHEAPID();
+        mNome = "<Type::" + ASTCorrente.getNome() + ":" + HEAPID + ">";
+
+        mAlocados.clear();
 
 
         boolean enc = false;
@@ -95,6 +101,7 @@ public class Run_Type {
 
             if (ASTC.mesmoTipo("STRUCT")) {
                 if (ASTC.mesmoNome(mStructNome)) {
+
 
                     mStructGeneric = ASTC.getBranch("GENERIC");
                     enc = true;
@@ -232,14 +239,13 @@ public class Run_Type {
         }
 
 
-        ArrayList<String> mAlocados = new ArrayList<>();
 
         for (AST ASTC : mStructCorpo.getASTS()) {
 
 
             if (ASTC.mesmoTipo("DEFINE")) {
 
-                mAlocados.add(ASTC.getNome());
+                adicionarCampo(ASTC.getNome());
 
                 Run_Def mAST = new Run_Def(mRunTime, mEscopo);
                 mAST.init(ASTC);
@@ -249,7 +255,7 @@ public class Run_Type {
 
             } else if (ASTC.mesmoTipo("MOCKIZ")) {
 
-                mAlocados.add(ASTC.getNome());
+                 adicionarCampo(ASTC.getNome());
 
                 Run_Moc mAST = new Run_Moc(mRunTime, mEscopo);
                 mAST.init(ASTC);
@@ -263,7 +269,7 @@ public class Run_Type {
 
         for (AST mDentro : ASTCorrente.getBranch("STARTED").getASTS()) {
 
-            if (!mAlocados.contains(mDentro.getBranch("SETTABLE").getNome())) {
+            if (!getCampos().contains(mDentro.getBranch("SETTABLE").getNome())) {
                 mRunTime.errar(mLocal,mStructNome + "." + mDentro.getBranch("SETTABLE").getNome() + " : Membro nao existe !");
                 return;
             }
@@ -278,6 +284,20 @@ public class Run_Type {
 
     }
 
+    public void adicionarCampo(String eCampo) {
+
+        mAlocados.add(eCampo);
+
+    }
+
+    public void setAnterior(Escopo aEscopo)
+    {
+     mEscopo.setAnterior(aEscopo);
+    }
+
+    public ArrayList<String> getCampos() {
+        return mAlocados;
+    }
 
     public Item init_Object(AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
 

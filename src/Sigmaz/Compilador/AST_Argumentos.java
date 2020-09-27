@@ -51,7 +51,7 @@ public class AST_Argumentos {
                     Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro");
                     ASTCorrente.setNome(TokenC4.getConteudo());
 
-                }else if (TokenD.mesmoConteudo("opt")) {
+                } else if (TokenD.mesmoConteudo("opt")) {
                     mOpt = true;
 
                     ASTCorrente.setValor("OPT");
@@ -65,7 +65,7 @@ public class AST_Argumentos {
                         Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro");
                         ASTCorrente.setNome(TokenC5.getConteudo());
 
-                    }else{
+                    } else {
 
                         ASTCorrente.setNome(TokenC4.getConteudo());
 
@@ -83,28 +83,31 @@ public class AST_Argumentos {
 
                 Token P2 = null;
 
-                if (mOpt){
+                if (mOpt) {
 
                     Token TokenP3 = mCompiler.getTokenAvante();
-               if (TokenP3.getTipo() == TokenTipo.IGUAL) {
+                    if (TokenP3.getTipo() == TokenTipo.IGUAL) {
 
-                   AST ASTValue =  ASTCorrente.criarBranch("VALUE");
-                   AST_Value_Argument gAST = new AST_Value_Argument(mCompiler);
-                   gAST.initArgumento(ASTValue);
+                        AST ASTValue = ASTCorrente.criarBranch("VALUE");
 
-               }else{
-                   mCompiler.errarCompilacao("Era esperado o valor opcional do argumento " + ASTCorrente.getNome() + " !", TokenC);
-               }
+                        AST_Value gAST = new AST_Value(mCompiler);
+                        gAST.setBuscadorDeArgumentos();
+
+                        gAST.init(ASTValue);
+
+                        ASTValue.setTipo("VALUE");
+
+                    } else {
+                        mCompiler.errarCompilacao("Era esperado o valor opcional do argumento " + ASTCorrente.getNome() + " !", TokenC);
+                    }
 
 
+                    P2 = mCompiler.getTokenCorrente();
 
-                    P2=  mCompiler.getTokenCorrente();
+                } else {
 
-                } else{
-
-                    P2=  mCompiler.getTokenAvante();
+                    P2 = mCompiler.getTokenAvante();
                 }
-
 
 
                 if (P2.getTipo() == TokenTipo.VIRGULA) {

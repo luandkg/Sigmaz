@@ -29,8 +29,11 @@ public class AST_ExecuteAuto {
 
         Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado abrir paresenteses !");
 
-        AST_Value_Argument mAVA = new AST_Value_Argument(mCompiler);
-        mAVA.ReceberArgumentos(AST_Corrente);
+       // AST_Value mAVA = new AST_Value(mCompiler);
+        //mAVA.ReceberArgumentos(AST_Corrente);
+
+        AST_ValueTypes mAVA = new AST_ValueTypes(mCompiler);
+        mAVA.ReceberArgumentos(AST_Corrente,false,null);
 
         //System.out.println("VAL :: " + mCompiler.getTokenCorrente().getConteudo());
 

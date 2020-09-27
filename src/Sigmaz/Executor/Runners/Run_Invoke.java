@@ -512,6 +512,130 @@ public class Run_Invoke {
 
     }
 
+    public String getArgumento(AST ASTArgumentos, int e) {
+
+        int i = 0;
+        String ret = "";
+
+        for (AST eAST : ASTArgumentos.getASTS()) {
+
+            if (eAST.mesmoTipo("ARGUMENT")) {
+
+                //System.out.println(" \t - Argumento : " + eAST.getNome() + " : " + eAST.getValor());
+
+                if (i==e){
+
+                    if (eAST.mesmoValor("ID")) {
+                        String eRet = "";
+
+                        if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
+                            eRet = eAST.getNome();
+                        } else {
+                            eRet = mEscopo.getDefinido(eAST.getNome());
+                        }
+
+                        ret = eRet;
+
+
+                    } else if (eAST.mesmoValor("Num")) {
+                        ret = eAST.getNome();
+                    } else if (eAST.mesmoValor("Float")) {
+                        ret = eAST.getNome();
+                    } else if (eAST.mesmoValor("Text")) {
+                        ret = eAST.getNome();
+                    }
+
+
+                }
+
+
+                i += 1;
+
+            }
+
+        }
+
+        return ret;
+
+
+    }
+
+    public String getArgumentoTipo(AST ASTArgumentos, int e) {
+
+        int i = 0;
+        String ret = "";
+
+        for (AST eAST : ASTArgumentos.getASTS()) {
+
+            if (eAST.mesmoTipo("ARGUMENT")) {
+
+                //System.out.println(" \t - Argumento : " + eAST.getNome() + " : " + eAST.getValor());
+
+                if (i==e){
+
+                    if (eAST.mesmoValor("ID")) {
+                        String eRet = "";
+
+                        if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
+                            eRet =  "bool";
+                        } else {
+                            eRet = mEscopo.getDefinidoTipo(eAST.getNome());
+                        }
+
+                        ret = eRet;
+
+
+                    } else if (eAST.mesmoValor("Num")) {
+                        ret ="int";
+                    } else if (eAST.mesmoValor("Float")) {
+                        ret ="num";
+                    } else if (eAST.mesmoValor("Text")) {
+                        ret = "string";
+                    }
+
+
+                }
+
+
+                i += 1;
+
+            }
+
+        }
+
+        return ret;
+
+
+    }
+
+    public String getArgumentoNome(AST ASTArgumentos, int e) {
+
+        int i = 0;
+        String ret = "";
+
+        for (AST eAST : ASTArgumentos.getASTS()) {
+
+            if (eAST.mesmoTipo("ARGUMENT")) {
+
+                //System.out.println(" \t - Argumento : " + eAST.getNome() + " : " + eAST.getValor());
+
+                if (i==e){
+
+                    ret = eAST.getNome();
+
+                }
+
+
+                i += 1;
+
+            }
+
+        }
+
+        return ret;
+
+
+    }
 
 }
 

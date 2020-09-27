@@ -367,7 +367,7 @@ public class Sigmaz_Fases {
         System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
         System.out.println("");
 
-      //  System.out.println(RunTimeC.getArvoreDeInstrucoes());
+       System.out.println(RunTimeC.getArvoreDeInstrucoes());
 
         System.out.println("");
         System.out.println("----------------------------------------------");

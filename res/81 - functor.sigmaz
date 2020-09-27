@@ -10,6 +10,14 @@ act operando ( ) {
     def c : int = functor<int>somatorio(12,8);
     def d : num = functor<num>somatorio(12.4,8.6);
     #def e : bool = functor<bool>somatorio(true,false);
+    #def f : num = auto<num>somatorio(12.4,8.6);
+
+    def duplo : int = functor<int>somatorio(12,8) ++ functor<int>somatorio(20,20);
+
+
+    auto <num>somatorio(0.6,0.4);
+
+    functor <num>somatorio(0.6,21.5);
 
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 

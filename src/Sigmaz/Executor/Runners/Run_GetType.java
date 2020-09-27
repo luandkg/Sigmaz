@@ -4,13 +4,14 @@ import Sigmaz.Executor.Escopo;
 import Sigmaz.Executor.RunTime;
 
 import java.util.ArrayList;
+
 import Sigmaz.Utils.AST;
 
 public class Run_GetType {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
-private ArrayList<String> dRefers;
+    private ArrayList<String> dRefers;
     private String mLocal;
 
     public Run_GetType(RunTime eRunTime, Escopo eEscopo) {
@@ -21,29 +22,32 @@ private ArrayList<String> dRefers;
         dRefers = new ArrayList<>();
         mLocal = "Run_GetType";
 
+
     }
 
-    public Run_GetType(RunTime eRunTime, Escopo eEscopo,ArrayList<String> mRefers) {
+    public Run_GetType(RunTime eRunTime, Escopo eEscopo, ArrayList<String> mRefers) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
-        dRefers=mRefers;
+        dRefers = mRefers;
 
     }
 
-    public void adicionarRefers(ArrayList<String> maisRefers){
+    public void adicionarRefers(ArrayList<String> maisRefers) {
 
         dRefers.addAll(maisRefers);
 
     }
 
 
+
+
     public String getTipagemSimples(String mTipagem) {
 
 
         ArrayList<String> maisRefers = new ArrayList<String>();
-        maisRefers.addAll( dRefers);
-        maisRefers.addAll( mEscopo.getRefers());
+        maisRefers.addAll(dRefers);
+        maisRefers.addAll(mEscopo.getRefers());
 
 
         int i = 0;
@@ -55,10 +59,10 @@ private ArrayList<String> dRefers;
         while (i < o) {
             String l = mTipagem.charAt(i) + "";
 
-            if (l.contentEquals("<")){
+            if (l.contentEquals("<")) {
                 break;
-            }else{
-                mPrefixo+=l;
+            } else {
+                mPrefixo += l;
             }
 
             i += 1;
@@ -66,10 +70,9 @@ private ArrayList<String> dRefers;
 
         while (i < o) {
             String l = mTipagem.charAt(i) + "";
-            mSufixo+=l;
+            mSufixo += l;
             i += 1;
         }
-
 
 
         if (mPrefixo.contentEquals("any")) {
@@ -171,7 +174,7 @@ private ArrayList<String> dRefers;
     public String getTipagemBruta(AST eAST) {
 
 
-        String mTipagem =(eAST.getNome());
+        String mTipagem = (eAST.getNome());
 
 
         if (eAST.mesmoValor("GENERIC")) {

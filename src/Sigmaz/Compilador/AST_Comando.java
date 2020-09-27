@@ -79,8 +79,8 @@ public class AST_Comando {
 
                 ASTCorrente.setValor("STRUCT");
 
-                AST_Value mA = new AST_Value(mCompiler) ;
-                mA.ReceberNovoEscopo(ASTCorrente);
+                AST_ValueTypes mA = new AST_ValueTypes(mCompiler) ;
+                mA.ReceberNovoEscopo(ASTCorrente,false,null);
 
                 Token P3 = mCompiler.getTokenAvante();
 
@@ -125,8 +125,8 @@ public class AST_Comando {
                 ASTCorrente.setValor("STRUCT_EXTERN");
 
 
-                AST_Value mA = new AST_Value(mCompiler) ;
-                mA.ReceberNovoEscopo(ASTCorrente);
+                AST_ValueTypes mA = new AST_ValueTypes(mCompiler) ;
+                mA.ReceberNovoEscopo(ASTCorrente,false,null);
 
                 Token P3 = mCompiler.getTokenAvante();
 
@@ -166,8 +166,12 @@ public class AST_Comando {
 
                 ASTCorrente.setValor("FUNCT");
 
-                AST_Value_Argument mAVA = new AST_Value_Argument(mCompiler);
-                mAVA.ReceberArgumentos(ASTCorrente);
+              //  AST_Value_Argument mAVA = new AST_Value_Argument(mCompiler);
+             //   mAVA.ReceberArgumentos(ASTCorrente);
+
+                AST_ValueTypes mAVA = new AST_ValueTypes(mCompiler);
+                mAVA.ReceberArgumentos(ASTCorrente,false,null);
+
 
                 Token P3 = mCompiler.getTokenAvante();
 

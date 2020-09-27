@@ -20,6 +20,7 @@ import Sigmaz.Utils.Erro;
 import Sigmaz.Utils.Identador;
 import Sigmaz.Sigmaz_SemObjeto;
 import Sigmaz.Internal;
+import Sigmaz.Utils.Syntax_HighLight;
 
 public class AppUtils {
 
@@ -434,6 +435,35 @@ public class AppUtils {
         mSigmazTestes.init(mLocal, "SIGMAZ - TESTES UNITARIOS");
 
     }
+
+
+    public static void SYNTAX_HIGHLIGHT(int eIndice, ArrayList<String> mArquivos,String eLocal) {
+
+
+        int iContando = 0;
+        boolean enc = false;
+
+        for (String mArquivo : mArquivos) {
+            iContando += 1;
+            if (iContando == eIndice) {
+
+                enc = true;
+
+                Syntax_HighLight mSyntax_HighLight = new Syntax_HighLight();
+                mSyntax_HighLight.init(mArquivo,eLocal);
+
+
+                break;
+            }
+        }
+
+        if (!enc) {
+            System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
+        }
+
+
+    }
+
 
     public static void IDENTAR(int eIndice, ArrayList<String> mArquivos) {
 

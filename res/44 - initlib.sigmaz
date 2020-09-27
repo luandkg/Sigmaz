@@ -7,7 +7,7 @@ act inicio ( ) {
 
 	def valor : int = 1;
 	
-	def ternal : int = -> ( maior ( valor , 2 ) ) :: ( +1 ) not ( -1 );
+	def ternal : int = if ( maior ( valor , 2 ) ) :: ( +1 ) not ( -1 );
 	
 	def ale : int =  aleatorio ( 0 , 100 ) ;
 

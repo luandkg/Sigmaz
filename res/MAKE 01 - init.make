@@ -19,10 +19,12 @@ status -> " -->> Executando MAKE pela primeira vez";
     build -> "build";
     source -> "";
     intellisenses -> "intellisenses";
+    highlights -> "highlights";
 
     status -> " -->> SOURCE :: ${SOURCE}";
     status -> " -->> BUILD :: ${BUILD}";
     status -> " -->> INTELLISENSE :: ${INTELLISENSE}";
+    status -> " -->> HIGH_LIGHT :: ${HIGH_LIGHT}";
 
 
 # REMOVER TEMPORARIOS
@@ -79,3 +81,21 @@ status -> " -->> Executando MAKE pela primeira vez";
     ast -> "num.a";
 
     #generate dependency "LISTA DE DEPENDENCIAS" with -> "libs/lib.sigmaz";
+
+    status -> " -->> SYNTAX DARK - HIGH LIGHT -> LIB";
+
+
+# GERAR SYNTAX HIGH LIGHT
+
+    options highlight {
+           theme = "dark";
+    };
+
+    generate highlight "dark_" with -> "libs/lib.sigmaz";
+
+    status -> " -->> SYNTAX LIGHT - HIGH LIGHT -> LIB";
+
+    options highlight {
+           theme = "light";
+    };
+    generate highlight "light_" with -> "libs/lib.sigmaz";

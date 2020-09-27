@@ -38,8 +38,9 @@ operator !! ( a : int , b : int ) : bool {
 	return c;
 }
 director ! ( a : int ) : int {
-	def b : int = a ++ int ( ( -1 ) );
-	return b;
+	def c : int;
+	invoke math -> director_inverse_int ( a ) :: c;
+	return c;
 }
 func somar ( a : int , b : int ) : int {
 	def c1 : int = null;

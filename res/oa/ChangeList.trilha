@@ -45,3 +45,11 @@
 2020 09 16  -->>  Função Anônima
 
 2020 09 22  -->>  Pre Processamento
+
+2020 09 25  -->>  Operador Ternário de "->" para "if"
+2020 09 25  -->>  Exclusão : AST_Value_ItemVector
+2020 09 25  -->>  Exclusão : AST_Value_Argument
+2020 09 25  -->>  Exclusão : AST_Value_Parenteses
+2020 09 25  -->>  Exclusao : AST_Value_Operator
+2020 09 26  -->>  Alteração do Sistema de CAST : Getter
+2020 09 26  -->>  Alteração do Sistema de CAST : Setter

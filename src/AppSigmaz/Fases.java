@@ -21,5 +21,6 @@ public enum Fases {
     INTERNO,
     MAKE_LEXER,
     MAKE_EXECUTAR,
+    SYNTAX_HIGHLIGHT,
     APP
 }

@@ -18,13 +18,21 @@ public class AST_When {
         AST AST_Corrente = new AST("WHEN");
         ASTPai.getASTS().add(AST_Corrente);
 
-        mCompiler.Proximo();
+      //  mCompiler.Proximo();
 
         AST AST_Arguments = AST_Corrente.criarBranch("CHOOSABLE");
         AST AST_Casos = AST_Corrente.criarBranch("CASES");
 
+        Token TokenPrimeiro = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
+
         AST_Value mAST = new AST_Value(mCompiler);
-        mAST.initParam(AST_Arguments);
+      //  mAST.initParam(AST_Arguments);
+        mAST.setBloco();
+        mAST.init(AST_Arguments);
+
+
+       // Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
+
 
         Token TokenC6 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado -> ");
 
@@ -44,11 +52,16 @@ public class AST_When {
                 break;
             } else  if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo("case")) {
 
+                //Token TokenPrimeiroCaso = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
+
                 AST_Value mVal = new AST_Value(mCompiler);
 
                 AST AST_CASE = AST_Casos.criarBranch("CASE");
                 AST AST_CONDITION = AST_CASE.criarBranch("CONDITION");
-                mVal.initSeta(AST_CONDITION);
+               // mVal.initSeta(AST_CONDITION);
+
+                mAST.setSeta();
+                mAST.init(AST_CONDITION);
 
                 AST_CONDITION.setTipo("CONDITION");
 

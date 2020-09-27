@@ -2,6 +2,7 @@ call iniciar -> operando ( );
 
 #Luan
 act operando ( ) {
+
 	def a1 : num = 10.0;
 	def a2 : num = 10.0;
 	def a3 : bool = true;
@@ -14,6 +15,7 @@ act operando ( ) {
 	def bb : num = somar ( 2.0 , 5.0 );
 	def bl : bool = true;
 	def ll : bool = igual ( bl , igual ( false , false ) );
+
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
 func somar ( a : num , b : num ) : num {

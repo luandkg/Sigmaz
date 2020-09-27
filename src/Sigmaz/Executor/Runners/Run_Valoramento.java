@@ -31,6 +31,10 @@ public class Run_Valoramento {
 
         // System.out.println("Def Retorno : " + mAST.getRetornoTipo());
 
+     //   System.out.println("Valoramento Type : " + mAST.getRetornoTipo());
+     //   System.out.println("Valoramento Primitivo : " + mAST.getIsPrimitivo());
+
+
         if (mRunTime.getErros().size() > 0) {
             //    System.out.println(" -->> " + mRunTime.getErros().get(0));
             return mAST;
@@ -186,6 +190,10 @@ public class Run_Valoramento {
         } else {
             mAST.setRetornoTipo(mTipagem);
         }
+
+       // System.out.println("Valoramento Type : " + mAST.getRetornoTipo());
+       // System.out.println("Valoramento Primitivo : " + mAST.getIsPrimitivo());
+
 
         return mAST;
 

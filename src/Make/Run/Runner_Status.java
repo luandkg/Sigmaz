@@ -27,6 +27,10 @@ public class Runner_Status {
             eConteudo=   eConteudo.replace("${INTELLISENSE}",mRunMake.getIntellisenses());
         }
 
+        if (eConteudo.contains("${HIGH_LIGHT}")) {
+            eConteudo=   eConteudo.replace("${HIGH_LIGHT}",mRunMake.getHighLights());
+        }
+
         System.out.println(eConteudo);
 
     }

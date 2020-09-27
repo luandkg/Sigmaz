@@ -128,6 +128,12 @@ public class Compiler {
                 AST_Source ePeca = new AST_Source(this);
                 ePeca.init(mAST);
 
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("highlights")) {
+
+                AST_HighLight ePeca = new AST_HighLight(this);
+                ePeca.init(mAST);
+
+
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("intellisenses")) {
 
                 AST_Intellisenses ePeca = new AST_Intellisenses(this);

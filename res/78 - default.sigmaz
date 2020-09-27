@@ -1,5 +1,21 @@
 call iniciar -> operando ( );
+default -> int {
+	return 0;
+}
+default -> bool {
+	return true;
+}
+default -> num {
+	return 0.0;
+}
+default -> string {
+	return "";
+}
+
 act operando ( ) {
+	def z1 : int = 6;
+	def z2 : int = 3;
+	z1 = z1;
 	def a : int = default;
 	def b : num = default;
 	def c : bool = default;
@@ -22,25 +38,28 @@ act operando ( ) {
 	def rr : int = somar ( default , default ) ** ( 3 ++ default );
 	
 	#def xa_1 : XA = default;
-
-
 	def neg_1 : neg = -5;
-    def int_1 : int = neg_1;
-    def neg_2 : int =default;
-
-    def n1 : neg = -1;
-    def n2 : neg = -2;
-
-    def n3 : neg = n1**n2;
-
-
+	def int_1 : int = neg_1;
+	def neg_2 : int = default;
+	def n1 : neg = -1;
+	def n2 : neg = -2;
+	
+	#def n3 : neg = n1**n2;
+	
+	#def n4 : neg = n1**2;
+	
+	#def n5 : neg = n1**-2;
+	def primario : int = 12;
+	def secundario : neg = null;
+	invoke casting -> move_content ( primario ) :: secundario;
+	def terciario : neg = neg ( -13 );
+	def i1 : int = n1;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }
 
 struct XA {
 	
 }
-
 operator ++ ( a : int , b : int ) : int {
 	def c : int = 0;
 	invoke math -> operator_sum_int ( a , b ) :: c;
@@ -56,49 +75,54 @@ func somar ( a : int , b : int ) : int {
 	invoke math -> operator_sum_int ( a , b ) :: c;
 	return c;
 }
-
 func maior ( a : int , b : int ) : bool {
 	def c : bool = null;
 	invoke math -> operator_great_int ( a , b ) :: c;
 	return c;
 }
-
-
 func menor ( a : int , b : int ) : bool {
 	def c : bool = null;
 	invoke math -> operator_less_int ( a , b ) :: c;
 	return c;
 }
-
-
 cast neg {
-
 	getter a : int -> {
 		if ( maior ( a , 0 ) ) -> {
 			exception "Nao e possivel obter valores positivos !";
 		}
-		return a;
+		
 	}
-
 	setter b : int -> {
 		if ( maior ( b , 0 ) ) -> {
-			exception "Nao e possivel obter valores positivos !";
+			exception "Nao e possivel atribuir valores positivos !";
 		}
-		return b;
+		
 	}
-
-	default -> { return -1; }
-
+	default -> {
+		return -1;
+	}
+	
 }
-
 operator ** ( a : neg , b : neg ) : neg {
 	def c : int = null;
 	def a1 : int = a;
 	def b1 : int = b;
-
 	invoke math -> operator_mux_int ( a1 , b1 ) :: c;
-
-	def d : neg = neg(c);
-
+	if ( maior ( c , 0 ) ) -> {
+		exception "Operacao invalida entre os negativos !";
+	}
+	def d : neg = c;
+	return d;
+}
+operator ** ( a : neg , b : int ) : neg {
+	def c : int = null;
+	def a1 : int = a;
+	def b1 : int = b;
+	invoke math -> operator_mux_int ( a1 , b1 ) :: c;
+	if ( maior ( c , 0 ) ) -> {
+		exception "Operacao invalida entre os negativos !";
+	}
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	def d : neg = c;
 	return d;
 }

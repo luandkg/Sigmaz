@@ -39,7 +39,9 @@ public class Run_Any {
             return null;
         }
 
-        //  System.out.println("Procurando FUNC " + ASTCorrente.getNome());
+       //   System.out.println("Procurando FUNC " + ASTCorrente.getNome());
+      //  System.out.println(ASTCorrente.ImprimirArvoreDeInstrucoes());
+
         //  System.out.println("\t - Argumentos :  " + mArgumentos.size());
 
         boolean enc = false;

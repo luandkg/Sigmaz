@@ -1,6 +1,7 @@
 package Sigmaz.Executor.Invokes;
 
 import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Executor.Runners.Run_Invoke;
 import Sigmaz.Utils.AST;
@@ -203,7 +204,7 @@ public class InvokeCasting {
                 mEscopo.setDefinido(eSaida, "false");
             }
 
-           // System.out.println("VERIFICANDO NULIDADE :: " + p1 + " ERROS : " + mRunTime.getErros().size());
+            // System.out.println("VERIFICANDO NULIDADE :: " + p1 + " ERROS : " + mRunTime.getErros().size());
 
         } else if (eAcao.contentEquals("inverse")) {
 
@@ -254,6 +255,53 @@ public class InvokeCasting {
 
 
             mEscopo.setDefinido(eSaida, tipo);
+
+        } else if (eAcao.contentEquals("cast_datatype")) {
+
+            String e1 = mRun_Invoke.getArgumentoNome(ASTArgumentos, 0);
+            Item eItem = mEscopo.getItem(eSaida);
+
+            if (eItem.getPrimitivo() == true) {
+
+                //  String e2 = eItem.getTipo();
+                //  System.out.println("DataType :: " + e2 + " -->> " + e1);
+
+                eItem.setTipo(e1);
+
+            } else {
+
+                mRunTime.getErros().add("Invocacao : Alteracao de datatype so pode ocorrer em primitivos e cast ");
+
+            }
+
+        } else if (eAcao.contentEquals("move_content")) {
+
+            String e1 = mRun_Invoke.getArgumentoNome(ASTArgumentos, 0);
+
+            Item mEntrada = mEscopo.getItem(e1);
+            Item mSaida = mEscopo.getItem(eSaida);
+
+          //  System.out.println("Entrada : " + mEntrada.getNome() + " : " + mEntrada.getTipo() + " -->> PRIMITIVO : " + mEntrada.getPrimitivo());
+       //     System.out.println("Saida : " + mSaida.getNome() + " : " + mSaida.getTipo() + " -->> PRIMITIVO : " + mSaida.getPrimitivo());
+
+            if (mEntrada.getPrimitivo()) {
+
+                if (mSaida.getPrimitivo()) {
+
+                    mSaida.setNulo(mEntrada.getNulo());
+                    mSaida.setValor(mEntrada.getValor(mRunTime,mEscopo),mRunTime,mEscopo);
+
+
+                }else{
+                    mRunTime.getErros().add("Invocacao : Move_Content -> A saida deve ser do tipo PRIMITIVO ou CAST !" );
+
+                }
+            }else{
+
+                mRunTime.getErros().add("Invocacao : Move_Content -> A entrada deve ser do tipo PRIMITIVO ou CAST !" );
+
+            }
+
         } else {
 
             mRunTime.getErros().add("Invocacao : Ação inconsistente ->  " + eAcao);

@@ -48,6 +48,9 @@ public class Run_Def {
         }
 
 
+     //   System.out.println("Def : " + eAST.getNome() + " : " + mAST.getRetornoTipo() + " -->> PRIMITIVO : " + mAST.getIsPrimitivo());
+
+
         if (mAST.getIsNulo()) {
 
 

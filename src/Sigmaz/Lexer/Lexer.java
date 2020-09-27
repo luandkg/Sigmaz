@@ -21,6 +21,10 @@ public class Lexer {
     private ArrayList<Token> mTokens;
     private ArrayList<Erro> mErros;
 
+    private int mLinhas;
+    private int mLinha_Max;
+    private int mLinha_Min;
+
     public Lexer() {
         mConteudo = "";
         mIndex = 0;
@@ -28,7 +32,16 @@ public class Lexer {
         mLinha = 0;
         mPosicao = 0;
         mTokens = new ArrayList<>();
+
+        mLinhas=0;
+        mLinha_Min=0;
+        mLinha_Max=0;
+
     }
+
+    public int getLinhas(){return mLinhas;}
+    public int getLinha_Min(){return mLinha_Min;}
+    public int getLinha_Max(){return mLinha_Max;}
 
 
     public boolean Continuar() {
@@ -62,6 +75,10 @@ public class Lexer {
         mLinha = 1;
         mPosicao = 0;
         mTokens.clear();
+
+        mLinhas=0;
+        mLinha_Min=-1;
+        mLinha_Max=-1;
 
         mErros = new ArrayList<>();
 
@@ -335,7 +352,24 @@ public class Lexer {
 
             mIndex += 1;
             mPosicao += 1;
+
+            if (mLinha_Min==-1){
+                mLinha_Min=mPosicao;
+            }else{
+                if (mPosicao<mLinha_Min){
+                    mLinha_Min=mPosicao;
+                }
+            }
+            if (mLinha_Max==-1){
+                mLinha_Max=mPosicao;
+            }else{
+                if (mPosicao>mLinha_Max){
+                    mLinha_Max=mPosicao;
+                }
+            }
         }
+
+        mLinhas=mLinha;
 
 
     }

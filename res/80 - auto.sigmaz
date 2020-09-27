@@ -20,3 +20,5 @@ auto <T> correr(a : T, b : T) {
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
 }
+
+
