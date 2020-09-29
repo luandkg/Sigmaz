@@ -1,6 +1,8 @@
 package Sigmaz.Executor;
 
 import Sigmaz.Executor.Debuggers.EscopoDebug;
+import Sigmaz.Executor.Debuggers.Local;
+import Sigmaz.Executor.Debuggers.RegressiveDebug;
 import Sigmaz.Executor.Indexador.Index_Action;
 import Sigmaz.Executor.Indexador.Index_Function;
 import Sigmaz.Executor.Runners.Run_Extern;
@@ -18,12 +20,16 @@ public class Escopo {
     private RunTime mRunTime;
     private Escopo mEscopoAnterior;
 
-    private EscopoDebug mDebug;
     private EscopoStack mEscopoStack;
+    private EscopoDebug mDebug;
+    private RegressiveDebug mRegressiveDebug;
+    private Local mLocalDebug;
 
 
     private boolean mCancelar;
     private boolean mContinuar;
+    private boolean mRetornado;
+    private Item mItem;
 
     private String mNome;
     private boolean mEstrutura;
@@ -72,6 +78,7 @@ public class Escopo {
         mEscopoAnterior = eEscopoAnterior;
         mCancelar = false;
         mContinuar = false;
+        mRetornado = false;
 
 
         mAO = new OO(this, mRunTime);
@@ -81,7 +88,6 @@ public class Escopo {
         mEstrutura = false;
 
         mRunTime = eRunTime;
-        mDebug = new EscopoDebug(this);
         mEscopoStack = new EscopoStack(mRunTime, this);
         mRefers = new ArrayList<String>();
         mRefersOcultas = new ArrayList<String>();
@@ -90,11 +96,16 @@ public class Escopo {
 
         mAutoID = 0;
         mFunctorID = 0;
+
+        mDebug = new EscopoDebug(this);
+        mRegressiveDebug = new RegressiveDebug(this);
+        mLocalDebug = new Local(this);
+
     }
 
 
     public void setAnterior(Escopo aEscopo) {
-        mEscopoAnterior=aEscopo;
+        mEscopoAnterior = aEscopo;
     }
 
     public Escopo getEscopoAnterior() {
@@ -104,6 +115,15 @@ public class Escopo {
     public EscopoDebug getDebug() {
         return mDebug;
     }
+
+    public RegressiveDebug getRegressiveDebug() {
+        return mRegressiveDebug;
+    }
+
+    public Local getLocalDebug() {
+        return mLocalDebug;
+    }
+
 
     public OO getOO() {
         return mOO;
@@ -230,6 +250,10 @@ public class Escopo {
 
     public ArrayList<Index_Function> getOperationsCompleto() {
         return mAO.getOperationsCompleto();
+    }
+
+    public ArrayList<Index_Function> getMarcadoresCompleto() {
+        return mAO.getMarcadoresCompleto();
     }
 
 
@@ -519,26 +543,66 @@ public class Escopo {
 
 
     public ArrayList<AST> getGuardadosCompleto() {
-        return mAO.getGuardadosCompleto();
+
+        ArrayList<AST> mRet = mAO.getGuardadosCompleto();
+
+        if (mTemLocal) {
+            mRet.add(mLocal);
+        }
+
+        return mRet;
     }
 
+
+    public ArrayList<AST> getLocais() {
+
+        ArrayList<AST> mRet = new ArrayList<AST>();
+
+        if (mEscopoAnterior != null) {
+            mRet.addAll(mEscopoAnterior.getLocais());
+
+        }
+
+        if (mTemLocal) {
+            mRet.add(mLocal);
+        }
+
+        return mRet;
+    }
 
     public void setCancelar(boolean eCancelar) {
         mCancelar = eCancelar;
     }
 
     public void setContinuar(boolean eContinuar) {
-
         mContinuar = eContinuar;
+    }
+
+    public void setRetornado(boolean eRetornado) {
+        mRetornado = eRetornado;
+    }
+
+
+    public void retorne(Item eItem) {
+        mRetornado = true;
+        mItem=eItem;
     }
 
     public boolean getCancelar() {
         return mCancelar;
     }
 
+    public Item getRetorno(){ return mItem; }
+
+
     public boolean getContinuar() {
         return mContinuar;
     }
+
+    public boolean getRetornado() {
+        return mRetornado;
+    }
+
 
     public void setContinue(boolean eContinue) {
         mContinuar = eContinue;
@@ -630,9 +694,6 @@ public class Escopo {
         mEscopoStack.setDefinido(eNome, eValor);
     }
 
-    public void setDefinidoStruct(String eNome, String eValor) {
-        mEscopoStack.setDefinidoStruct(eNome, eValor);
-    }
 
     public String getDefinidoTipo(String eNome) {
         return mEscopoStack.getDefinidoTipo(eNome);
@@ -642,17 +703,11 @@ public class Escopo {
         return mEscopoStack.getDefinidoPrimitivo(eNome);
     }
 
-    public void anularDefinido(String eNome) {
-        mEscopoStack.anularDefinido(eNome);
-    }
 
     public String getDefinido(String eNome) {
         return mEscopoStack.getDefinido(eNome);
     }
 
-    public String getDefinidoNum(String eNome) {
-        return mEscopoStack.getDefinidoNum(eNome);
-    }
 
     public String getDefinidoConteudo(String eNome) {
         return mEscopoStack.getDefinidoConteudo(eNome);
@@ -686,32 +741,5 @@ public class Escopo {
         return mLocal;
     }
 
-    public boolean temLocalAnteriormente() {
-
-        if (mTemLocal) {
-            return mTemLocal;
-        } else {
-            if (mEscopoAnterior != null) {
-                return mEscopoAnterior.temLocalAnteriormente();
-            } else {
-                return false;
-            }
-        }
-
-    }
-
-    public AST getLocalAnteriormente() {
-
-        if (mTemLocal) {
-            return getLocal();
-        } else {
-            if (mEscopoAnterior != null) {
-                return mEscopoAnterior.getLocal();
-            } else {
-                return null;
-            }
-        }
-
-    }
 
 }

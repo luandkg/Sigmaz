@@ -616,4 +616,138 @@ public class Run_Any {
 
 
     }
+
+
+
+
+    public Item init_Mark(AST ASTCorrente, Escopo BuscadorDeVariaveis, Escopo mEscopo, String eRetorne, ArrayList<Index_Function> eMarcadores) {
+
+        // System.out.println("Procurando FUNC "  + ASTCorrente.getNome() + " com passado DEFAULT " + eAntepassado);
+
+
+        String mLocal = "Run_Mark";
+
+        String eMarcador = ASTCorrente.getBranch("MARK").getNome();
+
+        Run_Value mRValue = new Run_Value(mRunTime, mEscopo);
+        mRValue.init(ASTCorrente.getBranch("VALUE"), eRetorne);
+
+        if (mRunTime.getErros().size() > 0) {
+            return null;
+        }
+
+
+
+        ArrayList<Item> mArgumentos = new ArrayList<Item>();
+
+        Item ve = new Item("VALUE");
+
+
+        ve.setNulo(mRValue.getIsNulo());
+        ve.setPrimitivo(mRValue.getIsPrimitivo());
+        ve.setIsEstrutura(mRValue.getIsStruct());
+        ve.setValor(mRValue.getConteudo(),mRunTime,mEscopo);
+        ve.setTipo(mRValue.getRetornoTipo());
+
+
+        String mTipagem = ve.getTipo();
+
+        // System.out.println("Procurando Diretor : " + eNome + " " +mTipagem );
+
+        mArgumentos.add(ve);
+
+        Item mRet = null;
+
+
+        if (mRunTime.getErros().size() > 0) {
+            return null;
+        }
+
+        //   System.out.println("Procurando FUNC " + ASTCorrente.getNome());
+        //  System.out.println(ASTCorrente.ImprimirArvoreDeInstrucoes());
+
+        //  System.out.println("\t - Argumentos :  " + mArgumentos.size());
+
+        boolean enc = false;
+        boolean algum = false;
+        boolean realizada = false;
+
+        String sugestao = "";
+        int sugestionando = -1;
+
+        // System.out.println("\t - Executando Dentro :  " +this.getNome());
+
+        //   System.out.println(" STRUCT :: "  +this.getNome());
+
+        String eNome = eMarcador;
+
+        Run_Arguments mRunArguments = new Run_Arguments();
+
+        ArrayList<String> mRefers = new ArrayList<String>();
+        mRefers.addAll(mEscopo.getRefers());
+        mRefers.addAll(BuscadorDeVariaveis.getRefers());
+
+
+        for (Index_Function mIndex_Function : eMarcadores) {
+
+            //  System.out.println("\t - Funcao :  " +mIndex_Function.getNome());
+            //  for (AST ArgumentoC : mArgumentos) {
+            //    System.out.println("\t\t - Arg :  " +ArgumentoC.getNome());
+            // }
+
+
+            if (mIndex_Function.mesmoNome(eNome)) {
+
+                mIndex_Function.resolverTipagem(mRefers);
+
+                if (mRunTime.getErros().size() > 0) {
+                    break;
+                }
+                enc = true;
+
+                if (mIndex_Function.getArgumentos().size() == mArgumentos.size()) {
+
+
+                    algum = true;
+
+                    int contagem = mRunArguments.conferirArgumentos(mRunTime, mEscopo, mIndex_Function.getArgumentos(), mArgumentos);
+
+                    if (contagem == mArgumentos.size()) {
+
+                        realizada = true;
+                        if (mRunTime.getErros().size() > 0) {
+                            break;
+                        }
+
+                        // System.out.println("\t - Executando Dentro :  " +this.getNome());
+                        //  mPreparadorDeArgumentos.executar_Action(mRunTime,  mEscopo, mIndex_Function, mArgumentos);
+                        //   System.out.println(mEscopo.getNome() + " EA -> Structs : " + mEscopo.getStructs().size());
+
+                        mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eRetorne);
+                        break;
+
+                    } else {
+                        if (contagem > sugestionando) {
+                            sugestionando = contagem;
+                            sugestao = mIndex_Function.getDefinicao();
+                        }
+                    }
+
+
+                }
+
+
+            }
+
+        }
+
+
+        errar("Marcador", eNome, mTipagem, sugestao, enc, algum, realizada, mLocal);
+
+
+        return mRet;
+    }
+
+
+
 }

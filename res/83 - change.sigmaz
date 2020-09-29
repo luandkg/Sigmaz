@@ -12,7 +12,7 @@ act mudar ( ) {
     def antes_a_duploX5 : int = duplo_X5.a;
     def antes_b_duploX5 : int = duplo_X5.b;
 
-    change duplo_X5 -> {
+    change (duplo_X5) -> {
 
             a = 30 ++ hh;
 

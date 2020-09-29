@@ -47,3 +47,9 @@ director ! ( a : bool ) : bool {
 	invoke casting -> inverse ( a ) :: a;
 	return a;
 }
+
+director ! ( a : int ) : int {
+		def c : int;
+    	invoke math -> operator_mux_int ( a , -1 ) :: c;
+    	return c;
+}

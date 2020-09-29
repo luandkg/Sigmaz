@@ -112,10 +112,10 @@ package Ecossistema {
 	}
 	cast Contador {
 		getter a : int -> {
-			return a;
+			#return a;
 		}
 		setter b : int -> {
-			return b;
+			#return b;
 		}
 		
 	}

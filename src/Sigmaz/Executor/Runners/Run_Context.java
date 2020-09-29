@@ -231,8 +231,10 @@ public class Run_Context {
     public ArrayList<AST> getTypesContexto(ArrayList<String> mPacotes) {
         ArrayList<AST> ret = new ArrayList<AST>();
 
-        for (AST eAST : mRunTime.getGlobalTypes()) {
-            ret.add(eAST);
+        for (AST eAST : mRunTime.getGlobalStructs()) {
+            if (eAST.getBranch("EXTENDED").mesmoNome("TYPE")){
+                ret.add(eAST);
+            }
         }
 
 
@@ -241,10 +243,10 @@ public class Run_Context {
             if (mRunTime.existePacote(Referencia)) {
 
                 for (AST eAST : mRunTime.getPacote(Referencia).getASTS()) {
-                    if (eAST.mesmoTipo("TYPE")) {
-                        //  System.out.println(" \t\t - " + eAST.getTipo() + " :  " + eAST.getNome());
-                        ret.add(eAST);
-
+                    if(eAST.mesmoTipo("STRUCT")){
+                        if (eAST.getBranch("EXTENDED").mesmoNome("TYPE")){
+                            ret.add(eAST);
+                        }
                     }
                 }
 

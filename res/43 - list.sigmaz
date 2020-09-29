@@ -131,10 +131,14 @@ operator !! ( a : bool , b : bool ) : bool {
 }
 
 act trash ( a : any ) {
+
 	def existe : bool = false;
+
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	invoke __COMPILER__ -> EXISTS ( a ) :: existe;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	invoke __COMPILER__ -> STRUCTS ( ) :: INSTANCES;
+
 	if ( existe ) -> {
 		invoke __COMPILER__ -> OBJECT ( a ) :: REMOVE;
 	}
@@ -190,10 +194,13 @@ struct Lista in ( T ) {
 			def mAnterior : Item >> ( T ) = null;
 			def mCorrente : Item >> ( T ) = mPrimeiro;
 			def mIndice : int = 0;
-			def mUltimoIndice : int = somar ( mQuantidade , 1 );
+			def mUltimoIndice : int = mQuantidade -- 1 ;
+
 			while ( isNull ( mCorrente ) == false ) -> {
 				if ( mCorrente.getValor ( ) == a ) -> {
+
 					println ( "Removendo : ", a );
+
 					if ( mIndice == 0 ) -> {
 						if ( mQuantidade == 1 ) -> {
 							mPrimeiro = null;
@@ -201,12 +208,19 @@ struct Lista in ( T ) {
 						}others {
 							mPrimeiro = mPrimeiro.getProximo ( );
 						}
-						
+
+											println ( " R : ", 1 );
+
 					}other ( mIndice == mUltimoIndice ) -> {
 						mAnterior.setProximo ( null );
 						mUltimo = mAnterior;
+																	println ( " R : ", 2 );
+
 					}others {
 						mAnterior.setProximo ( mCorrente.getProximo ( ) );
+
+																	println ( " R : ", 3 );
+
 					}
 					mQuantidade = subtrair ( mQuantidade , 1 );
 					trash ( mCorrente );
@@ -395,20 +409,33 @@ act inicio ( ) {
 	}
 	println ( " DEBUG  ", 2 );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
+
+	println ( "Remover Item : ", 10 );
 	ig.remover ( 10 );
+
 	ig.listar ( );
 	println ( "Quantidade  : ", ig.getQuantidade ( ) );
+
+	println ( "Remover Item : ", 40 );
 	ig.remover ( 40 );
 	ig.listar ( );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
+
+	println ( "Remover Item : ", 60 );
 	ig.remover ( 60 );
 	ig.listar ( );
+
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
+
+	println ( "Remover Item : ", 15 );
 	ig.remover ( 15 );
 	ig.listar ( );
+
 	println ( "Quantidade # : ", ig.getQuantidade ( ) );
+		println ( "Adicionar Item : ", 70 );
+
 	ig.adicionar ( 70 );
-	
+
 	#ig.listar ( );
 	iterando.iniciar ( );
 	while ( iterando.continuar ( ) ) -> {

@@ -1,5 +1,6 @@
 package Sigmaz.Compilador;
 
+import Sigmaz.Compilador.Organizador.AST_Generic;
 import Sigmaz.Lexer.Token;
 import Sigmaz.Lexer.TokenTipo;
 import Sigmaz.Utils.AST;

@@ -100,8 +100,8 @@ public class Run_Value {
 
         if (ASTCorrente.mesmoValor("NULL")) {
 
-         //   System.out.println("Value Type 1 : " + this.getRetornoTipo());
-        //    System.out.println("Value Primitivo 1 : " + this.getIsPrimitivo());
+            //   System.out.println("Value Type 1 : " + this.getRetornoTipo());
+            //    System.out.println("Value Primitivo 1 : " + this.getIsPrimitivo());
 
 
             mIsNulo = true;
@@ -111,8 +111,8 @@ public class Run_Value {
 
             //   System.out.println("RETORNAR NULO");
 
-         //   System.out.println("Value Type 2 : " + this.getRetornoTipo());
-        //    System.out.println("Value Primitivo 2 : " + this.getIsPrimitivo());
+            //   System.out.println("Value Type 2 : " + this.getRetornoTipo());
+            //    System.out.println("Value Primitivo 2 : " + this.getIsPrimitivo());
 
 
         } else if (ASTCorrente.mesmoValor("Text")) {
@@ -261,6 +261,15 @@ public class Run_Value {
 
             functor(ASTCorrente, eRetorno);
 
+
+        } else if (ASTCorrente.getValor().contentEquals("MARKER")) {
+
+
+            Marker(ASTCorrente,eRetorno);
+
+
+
+
         } else {
 
 
@@ -283,8 +292,8 @@ public class Run_Value {
         }
 
 
-      //  System.out.println("Value Type 3 : " + this.getRetornoTipo());
-      //  System.out.println("Value Primitivo 3 : " + this.getIsPrimitivo());
+        //  System.out.println("Value Type 3 : " + this.getRetornoTipo());
+        //  System.out.println("Value Primitivo 3 : " + this.getIsPrimitivo());
 
 
     }
@@ -318,7 +327,7 @@ public class Run_Value {
                         mRetornoTipo = eItem.getTipo();
                         mIsPrimitivo = eItem.getPrimitivo();
                         mIsEstrutura = eItem.getIsEstrutura();
-                        mConteudo = eItem.getValor(mRunTime,mEscopo);
+                        mConteudo = eItem.getValor(mRunTime, mEscopo);
 
                         senc = true;
                         break;
@@ -331,39 +340,39 @@ public class Run_Value {
             if (!senc) {
 
                 if (mTipo.contentEquals("int")) {
-                  //  mIsNulo = false;
-                  //  mRetornoTipo = mTipo;
-                  //  mIsPrimitivo = true;
-                 //   mIsEstrutura = false;
-                   // mConteudo = "0";
+                    //  mIsNulo = false;
+                    //  mRetornoTipo = mTipo;
+                    //  mIsPrimitivo = true;
+                    //   mIsEstrutura = false;
+                    // mConteudo = "0";
 
                     mRunTime.errar(mLocal, "RETORNO DEFAULT DESCONHECIDO para o PRIMITIVO : " + eRetorno);
 
 
                 } else if (mTipo.contentEquals("num")) {
-                  //  mIsNulo = false;
-                  //  mRetornoTipo = mTipo;
-                  //  mIsPrimitivo = true;
-                  //  mIsEstrutura = false;
-                  //  mConteudo = "0.0";
+                    //  mIsNulo = false;
+                    //  mRetornoTipo = mTipo;
+                    //  mIsPrimitivo = true;
+                    //  mIsEstrutura = false;
+                    //  mConteudo = "0.0";
 
                     mRunTime.errar(mLocal, "RETORNO DEFAULT DESCONHECIDO para o PRIMITIVO : " + eRetorno);
 
                 } else if (mTipo.contentEquals("string")) {
-                  //  mIsNulo = false;
-                  //  mRetornoTipo = mTipo;
-                  //  mIsPrimitivo = true;
-                  //  mIsEstrutura = false;
-                   // mConteudo = "";
+                    //  mIsNulo = false;
+                    //  mRetornoTipo = mTipo;
+                    //  mIsPrimitivo = true;
+                    //  mIsEstrutura = false;
+                    // mConteudo = "";
 
                     mRunTime.errar(mLocal, "RETORNO DEFAULT DESCONHECIDO para o PRIMITIVO : " + eRetorno);
 
                 } else if (mTipo.contentEquals("bool")) {
-                  //  mIsNulo = false;
-                 //   mRetornoTipo = mTipo;
-                  //  mIsPrimitivo = true;
-                //    mIsEstrutura = false;
-                  //  mConteudo = "true";
+                    //  mIsNulo = false;
+                    //   mRetornoTipo = mTipo;
+                    //  mIsPrimitivo = true;
+                    //    mIsEstrutura = false;
+                    //  mConteudo = "true";
 
                     mRunTime.errar(mLocal, "RETORNO DEFAULT DESCONHECIDO para o PRIMITIVO : " + eRetorno);
 
@@ -382,11 +391,11 @@ public class Run_Value {
                                     Run_Body mRB = new Run_Body(mRunTime, mEscopo);
                                     mRB.init(mCast.getBranch("DEFAULT"));
 
-                                    mIsNulo = mRB.getIsNulo();
-                                    mRetornoTipo = mRB.getRetornoTipo();
-                                    mIsPrimitivo = mRB.getIsPrimitivo();
-                                    mIsEstrutura = mRB.getIsStruct();
-                                    mConteudo = mRB.getConteudo();
+                                    mIsNulo = mRB.getRetorno().getNulo();
+                                    mRetornoTipo = mRB.getRetorno().getTipo();
+                                    mIsPrimitivo = mRB.getRetorno().getPrimitivo();
+                                    mIsEstrutura = mRB.getRetorno().getIsEstrutura();
+                                    mConteudo = mRB.getRetorno().getValor(mRunTime,mEscopo);
 
 
                                 } else {
@@ -429,6 +438,11 @@ public class Run_Value {
 
         Run_ExecuteLocal mRun_ExecuteLocal = new Run_ExecuteLocal(mRunTime, mEscopo);
         Item mItem = mRun_ExecuteLocal.initComRetorno(ASTCorrente);
+
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
+
 
         mIsNulo = mItem.getNulo();
         mRetornoTipo = mItem.getTipo();
@@ -582,6 +596,12 @@ public class Run_Value {
         } else if (eModo.mesmoNome("DIV")) {
 
             realizarOperacao("DIV", mRun_Esquerda, mRun_Direita, mRetornoTipo);
+        } else if (eModo.mesmoNome("GREAT")) {
+
+            realizarOperacao("GREAT", mRun_Esquerda, mRun_Direita, mRetornoTipo);
+        } else if (eModo.mesmoNome("LESS")) {
+
+            realizarOperacao("LESS", mRun_Esquerda, mRun_Direita, mRetornoTipo);
 
         } else {
             mRunTime.errar(mLocal, "Comparador Desconhecido : " + eModo.getNome());
@@ -1089,6 +1109,33 @@ public class Run_Value {
         mIsPrimitivo = mItem.getPrimitivo();
         mConteudo = mItem.getValor(mRunTime, mEscopo);
         mRetornoTipo = mItem.getTipo();
+
+
+    }
+
+
+    public void Marker(AST ASTCorrente, String eRetorno) {
+
+        // System.out.println("Valorando  -> FUNCT " + ASTCorrente.getNome());
+
+
+
+        Run_Any mAST = new Run_Any(mRunTime);
+        Item eItem = mAST.init_Mark(ASTCorrente, mEscopo, mEscopo, eRetorno, mEscopo.getMarcadoresCompleto());
+
+        // System.out.println("Ent ->> " + eRetorno);
+
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
+
+        this.setNulo(eItem.getNulo());
+        this.setPrimitivo(eItem.getPrimitivo());
+        this.setConteudo(eItem.getValor(mRunTime, mEscopo));
+        this.setRetornoTipo(eItem.getTipo());
+
+
+        //  System.out.println("FUNCT EXIT  -> " + ASTCorrente.getNome() + " -> " + this.getConteudo() + " Primitivo : " + mIsPrimitivo + " Nulo : " + mIsNulo + " Tipo : " + mRetornoTipo);
 
 
     }

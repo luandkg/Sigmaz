@@ -25,6 +25,7 @@ public class OO {
     private ArrayList<Index_Function> mDirectors;
     private ArrayList<Index_Function> mOperations;
     private ArrayList<Index_Action> mActionFunctions;
+    private ArrayList<Index_Function> mMarcadores;
 
     private ArrayList<AST> mCasts;
     private ArrayList<AST> mStages;
@@ -56,6 +57,13 @@ public class OO {
     private ArrayList<Index_Function> mDirectors_Restrict;
     private ArrayList<Index_Function> mDirectors_Extern;
 
+
+    private ArrayList<Index_Function> mMarcadores_All;
+    private ArrayList<Index_Function> mMarcadores_Restrict;
+    private ArrayList<Index_Function> mMarcadores_Extern;
+
+
+
     public OO(Escopo eEscopo, RunTime eRunTime) {
 
         mEscopo = eEscopo;
@@ -75,6 +83,8 @@ public class OO {
         mFunctions = new ArrayList<Index_Function>();
         mDirectors = new ArrayList<Index_Function>();
         mOperations = new ArrayList<Index_Function>();
+        mMarcadores=new ArrayList<Index_Function>();
+
 
         mCasts = new ArrayList<AST>();
         mStages = new ArrayList<AST>();
@@ -105,6 +115,11 @@ public class OO {
         mOperations_Restrict = new ArrayList<Index_Function>();
         mOperations_Extern = new ArrayList<Index_Function>();
 
+        mMarcadores_All = new ArrayList<Index_Function>();
+        mMarcadores_Restrict = new ArrayList<Index_Function>();
+        mMarcadores_Extern = new ArrayList<Index_Function>();
+
+
     }
 
     public void limpar() {
@@ -123,6 +138,7 @@ public class OO {
         mFunctions = new ArrayList<Index_Function>();
         mDirectors = new ArrayList<Index_Function>();
         mOperations = new ArrayList<Index_Function>();
+        mMarcadores.clear();
 
         mCasts = new ArrayList<AST>();
         mStages = new ArrayList<AST>();
@@ -152,6 +168,10 @@ public class OO {
         mOperations_All = new ArrayList<Index_Function>();
         mOperations_Restrict = new ArrayList<Index_Function>();
         mOperations_Extern = new ArrayList<Index_Function>();
+
+        mMarcadores_All.clear();
+        mMarcadores_Restrict.clear();
+        mMarcadores_Extern.clear();
 
     }
 
@@ -288,6 +308,28 @@ public class OO {
             mBases.add(eAST);
         } else if (eAST.mesmoTipo("REFER")) {
             mEscopo.adicionarRefer(eAST.getNome());
+
+        } else if (eAST.mesmoTipo("MARK")) {
+
+            Index_Function mFunc = new Index_Function(mRunTime, mEscopo, eAST);
+
+            mMarcadores.add(mFunc);
+
+
+            if (mFunc.isExtern()) {
+
+                mMarcadores_Extern.add(mFunc);
+
+            } else if (mFunc.isAll()) {
+
+                mMarcadores_All.add(mFunc);
+
+            } else if (mFunc.isRestrict()) {
+
+                mMarcadores_Restrict.add(mFunc);
+
+            }
+
         }
 
     }
@@ -368,6 +410,10 @@ public class OO {
 
     public ArrayList<Index_Function> getOperations() {
         return mOperations;
+    }
+
+    public ArrayList<Index_Function> getMarcadores() {
+        return mMarcadores;
     }
 
     public ArrayList<Index_Function> getOperations_All() {
@@ -465,6 +511,24 @@ public class OO {
 
         if (getEscopo().getEscopoAnterior() != null) {
             for (Index_Function mIndex_Function : getEscopo().getEscopoAnterior().getOperationsCompleto()) {
+                gc.add(mIndex_Function);
+            }
+        }
+
+        return gc;
+    }
+
+
+    public ArrayList<Index_Function> getMarcadoresCompleto() {
+
+        ArrayList<Index_Function> gc = new ArrayList<Index_Function>();
+
+        for (Index_Function mIndex_Function : getMarcadores()) {
+            gc.add(mIndex_Function);
+        }
+
+        if (getEscopo().getEscopoAnterior() != null) {
+            for (Index_Function mIndex_Function : getEscopo().getEscopoAnterior().getMarcadoresCompleto()) {
                 gc.add(mIndex_Function);
             }
         }

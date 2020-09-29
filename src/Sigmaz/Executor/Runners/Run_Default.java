@@ -45,10 +45,12 @@ public class Run_Default {
         Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
         mAST.init(mASTBody);
 
-        Saida.setNulo(mAST.getIsNulo());
-        Saida.setPrimitivo(mAST.getIsPrimitivo());
-        Saida.setValor(mAST.getConteudo(),mRunTime,mEscopoInterno);
-        Saida.setTipo(mAST.getRetornoTipo());
+        Saida = mAST.getRetorno();
+
+      //  Saida.setNulo(mAST.getIsNulo());
+      //  Saida.setPrimitivo(mAST.getIsPrimitivo());
+       // Saida.setValor(mAST.getConteudo(),mRunTime,mEscopoInterno);
+       // Saida.setTipo(mAST.getRetornoTipo());
 
         if (Saida.getNulo()) {
             Saida.setTipo(eRetorno);

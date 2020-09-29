@@ -37,9 +37,9 @@ public class AppSigmaz {
         String mLocal = "res/";
 
 
-        int ARQUIVO = 1;
+        int ARQUIVO = 43;
 
-        switch (Fases.MAKE_EXECUTAR) {
+        switch (Fases.TESTES) {
 
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
             case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos, mCompilado);

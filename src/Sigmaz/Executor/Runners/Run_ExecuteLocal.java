@@ -6,6 +6,7 @@ import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 
 import java.util.ArrayList;
+
 import Sigmaz.Utils.AST;
 import Sigmaz.Utils.AST;
 
@@ -28,42 +29,66 @@ public class Run_ExecuteLocal {
 
     public Item initComRetorno(AST ASTCorrente) {
 
+        boolean enc = false;
+        boolean executada = false;
 
-        if (mEscopo.temLocalAnteriormente() == true) {
+        Run_Arguments mPreparadorDeArgumentos = new Run_Arguments();
 
-            AST eAST = mEscopo.getLocalAnteriormente();
+        ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, mEscopo, ASTCorrente.getBranch("ARGUMENTS"));
+        if (mRunTime.getErros().size() > 0) {
+            return null;
+        }
 
-            Run_Arguments mPreparadorDeArgumentos = new Run_Arguments();
-
-            ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, mEscopo, ASTCorrente.getBranch("ARGUMENTS"));
-            if (mRunTime.getErros().size() > 0) {
-                return null;
-            }
-
-            Index_Action mIndex_Function = new Index_Action(mRunTime, mEscopo, eAST);
-            mIndex_Function.setNome("LOCAL");
-
-            mIndex_Function.resolverTipagem(mEscopo.getRefers());
-            Run_Arguments mRunArguments = new Run_Arguments();
-
-            if (mIndex_Function.getArgumentos().size() == mArgumentos.size()) {
-
-                int contagem = mRunArguments.conferirArgumentos(mRunTime, mEscopo, mIndex_Function.getArgumentos(), mArgumentos);
-                if (contagem == mArgumentos.size()) {
-
-                    return mPreparadorDeArgumentos.executar_ActionComRetorno(mRunTime, mEscopo, mIndex_Function, mArgumentos, "<<ANY>>");
+        String mTipagem = mPreparadorDeArgumentos.getTipagem(mArgumentos);
 
 
+        for (AST eLocal : mEscopo.getLocais()) {
+
+            if (eLocal.mesmoValor("FUNCTION")) {
+
+                enc = true;
+
+
+
+
+                Index_Action mIndex_Function = new Index_Action(mRunTime, mEscopo, eLocal);
+                mIndex_Function.setNome("LOCAL");
+
+                mIndex_Function.resolverTipagem(mEscopo.getRefers());
+                Run_Arguments mRunArguments = new Run_Arguments();
+
+                if (mIndex_Function.getArgumentos().size() == mArgumentos.size()) {
+
+                    int contagem = mRunArguments.conferirArgumentos(mRunTime, mEscopo, mIndex_Function.getArgumentos(), mArgumentos);
+                    if (contagem == mArgumentos.size()) {
+
+                        executada = true;
+                        return mPreparadorDeArgumentos.executar_ActionComRetorno(mRunTime, mEscopo, mIndex_Function, mArgumentos, "<<ANY>>");
+
+                    }
+
+                } else {
+                    mRunTime.errar(mLocal, "Argumentos incompativeis com funcao local !");
                 }
 
-            } else {
-                mRunTime.errar(mLocal, "Argumentos incompativeis com funcao local !");
+
             }
+
+        }
+
+        if (!enc) {
+
+            mRunTime.errar(mLocal, "Nao existe funcao local definida !");
 
 
         } else {
-            mRunTime.errar(mLocal, "Nao existe funcao local definida !");
+
+            if (!executada) {
+                mRunTime.errar(mLocal, "Nao existe funcao local com argumentos compativeis : " + mTipagem);
+            }
+
         }
+
 
         return null;
 
@@ -72,18 +97,26 @@ public class Run_ExecuteLocal {
     public void initSemRetorno(AST ASTCorrente) {
 
 
-        if (mEscopo.temLocalAnteriormente() == true) {
+        boolean enc = false;
+        boolean executada = false;
 
-            AST eAST = mEscopo.getLocalAnteriormente();
+        Run_Arguments mPreparadorDeArgumentos = new Run_Arguments();
 
-            Run_Arguments mPreparadorDeArgumentos = new Run_Arguments();
+        ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, mEscopo, ASTCorrente.getBranch("ARGUMENTS"));
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
 
-            ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, mEscopo, ASTCorrente.getBranch("ARGUMENTS"));
-            if (mRunTime.getErros().size() > 0) {
-                return ;
-            }
+        String mTipagem = mPreparadorDeArgumentos.getTipagem(mArgumentos);
 
-            Index_Action mIndex_Function = new Index_Action(mRunTime, mEscopo, eAST);
+
+        for (AST eLocal : mEscopo.getLocais()) {
+
+            enc = true;
+
+
+
+            Index_Action mIndex_Function = new Index_Action(mRunTime, mEscopo, eLocal);
             mIndex_Function.setNome("LOCAL");
 
             mIndex_Function.resolverTipagem(mEscopo.getRefers());
@@ -94,8 +127,9 @@ public class Run_ExecuteLocal {
                 int contagem = mRunArguments.conferirArgumentos(mRunTime, mEscopo, mIndex_Function.getArgumentos(), mArgumentos);
                 if (contagem == mArgumentos.size()) {
 
-                     mPreparadorDeArgumentos.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
-
+                    executada = true;
+                    mPreparadorDeArgumentos.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
+                    break;
 
                 }
 
@@ -103,12 +137,21 @@ public class Run_ExecuteLocal {
                 mRunTime.errar(mLocal, "Argumentos incompativeis com funcao local !");
             }
 
-
-        } else {
-            mRunTime.errar(mLocal, "Nao existe funcao local definida !");
         }
 
-        return ;
+        if (!enc) {
+
+            mRunTime.errar(mLocal, "Nao existe acao local definida !");
+
+        }else{
+
+            if (!executada) {
+                mRunTime.errar(mLocal, "Nao existe acao local com argumentos compativeis : " + mTipagem);
+            }
+
+        }
+
+        return;
 
     }
 

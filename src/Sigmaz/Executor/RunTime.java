@@ -1,5 +1,6 @@
 package Sigmaz.Executor;
 
+import Sigmaz.Executor.Debuggers.Global;
 import Sigmaz.Executor.Runners.*;
 import Sigmaz.Intellisenses.Intellisense;
 import Sigmaz.Intellisenses.IntellisenseTheme;
@@ -17,6 +18,7 @@ public class RunTime {
     private ArrayList<String> mErros;
 
     private Escopo mEscopoGlobal;
+    private Global mGlobal;
 
     private ArrayList<Run_Extern> mExtern;
     private ArrayList<Run_Type> mTypes_Instances;
@@ -389,6 +391,9 @@ public class RunTime {
             } else if (ASTC.mesmoTipo("DEFAULT")) {
 
                 Global.guardar(ASTC);
+            } else if (ASTC.mesmoTipo("MARK")) {
+
+                Global.guardar(ASTC);
 
             }
 
@@ -484,6 +489,7 @@ public class RunTime {
             Global.setNome("GLOBAL");
 
             mEscopoGlobal = Global;
+            mGlobal = new Global(mEscopoGlobal);
 
             indexar(ASTSigmaz, Global);
 
@@ -847,5 +853,6 @@ public class RunTime {
         getErros().add(eLocal + " -->> " + eMensagem);
     }
 
+    public Global getGlobalDebug(){return mGlobal;}
 
 }

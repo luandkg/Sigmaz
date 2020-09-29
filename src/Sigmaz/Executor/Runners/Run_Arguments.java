@@ -148,10 +148,13 @@ public class Run_Arguments {
         Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
         mAST.init(mASTBody);
 
-        Saida.setNulo(mAST.getIsNulo());
-        Saida.setPrimitivo(mAST.getIsPrimitivo());
-        Saida.setValor(mAST.getConteudo(),mRunTime,mEscopoInterno);
-        Saida.setTipo(mAST.getRetornoTipo());
+       // Saida.setNulo(mAST.getIsNulo());
+       // Saida.setPrimitivo(mAST.getIsPrimitivo());
+      //  Saida.setValor(mAST.getConteudo(),mRunTime,mEscopoInterno);
+     //   Saida.setTipo(mAST.getRetornoTipo());
+
+        Saida = mAST.getRetorno();
+
 
         if (Saida.getNulo()) {
             Saida.setTipo(eReturne);
@@ -210,10 +213,12 @@ public class Run_Arguments {
         Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
         mAST.init(mASTBody);
 
-        Saida.setNulo(mAST.getIsNulo());
-        Saida.setPrimitivo(mAST.getIsPrimitivo());
-        Saida.setValor(mAST.getConteudo(),mRunTime,mEscopoInterno);
-        Saida.setTipo(mAST.getRetornoTipo());
+       // Saida.setNulo(mAST.getIsNulo());
+       // Saida.setPrimitivo(mAST.getIsPrimitivo());
+     //   Saida.setValor(mAST.getConteudo(),mRunTime,mEscopoInterno);
+       // Saida.setTipo(mAST.getRetornoTipo());
+
+        Saida = mAST.getRetorno();
 
         if (Saida.getNulo()) {
             Saida.setTipo(eReturne);

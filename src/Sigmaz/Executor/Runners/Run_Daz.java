@@ -1,6 +1,7 @@
 package Sigmaz.Executor.Runners;
 
 import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
 
@@ -10,6 +11,9 @@ public class Run_Daz {
     private Escopo mEscopo;
     private String mLocal;
 
+    private boolean mRetornado;
+    private Item mItem;
+
 
     public Run_Daz(RunTime eRunTime, Escopo eEscopo) {
 
@@ -17,7 +21,8 @@ public class Run_Daz {
         mEscopo = eEscopo;
         mLocal = "Run_Daz";
 
-
+        mRetornado=false;
+        mItem=null;
     }
 
     public boolean getCancelado() {
@@ -26,6 +31,15 @@ public class Run_Daz {
 
     public boolean getContinuar() {
         return mEscopo.getContinuar();
+    }
+
+
+    public Item getRetorno(){ return mItem; }
+    public boolean getRetornado() { return mRetornado; }
+
+    public void Retorne(Item eItem){
+        mEscopo.retorne(eItem);
+        mItem=eItem;
     }
 
 
@@ -97,7 +111,10 @@ public class Run_Daz {
                     sucesso = true;
                     break;
                 }
-
+                if (cAST.getRetornado()){
+                    Retorne(cAST.getRetorno());
+                    break;
+                }
                 if (mRunTime.getErros().size() > 0) {
                     return;
                 }
@@ -115,7 +132,10 @@ public class Run_Daz {
                     sucesso = true;
                     break;
                 }
-
+                if (cAST.getRetornado()){
+                    Retorne(cAST.getRetorno());
+                    break;
+                }
                 if (mRunTime.getErros().size() > 0) {
                     return;
                 }
@@ -133,7 +153,10 @@ public class Run_Daz {
                     sucesso = true;
                     break;
                 }
-
+                if (cAST.getRetornado()){
+                    Retorne(cAST.getRetorno());
+                    break;
+                }
                 if (mRunTime.getErros().size() > 0) {
                     return;
                 }
@@ -151,7 +174,10 @@ public class Run_Daz {
                     sucesso = true;
                     break;
                 }
-
+                if (cAST.getRetornado()){
+                    Retorne(cAST.getRetorno());
+                    break;
+                }
                 if (mRunTime.getErros().size() > 0) {
                     return;
                 }
@@ -171,7 +197,10 @@ public class Run_Daz {
                     sucesso = true;
                     break;
                 }
-
+                if (cAST.getRetornado()){
+                    Retorne(cAST.getRetorno());
+                    break;
+                }
                 if (mRunTime.getErros().size() > 0) {
                     return;
                 }
@@ -202,6 +231,11 @@ public class Run_Daz {
                 }
                 if (cAST.getContinuar()) {
                     mEscopo.setContinuar(true);
+                }
+
+                if (cAST.getRetornado()){
+                    Retorne(cAST.getRetorno());
+                    break;
                 }
 
                 if (mRunTime.getErros().size() > 0) {

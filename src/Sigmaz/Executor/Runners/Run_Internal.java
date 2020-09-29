@@ -5,6 +5,8 @@ import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
 
+import java.util.ArrayList;
+
 public class Run_Internal {
 
     private RunTime mRunTime;
@@ -17,7 +19,7 @@ public class Run_Internal {
     }
 
 
-    public Item Struct_DentroStruct(String eLocal, AST eInternal, Escopo mEscopo, String eRetorno ) {
+    public Item Struct_DentroStruct(String eLocal, AST eInternal, Escopo mEscopo, String eRetorno) {
 
         Run_Struct mEstruturador = mRunTime.getRun_Struct(eLocal);
 
@@ -77,14 +79,14 @@ public class Run_Internal {
 
         } else {
 
-            mRunTime.errar(mLocal,"AST_Value --> STRUCTURED VALUE !");
+            mRunTime.errar(mLocal, "AST_Value --> STRUCTURED VALUE !");
 
         }
 
         return eItem;
     }
 
-    public Item Struct_DentroDiretoStruct(String eLocal, AST eInternal, Escopo mEscopo, String eRetorno ) {
+    public Item Struct_DentroDiretoStruct(String eLocal, AST eInternal, Escopo mEscopo, String eRetorno) {
 
         Run_Struct mEstruturador = mRunTime.getRun_Struct(eLocal);
 
@@ -140,15 +142,84 @@ public class Run_Internal {
 
         } else {
 
-            mRunTime.errar(mLocal,"AST_Value --> STRUCTURED VALUE !");
+            mRunTime.errar(mLocal, "AST_Value --> STRUCTURED VALUE !");
 
         }
 
         return eItem;
     }
 
+    private String limparGenericos(String eTipo) {
+        String ret = "";
 
-    public Item Struct_DentroType(String eLocal, AST eInternal, Escopo mEscopo, String eRetorno) {
+        int i = 0;
+        int o = eTipo.length();
+        while (i < o) {
+
+            String c = String.valueOf(eTipo.charAt(i));
+            if (c.contentEquals("<")) {
+                int i2 = i+1;
+                if (i2<o){
+                    if (String.valueOf(eTipo.charAt(i2)).contentEquals(">")){
+                        ret="";
+                        i+=1;
+                    }else{
+                        break;
+                    }
+                }else{
+                    break;
+                }
+
+            }else{
+                ret+=c;
+            }
+            i += 1;
+        }
+
+        return ret;
+    }
+
+    public Item Struct_DentroType(String eTipoOrigem, String eLocal, AST eInternal, Escopo mEscopo, String eRetorno) {
+
+        String aTipo = eTipoOrigem;
+        eTipoOrigem = limparGenericos(eTipoOrigem);
+
+
+      // System.out.println("Tipo Origem : " + aTipo + " -->> " + eTipoOrigem);
+
+        // System.out.println("Escopo :: " + mEscopo.getNome());
+
+        Run_Context eRun_Context = new Run_Context(mRunTime);
+
+        ArrayList<String> eCampos = new ArrayList<String>();
+
+        for (String eRefer : mEscopo.getRefers()) {
+      //      System.out.println("Refer -->> " + eRefer);
+//
+        }
+            for (AST eType : eRun_Context.getTypesContexto(mEscopo.getRefers())) {
+          //  System.out.println("Type -->> " + eType.getNome());
+            if (eType.getNome().contentEquals(eTipoOrigem)) {
+
+                for (AST eItem : eType.getBranch("BODY").getASTS()) {
+                    if (eItem.mesmoTipo("DEFINE")) {
+                        eCampos.add(eItem.getNome());
+                    } else if (eItem.mesmoTipo("MOCKIZ")) {
+                        eCampos.add(eItem.getNome());
+                    }
+                }
+
+                //System.out.println("Type Origem : " + eTipoOrigem);
+
+                for (String eCampo : eCampos) {
+
+              //     System.out.println("\t - " + eCampo);
+
+                }
+                break;
+            }
+        }
+
 
         Run_Type mEscopoType = mRunTime.getRun_Type(eLocal);
 
@@ -166,25 +237,34 @@ public class Run_Internal {
 
             //    System.out.println("STRUCT_OBJECT TYPE : " + eInternal.getNome());
 
+            if (eCampos.contains(eInternal.getNome())) {
 
-            eItem = mEscopoType.init_Object(eInternal, mEscopo, "<<ANY>>");
+                eItem = mEscopoType.init_Object(eInternal, mEscopo, "<<ANY>>");
 
-            if (mRunTime.getErros().size() > 0) {
-                return null;
-            }
+                if (mRunTime.getErros().size() > 0) {
+                    return null;
+                }
 
-            //    System.out.println("STRUCT_OBJECT : " + eInternal.getNome() + " = " + eItem.getValor());
+                //    System.out.println("STRUCT_OBJECT : " + eInternal.getNome() + " = " + eItem.getValor());
 
-            if (eInternal.existeBranch("INTERNAL")) {
-                Run_Dot mRun_Dot = new Run_Dot(mRunTime);
+                if (eInternal.existeBranch("INTERNAL")) {
+                    Run_Dot mRun_Dot = new Run_Dot(mRunTime);
 
-                eItem = mRun_Dot.operadorPontoType(mEscopoType, eItem, eInternal.getBranch("INTERNAL"), mEscopo, eRetorno);
+                    eItem = mRun_Dot.operadorPontoType(mEscopoType, eItem, eInternal.getBranch("INTERNAL"), mEscopo, eRetorno);
+                }
+
+
+            } else {
+
+
+                mRunTime.errar(mLocal, "Type " + eTipoOrigem + "." + eInternal.getNome() + " : Campo nao existente");
+
             }
 
 
         } else {
 
-            mRunTime.errar(mLocal,"AST_Value --> STRUCTURED VALUE !");
+            mRunTime.errar(mLocal, "AST_Value --> STRUCTURED VALUE !");
 
         }
 

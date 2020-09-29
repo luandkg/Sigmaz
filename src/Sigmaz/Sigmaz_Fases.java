@@ -148,6 +148,12 @@ public class Sigmaz_Fases {
             System.out.println("----------------------------------------------");
             System.out.println("");
 
+            System.out.println(CompilerC.getArvoreDeInstrucoes());
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+
+
+
             for (String eMensagem : mErros_Mensagens) {
                 System.out.println(eMensagem);
             }

@@ -1,0 +1,66 @@
+
+type Quad {
+
+    define a : int = 0;
+    define b : int = 0;
+
+}
+
+type Mesh {
+
+    define c : int = 0;
+    define d : int = 0;
+
+}
+
+
+type Cot {
+
+}
+
+type Quadrante in (T) {
+
+    define a : T = null;
+    define b : T = null;
+
+}
+
+type Meshante in (T) {
+
+    define c : T = null;
+    define d : T = null;
+
+}
+
+type QuadMesh union Quad :: Mesh;
+
+type QuadranteMesh union Quadrante >> (int) :: Mesh;
+
+type QuadranteMesh_GS in (A) union Quadrante >> (A) :: Mesh;
+
+type QuaMeshante_GS in (A) union Quad  :: Meshante >> (A) ;
+
+type QuadranteMeshante in (T,S) union Quadrante >> (T) :: Meshante >> (S);
+
+call iniciar ->  {
+
+    def QuadMesh_1 : QuadMesh = start QuadMesh { a = 1; b=2; c=3; d=4; };
+
+    def QuadMesh_1_a : int = QuadMesh_1.a;
+    def QuadMesh_1_b : int = QuadMesh_1.b;
+    def QuadMesh_1_c : int = QuadMesh_1.c;
+    def QuadMesh_1_d : int = QuadMesh_1.d;
+
+
+    def Mesh_1 : Mesh = QuadMesh_1;
+    def Mesh_1_C : int = Mesh_1.c;
+
+    def QuadranteMeshante_1 : QuadranteMeshante >> (int,num) = start QuadranteMeshante >> (int,num) { a = 1; b=2; c=3.0; d=4.0; };
+
+    def Meshante_1  : Meshante = QuadranteMeshante_1;
+
+    def Meshante_1_C : num = Meshante_1.c;
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+}

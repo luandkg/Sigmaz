@@ -1,0 +1,107 @@
+
+type Tipado {
+
+    define a : int = 0;
+    define b : int = 0;
+
+}
+
+define GERAL : int = 10;
+mockiz SUPREMO : int = 13;
+
+
+call Mark ->  {
+
+    def a : int = 6;
+    def c : int = 6;
+
+    def Tipado_1 : Tipado = start Tipado { a = a; };
+    def Tipado_2 : Tipado = start Tipado { a = c; };
+
+    def Tipado_1_A : int = Tipado_1.a;
+    def Tipado_1_B : int = Tipado_1.b;
+
+    def Tipado_2_A : int = Tipado_2.a;
+    def Tipado_2_B : int = Tipado_2.b;
+
+
+    def indice_1 : int = 10;
+    def indice_2 : int = !indice_1;
+    def indice_3 : int = indice_1 ++ indice_1;
+    def indice_4 : int = !indice_1 ++ !indice_1;
+    def indice_5 : int = indice_1 ++ !indice_1;
+    def indice_6 : int = !indice_1 ++ indice_1;
+
+
+    def metragem_1 : int = 10 Km;
+    def metragem_2 : int = 10000 m;
+
+    def metragem_3 : int = 10 Km ++ 12 Dam;
+
+    def metragem_4 : int  = metragem_3 Km;
+
+    def metragem_5 : int = !(! 10 Km);
+
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
+
+	invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: MARK;
+
+}
+
+director ! (a:int) : int {
+
+    def c : int;
+	invoke math -> operator_mux_int ( a , -1 ) :: c;
+
+	return c;
+
+}
+
+operator ** ( a : int , b : int ) : int {
+	def c : int;
+	invoke math -> operator_mux_int ( a , b ) :: c;
+	return c;
+}
+
+operator ++ ( a : int , b : int ) : int {
+	def c : int;
+	invoke math -> operator_sum_int ( a , b ) :: c;
+
+	return c;
+}
+
+mark Km(a:int) : int {
+
+    def c : int;
+	invoke math -> operator_mux_int ( a , 1000 ) :: c;
+	return c;
+
+}
+
+
+
+mark Hm(a:int) : int {
+
+    def c : int;
+	invoke math -> operator_mux_int ( a , 100 ) :: c;
+	return c;
+
+}
+
+mark Dam(a:int) : int {
+
+    def c : int;
+	invoke math -> operator_mux_int ( a , 10 ) :: c;
+	return c;
+
+}
+
+mark m(a:int) : int {
+
+    def c : int;
+	invoke math -> operator_mux_int ( a , 1 ) :: c;
+	return c;
+
+}

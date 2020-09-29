@@ -1,6 +1,7 @@
 package Sigmaz.Executor.Runners;
 
 import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
 
@@ -28,6 +29,11 @@ public class Run_Condition {
         return mEscopo.getContinuar();
     }
 
+    public boolean getRetornado() {
+        return mEscopo.getRetornado();
+    }
+
+    public Item getRetorno(){ return mEscopo.getRetorno(); }
 
     public void init(AST ASTCorrente) {
 
@@ -41,12 +47,12 @@ public class Run_Condition {
         if (mAST.getRetornoTipo().contentEquals("bool")) {
 
             if (mRunTime.getErros().size() > 0) {
-               return;
+                return;
             }
 
             if (mAST.getConteudo().contentEquals("true")) {
 
-             //   System.out.println(" --> CONDICIONAR : Escopo Pai : " + mEscopo.getNome() + " -> Structs : " +mEscopo.getStructs().size() );
+                //   System.out.println(" --> CONDICIONAR : Escopo Pai : " + mEscopo.getNome() + " -> Structs : " +mEscopo.getStructs().size() );
 
                 Escopo EscopoInterno = new Escopo(mRunTime, mEscopo);
                 EscopoInterno.setNome("Condicionate");
@@ -59,6 +65,18 @@ public class Run_Condition {
                 }
                 if (cAST.getContinuar()) {
                     mEscopo.setContinuar(true);
+                }
+
+                if (cAST.getRetornado()) {
+
+                    if (mRunTime.getErros().size() > 0) {
+                        return;
+                    }
+
+                    mEscopo.setRetornado(true);
+                    mEscopo.retorne(cAST.getRetorno());
+
+
                 }
 
 
@@ -94,9 +112,21 @@ public class Run_Condition {
                                     mEscopo.setContinuar(true);
                                 }
 
+                                if (cAST.getRetornado()) {
+
+                                    if (mRunTime.getErros().size() > 0) {
+                                        return;
+                                    }
+
+                                    mEscopo.setRetornado(true);
+                                    mEscopo.retorne(cAST.getRetorno());
+
+
+                                }
+
                             }
                         } else {
-                              mRunTime.errar(mLocal,"A condição deve possuir tipo BOOL !");
+                            mRunTime.errar(mLocal, "A condição deve possuir tipo BOOL !");
                         }
 
                     }
@@ -115,7 +145,7 @@ public class Run_Condition {
             }
 
         } else {
-              mRunTime.errar(mLocal,"A condição deve possuir tipo BOOL !");
+            mRunTime.errar(mLocal, "A condição deve possuir tipo BOOL !");
         }
 
     }
@@ -136,6 +166,18 @@ public class Run_Condition {
                 }
                 if (cAST.getContinuar()) {
                     mEscopo.setContinuar(true);
+                }
+
+                if (cAST.getRetornado()) {
+
+                    if (mRunTime.getErros().size() > 0) {
+                        return;
+                    }
+
+                    mEscopo.setRetornado(true);
+                    mEscopo.retorne(cAST.getRetorno());
+
+
                 }
 
                 break;

@@ -1,0 +1,101 @@
+
+define versao : int = 1;
+mockiz guardado : int = 6;
+
+
+call Escopos -> {
+
+    def A : int = 12;
+
+
+	{
+
+	    def B : int = 13;
+		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+		invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
+
+	}
+
+	{
+
+	    def C : int = 15;
+	    def D : int = A;
+		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+		invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
+
+	}
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
+	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+
+
+    #def v : int = @();
+
+
+
+	local -> ( v : int ) {
+		def t : int = v;
+		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	}
+
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: LOCAL;
+
+
+	@ ( 54 );
+
+
+	local -> ( a : num , b : num ) : num {
+		def c : num = 0.0;
+		invoke math -> operator_sum_num ( a , b ) :: c;
+		return c;
+	}
+
+
+
+    {
+
+        local -> (v1:int,v2:int) : int {
+                def c : int = 0;
+        		invoke math -> operator_sum_int ( v1 , v2 ) :: c;
+        		return c;
+        }
+
+        def t1 : num = @(2.2,3.3);
+        def t2 : int = @(2,3);
+
+    	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: LOCAL;
+		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    }
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: LOCAL;
+
+	def t : num = @ ( 20.0 , 50.0 );
+
+    def r0 : int = ateOnde(0);
+    def r1 : int = ateOnde(1);
+    def r2 : int = ateOnde(2);
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+}
+
+func ateOnde(a:int) : int {
+
+    if (a == 1) -> { return -1; }
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+
+    return 0;
+
+}
+
+operator == ( a : int , b : int ) : bool {
+	def c : bool;
+	def c1 : int = a;
+	def c2 : int = b;
+	invoke math -> operator_equal_int ( c1 , c2 ) :: c;
+	return c;
+}

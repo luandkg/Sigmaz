@@ -1,9 +1,9 @@
 cast pos {
 	getter a : num -> {
-		return a;
+		#return a;
 	}
 	setter b : num -> {
-		return b;
+		#return b;
 	}
 	
 }

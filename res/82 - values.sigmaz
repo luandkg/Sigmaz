@@ -28,6 +28,10 @@ act valores ( ) {
     #def n6 : i5 = 4.2;
     def n7 : i5 = default;
 
+    def in7 : int = n7;
+
+    def i5_soma : i5 = i5(5) ++ i5(2);
+
     def i_n1_n2 : bool = n1 == n2;
     def d_n1_n2 : bool = n1 !! n2;
 
@@ -97,7 +101,7 @@ act valores ( ) {
     def hh_dentro : int = duplo_X5.b;
 
 
-    change duplo_X5 -> {
+    change (duplo_X5) -> {
 
             a = 30 ++ hh;
             #b = 50 ++ hh;
@@ -111,7 +115,7 @@ act valores ( ) {
     def caixa_Z : Caixa = init Caixa(13);
     caixa_Z.INDICE = 5;
 
-    using caixa_Z -> {
+    using (caixa_Z) -> {
 
         setValor(30);
         #caixa_Z.setValor(30);
@@ -128,17 +132,19 @@ act valores ( ) {
 
 
     def caixador : int = Caixa->CAIXADOR();
+
+
     def encaixador : int = Caixa->ENCAIXADOR(2);
 
     def caixador2 : int = Caixa->CAIXADOR() ++ Caixa->CAIXADOR();
-    def encaixador2 : int = Caixa->ENCAIXADOR(2) ++ Caixa->ENCAIXADOR(2) ;
+    def encaixador2 : int = Caixa->ENCAIXADOR(3) ++ Caixa->ENCAIXADOR(2) ;
 
 
     def guardado : int = (12);
     def guardado2 : int = ((15));
 
 
-	local -> ( a : int , b : int ) {
+	local -> ( a : int , b : int ) : int {
 		def c : int = 0;
 		invoke math -> operator_sum_int ( a , b ) :: c;
 		return c;
@@ -157,12 +163,18 @@ act valores ( ) {
 
     def valor_duplo_functor : int = functor<int>somatorio(12,8) ++ functor<int>somatorio(20,20);
 
+
+    auto<int>chamatorio(52);
+
     def inu : num = ! 2.5;
 
     def zero : int = default;
     def logico : bool = default;
 
+
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: AUTO;
+	invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: FUNCTOR;
 
 
 }
@@ -199,6 +211,13 @@ functor <T> somatorio(a : T, b : T) : T {
 
     return c;
 }
+
+auto <T> chamatorio(a:T) {
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+}
+
 
 operator ++ ( a : int , b : int ) : int {
 	def c : int;
@@ -241,7 +260,6 @@ cast i5 {
         		if ( maior ( a , 5 ) ) -> {
                      exception "Nao e possivel obter valores maiores que 5 !";
                 }
-        		return a;
 	}
 	setter b : int -> {
 				if ( menor ( b , 0 ) ) -> {
@@ -250,7 +268,6 @@ cast i5 {
         		if ( maior ( b , 5 ) ) -> {
                      exception "Nao e possivel obter valores maiores que 5 !";
                 }
-        		return b;
 	}
 
 	default -> { return 0; }
@@ -271,6 +288,35 @@ operator !! ( a : i5 , b : i5 ) : bool {
 	return c;
 }
 
+operator ++ ( a : i5 , b : i5 ) : i5 {
+	def c : int = null;
+	def c1 : int = a;
+	def c2 : int = b;
+	invoke math -> operator_sum_int ( c1 , c2 ) :: c;
+
+
+	while (c >> 5)  -> { c = c -- 5; }
+	while (c << 0)  -> { c = c ++ 5; }
+
+	return i5(c);
+}
+
+operator -- ( a : i5 , b : i5 ) : i5 {
+	def c : int = null;
+	def c1 : int = a;
+	def c2 : int = b;
+	invoke math -> operator_sub_int ( c1 , c2 ) :: c;
+
+
+	while (c >> 5)  -> { c = c -- 5; }
+    while (c << 0)  -> { c = c ++ 5; }
+
+
+	return i5(c);
+}
+
+
+
 func maior ( a : int , b : int ) : bool {
 	def c : bool;
 	def a1 : int = a;
@@ -287,7 +333,37 @@ func menor ( a : int , b : int ) : bool {
 	return c;
 }
 
+operator ++ ( a : int , b : int ) : int {
+	def c : int;
+	def a1 : int = a;
+	def b1 : int = b;
+	invoke math -> operator_sum_int ( a1 , b1 ) :: c;
+	return c;
+}
 
+operator -- ( a : int , b : int ) : int {
+	def c : int;
+	def a1 : int = a;
+	def b1 : int = b;
+	invoke math -> operator_sub_int ( a1 , b1 ) :: c;
+	return c;
+}
+
+operator >> ( a : int , b : int ) : bool {
+	def c : bool;
+	def a1 : int = a;
+	def b1 : int = b;
+	invoke math -> operator_great_int ( a1 , b1 ) :: c;
+	return c;
+}
+
+operator << ( a : int , b : int ) : bool {
+	def c : bool;
+	def a1 : int = a;
+	def b1 : int = b;
+	invoke math -> operator_less_int ( a1 , b1 ) :: c;
+	return c;
+}
 
 stages Modos -> { SIMPLES, NORMAL, COMPLEXO}
 
@@ -316,7 +392,7 @@ struct Caixa {
 
     extern:
         func CAIXADOR() : int {return 12;}
-        func ENCAIXADOR(a:int) : int {return a++12;}
+        func ENCAIXADOR(a:int) : int {return a;}
 }
 
 type Duplo{
@@ -329,3 +405,4 @@ type Duplo{
 operator ++ ( d1 : Duplo , d2 : Duplo ) : Duplo {
         	return start Duplo { a = d1.a ++ d2.a; b = d1.b ++ d2.b; };
 }
+

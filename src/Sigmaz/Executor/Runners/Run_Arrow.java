@@ -110,7 +110,7 @@ public class Run_Arrow {
         } else if (eQualificador.contentEquals("TYPE")) {
             Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
-            eItem = mRun_Internal.Struct_DentroType(eItem.getValor(mRunTime,mEscopo), ASTCorrente, mEscopo, eRetorno);
+            eItem = mRun_Internal.Struct_DentroType(eItem.getTipo(),eItem.getValor(mRunTime,mEscopo), ASTCorrente, mEscopo, eRetorno);
 
         } else {
 

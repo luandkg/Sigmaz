@@ -10,7 +10,7 @@ act mudar ( ) {
     def antes_z_valor : int = caixa_Z.getValor();
     def antes_z_indice : int = caixa_Z.INDICE;
 
-       using caixa_Z -> {
+       using (caixa_Z) -> {
 
            setValor(30);
            #caixa_Z.setValor(30);

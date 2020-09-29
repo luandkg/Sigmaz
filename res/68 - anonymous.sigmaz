@@ -1,15 +1,21 @@
 call iniciar -> {
+
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+
 	local -> ( ) {
 		def t : int = -12;
 		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	}
+
 	@ ( );
-	local -> ( a : num , b : num ) {
+	local -> ( a : num , b : num ) : num {
 		def c : num = 0.0;
 		invoke math -> operator_sum_num ( a , b ) :: c;
 		return c;
 	}
+
 	def t : num = @ ( 20.0 , 50.0 );
+
+
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }

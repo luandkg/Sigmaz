@@ -321,3 +321,15 @@
 
 2020 09 27  -->>  Syntax HighLight - Dark Theme
 2020 09 27  -->>  Syntax HighLight - Light Theme
+2020 09 27  -->>   Pos Processamento : Cast
+2020 09 27  -->>  AST_VALUE : Operador GREAT
+2020 09 27  -->>  AST_VALUE : Operador LESS
+2020 09 27  -->>  Implementação UNION TYPE
+2020 09 27  -->>  Checagem de Acesso a Campo em Type
+
+2020 09 28  -->>  Implementação UNION TYPE GENERIC
+2020 09 28  -->>  Implementação MARCADORES
+2020 09 29  -->>  Re-Organização do AST_VALUE
+2020 09 29  -->>  Ampliação do Change com AST_VALUE
+2020 09 29  -->>  Ampliação do Using com AST_VALUE
+2020 09 29  -->>  Hierarquização de Funções Locais

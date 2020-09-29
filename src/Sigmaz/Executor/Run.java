@@ -3,6 +3,7 @@ package Sigmaz.Executor;
 import Sigmaz.Executor.Runners.*;
 
 import java.util.ArrayList;
+
 import Sigmaz.Utils.AST;
 
 public class Run {
@@ -62,7 +63,7 @@ public class Run {
 
         for (String Referencia : mRefers) {
 
-       //     System.out.println("Procurando Refer : " + Referencia);
+            //     System.out.println("Procurando Refer : " + Referencia);
 
             Global.adicionarRefer(Referencia);
 
@@ -85,7 +86,6 @@ public class Run {
         }
 
         mRunTime.indexar(ASTCGlobal, Global);
-
 
 
         for (Run_Extern RE : mRunTime.getExtern()) {
@@ -127,15 +127,17 @@ public class Run {
 
             if (ASTC.mesmoTipo("CALL")) {
 
-                Global.setNome(ASTC.getNome());
+                Escopo mEscopoCall = new Escopo(mRunTime,Global);
+
+                mEscopoCall.setNome("Call::"+ASTC.getNome());
 
                 if (ASTC.mesmoValor("REFER")) {
                     AST mSending = ASTC.getBranch("SENDING");
                     Run_Any mAST = new Run_Any(mRunTime);
-                    mAST.init_ActionFunction(mSending,Global);
+                    mAST.init_ActionFunction(mSending, mEscopoCall);
                 } else {
 
-                    Run_Body mAST = new Run_Body(mRunTime, Global);
+                    Run_Body mAST = new Run_Body(mRunTime, mEscopoCall);
                     mAST.init(ASTC.getBranch("BODY"));
 
                 }

@@ -1,16 +1,16 @@
 call iniciar -> pular ( );
 cast pos {
 	getter a : num -> {
-		return a;
+		#return a;
 	}
 	getter a : int -> {
-		return a;
+		#return a;
 	}
 	setter b : num -> {
-		return b;
+		#return b;
 	}
 	setter b : int -> {
-		return b;
+		#return b;
 	}
 	
 }

@@ -1,6 +1,7 @@
 package Sigmaz.Executor.Runners;
 
 import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Utils.AST;
 
@@ -10,6 +11,8 @@ public class Run_While {
     private Escopo mEscopo;
     private String mLocal;
 
+    private boolean mRetornado;
+    private Item mItem;
 
     public Run_While(RunTime eRunTime, Escopo eEscopo) {
 
@@ -17,6 +20,8 @@ public class Run_While {
         mEscopo = eEscopo;
         mLocal = "Run_While";
 
+        mRetornado=false;
+        mItem=null;
 
     }
 
@@ -25,6 +30,13 @@ public class Run_While {
         return mEscopo.getCancelar();
     }
 
+    public Item getRetorno(){ return mItem; }
+    public boolean getRetornado() { return mRetornado; }
+
+    public void Retorne(Item eItem){
+        mEscopo.retorne(eItem);
+        mItem=eItem;
+    }
 
     public void init(AST ASTCorrente) {
 
@@ -63,6 +75,12 @@ public class Run_While {
                     if (mRunTime.getErros().size() > 0) {
                         return;
                     }
+
+                    if (cAST.getRetornado()){
+                        Retorne(cAST.getRetorno());
+                        break;
+                    }
+
 
                     w+=1;
 

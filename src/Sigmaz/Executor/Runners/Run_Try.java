@@ -95,6 +95,11 @@ public class Run_Try {
 
     }
 
+    public boolean getRetornado() {
+        return mEscopo.getRetornado();
+    }
+
+    public Item getRetorno(){ return mEscopo.getRetorno(); }
 
 }
 

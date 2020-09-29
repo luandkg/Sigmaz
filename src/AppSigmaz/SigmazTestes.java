@@ -80,7 +80,7 @@ public class SigmazTestes {
 
                     Analisador AnaliseC = new Analisador();
 
-                    AnaliseC.init(CompilerC.getASTS(), mLocal);
+                    //AnaliseC.init(CompilerC.getASTS(), mLocal);
 
                     if (AnaliseC.getErros().size() == 0) {
 

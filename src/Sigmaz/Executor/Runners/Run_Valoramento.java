@@ -66,30 +66,6 @@ public class Run_Valoramento {
 
 
 
-            } else if (mTipagem.contentEquals("int") && mAST.getRetornoTipo().contentEquals("num")) {
-                mAST.setRetornoTipo("int");
-
-                String s = String.valueOf(mAST.getConteudo());
-                String inteiro = "";
-
-                int index = 0;
-                int o = s.length();
-                while (index < o) {
-                    String v = s.charAt(index) + "";
-                    if (v.contentEquals(".")) {
-                        break;
-                    } else {
-                        inteiro += v;
-                    }
-                    index += 1;
-                }
-
-                if (inteiro.contentEquals("")) {
-                    inteiro = "0";
-                }
-
-                mAST.setConteudo(inteiro);
-
 
             } else {
 
@@ -173,7 +149,41 @@ public class Run_Valoramento {
 
                     }
 
-                } else {
+            } else  if (mRunTime.getQualificador(mAST.getRetornoTipo(), mEscopo.getRefers()).contentEquals("TYPE")) {
+
+
+                boolean temHeranca = false;
+
+                Run_Type eRS = mRunTime.getRun_Type(mAST.getConteudo());
+
+                for (String eBase : eRS.getBases()) {
+                    if (eBase.contentEquals(mTipagem)) {
+                        temHeranca = true;
+                        break;
+                    }
+                    //  System.out.println("\t ->> " + eBase );
+                }
+
+                if (!temHeranca) {
+
+                    // System.out.println(" -->> RETORNANDO : " + mAST.getRetornoTipo() );
+                    //  System.out.println(" -->> RETORNANDO BASEADO : " + eRS.getBaseado() );
+                    //   System.out.println(" -->> RETORNANDO TIPO REAL : " + eRS.getTipoCompleto() );
+
+                    //  System.out.println(" -->> PRECISA : " + mTipagem );
+
+
+                    if (eRS.getTipoCompleto().contentEquals(mTipagem)) {
+
+                    } else {
+                        mRunTime.errar(mLocal, "Retorno incompativel  : " + mTipagem + " x8 " + mAST.getRetornoTipo() + " e Subtipo : " + eRS.getTipoCompleto());
+                    }
+
+
+                }
+
+
+            } else {
 
 
                     mRunTime.errar(mLocal, "Retorno incompativel  : " + mTipagem + " xc " + mAST.getRetornoTipo());

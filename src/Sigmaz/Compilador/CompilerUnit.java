@@ -1,5 +1,13 @@
 package Sigmaz.Compilador;
 
+import Sigmaz.Compilador.Alocador.AST_Alocador;
+import Sigmaz.Compilador.Bloco.*;
+import Sigmaz.Compilador.Complexo.*;
+import Sigmaz.Compilador.Fluxo.AST_Default;
+import Sigmaz.Compilador.Fluxo.AST_Invoke;
+import Sigmaz.Compilador.Organizador.AST_Import;
+import Sigmaz.Compilador.Organizador.AST_Refer;
+import Sigmaz.Compilador.Organizador.AST_Require;
 import Sigmaz.Lexer.Lexer;
 import Sigmaz.Lexer.Token;
 import Sigmaz.Lexer.TokenTipo;
@@ -83,6 +91,11 @@ public class CompilerUnit {
 
     }
 
+    public void proximo(){
+        if (mIndex<mTamanho){
+            mIndex+=1;
+        }
+    }
 
     public void init(String eArquivo, AST AST_Raiz, ArrayList<String> eRequisitados) {
 
@@ -394,6 +407,10 @@ public class CompilerUnit {
                 AST_Default mAST = new AST_Default(this);
                 mAST.init(AST_Raiz);
 
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mark")) {
+
+                AST_Marcador mAST = new AST_Marcador(this);
+                mAST.init(AST_Raiz,"ALL");
 
 
             } else {

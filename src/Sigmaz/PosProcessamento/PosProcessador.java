@@ -108,9 +108,14 @@ public class PosProcessador {
         Alocador mAlocador = new Alocador(this);
         mAlocador.init(mASTS);
 
-
         Tipador mTipador = new Tipador(this);
         mTipador.init(mASTS);
+
+        CastUp mCastUp = new CastUp(this);
+        mCastUp.init(mASTS);
+
+        Unificador mUnificador = new Unificador(this);
+        mUnificador.init(mASTS);
 
         Heranca mHeranca = new Heranca(this);
         mHeranca.init(mASTS);

@@ -3,13 +3,13 @@ cast neg {
 		if ( maior ( a , 0 ) ) -> {
 			exception "Nao e possivel obter valores positivos !";
 		}
-		return a;
+		#return a;
 	}
 	setter b : num -> {
 		if ( maior ( b , 0 ) ) -> {
 			exception "Nao e possivel obter valores positivos !";
 		}
-		return b;
+		#return b;
 	}
 	
 }

@@ -1,6 +1,6 @@
 call iniciar -> operando ( );
 act operando ( ) {
-	def cc : int = 0.0;
+	def cc : int = 0;
 	step cc :: ( 0 , 10 , somar ( cc , 1 ) ) -> {
 		def ac : int = cc;
 		println ( "ANTES : ", ac );

@@ -1,6 +1,7 @@
 package Sigmaz.Executor.Runners;
 
 import Sigmaz.Executor.Escopo;
+import Sigmaz.Executor.Item;
 import Sigmaz.Executor.RunTime;
 import Sigmaz.Executor.AST_Implementador;
 import Sigmaz.Utils.AST;
@@ -40,6 +41,12 @@ public class Run_Each {
 
         return mTipo;
     }
+
+    public boolean getRetornado() {
+        return mEscopo.getRetornado();
+    }
+
+    public Item getRetorno(){ return mEscopo.getRetorno(); }
 
 
     public void init(AST ASTCorrente) {
