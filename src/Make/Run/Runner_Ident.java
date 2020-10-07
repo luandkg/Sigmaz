@@ -1,11 +1,10 @@
 package Make.Run;
 
-import Sigmaz.Ferramentas.Dependenciador;
-import Sigmaz.Sigmaz;
-import Sigmaz.Utils.AST;
-import Sigmaz.Utils.Erro;
-import Sigmaz.Utils.GrupoDeErro;
-import Sigmaz.Utils.Identador;
+import Sigmaz.S08_Ferramentas.Dependenciador;
+import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S00_Utilitarios.Erro;
+import Sigmaz.S00_Utilitarios.GrupoDeErro;
+import Sigmaz.S08_Ferramentas.Identador;
 
 import java.util.ArrayList;
 

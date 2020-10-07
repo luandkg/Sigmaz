@@ -1,6 +1,6 @@
 package OA;
 
-import OA.LuanDKG.Objeto;
+import LuanDKG.Objeto;
 
 import java.util.ArrayList;
 

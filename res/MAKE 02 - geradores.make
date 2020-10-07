@@ -61,6 +61,8 @@ status -> "Executando MAKE pela primeira vez";
 
 # IDENTAR ARQUIVOS
 
+    status -> " --- FORMATADOR --- ";
+
     ident with -> "libs/lib.sigmaz";
 
 # TESTES AUTOMATIZADOS
@@ -82,4 +84,4 @@ status -> "Executando MAKE pela primeira vez";
 
     make library "num.a" with -> { "libs/neg.sigmaz" , "libs/pos.sigmaz" };
 
-    ast -> "num.a";
+    #ast -> "num.a";

@@ -1,10 +1,8 @@
 package AppSigmaz;
 
 import Make.Make;
-import Sigmaz.Lexer.Lexer;
-import Sigmaz.Lexer.Token;
-import Sigmaz.Sigmaz;
-import Sigmaz.Utils.Erro;
+import Sigmaz.S03_Parser.Lexer;
+import Sigmaz.S00_Utilitarios.Erro;
 
 import java.util.ArrayList;
 

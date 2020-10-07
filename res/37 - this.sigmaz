@@ -10,8 +10,8 @@ struct Pessoa {
 	func getContagem ( ) : num {
 		return somar_inteiro ( idade , Pessoa -> TGR );
 	}
-	extern : 
-	mockiz TGR : num = 2.0;
+	explicit :
+	    mockiz TGR : num = 2.0;
 }
 call iniciar -> inicio ( );
 act inicio ( ) {

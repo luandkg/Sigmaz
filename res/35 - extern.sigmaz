@@ -3,9 +3,9 @@ struct Sacola {
 	init Sacola ( ) {
 		
 	}
-	extern : 
+	explicit :
 	mockiz TGU : int = 4;
-	extern : 
+	explicit :
 	define BKA : int = 0;
 	all : 
 	mockiz TGA : int = 4;
@@ -38,7 +38,7 @@ struct Sacola {
 		return somar ( a , b );
 	}
 	all : 
-	extern : 
+	explicit :
 	operator == ( a : Sacola , b : Sacola ) : bool {
 		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 		def t : bool = a.itens == b.itens;
@@ -54,7 +54,7 @@ struct Sacola {
 	func tratar ( a : int , b : int ) : int {
 		return somar ( a , b );
 	}
-	extern : 
+	explicit :
 	func CRINNAR ( a : int , b : int ) : int {
 		return somar ( a , b );
 	}

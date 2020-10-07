@@ -153,7 +153,7 @@ struct Tempo {
 		return formatado;
 	}
 
-	extern:
+	explicit:
 	func getTempo_Formatado ( ) : string {
 	    		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 
@@ -293,7 +293,7 @@ struct TempoData {
 		def formatado : string = string_append ( alfa , " ", beta );
 		return formatado;
 	}
-	extern : 
+	explicit :
 	func getTempoData_Formatado ( ) : string {
 		def mHora : int = 0;
 		def mMinuto : int = 0;

@@ -390,7 +390,7 @@ struct Caixa {
         	return init Caixa(a.getValor() ++ b.getValor());
         }
 
-    extern:
+    explicit:
         func CAIXADOR() : int {return 12;}
         func ENCAIXADOR(a:int) : int {return a;}
 }

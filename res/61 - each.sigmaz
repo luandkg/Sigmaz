@@ -11,9 +11,15 @@ act inicio ( ) {
 	ListaNumerica.adicionar ( 30 );
 	ListaNumerica.adicionar ( 40 );
 	ListaNumerica.adicionar ( 50 );
+
+	println ( " DEBUG ", 0 );
+
 	each a : int :: ( ListaNumerica ) -> {
 		println ( "-> ", a );
 	}
+
+		println ( " DEBUG ", 1 );
+
 	TesteGeral -> AumentarC ( );
 	def t : int = TesteGeral -> ObterC ( );
 	def t1 : Tipado = start Tipado {

@@ -1,7 +1,7 @@
 package Make.Run;
 
 import AppSigmaz.SigmazTestes;
-import Sigmaz.Utils.AST;
+import Sigmaz.S00_Utilitarios.AST;
 
 public class Runner_Tests {
 
@@ -29,7 +29,7 @@ public class Runner_Tests {
 
         System.out.println("");
 
-        mSigmazTestes.init(mRunMake.getLocal(),ASTCGlobal.getNome());
+        mSigmazTestes.init(mRunMake.getLocal(),mRunMake.getLocal(),ASTCGlobal.getNome());
 
 
     }

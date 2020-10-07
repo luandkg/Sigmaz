@@ -1,6 +1,6 @@
 package Sigmaz.Intellisenses;
 
-import Sigmaz.Executor.Utils;
+import Sigmaz.S06_Executor.Utils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import Sigmaz.Utils.AST;
+import Sigmaz.S00_Utilitarios.AST;
 
 public class IS_Model {
 
@@ -82,7 +82,7 @@ public class IS_Model {
                 String eConteudo = Sub2.getNome();
 
                 g.setColor(eTexto);
-                mIntellisense.leftString(g, new Rectangle(x + 30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_GENERIC_TYPE);
+                mIntellisense.leftString(g, new Rectangle(x , mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_GENERIC_TYPE);
 
                 mais += 30;
 

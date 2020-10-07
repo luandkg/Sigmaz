@@ -383,7 +383,9 @@ struct Iterador in ( T ) {
 	}
 	
 }
+
 refer Delicia;
+
 act inicio ( ) {
 	def ls : Lista >> ( string ) = init Lista ( ) >> ( string );
 	def lsi : Iterador >> ( Lista >> ( string ) ) = init Iterador ( ls ) >> ( Lista >> ( string ) );
@@ -407,6 +409,7 @@ act inicio ( ) {
 		println ( "-> ", iterando.getValor ( ) );
 		iterando.proximo ( );
 	}
+
 	println ( " DEBUG  ", 2 );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
 
@@ -474,6 +477,8 @@ act inicio ( ) {
 		println ( "-> ", iterar.getValor ( ) );
 		iterar.proximo ( );
 	}
+
+
 	def Frutas : Lista >> ( Fruta ) = init Lista ( ) >> ( Fruta );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	Frutas.adicionar ( init Fruta ( ) );

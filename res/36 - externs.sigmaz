@@ -4,17 +4,17 @@ stages Tipos -> {
 
 struct Pessoa {
 	all : 
-	define privado : num = somar_inteiro ( 30.0 , 20.0 );
-	extern : 
-	define publico : num = Pessoa -> vazar ( 10.0 , 10.0 );
-	define tipo : Tipos = Tipos :: ALFA;
-	extern : 
-	func vazar ( a : num , b : num ) : num {
-		def c : num;
-		invoke math -> operator_sum_num ( a , b ) :: c;
-		invoke casting -> cast_integer_num ( c ) :: c;
-		return c;
-	}
+	    define privado : num = somar_inteiro ( 30.0 , 20.0 );
+	explicit :
+	    define publico : num = Pessoa -> vazar ( 10.0 , 10.0 );
+	    define tipo : Tipos = Tipos :: ALFA;
+	explicit :
+	    func vazar ( a : num , b : num ) : num {
+		    def c : num;
+		    invoke math -> operator_sum_num ( a , b ) :: c;
+		    invoke casting -> cast_integer_num ( c ) :: c;
+		    return c;
+	    }
 	
 }
 call iniciar -> inicio ( );

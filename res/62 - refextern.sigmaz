@@ -8,7 +8,7 @@ call iniciar -> {
 }
 package ESTRELAS {
 	struct Sol {
-		extern : 
+		explicit :
 		define mLuz : num = 12.0;
 		func Luminosidade ( ) : num {
 			return mLuz;
@@ -19,9 +19,9 @@ package ESTRELAS {
 }
 package COISAS {
 	struct Pessoa {
-		extern : 
+		explicit :
 		define mID : num = 0.0;
-		extern : 
+		explicit :
 		func ID ( ) : num {
 			mID = somar_inteiro ( mID , 1.0 );
 			return mID;

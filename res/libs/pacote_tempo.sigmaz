@@ -40,8 +40,7 @@ package Tempo {
 			def formatado : string = string_append ( f1 , ":", f2 , ":", f3 );
 			return formatado;
 		}
-		extern : 
-		func getTempo ( ) : Tempo {
+		explicit : func getTempo ( ) : Tempo {
 			def a : Tempo = init Tempo ( );
 			return a;
 		}
@@ -283,8 +282,7 @@ package Tempo {
 			def formatado : string = string_append ( alfa , " ", beta );
 			return formatado;
 		}
-		extern : 
-		func getTempoData_Formatado ( ) : string {
+		explicit : func getTempoData_Formatado ( ) : string {
 			def mHora : num = 0;
 			def mMinuto : num = 0;
 			def mSegundo : num = 0;

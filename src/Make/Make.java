@@ -1,8 +1,8 @@
 package Make;
 
 import Make.Run.RunMake;
-import Sigmaz.Utils.Erro;
-import Sigmaz.Utils.GrupoDeErro;
+import Sigmaz.S00_Utilitarios.Erro;
+import Sigmaz.S00_Utilitarios.GrupoDeErro;
 
 import Make.Compiler.Compiler;
 

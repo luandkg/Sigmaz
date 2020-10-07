@@ -1,12 +1,11 @@
 package Sigmaz;
 
-import Sigmaz.Analisador.Analisador;
-import Sigmaz.Compilador.Compiler;
-import Sigmaz.Executor.RunTime;
-import Sigmaz.PosProcessamento.Cabecalho;
-import Sigmaz.PosProcessamento.PosProcessador;
-import Sigmaz.Utils.Erro;
-import Sigmaz.Utils.GrupoDeErro;
+import Sigmaz.S04_Compilador.Compiler;
+import Sigmaz.S06_Executor.RunTime;
+import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
+import Sigmaz.S05_PosProcessamento.PosProcessador;
+import Sigmaz.S00_Utilitarios.Erro;
+import Sigmaz.S00_Utilitarios.GrupoDeErro;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -263,13 +262,8 @@ public class Sigmaz_Etapas {
 
             }
 
+
             if (mContinuar == 3) {
-
-                executar_Analisador(CompilerC, mLocal);
-
-            }
-
-            if (mContinuar == 4) {
 
                 executar_PosProcessamento(CompilerC, mLocal);
 
@@ -472,40 +466,6 @@ public class Sigmaz_Etapas {
 
     }
 
-    private void executar_Analisador(Compiler CompilerC, String mLocal) {
-
-
-        if (mFase == Fases.ANALISAR) {
-
-            Analisador AnaliseC = new Analisador();
-            AnaliseC.init(CompilerC.getASTS(), mLocal);
-
-            for (String eMensagem : AnaliseC.getMensagens()) {
-                mDebugMensagens.add(eMensagem);
-            }
-
-            if (AnaliseC.getErros().size() == 0) {
-
-                mFase = Fases.POS_PROCESSAMENTO;
-                mETAPA_ANALISE = mSTATUS_SUCESSO;
-
-            } else {
-
-                mETAPA_ANALISE = mSTATUS_FALHOU;
-
-                mErros_Mensagens.add("\n\t ERROS DE ANALISE : ");
-                for (String eErro : AnaliseC.getErros()) {
-                    mErros_Mensagens.add("\t\t    ->> " + eErro);
-                }
-
-            }
-
-        }
-
-        System.out.println("\t - 4 : Analise                 : " + mETAPA_ANALISE);
-
-
-    }
 
     private void executar_PosProcessamento(Compiler CompilerC, String mLocal) {
 

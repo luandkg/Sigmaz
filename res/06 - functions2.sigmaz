@@ -1,6 +1,6 @@
 call iniciar -> operando ( );
 
-#Luan
+
 act operando ( ) {
 
 	def a1 : num = 10.0;

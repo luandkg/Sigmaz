@@ -5,6 +5,7 @@ import AppUI.Mottum.Windows;
 import OA.*;
 
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -24,6 +25,7 @@ public class AppSigmaz {
         ArrayList<String> mMakes = Carregadores.Carregar_Makes();
 
         String mCompilado = "res/build/Sigmaz.sigmad";
+        String mLocalLibs = "res/build/";
 
         String mBiblioteca_Fonte = "res/libs/lib.sigmaz";
         String mBiblioteca_Sigmad = "res/build/lib.sigmad";
@@ -32,29 +34,33 @@ public class AppSigmaz {
         String mUML = "res/uml/uml.txt";
         String mIntellisense = "res/intellisenses/";
         String mSyntax_HighLights = "res/highlights/";
+        String mLOCAL_PLANOS = "res/plan/";
 
         String mInternos = "res/internos/";
         String mLocal = "res/";
 
 
-        int ARQUIVO = 43;
+
+        int ARQUIVO = 44;
 
         switch (Fases.TESTES) {
 
+            case MONTAR_PLANO_COMPILACAO -> AppUtils.PLANO_COMPILACAO(ARQUIVO, mArquivos, mLOCAL_PLANOS,mLocalLibs);
+
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
-            case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos, mCompilado);
-            case INTERNO -> AppUtils.INTERNO(ARQUIVO, mArquivos, mCompilado, mInternos);
+            case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos, mCompilado,mLocalLibs);
+            case INTERNO -> AppUtils.INTERNO(ARQUIVO, mArquivos, mCompilado,mLocalLibs, mInternos);
 
 
-            case COMPILAR_BIBLIOTECA -> AppUtils.COMPILAR_BIBLIOTECA(ARQUIVO, mArquivos, mCompilado);
-            case COMPILAR_EXECUTAVEL -> AppUtils.COMPILAR_EXECUTAVEL(ARQUIVO, mArquivos, mCompilado);
+            case COMPILAR_BIBLIOTECA -> AppUtils.COMPILAR_BIBLIOTECA(ARQUIVO, mArquivos, mCompilado,mLocalLibs);
+            case COMPILAR_EXECUTAVEL -> AppUtils.COMPILAR_EXECUTAVEL(ARQUIVO, mArquivos, mCompilado,mLocalLibs);
 
-            case EXECUTAR -> AppUtils.EXECUTAR(ARQUIVO, mArquivos, mCompilado);
-            case EXECUTAR_SIMPLES -> AppUtils.EXECUTAR_SIMPLES(ARQUIVO, mArquivos, mCompilado);
-            case EXECUTAR_FASES -> AppUtils.EXECUTAR_FASES(ARQUIVO, mArquivos, mCompilado);
+            case COMPILAR_SIMPLES -> AppUtils.COMPILAR_SIMPLES(ARQUIVO, mArquivos, mCompilado,mLocalLibs);
+            case COMPILAR_DETALHADO -> AppUtils.COMPILAR_DETALHADO(ARQUIVO, mArquivos, mCompilado,mLocalLibs);
 
+            case EXECUTAR -> AppUtils.EXECUTAR(mCompilado,mLocalLibs);
 
-            case TESTES -> AppUtils.TESTE_GERAL(mArquivos, mCompilado, mLocal);
+            case TESTES -> AppUtils.TESTE_GERAL(mArquivos, mCompilado, mLocal,mLocalLibs);
 
             case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);
             case SYNTAX_HIGHLIGHT -> AppUtils.SYNTAX_HIGHLIGHT(ARQUIVO, mArquivos,mSyntax_HighLights);
@@ -62,10 +68,10 @@ public class AppSigmaz {
             case IDENTAR_TUDO -> AppUtils.IDENTAR_LOTE("ARQUIVOS", mArquivos);
             case IDENTAR_BIBLIOTECAS -> AppUtils.IDENTAR_LOTE("BIBLIOTECAS", mBibliotecas);
 
-            case MONTAR_BIBLIOTECAS -> AppUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad);
+            case MONTAR_BIBLIOTECAS -> AppUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad,mLocalLibs);
 
-            case INTELLISENSE -> AppUtils.INTELISENSE(ARQUIVO, mArquivos, mCompilado, mIntellisense);
-            case INTELLISENSE_BIBLIOTECA -> AppUtils.INTELISENSE_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad, mIntellisense);
+            case INTELLISENSE -> AppUtils.INTELISENSE(ARQUIVO, mArquivos, mCompilado,mLocalLibs, mIntellisense);
+            case INTELLISENSE_BIBLIOTECA -> AppUtils.INTELISENSE_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad,mLocalLibs, mIntellisense);
 
             case LEXER -> AppUtils.LEXER(ARQUIVO, mArquivos);
             case TODO -> AppUtils.TODO(ARQUIVO, mArquivos);

@@ -1,14 +1,12 @@
 package Container;
 
-import Sigmaz.Utils.ArquivoAssociativo;
+import Sigmaz.S00_Utilitarios.ArquivoAssociativo;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.zip.GZIPOutputStream;
 
 public class Creator {
 

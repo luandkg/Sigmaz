@@ -151,6 +151,9 @@ public class Carregadores {
         mArquivos.add("res/85 - union.sigmaz");
         mArquivos.add("res/86 - mark.sigmaz");
         mArquivos.add("res/87 - escopos.sigmaz");
+        mArquivos.add("res/88 - externos.sigmaz");
+        mArquivos.add("res/89 - posprocessamento.sigmaz");
+        mArquivos.add("res/90 - processor.sigmaz");
 
         return mArquivos;
     }

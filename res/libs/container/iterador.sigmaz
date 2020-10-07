@@ -23,10 +23,13 @@ package Iterador {
 		define mTerminou : bool = false;
 		all : 
 		act iniciar ( ) {
+			
+			#invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
 			mIndex = 0;
 			mTamanho = mLista.getQuantidade ( );
 			mIniciado = true;
 			mTerminou = false;
+			invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
 		}
 
 		act proximo ( ) {

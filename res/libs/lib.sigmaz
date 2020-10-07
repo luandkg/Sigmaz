@@ -1,5 +1,6 @@
 mockiz SIGMAZ : string = "SIGMAZ 1.0";
 mockiz VERSAO : num = 1.0;
+define ALTERAVAL : int = 0;
 import "constant.sigmaz";
 import "functions.sigmaz";
 import "comparators.sigmaz";
@@ -18,6 +19,8 @@ import "pacote_tempo.sigmaz";
 import "ecossistema.sigmaz";
 import "cores.sigmaz";
 import "unit.sigmaz";
+import "marcadores.sigmaz";
+import "idealismo.sigmaz";
 stages Numeros -> {
 	POSITIVO , NEGATIVO , ZERO 
 }
@@ -72,8 +75,7 @@ struct TesteGeral {
 	#implicit:
 	
 	#   define C : num = 0;
-	extern : 
-	define C : int = 0;
+	explicit : define C : int = 0;
 	act AumentarC ( ) {
 		TesteGeral -> C = somar ( TesteGeral -> C , 1 );
 	}
@@ -128,4 +130,11 @@ struct O3 with Objeto {
 		return "@OBJETO::O3";
 	}
 	
+}
+functor < T1 , T2 , T3 > somatorio ( a1 : T1 , a2 : T2 ) : T3 {
+	def retorno : T3 = a1 ++ a2;
+	return retorno;
+}
+auto < T1 , T2 , T3 > autosoma ( a1 : T1 , a2 : T2 ) {
+	def somando : T3 = a1 ++ a2;
 }

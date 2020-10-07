@@ -68,7 +68,9 @@ operator ** ( a : num , b : num ) : num {
 	invoke math -> operator_mux_num ( a , b ) :: c;
 	return c;
 }
+
 refer Blocos;
+
 call iniciar -> {
 	def a1 : CXA >> ( num ) = init CXA ( 12.0 ) >> ( num );
 	def a2 : CXA >> ( num ) = init CXA ( 18.0 ) >> ( num );

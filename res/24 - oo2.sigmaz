@@ -44,7 +44,9 @@ act println ( a : string ) {
 	invoke terminal -> change ( ) :: c;
 	invoke terminal -> print ( a ) :: c;
 }
+
 call iniciar -> pular ( );
+
 act pular ( ) {
 	def sacola1 : Sacola = init Sacola ( );
 	sacola1.mostrar_struct ( );

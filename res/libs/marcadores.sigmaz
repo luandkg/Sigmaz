@@ -1,0 +1,20 @@
+mark Km ( a : int ) : int {
+	def c : int;
+	invoke math -> operator_mux_int ( a , 1000 ) :: c;
+	return c;
+}
+mark Hm ( a : int ) : int {
+	def c : int;
+	invoke math -> operator_mux_int ( a , 100 ) :: c;
+	return c;
+}
+mark Dam ( a : int ) : int {
+	def c : int;
+	invoke math -> operator_mux_int ( a , 10 ) :: c;
+	return c;
+}
+mark m ( a : int ) : int {
+	def c : int;
+	invoke math -> operator_mux_int ( a , 1 ) :: c;
+	return c;
+}

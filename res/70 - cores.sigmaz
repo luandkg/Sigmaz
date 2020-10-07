@@ -26,7 +26,7 @@ package Cores {
 		func getB ( ) : int {
 			return mB;
 		}
-		extern : 
+		explicit :
 		func getCor ( r : int , g : int , b : int ) : Cor {
 			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 			def t : Cor = init Cor ( r , g , b );

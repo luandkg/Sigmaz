@@ -1,18 +1,19 @@
 package Sigmaz.Intellisenses;
 
-import Sigmaz.Executor.Utils;
+import Sigmaz.S06_Executor.Debuggers.Simplificador;
 
 import java.awt.*;
-import Sigmaz.Utils.AST;
+
+import Sigmaz.S00_Utilitarios.AST;
 
 public class IS_Struct {
 
     private Intellisense mIntellisense;
     private IntellisenseTheme mIntellisenseTheme;
 
-    public IS_Struct(Intellisense eIntellisense,IntellisenseTheme eIntellisenseTheme) {
+    public IS_Struct(Intellisense eIntellisense, IntellisenseTheme eIntellisenseTheme) {
         mIntellisense = eIntellisense;
-        mIntellisenseTheme=eIntellisenseTheme;
+        mIntellisenseTheme = eIntellisenseTheme;
     }
 
     public int getContagem(AST eTudo) {
@@ -42,43 +43,51 @@ public class IS_Struct {
                 contador += 1;
             }
 
+        } else if (eTudo.getBranch("EXTENDED").mesmoNome("TYPE")) {
+
+            contador += mIntellisense.getContagemGenericos(eTudo.getBranch("GENERIC"));
+            contador += mIntellisense.getContagemGenericos(eTudo.getBranch("BASES"));
+
+
         }
 
         return contador;
     }
 
 
-    public int continuar(Graphics g, AST eTudo, String eTitulo,int x, int mais, int eLargura, int altura) {
+    public int continuar(Graphics g, AST eTudo, String eTitulo, int x, int mais, int eLargura, int altura) {
 
 
         Color eBarra = Color.RED;
 
-        Color eTexto=mIntellisenseTheme.getTexto();
-        Color eBox=mIntellisenseTheme.getBox();
+        Color eTexto = mIntellisenseTheme.getTexto();
+        Color eBox = mIntellisenseTheme.getBox();
+
+        Simplificador mSimplificador = new Simplificador();
 
         if (eTudo.getBranch("EXTENDED").mesmoNome("STAGES")) {
 
 
             eBarra = new Color(255, 110, 64);
-            eBarra=mIntellisenseTheme.getStage();
+            eBarra = mIntellisenseTheme.getStage();
 
 
         } else if (eTudo.getBranch("EXTENDED").mesmoNome("TYPE")) {
 
             eBarra = new Color(64, 196, 255);
-            eBarra=mIntellisenseTheme.getType();
+            eBarra = mIntellisenseTheme.getType();
 
 
         } else if (eTudo.getBranch("EXTENDED").mesmoNome("STRUCT")) {
 
             eBarra = new Color(124, 179, 66);
-            eBarra=mIntellisenseTheme.getStruct();
+            eBarra = mIntellisenseTheme.getStruct();
 
 
         } else if (eTudo.getBranch("EXTENDED").mesmoNome("EXTERNAL")) {
 
             eBarra = new Color(22, 160, 133);
-            eBarra=mIntellisenseTheme.getExternal();
+            eBarra = mIntellisenseTheme.getExternal();
 
 
         } else {
@@ -109,7 +118,7 @@ public class IS_Struct {
                 String eConteudo = Sub2.getNome();
 
                 g.setColor(eTexto);
-                mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_STAGE);
+                mIntellisense.leftString(g, new Rectangle(x + 30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_STAGE);
 
                 mais += 30;
 
@@ -118,85 +127,35 @@ public class IS_Struct {
             mais += 50;
 
             g.setColor(eBox);
-            g.fillRect(x+ 50, mais, eLargura / 2, 15);
+            g.fillRect(x + 50, mais, eLargura / 2, 15);
 
             g.setColor(Color.BLACK);
 
-            mais = mIntellisense.colocarGlobal2(x,mais, g, eTudo.getBranch("BODY"));
+            mais = mIntellisense.colocarGlobal2(x, mais, g, eTudo.getBranch("BODY"));
 
             mais += 50;
 
         } else if (eTudo.getBranch("EXTENDED").mesmoNome("TYPE")) {
 
-            Utils mUtils = new Utils();
 
-            if (eTudo.getBranch("GENERIC").mesmoNome("TRUE")) {
-
-
-                for (AST Sub2 : eTudo.getBranch("GENERIC").getASTS()) {
-
-                    String eConteudo = Sub2.getNome();
-
-                    g.setColor(eTexto);
-                    mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_GENERIC_TYPE);
-
-                    mais += 30;
-
-                }
-
-                mais += 70;
-
-                g.setColor(eBox);
-                g.fillRect(x+ 50, mais, eLargura / 2, 15);
-
-
-            }
-
-
-            for (AST Sub2 : eTudo.getBranch("BODY").getASTS()) {
-
-                if (Sub2.mesmoTipo("DEFINE")) {
-
-                    g.setColor(eTexto);
-                    String eConteudo = mUtils.getDefine(Sub2);
-                    mais = mIntellisense. algum(Sub2, g, x,mais, "ALL", eConteudo, mIntellisense.IMG_DEFINE_TYPE);
-                  //  p += 1;
-                }
-
-            }
-
-
-            for (AST Sub2 : eTudo.getBranch("BODY").getASTS()) {
-
-                if (Sub2.mesmoTipo("MOCKIZ")) {
-                    g.setColor(eTexto);
-
-                    String eConteudo = mUtils.getMockiz(Sub2);
-                    mais = mIntellisense.algum(Sub2, g, mais, x,"ALL", eConteudo, mIntellisense.IMG_MOCKIZ_TYPE);
-                    //p += 1;
-                }
-
-            }
-
-            mais += 50;
+            mais = Struct_Type(eTudo, x, mais, eLargura, eTexto, eBox, g);
 
         } else {
 
-            Utils mUtils = new Utils();
 
             if (eTudo.getBranch("MODEL").mesmoValor("TRUE")) {
 
                 String eConteudo = eTudo.getBranch("MODEL").getNome();
 
                 g.setColor(eTexto);
-                mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_MODEL);
+                mIntellisense.leftString(g, new Rectangle(x + 30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_MODEL);
 
                 mais += 30;
 
                 mais += 70;
 
                 g.setColor(eBox);
-                g.fillRect(x+ 50, mais, eLargura / 2, 15);
+                g.fillRect(x + 50, mais, eLargura / 2, 15);
 
 
             }
@@ -209,7 +168,7 @@ public class IS_Struct {
 
                     g.setColor(eTexto);
 
-                    mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_BASE);
+                    mIntellisense.leftString(g, new Rectangle(x + 30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_BASE);
 
                     mais += 30;
 
@@ -218,7 +177,7 @@ public class IS_Struct {
                 mais += 70;
 
                 g.setColor(eBox);
-                g.fillRect(x+ 50, mais, eLargura / 2, 15);
+                g.fillRect(x + 50, mais, eLargura / 2, 15);
 
 
             }
@@ -232,7 +191,7 @@ public class IS_Struct {
 
                     g.setColor(eTexto);
 
-                    mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_GENERIC);
+                    mIntellisense.leftString(g, new Rectangle(x + 30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_GENERIC_TYPE);
 
                     mais += 30;
 
@@ -241,7 +200,7 @@ public class IS_Struct {
                 mais += 70;
 
                 g.setColor(eBox);
-                g.fillRect(x+ 50, mais, eLargura / 2, 15);
+                g.fillRect(x + 50, mais, eLargura / 2, 15);
 
 
             }
@@ -255,11 +214,11 @@ public class IS_Struct {
 
                     if (Sub2.mesmoNome(eTudo.getNome())) {
 
-                        String eConteudo = mUtils.getAction(Sub2);
+                        String eConteudo = mSimplificador.getAction(Sub2);
 
                         g.setColor(eTexto);
 
-                        mIntellisense.leftString(g, new Rectangle(x+30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_INIT);
+                        mIntellisense.leftString(g, new Rectangle(x + 30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_INIT);
 
                         mais += 30;
                         inits += 1;
@@ -274,14 +233,14 @@ public class IS_Struct {
                 mais += 70;
 
                 g.setColor(eBox);
-                g.fillRect(x+ 50, mais, eLargura / 2, 15);
+                g.fillRect(x + 50, mais, eLargura / 2, 15);
 
             }
 
 
             g.setColor(Color.BLACK);
 
-            mais = mIntellisense.colocarGlobal(x,mais, g, eTudo.getBranch("BODY"));
+            mais = mIntellisense.colocarGlobal(x, mais, g, eTudo.getBranch("BODY"));
 
         }
 
@@ -289,5 +248,97 @@ public class IS_Struct {
 
     }
 
+    public int Struct_Type(AST eTudo, int x, int mais, int eLargura, Color eTexto, Color eBox, Graphics g) {
+
+        Simplificador mSimplificador = new Simplificador();
+
+        if (eTudo.getBranch("GENERIC").mesmoNome("TRUE")) {
+
+
+            for (AST Sub2 : eTudo.getBranch("GENERIC").getASTS()) {
+
+                String eConteudo = Sub2.getNome();
+
+                g.setColor(eTexto);
+                mIntellisense.leftString(g, new Rectangle(x + 30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_GENERIC_TYPE);
+
+                mais += 30;
+
+            }
+
+            mais += 70;
+
+            g.setColor(eBox);
+            g.fillRect(x + 50, mais, eLargura / 2, 15);
+
+
+        }
+
+
+        if (eTudo.getBranch("BASES").getASTS().size()>0) {
+
+            for (AST Sub2 : eTudo.getBranch("BASES").getASTS()) {
+
+                String eConteudo = Sub2.getNome();
+
+                if (Sub2.getBranch("GENERIC").getASTS().size()>0){
+
+                    eConteudo+=" < ";
+
+                    for(AST iG : Sub2.getBranch("GENERIC").getASTS()){
+                        eConteudo+=" " + iG.getNome();
+                    }
+
+                    eConteudo+=" > ";
+
+                }
+
+                g.setColor(eTexto);
+
+                mIntellisense.leftString(g, new Rectangle(x + 30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_BASE);
+
+                mais += 30;
+
+            }
+
+            mais += 70;
+
+            g.setColor(eBox);
+            g.fillRect(x + 50, mais, eLargura / 2, 15);
+
+
+        }
+
+
+        for (AST Sub2 : eTudo.getBranch("BODY").getASTS()) {
+
+            if (Sub2.mesmoTipo("DEFINE")) {
+
+                g.setColor(eTexto);
+                String eConteudo = mSimplificador.getDefine(Sub2);
+                mais = mIntellisense.algum(Sub2, g, x, mais, "ALL", eConteudo, mIntellisense.IMG_DEFINE_TYPE);
+                //  p += 1;
+            }
+
+        }
+
+
+        for (AST Sub2 : eTudo.getBranch("BODY").getASTS()) {
+
+            if (Sub2.mesmoTipo("MOCKIZ")) {
+                g.setColor(eTexto);
+
+                String eConteudo = mSimplificador.getMockiz(Sub2);
+                mais = mIntellisense.algum(Sub2, g, x, mais, "ALL", eConteudo, mIntellisense.IMG_MOCKIZ_TYPE);
+                //p += 1;
+            }
+
+        }
+
+        mais += 50;
+
+
+        return mais;
+    }
 
 }

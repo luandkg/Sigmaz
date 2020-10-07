@@ -58,7 +58,7 @@ struct XA {
         }
 
 
-	extern :
+	explicit :
 
 	    define mValor : int = 100;
 	    mockiz mSegredo : int = 33;

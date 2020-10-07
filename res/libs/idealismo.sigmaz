@@ -1,0 +1,99 @@
+package Tipos {
+	type Quad {
+		define QuadNome : int = null;
+		mockiz QuadValor : int = null;
+	}
+	type Mesh {
+		define MeshNome : int = null;
+		mockiz MeshValor : int = null;
+	}
+	type Alfa in ( T ) {
+		define Nome : T = null;
+		mockiz Valor : T = null;
+	}
+	type Beta in ( T ) {
+		define Conteudo : T = null;
+		mockiz Referencia : T = null;
+	}
+	type QuadMesh union Quad :: Mesh;
+	type QuadAlfaInt union Quad :: Alfa >> ( int );
+	type QuadAlfa in ( T ) union Quad :: Alfa >> ( T );
+	type AlfaBeta in ( T ) union Alfa >> ( T ) :: Beta >> ( T );
+	type AlfaBetaDuplo in ( T1 , T2 ) union Alfa >> ( T1 ) :: Beta >> ( T2 );
+}
+package Estruturas {
+	stages Modos -> {
+		ALFA , BETA , GAMA 
+	}
+	model Simplezinho {
+		
+		#all:
+		define mNome : int;
+		mockiz mValor : int;
+		
+		#restrict:
+		define mOculto : int;
+		mockiz mReferencia : int;
+	}
+
+	struct Simples {
+		all : 
+		define mNome : int = 0;
+		mockiz mValor : int = 0;
+		restrict : 
+		define mOculto : int = 0;
+		mockiz mReferencia : int = 0;
+		explicit : define mTodos : int = 0;
+		mockiz mPGID : int = 0;
+	}
+
+	struct SimplesModelado with Simples at Simplezinho {
+		init SimplesModelado ( ) -> Simples ( ) {
+			
+		}
+		
+	}
+
+	struct Normal with Simples {
+		init Normal ( ) -> Simples ( ) {
+			
+		}
+		all : 
+		act setNome ( aNome : int ) {
+			mNome = aNome;
+		}
+		func getNome ( ) : int {
+			return mNome;
+		}
+		restrict : 
+		act setOculto ( aOculto : int ) {
+			mOculto = aOculto;
+		}
+		func getOculto ( ) : int {
+			return mOculto;
+		}
+		explicit : act setTodos ( aTodos : int ) {
+			mTodos = aTodos;
+		}
+		func getTodos ( ) : int {
+			return mTodos;
+		}
+		
+	}
+
+	struct Complexa in ( T ) with Normal {
+		init Complexa ( eGenerico : T ) -> Normal ( ) {
+			
+		}
+		all : 
+		define mGenerico : T = null;
+		act setGenerico ( aGenerico : int ) {
+			mGenerico = aGenerico;
+		}
+		func getGenerico ( ) : int {
+			return mGenerico;
+		}
+		
+	}
+	
+}

@@ -23,8 +23,7 @@ package Cores {
 		func getB ( ) : int {
 			return mB;
 		}
-		extern : 
-		func getCor ( r : int , g : int , b : int ) : Cor {
+		explicit : func getCor ( r : int , g : int , b : int ) : Cor {
 			return init Cor ( r , g , b );
 		}
 		

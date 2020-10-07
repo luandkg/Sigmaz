@@ -1,7 +1,7 @@
 package Make.Run;
 
-import Sigmaz.Utils.AST;
-import Sigmaz.Utils.Documentador;
+import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S00_Utilitarios.Documentador;
 
 import java.util.ArrayList;
 

@@ -3,16 +3,16 @@ act inicio ( ) {
 	def a : bool = false;
 	def b : string = "";
 	try a with b -> {
-		def g : int = 0;
+		def g : int = 12;
 	}
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	def c : bool = false;
 	try c -> {
 		def g : num = "oi";
 	}
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	try -> {
 		def g : num = "oi";
 	}
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }

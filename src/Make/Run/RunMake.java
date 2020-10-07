@@ -1,11 +1,9 @@
 package Make.Run;
 
-import Sigmaz.Executor.RunTime;
 import Sigmaz.Intellisenses.IntellisenseTheme;
-import Sigmaz.Utils.AST;
-import Sigmaz.Utils.Documentador;
-import Sigmaz.Utils.SyntaxTheme;
-import Sigmaz.Utils.Tempo;
+import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Ferramentas.SyntaxTheme;
+import Sigmaz.S00_Utilitarios.Tempo;
 
 import java.util.ArrayList;
 

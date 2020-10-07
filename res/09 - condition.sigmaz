@@ -12,6 +12,7 @@ act operando ( ) {
 		println ( "Parte : ", "Diferente");
 	}
 	def modo : string = "";
+
 	if ( menor ( a1 , a2 ) ) -> {
 		modo = "Menor";
 	}other ( igual ( a1 , a2 ) ) -> {

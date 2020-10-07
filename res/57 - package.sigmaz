@@ -1,6 +1,6 @@
 package Terminal {
 	struct Terminal {
-		extern : 
+		explicit :
 		act println ( a : string , b : int ) {
 			def c : int;
 			invoke terminal -> change ( ) :: c;
@@ -36,7 +36,7 @@ package Blocos {
 	}
 
 	struct Blocos {
-		extern : 
+		explicit :
 		act Blocar ( a : int , b : int ) {
 			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: EXTERNS;
 			Terminal -> println ( " -->> Valor A : ", a );
@@ -66,8 +66,13 @@ call iniciar -> {
 	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 	
 	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: EXTERNS;
+
+	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+
 	Terminal -> println ( " -->> Valorando : ", 12 );
+
 	def m : MODOS = MODOS :: QUATRO;
+
 	Terminal -> println ( " -->> Valorando : ", 30 );
 	
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;

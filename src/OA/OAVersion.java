@@ -1,7 +1,7 @@
 package OA;
 
-import OA.LuanDKG.LuanDKG;
-import OA.LuanDKG.Pacote;
+import LuanDKG.LuanDKG;
+import LuanDKG.Pacote;
 
 import java.awt.*;
 import java.io.File;

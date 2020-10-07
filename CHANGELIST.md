@@ -74,3 +74,13 @@ Linguagem de Programação Estruturada - Alterações
 		2020 09 26 -->> Alteração do Sistema de CAST : Getter
 		2020 09 26 -->> Alteração do Sistema de CAST : Setter
 
+
+		2020 09 30 -->> Imagens Fixas para Gerador de Insignias
+
+
+		2020 10 01 -->> Alteração : Extern -> Explicit
+		2020 10 01 -->> Analisador Atribuidor -> PosProcessador Atribuidor
+
+
+		2020 10 04 -->> Remoção do Sistema de Analise
+

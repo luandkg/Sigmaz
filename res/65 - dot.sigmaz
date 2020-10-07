@@ -12,7 +12,7 @@ type Pessoa {
 }
 
 struct Alem {
-	extern : 
+	explicit :
 	mockiz V : num = 33.0;
 	func getAnjo ( n : string ) : Pessoa {
 		return start Pessoa {

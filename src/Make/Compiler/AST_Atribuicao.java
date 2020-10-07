@@ -1,8 +1,8 @@
 package Make.Compiler;
 
-import Sigmaz.Lexer.Token;
-import Sigmaz.Lexer.TokenTipo;
-import Sigmaz.Utils.AST;
+import Sigmaz.S03_Parser.Token;
+import Sigmaz.S03_Parser.TokenTipo;
+import Sigmaz.S00_Utilitarios.AST;
 
 public class AST_Atribuicao {
 

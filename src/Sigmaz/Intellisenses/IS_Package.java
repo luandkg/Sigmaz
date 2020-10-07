@@ -1,15 +1,12 @@
 package Sigmaz.Intellisenses;
 
-import Sigmaz.Executor.Utils;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import Sigmaz.Utils.AST;
-import Sigmaz.Utils.AST;
+import Sigmaz.S00_Utilitarios.AST;
 
 public class IS_Package {
 
@@ -80,9 +77,6 @@ public class IS_Package {
         g.setColor(Color.BLACK);
 
 
-        Utils mUtils = new Utils();
-
-        int fase = 0;
 
         for (AST Sub3 : eTudo.getASTS()) {
 
@@ -118,7 +112,6 @@ public class IS_Package {
             }
 
 
-            fase += 1;
         }
 
 
@@ -212,14 +205,11 @@ public class IS_Package {
         mIntellisense.centerString(g, new Rectangle(0, 0, eLargura * colunas, 100), eTitulo, new Font("TimesRoman", Font.BOLD, 50));
 
 
-        int mais = 110;
 
 
 
 
-        Utils mUtils = new Utils();
 
-        int fase = 0;
 
         int colunando = 0;
 
@@ -230,7 +220,7 @@ public class IS_Package {
             if (Sub3.mesmoTipo("STRUCT")) {
 
 
-                mais = mIS.continuar(g, Sub3, Sub3.getNome(), colunando * eLargura, 110, eLargura, altura);
+                 mIS.continuar(g, Sub3, Sub3.getNome(), colunando * eLargura, 110, eLargura, altura);
 
                 colunando += 1;
             } else if (Sub3.mesmoTipo("CAST")) {
@@ -238,28 +228,27 @@ public class IS_Package {
                 IS_Cast mIC = new IS_Cast(mIntellisense,mIntellisenseTheme);
 
 
-                mais = mIC.continuar(g, Sub3, Sub3.getNome(), colunando * eLargura, 110, eLargura, altura);
+                mIC.continuar(g, Sub3, Sub3.getNome(), colunando * eLargura, 110, eLargura, altura);
                 colunando += 1;
             } else if (Sub3.mesmoTipo("MODEL")) {
 
                 IS_Model mIC = new IS_Model(mIntellisense,mIntellisenseTheme);
 
-                mais = mIC.continuar(g, Sub3, Sub3.getNome(), (colunando * eLargura) + 20, 110, eLargura, altura);
+               mIC.continuar(g, Sub3, Sub3.getNome(), (colunando * eLargura) + 20, 110, eLargura, altura);
 
                 colunando += 1;
+
             } else {
 
 
             }
 
 
-            fase += 1;
         }
 
 
         try {
-            File outputfile = new File(eLocal + eTitulo + ".png");
-            ImageIO.write(img, "png", outputfile);
+            ImageIO.write(img, "png", new File(eLocal + eTitulo + ".png"));
         } catch (IOException e) {
 
         }

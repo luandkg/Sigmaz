@@ -1,4 +1,5 @@
 
+2020 06 13  -->>  Início do Projeto SIGMAZ 1.0
 2020 06 13  -->>  Lexer
 2020 06 13  -->>  Parser
 2020 06 13  -->>  Compiler
@@ -333,3 +334,38 @@
 2020 09 29  -->>  Ampliação do Change com AST_VALUE
 2020 09 29  -->>  Ampliação do Using com AST_VALUE
 2020 09 29  -->>  Hierarquização de Funções Locais
+2020 09 30  -->>  Gerador de Insignias
+
+2020 09 30  -->>  Implementação Run_Call
+2020 09 30  -->>  Re-Organização RunTime
+2020 09 30  -->>  Re-Organização RunContext
+
+2020 10 01  -->>  Re-Organização Run_Context
+2020 10 01  -->>  Divisão do Run_Value em RunValueTypes
+2020 10 01  -->>  Implementação RunValueType Default
+2020 10 01  -->>  Implementação RunValueType Director
+2020 10 01  -->>  Implementação RunValueType Dot
+2020 10 01  -->>  Implementação RunValueType Extern
+2020 10 01  -->>  Implementação RunValueType Funct
+2020 10 01  -->>  Implementação RunValueType Functor
+2020 10 01  -->>  Implementação RunValueType ID
+2020 10 01  -->>  Implementação RunValueType Local
+2020 10 01  -->>  Implementação RunValueType Marker
+2020 10 01  -->>  Implementação RunValueType Operator
+2020 10 01  -->>  Implementação RunValueType Stage
+2020 10 01  -->>  Implementação RunValueType Struct
+2020 10 01  -->>  Implementação RunValueType Ternal
+2020 10 01  -->>  Implementação RunValueType This
+2020 10 01  -->>  Implementação RunValueType Type
+2020 10 01  -->>  Implementação RunValueType Vector
+2020 10 01  -->>  Implementação PosProcessador Atribuidor
+
+2020 10 04  -->>  PosProcessamento Valoramento
+2020 10 04  -->>  Sequenciador de Testes
+2020 10 04  -->>  Planejador de Compilação
+2020 10 04  -->>  Pos Processador Tipador
+2020 10 04  -->>  Implementação do Processador
+2020 10 05  -->>  PosProcessamento - Requeridor
+2020 10 05  -->>  Processador de Baixo Nivel N7
+2020 10 07  -->>  Organização do Processo de Compilação
+2020 10 07  -->>  Fase - Apenas Execução

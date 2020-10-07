@@ -1,22 +1,21 @@
 package Sigmaz;
 
-import Sigmaz.Executor.RunTime;
+import Sigmaz.S06_Executor.RunTime;
 
 public class Sigmaz_Executor {
 
-    public void executar(String eArquivo, String saida) {
+    public void executar(String eArquivo) {
 
         System.out.println("");
         System.out.println("################ RUNTIME ################");
         System.out.println("");
-        System.out.println("\t - Source : " + eArquivo);
-        System.out.println("\t - Executando : " + saida);
+        System.out.println("\t - Executando : " + eArquivo);
 
         RunTime RunTimeC = new RunTime();
         String DI = RunTimeC.getData();
 
 
-        RunTimeC.init(saida);
+        RunTimeC.init(eArquivo);
 
         System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
         System.out.println("");

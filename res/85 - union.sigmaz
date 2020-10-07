@@ -61,6 +61,49 @@ call iniciar ->  {
 
     def Meshante_1_C : num = Meshante_1.c;
 
+    dentro(30);
+
+    def aa : int = somatorio(3,7);
+
+    def bb : int = 10 ++ 12;
+    def cc : int = !-5;
+
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
 }
+
+
+
+act dentro(v : int){
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+}
+
+func somatorio(a:int,b:int) : int {
+
+	def c : int;
+	invoke math -> operator_sum_int ( a , b ) :: c;
+	return c;
+
+}
+
+
+operator ++(a:int,b:int) : int {
+
+	def c : int;
+	invoke math -> operator_sum_int ( a , b ) :: c;
+	return c;
+
+}
+
+
+director !(a:int) : int {
+
+	def c : int;
+	invoke math -> operator_mux_int ( a , -1 ) :: c;
+	return c;
+
+}
+
+

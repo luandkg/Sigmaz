@@ -3,6 +3,26 @@ define versao : int = 1;
 mockiz guardado : int = 6;
 
 
+func ateOnde(a:int) : int {
+
+    if (a == 1) -> { return -1; }
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+
+    return 0;
+
+}
+
+operator == ( a : int , b : int ) : bool {
+	def c : bool;
+	def c1 : int = a;
+	def c2 : int = b;
+	invoke math -> operator_equal_int ( c1 , c2 ) :: c;
+	return c;
+}
+
+
 call Escopos -> {
 
     def A : int = 12;
@@ -81,21 +101,5 @@ call Escopos -> {
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }
 
-func ateOnde(a:int) : int {
-
-    if (a == 1) -> { return -1; }
-
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
 
-    return 0;
-
-}
-
-operator == ( a : int , b : int ) : bool {
-	def c : bool;
-	def c1 : int = a;
-	def c2 : int = b;
-	invoke math -> operator_equal_int ( c1 , c2 ) :: c;
-	return c;
-}

@@ -27,7 +27,7 @@ struct Pessoa{
 
     act mostrar()  {
 
-        invoke __COMPILER__ -> SHOW_GLOBAL () :: ALL;
+        invoke __COMPILER__ -> SHOW_REGRESSIVE () :: STACK;
 
     }
 

@@ -2,7 +2,7 @@ package OA;
 
 import java.io.File;
 import java.util.ArrayList;
-import Sigmaz.Utils.Texto;
+import Sigmaz.S00_Utilitarios.Texto;
 
 public class OAOrganizador {
 

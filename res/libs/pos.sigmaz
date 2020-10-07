@@ -1,9 +1,13 @@
 cast pos {
 	getter a : num -> {
+		
 		#return a;
+		
 	}
 	setter b : num -> {
+		
 		#return b;
+		
 	}
 	
 }

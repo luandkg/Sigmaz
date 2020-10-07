@@ -3,11 +3,25 @@ package Ecossistema {
 	external Populacao {
 		define Organismos : int = 0;
 	}
+	external Constantes {
+		mockiz Reinos : int = 5;
+	}
 
 	struct Animal at Organismo {
+		all : 
 		define nome : string = "";
 		define idade : int = 0;
 		mockiz Tipo : CelulaTipos = CelulaTipos :: EUCARIONTE;
+		restrict : 
+		define mGenero : string = "";
+		mockiz mFilo : string = "";
+		act setGenero ( aGenero : string ) {
+			mGenero = aGenero;
+		}
+		func getGenero ( ) : string {
+			return mGenero;
+		}
+		all : 
 		act setNome ( aNome : string ) {
 			
 		}
@@ -112,10 +126,14 @@ package Ecossistema {
 	}
 	cast Contador {
 		getter a : int -> {
+			
 			#return a;
+			
 		}
 		setter b : int -> {
+			
 			#return b;
+			
 		}
 		
 	}

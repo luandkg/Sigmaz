@@ -1,0 +1,187 @@
+
+
+
+call Processadores -> {
+
+    # IMPLEMENT O que
+
+    def a : int = 10 ++ 12;
+    def b : int = 30 -- 10;
+    def c : int = 30 ** 2;
+    def d : int = 30 // 2;
+
+    def e : num = 1.5 ++ 0.5;
+    def f : num = 1.5 -- 0.5;
+    def g : num = 1.5 ** 2.0;
+    def h : num = 1.5 // 0.5;
+
+
+    def i : int = ! 10;
+    def j : int = ! -10;
+
+    def k : num = ! 2.5;
+    def l : num = ! -2.5;
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+}
+
+
+operator ++ ( a : int , b : int ) : int {
+
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 ADD R6;
+
+     }
+
+	return reg @R7;
+}
+
+operator -- ( a : int , b : int ) : int {
+
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 SUB R6;
+
+     }
+
+	return reg @R7;
+}
+
+operator ** ( a : int , b : int ) : int {
+
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 MUX R6;
+
+     }
+
+	return reg @R7;
+}
+
+director ! ( a : int  ) : int {
+
+	reg @R5 -> a;
+
+     PROC -> {
+
+        SET R6;
+            MOV 0;
+            OPE R5 MUX -1;
+
+     }
+
+	return reg @R6;
+}
+
+
+operator // ( a : int , b : int ) : int {
+
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 DIV R6;
+
+     }
+
+	return reg @R7;
+}
+
+operator ++ ( a : num , b : num ) : num {
+
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 SAX R10;
+
+     }
+
+	return reg @R11;
+}
+
+operator -- ( a : num , b : num ) : num {
+
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 VEZ R10;
+
+     }
+
+	return reg @R11;
+}
+
+operator ** ( a : num , b : num ) : num {
+
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 PUC R10;
+
+     }
+
+	return reg @R11;
+}
+
+operator // ( a : num , b : num ) : num {
+
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 INK R10;
+
+     }
+
+	return reg @R11;
+}
+
+director ! ( a : num  ) : num {
+
+	reg @R9 -> a;
+
+     PROC -> {
+
+        SET R10;
+            MOV 0.0;
+            OPE R9 PUC -1.0;
+
+     }
+
+	return reg @R10;
+}

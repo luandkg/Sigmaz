@@ -50,7 +50,7 @@ struct Sacola {
 		return somar ( a , b );
 	}
 	all : 
-	extern : 
+	explicit :
 	operator == ( a : Sacola , b : Sacola ) : bool {
 		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 		def t : bool = a.itens == b.itens;

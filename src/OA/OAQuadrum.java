@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
-import Sigmaz.Utils.Tempo;
+import Sigmaz.S00_Utilitarios.Tempo;
 
 public class OAQuadrum {
 
