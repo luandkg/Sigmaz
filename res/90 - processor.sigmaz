@@ -22,9 +22,58 @@ call Processadores -> {
     def k : num = ! 2.5;
     def l : num = ! -2.5;
 
+    def tam1 : int = getTamanho("Luan");
+    def tam2 : int = getTamanho("Oie meu nome é luan !");
+
+    def c1 : string = getChar("Luan",0);
+    def c2 : string = getChar("Luan",1);
+    def c3 : string = getChar("Luan",2);
+    def c4 : string = getChar("Luan",3);
+
+    let ll = 0;
+    let tt = getTamanho("Luan");
+
+    def e_menor : bool = 2 << 5;
+    def e_igual : bool = 2 == 5;
+    def e_maior : bool = 2 >> 5;
+    def e_diferente : bool = 2 !! 5;
+
+    def i_menor : bool = 5 << 2;
+    def i_igual : bool = 2 == 2;
+    def i_maior : bool = 5 >> 2;
+    def i_diferente : bool = 5 !! 2;
+
+    def o_diferente : bool = 5 !! 5;
+    def o_igual : bool = 5 == 5;
+
+
+    def u_menor : bool = 5.0 << 2.0 ;
+    def u_igual : bool = 2.0  == 2.0 ;
+    def u_maior : bool = 5.0  >> 2.0 ;
+    def u_diferente : bool = 5.0  !! 2.0 ;
+
+    def z_diferente : bool = 5.0  !! 5.0 ;
+    def z_igual : bool = 5.0  == 5.0 ;
+
+    def int_1 : int = int(2.5);
+    def int_2 : int = int(10);
+
+
+    def num_1 : num = num(2.5);
+    def num_2 : num = num(int_2);
+
+def gga : string = "luan alves freitas";
+
+
+    def a1 : string = "Meu ";
+    def a2 : string = "Nome";
+
+    def a3 : string = texto_unir(a1,a2);
+
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
 }
+
 
 
 operator ++ ( a : int , b : int ) : int {
@@ -184,4 +233,224 @@ director ! ( a : num  ) : num {
      }
 
 	return reg @R10;
+}
+
+func getTamanho(a:string) : int {
+
+    reg @R13 -> a;
+
+     PROC -> {
+
+        SET R5;
+            MOV 0;
+            SIZE R13;
+
+     }
+
+	return reg @R5;
+
+}
+
+
+func texto_unir(a:string,b:string) : int {
+
+    reg @R13 -> a;
+    reg @R14 -> b;
+
+     PROC -> {
+
+        SET R13;
+            APPEND R14;
+
+     }
+
+	return reg @R13;
+
+}
+
+func getChar ( a : string , b : int ) : string {
+
+    reg @R13 -> a;
+    reg @R5 -> b;
+
+     PROC -> {
+
+        SET R14;
+            MOV "";
+            OPE R13 CHAR R5;
+
+     }
+
+	return reg @R14;
+}
+
+
+operator >> ( a : int , b : int ) : bool {
+
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 GREAT R6;
+
+     }
+
+	return reg @R1;
+}
+
+operator << ( a : int , b : int ) : bool {
+
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 LESS R6;
+
+     }
+
+	return reg @R1;
+}
+
+operator == ( a : int , b : int ) : bool {
+
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 EQUAL R6;
+
+     }
+
+	return reg @R1;
+}
+
+operator !! ( a : int , b : int ) : bool {
+
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 DIFF R6;
+
+     }
+
+	return reg @R1;
+}
+
+
+# OPERADORES NUM
+
+operator >> ( a : num , b : num ) : bool {
+
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R9 DROEN R10;
+
+     }
+
+	return reg @R1;
+}
+
+operator << ( a : num , b : num ) : bool {
+
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R9 MOZZ R10;
+
+     }
+
+	return reg @R1;
+}
+
+operator == ( a : num , b : num ) : bool {
+
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R9 OPUAL R10;
+
+     }
+
+	return reg @R1;
+}
+
+operator !! ( a : num , b : num ) : bool {
+
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R9 TOLL R10;
+
+     }
+
+	return reg @R1;
+}
+
+
+func int ( a : num  ) : int {
+
+	reg @R9 -> a;
+
+     PROC -> {
+
+        SET R5;
+            MOV 0;
+            INT R9;
+
+     }
+
+	return reg @R5;
+}
+
+func int ( a : int  ) : int {
+    return a;
+}
+
+func num ( a : int  ) : num {
+
+	reg @R5 -> a;
+
+     PROC -> {
+
+        SET R9;
+            MOV 0.0;
+            REAL R5;
+
+     }
+
+	return reg @R9;
+}
+
+func num ( a : num  ) : num {
+    return a;
 }

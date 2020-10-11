@@ -1,7 +1,7 @@
 package Sigmaz.Intellisenses;
 
-import Sigmaz.S06_Executor.Debuggers.Simplificador;
-import Sigmaz.S06_Executor.Utils;
+import Sigmaz.S07_Executor.Debuggers.Simplificador;
+import Sigmaz.S07_Executor.Utils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

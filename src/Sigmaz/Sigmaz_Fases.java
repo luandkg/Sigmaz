@@ -1,16 +1,14 @@
 package Sigmaz;
 
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S00_Utilitarios.*;
 import Sigmaz.S01_PreProcessamento.Etapa;
 import Sigmaz.S01_PreProcessamento.Planejador;
 import Sigmaz.S04_Compilador.Compiler;
-import Sigmaz.S06_Executor.RunTime;
+import Sigmaz.S06_Montador.Montador;
+import Sigmaz.S07_Executor.RunTime;
 import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
-import Sigmaz.S00_Utilitarios.Erro;
-import Sigmaz.S00_Utilitarios.GrupoDeErro;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class Sigmaz_Fases {
@@ -51,6 +49,8 @@ public class Sigmaz_Fases {
     private boolean mTemErros;
 
     private ArrayList<AST> mASTS;
+
+    private Chronos mChronos;
 
     public enum Fases {
         PRE_PROCESSAMENTO, LEXER, COMPILER, POS_PROCESSAMENTO, MONTAGEM, PRONTO;
@@ -95,6 +95,8 @@ public class Sigmaz_Fases {
         mErros_PosProcessamento = new ArrayList<>();
         mErros_Execucao = new ArrayList<>();
         mASTS = new ArrayList<AST>();
+
+        mChronos = new Chronos();
 
     }
 
@@ -242,6 +244,9 @@ public class Sigmaz_Fases {
 
         }
 
+        Chronos_Intervalo mIntervalo = new Chronos_Intervalo();
+
+        mIntervalo.marqueInicio();
 
         Compiler CompilerC = new Compiler();
 
@@ -255,10 +260,16 @@ public class Sigmaz_Fases {
 
         executar_Montagem(CompilerC, mSaida);
 
+        mIntervalo.marqueFim();
 
         listar_mensagens();
 
         if (mFase == Fases.PRONTO) {
+
+            if (mMostrar_Fases) {
+                System.out.println("");
+                System.out.println("\t - Tempo   : " + mIntervalo.getIntervalo() + " segundos");
+            }
 
             executar(mSaida);
 
@@ -266,6 +277,23 @@ public class Sigmaz_Fases {
 
             falhou(CompilerC);
 
+        }
+
+    }
+
+    public void executar(String eSaida){
+
+        Sigmaz_Executor mSigmaz_Executor = new Sigmaz_Executor();
+
+        mSigmaz_Executor.setMostrar_Execucao(mMostrar_Execucao);
+        mSigmaz_Executor.setMostrar_ArvoreRunTime(mMostrar_ArvoreRunTime);
+
+        mSigmaz_Executor.executar(eSaida);
+
+        if (mSigmaz_Executor.temErros()){
+            for(String mErro : mSigmaz_Executor.getErros()){
+                mErros_Execucao.add(mErro);
+            }
         }
 
     }
@@ -290,6 +318,7 @@ public class Sigmaz_Fases {
             System.out.println("");
             System.out.println("################ SIGMAZ FASES ################");
             System.out.println("");
+
             for (String a : eArquivos) {
                 System.out.println("\t - Source : " + a);
             }
@@ -301,6 +330,9 @@ public class Sigmaz_Fases {
 
         }
 
+        Chronos_Intervalo mIntervalo = new Chronos_Intervalo();
+
+        mIntervalo.marqueInicio();
 
         Compiler CompilerC = new Compiler();
 
@@ -314,12 +346,17 @@ public class Sigmaz_Fases {
 
         executar_Montagem(CompilerC, mSaida);
 
+        mIntervalo.marqueFim();
 
         listar_mensagens();
 
         if (mFase == Fases.PRONTO) {
 
-            //  executar(mSaida);
+            if (mMostrar_Fases) {
+                System.out.println("");
+                System.out.println("\t - Tempo   : " + mIntervalo.getIntervalo() + " segundos");
+            }
+
 
         } else {
 
@@ -332,7 +369,7 @@ public class Sigmaz_Fases {
 
     public void listar_mensagens() {
 
-        if(mMostrar_Mensagens){
+        if (mMostrar_Mensagens) {
 
             if (mDebug) {
 
@@ -693,14 +730,20 @@ public class Sigmaz_Fases {
         if (mFase == Fases.MONTAGEM) {
 
 
+            Montador MontadorC = new Montador();
+
+            MontadorC.compilar(CompilerC.getASTS(), mSaida);
+
             mASTS = CompilerC.getASTS();
 
-            CompilerC.Compilar(mSaida);
 
             mFase = Fases.PRONTO;
 
             mETAPA_MONTAGEM = mSTATUS_SUCESSO;
 
+            for (String eMensagem : MontadorC.getMensagens()) {
+                mDebugMensagens.add(eMensagem);
+            }
 
         }
         if (mMostrar_Fases) {
@@ -709,96 +752,6 @@ public class Sigmaz_Fases {
 
         }
 
-
-    }
-
-    private void executar(String eExecutor) {
-
-        if (mMostrar_Execucao) {
-
-            System.out.println("");
-            System.out.println("################ RUNTIME ################");
-            System.out.println("");
-            System.out.println("\t - Executando : " + eExecutor);
-
-        }
-
-
-        RunTime RunTimeC = new RunTime();
-        String DI = RunTimeC.getData();
-
-
-        RunTimeC.internalizar();
-
-        if (mMostrar_Execucao) {
-            RunTimeC.externarlizar();
-        }
-
-        RunTimeC.init(eExecutor);
-
-        if (mMostrar_Execucao) {
-
-
-            System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
-            System.out.println("");
-
-        }
-
-
-        if (mMostrar_ArvoreRunTime) {
-
-            System.out.println(RunTimeC.getArvoreDeInstrucoes());
-
-        }
-
-        if (mMostrar_Execucao) {
-
-
-            System.out.println("");
-            System.out.println("----------------------------------------------");
-
-        }
-
-        RunTimeC.run();
-
-        if (mMostrar_Execucao) {
-
-            System.out.println("");
-            System.out.println("----------------------------------------------");
-            System.out.println("");
-
-        }
-
-
-        if (RunTimeC.getErros().size() > 0) {
-            for (String Erro : RunTimeC.getErros()) {
-                mErros_Execucao.add(Erro);
-            }
-        }
-
-        if (mMostrar_Execucao) {
-
-            String DF = RunTimeC.getData();
-
-
-            System.out.println("\t - Iniciado : " + DI);
-            System.out.println("\t - Finalizado : " + DF);
-
-            System.out.println("\t - Erros : " + RunTimeC.getErros().size());
-
-            if (RunTimeC.getErros().size() > 0) {
-                System.out.println("\n\t ERROS DE EXECUCAO : ");
-
-                for (String Erro : RunTimeC.getErros()) {
-                    System.out.println("\t\t" + Erro);
-                }
-            }
-
-            System.out.println("");
-            System.out.println("----------------------------------------------");
-
-
-        }
 
     }
 

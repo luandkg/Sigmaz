@@ -4,217 +4,244 @@ import java.util.ArrayList;
 
 public class LuanDKG {
 
-	private ArrayList<Pacote> mPacotes;
+    private ArrayList<Pacote> mPacotes;
+    private ArrayList<String> mErros;
 
-	public LuanDKG() {
+    public LuanDKG() {
 
-		mPacotes = new ArrayList<Pacote>();
+        mPacotes = new ArrayList<Pacote>();
+        mErros = new ArrayList<String>();
 
-	}
+    }
 
-	public ArrayList<Pacote> getPacotes() {
-		return mPacotes;
-	}
 
-	public Pacote CriarPacote(String eNome) {
+    public ArrayList<Pacote> getPacotes() {
+        return mPacotes;
+    }
 
-		Pacote ret = new Pacote(eNome);
-		mPacotes.add(ret);
+    public ArrayList<String> getErros() {
+        return mErros;
+    }
 
-		return ret;
-	}
+    public Pacote CriarPacote(String eNome) {
 
-	public Pacote UnicoPacote(String eNome) {
+        Pacote ret = new Pacote(eNome);
+        mPacotes.add(ret);
 
-		boolean enc = false;
-		Pacote ret = null;
+        return ret;
+    }
 
-		for (Pacote mPacote : mPacotes) {
-			if (mPacote.getNome().contentEquals(eNome)) {
-				enc = true;
-				ret = mPacote;
-				break;
-			}
+    public Pacote UnicoPacote(String eNome) {
 
-		}
+        boolean enc = false;
+        Pacote ret = null;
 
-		if (enc == false) {
-			ret = new Pacote(eNome);
-			mPacotes.add(ret);
-		}
+        for (Pacote mPacote : mPacotes) {
+            if (mPacote.getNome().contentEquals(eNome)) {
+                enc = true;
+                ret = mPacote;
+                break;
+            }
 
-		return ret;
-	}
+        }
 
-	public void RemoverPacote(Pacote ePacote) {
+        if (enc == false) {
+            ret = new Pacote(eNome);
+            mPacotes.add(ret);
+        }
 
-		for (Pacote mPacote : mPacotes) {
+        return ret;
+    }
 
-			if (mPacote == ePacote) {
-				mPacotes.remove(ePacote);
-				break;
-			}
+    public void RemoverPacote(Pacote ePacote) {
 
-		}
+        for (Pacote mPacote : mPacotes) {
 
-	}
+            if (mPacote == ePacote) {
+                mPacotes.remove(ePacote);
+                break;
+            }
 
-	public void RemoverPacotePorNome(String eNome) {
+        }
 
-		for (Pacote mPacote : mPacotes) {
+    }
 
-			if (mPacote.getNome().contentEquals(eNome)) {
-				mPacotes.remove(mPacote);
-				break;
-			}
+    public void RemoverPacotePorNome(String eNome) {
 
-		}
+        for (Pacote mPacote : mPacotes) {
 
-	}
+            if (mPacote.getNome().contentEquals(eNome)) {
+                mPacotes.remove(mPacote);
+                break;
+            }
 
-	public String toString() {
+        }
 
-		ITexto ITextoC = new ITexto();
-		Salvamento SalvamentoC = new Salvamento();
+    }
 
-		SalvamentoC.Pacote_Listar(ITextoC, "   ", this.getPacotes());
+    public String toString() {
 
-		return ITextoC.toString();
-	}
+        ITexto ITextoC = new ITexto();
+        Salvamento SalvamentoC = new Salvamento();
 
-	public String gerarReduzido() {
+        SalvamentoC.Pacote_Listar(ITextoC, "   ", this.getPacotes());
 
-		ITexto ITextoC = new ITexto();
-		SalvamentoReduzido SalvamentoC = new SalvamentoReduzido();
+        return ITextoC.toString();
+    }
 
-		SalvamentoC.Pacote_Listar(ITextoC, this.getPacotes());
 
-		return ITextoC.toString();
-	}
+    public int contagem() {
 
-	// IO
+        int t = 0;
 
-	public void Abrir(String eArquivo) {
+        for (Pacote ePacote : mPacotes) {
+            t += ePacote.contagem();
+        }
 
-		Parser ParserC = new Parser();
 
-		ParserC.Parse(Texto.Ler(eArquivo), this);
+        return t;
 
-	}
+    }
 
 
-	public void Parser(String eConteudo) {
+    public String gerarReduzido() {
 
-		Parser ParserC = new Parser();
+        ITexto ITextoC = new ITexto();
+        SalvamentoReduzido SalvamentoC = new SalvamentoReduzido();
 
-		ParserC.Parse(eConteudo, this);
+        SalvamentoC.Pacote_Listar(ITextoC, this.getPacotes());
 
-	}
+        return ITextoC.toString();
+    }
 
-	public void Salvar(String eArquivo) {
+    // IO
 
-		Texto.Escrever(eArquivo, this.toString());
+    public void Abrir(String eArquivo) {
 
-	}
+        Parser ParserC = new Parser();
 
-	public void SalvarReduzido(String eArquivo) {
+        ParserC.Parse(Texto.Ler(eArquivo), this);
 
-		Texto.Escrever(eArquivo, this.gerarReduzido());
+    }
 
-	}
 
-	public String GerarString() {
-		return this.toString();
-	}
+    public void Parser(String eConteudo) {
 
-	// HIERARQUIZE
+        mErros.clear();
 
-	public String Hierarquize() {
-		ITexto ITextoC = new ITexto();
-		Hierarquizador HierarquizadorC = new Hierarquizador();
+        Parser ParserC = new Parser();
 
-		HierarquizadorC.Hierarquizar(ITextoC, "   ", this.getPacotes());
+        ParserC.Parse(eConteudo, this);
 
-		return ITextoC.toString();
+        for (String e : ParserC.getErros()) {
+            mErros.add(e);
+        }
+    }
 
-	}
+    public void Salvar(String eArquivo) {
 
-	// EXTRA
+        Texto.Escrever(eArquivo, this.toString());
 
-	public Pacote PacoteComAtributoUnico(String eNomePacote, String eNomeIdentificador, String eValor) {
+    }
 
-		Pacote ret = null;
-		boolean enc = false;
+    public void SalvarReduzido(String eArquivo) {
 
-		for (Pacote PacoteC : getPacotes()) {
+        Texto.Escrever(eArquivo, this.gerarReduzido());
 
-			if (PacoteC.getNome().contentEquals(eNomePacote)) {
+    }
 
-				if (PacoteC.IdentificadorExiste(eNomeIdentificador)) {
-					if (PacoteC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
-						ret = PacoteC;
-						enc = true;
-						break;
-					}
-				}
+    public String GerarString() {
+        return this.toString();
+    }
 
-			}
+    // HIERARQUIZE
 
-		}
+    public String Hierarquize() {
+        ITexto ITextoC = new ITexto();
+        Hierarquizador HierarquizadorC = new Hierarquizador();
 
-		if (!enc) {
+        HierarquizadorC.Hierarquizar(ITextoC, "   ", this.getPacotes());
 
-			ret = new Pacote(eNomePacote);
+        return ITextoC.toString();
 
-			ret.Identifique(eNomeIdentificador, eValor);
+    }
 
-			getPacotes().add(ret);
-		}
+    // EXTRA
 
-		return ret;
+    public Pacote PacoteComAtributoUnico(String eNomePacote, String eNomeIdentificador, String eValor) {
 
-	}
+        Pacote ret = null;
+        boolean enc = false;
 
-	public boolean PacoteComAtributo_Existe(String eNomePacote, String eNomeIdentificador, String eValor) {
+        for (Pacote PacoteC : getPacotes()) {
 
-		boolean enc = false;
+            if (PacoteC.getNome().contentEquals(eNomePacote)) {
 
-		for (Pacote PacoteC : getPacotes()) {
+                if (PacoteC.IdentificadorExiste(eNomeIdentificador)) {
+                    if (PacoteC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
+                        ret = PacoteC;
+                        enc = true;
+                        break;
+                    }
+                }
 
-			if (PacoteC.getNome().contentEquals(eNomePacote)) {
+            }
 
-				if (PacoteC.IdentificadorExiste(eNomeIdentificador)) {
-					if (PacoteC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
-						enc = true;
-						break;
-					}
-				}
+        }
 
-			}
+        if (!enc) {
 
-		}
+            ret = new Pacote(eNomePacote);
 
-		return enc;
+            ret.Identifique(eNomeIdentificador, eValor);
 
-	}
+            getPacotes().add(ret);
+        }
 
-	public void PacoteComAtributo_Remover(String eNomePacote, String eNomeIdentificador, String eValor) {
+        return ret;
 
-		for (Pacote PacoteC : getPacotes()) {
+    }
 
-			if (PacoteC.getNome().contentEquals(eNomePacote)) {
+    public boolean PacoteComAtributo_Existe(String eNomePacote, String eNomeIdentificador, String eValor) {
 
-				if (PacoteC.IdentificadorExiste(eNomeIdentificador)) {
-					if (PacoteC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
-						getPacotes().remove(PacoteC);
-						break;
-					}
-				}
+        boolean enc = false;
 
-			}
+        for (Pacote PacoteC : getPacotes()) {
 
-		}
+            if (PacoteC.getNome().contentEquals(eNomePacote)) {
 
-	}
+                if (PacoteC.IdentificadorExiste(eNomeIdentificador)) {
+                    if (PacoteC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
+                        enc = true;
+                        break;
+                    }
+                }
+
+            }
+
+        }
+
+        return enc;
+
+    }
+
+    public void PacoteComAtributo_Remover(String eNomePacote, String eNomeIdentificador, String eValor) {
+
+        for (Pacote PacoteC : getPacotes()) {
+
+            if (PacoteC.getNome().contentEquals(eNomePacote)) {
+
+                if (PacoteC.IdentificadorExiste(eNomeIdentificador)) {
+                    if (PacoteC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
+                        getPacotes().remove(PacoteC);
+                        break;
+                    }
+                }
+
+            }
+
+        }
+
+    }
 
 }

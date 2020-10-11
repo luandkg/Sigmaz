@@ -45,4 +45,18 @@ public class Lista {
 		return mItens;
 	}
 
+	public int contagem() {
+
+		int t = 1;
+
+
+		for (String ePacote : mItens) {
+			t += 1;
+		}
+
+
+		return t;
+
+	}
+
 }

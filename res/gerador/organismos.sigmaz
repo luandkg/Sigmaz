@@ -1,0 +1,14 @@
+package Vida {
+	struct Organismo {
+		init Organismo ( eNome : string, eIdade : int ) {
+			 nome = eNome; 
+			 idade = eIdade; 
+		} 
+		restrict: 
+			define nome : string;
+			define idade : int;
+		all: 
+			func getIdade() : int { return idade;}
+			act envelhecer(eMais : int) { idade = idade++eMais;}
+	}
+}

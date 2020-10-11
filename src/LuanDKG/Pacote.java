@@ -4,558 +4,590 @@ import java.util.ArrayList;
 
 public class Pacote {
 
-	private String mNome;
-	private ArrayList<Identificador> mIdentificadores;
-	private ArrayList<Comentario> mComentarios;
-	private ArrayList<Lista> mListas;
-	private ArrayList<Objeto> mObjetos;
-
-	private ArrayList<Pacote> mPacotes;
-
-	private boolean mLinear;
-
-	public Pacote(String eNome) {
-		mNome = eNome;
-
-		mPacotes = new ArrayList<Pacote>();
-		mIdentificadores = new ArrayList<Identificador>();
-		mComentarios = new ArrayList<Comentario>();
-		mObjetos = new ArrayList<Objeto>();
-
-		mListas = new ArrayList<Lista>();
-
-		mLinear = false;
-	}
-
-	public void setNome(String eNome) {
-		mNome = eNome;
-	}
-
-	public String getNome() {
-		return mNome;
-	}
-
-	public Identificador Identifique(String eNome) {
-
-		boolean enc = false;
-		Identificador ret = null;
-
-		for (Identificador mIdentificador : mIdentificadores) {
-
-			if (mIdentificador.getNome().contentEquals(eNome)) {
-				enc = true;
-				ret = mIdentificador;
-				break;
-			}
-
-		}
-
-		if (enc == false) {
-			ret = new Identificador(eNome, "");
-			mIdentificadores.add(ret);
-		}
-
-		return ret;
-
-	}
-
-	public Identificador Identifique(String eNome, short eValor) {
-		
-		return	this.Identifique(eNome,String.valueOf(eValor));
-		
-	}
-	
-	public Identificador Identifique(String eNome, int eValor) {
-	
-		return	this.Identifique(eNome,String.valueOf(eValor));
-		
-	}
-	
-	public Identificador Identifique(String eNome, float eValor) {
-		
-		return	this.Identifique(eNome,String.valueOf(eValor));
-		
-	}
-	
-	public Identificador Identifique(String eNome, double eValor) {
-		
-		return	this.Identifique(eNome,String.valueOf(eValor));
-		
-	}
-	
-	public Identificador Identifique(String eNome, boolean eValor) {
-		
-		return	this.Identifique(eNome,String.valueOf(eValor));
-		
-	}
-	
-	public Identificador Identifique(String eNome, String eValor) {
+    private String mNome;
+    private ArrayList<Identificador> mIdentificadores;
+    private ArrayList<Comentario> mComentarios;
+    private ArrayList<Lista> mListas;
+    private ArrayList<Objeto> mObjetos;
 
-		boolean enc = false;
-		Identificador ret = null;
+    private ArrayList<Pacote> mPacotes;
 
-		for (Identificador mIdentificador : mIdentificadores) {
+    private boolean mLinear;
 
-			if (mIdentificador.getNome().contentEquals(eNome)) {
-				enc = true;
-				ret = mIdentificador;
-				ret.setValor(eValor);
-				break;
-			}
+    public Pacote(String eNome) {
+        mNome = eNome;
 
-		}
+        mPacotes = new ArrayList<Pacote>();
+        mIdentificadores = new ArrayList<Identificador>();
+        mComentarios = new ArrayList<Comentario>();
+        mObjetos = new ArrayList<Objeto>();
 
-		if (enc == false) {
-			ret = new Identificador(eNome, eValor);
-			mIdentificadores.add(ret);
-		}
+        mListas = new ArrayList<Lista>();
 
-		return ret;
-	}
+        mLinear = false;
+    }
 
-	public ArrayList<Identificador> getIdentificadores() {
-		return mIdentificadores;
-	}
+    public void setNome(String eNome) {
+        mNome = eNome;
+    }
 
-	public ArrayList<Pacote> getPacotes() {
-		return mPacotes;
-	}
+    public String getNome() {
+        return mNome;
+    }
 
-	public ArrayList<Comentario> getComentarios() {
-		return mComentarios;
-	}
 
-	public ArrayList<Lista> getListas() {
-		return mListas;
-	}
+    public int contagem() {
 
-	public ArrayList<Objeto> getObjetos() {
-		return mObjetos;
-	}
+        int t = 1;
 
-	public Pacote CriarPacote(String eNome) {
 
-		Pacote ret = new Pacote(eNome);
-		mPacotes.add(ret);
+        for (Identificador ePacote : mIdentificadores) {
+            t += 2;
+        }
 
-		return ret;
-	}
+        for (Comentario eComentario : mComentarios) {
+            t += 2;
+        }
 
-	public Pacote UnicoPacote(String eNome) {
+        for (Objeto mObjeto : mObjetos) {
+            t += mObjeto.contagem();
+        }
 
-		boolean enc = false;
-		Pacote ret = null;
+        for (Lista mLista : mListas) {
+            t += mLista.contagem();
+        }
 
-		for (Pacote mPacote : mPacotes) {
+        for (Pacote ePacote : mPacotes) {
+            t += ePacote.contagem();
+        }
 
-			if (mPacote.getNome().contentEquals(eNome)) {
-				enc = true;
-				ret = mPacote;
-				break;
-			}
 
-		}
+        return t;
 
-		if (enc == false) {
-			ret = new Pacote(eNome);
-			mPacotes.add(ret);
-		}
+    }
 
-		return ret;
-	}
 
-	public void RemoverPacote(Pacote ePacote) {
+    public Identificador Identifique(String eNome) {
 
-		for (Pacote mPacote : mPacotes) {
+        boolean enc = false;
+        Identificador ret = null;
 
-			if (mPacote == ePacote) {
-				mPacotes.remove(ePacote);
-				break;
-			}
+        for (Identificador mIdentificador : mIdentificadores) {
 
-		}
+            if (mIdentificador.getNome().contentEquals(eNome)) {
+                enc = true;
+                ret = mIdentificador;
+                break;
+            }
 
-	}
+        }
 
-	public void RemoverPacotePorNome(String eNome) {
+        if (enc == false) {
+            ret = new Identificador(eNome, "");
+            mIdentificadores.add(ret);
+        }
 
-		for (Pacote mPacote : mPacotes) {
+        return ret;
 
-			if (mPacote.getNome().contentEquals(eNome)) {
-				mPacotes.remove(mPacote);
-				break;
-			}
+    }
 
-		}
+    public Identificador Identifique(String eNome, short eValor) {
 
-	}
+        return this.Identifique(eNome, String.valueOf(eValor));
 
-	public void RemoverIdentificador(Identificador eIdentificador) {
+    }
 
-		for (Identificador mIdentificador : mIdentificadores) {
+    public Identificador Identifique(String eNome, int eValor) {
 
-			if (mIdentificador == eIdentificador) {
-				mIdentificadores.remove(eIdentificador);
-				break;
-			}
+        return this.Identifique(eNome, String.valueOf(eValor));
 
-		}
+    }
 
-	}
+    public Identificador Identifique(String eNome, float eValor) {
 
-	public boolean IdentificadorExiste(String eIdentificadorNome) {
+        return this.Identifique(eNome, String.valueOf(eValor));
 
-		boolean ret = false;
+    }
 
-		for (Identificador mIdentificador : mIdentificadores) {
+    public Identificador Identifique(String eNome, double eValor) {
 
-			if (mIdentificador.getNome().contentEquals(eIdentificadorNome)) {
-				ret = true;
-				break;
-			}
+        return this.Identifique(eNome, String.valueOf(eValor));
 
-		}
-		return ret;
-	}
+    }
 
-	public void RemoverIdentificadorPorNome(String eIdentificador) {
+    public Identificador Identifique(String eNome, boolean eValor) {
 
-		for (Identificador mIdentificador : mIdentificadores) {
+        return this.Identifique(eNome, String.valueOf(eValor));
 
-			if (mIdentificador.getNome().contentEquals(eIdentificador)) {
-				mIdentificadores.remove(mIdentificador);
-				break;
-			}
+    }
 
-		}
+    public Identificador Identifique(String eNome, String eValor) {
 
-	}
+        boolean enc = false;
+        Identificador ret = null;
 
-	public Comentario Comentar(String eNome, String eValor) {
+        for (Identificador mIdentificador : mIdentificadores) {
 
-		boolean enc = false;
-		Comentario ret = null;
+            if (mIdentificador.getNome().contentEquals(eNome)) {
+                enc = true;
+                ret = mIdentificador;
+                ret.setValor(eValor);
+                break;
+            }
 
-		for (Comentario mComentario : mComentarios) {
+        }
 
-			if (mComentario.getNome().contentEquals(eNome)) {
-				enc = true;
-				ret = mComentario;
-				ret.setValor(eValor);
-				break;
-			}
+        if (enc == false) {
+            ret = new Identificador(eNome, eValor);
+            mIdentificadores.add(ret);
+        }
 
-		}
+        return ret;
+    }
 
-		if (enc == false) {
-			ret = new Comentario(eNome, eValor);
-			mComentarios.add(ret);
-		}
+    public ArrayList<Identificador> getIdentificadores() {
+        return mIdentificadores;
+    }
 
-		return ret;
-	}
+    public ArrayList<Pacote> getPacotes() {
+        return mPacotes;
+    }
 
-	public void RemoverComentario(Comentario eComentario) {
+    public ArrayList<Comentario> getComentarios() {
+        return mComentarios;
+    }
 
-		for (Comentario mComentario : mComentarios) {
+    public ArrayList<Lista> getListas() {
+        return mListas;
+    }
 
-			if (mComentario == eComentario) {
-				mComentarios.remove(eComentario);
-				break;
-			}
+    public ArrayList<Objeto> getObjetos() {
+        return mObjetos;
+    }
 
-		}
+    public Pacote CriarPacote(String eNome) {
 
-	}
+        Pacote ret = new Pacote(eNome);
+        mPacotes.add(ret);
 
-	public void RemoverComentarioPorNome(String eComentario) {
+        return ret;
+    }
 
-		for (Comentario mComentario : mComentarios) {
+    public Pacote UnicoPacote(String eNome) {
 
-			if (mComentario.getNome().contentEquals(eComentario)) {
-				mComentarios.remove(mComentario);
-				break;
-			}
+        boolean enc = false;
+        Pacote ret = null;
 
-		}
+        for (Pacote mPacote : mPacotes) {
 
-	}
+            if (mPacote.getNome().contentEquals(eNome)) {
+                enc = true;
+                ret = mPacote;
+                break;
+            }
 
-	// LISTAS
+        }
 
-	public Lista CriarLista(String eNome) {
+        if (enc == false) {
+            ret = new Pacote(eNome);
+            mPacotes.add(ret);
+        }
 
-		Lista ret = new Lista(eNome);
-		mListas.add(ret);
+        return ret;
+    }
 
-		return ret;
-	}
+    public void RemoverPacote(Pacote ePacote) {
 
-	public Lista UnicaLista(String eNome) {
+        for (Pacote mPacote : mPacotes) {
 
-		boolean enc = false;
-		Lista ret = null;
+            if (mPacote == ePacote) {
+                mPacotes.remove(ePacote);
+                break;
+            }
 
-		for (Lista mLista : mListas) {
+        }
 
-			if (mLista.getNome().contentEquals(eNome)) {
-				enc = true;
-				ret = mLista;
-				break;
-			}
+    }
 
-		}
+    public void RemoverPacotePorNome(String eNome) {
 
-		if (enc == false) {
-			ret = new Lista(eNome);
-			mListas.add(ret);
-		}
+        for (Pacote mPacote : mPacotes) {
 
-		return ret;
-	}
+            if (mPacote.getNome().contentEquals(eNome)) {
+                mPacotes.remove(mPacote);
+                break;
+            }
 
-	public void RemoverLista(Lista eLista) {
+        }
 
-		for (Lista mLista : mListas) {
+    }
 
-			if (mLista == eLista) {
-				mListas.remove(eLista);
-				break;
-			}
+    public void RemoverIdentificador(Identificador eIdentificador) {
 
-		}
+        for (Identificador mIdentificador : mIdentificadores) {
 
-	}
+            if (mIdentificador == eIdentificador) {
+                mIdentificadores.remove(eIdentificador);
+                break;
+            }
 
-	public void RemoverListaPorNome(String eNome) {
+        }
 
-		for (Lista mLista : mListas) {
+    }
 
-			if (mLista.getNome().contentEquals(eNome)) {
-				mListas.remove(mLista);
-				break;
-			}
+    public boolean IdentificadorExiste(String eIdentificadorNome) {
 
-		}
+        boolean ret = false;
 
-	}
+        for (Identificador mIdentificador : mIdentificadores) {
 
-	// OBJETO
+            if (mIdentificador.getNome().contentEquals(eIdentificadorNome)) {
+                ret = true;
+                break;
+            }
 
-	public Objeto CriarObjeto(String eNome) {
+        }
+        return ret;
+    }
 
-		Objeto ret = new Objeto(eNome);
-		mObjetos.add(ret);
+    public void RemoverIdentificadorPorNome(String eIdentificador) {
 
-		return ret;
-	}
+        for (Identificador mIdentificador : mIdentificadores) {
 
-	public Objeto UnicoObjeto(String eNome) {
+            if (mIdentificador.getNome().contentEquals(eIdentificador)) {
+                mIdentificadores.remove(mIdentificador);
+                break;
+            }
 
-		boolean enc = false;
-		Objeto ret = null;
+        }
 
-		for (Objeto mObjeto : mObjetos) {
+    }
 
-			if (mObjeto.getNome().contentEquals(eNome)) {
-				enc = true;
-				ret = mObjeto;
-				break;
-			}
+    public Comentario Comentar(String eNome, String eValor) {
 
-		}
+        boolean enc = false;
+        Comentario ret = null;
 
-		if (enc == false) {
-			ret = new Objeto(eNome);
-			mObjetos.add(ret);
-		}
+        for (Comentario mComentario : mComentarios) {
 
-		return ret;
-	}
+            if (mComentario.getNome().contentEquals(eNome)) {
+                enc = true;
+                ret = mComentario;
+                ret.setValor(eValor);
+                break;
+            }
 
-	public void RemoverObjeto(Objeto eObjeto) {
+        }
 
-		for (Objeto mObjeto : mObjetos) {
+        if (enc == false) {
+            ret = new Comentario(eNome, eValor);
+            mComentarios.add(ret);
+        }
 
-			if (mObjeto == eObjeto) {
-				mObjetos.remove(eObjeto);
-				break;
-			}
+        return ret;
+    }
 
-		}
+    public void RemoverComentario(Comentario eComentario) {
 
-	}
+        for (Comentario mComentario : mComentarios) {
 
-	public void RemoverObjetoPorNome(String eNome) {
+            if (mComentario == eComentario) {
+                mComentarios.remove(eComentario);
+                break;
+            }
 
-		for (Objeto mObjeto : mObjetos) {
+        }
 
-			if (mObjeto.getNome().contentEquals(eNome)) {
-				mObjetos.remove(mObjeto);
-				break;
-			}
+    }
 
-		}
+    public void RemoverComentarioPorNome(String eComentario) {
 
-	}
+        for (Comentario mComentario : mComentarios) {
 
-	// EXTRA
+            if (mComentario.getNome().contentEquals(eComentario)) {
+                mComentarios.remove(mComentario);
+                break;
+            }
 
-	public Pacote PacoteComAtributoUnico(String eNomePacote, String eNomeIdentificador, String eValor) {
+        }
 
-		Pacote ret = null;
-		boolean enc = false;
+    }
 
-		for (Pacote PacoteC : getPacotes()) {
+    // LISTAS
 
-			if (PacoteC.getNome().contentEquals(eNomePacote)) {
+    public Lista CriarLista(String eNome) {
 
-				if (PacoteC.IdentificadorExiste(eNomeIdentificador)) {
-					if (PacoteC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
-						ret = PacoteC;
-						enc = true;
-						break;
-					}
-				}
+        Lista ret = new Lista(eNome);
+        mListas.add(ret);
 
-			}
+        return ret;
+    }
 
-		}
+    public Lista UnicaLista(String eNome) {
 
-		if (!enc) {
+        boolean enc = false;
+        Lista ret = null;
 
-			ret = new Pacote(eNomePacote);
+        for (Lista mLista : mListas) {
 
-			ret.Identifique(eNomeIdentificador, eValor);
+            if (mLista.getNome().contentEquals(eNome)) {
+                enc = true;
+                ret = mLista;
+                break;
+            }
 
-			getPacotes().add(ret);
-		}
+        }
 
-		return ret;
+        if (enc == false) {
+            ret = new Lista(eNome);
+            mListas.add(ret);
+        }
 
-	}
+        return ret;
+    }
 
-	public boolean PacoteComAtributo_Existe(String eNomePacote, String eNomeIdentificador, String eValor) {
+    public void RemoverLista(Lista eLista) {
 
-		boolean enc = false;
+        for (Lista mLista : mListas) {
 
-		for (Pacote PacoteC : getPacotes()) {
+            if (mLista == eLista) {
+                mListas.remove(eLista);
+                break;
+            }
 
-			if (PacoteC.getNome().contentEquals(eNomePacote)) {
+        }
 
-				if (PacoteC.IdentificadorExiste(eNomeIdentificador)) {
-					if (PacoteC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
-						enc = true;
-						break;
-					}
-				}
+    }
 
-			}
+    public void RemoverListaPorNome(String eNome) {
 
-		}
+        for (Lista mLista : mListas) {
 
-		return enc;
+            if (mLista.getNome().contentEquals(eNome)) {
+                mListas.remove(mLista);
+                break;
+            }
 
-	}
+        }
 
-	public void PacoteComAtributo_Remover(String eNomePacote, String eNomeIdentificador, String eValor) {
+    }
 
-		for (Pacote PacoteC : getPacotes()) {
+    // OBJETO
 
-			if (PacoteC.getNome().contentEquals(eNomePacote)) {
+    public Objeto CriarObjeto(String eNome) {
 
-				if (PacoteC.IdentificadorExiste(eNomeIdentificador)) {
-					if (PacoteC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
-						getPacotes().remove(PacoteC);
-						break;
-					}
-				}
+        Objeto ret = new Objeto(eNome);
+        mObjetos.add(ret);
 
-			}
+        return ret;
+    }
 
-		}
+    public Objeto UnicoObjeto(String eNome) {
 
-	}
+        boolean enc = false;
+        Objeto ret = null;
 
-	public Objeto ObjetoComAtributoUnico(String eNomeObjeto, String eNomeIdentificador, String eValor) {
+        for (Objeto mObjeto : mObjetos) {
 
-		Objeto ret = null;
-		boolean enc = false;
+            if (mObjeto.getNome().contentEquals(eNome)) {
+                enc = true;
+                ret = mObjeto;
+                break;
+            }
 
-		for (Objeto ObjetoC : getObjetos()) {
+        }
 
-			if (ObjetoC.getNome().contentEquals(eNomeObjeto)) {
+        if (enc == false) {
+            ret = new Objeto(eNome);
+            mObjetos.add(ret);
+        }
 
-				if (ObjetoC.IdentificadorExiste(eNomeIdentificador)) {
-					if (ObjetoC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
-						ret = ObjetoC;
-						enc = true;
-						break;
-					}
-				}
+        return ret;
+    }
 
-			}
+    public void RemoverObjeto(Objeto eObjeto) {
 
-		}
+        for (Objeto mObjeto : mObjetos) {
 
-		if (!enc) {
+            if (mObjeto == eObjeto) {
+                mObjetos.remove(eObjeto);
+                break;
+            }
 
-			ret = new Objeto(eNomeObjeto);
+        }
 
-			ret.Identifique(eNomeIdentificador, eValor);
+    }
 
-			getObjetos().add(ret);
-		}
+    public void RemoverObjetoPorNome(String eNome) {
 
-		return ret;
+        for (Objeto mObjeto : mObjetos) {
 
-	}
+            if (mObjeto.getNome().contentEquals(eNome)) {
+                mObjetos.remove(mObjeto);
+                break;
+            }
 
-	public boolean ObjetoComAtributo_Existe(String eNomeObjeto, String eNomeIdentificador, String eValor) {
+        }
 
-		boolean enc = false;
+    }
 
-		for (Objeto ObjetoC : getObjetos()) {
+    // EXTRA
 
-			if (ObjetoC.getNome().contentEquals(eNomeObjeto)) {
+    public Pacote PacoteComAtributoUnico(String eNomePacote, String eNomeIdentificador, String eValor) {
 
-				if (ObjetoC.IdentificadorExiste(eNomeIdentificador)) {
-					if (ObjetoC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
-						enc = true;
-						break;
-					}
-				}
+        Pacote ret = null;
+        boolean enc = false;
 
-			}
+        for (Pacote PacoteC : getPacotes()) {
 
-		}
+            if (PacoteC.getNome().contentEquals(eNomePacote)) {
 
-		return enc;
+                if (PacoteC.IdentificadorExiste(eNomeIdentificador)) {
+                    if (PacoteC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
+                        ret = PacoteC;
+                        enc = true;
+                        break;
+                    }
+                }
 
-	}
+            }
 
-	public void ObjetoComAtributo_Remover(String eNomeObjeto, String eNomeIdentificador, String eValor) {
+        }
 
-		for (Objeto ObjetoC : getObjetos()) {
+        if (!enc) {
 
-			if (ObjetoC.getNome().contentEquals(eNomeObjeto)) {
+            ret = new Pacote(eNomePacote);
 
-				if (ObjetoC.IdentificadorExiste(eNomeIdentificador)) {
-					if (ObjetoC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
-						getObjetos().remove(ObjetoC);
-						break;
-					}
-				}
+            ret.Identifique(eNomeIdentificador, eValor);
 
-			}
+            getPacotes().add(ret);
+        }
 
-		}
+        return ret;
 
-	}
+    }
 
+    public boolean PacoteComAtributo_Existe(String eNomePacote, String eNomeIdentificador, String eValor) {
 
-	public void salvarLinear() {
-		mLinear = true;
-	}
+        boolean enc = false;
+
+        for (Pacote PacoteC : getPacotes()) {
+
+            if (PacoteC.getNome().contentEquals(eNomePacote)) {
+
+                if (PacoteC.IdentificadorExiste(eNomeIdentificador)) {
+                    if (PacoteC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
+                        enc = true;
+                        break;
+                    }
+                }
+
+            }
+
+        }
+
+        return enc;
+
+    }
+
+    public void PacoteComAtributo_Remover(String eNomePacote, String eNomeIdentificador, String eValor) {
+
+        for (Pacote PacoteC : getPacotes()) {
+
+            if (PacoteC.getNome().contentEquals(eNomePacote)) {
+
+                if (PacoteC.IdentificadorExiste(eNomeIdentificador)) {
+                    if (PacoteC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
+                        getPacotes().remove(PacoteC);
+                        break;
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+    public Objeto ObjetoComAtributoUnico(String eNomeObjeto, String eNomeIdentificador, String eValor) {
+
+        Objeto ret = null;
+        boolean enc = false;
+
+        for (Objeto ObjetoC : getObjetos()) {
+
+            if (ObjetoC.getNome().contentEquals(eNomeObjeto)) {
+
+                if (ObjetoC.IdentificadorExiste(eNomeIdentificador)) {
+                    if (ObjetoC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
+                        ret = ObjetoC;
+                        enc = true;
+                        break;
+                    }
+                }
+
+            }
+
+        }
+
+        if (!enc) {
+
+            ret = new Objeto(eNomeObjeto);
+
+            ret.Identifique(eNomeIdentificador, eValor);
+
+            getObjetos().add(ret);
+        }
+
+        return ret;
+
+    }
+
+    public boolean ObjetoComAtributo_Existe(String eNomeObjeto, String eNomeIdentificador, String eValor) {
+
+        boolean enc = false;
+
+        for (Objeto ObjetoC : getObjetos()) {
+
+            if (ObjetoC.getNome().contentEquals(eNomeObjeto)) {
+
+                if (ObjetoC.IdentificadorExiste(eNomeIdentificador)) {
+                    if (ObjetoC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
+                        enc = true;
+                        break;
+                    }
+                }
+
+            }
+
+        }
+
+        return enc;
+
+    }
+
+    public void ObjetoComAtributo_Remover(String eNomeObjeto, String eNomeIdentificador, String eValor) {
+
+        for (Objeto ObjetoC : getObjetos()) {
+
+            if (ObjetoC.getNome().contentEquals(eNomeObjeto)) {
+
+                if (ObjetoC.IdentificadorExiste(eNomeIdentificador)) {
+                    if (ObjetoC.Identifique(eNomeIdentificador).getValor().contentEquals(eValor)) {
+                        getObjetos().remove(ObjetoC);
+                        break;
+                    }
+                }
+
+            }
+
+        }
+
+    }
+
+
+    public void salvarLinear() {
+        mLinear = true;
+    }
 
 }

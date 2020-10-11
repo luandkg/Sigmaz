@@ -1,11 +1,19 @@
 call iniciar -> operando ( );
 
+default -> int {
+	return 0;
+}
 
+default -> num {
+	return 0.0;
+}
 
 act operando ( ) {
 
     def a : int = 12;
 
+    def TT : num = default;
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
     def c : int = functor<int>somatorio(12,8);
     def d : num = functor<num>somatorio(12.4,8.6);
@@ -18,6 +26,13 @@ act operando ( ) {
     auto <num>somatorio(0.6,0.4);
 
     functor <num>somatorio(0.6,21.5);
+
+    def o1 : num = functor<num>obliviar(40.4,9.6);
+    def o2 : num = functor<num>obliviar(5.4);
+
+    def o3 : int = functor<int>obliviar(12,8);
+    def o4 : int = functor<int>obliviar(12);
+
 
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 
@@ -44,4 +59,14 @@ operator ++ ( a : num , b : num ) : num {
 	def c : num;
 	invoke math -> operator_sum_num ( a , b ) :: c;
 	return c;
+}
+
+
+functor <T> obliviar(a : T, opt b : T = default ) : T {
+
+    def c : T = a ++ b;
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+    return c;
 }

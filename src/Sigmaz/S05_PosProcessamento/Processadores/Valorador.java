@@ -1,6 +1,6 @@
 package Sigmaz.S05_PosProcessamento.Processadores;
 
-import Sigmaz.S05_PosProcessamento.Valore.*;
+import Sigmaz.S05_PosProcessamento.Povalorum.*;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
 import Sigmaz.S05_PosProcessamento.Pronoco.*;
 import Sigmaz.S00_Utilitarios.AST;
@@ -73,8 +73,16 @@ public class Valorador {
                     return;
                 }
 
+                mPosProcessador.mensagem("REFERS : ");
+
                 mReferenciamento.processar_Refers("\t", mPacotes, mAST, mAtribuindo);
+
+                mPosProcessador.mensagem("SIMBOLISMO : ");
+
                 mSimbolismo.realizarSimbolismo("\t", mAST, mAtribuindo);
+
+                mPosProcessador.mensagem("VALORAMENTO : ");
+
                 mValoramento.realizarValoramento("\t", mAST, mAtribuindo);
 
 

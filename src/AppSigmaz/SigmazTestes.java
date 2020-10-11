@@ -1,10 +1,7 @@
 package AppSigmaz;
 
 import Sigmaz.S00_Utilitarios.*;
-import Sigmaz.S04_Compilador.Compiler;
-import Sigmaz.S06_Executor.RunTime;
 import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
-import Sigmaz.S05_PosProcessamento.PosProcessador;
 import Sigmaz.Sigmaz_Fases;
 
 import java.text.DecimalFormat;
@@ -60,6 +57,7 @@ public class SigmazTestes {
         int mProblema = 0;
 
         SequenciadorDeTestes mSequenciadorDeTestes = new SequenciadorDeTestes();
+
 
         for (String Arquivo : mArquivos) {
 

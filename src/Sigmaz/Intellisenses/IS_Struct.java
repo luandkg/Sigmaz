@@ -1,6 +1,6 @@
 package Sigmaz.Intellisenses;
 
-import Sigmaz.S06_Executor.Debuggers.Simplificador;
+import Sigmaz.S07_Executor.Debuggers.Simplificador;
 
 import java.awt.*;
 

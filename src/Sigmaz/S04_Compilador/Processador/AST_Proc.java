@@ -47,6 +47,27 @@ public class AST_Proc {
                 AST_Ope mAST = new AST_Ope(mCompiler);
                 mAST.init(AST_Corrente);
 
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("SIZE")) {
+
+                AST_Size mAST = new AST_Size(mCompiler);
+                mAST.init(AST_Corrente);
+
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("APPEND")) {
+
+                AST_Append mAST = new AST_Append(mCompiler);
+                mAST.init(AST_Corrente);
+
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("INT")) {
+
+                AST_Int mAST = new AST_Int(mCompiler);
+                mAST.init(AST_Corrente);
+
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("REAL")) {
+
+                AST_Real mAST = new AST_Real(mCompiler);
+                mAST.init(AST_Corrente);
+
+
             } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("PROC")) {
 
                 AST_Instrucao mAST = new AST_Instrucao(mCompiler);

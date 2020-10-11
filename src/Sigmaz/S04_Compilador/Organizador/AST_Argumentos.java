@@ -94,6 +94,7 @@ public class AST_Argumentos {
                         AST ASTValue = ASTCorrente.criarBranch("VALUE");
 
                         AST_Value gAST = new AST_Value(mCompiler);
+                        gAST.sePrecisarTipar(ASTCorrente.getBranch("TYPE"));
                         gAST.setBuscadorDeArgumentos();
 
                         gAST.init(ASTValue);

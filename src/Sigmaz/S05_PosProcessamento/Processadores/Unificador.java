@@ -1,6 +1,6 @@
 package Sigmaz.S05_PosProcessamento.Processadores;
 
-import Sigmaz.S06_Executor.Alterador;
+import Sigmaz.S07_Executor.Alterador;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
 import Sigmaz.S00_Utilitarios.AST;
 

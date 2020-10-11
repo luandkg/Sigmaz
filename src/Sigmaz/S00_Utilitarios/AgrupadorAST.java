@@ -59,6 +59,7 @@ public class AgrupadorAST {
 
         for (AST mAST : eASTPai.getASTS()) {
 
+
             if (mAST.mesmoTipo("STRUCT")) {
 
 
@@ -77,6 +78,7 @@ public class AgrupadorAST {
                 } else if (mAST.getBranch("EXTENDED").mesmoNome("EXTERNAL")) {
 
                     mExternals.add(mAST);
+
                 } else if (mAST.getBranch("EXTENDED").mesmoNome("MODEL")) {
 
                     mModels.add(mAST);

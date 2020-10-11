@@ -1,7 +1,8 @@
 package AppSigmaz;
 
-import Sigmaz.S06_Executor.RunTime;
-import Sigmaz.S06_Executor.UML;
+import Gerador.BioGerador;
+import Sigmaz.S07_Executor.RunTime;
+import Sigmaz.S07_Executor.UML;
 import Sigmaz.S08_Ferramentas.Dependenciador;
 import Sigmaz.Intellisenses.Intellisense;
 import Sigmaz.Intellisenses.IntellisenseTheme;
@@ -28,57 +29,48 @@ public class AppUtils {
     public static void LEXER(int eIndice, ArrayList<String> mArquivos) {
 
 
-        int iContando = 0;
-        boolean enc = false;
+        Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
 
-        for (String mArquivo : mArquivos) {
-            iContando += 1;
-            if (iContando == eIndice) {
-
-                enc = true;
+        if (mOpcional.estaValido()) {
 
 
-                Lexer LexerC = new Lexer();
+            Lexer LexerC = new Lexer();
 
-                System.out.println("################# LEXER ##################");
-                System.out.println("");
-                System.out.println("\t Iniciado : " + LexerC.getData().toString());
-                System.out.println("\t - Arquivo : " + mArquivo);
-
-
-                LexerC.init(mArquivo);
-
-                System.out.println("\t - Chars : " + LexerC.getChars());
-                System.out.println("\t - Tokens : " + LexerC.getTokens().size());
-                System.out.println("\t - Erros : " + LexerC.getErros().size());
-                System.out.println("\t Finalizado : " + LexerC.getData().toString());
-                System.out.println("");
+            System.out.println("################# LEXER ##################");
+            System.out.println("");
+            System.out.println("\t Iniciado : " + LexerC.getData().toString());
+            System.out.println("\t - Arquivo : " + mOpcional.getConteudo());
 
 
-                if (LexerC.getErros().size() > 0) {
+            LexerC.init(mOpcional.getConteudo());
 
-                    System.out.println("\n\t ERROS DE LEXICOGRAFICA : ");
-
-                    for (Erro eErro : LexerC.getErros()) {
-                        System.out.println("\t\t    ->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem());
-                    }
-
-
-                } else {
+            System.out.println("\t - Chars : " + LexerC.getChars());
+            System.out.println("\t - Tokens : " + LexerC.getTokens().size());
+            System.out.println("\t - Erros : " + LexerC.getErros().size());
+            System.out.println("\t Finalizado : " + LexerC.getData().toString());
+            System.out.println("");
 
 
-                    for (Token TokenC : LexerC.getTokens()) {
-                        System.out.println(" -->> " + TokenC.getTipo() + " = " + TokenC.getConteudo());
-                    }
+            if (LexerC.getErros().size() > 0) {
 
+                System.out.println("\n\t ERROS DE LEXICOGRAFICA : ");
+
+                for (Erro eErro : LexerC.getErros()) {
+                    System.out.println("\t\t    ->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem());
                 }
 
 
-                break;
-            }
-        }
+            } else {
 
-        if (!enc) {
+
+                for (Token TokenC : LexerC.getTokens()) {
+                    System.out.println(" -->> " + TokenC.getTipo() + " = " + TokenC.getConteudo());
+                }
+
+            }
+
+
+        } else {
             System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
         }
 
@@ -147,9 +139,10 @@ public class AppUtils {
 
     }
 
-    public static void EXECUTAR( String eCompilado, String eLocalLibs) {
+    public static void EXECUTAR(String eCompilado, String eLocalLibs) {
 
         Sigmaz_Executor mSE = new Sigmaz_Executor();
+        mSE.setMostrar_Execucao(true);
         mSE.executar(eCompilado);
 
     }
@@ -201,12 +194,6 @@ public class AppUtils {
     public static void MONTAR_BIBLIOTECA(String eArquivo, String eSaida, String eLocalLibs) {
 
 
-        //  Sigmaz SigmazC = new Sigmaz();
-        //  SigmazC.setObject(false);
-
-        //    SigmazC.estrutura(eArquivo, eSaida, 1);
-
-
         Sigmaz_Fases SigmazC = new Sigmaz_Fases();
         SigmazC.initSemExecucao(eArquivo, eSaida, eLocalLibs, 2);
 
@@ -216,26 +203,17 @@ public class AppUtils {
     public static void DEPENDENCIA(int eIndice, ArrayList<String> mArquivos) {
 
 
-        int iContando = 0;
-        boolean enc = false;
+        Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
 
-        for (String mArquivo : mArquivos) {
-            iContando += 1;
-            if (iContando == eIndice) {
-
-                enc = true;
+        if (mOpcional.estaValido()) {
 
 
-                Dependenciador mDependenciador = new Dependenciador();
-                mDependenciador.init_debug(mArquivo);
+            Dependenciador mDependenciador = new Dependenciador();
+            mDependenciador.init_debug(mOpcional.getConteudo());
 
 
-                break;
-            }
-        }
-
-        if (!enc) {
-            System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
+        } else {
+            System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
         }
 
 
@@ -401,6 +379,7 @@ public class AppUtils {
             mSigmazTestes.adicionar(mArquivo);
         }
 
+
         mSigmazTestes.init(mLocal, mLocalLibs, "SIGMAZ - TESTES UNITARIOS");
 
     }
@@ -409,25 +388,16 @@ public class AppUtils {
     public static void SYNTAX_HIGHLIGHT(int eIndice, ArrayList<String> mArquivos, String eLocal) {
 
 
-        int iContando = 0;
-        boolean enc = false;
+        Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
 
-        for (String mArquivo : mArquivos) {
-            iContando += 1;
-            if (iContando == eIndice) {
+        if (mOpcional.estaValido()) {
 
-                enc = true;
-
-                Syntax_HighLight mSyntax_HighLight = new Syntax_HighLight();
-                mSyntax_HighLight.init(mArquivo, eLocal);
+            Syntax_HighLight mSyntax_HighLight = new Syntax_HighLight();
+            mSyntax_HighLight.init(mOpcional.getConteudo(), eLocal);
 
 
-                break;
-            }
-        }
-
-        if (!enc) {
-            System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
+        } else {
+            System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
         }
 
 
@@ -437,25 +407,17 @@ public class AppUtils {
     public static void IDENTAR(int eIndice, ArrayList<String> mArquivos) {
 
 
-        int iContando = 0;
-        boolean enc = false;
+        Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
 
-        for (String mArquivo : mArquivos) {
-            iContando += 1;
-            if (iContando == eIndice) {
-
-                enc = true;
-
-                Identador mIdentador = new Identador();
-                mIdentador.init(mArquivo, mArquivo);
+        if (mOpcional.estaValido()) {
 
 
-                break;
-            }
-        }
+            Identador mIdentador = new Identador();
+            mIdentador.init(mOpcional.getConteudo(), mOpcional.getConteudo());
 
-        if (!enc) {
-            System.out.println("Indice de Arquivo nao encontrado : " + eIndice);
+
+        } else {
+            System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
         }
 
 
@@ -565,26 +527,17 @@ public class AppUtils {
 
     public static void TODO(int eIndice, ArrayList<String> mArquivos) {
 
+        Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
 
-        int iContando = 0;
-        boolean enc = false;
-
-        for (String mArquivo : mArquivos) {
-            iContando += 1;
-            if (iContando == eIndice) {
-
-                enc = true;
+        if (mOpcional.estaValido()) {
 
 
-                Todos TodosC = new Todos();
+            Todos TodosC = new Todos();
 
-                TodosC.init(mArquivo);
+            TodosC.init(mOpcional.getConteudo());
 
-                break;
-            }
-        }
 
-        if (!enc) {
+        } else {
             System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
         }
 
@@ -617,5 +570,51 @@ public class AppUtils {
 
 
     }
+
+
+    public static void GERADOR_DETALHADO(String eLocalGerador, String eCompilado, String eLocalLibs) {
+
+        BioGerador mBioGerador = new BioGerador(eLocalGerador);
+        mBioGerador.gerar();
+
+        String mArquivo = eLocalGerador + "bio.sigmaz";
+
+        Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+
+        SigmazC.mostrarDebug(true);
+        SigmazC.setMostrarArvoreRunTime(false);
+        SigmazC.setMostrar_ArvoreFalhou(false);
+
+        SigmazC.init(mArquivo, eCompilado, eLocalLibs, 1);
+
+
+    }
+
+
+    public static void GERADOR_INTELISENSE(String eLocalGerador, String eSaida, String eLocalLibs, String eGrafico) {
+
+        BioGerador mBioGerador = new BioGerador(eLocalGerador);
+        mBioGerador.gerar();
+
+        String mArquivo = eLocalGerador + "bio.sigmaz";
+
+
+        Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+        SigmazC.initSemExecucao(mArquivo, eSaida, eLocalLibs, 1);
+
+        if (!SigmazC.temErros()) {
+
+            Intellisense IntellisenseC = new Intellisense();
+            IntellisenseC.run(SigmazC.getASTS(), new IntellisenseTheme(), eGrafico);
+
+
+            System.out.println("\t - 7 : Intellisense\t\t\t: SUCESSO");
+
+
+        }
+
+
+    }
+
 
 }

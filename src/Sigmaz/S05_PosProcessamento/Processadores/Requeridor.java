@@ -3,7 +3,7 @@ package Sigmaz.S05_PosProcessamento.Processadores;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S00_Utilitarios.Contador;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
-import Sigmaz.S06_Executor.RunTime;
+import Sigmaz.S07_Executor.RunTime;
 
 import java.io.File;
 import java.util.ArrayList;

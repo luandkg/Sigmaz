@@ -1,7 +1,9 @@
 package Sigmaz;
 
+import Sigmaz.S00_Utilitarios.Chronos;
 import Sigmaz.S04_Compilador.Compiler;
-import Sigmaz.S06_Executor.RunTime;
+import Sigmaz.S06_Montador.Montador;
+import Sigmaz.S07_Executor.RunTime;
 import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
 import Sigmaz.S00_Utilitarios.Erro;
@@ -19,7 +21,6 @@ public class Sigmaz_Etapas {
     private String mETAPA_PRE_PROCESSAMENTO;
     private String mETAPA_LEXER;
     private String mETAPA_COMPILER;
-    private String mETAPA_ANALISE;
     private String mETAPA_POS_PROCESSAMENTO;
     private String mETAPA_MONTAGEM;
 
@@ -45,8 +46,10 @@ public class Sigmaz_Etapas {
     private boolean mCorrenteParseando;
     private boolean mCorrenteCompilando;
 
+    private Chronos mChronos;
+
     public enum Fases {
-        PRE_PROCESSAMENTO, LEXER, COMPILER, ANALISAR, POS_PROCESSAMENTO, MONTAGEM, PRONTO;
+        PRE_PROCESSAMENTO, LEXER, COMPILER, POS_PROCESSAMENTO, MONTAGEM, PRONTO;
     }
 
     public boolean estaPre() {
@@ -74,7 +77,6 @@ public class Sigmaz_Etapas {
         mETAPA_PRE_PROCESSAMENTO = mSTATUS_NAO;
         mETAPA_LEXER = mSTATUS_NAO;
         mETAPA_COMPILER = mSTATUS_NAO;
-        mETAPA_ANALISE = mSTATUS_NAO;
         mETAPA_POS_PROCESSAMENTO = mSTATUS_NAO;
         mETAPA_MONTAGEM = mSTATUS_NAO;
 
@@ -93,6 +95,8 @@ public class Sigmaz_Etapas {
         mCorrentePreprocessando = false;
         mCorrenteParseando = false;
         mCorrenteCompilando = false;
+
+        mChronos = new Chronos();
 
     }
 
@@ -113,9 +117,6 @@ public class Sigmaz_Etapas {
         return mETAPA_COMPILER;
     }
 
-    public String getAnalise() {
-        return mETAPA_ANALISE;
-    }
 
     public String getPosProcessamento() {
         return mETAPA_POS_PROCESSAMENTO;
@@ -161,7 +162,6 @@ public class Sigmaz_Etapas {
         mETAPA_PRE_PROCESSAMENTO = mSTATUS_NAO;
         mETAPA_LEXER = mSTATUS_NAO;
         mETAPA_COMPILER = mSTATUS_NAO;
-        mETAPA_ANALISE = mSTATUS_NAO;
         mETAPA_POS_PROCESSAMENTO = mSTATUS_NAO;
         mETAPA_MONTAGEM = mSTATUS_NAO;
 
@@ -443,7 +443,7 @@ public class Sigmaz_Etapas {
         if (mFase == Fases.COMPILER) {
 
             if (CompilerC.getErros_Compiler().size() == 0) {
-                mFase = Fases.ANALISAR;
+                mFase = Fases.POS_PROCESSAMENTO;
                 mETAPA_COMPILER = mSTATUS_SUCESSO;
             } else {
                 mETAPA_COMPILER = mSTATUS_FALHOU;
@@ -512,7 +512,11 @@ public class Sigmaz_Etapas {
         if (mFase == Fases.MONTAGEM) {
 
 
-            CompilerC.Compilar(mSaida);
+            Montador MontadorC = new Montador();
+
+            MontadorC.compilar(CompilerC.getASTS(), mSaida);
+
+
 
             mFase = Fases.PRONTO;
 
@@ -534,7 +538,7 @@ public class Sigmaz_Etapas {
         System.out.println("\t - Executando : " + eExecutor);
 
         RunTime RunTimeC = new RunTime();
-        String DI = RunTimeC.getData();
+        String DI = mChronos.getData();
 
 
         RunTimeC.init(eExecutor);
@@ -552,7 +556,7 @@ public class Sigmaz_Etapas {
         System.out.println("----------------------------------------------");
         System.out.println("");
 
-        String DF = RunTimeC.getData();
+        String DF = mChronos.getData();
 
         System.out.println("\t - Iniciado : " + DI);
         System.out.println("\t - Finalizado : " + DF);

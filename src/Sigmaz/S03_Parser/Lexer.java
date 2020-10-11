@@ -2,6 +2,7 @@ package Sigmaz.S03_Parser;
 
 import java.io.File;
 import java.util.ArrayList;
+
 import Sigmaz.S00_Utilitarios.Erro;
 import Sigmaz.S00_Utilitarios.Texto;
 import Sigmaz.S00_Utilitarios.Tempo;
@@ -33,15 +34,23 @@ public class Lexer {
         mPosicao = 0;
         mTokens = new ArrayList<>();
 
-        mLinhas=0;
-        mLinha_Min=0;
-        mLinha_Max=0;
+        mLinhas = 0;
+        mLinha_Min = 0;
+        mLinha_Max = 0;
 
     }
 
-    public int getLinhas(){return mLinhas;}
-    public int getLinha_Min(){return mLinha_Min;}
-    public int getLinha_Max(){return mLinha_Max;}
+    public int getLinhas() {
+        return mLinhas;
+    }
+
+    public int getLinha_Min() {
+        return mLinha_Min;
+    }
+
+    public int getLinha_Max() {
+        return mLinha_Max;
+    }
 
 
     public boolean Continuar() {
@@ -76,9 +85,9 @@ public class Lexer {
         mPosicao = 0;
         mTokens.clear();
 
-        mLinhas=0;
-        mLinha_Min=-1;
-        mLinha_Max=-1;
+        mLinhas = 0;
+        mLinha_Min = -1;
+        mLinha_Max = -1;
 
         mErros = new ArrayList<>();
 
@@ -89,6 +98,15 @@ public class Lexer {
         }
 
         mTamanho = mConteudo.length();
+
+        if (mTamanho == 0) {
+            return;
+        }
+
+        if (mConteudo == null){
+            return;
+        }
+
 
         while (Continuar()) {
             String charC = String.valueOf(mConteudo.charAt(mIndex));
@@ -112,9 +130,9 @@ public class Lexer {
                 String eTokenConteudo = ObterNUM();
                 int eFim = mPosicao;
 
-                if (eTokenConteudo.contains(".")){
+                if (eTokenConteudo.contains(".")) {
                     mTokens.add(new Token(TokenTipo.NUMERO_FLOAT, eTokenConteudo, eInicio, eFim, mLinha));
-                }else{
+                } else {
                     mTokens.add(new Token(TokenTipo.NUMERO, eTokenConteudo, eInicio, eFim, mLinha));
                 }
             } else if (charC.contentEquals("+") && charP.contentEquals("+")) {
@@ -130,9 +148,9 @@ public class Lexer {
                 String eTokenConteudo = "+" + ObterNUM();
                 int eFim = mPosicao;
 
-                if (eTokenConteudo.contains(".")){
+                if (eTokenConteudo.contains(".")) {
                     mTokens.add(new Token(TokenTipo.NUMERO_FLOAT, eTokenConteudo, eInicio, eFim, mLinha));
-                }else{
+                } else {
                     mTokens.add(new Token(TokenTipo.NUMERO, eTokenConteudo, eInicio, eFim, mLinha));
                 }
 
@@ -157,9 +175,9 @@ public class Lexer {
                 String eTokenConteudo = "-" + ObterNUM();
                 int eFim = mPosicao;
 
-                if (eTokenConteudo.contains(".")){
+                if (eTokenConteudo.contains(".")) {
                     mTokens.add(new Token(TokenTipo.NUMERO_FLOAT, eTokenConteudo, eInicio, eFim, mLinha));
-                }else{
+                } else {
                     mTokens.add(new Token(TokenTipo.NUMERO, eTokenConteudo, eInicio, eFim, mLinha));
                 }
 
@@ -351,23 +369,23 @@ public class Lexer {
             mIndex += 1;
             mPosicao += 1;
 
-            if (mLinha_Min==-1){
-                mLinha_Min=mPosicao;
-            }else{
-                if (mPosicao<mLinha_Min){
-                    mLinha_Min=mPosicao;
+            if (mLinha_Min == -1) {
+                mLinha_Min = mPosicao;
+            } else {
+                if (mPosicao < mLinha_Min) {
+                    mLinha_Min = mPosicao;
                 }
             }
-            if (mLinha_Max==-1){
-                mLinha_Max=mPosicao;
-            }else{
-                if (mPosicao>mLinha_Max){
-                    mLinha_Max=mPosicao;
+            if (mLinha_Max == -1) {
+                mLinha_Max = mPosicao;
+            } else {
+                if (mPosicao > mLinha_Max) {
+                    mLinha_Max = mPosicao;
                 }
             }
         }
 
-        mLinhas=mLinha;
+        mLinhas = mLinha;
 
 
     }

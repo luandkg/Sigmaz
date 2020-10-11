@@ -131,6 +131,10 @@ public class CompilerUnit {
             errarLexer(mErro.getMensagem(), mErro.getLinha(), mErro.getPosicao());
         }
 
+        if (LexerC.getTokens().size() == 0) {
+            errarLexer("Arquivo vazio !", 0, 0);
+            return;
+        }
 
         GrupoDeComentario GrupoDeComentarioC = new GrupoDeComentario(eArquivo);
 

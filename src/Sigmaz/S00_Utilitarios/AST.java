@@ -120,7 +120,7 @@ public class AST {
     }
 
 
-    public String getImpressao(){
+    public String getImpressao() {
 
         String eRet = "";
 
@@ -192,35 +192,55 @@ public class AST {
     }
 
 
-    public boolean mesmoValor(String eValor) { return this.mValor.contentEquals(eValor); }
+    public boolean mesmoValor(String eValor) {
+        return this.mValor.contentEquals(eValor);
+    }
 
-    public boolean mesmoValor_SCS(String eValor) { return this.mValor.toUpperCase().contentEquals(eValor.toUpperCase()); }
+    public boolean mesmoValor_SCS(String eValor) {
+        return this.mValor.toUpperCase().contentEquals(eValor.toUpperCase());
+    }
 
     public int getInstrucoes() {
         int t = 1;
 
+        if (this.getNome().length() > 0) {
+            t += 1;
+        }
+        if (this.getValor().length() > 0) {
+            t += 1;
+        }
+
         for (AST a : getASTS()) {
-            if (a.getASTS().size() > 0) {
-                t += subInstrucoes(a);
-            }
-            t += 1;
+            t += a.getInstrucoes();
         }
 
         return t;
     }
 
-    private int subInstrucoes(AST ASTC) {
-        int t = 0;
+    public int getObjetos() {
+        int t = 1;
 
-        for (AST a : ASTC.getASTS()) {
-            if (a.getASTS().size() > 0) {
-                t += subInstrucoes(a);
-            }
-            t += 1;
+
+        for (AST a : getASTS()) {
+            t += a.getObjetos();
         }
 
         return t;
     }
+
+    public int getProfundidade(int aAnterior) {
+        int t = aAnterior + 1;
+
+        for (AST a : getASTS()) {
+            int tmp = a.getProfundidade(aAnterior+1);
+            if (tmp > t) {
+                t = tmp;
+            }
+        }
+
+        return t;
+    }
+
 
     public void limpar() {
 

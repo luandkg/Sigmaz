@@ -16,6 +16,12 @@ call iniciar -> {
 act fofocar ( opt ref r : num = 50.0 , opt a : num = 5.0 ) {
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }
+
+#act fofocando ( opt ref r : num = 50.0 ,  a : num ) {invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;}
+
+#operator ** (a :int,opt b:int = 12) : int {}
+#operator ** (a :int, b:int,c:int) : int {}
+
 func bla ( ) : num {
 	return som ( 2.0 , false );
 }
@@ -28,7 +34,7 @@ act algo ( opt a : num = 5.0 ) {
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
 }
 
-act duplo ( opt a : num = 5.0 , b : num ) {
+act duplo ( opt a : num = 5.0 , opt b : num = 2.0 ) {
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
 }

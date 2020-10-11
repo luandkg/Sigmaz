@@ -298,14 +298,6 @@ public class Compiler {
 
     }
 
-    public void Compilar(String eArquivo) {
-
-        Documentador documentadorC = new Documentador();
-
-        documentadorC.compilar(this.getASTS(), eArquivo);
-
-
-    }
 
     public ArrayList<GrupoDeErro> getErros_PreProcessamento() {
         return mErros_PreProcessamento;

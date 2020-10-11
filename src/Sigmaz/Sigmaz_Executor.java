@@ -1,55 +1,151 @@
 package Sigmaz;
 
-import Sigmaz.S06_Executor.RunTime;
+import Sigmaz.S00_Utilitarios.Chronos;
+import Sigmaz.S07_Executor.RunTime;
+
+import java.util.ArrayList;
 
 public class Sigmaz_Executor {
 
-    public void executar(String eArquivo) {
+    private Chronos mChronos;
 
-        System.out.println("");
-        System.out.println("################ RUNTIME ################");
-        System.out.println("");
-        System.out.println("\t - Executando : " + eArquivo);
+    private boolean mMostrar_Execucao;
+    private boolean mMostrar_ArvoreRunTime;
+    private boolean mTemErros;
+    private ArrayList<String> mErros_Execucao;
+
+    public Sigmaz_Executor() {
+
+        mChronos = new Chronos();
+
+        mMostrar_Execucao = false;
+        mMostrar_ArvoreRunTime = false;
+
+        mTemErros = false;
+        mErros_Execucao = new ArrayList<String>();
+
+    }
+
+    public void setMostrar_Execucao(boolean e) {
+        mMostrar_Execucao = e;
+    }
+
+    public void setMostrar_ArvoreRunTime(boolean e) {
+        mMostrar_ArvoreRunTime = e;
+    }
+
+    public boolean temErros() {
+        return mTemErros;
+    }
+
+    public ArrayList<String> getErros() {
+        return mErros_Execucao;
+    }
+
+    public void executar(String eExecutor) {
+
+        mTemErros = false;
+        mErros_Execucao.clear();
+
+        if (mMostrar_Execucao) {
+
+            System.out.println("");
+            System.out.println("################ RUNTIME ################");
+            System.out.println("");
+            System.out.println("\t - Executando : " + eExecutor);
+
+        }
+
 
         RunTime RunTimeC = new RunTime();
-        String DI = RunTimeC.getData();
+        String DI = mChronos.getData();
 
 
-        RunTimeC.init(eArquivo);
+        RunTimeC.ocultar();
 
-        System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
-        System.out.println("");
+        if (mMostrar_Execucao) {
+            RunTimeC.mostrar();
+        }
 
 
-        System.out.println("");
-        System.out.println("----------------------------------------------");
+        RunTimeC.init(eExecutor);
 
-        RunTimeC.run();
+        if (mMostrar_Execucao) {
 
-        System.out.println("");
-        System.out.println("----------------------------------------------");
-        System.out.println("");
+            System.out.println("\t - Tempo de Processamento : " + RunTimeC.getTempo_Processamento());
+            System.out.println("\t - Tempo de Organizacao : " + RunTimeC.getTempo_Organizacao());
+            System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
 
-        String DF = RunTimeC.getData();
 
-        System.out.println("\t - Iniciado : " + DI);
-        System.out.println("\t - Finalizado : " + DF);
+        }
 
-        System.out.println("\t - Erros : " + RunTimeC.getErros().size());
+        if (RunTimeC.getErros().size() == 0) {
+
+
+            if (mMostrar_ArvoreRunTime) {
+
+                System.out.println("");
+                System.out.println(RunTimeC.getArvoreDeInstrucoes());
+            }
+
+            if (mMostrar_Execucao) {
+
+                System.out.println("");
+                System.out.println("----------------------------------------------");
+
+            }
+
+            RunTimeC.run();
+
+            if (mMostrar_Execucao) {
+
+                System.out.println("");
+                System.out.println("----------------------------------------------");
+                System.out.println("");
+
+            }
+
+
+        }
+
 
         if (RunTimeC.getErros().size() > 0) {
-            System.out.println("\n\t ERROS DE EXECUCAO : ");
+
+            mTemErros = true;
 
             for (String Erro : RunTimeC.getErros()) {
-                System.out.println("\t\t" + Erro);
+                mErros_Execucao.add(Erro);
             }
         }
 
-        System.out.println("");
-        System.out.println("----------------------------------------------");
+        if (mMostrar_Execucao) {
 
+            String DF = mChronos.getData();
+
+
+            System.out.println("\t - Iniciado : " + DI);
+            System.out.println("\t - Finalizado : " + DF);
+            System.out.println("\t - Tempo de Execucao : " + RunTimeC.getTempo_Execucao());
+
+            System.out.println("\t - Erros : " + RunTimeC.getErros().size());
+
+            if (RunTimeC.getErros().size() > 0) {
+                System.out.println("\n\t ERROS DE EXECUCAO : ");
+
+
+                for (String Erro : RunTimeC.getErros()) {
+                    System.out.println("\t\t" + Erro);
+                }
+            }
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+
+
+        }
 
     }
+
 
     public void estruturador(String eArquivo, String saida) {
 
@@ -60,7 +156,7 @@ public class Sigmaz_Executor {
         System.out.println("\t - Executando : " + saida);
 
         RunTime RunTimeC = new RunTime();
-        String DI = RunTimeC.getData();
+        String DI = mChronos.getData();
 
 
         RunTimeC.init(saida);
@@ -78,7 +174,7 @@ public class Sigmaz_Executor {
         System.out.println("----------------------------------------------");
         System.out.println("");
 
-        String DF = RunTimeC.getData();
+        String DF = mChronos.getData();
 
         System.out.println("\t - Iniciado : " + DI);
         System.out.println("\t - Finalizado : " + DF);

@@ -369,3 +369,17 @@
 2020 10 05  -->>  Processador de Baixo Nivel N7
 2020 10 07  -->>  Organização do Processo de Compilação
 2020 10 07  -->>  Fase - Apenas Execução
+2020 10 07  -->>  PosProcessador : Argumentador
+2020 10 07  -->>  PosProcessador : Opcionalizador Auto e Functor
+2020 10 07  -->>  Instruções de Processador : Inteiro
+2020 10 07  -->>  Instruções de Processador : Real
+2020 10 07  -->>  Instruções de Processador : Texto
+2020 10 08  -->>  RE-Organizaçao do Processo de Montagem
+2020 10 08  -->>  Montador
+2020 10 08  -->>  Chaveador
+2020 10 08  -->>  Pacotador
+2020 10 08  -->>  R5
+2020 10 10  -->>  Arquivo Objeto 2.0
+2020 10 10  -->>  Maior Velocidade de Montagem
+2020 10 10  -->>  Redução do Tamanho do Objeto
+2020 10 11  -->>  Formato Objeto - OLM 1.0

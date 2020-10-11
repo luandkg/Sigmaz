@@ -1,0 +1,1061 @@
+SIGMAZ :: "EXECUTABLE" = "1QL4D.2UZ6V.Z5ZZF@HEH9" { 
+	HEADER :: "1" = "Num" { 
+		AUTHORES :: { }
+		VERSION :: { }
+		COMPANY :: { }
+		PRIVATE :: "" = "537JE.X7QFX.J81L5@HWU1" { }
+		PUBLIC :: "" = "AFYS9.8AVQI.O5WYI@HBQB" { }
+		SHARED :: "" = "VRDZA.7KE97.DBG0E@HYV7" { }
+		DEVELOPMENT :: { 
+			PREPROCESSOR :: "Zettacor" = "AAZBJ.LLCXZ.47TGC@H5QQ" { }
+			LEXER :: "Alfaxer" = "AWRCF.UJ3ML.RLXLX@HQZN" { }
+			PARSER :: "Betagrarser" = "IXBQV.CNVMZ.NMRH2@H59O" { }
+			COMPILER :: "Gamaller" = "JYJRF.UOKYL.ZASEI@HKKS" { }
+			POSPROCESSOR :: "Deltaquor" = "PDPXQ.HBLAQ.TAGSI@H7OC" { }
+		 }
+	 }
+	CALL :: "Processadores" = "AUTO" { 
+		SENDING :: { 
+			ARGUMENTS :: { }
+		 }
+		BODY :: { 
+			DEF :: "a" = "" { 
+				TYPE :: "int" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "SUM" = "" { }
+					LEFT :: "10" = "Num" { }
+					RIGHT :: "12" = "Num" { }
+				 }
+			 }
+			DEF :: "b" = "" { 
+				TYPE :: "int" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "SUB" = "" { }
+					LEFT :: "30" = "Num" { }
+					RIGHT :: "10" = "Num" { }
+				 }
+			 }
+			DEF :: "c" = "" { 
+				TYPE :: "int" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "MUX" = "" { }
+					LEFT :: "30" = "Num" { }
+					RIGHT :: "2" = "Num" { }
+				 }
+			 }
+			DEF :: "d" = "" { 
+				TYPE :: "int" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "DIV" = "" { }
+					LEFT :: "30" = "Num" { }
+					RIGHT :: "2" = "Num" { }
+				 }
+			 }
+			DEF :: "e" = "" { 
+				TYPE :: "num" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "SUM" = "" { }
+					LEFT :: "1.5" = "Float" { }
+					RIGHT :: "0.5" = "Float" { }
+				 }
+			 }
+			DEF :: "f" = "" { 
+				TYPE :: "num" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "SUB" = "" { }
+					LEFT :: "1.5" = "Float" { }
+					RIGHT :: "0.5" = "Float" { }
+				 }
+			 }
+			DEF :: "g" = "" { 
+				TYPE :: "num" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "MUX" = "" { }
+					LEFT :: "1.5" = "Float" { }
+					RIGHT :: "2.0" = "Float" { }
+				 }
+			 }
+			DEF :: "h" = "" { 
+				TYPE :: "num" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "DIV" = "" { }
+					LEFT :: "1.5" = "Float" { }
+					RIGHT :: "0.5" = "Float" { }
+				 }
+			 }
+			DEF :: "i" = "" { 
+				TYPE :: "int" = "CONCRETE" { }
+				VALUE :: "" = "DIRECTOR" { 
+					MODE :: "INVERSE" = "" { }
+					VALUE :: "10" = "Num" { }
+				 }
+			 }
+			DEF :: "j" = "" { 
+				TYPE :: "int" = "CONCRETE" { }
+				VALUE :: "" = "DIRECTOR" { 
+					MODE :: "INVERSE" = "" { }
+					VALUE :: "@H10" = "Num" { }
+				 }
+			 }
+			DEF :: "k" = "" { 
+				TYPE :: "num" = "CONCRETE" { }
+				VALUE :: "" = "DIRECTOR" { 
+					MODE :: "INVERSE" = "" { }
+					VALUE :: "2.5" = "Float" { }
+				 }
+			 }
+			DEF :: "l" = "" { 
+				TYPE :: "num" = "CONCRETE" { }
+				VALUE :: "" = "DIRECTOR" { 
+					MODE :: "INVERSE" = "" { }
+					VALUE :: "@H2.5" = "Float" { }
+				 }
+			 }
+			DEF :: "tam1" = "" { 
+				TYPE :: "int" = "CONCRETE" { }
+				VALUE :: "getTamanho" = "FUNCT" { 
+					ARGUMENTS :: { 
+						ARGUMENT :: "Luan" = "Text" { }
+					 }
+				 }
+			 }
+			DEF :: "tam2" = "" { 
+				TYPE :: "int" = "CONCRETE" { }
+				VALUE :: "getTamanho" = "FUNCT" { 
+					ARGUMENTS :: { 
+						ARGUMENT :: "Oie meu nome é luan !" = "Text" { }
+					 }
+				 }
+			 }
+			DEF :: "c1" = "" { 
+				TYPE :: "string" = "CONCRETE" { }
+				VALUE :: "getChar" = "FUNCT" { 
+					ARGUMENTS :: { 
+						ARGUMENT :: "Luan" = "Text" { }
+						ARGUMENT :: "0" = "Num" { }
+					 }
+				 }
+			 }
+			DEF :: "c2" = "" { 
+				TYPE :: "string" = "CONCRETE" { }
+				VALUE :: "getChar" = "FUNCT" { 
+					ARGUMENTS :: { 
+						ARGUMENT :: "Luan" = "Text" { }
+						ARGUMENT :: "1" = "Num" { }
+					 }
+				 }
+			 }
+			DEF :: "c3" = "" { 
+				TYPE :: "string" = "CONCRETE" { }
+				VALUE :: "getChar" = "FUNCT" { 
+					ARGUMENTS :: { 
+						ARGUMENT :: "Luan" = "Text" { }
+						ARGUMENT :: "2" = "Num" { }
+					 }
+				 }
+			 }
+			DEF :: "c4" = "" { 
+				TYPE :: "string" = "CONCRETE" { }
+				VALUE :: "getChar" = "FUNCT" { 
+					ARGUMENTS :: { 
+						ARGUMENT :: "Luan" = "Text" { }
+						ARGUMENT :: "3" = "Num" { }
+					 }
+				 }
+			 }
+			LET :: "ll" = "" { 
+				VALUE :: "0" = "Num" { }
+			 }
+			LET :: "tt" = "" { 
+				VALUE :: "getTamanho" = "FUNCT" { 
+					ARGUMENTS :: { 
+						ARGUMENT :: "Luan" = "Text" { }
+					 }
+				 }
+			 }
+			DEF :: "e_menor" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "LESS" = "" { }
+					LEFT :: "2" = "Num" { }
+					RIGHT :: "5" = "Num" { }
+				 }
+			 }
+			DEF :: "e_igual" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "MATCH" = "" { }
+					LEFT :: "2" = "Num" { }
+					RIGHT :: "5" = "Num" { }
+				 }
+			 }
+			DEF :: "e_maior" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "GREAT" = "" { }
+					LEFT :: "2" = "Num" { }
+					RIGHT :: "5" = "Num" { }
+				 }
+			 }
+			DEF :: "e_diferente" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "UNMATCH" = "" { }
+					LEFT :: "2" = "Num" { }
+					RIGHT :: "5" = "Num" { }
+				 }
+			 }
+			DEF :: "i_menor" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "LESS" = "" { }
+					LEFT :: "5" = "Num" { }
+					RIGHT :: "2" = "Num" { }
+				 }
+			 }
+			DEF :: "i_igual" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "MATCH" = "" { }
+					LEFT :: "2" = "Num" { }
+					RIGHT :: "2" = "Num" { }
+				 }
+			 }
+			DEF :: "i_maior" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "GREAT" = "" { }
+					LEFT :: "5" = "Num" { }
+					RIGHT :: "2" = "Num" { }
+				 }
+			 }
+			DEF :: "i_diferente" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "UNMATCH" = "" { }
+					LEFT :: "5" = "Num" { }
+					RIGHT :: "2" = "Num" { }
+				 }
+			 }
+			DEF :: "o_diferente" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "UNMATCH" = "" { }
+					LEFT :: "5" = "Num" { }
+					RIGHT :: "5" = "Num" { }
+				 }
+			 }
+			DEF :: "o_igual" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "MATCH" = "" { }
+					LEFT :: "5" = "Num" { }
+					RIGHT :: "5" = "Num" { }
+				 }
+			 }
+			DEF :: "u_menor" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "LESS" = "" { }
+					LEFT :: "5.0" = "Float" { }
+					RIGHT :: "2.0" = "Float" { }
+				 }
+			 }
+			DEF :: "u_igual" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "MATCH" = "" { }
+					LEFT :: "2.0" = "Float" { }
+					RIGHT :: "2.0" = "Float" { }
+				 }
+			 }
+			DEF :: "u_maior" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "GREAT" = "" { }
+					LEFT :: "5.0" = "Float" { }
+					RIGHT :: "2.0" = "Float" { }
+				 }
+			 }
+			DEF :: "u_diferente" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "UNMATCH" = "" { }
+					LEFT :: "5.0" = "Float" { }
+					RIGHT :: "2.0" = "Float" { }
+				 }
+			 }
+			DEF :: "z_diferente" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "UNMATCH" = "" { }
+					LEFT :: "5.0" = "Float" { }
+					RIGHT :: "5.0" = "Float" { }
+				 }
+			 }
+			DEF :: "z_igual" = "" { 
+				TYPE :: "bool" = "CONCRETE" { }
+				VALUE :: "" = "OPERATOR" { 
+					MODE :: "MATCH" = "" { }
+					LEFT :: "5.0" = "Float" { }
+					RIGHT :: "5.0" = "Float" { }
+				 }
+			 }
+			DEF :: "int_1" = "" { 
+				TYPE :: "int" = "CONCRETE" { }
+				VALUE :: "int" = "FUNCT" { 
+					ARGUMENTS :: { 
+						ARGUMENT :: "2.5" = "Float" { }
+					 }
+				 }
+			 }
+			DEF :: "int_2" = "" { 
+				TYPE :: "int" = "CONCRETE" { }
+				VALUE :: "int" = "FUNCT" { 
+					ARGUMENTS :: { 
+						ARGUMENT :: "10" = "Num" { }
+					 }
+				 }
+			 }
+			DEF :: "num_1" = "" { 
+				TYPE :: "num" = "CONCRETE" { }
+				VALUE :: "num" = "FUNCT" { 
+					ARGUMENTS :: { 
+						ARGUMENT :: "2.5" = "Float" { }
+					 }
+				 }
+			 }
+			DEF :: "num_2" = "" { 
+				TYPE :: "num" = "CONCRETE" { }
+				VALUE :: "num" = "FUNCT" { 
+					ARGUMENTS :: { 
+						ARGUMENT :: "int_2" = "ID" { }
+					 }
+				 }
+			 }
+			DEF :: "gga" = "" { 
+				TYPE :: "string" = "CONCRETE" { }
+				VALUE :: "luan alves freitas" = "Text" { }
+			 }
+			DEF :: "a1" = "" { 
+				TYPE :: "string" = "CONCRETE" { }
+				VALUE :: "Meu " = "Text" { }
+			 }
+			DEF :: "a2" = "" { 
+				TYPE :: "string" = "CONCRETE" { }
+				VALUE :: "Nome" = "Text" { }
+			 }
+			DEF :: "a3" = "" { 
+				TYPE :: "string" = "CONCRETE" { }
+				VALUE :: "texto_unir" = "FUNCT" { 
+					ARGUMENTS :: { 
+						ARGUMENT :: "a1" = "ID" { }
+						ARGUMENT :: "a2" = "ID" { }
+					 }
+				 }
+			 }
+			INVOKE :: "__COMPILER__" = "SHOW_SCOPE" { 
+				EXIT :: "STACK" = "" { }
+				ARGUMENTS :: { }
+			 }
+		 }
+	 }
+	OPERATOR :: "SUM" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "int" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R5" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R6" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R7" = "ID" { }
+				MOV :: "0" = "Num" { }
+				OPE :: "ADD" = "" { 
+					RIGHT :: "R5" = "ID" { }
+					LEFT :: "R6" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R7" = "REG" { }
+			 }
+		 }
+	 }
+	OPERATOR :: "SUB" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "int" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R5" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R6" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R7" = "ID" { }
+				MOV :: "0" = "Num" { }
+				OPE :: "SUB" = "" { 
+					RIGHT :: "R5" = "ID" { }
+					LEFT :: "R6" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R7" = "REG" { }
+			 }
+		 }
+	 }
+	OPERATOR :: "MUX" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "int" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R5" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R6" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R7" = "ID" { }
+				MOV :: "0" = "Num" { }
+				OPE :: "MUX" = "" { 
+					RIGHT :: "R5" = "ID" { }
+					LEFT :: "R6" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R7" = "REG" { }
+			 }
+		 }
+	 }
+	DIRECTOR :: "INVERSE" = "" { 
+		VISIBILITY :: "ALL" = "" { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "int" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R5" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R6" = "ID" { }
+				MOV :: "0" = "Num" { }
+				OPE :: "MUX" = "" { 
+					RIGHT :: "R5" = "ID" { }
+					LEFT :: "@H1" = "Num" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R6" = "REG" { }
+			 }
+		 }
+	 }
+	OPERATOR :: "DIV" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "int" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R5" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R6" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R7" = "ID" { }
+				MOV :: "0" = "Num" { }
+				OPE :: "DIV" = "" { 
+					RIGHT :: "R5" = "ID" { }
+					LEFT :: "R6" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R7" = "REG" { }
+			 }
+		 }
+	 }
+	OPERATOR :: "SUM" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "num" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R9" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R10" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R11" = "ID" { }
+				MOV :: "0.0" = "Float" { }
+				OPE :: "SAX" = "" { 
+					RIGHT :: "R9" = "ID" { }
+					LEFT :: "R10" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R11" = "REG" { }
+			 }
+		 }
+	 }
+	OPERATOR :: "SUB" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "num" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R9" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R10" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R11" = "ID" { }
+				MOV :: "0.0" = "Float" { }
+				OPE :: "VEZ" = "" { 
+					RIGHT :: "R9" = "ID" { }
+					LEFT :: "R10" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R11" = "REG" { }
+			 }
+		 }
+	 }
+	OPERATOR :: "MUX" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "num" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R9" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R10" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R11" = "ID" { }
+				MOV :: "0.0" = "Float" { }
+				OPE :: "PUC" = "" { 
+					RIGHT :: "R9" = "ID" { }
+					LEFT :: "R10" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R11" = "REG" { }
+			 }
+		 }
+	 }
+	OPERATOR :: "DIV" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "num" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R9" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R10" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R11" = "ID" { }
+				MOV :: "0.0" = "Float" { }
+				OPE :: "INK" = "" { 
+					RIGHT :: "R9" = "ID" { }
+					LEFT :: "R10" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R11" = "REG" { }
+			 }
+		 }
+	 }
+	DIRECTOR :: "INVERSE" = "" { 
+		VISIBILITY :: "ALL" = "" { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "num" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R9" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R10" = "ID" { }
+				MOV :: "0.0" = "Float" { }
+				OPE :: "PUC" = "" { 
+					RIGHT :: "R9" = "ID" { }
+					LEFT :: "@H1.0" = "Float" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R10" = "REG" { }
+			 }
+		 }
+	 }
+	FUNCTION :: "getTamanho" = "" { 
+		VISIBILITY :: "ALL" = "" { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "string" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "int" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R13" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R5" = "ID" { }
+				MOV :: "0" = "Num" { }
+				SIZE :: "R13" = "ID" { }
+			 }
+			RETURN :: { 
+				VALUE :: "R5" = "REG" { }
+			 }
+		 }
+	 }
+	FUNCTION :: "texto_unir" = "" { 
+		VISIBILITY :: "ALL" = "" { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "string" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "string" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "int" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R13" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R14" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R13" = "ID" { }
+				APPEND :: "R14" = "ID" { }
+			 }
+			RETURN :: { 
+				VALUE :: "R13" = "REG" { }
+			 }
+		 }
+	 }
+	FUNCTION :: "getChar" = "" { 
+		VISIBILITY :: "ALL" = "" { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "string" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "string" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R13" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R5" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R14" = "ID" { }
+				MOV :: "" = "Text" { }
+				OPE :: "CHAR" = "" { 
+					RIGHT :: "R13" = "ID" { }
+					LEFT :: "R5" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R14" = "REG" { }
+			 }
+		 }
+	 }
+	OPERATOR :: "GREAT" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "bool" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R5" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R6" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R1" = "ID" { }
+				MOV :: "FALSE" = "ID" { }
+				OPE :: "GREAT" = "" { 
+					RIGHT :: "R5" = "ID" { }
+					LEFT :: "R6" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R1" = "REG" { }
+			 }
+		 }
+	 }
+	OPERATOR :: "LESS" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "bool" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R5" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R6" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R1" = "ID" { }
+				MOV :: "FALSE" = "ID" { }
+				OPE :: "LESS" = "" { 
+					RIGHT :: "R5" = "ID" { }
+					LEFT :: "R6" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R1" = "REG" { }
+			 }
+		 }
+	 }
+	OPERATOR :: "MATCH" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "bool" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R5" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R6" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R1" = "ID" { }
+				MOV :: "FALSE" = "ID" { }
+				OPE :: "EQUAL" = "" { 
+					RIGHT :: "R5" = "ID" { }
+					LEFT :: "R6" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R1" = "REG" { }
+			 }
+		 }
+	 }
+	OPERATOR :: "UNMATCH" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "bool" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R5" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R6" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R1" = "ID" { }
+				MOV :: "FALSE" = "ID" { }
+				OPE :: "DIFF" = "" { 
+					RIGHT :: "R5" = "ID" { }
+					LEFT :: "R6" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R1" = "REG" { }
+			 }
+		 }
+	 }
+	OPERATOR :: "GREAT" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "bool" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R9" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R10" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R1" = "ID" { }
+				MOV :: "FALSE" = "ID" { }
+				OPE :: "DROEN" = "" { 
+					RIGHT :: "R9" = "ID" { }
+					LEFT :: "R10" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R1" = "REG" { }
+			 }
+		 }
+	 }
+	OPERATOR :: "LESS" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "bool" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R9" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R10" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R1" = "ID" { }
+				MOV :: "FALSE" = "ID" { }
+				OPE :: "MOZZ" = "" { 
+					RIGHT :: "R9" = "ID" { }
+					LEFT :: "R10" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R1" = "REG" { }
+			 }
+		 }
+	 }
+	OPERATOR :: "MATCH" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "bool" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R9" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R10" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R1" = "ID" { }
+				MOV :: "FALSE" = "ID" { }
+				OPE :: "OPUAL" = "" { 
+					RIGHT :: "R9" = "ID" { }
+					LEFT :: "R10" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R1" = "REG" { }
+			 }
+		 }
+	 }
+	OPERATOR :: "UNMATCH" = "" { 
+		VISIBILITY :: { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+			ARGUMENT :: "b" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "bool" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R9" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			REG :: "R10" = "" { 
+				VALUE :: "b" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R1" = "ID" { }
+				MOV :: "FALSE" = "ID" { }
+				OPE :: "TOLL" = "" { 
+					RIGHT :: "R9" = "ID" { }
+					LEFT :: "R10" = "ID" { }
+				 }
+			 }
+			RETURN :: { 
+				VALUE :: "R1" = "REG" { }
+			 }
+		 }
+	 }
+	FUNCTION :: "int" = "" { 
+		VISIBILITY :: "ALL" = "" { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "int" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R9" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R5" = "ID" { }
+				MOV :: "0" = "Num" { }
+				INT :: "R9" = "ID" { }
+			 }
+			RETURN :: { 
+				VALUE :: "R5" = "REG" { }
+			 }
+		 }
+	 }
+	FUNCTION :: "int" = "" { 
+		VISIBILITY :: "ALL" = "" { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "int" = "CONCRETE" { }
+		BODY :: { 
+			RETURN :: { 
+				VALUE :: "a" = "ID" { }
+			 }
+		 }
+	 }
+	FUNCTION :: "num" = "" { 
+		VISIBILITY :: "ALL" = "" { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "int" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "num" = "CONCRETE" { }
+		BODY :: { 
+			REG :: "R5" = "" { 
+				VALUE :: "a" = "ID" { }
+			 }
+			PROC :: { 
+				SET :: "R9" = "ID" { }
+				MOV :: "0.0" = "Float" { }
+				REAL :: "R5" = "ID" { }
+			 }
+			RETURN :: { 
+				VALUE :: "R9" = "REG" { }
+			 }
+		 }
+	 }
+	FUNCTION :: "num" = "" { 
+		VISIBILITY :: "ALL" = "" { }
+		ARGUMENTS :: { 
+			ARGUMENT :: "a" = "VALUE" { 
+				TYPE :: "num" = "CONCRETE" { }
+			 }
+		 }
+		TYPE :: "num" = "CONCRETE" { }
+		BODY :: { 
+			RETURN :: { 
+				VALUE :: "a" = "ID" { }
+			 }
+		 }
+	 }
+ }

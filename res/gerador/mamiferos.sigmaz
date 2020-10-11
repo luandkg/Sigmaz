@@ -1,0 +1,15 @@
+import "organismos.sigmaz";
+package Mamiferos {
+	refer Vida;
+	struct Mamifero with Organismo {
+		init Mamifero (eNome:string,eIdade:int) -> Organismo (eNome,eIdade) {} 
+	}
+
+	struct Gato with Mamifero {
+		init Gato (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) {} 
+	}
+
+	struct Lobo with Mamifero {
+		init Lobo (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) {} 
+	}
+}

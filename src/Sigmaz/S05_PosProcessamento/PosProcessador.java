@@ -1,10 +1,8 @@
 package Sigmaz.S05_PosProcessamento;
 
-import Sigmaz.S06_Executor.RunTime;
-
-import java.io.File;
 import java.util.ArrayList;
 
+import Sigmaz.S00_Utilitarios.Mensageiro;
 import Sigmaz.S05_PosProcessamento.Processadores.*;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S00_Utilitarios.UUID;
@@ -49,10 +47,6 @@ public class PosProcessador {
         }
 
         if (tudoOK()) {
-            Tipador mTipador = new Tipador(this);
-            mTipador.init(mASTS);
-        }
-        if (tudoOK()) {
             Castificador mCastificador = new Castificador(this);
             mCastificador.init(mASTS);
         }
@@ -77,6 +71,11 @@ public class PosProcessador {
             mEstagiador.init(mASTS);
         }
 
+        if (tudoOK()) {
+            Tipador mTipador = new Tipador(this);
+            mTipador.init(mASTS);
+        }
+
 
         if (tudoOK()) {
             Referenciador mReferenciador = new Referenciador(this);
@@ -84,10 +83,17 @@ public class PosProcessador {
         }
 
         if (tudoOK()) {
+            Argumentador mArgumentador = new Argumentador(this);
+            mArgumentador.init(mASTS);
+        }
+
+        if (tudoOK()) {
             Opcionador mOpcionador = new Opcionador(this);
             mOpcionador.init(mASTS);
 
         }
+
+
         if (tudoOK()) {
             Valorador mValorador = new Valorador(this);
             mValorador.init(mASTS,mRequisicoes);
@@ -125,30 +131,24 @@ public class PosProcessador {
             for (String eAutor : eCabecalho.getAutores()) {
 
                 AST tmpA = ma.criarBranch("AUTHOR");
-                tmpA.setNome(eAutor);
-                tmpA.setValor("ID");
+                tmpA.setValor(eAutor);
 
             }
 
             AST AVersao = mCabecalho.criarBranch("VERSION");
-            AVersao.setNome(eCabecalho.getVersao());
-            AVersao.setValor("ID");
+            AVersao.setValor(eCabecalho.getVersao());
 
             AST AC = mCabecalho.criarBranch("COMPANY");
-            AC.setNome(eCabecalho.getCompanhia());
-            AC.setValor("ID");
+            AC.setValor(eCabecalho.getCompanhia());
 
             AST ePrivado = mCabecalho.criarBranch("PRIVATE");
-            ePrivado.setNome(mUUID.getUUID());
-            ePrivado.setValor("ID");
+            ePrivado.setValor(mUUID.getUUID());
 
             AST ePublico = mCabecalho.criarBranch("PUBLIC");
-            ePublico.setNome(mUUID.getUUID());
-            ePublico.setValor("ID");
+            ePublico.setValor(mUUID.getUUID());
 
             AST eShared = mCabecalho.criarBranch("SHARED");
-            eShared.setNome(mUUID.getUUID());
-            eShared.setValor("ID");
+            eShared.setValor(mUUID.getUUID());
 
             AST eDevelopment = mCabecalho.criarBranch("DEVELOPMENT");
 

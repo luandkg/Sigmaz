@@ -1,7 +1,7 @@
 package Sigmaz.S04_Compilador.Fluxo;
 
 import Sigmaz.S04_Compilador.CompilerUnit;
-import Sigmaz.S06_Executor.Item;
+import Sigmaz.S07_Executor.Item;
 import Sigmaz.S03_Parser.Token;
 import Sigmaz.S03_Parser.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;

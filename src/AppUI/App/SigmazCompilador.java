@@ -32,7 +32,6 @@ public class SigmazCompilador extends Cena {
     private String mETAPA_PRE_PROCESSAMENTO;
     private String mETAPA_LEXER;
     private String mETAPA_COMPILER;
-    private String mETAPA_ANALISE;
     private String mETAPA_POS_PROCESSAMENTO;
     private String mETAPA_MONTAGEM;
 
@@ -57,7 +56,6 @@ public class SigmazCompilador extends Cena {
         mETAPA_PRE_PROCESSAMENTO = mSTATUS_NAO;
         mETAPA_LEXER = mSTATUS_NAO;
         mETAPA_COMPILER = mSTATUS_NAO;
-        mETAPA_ANALISE = mSTATUS_NAO;
         mETAPA_POS_PROCESSAMENTO = mSTATUS_NAO;
         mETAPA_MONTAGEM = mSTATUS_NAO;
 
@@ -90,7 +88,6 @@ public class SigmazCompilador extends Cena {
             mETAPA_PRE_PROCESSAMENTO = SigmazC.getPreProcessamento();
             mETAPA_LEXER = SigmazC.getLexer();
             mETAPA_COMPILER = SigmazC.getCompiler();
-            mETAPA_ANALISE = SigmazC.getAnalise();
             mETAPA_POS_PROCESSAMENTO = SigmazC.getPosProcessamento();
             mETAPA_MONTAGEM = SigmazC.getMontagem();
 
@@ -131,7 +128,6 @@ public class SigmazCompilador extends Cena {
                     mETAPA_PRE_PROCESSAMENTO = SigmazC.getPreProcessamento();
                     mETAPA_LEXER = SigmazC.getLexer();
                     mETAPA_COMPILER = SigmazC.getCompiler();
-                    mETAPA_ANALISE = SigmazC.getAnalise();
                     mETAPA_POS_PROCESSAMENTO = SigmazC.getPosProcessamento();
                     mETAPA_MONTAGEM = SigmazC.getMontagem();
 
@@ -163,9 +159,8 @@ public class SigmazCompilador extends Cena {
         TextoPequeno.EscreveNegrito(g, "PRE PROCESAMENTO : " + mETAPA_PRE_PROCESSAMENTO, 20, 200);
         TextoPequeno.EscreveNegrito(g, "LEXER : " + mETAPA_LEXER, 20, 250);
         TextoPequeno.EscreveNegrito(g, "COMPILER : " + mETAPA_COMPILER, 20, 300);
-        TextoPequeno.EscreveNegrito(g, "ANALISE : " + mETAPA_ANALISE, 20, 350);
-        TextoPequeno.EscreveNegrito(g, "POS PROCESSAMENTO : " + mETAPA_POS_PROCESSAMENTO, 20, 400);
-        TextoPequeno.EscreveNegrito(g, "MONTAGEM : " + mETAPA_MONTAGEM, 20, 450);
+        TextoPequeno.EscreveNegrito(g, "POS PROCESSAMENTO : " + mETAPA_POS_PROCESSAMENTO, 20, 350);
+        TextoPequeno.EscreveNegrito(g, "MONTAGEM : " + mETAPA_MONTAGEM, 20, 400);
 
 
         barra(g, 0, mETAPA_PRE_PROCESSAMENTO);
@@ -174,11 +169,9 @@ public class SigmazCompilador extends Cena {
 
         barra(g, 2, mETAPA_COMPILER);
 
-        barra(g, 3, mETAPA_ANALISE);
+        barra(g, 3, mETAPA_POS_PROCESSAMENTO);
 
-        barra(g, 4, mETAPA_POS_PROCESSAMENTO);
-
-        barra(g, 5, mETAPA_MONTAGEM);
+        barra(g, 4, mETAPA_MONTAGEM);
 
 
     }
@@ -186,7 +179,7 @@ public class SigmazCompilador extends Cena {
     public void barra(Graphics g, int n, String status) {
 
         int sep = 30;
-        int ini = 50;
+        int ini = 100;
         int tam = 80;
 
         if (status.contains("SUCESSO")) {

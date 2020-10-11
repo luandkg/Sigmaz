@@ -39,39 +39,39 @@ public class AppSigmaz {
         String mInternos = "res/internos/";
         String mLocal = "res/";
 
+        String mLocalGerador = "res/gerador/";
 
+        int ARQUIVO = 90;
 
-        int ARQUIVO = 44;
+        switch (Fases.COMPILAR_E_EXECUTAR_DETALHADO) {
 
-        switch (Fases.TESTES) {
-
-            case MONTAR_PLANO_COMPILACAO -> AppUtils.PLANO_COMPILACAO(ARQUIVO, mArquivos, mLOCAL_PLANOS,mLocalLibs);
+            case MONTAR_PLANO_COMPILACAO -> AppUtils.PLANO_COMPILACAO(ARQUIVO, mArquivos, mLOCAL_PLANOS, mLocalLibs);
 
             case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
-            case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos, mCompilado,mLocalLibs);
-            case INTERNO -> AppUtils.INTERNO(ARQUIVO, mArquivos, mCompilado,mLocalLibs, mInternos);
+            case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos, mCompilado, mLocalLibs);
+            case INTERNO -> AppUtils.INTERNO(ARQUIVO, mArquivos, mCompilado, mLocalLibs, mInternos);
 
 
-            case COMPILAR_BIBLIOTECA -> AppUtils.COMPILAR_BIBLIOTECA(ARQUIVO, mArquivos, mCompilado,mLocalLibs);
-            case COMPILAR_EXECUTAVEL -> AppUtils.COMPILAR_EXECUTAVEL(ARQUIVO, mArquivos, mCompilado,mLocalLibs);
+            case COMPILAR_BIBLIOTECA -> AppUtils.COMPILAR_BIBLIOTECA(ARQUIVO, mArquivos, mCompilado, mLocalLibs);
+            case COMPILAR_EXECUTAVEL -> AppUtils.COMPILAR_EXECUTAVEL(ARQUIVO, mArquivos, mCompilado, mLocalLibs);
 
-            case COMPILAR_SIMPLES -> AppUtils.COMPILAR_SIMPLES(ARQUIVO, mArquivos, mCompilado,mLocalLibs);
-            case COMPILAR_DETALHADO -> AppUtils.COMPILAR_DETALHADO(ARQUIVO, mArquivos, mCompilado,mLocalLibs);
+            case COMPILAR_E_EXECUTAR_SIMPLES -> AppUtils.COMPILAR_SIMPLES(ARQUIVO, mArquivos, mCompilado, mLocalLibs);
+            case COMPILAR_E_EXECUTAR_DETALHADO -> AppUtils.COMPILAR_DETALHADO(ARQUIVO, mArquivos, mCompilado, mLocalLibs);
 
-            case EXECUTAR -> AppUtils.EXECUTAR(mCompilado,mLocalLibs);
+            case EXECUTAR -> AppUtils.EXECUTAR(mCompilado, mLocalLibs);
 
-            case TESTES -> AppUtils.TESTE_GERAL(mArquivos, mCompilado, mLocal,mLocalLibs);
+            case TESTES -> AppUtils.TESTE_GERAL(mArquivos, mCompilado, mLocal, mLocalLibs);
 
             case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);
-            case SYNTAX_HIGHLIGHT -> AppUtils.SYNTAX_HIGHLIGHT(ARQUIVO, mArquivos,mSyntax_HighLights);
+            case SYNTAX_HIGHLIGHT -> AppUtils.SYNTAX_HIGHLIGHT(ARQUIVO, mArquivos, mSyntax_HighLights);
 
             case IDENTAR_TUDO -> AppUtils.IDENTAR_LOTE("ARQUIVOS", mArquivos);
             case IDENTAR_BIBLIOTECAS -> AppUtils.IDENTAR_LOTE("BIBLIOTECAS", mBibliotecas);
 
-            case MONTAR_BIBLIOTECAS -> AppUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad,mLocalLibs);
+            case MONTAR_BIBLIOTECAS -> AppUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad, mLocalLibs);
 
-            case INTELLISENSE -> AppUtils.INTELISENSE(ARQUIVO, mArquivos, mCompilado,mLocalLibs, mIntellisense);
-            case INTELLISENSE_BIBLIOTECA -> AppUtils.INTELISENSE_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad,mLocalLibs, mIntellisense);
+            case INTELLISENSE -> AppUtils.INTELISENSE(ARQUIVO, mArquivos, mCompilado, mLocalLibs, mIntellisense);
+            case INTELLISENSE_BIBLIOTECA -> AppUtils.INTELISENSE_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad, mLocalLibs, mIntellisense);
 
             case LEXER -> AppUtils.LEXER(ARQUIVO, mArquivos);
             case TODO -> AppUtils.TODO(ARQUIVO, mArquivos);
@@ -80,7 +80,10 @@ public class AppSigmaz {
             case MAKE_LEXER -> AppMake.MAKE_LEXER(ARQUIVO, mMakes);
             case MAKE_EXECUTAR -> AppMake.MAKE_EXECUTAR(ARQUIVO, mMakes);
 
-            case APP ->APP();
+            case GERADOR_DETALHADO -> AppUtils.GERADOR_DETALHADO(mLocalGerador, mCompilado, mLocalLibs);
+            case GERADOR_INTELLISENSE -> AppUtils.GERADOR_INTELISENSE(mLocalGerador, mCompilado, mLocalLibs, mIntellisense);
+
+            case APP -> APP();
 
             default -> System.out.println("\t - Fases : Desconhecida !");
         }

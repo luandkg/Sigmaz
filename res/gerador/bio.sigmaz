@@ -1,0 +1,55 @@
+import "operadores.sigmaz";
+import "mamiferos.sigmaz";
+
+define HIPER : int = 2020;
+define SUPER : int = 5050;
+
+refer Mamiferos;
+
+call iniciar -> { 
+	
+	s_1();
+	s_2();
+	def ALFA : int = f_1();
+	def BETA : int = p_1(10);
+	def Gatinho_Ana : Gato = init Gato('Ana',5);
+	def Lobinho_Fuc : Lobo = init Lobo('Fuc',12);
+	
+	def Lobinho_Fuc_idade : int = Lobinho_Fuc.getIdade();
+	
+	Gatinho_Ana.envelhecer(3);
+	def Gatinho_Ana_idade : int = Gatinho_Ana.getIdade();
+
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
+}
+
+act s_1 ( ) { } 
+act s_2 ( ) { } 
+act s_3 ( ) { } 
+act s_4 ( ) { } 
+act s_5 ( ) { } 
+act s_6 ( ) { } 
+act s_7 ( ) { } 
+act s_8 ( ) { } 
+act s_9 ( ) { } 
+
+func f_1 ( ) : int { return 12 ++ 1;  } 
+func f_2 ( ) : int { return 12 ++ 2;  } 
+func f_3 ( ) : int { return 12 ++ 3;  } 
+func f_4 ( ) : int { return 12 ++ 4;  } 
+func f_5 ( ) : int { return 12 ++ 5;  } 
+func f_6 ( ) : int { return 12 ++ 6;  } 
+func f_7 ( ) : int { return 12 ++ 7;  } 
+func f_8 ( ) : int { return 12 ++ 8;  } 
+func f_9 ( ) : int { return 12 ++ 9;  } 
+
+func p_1 ( a : int ) : int { return 12 ++ ( 1 ++ a );  } 
+func p_2 ( a : int ) : int { return 12 ++ ( 2 ++ a );  } 
+func p_3 ( a : int ) : int { return 12 ++ ( 3 ++ a );  } 
+func p_4 ( a : int ) : int { return 12 ++ ( 4 ++ a );  } 
+func p_5 ( a : int ) : int { return 12 ++ ( 5 ++ a );  } 
+func p_6 ( a : int ) : int { return 12 ++ ( 6 ++ a );  } 
+func p_7 ( a : int ) : int { return 12 ++ ( 7 ++ a );  } 
+func p_8 ( a : int ) : int { return 12 ++ ( 8 ++ a );  } 
+func p_9 ( a : int ) : int { return 12 ++ ( 9 ++ a );  } 
