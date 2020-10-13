@@ -30,13 +30,3 @@ func diferente ( a : bool , b : bool ) : bool {
 	invoke math -> operator_unmatch ( a , b ) :: c;
 	return c;
 }
-operator == ( a : bool , b : bool ) : bool {
-	def c : bool;
-	invoke math -> operator_match ( a , b ) :: c;
-	return c;
-}
-operator !! ( a : bool , b : bool ) : bool {
-	def c : bool;
-	invoke math -> operator_unmatch ( a , b ) :: c;
-	return c;
-}

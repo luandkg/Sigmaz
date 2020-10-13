@@ -3,6 +3,7 @@ package AppSigmaz;
 import AppUI.App.SigmazCompilador;
 import AppUI.Mottum.Windows;
 import OA.*;
+import Sigmaz.S08_Ferramentas.Gerador;
 
 import java.awt.*;
 import java.io.File;
@@ -14,8 +15,8 @@ public class AppSigmaz {
     public static void main(String[] args) {
 
 
-        //  Gerador G = new Gerador();
-        // G.gerarPrint("res/libs/terminal.sigmaz");
+          //Gerador G = new Gerador();
+       // G.gerarPrint("res/libs/terminal.sigmaz");
 
         AUTO();
 
@@ -41,7 +42,7 @@ public class AppSigmaz {
 
         String mLocalGerador = "res/gerador/";
 
-        int ARQUIVO = 90;
+        int ARQUIVO = 32;
 
         switch (Fases.COMPILAR_E_EXECUTAR_DETALHADO) {
 

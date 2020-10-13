@@ -60,6 +60,13 @@ public class InvokeCasting {
 
             String p1 = mRun_Invoke.getNum(ASTArgumentos, 1);
             mEscopo.setDefinido(eSaida, p1);
+
+        } else if (eAcao.contentEquals("int_to_string")) {
+
+            String p1 = mRun_Invoke.getInt(ASTArgumentos, 1);
+            mEscopo.setDefinido(eSaida, p1);
+
+
         } else if (eAcao.contentEquals("bool_to_string")) {
 
             String p1 = mRun_Invoke.getBool(ASTArgumentos, 1);

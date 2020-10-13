@@ -1,23 +1,13 @@
 call iniciar -> pular ( );
 cast pos {
-	getter a : num -> {
-		if ( menor ( a , 0 ) ) -> {
-			exception "Nao e possivel obter valores negativos !";
-		}
 
-	}
 	getter a2 : int -> {
 		if ( menor ( a2 , 0 ) ) -> {
 			exception "Nao e possivel obter valores negativos !";
 		}
 
 	}
-	setter b : num -> {
-		if ( menor ( b , 0 ) ) -> {
-			exception "Nao e possivel obter valores negativos !";
-		}
 
-	}
 	setter b : int -> {
 		if ( menor ( b , 0 ) ) -> {
 			exception "Nao e possivel obter valores negativos !";
@@ -27,24 +17,14 @@ cast pos {
 	
 }
 cast neg {
-	getter a : num -> {
-		if ( maior ( a , 0 ) ) -> {
-			exception "Nao e possivel obter valores positivos !";
-		}
 
-	}
 	getter a2 : int -> {
 		if ( maior ( a2 , 0 ) ) -> {
 			exception "Nao e possivel obter valores positivos !";
 		}
 
 	}
-	setter b : num -> {
-		if ( maior ( b , 0 ) ) -> {
-			exception "Nao e possivel obter valores positivos !";
-		}
 
-	}
 	setter b : int -> {
 		if ( maior ( b , 0 ) ) -> {
 			exception "Nao e possivel obter valores positivos !";
@@ -53,101 +33,55 @@ cast neg {
 	}
 	
 }
+
 func menor ( a : int , b : int ) : bool {
-	def c : bool;
-	invoke math -> operator_less_int ( a , b ) :: c;
-	return c;
-}
-func menor ( a : num , b : int ) : bool {
-	def c : bool;
-	def a1 : int = int ( a );
-	invoke math -> operator_less_int ( a1 , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 LESS R6;
+
+     }
+
+	return reg @R1;
 }
 func maior ( a : int , b : int ) : bool {
-	def c : bool;
-	invoke math -> operator_great_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 GREAT R6;
+
+     }
+
+	return reg @R1;
 }
-func menor ( a : num , b : num ) : bool {
-	def c : bool;
-	invoke math -> operator_less_num ( a , b ) :: c;
-	return c;
-}
-func maior ( a : num , b : num ) : bool {
-	def c : bool;
-	invoke math -> operator_great_num ( a , b ) :: c;
-	return c;
-}
-func maior ( a : num , b : int ) : bool {
-	def c : bool;
-	def a1 : int = int ( a );
-	invoke math -> operator_great_int ( a1 , b ) :: c;
-	return c;
-}
-operator == ( a : pos , b : pos ) : bool {
-	def c : bool;
-	def c1 : num = a;
-	def c2 : num = b;
-	invoke math -> operator_equal_num ( c1 , c2 ) :: c;
-	return c;
-}
-operator !! ( a : pos , b : pos ) : bool {
-	def c : bool;
-	def c1 : num = a;
-	def c2 : num = b;
-	invoke math -> operator_not_num ( c1 , c2 ) :: c;
-	return c;
-}
-operator == ( a : num , b : num ) : bool {
-	def c : bool;
-	invoke math -> operator_equal_num ( a , b ) :: c;
-	return c;
-}
-func int ( a : int ) : int {
-	return a;
-}
-func int ( a : num ) : int {
-	def b : int;
-	invoke math -> operator_num_to_int ( a ) :: b;
-	return b;
-}
-func num ( a : int ) : num {
-	def b : num;
-	invoke math -> operator_int_to_num ( a ) :: b;
-	return b;
-}
-func somar ( a : int , b : num ) : num {
-	def c : num;
-	def x : num = num ( a );
-	invoke math -> operator_sum_num ( x , b ) :: c;
-	return c;
-}
-func somar ( a : num , b : int ) : num {
-	def c : num;
-	def x : num = num ( b );
-	invoke math -> operator_sum_num ( a , x ) :: c;
-	return c;
-}
+
+
 
 act pular ( ) {
 	def P1 : pos = 13;
-	def v : num = P1;
+	def v : int = P1;
 	def P2 : pos = 40;
 	def igual : bool = P1 == P2;
 	def diferente : bool = P1 !! P2;
 	def N1 : neg = -13;
-	def v2 : num = N1;
+	def v2 : int = N1;
 	def P3 : pos = positivar ( P1 , pos ( 5 ) );
-	def v3 : num = num ( P3 );
-	def ii : bool = num ( pos ( 0 ) ) == num ( neg ( 0 ) );
+	def v3 : int = int ( P3 );
+	def ii : bool = int ( pos ( 0 ) ) == int ( neg ( 0 ) );
 	def iMais5 : int = 5;
 	def iMenos : int = -5;
 	def pos_int : pos = iMais5;
 	def neg_int : neg = iMenos;
 	def int_pos : int = pos_int;
 	
-	# def int_neg : int = neg_int;
 	def ipos : pos = int ( 5 );
 	def ineg : neg = int ( -5 );
 	def pint : int = pos ( 2 );
@@ -155,10 +89,55 @@ act pular ( ) {
 	def nn : neg = neg ( -2 );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
+
 func positivar ( p1 : pos , p2 : pos ) : pos {
 	p1 = p2;
 	p1 = 5;
-	
-	#invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
 	return p1;
+}
+
+operator == (a:pos,b:pos) : bool {
+    def a1 : int = a;
+    def b1 : int = b;
+    return a1 == b1;
+}
+
+operator !! (a:pos,b:pos) : bool {
+    def a1 : int = a;
+    def b1 : int = b;
+    return a1 !! b1;
+}
+
+
+operator == ( a : int , b : int ) : bool {
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 EQUAL R6;
+
+     }
+
+	return reg @R1;
+}
+operator !! ( a : int , b : int ) : bool {
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 DIFF R6;
+
+     }
+
+	return reg @R1;
+}
+
+func int ( a : int ) : int {
+	return a;
 }

@@ -30,6 +30,17 @@ public class Processador {
 
     private String mR13;
     private String mR14;
+    private String mR15;
+    private String mR16;
+
+    private String mR17;
+    private String mR18;
+
+    private String mR19;
+    private String mR20;
+
+    private String mR21;
+    private String mR22;
 
     private ArrayList<String> mRegistradores;
 
@@ -38,6 +49,9 @@ public class Processador {
     private ArrayList<String> mInteiros;
     private ArrayList<String> mReais;
     private ArrayList<String> mTextos;
+    private ArrayList<String> mCasts;
+    private ArrayList<String> mStages;
+    private ArrayList<String> mStructs;
 
     private String mApontando;
 
@@ -56,6 +70,9 @@ public class Processador {
         mInteiros = new ArrayList<String>();
         mReais = new ArrayList<String>();
         mTextos = new ArrayList<String>();
+        mCasts = new ArrayList<String>();
+        mStages = new ArrayList<String>();
+        mStructs = new ArrayList<String>();
 
 
         for (int i = 0; i < 20; i++) {
@@ -74,9 +91,18 @@ public class Processador {
             mReais.add("R" + i);
         }
 
-        mTextos.add("R13");
-        mTextos.add("R14");
+        for (int i = 13; i < 17; i++) {
+            mTextos.add("R" + i);
+        }
 
+        mCasts.add("R17");
+        mCasts.add("R18");
+
+        mStages.add("R19");
+        mStages.add("R20");
+
+        mStructs.add("R21");
+        mStructs.add("R22");
     }
 
 
@@ -104,6 +130,17 @@ public class Processador {
 
         mR13 = "";
         mR14 = "";
+        mR15 = "";
+        mR16 = "";
+
+        mR17 = "";
+        mR18 = "";
+
+        mR19 = "";
+        mR20 = "";
+
+        mR21 = "";
+        mR22 = "";
 
     }
 
@@ -406,14 +443,57 @@ public class Processador {
 
             if (eRegistrador.contentEquals("R13")) {
                 mR13 = eConteudo;
-            } else if (eRegistrador.contentEquals("R14")) {
+            }else if (eRegistrador.contentEquals("R14")) {
                 mR14 = eConteudo;
+            }else if (eRegistrador.contentEquals("R15")) {
+                mR15 = eConteudo;
+            }else if (eRegistrador.contentEquals("R16")) {
+                mR16 = eConteudo;
             } else {
                 mRunTime.errar(mLocal, "O registrador " + eRegistrador + " nao pode receber esse conteudo : " + eConteudo);
             }
 
         } else {
             mRunTime.errar(mLocal, "O registrador " + eRegistrador + " nao pode receber conteudo do tipo texto : " + eConteudo);
+        }
+    }
+
+    public void aplicar_cast(String eRegistrador, String eConteudo) {
+
+        if (mCasts.contains(eRegistrador)) {
+
+
+            if (eRegistrador.contentEquals("R17")) {
+                mR17 = eConteudo;
+            }else if (eRegistrador.contentEquals("R18")) {
+                mR18 = eConteudo;
+
+            } else {
+                mRunTime.errar(mLocal, "O registrador " + eRegistrador + " nao pode receber esse conteudo : " + eConteudo);
+            }
+
+        } else {
+            mRunTime.errar(mLocal, "O registrador " + eRegistrador + " nao pode receber conteudo do tipo cast : " + eConteudo);
+        }
+    }
+
+
+    public void aplicar_stage(String eRegistrador, String eConteudo) {
+
+        if (mStages.contains(eRegistrador)) {
+
+
+            if (eRegistrador.contentEquals("R19")) {
+                mR19 = eConteudo;
+            }else if (eRegistrador.contentEquals("R20")) {
+                mR20 = eConteudo;
+
+            } else {
+                mRunTime.errar(mLocal, "O registrador " + eRegistrador + " nao pode receber esse conteudo : " + eConteudo);
+            }
+
+        } else {
+            mRunTime.errar(mLocal, "O registrador " + eRegistrador + " nao pode receber conteudo do tipo stage : " + eConteudo);
         }
     }
 
@@ -483,9 +563,38 @@ public class Processador {
                     mRegistrado.atribuir(String.valueOf(mR13), "Texto");
                 } else if (eRegistrador.contentEquals("R14")) {
                     mRegistrado.atribuir(String.valueOf(mR14), "Texto");
+                } else if (eRegistrador.contentEquals("R15")) {
+                    mRegistrado.atribuir(String.valueOf(mR15), "Texto");
+                } else if (eRegistrador.contentEquals("R16")) {
+                    mRegistrado.atribuir(String.valueOf(mR16), "Texto");
                 } else {
                     mRunTime.errar(mLocal, "registrador Real Desconhecido : " + eRegistrador);
                 }
+
+            } else if (mCasts.contains(eRegistrador)) {
+
+                if (eRegistrador.contentEquals("R17")) {
+                    mRegistrado.atribuir(String.valueOf(mR17), "Cast");
+                } else if (eRegistrador.contentEquals("R18")) {
+                    mRegistrado.atribuir(String.valueOf(mR18), "Cast");
+                }
+
+            } else if (mStages.contains(eRegistrador)) {
+
+                if (eRegistrador.contentEquals("R19")) {
+                    mRegistrado.atribuir(String.valueOf(mR19), "Stage");
+                } else if (eRegistrador.contentEquals("R20")) {
+                    mRegistrado.atribuir(String.valueOf(mR20), "Stage");
+                }
+
+            } else if (mStructs.contains(eRegistrador)) {
+
+                if (eRegistrador.contentEquals("R21")) {
+                    mRegistrado.atribuir(String.valueOf(mR21), "Struct");
+                } else if (eRegistrador.contentEquals("R22")) {
+                    mRegistrado.atribuir(String.valueOf(mR22), "Struct");
+                }
+
 
             } else {
                 mRunTime.errar(mLocal, "registrador Desconhecido : " + eRegistrador);

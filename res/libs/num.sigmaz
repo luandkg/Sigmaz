@@ -3,125 +3,299 @@
 func num ( a : num ) : num {
 	return a;
 }
+
+
 operator ++ ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sum_num ( a , b ) :: c;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 SAX R10;
+
+     }
+
+	return reg @R11;
 }
 operator -- ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sub_num ( a , b ) :: c;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 VEZ R10;
+
+     }
+
+	return reg @R11;
 }
 operator ** ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_mux_num ( a , b ) :: c;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 PUC R10;
+
+     }
+
+	return reg @R11;
 }
 operator // ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_div_num ( a , b ) :: c;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 INK R10;
+
+     }
+
+	return reg @R11;
 }
 operator == ( a : num , b : num ) : bool {
-	def c : bool;
-	def c1 : num = a;
-	def c2 : num = b;
-	invoke math -> operator_equal_num ( c1 , c2 ) :: c;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R9 OPUAL R10;
+
+     }
+
+	return reg @R1;
 }
 operator !! ( a : num , b : num ) : bool {
-	def c : bool;
-	def c1 : num = a;
-	def c2 : num = b;
-	invoke math -> operator_not_num ( c1 , c2 ) :: c;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R9 TOLL R10;
+
+     }
+
+	return reg @R1;
 }
 director ! ( a : num ) : num {
-	def c : num;
-	invoke math -> director_inverse_num ( a ) :: c;
-	return c;
+	reg @R9 -> a;
+
+     PROC -> {
+
+        SET R10;
+            MOV 0.0;
+            OPE R9 PUC -1.0;
+
+     }
+
+	return reg @R10;
 }
 func somar ( a : num , b : num ) : num {
-	def c1 : num = null;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_sum_num ( a1 , b1 ) :: c1;
-	def c : num = c1;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 SAX R10;
+
+     }
+
+	return reg @R11;
 }
 func subtrair ( a : num , b : num ) : num {
-	def c1 : num = null;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_sub_num ( a1 , b1 ) :: c1;
-	def c : num = c1;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 VEZ R10;
+
+     }
+
+	return reg @R11;
 }
 func multiplicar ( a : num , b : num ) : num {
-	def c1 : num = null;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_mux_num ( a1 , b1 ) :: c1;
-	def c : num = c1;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 PUC R10;
+
+     }
+
+	return reg @R11;
 }
 func dividir ( a : num , b : num ) : num {
-	def c1 : num = null;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_div_num ( a1 , b1 ) :: c1;
-	def c : num = c1;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 INK R10;
+
+     }
+
+	return reg @R11;
 }
 func resto ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_mod_num ( a , b ) :: c;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 DUM R10;
+
+     }
+
+	return reg @R11;
 }
 func menor ( a : num , b : num ) : bool {
-	def c : bool;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_less_num ( a1 , b1 ) :: c;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R9 MOZZ R10;
+
+     }
+
+	return reg @R1;
 }
 func maior ( a : num , b : num ) : bool {
-	def c : bool;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_great_num ( a1 , b1 ) :: c;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R9 DROEN R10;
+
+     }
+
+	return reg @R1;
 }
 func menor_igual ( a : num , b : num ) : bool {
-	def c1 : bool = false;
-	def c2 : bool = false;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_less_num ( a1 , b1 ) :: c1;
-	invoke math -> operator_equal_num ( a1 , b1 ) :: c2;
-	return operador_ou ( c1 , c2 );
+    def ret : bool = false;
+
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R9 MOZZ R10;
+
+     }
+
+	def e_menor : bool =  reg @R1;
+
+			reg @R9 -> a;
+            reg @R10 -> b;
+
+             PROC -> {
+
+                SET R1;
+                    MOV FALSE;
+                    OPE R9 OPUAL R10;
+
+             }
+
+        def e_igual : bool =  reg @R1;
+
+	if (e_menor) -> { ret = true; }
+    if (e_igual) -> { ret = true; }
+
+    return ret;
+
 }
 func maior_igual ( a : num , b : num ) : bool {
-	def c1 : bool = false;
-	def c2 : bool = false;
-	def a1 : num = a;
-	def b1 : num = b;
-	invoke math -> operator_great_num ( a1 , b1 ) :: c1;
-	invoke math -> operator_equal_num ( a1 , b1 ) :: c2;
-	return operador_ou ( c1 , c2 );
+
+    def ret : bool = false;
+
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R9 DROEN R10;
+
+     }
+
+	def e_maior : bool =  reg @R1;
+
+		reg @R9 -> a;
+        reg @R10 -> b;
+
+         PROC -> {
+
+            SET R1;
+                MOV FALSE;
+                OPE R9 OPUAL R10;
+
+         }
+
+    def e_igual : bool =  reg @R1;
+
+    	if (e_maior) -> { ret = true; }
+        if (e_igual) -> { ret = true; }
+
+        return ret;
+
 }
 func igual ( a : num , b : num ) : bool {
-	def a1 : num = a;
-	def b1 : num = b;
-	def c : bool;
-	invoke math -> operator_equal_num ( a1 , b1 ) :: c;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R9 OPUAL R10;
+
+     }
+
+	return reg @R1;
 }
 func diferente ( a : num , b : num ) : bool {
-	def a1 : num = a;
-	def b1 : num = b;
-	def c : bool;
-	invoke math -> operator_not_num ( a1 , b1 ) :: c;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R9 TOLL R10;
+
+     }
+
+	return reg @R1;
 }

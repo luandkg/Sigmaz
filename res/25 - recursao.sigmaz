@@ -8,20 +8,48 @@ act recursao ( a : int ) {
 	
 }
 func somar_inteiro ( a : int , b : int ) : int {
-	def c : int;
-	invoke math -> operator_sum_int ( a , b ) :: c;
-	invoke casting -> cast_integer_int ( c ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 ADD R6;
+
+     }
+
+	return reg @R7;
 }
 func menor ( a : int , b : int ) : bool {
-	def c : bool;
-	invoke math -> operator_less_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 LESS R6;
+
+     }
+
+	return reg @R1;
 }
 
 act println ( a : string , b : int ) {
-	def c : num;
-	invoke terminal -> change ( ) :: c;
-	invoke terminal -> print ( a ) :: c;
-	invoke terminal -> print ( b ) :: c;
+	PROC -> {
+		PROC CHANGE_LINE;
+	}
+	reg @R13 -> a;
+	PROC -> {
+		PRINT R13;
+	}
+
+	reg @R5 -> b;
+	PROC -> {
+		SET R13;
+		MOV "";
+		INT_STRING R5;
+		PRINT R13;
+	}
 }

@@ -3,6 +3,7 @@ package Sigmaz.S07_Executor.Processor;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S07_Executor.Escopo;
 import Sigmaz.S07_Executor.RunTime;
+import Sigmaz.S07_Executor.Runners.Run_Context;
 import Sigmaz.S07_Executor.Runners.Run_Valoramento;
 import Sigmaz.S07_Executor.Runners.Run_Value;
 
@@ -78,7 +79,24 @@ public class Run_Reg {
 
                     } else {
 
-                        mRunTime.errar(mLocal, "O registrador " + ASTCorrente.getNome() + "  nao pode receber o tipo " + mAST.getRetornoTipo());
+
+                        Run_Context mRC = new Run_Context(mRunTime);
+                        String eQual =mRC.getQualificador(mAST.getRetornoTipo(),mEscopo);
+
+                        if (eQual.contentEquals("STAGES")){
+
+
+                            mRunTime.getProcessador().aplicar_stage(ASTCorrente.getNome(), mAST.getConteudo());
+
+
+                        }else{
+
+
+                            mRunTime.errar(mLocal, "O registrador " + ASTCorrente.getNome() + "  nao pode receber o tipo " + mAST.getRetornoTipo());
+
+                        }
+
+
 
                     }
 

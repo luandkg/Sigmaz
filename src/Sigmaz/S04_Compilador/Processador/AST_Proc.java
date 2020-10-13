@@ -73,6 +73,34 @@ public class AST_Proc {
                 AST_Instrucao mAST = new AST_Instrucao(mCompiler);
                 mAST.init(AST_Corrente);
 
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("INT_STRING")) {
+
+                AST_Instrucao mAST = new AST_Instrucao(mCompiler);
+                mAST.init(AST_Corrente);
+
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("NUM_STRING")) {
+
+                AST_Instrucao mAST = new AST_Instrucao(mCompiler);
+                mAST.init(AST_Corrente);
+
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("BOOL_STRING")) {
+
+                AST_Instrucao mAST = new AST_Instrucao(mCompiler);
+                mAST.init(AST_Corrente);
+
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("STAGE")) {
+
+                AST_Instrucao mAST = new AST_Instrucao(mCompiler);
+                mAST.init(AST_Corrente);
+
+
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("PRINT")) {
+
+                AST_Instrucao mAST = new AST_Instrucao(mCompiler);
+                mAST.init(AST_Corrente);
+
+
+
             } else {
 
 

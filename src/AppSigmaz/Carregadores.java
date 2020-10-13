@@ -15,7 +15,10 @@ public class Carregadores {
         mArquivos.add("res/libs/strings.sigmaz");
         mArquivos.add("res/libs/tempo.sigmaz");
         mArquivos.add("res/libs/terminal.sigmaz");
+
+        mArquivos.add("res/libs/bool.sigmaz");
         mArquivos.add("res/libs/int.sigmaz");
+
         mArquivos.add("res/libs/functions.sigmaz");
         mArquivos.add("res/libs/constant.sigmaz");
         mArquivos.add("res/libs/pacote_tempo.sigmaz");

@@ -36,10 +36,10 @@ public class Run_Invoke {
             InvokeCompiler mCor = new InvokeCompiler(mRunTime, mEscopo, this);
             mCor.init(eAcao, eSaida, mArgumentos);
 
-        } else if (eNome.contentEquals("terminal")) {
+       // } else if (eNome.contentEquals("terminal")) {
 
-            InvokeTerminal mCor = new InvokeTerminal(mRunTime, mEscopo, this);
-            mCor.init(eAcao, eSaida, mArgumentos);
+       //     InvokeTerminal mCor = new InvokeTerminal(mRunTime, mEscopo, this);
+         //   mCor.init(eAcao, eSaida, mArgumentos);
 
         } else if (eNome.contentEquals("casting")) {
 
@@ -47,20 +47,20 @@ public class Run_Invoke {
             mCor.init(eAcao, eSaida, mArgumentos);
 
 
-        } else if (eNome.contentEquals("math")) {
+      //  } else if (eNome.contentEquals("math")) {
 
-            InvokeMath mCor = new InvokeMath(mRunTime, mEscopo, this);
-            mCor.init(eAcao, eSaida, mArgumentos);
+         //   InvokeMath mCor = new InvokeMath(mRunTime, mEscopo, this);
+           // mCor.init(eAcao, eSaida, mArgumentos);
 
-        } else if (eNome.contentEquals("stages")) {
+      //  } else if (eNome.contentEquals("stages")) {
 
-            InvokeStages mCor = new InvokeStages(mRunTime, mEscopo, this);
-            mCor.init(eAcao, eSaida, mArgumentos);
+       //     InvokeStages mCor = new InvokeStages(mRunTime, mEscopo, this);
+           // mCor.init(eAcao, eSaida, mArgumentos);
 
-        } else if (eNome.contentEquals("__UTILS__")) {
+        //} else if (eNome.contentEquals("__UTILS__")) {
 
-            InvokeUtils mCor = new InvokeUtils(mRunTime, mEscopo, this);
-            mCor.init(eAcao, eSaida, mArgumentos);
+         //   InvokeUtils mCor = new InvokeUtils(mRunTime, mEscopo, this);
+       //     mCor.init(eAcao, eSaida, mArgumentos);
 
         } else {
 

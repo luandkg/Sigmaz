@@ -1,0 +1,28 @@
+operator == ( a : bool , b : bool ) : bool {
+	reg @R1 -> a;
+    reg @R2 -> b;
+
+     PROC -> {
+
+        SET R3;
+            MOV FALSE;
+            OPE R1 MATCH R2;
+
+     }
+
+	return reg @R3;
+}
+operator !! ( a : bool , b : bool ) : bool {
+	reg @R1 -> a;
+    reg @R2 -> b;
+
+     PROC -> {
+
+        SET R3;
+            MOV FALSE;
+            OPE R1 UNMATCH R2;
+
+     }
+
+	return reg @R3;
+}

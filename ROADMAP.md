@@ -439,4 +439,8 @@ Linguagem de Programação Estruturada - Implementações
 
 
 		2020 10 11 -->> Formato Objeto - OLM 1.0
+		2020 10 11 -->> Alteração de Invocadores para Processadores
+
+
+		2020 10 13 -->> Implementação do Stage no Processador
 

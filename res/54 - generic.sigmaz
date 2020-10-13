@@ -15,8 +15,13 @@ struct Item in ( T ) {
 	}
 
 	act cortar ( a : int ) {
-		def b : num;
-		invoke terminal -> print ( a ) :: b;
+	reg @R5 -> a;
+	PROC -> {
+		SET R13;
+		MOV "";
+		INT_STRING R5;
+		PRINT R13;
+	}
 	}
 	
 }

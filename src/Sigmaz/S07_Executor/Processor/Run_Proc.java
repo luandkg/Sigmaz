@@ -5,6 +5,7 @@ import Sigmaz.S07_Executor.Escopo;
 import Sigmaz.S07_Executor.RunTime;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Run_Proc {
 
@@ -64,6 +65,27 @@ public class Run_Proc {
             } else if (mAST.mesmoTipo("REAL")) {
 
                 instrucao_REAL(mAST);
+
+            } else if (mAST.mesmoTipo("INT_STRING")) {
+
+                instrucao_INT_STRING(mAST);
+
+            } else if (mAST.mesmoTipo("NUM_STRING")) {
+
+                instrucao_NUM_STRING(mAST);
+
+            } else if (mAST.mesmoTipo("BOOL_STRING")) {
+
+                instrucao_BOOL_STRING(mAST);
+
+            } else if (mAST.mesmoTipo("PRINT")) {
+
+                instrucao_PRINT(mAST);
+
+            } else if (mAST.mesmoTipo("STAGE")) {
+
+                instrucao_STAGE(mAST);
+
 
             } else if (mAST.mesmoTipo("PROC")) {
 
@@ -130,6 +152,94 @@ public class Run_Proc {
 
         mRunTime.getProcessador().aplicar(eSetada, eConteudo);
 
+
+    }
+
+    public void instrucao_INT_STRING(AST eAST){
+
+        Registrado eConteudo = getConteudo(eAST);
+
+        if(eConteudo.getTipo().contentEquals("Inteiro")){
+            Registrado mRegistrado = new Registrado();
+            mRegistrado.atribuir(eConteudo.getConteudo(),"Texto");
+
+            mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mRegistrado);
+
+        }else{
+            mRunTime.errar(mLocal, "Processador - A Instrucao INT_STRING so executa com inteiros !");
+        }
+
+
+
+
+    }
+
+    public void instrucao_NUM_STRING(AST eAST){
+
+        Registrado eConteudo = getConteudo(eAST);
+
+        if(eConteudo.getTipo().contentEquals("Real")){
+            Registrado mRegistrado = new Registrado();
+            mRegistrado.atribuir(eConteudo.getConteudo(),"Texto");
+
+            mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mRegistrado);
+
+        }else{
+            mRunTime.errar(mLocal, "Processador - A Instrucao NUM_STRING so executa com reais !");
+        }
+
+    }
+
+    public void instrucao_BOOL_STRING(AST eAST){
+
+        Registrado eConteudo = getConteudo(eAST);
+
+        if(eConteudo.getTipo().contentEquals("Logico")){
+            Registrado mRegistrado = new Registrado();
+            mRegistrado.atribuir(eConteudo.getConteudo(),"Texto");
+
+            mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mRegistrado);
+
+        }else{
+            mRunTime.errar(mLocal, "Processador - A Instrucao BOOL_STRING so executa com logicos !");
+        }
+
+    }
+
+
+    public void instrucao_PRINT(AST eAST){
+
+        Registrado eConteudo = getConteudo(eAST);
+
+        if(eConteudo.getTipo().contentEquals("Texto")){
+
+        if (mRunTime.getVisibilidade()){
+            System.out.print(eConteudo.getConteudo());
+        }
+
+        }else{
+            mRunTime.errar(mLocal, "Processador - A Instrucao NUM_STRING so executa com reais !");
+        }
+
+    }
+
+    public void instrucao_STAGE(AST eAST){
+
+        Registrado eConteudo = getConteudo(eAST);
+        String eSetada = mRunTime.getProcessador().getApontando();
+
+        if(eConteudo.getTipo().contentEquals("Stage")){
+
+
+            Registrado mr = new Registrado();
+            mr.atribuir(eConteudo.getConteudo(), "Inteiro");
+
+
+            mRunTime.getProcessador().aplicar(eSetada, mr);
+
+        }else{
+            mRunTime.errar(mLocal, "Processador - A Instrucao STAGE so executa com Stage !");
+        }
 
     }
 
@@ -218,7 +328,7 @@ public class Run_Proc {
         } else if (eConteudo.getTipo().contentEquals("Inteiro")) {
 
             Registrado novo = new Registrado();
-            novo.atribuir(eConteudo.getConteudo() + ".0","Real");
+            novo.atribuir(eConteudo.getConteudo() + ".0", "Real");
 
             mRunTime.getProcessador().aplicar(eSetada, novo);
 
@@ -275,7 +385,13 @@ public class Run_Proc {
         //  System.out.println("\t - Esquerda Tipo : " + eConteudo_Esquerda.getTipo());
         //   System.out.println("\t - Esquerda Valor : " + eConteudo_Esquerda.getConteudo());
 
-        if (eOperador.contentEquals("ADD")) {
+        if (eOperador.contentEquals("MATCH")) {
+            operador_Logico(eOperador, eConteudo_Esquerda, eConteudo_Direita);
+        } else if (eOperador.contentEquals("UNMATCH")) {
+            operador_Logico(eOperador, eConteudo_Esquerda, eConteudo_Direita);
+
+
+        } else if (eOperador.contentEquals("ADD")) {
             operador_Inteiro(eOperador, eConteudo_Direita, eConteudo_Esquerda);
         } else if (eOperador.contentEquals("SUB")) {
             operador_Inteiro(eOperador, eConteudo_Direita, eConteudo_Esquerda);
@@ -283,6 +399,11 @@ public class Run_Proc {
             operador_Inteiro(eOperador, eConteudo_Direita, eConteudo_Esquerda);
         } else if (eOperador.contentEquals("MUX")) {
             operador_Inteiro(eOperador, eConteudo_Direita, eConteudo_Esquerda);
+        } else if (eOperador.contentEquals("MOD")) {
+            operador_Inteiro(eOperador, eConteudo_Direita, eConteudo_Esquerda);
+        } else if (eOperador.contentEquals("ALE")) {
+            operador_Inteiro(eOperador, eConteudo_Direita, eConteudo_Esquerda);
+
 
         } else if (eOperador.contentEquals("LESS")) {
             operador_Inteiro_Logico(eOperador, eConteudo_Direita, eConteudo_Esquerda);
@@ -302,6 +423,10 @@ public class Run_Proc {
             operador_Real(eOperador, eConteudo_Direita, eConteudo_Esquerda);
         } else if (eOperador.contentEquals("INK")) {
             operador_Real(eOperador, eConteudo_Direita, eConteudo_Esquerda);
+        } else if (eOperador.contentEquals("DUM")) {
+            operador_Real(eOperador, eConteudo_Direita, eConteudo_Esquerda);
+        } else if (eOperador.contentEquals("OZU")) {
+            operador_Real(eOperador, eConteudo_Direita, eConteudo_Esquerda);
 
 
         } else if (eOperador.contentEquals("MOZZ")) {
@@ -316,6 +441,10 @@ public class Run_Proc {
 
         } else if (eOperador.contentEquals("CHAR")) {
             operador_Texto(eOperador, eConteudo_Esquerda, eConteudo_Direita);
+        } else if (eOperador.contentEquals("CONTENT")) {
+            operador_Texto_Logico(eOperador, eConteudo_Direita, eConteudo_Esquerda);
+        } else if (eOperador.contentEquals("UNCONTENT")) {
+            operador_Texto_Logico(eOperador, eConteudo_Direita, eConteudo_Esquerda);
 
 
         } else {
@@ -324,8 +453,61 @@ public class Run_Proc {
 
         }
 
-        //  mRunTime.getProcessador().aplicar(eSetada,eConteudo);
 
+
+    }
+
+    public void operador_Logico(String eOperador, Registrado eDireita, Registrado eEsquerda) {
+
+
+        if (eDireita.getTipo().contentEquals("Logico")) {
+            if (eEsquerda.getTipo().contentEquals("Logico")) {
+
+                boolean A = false;
+                boolean B = false;
+
+                try {
+                    A = Boolean.parseBoolean(eDireita.getConteudo());
+                } catch (Exception e) {
+                    mRunTime.errar(mLocal, "A instrucao " + eOperador + " nao pode ser realizada com valor do tipo : " + eDireita.getTipo());
+                    return;
+                }
+
+                try {
+                    B = Boolean.parseBoolean(eEsquerda.getConteudo());
+                } catch (Exception e) {
+                    mRunTime.errar(mLocal, "A instrucao " + eOperador + " nao pode ser realizada com valor do tipo : " + eEsquerda.getTipo());
+                    return;
+                }
+
+                if (eOperador.contentEquals("MATCH")) {
+
+                    boolean C = A == B;
+
+                    Registrado mReg = new Registrado();
+                    mReg.atribuir(String.valueOf(C), "Logico");
+                    mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
+                } else if (eOperador.contentEquals("UNMATCH")) {
+
+                    boolean C = A != B;
+
+                    Registrado mReg = new Registrado();
+                    mReg.atribuir(String.valueOf(C), "Logico");
+                    mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
+
+                } else {
+
+                    mRunTime.errar(mLocal, "Processador - Operador desconhecido : " + eOperador);
+
+                }
+
+
+            } else {
+                mRunTime.errar(mLocal, "A instrucao " + eOperador + " nao pode ser realizada com valor do tipo : " + eEsquerda.getTipo());
+            }
+        } else {
+            mRunTime.errar(mLocal, "A instrucao " + eOperador + " nao pode ser realizada com valor do tipo : " + eDireita.getTipo());
+        }
 
     }
 
@@ -382,6 +564,47 @@ public class Run_Proc {
                     }
 
                     long C = A / B;
+
+                    Registrado mReg = new Registrado();
+                    mReg.atribuir(String.valueOf(C), "Inteiro");
+                    mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
+                } else if (eOperador.contentEquals("MOD")) {
+
+                    if (B == 0) {
+                        mRunTime.errar(mLocal, "Processador - Operante MOD = 0 ");
+                        return;
+                    }
+
+                    long C = A % B;
+
+                    Registrado mReg = new Registrado();
+                    mReg.atribuir(String.valueOf(C), "Inteiro");
+                    mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
+
+                } else if (eOperador.contentEquals("ALE")) {
+
+                    long C = 0;
+
+                    if (A == B) {
+
+                        C = A;
+
+                    } else {
+
+                        if (A > B) {
+                            long t = A;
+                            A = B;
+                            B = t;
+                        }
+
+
+                        long delta = B - A;
+
+                        C = A + (long) (Math.random() * delta);
+
+
+                    }
+
 
                     Registrado mReg = new Registrado();
                     mReg.atribuir(String.valueOf(C), "Inteiro");
@@ -603,6 +826,48 @@ public class Run_Proc {
                     mReg.atribuir(String.valueOf(C), "Real");
                     mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
 
+                } else if (eOperador.contentEquals("DUM")) {
+
+                    if (B == 0) {
+                        mRunTime.errar(mLocal, "Processador - Operante DUM = 0 ");
+                        return;
+                    }
+
+                    float C = A % B;
+
+                    Registrado mReg = new Registrado();
+                    mReg.atribuir(String.valueOf(C), "Real");
+                    mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
+                } else if (eOperador.contentEquals("OZU")) {
+
+                    float C = 0.0F;
+
+                    if (A == B) {
+
+                        C = A;
+
+                    } else {
+
+                        if (A > B) {
+                            float t = A;
+                            A = B;
+                            B = t;
+                        }
+
+
+                        float delta = B - A;
+
+                        C = A + (long) (Math.random() * delta);
+
+
+                    }
+
+
+                    Registrado mReg = new Registrado();
+                    mReg.atribuir(String.valueOf(C), "Real");
+                    mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
+
+
 
                 } else {
 
@@ -687,6 +952,67 @@ public class Run_Proc {
 
     }
 
+    public void operador_Texto_Logico(String eOperador, Registrado eDireita, Registrado eEsquerda) {
+
+
+        if (eDireita.getTipo().contentEquals("Texto")) {
+            if (eEsquerda.getTipo().contentEquals("Texto")) {
+
+                String A = "";
+                String B = "";
+
+                try {
+                    A = eDireita.getConteudo();
+                } catch (Exception e) {
+                    mRunTime.errar(mLocal, "A instrucao " + eOperador + " nao pode ser realizada com valor do tipo : " + eDireita.getTipo());
+                    return;
+                }
+
+                try {
+                    B = eEsquerda.getConteudo();
+                } catch (Exception e) {
+                    mRunTime.errar(mLocal, "A instrucao " + eOperador + " nao pode ser realizada com valor do tipo : " + eEsquerda.getTipo());
+                    return;
+                }
+
+                if (eOperador.contentEquals("CONTENT")) {
+
+                    boolean C = A.contentEquals(B);
+
+                    Registrado mReg = new Registrado();
+                    mReg.atribuir(String.valueOf(C), "Logico");
+                    mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
+
+                } else if (eOperador.contentEquals("UNCONTENT")) {
+
+                    boolean C = A.contentEquals(B);
+
+                    if (C) {
+                        C = false;
+                    } else {
+                        C = true;
+                    }
+                    Registrado mReg = new Registrado();
+                    mReg.atribuir(String.valueOf(C), "Logico");
+                    mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
+
+
+                } else {
+
+                    mRunTime.errar(mLocal, "Processador - Operador desconhecido : " + eOperador);
+
+                }
+
+
+            } else {
+                mRunTime.errar(mLocal, "A instrucao " + eOperador + " nao pode ser realizada com valor do tipo : " + eEsquerda.getTipo());
+            }
+        } else {
+            mRunTime.errar(mLocal, "A instrucao " + eOperador + " nao pode ser realizada com valor do tipo : " + eDireita.getTipo());
+        }
+
+    }
+
 
     public void instrucao_PROC(AST eAST) {
 
@@ -694,11 +1020,124 @@ public class Run_Proc {
         if (eAST.mesmoValor("ID")) {
 
             if (eAST.mesmoNome_SCS("DEBUG")) {
+
                 mRunTime.getProcessador().debug();
 
             } else if (eAST.mesmoNome_SCS("ZERO")) {
 
                 mRunTime.getProcessador().zerar();
+
+            } else if (eAST.mesmoNome_SCS("CHANGE_LINE")) {
+
+                if (mRunTime.getVisibilidade()){
+                    System.out.println("\n");
+                }
+
+            } else if (eAST.mesmoNome_SCS("CHRONOS_DAY")) {
+
+
+                Calendar c = Calendar.getInstance();
+
+                int dia = c.get(Calendar.DAY_OF_MONTH);
+                int mes = c.get(Calendar.MONTH) + 1;
+                int ano = c.get(Calendar.YEAR);
+
+                int hora = c.get(Calendar.HOUR);
+                int minutos = c.get(Calendar.MINUTE);
+                int segundos = c.get(Calendar.SECOND);
+
+
+                Registrado mReg = new Registrado();
+                mReg.atribuir(String.valueOf(dia), "Inteiro");
+                mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
+
+            } else if (eAST.mesmoNome_SCS("CHRONOS_MONTH")) {
+
+
+                Calendar c = Calendar.getInstance();
+
+                int dia = c.get(Calendar.DAY_OF_MONTH);
+                int mes = c.get(Calendar.MONTH) + 1;
+                int ano = c.get(Calendar.YEAR);
+
+                int hora = c.get(Calendar.HOUR);
+                int minutos = c.get(Calendar.MINUTE);
+                int segundos = c.get(Calendar.SECOND);
+
+
+                Registrado mReg = new Registrado();
+                mReg.atribuir(String.valueOf(mes), "Inteiro");
+                mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
+
+            } else if (eAST.mesmoNome_SCS("CHRONOS_YEAR")) {
+
+
+                Calendar c = Calendar.getInstance();
+
+                int dia = c.get(Calendar.DAY_OF_MONTH);
+                int mes = c.get(Calendar.MONTH) + 1;
+                int ano = c.get(Calendar.YEAR);
+
+                int hora = c.get(Calendar.HOUR);
+                int minutos = c.get(Calendar.MINUTE);
+                int segundos = c.get(Calendar.SECOND);
+
+
+                Registrado mReg = new Registrado();
+                mReg.atribuir(String.valueOf(ano), "Inteiro");
+                mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
+            } else if (eAST.mesmoNome_SCS("CHRONOS_HOUR")) {
+
+
+                Calendar c = Calendar.getInstance();
+
+                int dia = c.get(Calendar.DAY_OF_MONTH);
+                int mes = c.get(Calendar.MONTH) + 1;
+                int ano = c.get(Calendar.YEAR);
+
+                int hora = c.get(Calendar.HOUR);
+                int minutos = c.get(Calendar.MINUTE);
+                int segundos = c.get(Calendar.SECOND);
+
+
+                Registrado mReg = new Registrado();
+                mReg.atribuir(String.valueOf(hora), "Inteiro");
+                mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
+            } else if (eAST.mesmoNome_SCS("CHRONOS_MINUTE")) {
+
+
+                Calendar c = Calendar.getInstance();
+
+                int dia = c.get(Calendar.DAY_OF_MONTH);
+                int mes = c.get(Calendar.MONTH) + 1;
+                int ano = c.get(Calendar.YEAR);
+
+                int hora = c.get(Calendar.HOUR);
+                int minutos = c.get(Calendar.MINUTE);
+                int segundos = c.get(Calendar.SECOND);
+
+
+                Registrado mReg = new Registrado();
+                mReg.atribuir(String.valueOf(minutos), "Inteiro");
+                mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
+            } else if (eAST.mesmoNome_SCS("CHRONOS_SECOND")) {
+
+
+                Calendar c = Calendar.getInstance();
+
+                int dia = c.get(Calendar.DAY_OF_MONTH);
+                int mes = c.get(Calendar.MONTH) + 1;
+                int ano = c.get(Calendar.YEAR);
+
+                int hora = c.get(Calendar.HOUR);
+                int minutos = c.get(Calendar.MINUTE);
+                int segundos = c.get(Calendar.SECOND);
+
+
+                Registrado mReg = new Registrado();
+                mReg.atribuir(String.valueOf(segundos), "Inteiro");
+                mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
+
 
             } else {
                 mRunTime.errar(mLocal, "Comando PROC desconhecido : " + eAST.getNome());

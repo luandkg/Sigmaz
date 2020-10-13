@@ -74,6 +74,7 @@ public class Requeridor {
                                     mPosProcessador.mensagem("\t - Stages : " +mContador.getStages());
                                     mPosProcessador.mensagem("\t - Types : " +mContador.getTypes());
                                     mPosProcessador.mensagem("\t - Structs : " +mContador.getStructs());
+                                    mPosProcessador.mensagem("\t - Models : " +mContador.getModels());
                                     mPosProcessador.mensagem("\t - Externals : " +mContador.getExternals());
                                     mPosProcessador.mensagem("\t - Packages : " +mContador.getPackages());
 

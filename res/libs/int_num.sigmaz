@@ -1,22 +1,79 @@
-func int ( a : num ) : int {
-	def b : int;
-	invoke math -> operator_num_to_int ( a ) :: b;
-	return b;
+func int ( a : num  ) : int {
+
+	reg @R9 -> a;
+
+     PROC -> {
+
+        SET R5;
+            MOV 0;
+            INT R9;
+
+     }
+
+	return reg @R5;
 }
-func num ( a : int ) : num {
-	def b : num;
-	invoke math -> operator_int_to_num ( a ) :: b;
-	return b;
+
+
+func num ( a : int  ) : num {
+
+	reg @R5 -> a;
+
+     PROC -> {
+
+        SET R9;
+            MOV 0.0;
+            REAL R5;
+
+     }
+
+	return reg @R9;
 }
+
+
 operator ++ ( a : int , b : num ) : num {
-	def c : num;
-	def x : num = num ( a );
-	invoke math -> operator_sum_num ( x , b ) :: c;
-	return c;
+	def a1 : num = num ( a );
+	def b1 : num = num ( a );
+	return a1 ++ b1;
 }
 operator ++ ( a : num , b : int ) : num {
-	def c : num;
-	def x : num = num ( b );
-	invoke math -> operator_sum_num ( a , x ) :: c;
-	return c;
+	def a1 : num = num ( a );
+	def b1 : num = num ( a );
+	return a1 ++ b1;
 }
+
+
+operator -- ( a : int , b : num ) : num {
+	def a1 : num = num ( a );
+	def b1 : num = num ( a );
+	return a1 -- b1;
+}
+operator -- ( a : num , b : int ) : num {
+	def a1 : num = num ( a );
+	def b1 : num = num ( a );
+	return a1 -- b1;
+}
+
+
+
+operator ** ( a : int , b : num ) : num {
+	def a1 : num = num ( a );
+	def b1 : num = num ( a );
+	return a1 ** b1;
+}
+operator ** ( a : num , b : int ) : num {
+	def a1 : num = num ( a );
+	def b1 : num = num ( a );
+	return a1 ** b1;
+}
+
+operator // ( a : int , b : num ) : num {
+	def a1 : num = num ( a );
+	def b1 : num = num ( a );
+	return a1 // b1;
+}
+operator // ( a : num , b : int ) : num {
+	def a1 : num = num ( a );
+	def b1 : num = num ( a );
+	return a1 // b1;
+}
+

@@ -1,95 +1,267 @@
 call iniciar -> inicio ( );
 act inicio ( ) {
 	def agora : Tempo = getTempo ( );
-	def hora : num = agora.getHora ( );
-	def minuto : num = agora.getMinuto ( );
-	def segundo : num = agora.getSegundo ( );
+	def hora : int = agora.getHora ( );
+	def minuto : int = agora.getMinuto ( );
+	def segundo : int = agora.getSegundo ( );
 	def formatado : string = agora.getFormatado ( );
 	def formatado2 : string = getTempo_Formatado ( );
 	def formatado3 : string = getData_Formatado ( );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
-func num_to_string ( a : num ) : string {
+func num_to_string ( a : int ) : string {
 	def c : string;
-	invoke casting -> num_to_string ( a ) :: c;
+	invoke casting -> int_to_string ( a ) :: c;
 	return c;
 }
-func string_length ( a : string ) : num {
-	def c : num;
-	invoke __UTILS__ -> string_length ( a ) :: c;
-	return c;
+func string_length(a:string) : int {
+
+    reg @R13 -> a;
+
+     PROC -> {
+
+        SET R5;
+            MOV 0;
+            SIZE R13;
+
+     }
+
+	return reg @R5;
+
 }
-func string_append ( a : string , b : string ) : string {
-	def ret : string;
-	invoke __UTILS__ -> string_append ( a , b ) :: ret;
-	return ret;
+
+func string_append(a:string,b:string) : int {
+
+    reg @R13 -> a;
+    reg @R14 -> b;
+
+     PROC -> {
+
+        SET R13;
+            APPEND R14;
+
+     }
+
+	return reg @R13;
+
 }
+
 func string_append ( a : string , b : string , c : string ) : string {
-	def ret : string;
-	invoke __UTILS__ -> string_append ( a , b ) :: ret;
-	invoke __UTILS__ -> string_append ( ret , c ) :: ret;
-	return ret;
+
+    reg @R13 -> a;
+    reg @R14 -> b;
+
+     PROC -> {
+
+        SET R13;
+            APPEND R14;
+
+     }
+
+    reg @R14 -> c;
+
+     PROC -> {
+
+        SET R13;
+            APPEND R14;
+
+     }
+
+	return reg @R13;
+
 }
+
+
 func string_append ( a : string , b : string , c : string , d : string ) : string {
-	def ret : string;
-	invoke __UTILS__ -> string_append ( a , b ) :: ret;
-	invoke __UTILS__ -> string_append ( ret , c ) :: ret;
-	invoke __UTILS__ -> string_append ( ret , d ) :: ret;
-	return ret;
+
+    reg @R13 -> a;
+    reg @R14 -> b;
+
+     PROC -> {
+
+        SET R13;
+            APPEND R14;
+
+     }
+
+    reg @R14 -> c;
+
+     PROC -> {
+
+        SET R13;
+            APPEND R14;
+
+     }
+
+    reg @R14 -> d;
+
+     PROC -> {
+
+        SET R13;
+            APPEND R14;
+
+     }
+
+	return reg @R13;
+
 }
+
+
+
 func string_append ( a : string , b : string , c : string , d : string , e : string ) : string {
-	def ret : string;
-	invoke __UTILS__ -> string_append ( a , b ) :: ret;
-	invoke __UTILS__ -> string_append ( ret , c ) :: ret;
-	invoke __UTILS__ -> string_append ( ret , d ) :: ret;
-	invoke __UTILS__ -> string_append ( ret , e ) :: ret;
-	return ret;
+
+
+    reg @R13 -> a;
+    reg @R14 -> b;
+
+     PROC -> {
+
+        SET R13;
+            APPEND R14;
+
+     }
+
+    reg @R14 -> c;
+
+     PROC -> {
+
+        SET R13;
+            APPEND R14;
+
+     }
+
+    reg @R14 -> d;
+
+     PROC -> {
+
+        SET R13;
+            APPEND R14;
+
+     }
+
+         reg @R14 -> e;
+
+          PROC -> {
+
+             SET R13;
+                 APPEND R14;
+
+          }
+
+
+	return reg @R13;
+
 }
-func menor ( a : num , b : num ) : bool {
-	def c : bool;
-	invoke math -> operator_less_num ( a , b ) :: c;
-	return c;
+
+
+func menor ( a : int , b : int ) : bool {
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 LESS R6;
+
+     }
+
+	return reg @R1;
 }
 func getTempo ( ) : Tempo {
 	def a : Tempo = init Tempo ( );
 	return a;
 }
 func getTempo_Formatado ( ) : string {
-	def mHora : num = 0.0;
-	def mMinuto : num = 0.0;
-	def mSegundo : num = 0.0;
-	invoke __UTILS__ -> Time_getHour ( ) :: mHora;
-	invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
-	invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
+
+
+			 PROC -> {
+
+                    SET R5;
+                        MOV 0;
+                        PROC CHRONOS_SECOND;
+
+                 }
+
+            	def mSegundo : int  =  reg @R5;
+
+
+		 PROC -> {
+
+                SET R5;
+                    MOV 0;
+                    PROC CHRONOS_MINUTE;
+
+             }
+
+        	def mMinuto : int  =  reg @R5;
+
+
+	 PROC -> {
+
+            SET R5;
+                MOV 0;
+                PROC CHRONOS_HOUR;
+
+         }
+
+    	def mHora : int  =  reg @R5;
+
+
 	def f1 : string = num_to_string ( mHora );
 	def f2 : string = num_to_string ( mMinuto );
 	def f3 : string = num_to_string ( mSegundo );
-	if ( menor ( string_length ( f1 ) , 2.0 ) ) -> {
+	if ( menor ( string_length ( f1 ) , 2 ) ) -> {
 		f1 = string_append ( "0", f1 );
 	}
-	if ( menor ( string_length ( f2 ) , 2.0 ) ) -> {
+	if ( menor ( string_length ( f2 ) , 2 ) ) -> {
 		f2 = string_append ( "0", f2 );
 	}
-	if ( menor ( string_length ( f3 ) , 2.0 ) ) -> {
+	if ( menor ( string_length ( f3 ) , 2 ) ) -> {
 		f3 = string_append ( "0", f3 );
 	}
 	def formatado : string = string_append ( f1 , ":", f2 , ":", f3 );
 	return formatado;
 }
 func getData_Formatado ( ) : string {
-	def mDia : num = 0.0;
-	def mMes : num = 0.0;
-	def mAno : num = 0.0;
-	invoke __UTILS__ -> Date_getDay ( ) :: mDia;
-	invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
-	invoke __UTILS__ -> Date_getYear ( ) :: mAno;
+
+				 PROC -> {
+
+                        SET R5;
+                            MOV 0;
+                            PROC CHRONOS_DAY;
+
+                     }
+
+                	def mDia : int  =  reg @R5;
+
+					 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_MONTH;
+
+                         }
+
+                    	def mMes : int  =  reg @R5;
+
+					 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_YEAR;
+
+                         }
+
+                    	def mAno : int  =  reg @R5;
+
 	def f1 : string = num_to_string ( mDia );
 	def f2 : string = num_to_string ( mMes );
 	def f3 : string = num_to_string ( mAno );
-	if ( menor ( string_length ( f1 ) , 2.0 ) ) -> {
+	if ( menor ( string_length ( f1 ) , 2 ) ) -> {
 		f1 = string_append ( "0", f1 );
 	}
-	if ( menor ( string_length ( f2 ) , 2.0 ) ) -> {
+	if ( menor ( string_length ( f2 ) , 2 ) ) -> {
 		f2 = string_append ( "0", f2 );
 	}
 	def formatado : string = string_append ( f1 , "/", f2 , "/", f3 );
@@ -98,40 +270,71 @@ func getData_Formatado ( ) : string {
 
 struct Tempo {
 	restrict : 
-	define mHora : num = 0.0;
-	define mMinuto : num = 0.0;
-	define mSegundo : num = 0.0;
+	define mHora : int = 0;
+	define mMinuto : int = 0;
+	define mSegundo : int = 0;
 	all : 
-	init Tempo ( h : num , m : num , s : num ) {
+	init Tempo ( h : int , m : int , s : int ) {
 		mHora = h;
 		mMinuto = m;
 		mSegundo = s;
 	}
 	init Tempo ( ) {
-		invoke __UTILS__ -> Time_getHour ( ) :: mHora;
-		invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
-		invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
+
+
+			 PROC -> {
+
+                    SET R5;
+                        MOV 0;
+                        PROC CHRONOS_SECOND;
+
+                 }
+
+            	 mSegundo   =  reg @R5;
+
+
+		 PROC -> {
+
+                SET R5;
+                    MOV 0;
+                    PROC CHRONOS_MINUTE;
+
+             }
+
+        	 mMinuto   =  reg @R5;
+
+
+	 PROC -> {
+
+            SET R5;
+                MOV 0;
+                PROC CHRONOS_HOUR;
+
+         }
+
+    	 mHora   =  reg @R5;
+
 	}
-	func getHora ( ) : num {
+	func getHora ( ) : int {
 		return mHora;
 	}
-	func getMinuto ( ) : num {
+	func getMinuto ( ) : int {
 		return mMinuto;
 	}
-	func getSegundo ( ) : num {
+	func getSegundo ( ) : int {
 		return mSegundo;
 	}
 	func getFormatado ( ) : string {
 		def f1 : string = num_to_string ( mHora );
 		def f2 : string = num_to_string ( mMinuto );
 		def f3 : string = num_to_string ( mSegundo );
-		if ( menor ( string_length ( f1 ) , 2.0 ) ) -> {
+		if ( menor ( string_length ( f1 ) , 2 ) ) -> {
 			f1 = string_append ( "0", f1 );
 		}
-		if ( menor ( string_length ( f2 ) , 2.0 ) ) -> {
+		if ( menor ( string_length ( f2 ) , 2 ) ) -> {
 			f2 = string_append ( "0", f2 );
 		}
-		if ( menor ( string_length ( f3 ) , 2.0 ) ) -> {
+		if ( menor ( string_length ( f3 ) , 2 ) ) -> {
 			f3 = string_append ( "0", f3 );
 		}
 		def formatado : string = string_append ( f1 , ":", f2 , ":", f3 );
@@ -142,36 +345,67 @@ struct Tempo {
 
 struct Data {
 	restrict : 
-	define mDia : num = 0.0;
-	define mMes : num = 0.0;
-	define mAno : num = 0.0;
+	define mDia : int = 0;
+	define mMes : int = 0;
+	define mAno : int = 0;
 	all : 
-	init Data ( d : num , m : num , a : num ) {
+	init Data ( d : int , m : int , a : int ) {
 		mDia = d;
 		mMes = m;
 		mAno = a;
 	}
 	init Data ( ) {
-		invoke __UTILS__ -> Date_getDay ( ) :: mDia;
-		invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
-		invoke __UTILS__ -> Date_getYear ( ) :: mAno;
+
+
+
+				 PROC -> {
+
+                        SET R5;
+                            MOV 0;
+                            PROC CHRONOS_DAY;
+
+                     }
+
+                	 mDia   =  reg @R5;
+
+					 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_MONTH;
+
+                         }
+
+                    	 mMes   =  reg @R5;
+
+					 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_YEAR;
+
+                         }
+
+                    	 mAno   =  reg @R5;
+
+
 	}
-	func getDia ( ) : num {
+	func getDia ( ) : int {
 		return mDia;
 	}
-	func getMes ( ) : num {
+	func getMes ( ) : int {
 		return mMes;
 	}
-	func getAno ( ) : num {
+	func getAno ( ) : int {
 		return mAno;
 	}
 	func getFormatado ( ) : string {
 		def f1 : string = num_to_string ( mDia );
 		def f2 : string = num_to_string ( mMes );
-		if ( menor ( string_length ( f1 ) , 2.0 ) ) -> {
+		if ( menor ( string_length ( f1 ) , 2 ) ) -> {
 			f1 = string_append ( "0", f1 );
 		}
-		if ( menor ( string_length ( f2 ) , 2.0 ) ) -> {
+		if ( menor ( string_length ( f2 ) , 2 ) ) -> {
 			f2 = string_append ( "0", f2 );
 		}
 		def formatado : string = string_append ( f1 , "/", f2 , "/", f3 );

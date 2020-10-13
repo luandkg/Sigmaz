@@ -35,7 +35,16 @@ act pular ( ) {
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }
 operator == ( a : int , b : int ) : bool {
-	def c : bool;
-	invoke math -> operator_equal_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 EQUAL R6;
+
+     }
+
+	return reg @R1;
 }

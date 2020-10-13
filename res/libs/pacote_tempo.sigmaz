@@ -1,27 +1,59 @@
 package Tempo {
 	struct Tempo {
 		restrict : 
-		define mHora : num = 0;
-		define mMinuto : num = 0;
-		define mSegundo : num = 0;
+		define mHora : int = 0;
+		define mMinuto : int = 0;
+		define mSegundo : int = 0;
 		all : 
-		init Tempo ( h : num , m : num , s : num ) {
+		init Tempo ( h : int , m : int , s : int ) {
 			mHora = h;
 			mMinuto = m;
 			mSegundo = s;
 		}
 		init Tempo ( ) {
-			invoke __UTILS__ -> Time_getHour ( ) :: mHora;
-			invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
-			invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
+
+
+
+					 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_SECOND;
+
+                         }
+
+                    	 mSegundo   =  reg @R5;
+
+
+        		 PROC -> {
+
+                        SET R5;
+                            MOV 0;
+                            PROC CHRONOS_MINUTE;
+
+                     }
+
+                	 mMinuto   =  reg @R5;
+
+
+        	 PROC -> {
+
+                    SET R5;
+                        MOV 0;
+                        PROC CHRONOS_HOUR;
+
+                 }
+
+            	 mHora   =  reg @R5;
+
 		}
-		func getHora ( ) : num {
+		func getHora ( ) : int {
 			return mHora;
 		}
-		func getMinuto ( ) : num {
+		func getMinuto ( ) : int {
 			return mMinuto;
 		}
-		func getSegundo ( ) : num {
+		func getSegundo ( ) : int {
 			return mSegundo;
 		}
 		func getFormatado ( ) : string {
@@ -40,7 +72,8 @@ package Tempo {
 			def formatado : string = string_append ( f1 , ":", f2 , ":", f3 );
 			return formatado;
 		}
-		explicit : func getTempo ( ) : Tempo {
+		explicit :
+		func getTempo ( ) : Tempo {
 			def a : Tempo = init Tempo ( );
 			return a;
 		}
@@ -51,12 +84,45 @@ package Tempo {
 		
 		# Comentario dfgfdg func
 		func getTempo_Formatado ( ) : string {
-			def mHora : num = 0;
-			def mMinuto : num = 0;
-			def mSegundo : num = 0;
-			invoke __UTILS__ -> Time_getHour ( ) :: mHora;
-			invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
-			invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
+			def mHora : int = 0;
+			def mMinuto : int = 0;
+			def mSegundo : int = 0;
+
+
+					 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_SECOND;
+
+                         }
+
+                    	 mSegundo   =  reg @R5;
+
+
+        		 PROC -> {
+
+                        SET R5;
+                            MOV 0;
+                            PROC CHRONOS_MINUTE;
+
+                     }
+
+                	 mMinuto   =  reg @R5;
+
+
+        	 PROC -> {
+
+                    SET R5;
+                        MOV 0;
+                        PROC CHRONOS_HOUR;
+
+                 }
+
+            	 mHora   =  reg @R5;
+
+
+
 			def f1 : string = num_to_string ( mHora );
 			def f2 : string = num_to_string ( mMinuto );
 			def f3 : string = num_to_string ( mSegundo );
@@ -73,12 +139,40 @@ package Tempo {
 			return formatado;
 		}
 		func getData_Formatado ( ) : string {
-			def mDia : num = 0;
-			def mMes : num = 0;
-			def mAno : num = 0;
-			invoke __UTILS__ -> Date_getDay ( ) :: mDia;
-			invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
-			invoke __UTILS__ -> Date_getYear ( ) :: mAno;
+			def mDia : int = 0;
+			def mMes : int = 0;
+			def mAno : int = 0;
+
+	 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_DAY;
+
+                         }
+
+                    	 mDia   =  reg @R5;
+
+    					 PROC -> {
+
+                                SET R5;
+                                    MOV 0;
+                                    PROC CHRONOS_MONTH;
+
+                             }
+
+                        	 mMes   =  reg @R5;
+
+    					 PROC -> {
+
+                                SET R5;
+                                    MOV 0;
+                                    PROC CHRONOS_YEAR;
+
+                             }
+
+                        	 mAno   =  reg @R5;
+
 			def f1 : string = num_to_string ( mDia );
 			def f2 : string = num_to_string ( mMes );
 			def f3 : string = num_to_string ( mAno );
@@ -91,19 +185,77 @@ package Tempo {
 			def formatado : string = string_append ( f1 , "/", f2 , "/", f3 );
 			return formatado;
 		}
-		func getTempoData_Formatado ( ) : string {
-			def mHora : num = 0;
-			def mMinuto : num = 0;
-			def mSegundo : num = 0;
-			def mDia : num = 0;
-			def mMes : num = 0;
-			def mAno : num = 0;
-			invoke __UTILS__ -> Time_getHour ( ) :: mHora;
-			invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
-			invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
-			invoke __UTILS__ -> Date_getDay ( ) :: mDia;
-			invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
-			invoke __UTILS__ -> Date_getYear ( ) :: mAno;
+		func getDataTempo_Formatado ( ) : string {
+			def mHora : int = 0;
+			def mMinuto : int = 0;
+			def mSegundo : int = 0;
+			def mDia : int = 0;
+			def mMes : int = 0;
+			def mAno : int = 0;
+
+			 PROC -> {
+
+                    SET R5;
+                        MOV 0;
+                        PROC CHRONOS_SECOND;
+
+                 }
+
+            	 mSegundo   =  reg @R5;
+
+
+		 PROC -> {
+
+                SET R5;
+                    MOV 0;
+                    PROC CHRONOS_MINUTE;
+
+             }
+
+        	 mMinuto   =  reg @R5;
+
+
+	 PROC -> {
+
+            SET R5;
+                MOV 0;
+                PROC CHRONOS_HOUR;
+
+         }
+
+    	 mHora   =  reg @R5;
+
+
+				 PROC -> {
+
+                        SET R5;
+                            MOV 0;
+                            PROC CHRONOS_DAY;
+
+                     }
+
+                	 mDia   =  reg @R5;
+
+					 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_MONTH;
+
+                         }
+
+                    	 mMes   =  reg @R5;
+
+					 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_YEAR;
+
+                         }
+
+                    	 mAno   =  reg @R5;
+
 			def f1 : string = num_to_string ( mDia );
 			def f2 : string = num_to_string ( mMes );
 			def f3 : string = num_to_string ( mAno );
@@ -130,19 +282,78 @@ package Tempo {
 			def formatado : string = string_append ( alfa , " ", beta );
 			return formatado;
 		}
-		func getDataTempo_Formatado ( ) : string {
-			def mHora : num = 0;
-			def mMinuto : num = 0;
-			def mSegundo : num = 0;
-			def mDia : num = 0;
-			def mMes : num = 0;
-			def mAno : num = 0;
-			invoke __UTILS__ -> Time_getHour ( ) :: mHora;
-			invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
-			invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
-			invoke __UTILS__ -> Date_getDay ( ) :: mDia;
-			invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
-			invoke __UTILS__ -> Date_getYear ( ) :: mAno;
+		func getTempoData_Formatado ( ) : string {
+			def mHora : int = 0;
+			def mMinuto : int = 0;
+			def mSegundo : int = 0;
+			def mDia : int = 0;
+			def mMes : int = 0;
+			def mAno : int = 0;
+
+			 PROC -> {
+
+                    SET R5;
+                        MOV 0;
+                        PROC CHRONOS_SECOND;
+
+                 }
+
+            	 mSegundo   =  reg @R5;
+
+
+		 PROC -> {
+
+                SET R5;
+                    MOV 0;
+                    PROC CHRONOS_MINUTE;
+
+             }
+
+        	 mMinuto   =  reg @R5;
+
+
+	 PROC -> {
+
+            SET R5;
+                MOV 0;
+                PROC CHRONOS_HOUR;
+
+         }
+
+    	 mHora   =  reg @R5;
+
+
+				 PROC -> {
+
+                        SET R5;
+                            MOV 0;
+                            PROC CHRONOS_DAY;
+
+                     }
+
+                	 mDia   =  reg @R5;
+
+					 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_MONTH;
+
+                         }
+
+                    	 mMes   =  reg @R5;
+
+					 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_YEAR;
+
+                         }
+
+                    	 mAno   =  reg @R5;
+
+
 			def f1 : string = num_to_string ( mDia );
 			def f2 : string = num_to_string ( mMes );
 			def f3 : string = num_to_string ( mAno );
@@ -174,27 +385,55 @@ package Tempo {
 
 	struct Data {
 		restrict : 
-		define mDia : num = 0;
-		define mMes : num = 0;
-		define mAno : num = 0;
+		define mDia : int = 0;
+		define mMes : int = 0;
+		define mAno : int = 0;
 		all : 
-		init Data ( d : num , m : num , a : num ) {
+		init Data ( d : int , m : int , a : int ) {
 			mDia = d;
 			mMes = m;
 			mAno = a;
 		}
 		init Data ( ) {
-			invoke __UTILS__ -> Date_getDay ( ) :: mDia;
-			invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
-			invoke __UTILS__ -> Date_getYear ( ) :: mAno;
+
+				 PROC -> {
+
+                        SET R5;
+                            MOV 0;
+                            PROC CHRONOS_DAY;
+
+                     }
+
+                	 mDia   =  reg @R5;
+
+					 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_MONTH;
+
+                         }
+
+                    	 mMes   =  reg @R5;
+
+					 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_YEAR;
+
+                         }
+
+                    	 mAno   =  reg @R5;
+
 		}
-		func getDia ( ) : num {
+		func getDia ( ) : int {
 			return mDia;
 		}
-		func getMes ( ) : num {
+		func getMes ( ) : int {
 			return mMes;
 		}
-		func getAno ( ) : num {
+		func getAno ( ) : int {
 			return mAno;
 		}
 		func getFormatado ( ) : string {
@@ -214,14 +453,14 @@ package Tempo {
 
 	struct TempoData {
 		restrict : 
-		define mHora : num = 0;
-		define mMinuto : num = 0;
-		define mSegundo : num = 0;
-		define mDia : num = 0;
-		define mMes : num = 0;
-		define mAno : num = 0;
+		define mHora : int = 0;
+		define mMinuto : int = 0;
+		define mSegundo : int = 0;
+		define mDia : int = 0;
+		define mMes : int = 0;
+		define mAno : int = 0;
 		all : 
-		init TempoData ( h : num , mi : num , s : num , d : num , me : num , a : num ) {
+		init TempoData ( h : int , mi : int , s : int , d : int , me : int , a : int ) {
 			mHora = h;
 			mMinuto = mi;
 			mSegundo = s;
@@ -230,29 +469,87 @@ package Tempo {
 			mAno = a;
 		}
 		init TempoData ( ) {
-			invoke __UTILS__ -> Time_getHour ( ) :: mHora;
-			invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
-			invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
-			invoke __UTILS__ -> Date_getDay ( ) :: mDia;
-			invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
-			invoke __UTILS__ -> Date_getYear ( ) :: mAno;
+
+			 PROC -> {
+
+                    SET R5;
+                        MOV 0;
+                        PROC CHRONOS_SECOND;
+
+                 }
+
+            	 mSegundo   =  reg @R5;
+
+
+		 PROC -> {
+
+                SET R5;
+                    MOV 0;
+                    PROC CHRONOS_MINUTE;
+
+             }
+
+        	 mMinuto   =  reg @R5;
+
+
+	 PROC -> {
+
+            SET R5;
+                MOV 0;
+                PROC CHRONOS_HOUR;
+
+         }
+
+    	 mHora   =  reg @R5;
+
+
+				 PROC -> {
+
+                        SET R5;
+                            MOV 0;
+                            PROC CHRONOS_DAY;
+
+                     }
+
+                	 mDia   =  reg @R5;
+
+					 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_MONTH;
+
+                         }
+
+                    	 mMes   =  reg @R5;
+
+					 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_YEAR;
+
+                         }
+
+                    	 mAno   =  reg @R5;
+
 		}
-		func getHora ( ) : num {
+		func getHora ( ) : int {
 			return mHora;
 		}
-		func getMinuto ( ) : num {
+		func getMinuto ( ) : int {
 			return mMinuto;
 		}
-		func getSegundo ( ) : num {
+		func getSegundo ( ) : int {
 			return mSegundo;
 		}
-		func getDia ( ) : num {
+		func getDia ( ) : int {
 			return mDia;
 		}
-		func getMes ( ) : num {
+		func getMes ( ) : int {
 			return mMes;
 		}
-		func getAno ( ) : num {
+		func getAno ( ) : int {
 			return mAno;
 		}
 		func getFormatado ( ) : string {
@@ -282,19 +579,77 @@ package Tempo {
 			def formatado : string = string_append ( alfa , " ", beta );
 			return formatado;
 		}
-		explicit : func getTempoData_Formatado ( ) : string {
-			def mHora : num = 0;
-			def mMinuto : num = 0;
-			def mSegundo : num = 0;
-			def mDia : num = 0;
-			def mMes : num = 0;
-			def mAno : num = 0;
-			invoke __UTILS__ -> Time_getHour ( ) :: mHora;
-			invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
-			invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
-			invoke __UTILS__ -> Date_getDay ( ) :: mDia;
-			invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
-			invoke __UTILS__ -> Date_getYear ( ) :: mAno;
+		explicit : func getDataTempo_Formatado ( ) : string {
+			def mHora : int = 0;
+			def mMinuto : int = 0;
+			def mSegundo : int = 0;
+			def mDia : int = 0;
+			def mMes : int = 0;
+			def mAno : int = 0;
+
+				 PROC -> {
+
+                        SET R5;
+                            MOV 0;
+                            PROC CHRONOS_SECOND;
+
+                     }
+
+                	 mSegundo   =  reg @R5;
+
+
+    		 PROC -> {
+
+                    SET R5;
+                        MOV 0;
+                        PROC CHRONOS_MINUTE;
+
+                 }
+
+            	 mMinuto   =  reg @R5;
+
+
+    	 PROC -> {
+
+                SET R5;
+                    MOV 0;
+                    PROC CHRONOS_HOUR;
+
+             }
+
+        	 mHora   =  reg @R5;
+
+
+    				 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_DAY;
+
+                         }
+
+                    	 mDia   =  reg @R5;
+
+    					 PROC -> {
+
+                                SET R5;
+                                    MOV 0;
+                                    PROC CHRONOS_MONTH;
+
+                             }
+
+                        	 mMes   =  reg @R5;
+
+    					 PROC -> {
+
+                                SET R5;
+                                    MOV 0;
+                                    PROC CHRONOS_YEAR;
+
+                             }
+
+                        	 mAno   =  reg @R5;
+
 			def f1 : string = num_to_string ( mDia );
 			def f2 : string = num_to_string ( mMes );
 			def f3 : string = num_to_string ( mAno );
@@ -321,19 +676,77 @@ package Tempo {
 			def formatado : string = string_append ( alfa , " ", beta );
 			return formatado;
 		}
-		func getDataTempo_Formatado ( ) : string {
-			def mHora : num = 0;
-			def mMinuto : num = 0;
-			def mSegundo : num = 0;
-			def mDia : num = 0;
-			def mMes : num = 0;
-			def mAno : num = 0;
-			invoke __UTILS__ -> Time_getHour ( ) :: mHora;
-			invoke __UTILS__ -> Time_getMinute ( ) :: mMinuto;
-			invoke __UTILS__ -> Time_getSecond ( ) :: mSegundo;
-			invoke __UTILS__ -> Date_getDay ( ) :: mDia;
-			invoke __UTILS__ -> Date_getMonth ( ) :: mMes;
-			invoke __UTILS__ -> Date_getYear ( ) :: mAno;
+		func getTempoData_Formatado ( ) : string {
+			def mHora : int = 0;
+			def mMinuto : int = 0;
+			def mSegundo : int = 0;
+			def mDia : int = 0;
+			def mMes : int = 0;
+			def mAno : int = 0;
+
+				 PROC -> {
+
+                        SET R5;
+                            MOV 0;
+                            PROC CHRONOS_SECOND;
+
+                     }
+
+                	 mSegundo   =  reg @R5;
+
+
+    		 PROC -> {
+
+                    SET R5;
+                        MOV 0;
+                        PROC CHRONOS_MINUTE;
+
+                 }
+
+            	 mMinuto   =  reg @R5;
+
+
+    	 PROC -> {
+
+                SET R5;
+                    MOV 0;
+                    PROC CHRONOS_HOUR;
+
+             }
+
+        	 mHora   =  reg @R5;
+
+
+    				 PROC -> {
+
+                            SET R5;
+                                MOV 0;
+                                PROC CHRONOS_DAY;
+
+                         }
+
+                    	 mDia   =  reg @R5;
+
+    					 PROC -> {
+
+                                SET R5;
+                                    MOV 0;
+                                    PROC CHRONOS_MONTH;
+
+                             }
+
+                        	 mMes   =  reg @R5;
+
+    					 PROC -> {
+
+                                SET R5;
+                                    MOV 0;
+                                    PROC CHRONOS_YEAR;
+
+                             }
+
+                        	 mAno   =  reg @R5;
+
 			def f1 : string = num_to_string ( mDia );
 			def f2 : string = num_to_string ( mMes );
 			def f3 : string = num_to_string ( mAno );

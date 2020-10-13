@@ -554,12 +554,19 @@ public class Run_Context {
 
 
         ArrayList<AST> mCasts = new ArrayList<AST>();
+        ArrayList<AST> mStages = new ArrayList<AST>();
+
         ArrayList<AST> mTipos = new ArrayList<AST>();
         ArrayList<AST> mStructs = new ArrayList<AST>();
 
         for (AST eAST : getCastsContexto(mEscopo)) {
             mCasts.add(eAST);
         }
+
+        for (AST eAST : getStagesContexto(mEscopo)) {
+            mStages.add(eAST);
+        }
+
 
         for (AST eAST : getTypesContexto(mEscopo)) {
             mTipos.add(eAST);
@@ -575,28 +582,60 @@ public class Run_Context {
 
         }
 
-        for (AST eAST : mCasts) {
-            if (eAST.mesmoNome(eNome)) {
-                ret = "CAST";
-                break;
+        boolean enc = false;
+
+        if (!enc){
+            for (AST eAST : mCasts) {
+                if (eAST.mesmoNome(eNome)) {
+                    ret = "CAST";
+                    enc=true;
+                    break;
+                }
             }
         }
 
-        for (AST eAST : mTipos) {
-            if (eAST.mesmoNome(eNome)) {
-                ret = "TYPE";
-                break;
+        if (!enc){
+
+            for (AST eAST : mStages) {
+                if (eAST.mesmoNome(eNome)) {
+                    ret = "STAGES";
+                    enc=true;
+
+                    break;
+                }
             }
         }
 
-        for (AST eAST : mStructs) {
 
-            if (eAST.mesmoNome(eNome)) {
-                ret = "STRUCT";
-                break;
+        if (!enc){
+
+            for (AST eAST : mTipos) {
+                if (eAST.mesmoNome(eNome)) {
+                    ret = "TYPE";
+                    enc=true;
+
+                    break;
+                }
             }
-
         }
+
+
+
+        if (!enc){
+
+            for (AST eAST : mStructs) {
+
+                if (eAST.mesmoNome(eNome)) {
+                    ret = "STRUCT";
+                    enc=true;
+
+                    break;
+                }
+
+            }
+        }
+
+
 
 
         return ret;

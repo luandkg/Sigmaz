@@ -51,9 +51,18 @@ struct O3 with Objeto {
 	
 }
 operator == ( a : int , b : int ) : bool {
-	def c : bool;
-	invoke math -> operator_equal_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 EQUAL R6;
+
+     }
+
+	return reg @R1;
 }
 call iniciar -> {
 	def obj_1 : Objeto = init Objeto ( );

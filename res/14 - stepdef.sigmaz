@@ -17,38 +17,92 @@ act operando ( ) {
 	
 }
 func somar ( a : int , b : int ) : int {
-	def c : int;
-	invoke math -> operator_sum_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 ADD R6;
+
+     }
+
+	return reg @R7;
 }
 func resto ( a : int , b : int ) : int {
-	def c : int;
-	invoke math -> operator_mod_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 MOD R6;
+
+     }
+
+	return reg @R7;
 }
 
 act println ( a : int , b : string ) {
-	def c : int;
-	invoke terminal -> change ( ) :: c;
-	invoke terminal -> print ( a ) :: c;
-	invoke terminal -> print ( b ) :: c;
+
+	   reg @R5 -> a;
+       reg @R13 -> b;
+
+         PROC -> {
+            PROC CHANGE_LINE;
+
+            SET R14;
+            MOV "";
+            INT_STRING R5;
+            PRINT R14;
+            PRINT R13;
+
+         }
+
 }
 
 act println ( a : string , b : int ) {
-	def c : int;
-	invoke terminal -> change ( ) :: c;
-	invoke terminal -> print ( a ) :: c;
-	invoke terminal -> print ( b ) :: c;
+
+	   reg @R13 -> a;
+       reg @R5 -> b;
+
+         PROC -> {
+            PROC CHANGE_LINE;
+            PRINT R13;
+            SET R13;
+            MOV "";
+            INT_STRING R5;
+            PRINT R13;
+         }
+
 }
 func menor ( a : int , b : int ) : bool {
-	def c : bool;
-	invoke math -> operator_less_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 LESS R6;
+
+     }
+
+	return reg @R1;
 }
 operator == ( a : int , b : int ) : bool {
-	def c : bool;
-	def c1 : int = a;
-	def c2 : int = b;
-	invoke math -> operator_equal_int ( c1 , c2 ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 EQUAL R6;
+
+     }
+
+	return reg @R1;
 }

@@ -10,10 +10,18 @@ struct Pessoa {
 	    define tipo : Tipos = Tipos :: ALFA;
 	explicit :
 	    func vazar ( a : num , b : num ) : num {
-		    def c : num;
-		    invoke math -> operator_sum_num ( a , b ) :: c;
-		    invoke casting -> cast_integer_num ( c ) :: c;
-		    return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 SAX R10;
+
+     }
+
+	return reg @R11;
 	    }
 	
 }
@@ -31,8 +39,16 @@ act inicio ( ) {
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }
 func somar_inteiro ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sum_num ( a , b ) :: c;
-	invoke casting -> cast_integer_num ( c ) :: c;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 SAX R10;
+
+     }
+
+	return reg @R11;
 }

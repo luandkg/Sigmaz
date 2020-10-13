@@ -50,15 +50,33 @@ functor <T> somatorio(a : T, b : T) : T {
 }
 
 operator ++ ( a : int , b : int ) : int {
-	def c : int;
-	invoke math -> operator_sum_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 ADD R6;
+
+     }
+
+	return reg @R7;
 }
 
 operator ++ ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sum_num ( a , b ) :: c;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 SAX R10;
+
+     }
+
+	return reg @R11;
 }
 
 

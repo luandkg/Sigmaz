@@ -84,3 +84,8 @@ Linguagem de Programação Estruturada - Alterações
 
 		2020 10 04 -->> Remoção do Sistema de Analise
 
+
+		2020 10 11 -->> Alteração de Invocadores para Processadores
+		2020 10 11 -->> Remoção do Invocador MATH
+		2020 10 11 -->> Remoção do Invocador UTILS
+

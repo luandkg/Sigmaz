@@ -1,27 +1,16 @@
 cast pos {
-	getter a : num -> {
-		
-		#return a;
-		
-	}
-	setter b : num -> {
-		
-		#return b;
-		
-	}
+	getter a : num -> {		}
+	setter b : num -> {		}
 	
 }
 operator == ( a : pos , b : pos ) : bool {
-	def c : bool;
 	def c1 : num = num ( a );
 	def c2 : num = num ( b );
-	invoke math -> operator_equal ( c1 , c2 ) :: c;
-	return c;
+	return c1 == c2;
 }
 operator !! ( a : pos , b : pos ) : bool {
-	def c : bool;
 	def c1 : num = a;
 	def c2 : num = b;
 	invoke math -> operator_not ( c1 , c2 ) :: c;
-	return c;
+	return c1 !! c2;
 }

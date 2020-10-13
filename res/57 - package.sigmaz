@@ -1,12 +1,23 @@
 package Terminal {
 	struct Terminal {
 		explicit :
-		act println ( a : string , b : int ) {
-			def c : int;
-			invoke terminal -> change ( ) :: c;
-			invoke terminal -> print ( a ) :: c;
-			invoke terminal -> print ( b ) :: c;
-		}
+act println ( a : string , b : int ) {
+	PROC -> {
+		PROC CHANGE_LINE;
+	}
+	reg @R13 -> a;
+	PROC -> {
+		PRINT R13;
+	}
+
+	reg @R5 -> b;
+	PROC -> {
+		SET R13;
+		MOV "";
+		INT_STRING R5;
+		PRINT R13;
+	}
+}
 		
 	}
 	

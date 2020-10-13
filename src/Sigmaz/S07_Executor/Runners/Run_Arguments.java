@@ -228,6 +228,11 @@ public class Run_Arguments {
      //   Saida.setValor(mAST.getConteudo(),mRunTime,mEscopoInterno);
        // Saida.setTipo(mAST.getRetornoTipo());
 
+
+        if (mRunTime.getErros().size() > 0) {
+            return null;
+        }
+
         Saida = mAST.getRetorno();
 
         if (Saida.getNulo()) {

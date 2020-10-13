@@ -293,6 +293,7 @@ public class Sigmaz_Fases {
         if (mSigmaz_Executor.temErros()){
             for(String mErro : mSigmaz_Executor.getErros()){
                 mErros_Execucao.add(mErro);
+                mTemErros=true;
             }
         }
 

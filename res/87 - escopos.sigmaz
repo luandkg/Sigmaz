@@ -15,11 +15,18 @@ func ateOnde(a:int) : int {
 }
 
 operator == ( a : int , b : int ) : bool {
-	def c : bool;
-	def c1 : int = a;
-	def c2 : int = b;
-	invoke math -> operator_equal_int ( c1 , c2 ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 EQUAL R6;
+
+     }
+
+	return reg @R1;
 }
 
 
@@ -67,9 +74,18 @@ call Escopos -> {
 
 
 	local -> ( a : num , b : num ) : num {
-		def c : num = 0.0;
-		invoke math -> operator_sum_num ( a , b ) :: c;
-		return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 SAX R10;
+
+     }
+
+	return reg @R11;
 	}
 
 
@@ -77,9 +93,18 @@ call Escopos -> {
     {
 
         local -> (v1:int,v2:int) : int {
-                def c : int = 0;
-        		invoke math -> operator_sum_int ( v1 , v2 ) :: c;
-        		return c;
+	reg @R5 -> v1;
+    reg @R6 -> v2;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 ADD R6;
+
+     }
+
+	return reg @R7;
         }
 
         def t1 : num = @(2.2,3.3);

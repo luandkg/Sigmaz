@@ -40,7 +40,16 @@ act mudar ( ) {
 
 
     operator ++ ( a : int , b : int ) : int {
-    	def c : int;
-    	invoke math -> operator_sum_int ( a , b ) :: c;
-    	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 ADD R6;
+
+     }
+
+	return reg @R7;
     }

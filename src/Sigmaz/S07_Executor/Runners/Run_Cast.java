@@ -173,6 +173,10 @@ public class Run_Cast {
         Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
         mAST.init(mCasting);
 
+        if (mRunTime.getErros().size() > 0) {
+            return ret;
+        }
+
         if (mAST.getRetorno().getNulo()) {
             ret = null;
         } else if (mAST.getRetorno().getPrimitivo()) {

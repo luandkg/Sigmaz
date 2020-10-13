@@ -3,6 +3,8 @@ require lib;
 
 call iniciar -> inicio ( );
 
+refer Tempo;
+
 act inicio ( ) {
 
 	def valor : int = 1;
@@ -10,6 +12,8 @@ act inicio ( ) {
 	def ternal : int = if ( maior ( valor , 2 ) ) :: ( +1 ) not ( -1 );
 	
 	def ale : int =  aleatorio ( 0 , 100 ) ;
+
+    def data : string = Data -> getData_Formatado();
 
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }

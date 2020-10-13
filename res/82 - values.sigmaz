@@ -145,9 +145,18 @@ act valores ( ) {
 
 
 	local -> ( a : int , b : int ) : int {
-		def c : int = 0;
-		invoke math -> operator_sum_int ( a , b ) :: c;
-		return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 ADD R6;
+
+     }
+
+	return reg @R7;
 	}
 
 
@@ -192,15 +201,31 @@ director ! ( a : bool ) : bool {
 }
 
 director ! ( a : int ) : int {
-    def c : int;
-	invoke math ->  director_inverse_int ( a ) :: c;
-	return c;
+	reg @R5 -> a;
+
+     PROC -> {
+
+        SET R6;
+            MOV 0;
+            OPE R5 MUX -1;
+
+     }
+
+	return reg @R6;
 }
 
 director ! ( a : num ) : num {
-    def c : num;
-	invoke math ->  director_inverse_num ( a ) :: c;
-	return c;
+	reg @R9 -> a;
+
+     PROC -> {
+
+        SET R10;
+            MOV 0.0;
+            OPE R9 PUC -1.0;
+
+     }
+
+	return reg @R10;
 }
 
 functor <T> somatorio(a : T, b : T) : T {
@@ -220,29 +245,65 @@ auto <T> chamatorio(a:T) {
 
 
 operator ++ ( a : int , b : int ) : int {
-	def c : int;
-	invoke math -> operator_sum_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 ADD R6;
+
+     }
+
+	return reg @R7;
 }
 
 operator == ( a : int , b : int ) : bool {
-	def c : bool;
-	invoke math -> operator_equal_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 EQUAL R6;
+
+     }
+
+	return reg @R1;
 }
 
 
 
 operator ++ ( a : num , b : num ) : num {
-	def c : num;
-	invoke math -> operator_sum_num ( a , b ) :: c;
-	return c;
+	reg @R9 -> a;
+    reg @R10 -> b;
+
+     PROC -> {
+
+        SET R11;
+            MOV 0.0;
+            OPE R9 SAX R10;
+
+     }
+
+	return reg @R11;
 }
 
 func somar ( a : int , b : int ) : int {
-	def c : int;
-	invoke math -> operator_sum_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 ADD R6;
+
+     }
+
+	return reg @R7;
 }
 
 func somar_caixas ( a : Caixa , b : Caixa ) : int {
@@ -274,25 +335,38 @@ cast i5 {
 
 }
 operator == ( a : i5 , b : i5 ) : bool {
-	def c : bool;
-	def c1 : int = a;
-	def c2 : int = b;
-	invoke math -> operator_equal_int ( c1 , c2 ) :: c;
-	return c;
+	reg @R5 -> int(a);
+    reg @R6 -> int(b);
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 EQUAL R6;
+
+     }
+
+	return reg @R1;
 }
 operator !! ( a : i5 , b : i5 ) : bool {
-	def c : bool;
-	def c1 : int = a;
-	def c2 : int = b;
-	invoke math -> operator_not_int ( c1 , c2 ) :: c;
-	return c;
+	reg @R5 -> int(a);
+    reg @R6 -> int(b);
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 DIFF R6;
+
+     }
+
+	return reg @R1;
 }
 
 operator ++ ( a : i5 , b : i5 ) : i5 {
-	def c : int = null;
 	def c1 : int = a;
 	def c2 : int = b;
-	invoke math -> operator_sum_int ( c1 , c2 ) :: c;
+	def c : int = c1 ++ c2;
 
 
 	while (c >> 5)  -> { c = c -- 5; }
@@ -302,10 +376,9 @@ operator ++ ( a : i5 , b : i5 ) : i5 {
 }
 
 operator -- ( a : i5 , b : i5 ) : i5 {
-	def c : int = null;
 	def c1 : int = a;
 	def c2 : int = b;
-	invoke math -> operator_sub_int ( c1 , c2 ) :: c;
+	def c : int = c1 -- c2;
 
 
 	while (c >> 5)  -> { c = c -- 5; }
@@ -318,51 +391,93 @@ operator -- ( a : i5 , b : i5 ) : i5 {
 
 
 func maior ( a : int , b : int ) : bool {
-	def c : bool;
-	def a1 : int = a;
-	def b1 : int = b;
-	invoke math -> operator_great_int ( a1 , b1 ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 GREAT R6;
+
+     }
+
+	return reg @R1;
 }
 
 func menor ( a : int , b : int ) : bool {
-	def c : bool;
-	def a1 : int = a;
-	def b1 : int = b;
-	invoke math -> operator_less_int ( a1 , b1 ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 LESS R6;
+
+     }
+
+	return reg @R1;
 }
 
 operator ++ ( a : int , b : int ) : int {
-	def c : int;
-	def a1 : int = a;
-	def b1 : int = b;
-	invoke math -> operator_sum_int ( a1 , b1 ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 ADD R6;
+
+     }
+
+	return reg @R7;
 }
 
 operator -- ( a : int , b : int ) : int {
-	def c : int;
-	def a1 : int = a;
-	def b1 : int = b;
-	invoke math -> operator_sub_int ( a1 , b1 ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 SUB R6;
+
+     }
+
+	return reg @R7;
 }
 
 operator >> ( a : int , b : int ) : bool {
-	def c : bool;
-	def a1 : int = a;
-	def b1 : int = b;
-	invoke math -> operator_great_int ( a1 , b1 ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 GREAT R6;
+
+     }
+
+	return reg @R1;
 }
 
 operator << ( a : int , b : int ) : bool {
-	def c : bool;
-	def a1 : int = a;
-	def b1 : int = b;
-	invoke math -> operator_less_int ( a1 , b1 ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 LESS R6;
+
+     }
+
+	return reg @R1;
 }
 
 stages Modos -> { SIMPLES, NORMAL, COMPLEXO}

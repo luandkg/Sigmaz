@@ -61,29 +61,74 @@ struct XA {
 	
 }
 operator ++ ( a : int , b : int ) : int {
-	def c : int = 0;
-	invoke math -> operator_sum_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 ADD R6;
+
+     }
+
+	return reg @R7;
 }
 operator ** ( a : int , b : int ) : int {
-	def c : int = 0;
-	invoke math -> operator_mux_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 MUX R6;
+
+     }
+
+	return reg @R7;
 }
 func somar ( a : int , b : int ) : int {
-	def c : int = 0;
-	invoke math -> operator_sum_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R7;
+            MOV 0;
+            OPE R5 ADD R6;
+
+     }
+
+	return reg @R7;
 }
 func maior ( a : int , b : int ) : bool {
-	def c : bool = null;
-	invoke math -> operator_great_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 GREAT R6;
+
+     }
+
+	return reg @R1;
 }
 func menor ( a : int , b : int ) : bool {
-	def c : bool = null;
-	invoke math -> operator_less_int ( a , b ) :: c;
-	return c;
+	reg @R5 -> a;
+    reg @R6 -> b;
+
+     PROC -> {
+
+        SET R1;
+            MOV FALSE;
+            OPE R5 LESS R6;
+
+     }
+
+	return reg @R1;
 }
 cast neg {
 	getter a : int -> {
@@ -104,10 +149,9 @@ cast neg {
 	
 }
 operator ** ( a : neg , b : neg ) : neg {
-	def c : int = null;
 	def a1 : int = a;
 	def b1 : int = b;
-	invoke math -> operator_mux_int ( a1 , b1 ) :: c;
+	def c : int = a1**b1;
 	if ( maior ( c , 0 ) ) -> {
 		exception "Operacao invalida entre os negativos !";
 	}
@@ -115,10 +159,9 @@ operator ** ( a : neg , b : neg ) : neg {
 	return d;
 }
 operator ** ( a : neg , b : int ) : neg {
-	def c : int = null;
 	def a1 : int = a;
 	def b1 : int = b;
-	invoke math -> operator_mux_int ( a1 , b1 ) :: c;
+	def c : int = a1**b1;
 	if ( maior ( c , 0 ) ) -> {
 		exception "Operacao invalida entre os negativos !";
 	}

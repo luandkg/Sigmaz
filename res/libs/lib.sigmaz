@@ -7,6 +7,7 @@ import "comparators.sigmaz";
 import "terminal.sigmaz";
 import "cast.sigmaz";
 import "strings.sigmaz";
+import "bool.sigmaz";
 import "int.sigmaz";
 import "num.sigmaz";
 import "int_num.sigmaz";
@@ -16,6 +17,7 @@ import "container/lista.sigmaz";
 import "container/vetor.sigmaz";
 import "container/iterador.sigmaz";
 import "pacote_tempo.sigmaz";
+
 import "ecossistema.sigmaz";
 import "cores.sigmaz";
 import "unit.sigmaz";

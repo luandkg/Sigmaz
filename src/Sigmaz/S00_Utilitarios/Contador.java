@@ -16,6 +16,8 @@ public class Contador {
     private int mStages;
     private int mTypes;
     private int mStructs;
+    private int mModels;
+
     private int mExternals;
 
     private int mPackages;
@@ -34,14 +36,16 @@ public class Contador {
         mAutos = 0;
         mFunctors = 0;
 
-        mDefaults=0;
-        mOperators=0;
-        mDirectors=0;
+        mDefaults = 0;
+        mOperators = 0;
+        mDirectors = 0;
 
         mCasts = 0;
         mStages = 0;
         mTypes = 0;
         mStructs = 0;
+        mModels = 0;
+
         mExternals = 0;
         mPackages = 0;
 
@@ -67,6 +71,25 @@ public class Contador {
                 mOperators += 1;
             } else if (mCorrente.mesmoTipo("DIRECTOR")) {
                 mDirectors += 1;
+            } else if (mCorrente.mesmoTipo("CAST")) {
+                mCasts += 1;
+            } else if (mCorrente.mesmoTipo("STRUCT")) {
+
+                if (mCorrente.getBranch("EXTENDED").mesmoNome("STRUCT")) {
+                    mStructs += 1;
+                } else if (mCorrente.getBranch("EXTENDED").mesmoNome("TYPE")) {
+                    mTypes += 1;
+                } else if (mCorrente.getBranch("EXTENDED").mesmoNome("STAGES")) {
+                    mStages += 1;
+                } else if (mCorrente.getBranch("EXTENDED").mesmoNome("MODEL")) {
+                    mModels += 1;
+                } else if (mCorrente.getBranch("EXTENDED").mesmoNome("EXTERNAL")) {
+                    mExternals += 1;
+                }
+
+
+            } else if (mCorrente.mesmoTipo("PACKAGE")) {
+                mPackages += 1;
             }
         }
 
@@ -115,6 +138,10 @@ public class Contador {
 
     public int getStructs() {
         return mStructs;
+    }
+
+    public int getModels() {
+        return mModels;
     }
 
     public int getExternals() {
