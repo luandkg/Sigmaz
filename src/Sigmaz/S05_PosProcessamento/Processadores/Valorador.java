@@ -18,7 +18,6 @@ public class Valorador {
     }
 
 
-
     public void init(ArrayList<AST> mTodos, ArrayList<AST> mRequisicoes) {
 
         mPosProcessador.mensagem("");
@@ -28,83 +27,38 @@ public class Valorador {
 
         Pronoco mAtribuindo = new Pronoco("<<SIGMAZ>>");
 
-        ArrayList<Pronoco_Pacote> mPacotes = new ArrayList<Pronoco_Pacote>();
-
 
         Simbolismo mSimbolismo = new Simbolismo(mPosProcessador.getMensageiro());
         Valoramento mValoramento = new Valoramento(mPosProcessador.getMensageiro());
         Referenciamento mReferenciamento = new Referenciamento(mPosProcessador.getMensageiro());
 
-        for (AST mAST : mTodos) {
+        ArrayList<Pronoco_Pacote> mPacotes = new ArrayList<Pronoco_Pacote>();
 
-            if (mAST.mesmoTipo("SIGMAZ")) {
 
-                mPosProcessador.mensagem("");
+        for (AST mRequisicao : mPosProcessador.getRequisicoes()) {
 
-                for (AST eAlgumaCoisa : mAST.getASTS()) {
+            mPosProcessador.mensagem("Biblioteca Externa");
+
+
+                mSimbolismo.realizarSimbolismoExterno("\t", mRequisicao, mAtribuindo);
+
+                for (AST eAlgumaCoisa : mRequisicao.getASTS()) {
                     if (eAlgumaCoisa.mesmoTipo("PACKAGE")) {
                         mPacotes.add(new Pronoco_Pacote(eAlgumaCoisa));
                     }
                 }
 
-                if (mPacotes.size() > 0) {
 
-                    mPosProcessador.mensagem("PACOTES : " + mPacotes.size());
-                    mPosProcessador.mensagem("");
-                    int pi = 1;
-
-                    for (Pronoco_Pacote ePacote : mPacotes) {
-                        mPosProcessador.mensagem("\t - " + pi + " : " + ePacote.getNome());
-                        pi += 1;
-                    }
-
-                    mPosProcessador.mensagem("");
-
-                }
-
-                mPosProcessador.mensagem("SIGMAZ");
-                mPosProcessador.mensagem("");
-
-                for (AST eAST : mRequisicoes) {
-                    mSimbolismo.realizarSimbolismoExterno("\t", eAST, mAtribuindo);
-                }
-
-                if (mPosProcessador.temErros()) {
-                    return;
-                }
-
-                mPosProcessador.mensagem("REFERS : ");
-
-                mReferenciamento.processar_Refers("\t", mPacotes, mAST, mAtribuindo);
-
-                mPosProcessador.mensagem("SIMBOLISMO : ");
-
-                mSimbolismo.realizarSimbolismo("\t", mAST, mAtribuindo);
-
-                mPosProcessador.mensagem("VALORAMENTO : ");
-
-                mValoramento.realizarValoramento("\t", mAST, mAtribuindo);
+        }
 
 
-                for (Pronoco_Pacote ePacote : mPacotes) {
-
-                    mPosProcessador.mensagem("Pacote : " + ePacote.getNome());
 
 
-                    mReferenciamento.processar_Refers("\t\t", mPacotes, ePacote.getAST(), mAtribuindo);
+        for (AST mAST : mTodos) {
 
-                    if (mPosProcessador.temErros()) {
-                        return;
-                    }
+            if (mAST.mesmoTipo("SIGMAZ")) {
 
-                    mSimbolismo.realizarSimbolismo("\t\t", ePacote.getAST(), mAtribuindo);
-                    mValoramento.realizarValoramento("\t\t", ePacote.getAST(), mAtribuindo);
-
-
-                    if (mPosProcessador.getErros().size() > 0) {
-                        break;
-                    }
-                }
+                unidade(mSimbolismo, mValoramento, mReferenciamento, mPacotes, mAtribuindo, mAST);
 
             }
         }
@@ -112,5 +66,73 @@ public class Valorador {
 
     }
 
+    public void unidade(Simbolismo mSimbolismo, Valoramento mValoramento, Referenciamento mReferenciamento, ArrayList<Pronoco_Pacote> mPacotes, Pronoco mPronoco, AST mAST) {
+
+
+        mPosProcessador.mensagem("");
+
+        for (AST eAlgumaCoisa : mAST.getASTS()) {
+            if (eAlgumaCoisa.mesmoTipo("PACKAGE")) {
+                mPacotes.add(new Pronoco_Pacote(eAlgumaCoisa));
+            }
+        }
+
+        if (mPacotes.size() > 0) {
+
+            mPosProcessador.mensagem("PACOTES : " + mPacotes.size());
+            mPosProcessador.mensagem("");
+            int pi = 1;
+
+            for (Pronoco_Pacote ePacote : mPacotes) {
+                mPosProcessador.mensagem("\t - " + pi + " : " + ePacote.getNome());
+                pi += 1;
+            }
+
+            mPosProcessador.mensagem("");
+
+        }
+
+        mPosProcessador.mensagem("SIGMAZ");
+        mPosProcessador.mensagem("");
+
+
+        if (mPosProcessador.temErros()) {
+            return;
+        }
+
+        mPosProcessador.mensagem("REFERS : ");
+
+        mReferenciamento.processar_Refers("\t", mPacotes, mAST, mPronoco);
+
+        mPosProcessador.mensagem("SIMBOLISMO : ");
+
+        mSimbolismo.realizarSimbolismo("\t", mAST, mPronoco);
+
+        mPosProcessador.mensagem("VALORAMENTO : ");
+
+        mValoramento.realizarValoramento("\t", mAST, mPronoco);
+
+
+        for (Pronoco_Pacote ePacote : mPacotes) {
+
+            mPosProcessador.mensagem("Pacote : " + ePacote.getNome());
+
+
+            mReferenciamento.processar_Refers("\t\t", mPacotes, ePacote.getAST(), mPronoco);
+
+            if (mPosProcessador.temErros()) {
+                return;
+            }
+
+            mSimbolismo.realizarSimbolismo("\t\t", ePacote.getAST(), mPronoco);
+            mValoramento.realizarValoramento("\t\t", ePacote.getAST(), mPronoco);
+
+
+            if (mPosProcessador.getErros().size() > 0) {
+                break;
+            }
+        }
+
+    }
 
 }

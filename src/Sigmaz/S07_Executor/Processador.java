@@ -34,13 +34,7 @@ public class Processador {
     private String mR16;
 
     private String mR17;
-    private String mR18;
 
-    private String mR19;
-    private String mR20;
-
-    private String mR21;
-    private String mR22;
 
     private ArrayList<String> mRegistradores;
 
@@ -49,9 +43,9 @@ public class Processador {
     private ArrayList<String> mInteiros;
     private ArrayList<String> mReais;
     private ArrayList<String> mTextos;
-    private ArrayList<String> mCasts;
-    private ArrayList<String> mStages;
-    private ArrayList<String> mStructs;
+
+    private ArrayList<String> mTipos;
+
 
     private String mApontando;
 
@@ -70,9 +64,7 @@ public class Processador {
         mInteiros = new ArrayList<String>();
         mReais = new ArrayList<String>();
         mTextos = new ArrayList<String>();
-        mCasts = new ArrayList<String>();
-        mStages = new ArrayList<String>();
-        mStructs = new ArrayList<String>();
+        mTipos = new ArrayList<String>();
 
 
         for (int i = 0; i < 20; i++) {
@@ -95,14 +87,8 @@ public class Processador {
             mTextos.add("R" + i);
         }
 
-        mCasts.add("R17");
-        mCasts.add("R18");
+        mTipos.add("R17");
 
-        mStages.add("R19");
-        mStages.add("R20");
-
-        mStructs.add("R21");
-        mStructs.add("R22");
     }
 
 
@@ -134,13 +120,7 @@ public class Processador {
         mR16 = "";
 
         mR17 = "";
-        mR18 = "";
 
-        mR19 = "";
-        mR20 = "";
-
-        mR21 = "";
-        mR22 = "";
 
     }
 
@@ -196,7 +176,13 @@ public class Processador {
             ret.atribuir(String.valueOf(mR13), "Texto");
         } else if (mApontando.contentEquals("R14")) {
             ret.atribuir(String.valueOf(mR14), "Texto");
+        } else if (mApontando.contentEquals("R15")) {
+            ret.atribuir(String.valueOf(mR15), "Texto");
+        } else if (mApontando.contentEquals("R16")) {
+            ret.atribuir(String.valueOf(mR15), "Texto");
 
+        } else if (mApontando.contentEquals("R17")) {
+            ret.atribuir(String.valueOf(mR15), "Tipo");
 
         }
 
@@ -458,44 +444,24 @@ public class Processador {
         }
     }
 
-    public void aplicar_cast(String eRegistrador, String eConteudo) {
+    public void aplicar_tipo(String eRegistrador, String eConteudo) {
 
-        if (mCasts.contains(eRegistrador)) {
+        if (mTipos.contains(eRegistrador)) {
 
 
             if (eRegistrador.contentEquals("R17")) {
                 mR17 = eConteudo;
-            }else if (eRegistrador.contentEquals("R18")) {
-                mR18 = eConteudo;
 
             } else {
                 mRunTime.errar(mLocal, "O registrador " + eRegistrador + " nao pode receber esse conteudo : " + eConteudo);
             }
 
         } else {
-            mRunTime.errar(mLocal, "O registrador " + eRegistrador + " nao pode receber conteudo do tipo cast : " + eConteudo);
+            mRunTime.errar(mLocal, "O registrador " + eRegistrador + " nao pode receber conteudo do tipo TYPE : " + eConteudo);
         }
     }
 
 
-    public void aplicar_stage(String eRegistrador, String eConteudo) {
-
-        if (mStages.contains(eRegistrador)) {
-
-
-            if (eRegistrador.contentEquals("R19")) {
-                mR19 = eConteudo;
-            }else if (eRegistrador.contentEquals("R20")) {
-                mR20 = eConteudo;
-
-            } else {
-                mRunTime.errar(mLocal, "O registrador " + eRegistrador + " nao pode receber esse conteudo : " + eConteudo);
-            }
-
-        } else {
-            mRunTime.errar(mLocal, "O registrador " + eRegistrador + " nao pode receber conteudo do tipo stage : " + eConteudo);
-        }
-    }
 
 
     public Registrado getRegistradorApontado() {
@@ -571,29 +537,13 @@ public class Processador {
                     mRunTime.errar(mLocal, "registrador Real Desconhecido : " + eRegistrador);
                 }
 
-            } else if (mCasts.contains(eRegistrador)) {
+            } else if (mTipos.contains(eRegistrador)) {
 
                 if (eRegistrador.contentEquals("R17")) {
-                    mRegistrado.atribuir(String.valueOf(mR17), "Cast");
-                } else if (eRegistrador.contentEquals("R18")) {
-                    mRegistrado.atribuir(String.valueOf(mR18), "Cast");
+                    mRegistrado.atribuir(String.valueOf(mR17), "Tipo");
                 }
 
-            } else if (mStages.contains(eRegistrador)) {
 
-                if (eRegistrador.contentEquals("R19")) {
-                    mRegistrado.atribuir(String.valueOf(mR19), "Stage");
-                } else if (eRegistrador.contentEquals("R20")) {
-                    mRegistrado.atribuir(String.valueOf(mR20), "Stage");
-                }
-
-            } else if (mStructs.contains(eRegistrador)) {
-
-                if (eRegistrador.contentEquals("R21")) {
-                    mRegistrado.atribuir(String.valueOf(mR21), "Struct");
-                } else if (eRegistrador.contentEquals("R22")) {
-                    mRegistrado.atribuir(String.valueOf(mR22), "Struct");
-                }
 
 
             } else {
@@ -642,7 +592,11 @@ public class Processador {
         System.out.println("");
         System.out.println("\t - R13 : " + mR13);
         System.out.println("\t - R14 : " + mR14);
+        System.out.println("\t - R15 : " + mR15);
+        System.out.println("\t - R16 : " + mR16);
 
+        System.out.println("");
+        System.out.println("\t - R17 : " + mR17);
 
         System.out.println("");
         System.out.println("################### ########### ####################");

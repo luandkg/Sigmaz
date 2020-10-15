@@ -89,3 +89,7 @@ Linguagem de Programação Estruturada - Alterações
 		2020 10 11 -->> Remoção do Invocador MATH
 		2020 10 11 -->> Remoção do Invocador UTILS
 
+
+		2020 10 14 -->> Remoção do Invocador STAGES
+		2020 10 14 -->> Divisão do Lexer : Lexer e Tokenizador
+

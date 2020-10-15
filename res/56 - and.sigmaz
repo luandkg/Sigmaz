@@ -13,18 +13,14 @@ call iniciar -> {
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 }
 operator == ( a : bool , b : bool ) : bool {
-		reg @R1 -> a;
-        reg @R2 -> b;
-
-         PROC -> {
-
-            SET R3;
-                MOV FALSE;
-                OPE R1 MATCH R2;
-
-         }
-
-    	return reg @R3;
+	reg @ R1 -> a;
+	reg @ R2 -> b;
+	PROC -> {
+		SET R3;
+		MOV FALSE;
+		OPE R1 MATCH R2;
+	}
+	return reg @ R3;
 }
 func operador_e ( a : bool , b : bool ) : bool {
 	def c : bool = false;
@@ -47,40 +43,29 @@ func operador_ou ( a : bool , b : bool ) : bool {
 	return c;
 }
 func maior_igual ( a : int , b : int ) : bool {
-def ret : bool = false;
-
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R5 GREAT R6;
-
-     }
-
-	def e_maior : bool =  reg @R1;
-
-		reg @R5 -> a;
-        reg @R6 -> b;
-
-         PROC -> {
-
-            SET R1;
-                MOV FALSE;
-                OPE R5 EQUAL R6;
-
-         }
-
-    	def e_igual : bool =  reg @R1;
-
-
-
-	if (e_maior) -> { ret = true; }
-	if (e_igual) -> { ret = true; }
-
-
+	def ret : bool = false;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 GREAT R6;
+	}
+	def e_maior : bool = reg @ R1;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 EQUAL R6;
+	}
+	def e_igual : bool = reg @ R1;
+	if ( e_maior ) -> {
+		ret = true;
+	}
+	if ( e_igual ) -> {
+		ret = true;
+	}
 	return ret;
 }
 

@@ -29,6 +29,7 @@ public class Token {
 
 	public boolean mesmoConteudo_SemCS(String eOutroConteudo) { return mConteudo.toUpperCase().contentEquals(eOutroConteudo.toUpperCase());}
 
+	public void setConteudo(String eConteudo) { mConteudo=eConteudo;}
 
 
 }

@@ -1,44 +1,25 @@
 call iniciar -> varios_estagios ( );
 act varios_estagios ( ) {
-
-
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	def cor1 : CORES = CORES :: AMARELO;
 	def cor2 : CORES = CORES :: AZUL;
-
-    reg @R19 -> cor1;
-
-    PROC -> {
-
-        SET R5;
-        MOV 0;
-        STAGE R19;
-
-    }
-
-    def v : int = reg @R5;
-
-    reg @R19 -> cor2;
-
-    PROC -> {
-
-        SET R5;
-        MOV 0;
-        STAGE R19;
-
-    }
-
-    def v2 : int = reg @R5;
-
-		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
-
-	def t1 : bool = CORES :: AZUL == CORES :: AMARELO;
-	def t2 : bool = CORES :: AZUL == CORES :: AZUL;
-	def t3 : bool = CORES :: AZUL !! CORES :: AMARELO;
-	def t4 : bool = CORES :: AZUL !! CORES :: AZUL;
-	def q1 : string = qualcor ( CORES :: AMARELO );
-	def q2 : string = qualcor ( CORES :: VERMELHO );
+	def z1 : bool = DIAS :: SEGUNDA == DIAS :: SEGUNDA;
+	def z2 : bool = DIAS :: SEGUNDA == DIAS :: QUARTA;
+	def dia1 : DIAS = DIAS :: SEGUNDA;
+	def dia2 : DIAS = DIAS :: QUARTA;
+	def s_dia1 : string = DIAS -> nameOf ( DIAS :: SEGUNDA );
+	def s_dia2 : string = DIAS -> nameOf ( DIAS :: QUARTA );
+	def i_dia1 : int = DIAS -> valueOf ( DIAS :: SEGUNDA );
+	def i_dia2 : int = DIAS -> valueOf ( DIAS :: QUARTA );
+	def r_dia : DIAS = DIAS -> get ( 6 );
+	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	def q1 : string = qualDia ( DIAS :: DOMINGO );
+	def q2 : string = qualDia ( DIAS :: SEGUNDA );
+	def q3 : string = qualDia ( DIAS :: TERCA );
+	def q4 : string = qualDia ( DIAS :: QUARTA );
+	def q5 : string = qualDia ( DIAS :: QUINTA );
+	def q6 : string = qualDia ( DIAS :: SEXTA );
+	def q7 : string = qualDia ( DIAS :: SABADO );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	def d1 : bool = DIAS :: SEGUNDA == DIAS :: SEGUNDA;
 	
@@ -55,23 +36,26 @@ stages DIAS -> {
 stages CORES -> not {
 	AMARELO , VERMELHO , AZUL , BRANCO 
 }
-operator == ( a : CORES , b : CORES ) : bool {
-	def c : bool;
-	invoke stages -> match ( a , b ) :: c;
-	return c;
-}
-operator !! ( a : CORES , b : CORES ) : bool {
-	def c : bool;
-	invoke stages -> unmatch ( a , b ) :: c;
-	return c;
-}
-func qualcor ( a : CORES ) : string {
+func qualDia ( a : DIAS ) : string {
 	def resp : string = "Desconhecido";
-	if ( a == CORES :: AMARELO ) -> {
-		resp = "Amarelo";
+	if ( a == DIAS :: SEGUNDA ) -> {
+		resp = "SEGUNDA";
 	}
-	if ( a == CORES :: VERMELHO ) -> {
-		resp = "Vermelho";
+	if ( a == DIAS :: TERCA ) -> {
+		resp = "TERCA";
+	}
+	if ( a == DIAS :: QUARTA ) -> {
+		resp = "QUARTA";
 	}
 	return resp;
+}
+operator == ( a : int , b : int ) : bool {
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 EQUAL R6;
+	}
+	return reg @ R1;
 }

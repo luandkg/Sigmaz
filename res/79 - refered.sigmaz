@@ -1,165 +1,105 @@
 call iniciar -> operando ( );
-
-
-
 act operando ( ) {
-
-    def oo : int = XA -> mValor;
-
+	def oo : int = XA -> mValor;
 	def axa : int = XA -> mValor;
 	XA -> aumentar ( );
 	XA -> aumentar ( );
 	XA -> aumentar ( );
-
+	
 	#XA -> reduzir ( );
-
 	def axb : int = XA -> mValor;
-	extern_refered XA_VALOR :: XA-> mValor ;
-
-    def igual : bool = 4 == 4;
-
+	extern_refered XA_VALOR :: XA -> mValor;
+	def igual : bool = 4 == 4;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
-    def ma : Fases = Fases::A;
-    def mb : Fases = Fases::B;
-    def mc: Fases = Fases::C;
-
-    def t : int = Fases->valueOf(ma);
-
-    def ts : string = Fases->nameOf(ma);
-
-    def rt : Fases = Fases->get(t);
-
-
-
+	def ma : Fases = Fases :: A;
+	def mb : Fases = Fases :: B;
+	def mc : Fases = Fases :: C;
+	def t : int = Fases -> valueOf ( ma );
+	def ts : string = Fases -> nameOf ( ma );
+	def rt : Fases = Fases -> get ( t );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
-
+}
+stages Fases -> {
+	A , B , C 
 }
 
-stages Fases -> { A,B,C }
-
 struct XA {
-
-    implicit:
-        define mOculto : int = 100;
-
-        act reduzir() {
-
-            mValor = mValor -- 50;
-            def mv : int = mValor;
-
-		    invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
-
-        }
-
-        func ral(a:int) : int {
-            return a ++ 5 ;
-        }
-
-
-	explicit :
-
-	    define mValor : int = 100;
-	    mockiz mSegredo : int = 33;
-
+	implicit : define mOculto : int = 100;
+	act reduzir ( ) {
+		mValor = mValor -- 50;
+		def mv : int = mValor;
+		invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
+	}
+	func ral ( a : int ) : int {
+		return a ++ 5;
+	}
+	explicit : define mValor : int = 100;
+	mockiz mSegredo : int = 33;
 	act aumentar ( ) {
-
-        extern_refered AQUI_VALOR :: XA->mValor;
-		extern_refered AQUI_VALOR_2 ::  XA -> mValor;
-
-
-
+		extern_refered AQUI_VALOR :: XA -> mValor;
+		extern_refered AQUI_VALOR_2 :: XA -> mValor;
 		AQUI_VALOR = AQUI_VALOR ++ 1;
-
-        if (AQUI_VALOR == AQUI_VALOR_2) -> { AQUI_VALOR_2 = AQUI_VALOR_2 ** 2;}
-
-		extern_refered SEGREDO ::  XA -> mSegredo;
-
-
-        def maa : int = AQUI_VALOR_2;
-
-        def te : int = SEGREDO;
-
-        def trall : int = ral(10);
-
-        mOculto = 200;
-        mValor = 100;
-
-        reduzir();
-
+		if ( AQUI_VALOR == AQUI_VALOR_2 ) -> {
+			AQUI_VALOR_2 = AQUI_VALOR_2 ** 2;
+		}
+		extern_refered SEGREDO :: XA -> mSegredo;
+		def maa : int = AQUI_VALOR_2;
+		def te : int = SEGREDO;
+		def trall : int = ral ( 10 );
+		mOculto = 200;
+		mValor = 100;
+		reduzir ( );
 		invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
 	}
 	
 }
 operator ++ ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 ADD R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 ADD R6;
+	}
+	return reg @ R7;
 }
 operator -- ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 SUB R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 SUB R6;
+	}
+	return reg @ R7;
 }
 operator ** ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 MUX R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 MUX R6;
+	}
+	return reg @ R7;
 }
 func somar ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 ADD R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 ADD R6;
+	}
+	return reg @ R7;
 }
-
 operator == ( a : int , b : int ) : bool {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R5 EQUAL R6;
-
-     }
-
-	return reg @R1;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 EQUAL R6;
+	}
+	return reg @ R1;
 }

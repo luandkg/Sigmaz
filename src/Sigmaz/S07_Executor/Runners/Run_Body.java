@@ -373,6 +373,16 @@ public class Run_Body {
                 Run_Proc mRun_Proc = new Run_Proc(mRunTime, mEscopo);
                 mRun_Proc.init(fAST);
 
+            } else if (fAST.mesmoTipo("MOVE_DATA")) {
+
+                Run_MoveData mAST = new Run_MoveData(mRunTime, mEscopo);
+                mAST.init(fAST);
+
+            }else if (fAST.mesmoTipo("STAGE_GET")){
+
+                Run_Stages mAST = new Run_Stages(mRunTime, mEscopo);
+                mAST.init(fAST);
+
             } else {
 
                mRunTime.errar(mLocal,"Dentro do Escopo  : " + fAST.getTipo());

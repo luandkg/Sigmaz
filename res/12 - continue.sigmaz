@@ -17,62 +17,46 @@ act operando ( ) {
 	
 }
 func somar ( a : num , b : num ) : num {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 SAX R10;
-
-     }
-
-	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 SAX R10;
+	}
+	return reg @ R11;
 }
 
 act println ( a : string , b : num ) {
-
-	   reg @R13 -> a;
-       reg @R9 -> b;
-
-         PROC -> {
-            PROC CHANGE_LINE;
-            PRINT R13;
-            SET R13;
-            MOV "";
-            NUM_STRING R9;
-            PRINT R13;
-         }
-
-
-
+	reg @ R13 -> a;
+	reg @ R9 -> b;
+	PROC -> {
+		PROC CHANGE_LINE;
+		PRINT R13;
+		SET R13;
+		MOV "";
+		NUM_STRING R9;
+		PRINT R13;
+	}
+	
 }
 func menor ( a : num , b : num ) : bool {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R9 MOZZ R10;
-
-     }
-
-	return reg @R1;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R9 MOZZ R10;
+	}
+	return reg @ R1;
 }
 operator == ( a : num , b : num ) : bool {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R9 OPUAL R10;
-
-     }
-
-	return reg @R1;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R9 OPUAL R10;
+	}
+	return reg @ R1;
 }

@@ -1,7 +1,7 @@
 package Blocos {
 	struct VALORADO in ( T ) {
 		restrict : 
-		    define mValor : T = null;
+		define mValor : T = null;
 		all : 
 		init VALORADO ( a : T ) {
 			mValor = a;
@@ -54,50 +54,36 @@ func azucrinar ( a : num , b : num ) : num {
 	return -1.0;
 }
 operator ++ ( a : num , b : num ) : num {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 SAX R10;
-
-     }
-
-	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 SAX R10;
+	}
+	return reg @ R11;
 }
 operator -- ( a : num , b : num ) : num {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 VEZ R10;
-
-     }
-
-	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 VEZ R10;
+	}
+	return reg @ R11;
 }
 operator ** ( a : num , b : num ) : num {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 PUC R10;
-
-     }
-
-	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 PUC R10;
+	}
+	return reg @ R11;
 }
-
 refer Blocos;
-
 call iniciar -> {
 	def a1 : CXA >> ( num ) = init CXA ( 12.0 ) >> ( num );
 	def a2 : CXA >> ( num ) = init CXA ( 18.0 ) >> ( num );

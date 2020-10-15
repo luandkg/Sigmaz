@@ -60,6 +60,16 @@ public class RunValueType_Reg {
             eRunValue.setConteudo(mReg.getConteudo());
             eRunValue.setIsReferenciavel(false);
 
+        } else if (mReg.getTipo().contentEquals("Tipo")) {
+
+            eRunValue.setNulo(false);
+            eRunValue.setRetornoTipo("string");
+            eRunValue.setPrimitivo(true);
+            eRunValue.setEstrutura(false);
+            eRunValue.setConteudo(mReg.getConteudo());
+            eRunValue.setIsReferenciavel(false);
+
+
 
         } else {
 

@@ -1,9 +1,7 @@
 import "libs/lib.sigmaz";
-
 call iniciar -> inicio ( );
 refer Lista;
 refer Iterador;
-
 act inicio ( ) {
 	def ig : Lista >> ( int ) = init Lista ( ) >> ( int );
 	ig.adicionar ( 10 );
@@ -64,34 +62,20 @@ act inicio ( ) {
 	ig.adicionar ( 87 );
 	ig.adicionar ( 90 );
 	ig.adicionar ( 100 );
-
 	ig.listar ( );
 	println ( "Quantidade LISTA : ", ig.getQuantidade ( ) );
-
-
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
-
 	println ( "DEBUG - ", 0 );
-
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
-
 	def iterar : Iterador >> ( Lista >> ( int ) ) = init Iterador ( ig ) >> ( Lista >> ( int ) );
-
-		println ( "DEBUG - ", 1);
-
-
+	println ( "DEBUG - ", 1 );
 	iterar.iniciar ( );
-
-		println ( "DEBUG - ", 2);
-
+	println ( "DEBUG - ", 2 );
 	while ( iterar.continuar ( ) ) -> {
 		println ( "-> ", iterar.getValor ( ) );
 		iterar.proximo ( );
 	}
-
-			println ( "DEBUG - ", 3);
-
+	println ( "DEBUG - ", 3 );
 	
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 	

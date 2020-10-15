@@ -1,23 +1,22 @@
 package Terminal {
 	struct Terminal {
-		explicit :
-act println ( a : string , b : int ) {
-	PROC -> {
-		PROC CHANGE_LINE;
-	}
-	reg @R13 -> a;
-	PROC -> {
-		PRINT R13;
-	}
-
-	reg @R5 -> b;
-	PROC -> {
-		SET R13;
-		MOV "";
-		INT_STRING R5;
-		PRINT R13;
-	}
-}
+		explicit : act println ( a : string , b : int ) {
+			PROC -> {
+				PROC CHANGE_LINE;
+			}
+			reg @ R13 -> a;
+			PROC -> {
+				PRINT R13;
+			}
+			reg @ R5 -> b;
+			PROC -> {
+				SET R13;
+				MOV "";
+				INT_STRING R5;
+				PRINT R13;
+			}
+			
+		}
 		
 	}
 	
@@ -47,8 +46,7 @@ package Blocos {
 	}
 
 	struct Blocos {
-		explicit :
-		act Blocar ( a : int , b : int ) {
+		explicit : act Blocar ( a : int , b : int ) {
 			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: EXTERNS;
 			Terminal -> println ( " -->> Valor A : ", a );
 		}
@@ -77,13 +75,10 @@ call iniciar -> {
 	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 	
 	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: EXTERNS;
-
+	
 	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
-
 	Terminal -> println ( " -->> Valorando : ", 12 );
-
 	def m : MODOS = MODOS :: QUATRO;
-
 	Terminal -> println ( " -->> Valorando : ", 30 );
 	
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;

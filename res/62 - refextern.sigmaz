@@ -8,8 +8,7 @@ call iniciar -> {
 }
 package ESTRELAS {
 	struct Sol {
-		explicit :
-		    define mLuz : int = 12;
+		explicit : define mLuz : int = 12;
 		func Luminosidade ( ) : int {
 			return mLuz;
 		}
@@ -19,28 +18,22 @@ package ESTRELAS {
 }
 package COISAS {
 	struct Pessoa {
-		explicit :
-		    define mID : int = 0;
-		explicit :
-		    func ID ( ) : int {
-			    mID = somar_inteiro ( mID , 1 );
-			    return mID;
-		    }
+		explicit : define mID : int = 0;
+		explicit : func ID ( ) : int {
+			mID = somar_inteiro ( mID , 1 );
+			return mID;
+		}
 		
 	}
 	
 }
 func somar_inteiro ( a : int , b : int ) : int {
-reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 ADD R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 ADD R6;
+	}
+	return reg @ R7;
 }

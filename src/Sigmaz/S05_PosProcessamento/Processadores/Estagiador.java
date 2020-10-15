@@ -2,6 +2,7 @@ package Sigmaz.S05_PosProcessamento.Processadores;
 
 import java.util.ArrayList;
 
+import Sigmaz.S00_Utilitarios.AST_Implementador;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
 import Sigmaz.S00_Utilitarios.AST;
 
@@ -27,8 +28,6 @@ public class Estagiador {
         mAnalisador.mensagem("");
 
 
-        //ArrayList<AST> mStages = new ArrayList<AST>();
-
         for (AST mSigmaz : mTodos) {
 
             if (mSigmaz.mesmoTipo("SIGMAZ")) {
@@ -38,25 +37,15 @@ public class Estagiador {
                     if (mStruct.mesmoTipo("STRUCT")) {
 
                         if (mStruct.getBranch("EXTENDED").mesmoNome("STAGES")) {
+
+
+                            AST mStageDef = mStruct;
+                            mAnalisador.mensagem(" Estagiar : " + mStageDef.getNome());
+
+                            organizar(mStageDef);
+
                             if (mStruct.getBranch("DEFINED").mesmoNome("TRUE")) {
-
-                                AST mStageDef = mStruct;
-
-                                mAnalisador.mensagem(" Estagiar : " + mStageDef.getNome());
-
-                                AST mCorpo = mStageDef.getBranch("BODY");
-
-                                criarFunction_NameOf(mCorpo, mStageDef);
-                                criarFunction_ValueOf(mCorpo, mStageDef);
-
-                                criarFunction_Get(mCorpo, mStageDef);
-
-                                criarOperador(mCorpo, mStageDef, "MATCH", "match");
-                                criarOperador(mCorpo, mStageDef, "UNMATCH", "unmatch");
-
-                              //  mAnalisador.mensagem(mCorpo.ImprimirArvoreDeInstrucoes());
-
-
+                                externalizar(mStageDef);
                             }
                         }
 
@@ -70,23 +59,16 @@ public class Estagiador {
                             if (PackageStruct.mesmoTipo("STRUCT")) {
 
                                 if (PackageStruct.getBranch("EXTENDED").mesmoNome("STAGES")) {
-                                  //  mPackageEstruturas.add(PackageStruct);
 
                                     AST mStageDef = PackageStruct;
-
                                     mAnalisador.mensagem(" Estagiar : " + PackageStruct.getNome() + "<>" + mStageDef.getNome());
 
-                                    AST mCorpo = mStageDef.getBranch("BODY");
+                                    organizar(mStageDef);
 
-                                    criarFunction_NameOf(mCorpo, mStageDef);
-                                    criarFunction_ValueOf(mCorpo, mStageDef);
+                                    if (mStageDef.getBranch("DEFINED").mesmoNome("TRUE")) {
+                                        externalizar(mStageDef);
+                                    }
 
-                                    criarFunction_Get(mCorpo, mStageDef);
-
-                                    criarOperador(mCorpo, mStageDef, "MATCH", "match");
-                                    criarOperador(mCorpo, mStageDef, "UNMATCH", "unmatch");
-
-                                   // mAnalisador.mensagem(mCorpo.ImprimirArvoreDeInstrucoes());
 
                                 }
 
@@ -100,7 +82,6 @@ public class Estagiador {
                 }
 
 
-
             }
         }
 
@@ -108,6 +89,34 @@ public class Estagiador {
     }
 
 
+    public void organizar(AST mStageDef) {
+
+        AST mStages = mStageDef.getBranch("STAGES");
+
+        int eID = 5;
+        for (AST eAST : mStages.getASTS()) {
+            eAST.setValor(String.valueOf(eID));
+            eID += 1;
+        }
+
+
+    }
+
+    public void externalizar(AST mStageDef) {
+
+
+        AST mCorpo = mStageDef.getBranch("BODY");
+
+        criarFunction_NameOf(mCorpo, mStageDef);
+        criarFunction_ValueOf(mCorpo, mStageDef);
+
+        criarFunction_Get(mCorpo, mStageDef);
+
+        criarOperador(mCorpo, mStageDef, "MATCH", "EQUAL");
+        criarOperador(mCorpo, mStageDef, "UNMATCH", "NOT");
+
+
+    }
 
 
     private void criarTipagemConcreta(AST ASTPai, String eTipo) {
@@ -227,7 +236,6 @@ public class Estagiador {
         mValue.setNome("");
         mValue.setValor("NULL");
 
-        int resposta = 0;
 
         for (AST AST_STAGE : mStageDef.getBranch("STAGES").getASTS()) {
 
@@ -258,10 +266,9 @@ public class Estagiador {
                 mSETTABLE.setValor("ID");
 
                 AST mVALUE = mApply.criarBranch("VALUE");
-                mVALUE.setNome("" + resposta);
+                mVALUE.setNome(AST_STAGE.getValor());
                 mVALUE.setValor("Num");
 
-                resposta += 1;
             }
 
 
@@ -298,8 +305,6 @@ public class Estagiador {
 
 
         AST mDef = mBody.criarBranch("DEF");
-
-
         mDef.setNome("BETA");
         criarTipagemConcreta(mDef, mStageDef.getNome());
 
@@ -308,7 +313,14 @@ public class Estagiador {
         mValue.setNome("");
         mValue.setValor("NULL");
 
-        int resposta = 0;
+
+        AST mEncontrado = mBody.criarBranch("DEF");
+        mEncontrado.setNome("GAMA");
+        criarTipagemConcreta(mEncontrado, "bool");
+        AST mmEncontradoValue = mEncontrado.criarBranch("VALUE");
+        mmEncontradoValue.setNome("false");
+        mmEncontradoValue.setValor("ID");
+
 
         for (AST AST_STAGE : mStageDef.getBranch("STAGES").getASTS()) {
 
@@ -328,10 +340,8 @@ public class Estagiador {
                 mLeft.setValor("ID");
 
                 AST mRight = mCondition.criarBranch("RIGHT");
-                mRight.setNome(String.valueOf(resposta));
+                mRight.setNome(AST_STAGE.getValor());
                 mRight.setValor("Num");
-
-
 
 
                 AST mIfbody = mIf.criarBranch("BODY");
@@ -347,11 +357,50 @@ public class Estagiador {
                 mVALUE.criarBranch("STAGED").setNome(eNomeStage);
 
 
-                resposta += 1;
+                AST mAplicavel = mIfbody.criarBranch("APPLY");
+
+                AST mAplicavel_SET = mAplicavel.criarBranch("SETTABLE");
+                mAplicavel_SET.setNome("GAMA");
+                mAplicavel_SET.setValor("ID");
+
+                AST mAplicavel_VAL = mAplicavel.criarBranch("VALUE");
+                mAplicavel_VAL.setNome("true");
+                mAplicavel_VAL.setValor("ID");
+
+
             }
 
 
         }
+
+        AST mIf = mBody.criarBranch("IF");
+        AST mIfBody = mIf.criarBranch("BODY");
+
+        AST mCONDITION = mIf.criarBranch("CONDITION");
+        mCONDITION.setNome("GAMA");
+        mCONDITION.setValor("ID");
+
+        AST mIfOthers = mIf.criarBranch("OTHERS");
+
+
+        criarInt_To_String(mIfOthers, "ALFA", "DELTA");
+
+
+        AST_Implementador mAI = new AST_Implementador();
+
+
+        mAI.criar_Def_ValueText(mIfOthers, "EPSILON", "string", " O stage com valor ");
+        mAI.criar_Def_ValueText(mIfOthers, "IOTA", "string", " nao existe em " + mStageDef.getNome() + " ! ");
+
+        criarAppend(mIfOthers,"EPSILON","DELTA","ZETA");
+
+        criarAppend(mIfOthers,"ZETA","IOTA","OMEGA");
+
+        AST mEXCEPTION = mIfOthers.criarBranch("EXCEPTION");
+
+        AST mEXCEPTIONVALUE = mEXCEPTION.criarBranch("VALUE");
+        mEXCEPTIONVALUE.setNome("OMEGA");
+        mEXCEPTIONVALUE.setValor("ID");
 
 
         AST mReturn = mBody.criarBranch("RETURN");
@@ -362,6 +411,42 @@ public class Estagiador {
 
     }
 
+
+    public void criarInt_To_String(AST ASTPai, String eReceber, String Saida) {
+
+        AST_Implementador mAI = new AST_Implementador();
+
+        AST mReg = mAI.crar_Reg_ValueID(ASTPai, "R5", eReceber);
+
+        AST mProc = mAI.criar_Proc(ASTPai);
+
+
+        mAI.criar_Proc_InstrucaoID(mProc, "SET", "R13");
+        mAI.criar_Proc_InstrucaoText(mProc, "MOV", "");
+        mAI.criar_Proc_InstrucaoID(mProc, "INT_STRING", "R5");
+
+        mAI.criarDef_ComRegistrador(ASTPai, Saida, "string", "R13");
+
+
+    }
+
+    public void criarAppend(AST ASTPai, String a1, String a2,String a3) {
+
+        AST_Implementador mAI = new AST_Implementador();
+
+        AST mReg12 = mAI.crar_Reg_ValueID(ASTPai, "R13", a1);
+        AST mReg14 = mAI.crar_Reg_ValueID(ASTPai, "R14", a2);
+
+        AST mProc = mAI.criar_Proc(ASTPai);
+        mAI.criar_Proc_InstrucaoID(mProc, "SET", "R13");
+        mAI.criar_Proc_InstrucaoID(mProc, "APPEND", "R14");
+
+
+
+
+        mAI.criarDef_ComRegistrador(ASTPai, a3, "string", "R13");
+
+    }
 
     public void criarOperador(AST mSigmaz, AST mStageDef, String mOperacao, String mInvocacao) {
 
@@ -407,20 +492,22 @@ public class Estagiador {
         mValue.setNome("");
         mValue.setValor("NULL");
 
-        AST mInvoke = mBody.criarBranch("INVOKE");
-        mInvoke.setNome("stages");
-        mInvoke.setValor(mInvocacao);
-        mInvoke.criarBranch("EXIT").setNome("GAMA");
-        AST mInvokeArguments = mInvoke.criarBranch("ARGUMENTS");
+        String eA1_Verificar = p1 + "_@_STAGE_VERIFY";
+        String eA2_Verificar = p2 + "_@_STAGE_VERIFY";
 
-        AST mAlfa_Invoke = mInvokeArguments.criarBranch("ARGUMENT");
-        mAlfa_Invoke.setNome(p1);
-        mAlfa_Invoke.setValor("ID");
+        verificar_lado(mBody, p1, eA1_Verificar);
 
-        AST mBeta_Invoke = mInvokeArguments.criarBranch("ARGUMENT");
-        mBeta_Invoke.setNome(p2);
-        mBeta_Invoke.setValor("ID");
+        verificar_lado(mBody, p2, eA2_Verificar);
 
+        String eA1_Obter = p1 + "_@_STAGE";
+        String eA2_Obter = p2 + "_@_STAGE";
+
+        obter_lado(mBody, p1, eA1_Obter);
+
+        obter_lado(mBody, p2, eA2_Obter);
+
+
+        operador(mBody, mInvocacao, eA1_Obter, eA2_Obter, "GAMA");
 
         AST mReturn = mBody.criarBranch("RETURN");
         AST mReturnValue = mReturn.criarBranch("VALUE");
@@ -430,4 +517,146 @@ public class Estagiador {
 
     }
 
+    public void verificar_lado(AST ASTLocal, String eVar, String eResultado) {
+
+        AST mEsquerda_R0 = ASTLocal.criarBranch("REG");
+        mEsquerda_R0.setNome("R0");
+        AST mEsquerda_R0_Value = mEsquerda_R0.criarBranch("VALUE");
+        mEsquerda_R0_Value.setNome(eVar);
+        mEsquerda_R0_Value.setValor("ID");
+
+        AST mDef = ASTLocal.criarBranch("DEF");
+        mDef.setNome(eResultado);
+
+        AST mDefType = mDef.criarBranch("TYPE");
+        mDefType.setNome("bool");
+        mDefType.setValor("CONCRETE");
+
+        AST mDefValue = mDef.criarBranch("VALUE");
+        mDefValue.setNome("R0");
+        mDefValue.setValor("REG");
+
+        AST mIf = ASTLocal.criarBranch("IF");
+
+        AST mCONDITION = mIf.criarBranch("CONDITION");
+        mCONDITION.setNome(eResultado);
+        mCONDITION.setValor("ID");
+
+        AST mIfBody = mIf.criarBranch("BODY");
+        AST mEXCEPTION = mIfBody.criarBranch("EXCEPTION");
+
+        AST mEXCEPTIONVALUE = mEXCEPTION.criarBranch("VALUE");
+        mEXCEPTIONVALUE.setNome(" O stage " + eVar + " e nulo !");
+        mEXCEPTIONVALUE.setValor("ID");
+    }
+
+    public void obter_lado(AST ASTLocal, String eVar, String eResultado) {
+
+
+
+
+        AST mDef = ASTLocal.criarBranch("DEF");
+        mDef.setNome(eResultado);
+
+        AST mDefType = mDef.criarBranch("TYPE");
+        mDefType.setNome("int");
+        mDefType.setValor("CONCRETE");
+
+        AST mDefValue = mDef.criarBranch("VALUE");
+        mDefValue.setNome("");
+        mDefValue.setValor("NULL");
+
+        AST mEsquerda_R0 = ASTLocal.criarBranch("STAGE_GET");
+        mEsquerda_R0.setNome(eVar);
+        mEsquerda_R0.setValor(eResultado);
+
+    }
+
+
+    public void obter_ladoantigo(AST ASTLocal, String eVar, String eResultado) {
+
+        AST mEsquerda_R0 = ASTLocal.criarBranch("REG");
+        mEsquerda_R0.setNome("R19");
+        AST mEsquerda_R0_Value = mEsquerda_R0.criarBranch("VALUE");
+        mEsquerda_R0_Value.setNome(eVar);
+        mEsquerda_R0_Value.setValor("ID");
+
+        AST mProc = ASTLocal.criarBranch("PROC");
+
+        AST mSet = mProc.criarBranch("SET");
+        mSet.setNome("R5");
+        mSet.setValor("ID");
+
+        AST mMov = mProc.criarBranch("MOV");
+        mMov.setNome("0");
+        mMov.setValor("Num");
+
+        AST mStage = mProc.criarBranch("STAGE");
+        mStage.setNome("R19");
+        mStage.setValor("ID");
+
+
+        AST mDef = ASTLocal.criarBranch("DEF");
+        mDef.setNome(eResultado);
+
+        AST mDefType = mDef.criarBranch("TYPE");
+        mDefType.setNome("int");
+        mDefType.setValor("CONCRETE");
+
+        AST mDefValue = mDef.criarBranch("VALUE");
+        mDefValue.setNome("R5");
+        mDefValue.setValor("REG");
+
+
+    }
+
+    public void operador(AST ASTLocal, String eOperador, String eA1, String eA2, String eRetorno) {
+
+        AST mREG_A = ASTLocal.criarBranch("REG");
+        mREG_A.setNome("R5");
+
+        AST mREG_A_Value = mREG_A.criarBranch("VALUE");
+        mREG_A_Value.setNome(eA1);
+        mREG_A_Value.setValor("ID");
+
+        AST mREG_B = ASTLocal.criarBranch("REG");
+        mREG_B.setNome("R6");
+
+        AST mREG_B_Value = mREG_B.criarBranch("VALUE");
+        mREG_B_Value.setNome(eA2);
+        mREG_B_Value.setValor("ID");
+
+        AST mProc = ASTLocal.criarBranch("PROC");
+
+        AST mSet = mProc.criarBranch("SET");
+        mSet.setNome("R3");
+        mSet.setValor("ID");
+
+        AST mMov = mProc.criarBranch("MOV");
+        mMov.setNome("FALSE");
+        mMov.setValor("ID");
+
+        AST mOPE = mProc.criarBranch("OPE");
+        mOPE.setNome(eOperador);
+
+        AST mRIGHT = mOPE.criarBranch("RIGHT");
+        mRIGHT.setNome("R5");
+        mRIGHT.setValor("ID");
+
+        AST mLEFT = mOPE.criarBranch("LEFT");
+        mLEFT.setNome("R6");
+        mLEFT.setValor("ID");
+
+
+        AST mAplicavel = ASTLocal.criarBranch("APPLY");
+
+        AST mAplicavel_SET = mAplicavel.criarBranch("SETTABLE");
+        mAplicavel_SET.setNome(eRetorno);
+        mAplicavel_SET.setValor("ID");
+
+        AST mAplicavel_VAL = mAplicavel.criarBranch("VALUE");
+        mAplicavel_VAL.setNome("R3");
+        mAplicavel_VAL.setValor("REG");
+
+    }
 }

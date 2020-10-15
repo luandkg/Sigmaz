@@ -4,7 +4,7 @@ import Sigmaz.S07_Executor.Escopo;
 import Sigmaz.S07_Executor.Escopos.Run_Struct;
 import Sigmaz.S07_Executor.Item;
 import Sigmaz.S07_Executor.RunTime;
-import Sigmaz.S07_Executor.AST_Implementador;
+import Sigmaz.S00_Utilitarios.AST_Implementador;
 import Sigmaz.S00_Utilitarios.AST;
 
 public class Run_Each {

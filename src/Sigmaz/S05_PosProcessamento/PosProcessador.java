@@ -10,6 +10,7 @@ import Sigmaz.S00_Utilitarios.UUID;
 public class PosProcessador {
 
     private ArrayList<AST> mASTS;
+    private ArrayList<AST> mRequisicoes;
 
     private ArrayList<AST> mPacotes;
 
@@ -22,8 +23,11 @@ public class PosProcessador {
         mMensageiro = new Mensageiro();
 
         mPacotes = new ArrayList<AST>();
+        mRequisicoes = new ArrayList<AST>();
 
     }
+
+    public ArrayList<AST> getRequisicoes(){ return mRequisicoes;}
 
 
     public void init(Cabecalho mCabecalho, ArrayList<AST> eASTs, String mLocalLibs) {
@@ -31,14 +35,15 @@ public class PosProcessador {
         mASTS = eASTs;
         mPacotes.clear();
         mMensageiro.limpar();
+        mRequisicoes.clear();
 
         mensagem("");
 
-        ArrayList<AST> mRequisicoes = new ArrayList<AST>();
 
         if (tudoOK()) {
             Requeridor mRequeridor = new Requeridor(this);
-            mRequeridor.init(mASTS,mLocalLibs,mRequisicoes);
+            mRequeridor.init(mASTS, mLocalLibs);
+            mRequisicoes = mRequeridor.getRequisicoes();
         }
 
         if (tudoOK()) {
@@ -96,7 +101,7 @@ public class PosProcessador {
 
         if (tudoOK()) {
             Valorador mValorador = new Valorador(this);
-            mValorador.init(mASTS,mRequisicoes);
+            mValorador.init(mASTS, mRequisicoes);
         }
 
         gravarCabecalho(mCabecalho, mASTS);
@@ -112,9 +117,11 @@ public class PosProcessador {
         return mMensageiro.tudoOK();
     }
 
-    public Mensageiro getMensageiro(){return mMensageiro;}
+    public Mensageiro getMensageiro() {
+        return mMensageiro;
+    }
 
-        public void gravarCabecalho(Cabecalho eCabecalho, ArrayList<AST> mASTS) {
+    public void gravarCabecalho(Cabecalho eCabecalho, ArrayList<AST> mASTS) {
 
         UUID mUUID = new UUID();
 

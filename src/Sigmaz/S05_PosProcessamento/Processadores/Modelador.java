@@ -42,18 +42,59 @@ public class Modelador {
 
         ArrayList<AST> mPacotes = new ArrayList<AST>();
 
+        ArrayList<AST> mPacotesRequisitados = new ArrayList<AST>();
+        ArrayList<AST> mModelosRequisitados = new ArrayList<AST>();
+
+        for (AST mRequisicao : mAnalisador.getRequisicoes()) {
+            for (AST mAST : mRequisicao.getASTS()) {
+
+                if (mAST.mesmoTipo("PACKAGE")) {
+
+                    mPacotesRequisitados.add(mAST);
+
+                    mAnalisador.mensagem(" Pacote Externo :: " + mAST.getNome());
+
+                } else if (mAST.mesmoTipo("MODEL")) {
+
+                    mAnalisador.mensagem(" Modelo Externo :: " + mAST.getNome());
+
+                    mModelosRequisitados.add(mAST);
+
+                }
+            }
+
+        }
+
+
         for (AST mAST : mTodos) {
 
             if (mAST.mesmoTipo("SIGMAZ")) {
 
+                ArrayList<AST> mPacotes_Completo = new ArrayList<AST>();
+                ArrayList<AST> mModelos_Completo = new ArrayList<AST>();
+
                 ArrayList<AST> mModelosRaiz = new ArrayList<AST>();
+
+                for (AST Struct_AST : mPacotesRequisitados) {
+                    mPacotes_Completo.add(Struct_AST);
+                }
+
+                for (AST Struct_AST : mModelosRequisitados) {
+                    mModelos_Completo.add(Struct_AST);
+                }
 
                 for (AST Struct_AST : mAST.getASTS()) {
 
                     if (Struct_AST.mesmoTipo("PACKAGE")) {
+
                         mPacotes.add(Struct_AST.copiar());
+                        mPacotes_Completo.add(Struct_AST.copiar());
+
                     } else if (Struct_AST.mesmoTipo("MODEL")) {
+
                         mModelosRaiz.add(Struct_AST);
+                        mModelos_Completo.add(Struct_AST);
+
                     }
 
                 }
@@ -62,34 +103,24 @@ public class Modelador {
 
                 ArrayList<AST> mModelosSigmaz = new ArrayList<AST>();
 
+                for (AST Struct_AST : mModelosRequisitados) {
+                    mModelosSigmaz.add(Struct_AST);
+                }
+
                 for (AST eModelo : mModelosRaiz) {
                     mModelosSigmaz.add(eModelo);
                 }
-                for (AST eModelo : getModelos(mRefers, mPacotes)) {
+                for (AST eModelo : getModelos(mRefers, mPacotes_Completo)) {
                     mModelosSigmaz.add(eModelo);
                 }
+
 
                 modelador(true, "SIGMAZ", mAST, mModelosSigmaz);
 
 
                 for (AST ePacote : mPacotes) {
 
-                    ArrayList<AST> mModelosPacote = new ArrayList<AST>();
-
-                    for (AST Struct_AST : ePacote.getASTS()) {
-
-                        if (Struct_AST.mesmoTipo("MODEL")) {
-                            mModelosPacote.add(Struct_AST);
-                        }
-                    }
-                    for (AST eModelo : getModelos(getRefers(ePacote), mPacotes)) {
-                        mModelosPacote.add(eModelo);
-                    }
-                    for (AST eModelo : mModelosRaiz) {
-                        mModelosPacote.add(eModelo);
-                    }
-
-                    modelador(false, ePacote.getNome(), ePacote, mModelosPacote);
+                    pacote_modelador(ePacote, mModelos_Completo, mPacotes_Completo);
 
                 }
 
@@ -176,6 +207,30 @@ public class Modelador {
     }
 
 
+    public void pacote_modelador(AST ePacote, ArrayList<AST> mModelosRaiz, ArrayList<AST> mPacotes) {
+
+
+        ArrayList<AST> mModelosPacote = new ArrayList<AST>();
+
+        for (AST Struct_AST : ePacote.getASTS()) {
+
+            if (Struct_AST.mesmoTipo("MODEL")) {
+                mModelosPacote.add(Struct_AST);
+            }
+        }
+        for (AST eModelo : getModelos(getRefers(ePacote), mPacotes)) {
+            mModelosPacote.add(eModelo);
+        }
+
+        for (AST eModelo : mModelosRaiz) {
+            mModelosPacote.add(eModelo);
+        }
+
+        modelador(false, ePacote.getNome(), ePacote, mModelosPacote);
+
+
+    }
+
     public ArrayList<AST> getModelos(ArrayList<String> mRefers, ArrayList<AST> mPacotes) {
 
         ArrayList<AST> modelos = new ArrayList<AST>();
@@ -203,6 +258,8 @@ public class Modelador {
                 }
 
             } else {
+
+
                 mAnalisador.getErros().add("Pacote " + eRefer + " : Nao encontrado !");
                 break;
             }
@@ -216,18 +273,13 @@ public class Modelador {
     public void modelar(AST Struct, String eModelo, ArrayList<AST> mModelos) {
 
 
-
         AST Modelo = ProcurarModelo(eModelo, mModelos).copiar();
-
 
 
         AST mStruct_Generic = Struct.getBranch("MODEL").getBranch("GENERIC");
 
 
         AST mModelo_Generic = Modelo.getBranch("GENERIC");
-
-
-
 
 
         if (mModelo_Generic.mesmoNome("TRUE") && mStruct_Generic.mesmoNome("TRUE")) {
@@ -256,7 +308,7 @@ public class Modelador {
 
                     AST sInit = mStruct_Generic.getASTS().get(i);
 
-                   //    mAnalisador.mensagem("Alterando " + eSub.getNome() + " -> " + sInit.getNome());
+                    //    mAnalisador.mensagem("Alterando " + eSub.getNome() + " -> " + sInit.getNome());
 
                     mAlterador.adicionar(eSub.getNome(), sInit);
 
@@ -267,11 +319,9 @@ public class Modelador {
                 mAlterador.alterar(Modelo);
 
 
-
-
             } else {
 
-                mAnalisador.errar("Modelagem de " + Struct.getNome() + " com " + Modelo.getNome() + " : Precisa de " +initContagem + " Tipos Abstratos   !");
+                mAnalisador.errar("Modelagem de " + Struct.getNome() + " com " + Modelo.getNome() + " : Precisa de " + initContagem + " Tipos Abstratos   !");
 
             }
 
@@ -294,13 +344,12 @@ public class Modelador {
             mAnalisador.errar("Struct " + Struct.getNome() + " : Nao e Generica !");
         }
 
-        if (mAnalisador.getErros().size()>0){
+        if (mAnalisador.getErros().size() > 0) {
             return;
         }
 
 
-
-        if (mAnalisador.getErros().size()>0){
+        if (mAnalisador.getErros().size() > 0) {
             return;
         }
 

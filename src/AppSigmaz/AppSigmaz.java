@@ -42,9 +42,9 @@ public class AppSigmaz {
 
         String mLocalGerador = "res/gerador/";
 
-        int ARQUIVO = 32;
+        int ARQUIVO = 44;
 
-        switch (Fases.COMPILAR_E_EXECUTAR_DETALHADO) {
+        switch (Fases.TESTES) {
 
             case MONTAR_PLANO_COMPILACAO -> AppUtils.PLANO_COMPILACAO(ARQUIVO, mArquivos, mLOCAL_PLANOS, mLocalLibs);
 

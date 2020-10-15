@@ -15,13 +15,14 @@ struct Item in ( T ) {
 	}
 
 	act cortar ( a : int ) {
-	reg @R5 -> a;
-	PROC -> {
-		SET R13;
-		MOV "";
-		INT_STRING R5;
-		PRINT R13;
-	}
+		reg @ R5 -> a;
+		PROC -> {
+			SET R13;
+			MOV "";
+			INT_STRING R5;
+			PRINT R13;
+		}
+		
 	}
 	
 }

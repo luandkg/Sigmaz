@@ -17,7 +17,38 @@ public class Lexer {
 
     private final String ALFA = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
     private final String NUM = "0123456789";
-    private final String ALFANUM = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz0123456789";
+
+    private final String MAIS = "+";
+    private final String MENOS = "-";
+    private final String ASTERISCO = "*";
+    private final String BARRA = "/";
+    private final String PONTO = ".";
+    private final String PONTO_E_VIRGULA = ";";
+    private final String DOIS_PONTOS = ":";
+    private final String MAIOR = ">";
+    private final String MENOR = "<";
+    private final String CERQUILHA = "#";
+    private final String EXCLAMACAO = "!";
+    private final String IGUAL = "=";
+    private final String VIRGULA = ",";
+
+    private final String PARENTESES_ABRE = "(";
+    private final String PARENTESES_FECHA = ")";
+
+    private final String CHAVE_ABRE = "{";
+    private final String CHAVE_FECHA = "}";
+
+    private final String COLCHETE_ABRE = "[";
+    private final String COLCHETE_FECHA = "]";
+
+    private final String ARROBA = "@";
+
+    private final String ASPAS_SIMPLES = "'";
+    private final String ASPAS_DUPLA = "\"";
+
+    private final String ESPACO = " ";
+    private final String TABULACAO = "\t";
+    private final String LINHA = "\n";
 
     private ArrayList<Token> mTokens;
     private ArrayList<Erro> mErros;
@@ -27,6 +58,7 @@ public class Lexer {
     private int mLinha_Min;
 
     public Lexer() {
+
         mConteudo = "";
         mIndex = 0;
         mTamanho = 0;
@@ -57,6 +89,10 @@ public class Lexer {
         return mIndex < mTamanho;
     }
 
+    public boolean TemProximo() {
+        return (mIndex + 1 < mTamanho);
+    }
+
     public ArrayList<Token> getTokens() {
         return mTokens;
     }
@@ -69,9 +105,15 @@ public class Lexer {
         return mConteudo.length();
     }
 
-    private void errar(String eMensagem, int eLinha, int ePosicao) {
+    public void errar(String eMensagem, int eLinha, int ePosicao) {
         mErros.add(new Erro(eMensagem, eLinha, ePosicao));
     }
+
+
+    public boolean igual(String a, String b) {
+        return a.contentEquals(b);
+    }
+
 
     public void init(String eArquivo) {
 
@@ -103,262 +145,123 @@ public class Lexer {
             return;
         }
 
-        if (mConteudo == null){
+        if (mConteudo == null) {
             return;
         }
 
 
-        while (Continuar()) {
-            String charC = String.valueOf(mConteudo.charAt(mIndex));
-            String charP = "";
+        Tokenizador mTokenizador = new Tokenizador();
+        mTokenizador.init(this);
 
-            if (mIndex + 1 < mTamanho) {
-                charP = String.valueOf(mConteudo.charAt(mIndex + 1));
-            }
+        while (Continuar()) {
+
+            String charC = String.valueOf(mConteudo.charAt(mIndex));
 
 
             if (ALFA.contains(charC)) {
 
-                int eInicio = mPosicao;
-                String eTokenConteudo = ObterID();
-                int eFim = mPosicao;
+                mTokens.add(mTokenizador.getIdentificador());
 
-                mTokens.add(new Token(TokenTipo.ID, eTokenConteudo, eInicio, eFim, mLinha));
             } else if (NUM.contains(charC)) {
 
-                int eInicio = mPosicao;
-                String eTokenConteudo = ObterNUM();
-                int eFim = mPosicao;
+                mTokens.add(mTokenizador.getNumero());
 
-                if (eTokenConteudo.contains(".")) {
-                    mTokens.add(new Token(TokenTipo.NUMERO_FLOAT, eTokenConteudo, eInicio, eFim, mLinha));
-                } else {
-                    mTokens.add(new Token(TokenTipo.NUMERO, eTokenConteudo, eInicio, eFim, mLinha));
-                }
-            } else if (charC.contentEquals("+") && charP.contentEquals("+")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
+            } else if (igual(charC,MAIS)) {
 
-                mIndex += 1;
+                mTokens.add(mTokenizador.getMais());
 
-                mTokens.add(new Token(TokenTipo.SOMADOR, "++", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals("+")) {
-                int eInicio = mPosicao;
-                mIndex += 1;
-                String eTokenConteudo = "+" + ObterNUM();
-                int eFim = mPosicao;
+            } else if (igual(charC,MENOS)) {
 
-                if (eTokenConteudo.contains(".")) {
-                    mTokens.add(new Token(TokenTipo.NUMERO_FLOAT, eTokenConteudo, eInicio, eFim, mLinha));
-                } else {
-                    mTokens.add(new Token(TokenTipo.NUMERO, eTokenConteudo, eInicio, eFim, mLinha));
-                }
+                mTokens.add(mTokenizador.getMenos());
 
-            } else if (charC.contentEquals("-") && charP.contentEquals(">")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
+            } else if (igual(charC,ASTERISCO)) {
 
-                mIndex += 1;
+                mTokens.add(mTokenizador.getAsterisco());
 
-                mTokens.add(new Token(TokenTipo.SETA, "->", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals("-") && charP.contentEquals("-")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
+            } else if (igual(charC,BARRA)) {
 
-                mIndex += 1;
+                mTokens.add(mTokenizador.getBarra());
 
-                mTokens.add(new Token(TokenTipo.DIMINUIDOR, "--", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals("-")) {
-                int eInicio = mPosicao;
-                mIndex += 1;
+            } else if (igual(charC,PONTO)) {
 
-                String eTokenConteudo = "-" + ObterNUM();
-                int eFim = mPosicao;
+                mTokens.add(mTokenizador.getPonto());
 
-                if (eTokenConteudo.contains(".")) {
-                    mTokens.add(new Token(TokenTipo.NUMERO_FLOAT, eTokenConteudo, eInicio, eFim, mLinha));
-                } else {
-                    mTokens.add(new Token(TokenTipo.NUMERO, eTokenConteudo, eInicio, eFim, mLinha));
-                }
+            } else if (igual(charC,DOIS_PONTOS)) {
 
-            } else if (charC.contentEquals("*") && charP.contentEquals("*")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
+                mTokens.add(mTokenizador.getDoisPontos());
 
-                mIndex += 1;
+            } else if (igual(charC,VIRGULA)) {
 
-                mTokens.add(new Token(TokenTipo.MULTIPLICADOR, "**", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals("/") && charP.contentEquals("/")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
+                mTokens.add(mTokenizador.getVirgula());
 
-                mIndex += 1;
+            } else if (igual(charC,IGUAL)) {
 
-                mTokens.add(new Token(TokenTipo.DIVISOR, "//", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals(".")) {
-                int eInicio = mPosicao;
+                mTokens.add(mTokenizador.getIgual());
 
-                String eTokenConteudo = ".";
-                int eFim = mPosicao;
+            } else if (igual(charC,EXCLAMACAO)) {
 
-                mTokens.add(new Token(TokenTipo.PONTO, eTokenConteudo, eInicio, eFim, mLinha));
+                mTokens.add(mTokenizador.getExclamacao());
 
-            } else if (charC.contentEquals(":") && charP.contentEquals(":")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
+            } else if (igual(charC,MENOR)) {
 
-                mIndex += 1;
+                mTokens.add(mTokenizador.getMenor());
 
-                mTokens.add(new Token(TokenTipo.QUAD, "::", eInicio, eFim, mLinha));
+            } else if (igual(charC,MAIOR)) {
 
-            } else if (charC.contentEquals(":")) {
+                mTokens.add(mTokenizador.getMaior());
 
+            } else if (igual(charC,CERQUILHA)) {
 
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
+                mTokens.add(mTokenizador.getComentario());
 
-                mTokens.add(new Token(TokenTipo.DOISPONTOS, ":", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals(",")) {
+            } else if (igual(charC,ASPAS_DUPLA)) {
 
+                mTokens.add(mTokenizador.getTextoDuplo());
 
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
+            } else if (igual(charC,ASPAS_SIMPLES)) {
 
-                mTokens.add(new Token(TokenTipo.VIRGULA, ",", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals("=") && charP.contentEquals("=")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
+                mTokens.add(mTokenizador.getTextoSimples());
 
-                mIndex += 1;
+            } else if (igual(charC,CHAVE_ABRE)) {
 
-                mTokens.add(new Token(TokenTipo.COMPARADOR_IGUALDADE, "==", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals("!") && charP.contentEquals("!")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
+                mTokens.add(mTokenizador.getChave_Abre());
 
-                mIndex += 1;
+            } else if (igual(charC,CHAVE_FECHA)) {
 
-                mTokens.add(new Token(TokenTipo.COMPARADOR_DIFERENTE, "!!", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals("!")) {
+                mTokens.add(mTokenizador.getChave_Fecha());
 
+            } else if (igual(charC,COLCHETE_ABRE)) {
 
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
+                mTokens.add(mTokenizador.getColchete_Abre());
 
-                mTokens.add(new Token(TokenTipo.NEGADOR, "!", eInicio, eFim, mLinha));
+            } else if (igual(charC,COLCHETE_FECHA)) {
 
-            } else if (charC.contentEquals("=")) {
+                mTokens.add(mTokenizador.getColchete_Fecha());
 
+            } else if (igual(charC,PONTO_E_VIRGULA)) {
 
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
+                mTokens.add(mTokenizador.getPontoEVirgula());
 
-                mTokens.add(new Token(TokenTipo.IGUAL, "=", eInicio, eFim, mLinha));
+            } else if (igual(charC,PARENTESES_ABRE)) {
 
-            } else if (charC.contentEquals("<") && charP.contentEquals("<")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
+                mTokens.add(mTokenizador.getParenteses_Abre());
 
-                mIndex += 1;
+            } else if (igual(charC,PARENTESES_FECHA)) {
 
-                mTokens.add(new Token(TokenTipo.RECEBER, "<<", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals("<")) {
+                mTokens.add(mTokenizador.getParenteses_Fecha());
 
+            } else if (igual(charC,ARROBA)) {
 
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
+                mTokens.add(mTokenizador.getArroba());
 
-                mTokens.add(new Token(TokenTipo.MENOR, "<", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals(">") && charP.contentEquals(">")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
 
-                mIndex += 1;
+            } else if (igual(charC,LINHA)) {
 
-                mTokens.add(new Token(TokenTipo.ENVIAR, ">>", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals(">")) {
+                descerLinha();
 
+            } else if (igual(charC,TABULACAO)) {
 
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
-
-                mTokens.add(new Token(TokenTipo.MAIOR, ">", eInicio, eFim, mLinha));
-
-            } else if (charC.contentEquals("#") && charP.contentEquals("#")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
-                String mConteudo = ObterComentarioGrande();
-
-
-                mTokens.add(new Token(TokenTipo.COMENTARIO, mConteudo, eInicio, eFim, mLinha));
-            } else if (charC.contentEquals("#")) {
-                int eInicio = mPosicao;
-                String eTokenConteudo = ObterComentario();
-                int eFim = mPosicao;
-
-                mTokens.add(new Token(TokenTipo.COMENTARIO, eTokenConteudo, eInicio, eFim, mLinha));
-
-            } else if (charC.contentEquals("\"")) {
-                int eInicio = mPosicao;
-                String eTokenConteudo = ObterTexto("\"");
-                int eFim = mPosicao;
-
-                mTokens.add(new Token(TokenTipo.TEXTO, eTokenConteudo, eInicio, eFim, mLinha));
-            } else if (charC.contentEquals("'")) {
-                int eInicio = mPosicao;
-                String eTokenConteudo = ObterTexto("'");
-                int eFim = mPosicao;
-
-                mTokens.add(new Token(TokenTipo.TEXTO, eTokenConteudo, eInicio, eFim, mLinha));
-
-            } else if (charC.contentEquals("{")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
-
-                mTokens.add(new Token(TokenTipo.CHAVE_ABRE, "{", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals("}")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
-
-                mTokens.add(new Token(TokenTipo.CHAVE_FECHA, "}", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals("[")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
-
-                mTokens.add(new Token(TokenTipo.COLCHETE_ABRE, "[", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals("]")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
-
-                mTokens.add(new Token(TokenTipo.COLCHETE_FECHA, "]", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals(";")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
-
-                mTokens.add(new Token(TokenTipo.PONTOVIRGULA, ";", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals("(")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
-
-                mTokens.add(new Token(TokenTipo.PARENTESES_ABRE, "(", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals(")")) {
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
-
-                mTokens.add(new Token(TokenTipo.PARENTESES_FECHA, ")", eInicio, eFim, mLinha));
-            } else if (charC.contentEquals("@")) {
-
-                int eInicio = mPosicao;
-                int eFim = mPosicao;
-
-                mTokens.add(new Token(TokenTipo.ARROBA, "@", eInicio, eFim, mLinha));
-
-
-            } else if (charC.contentEquals("\n")) {
-                mLinha += 1;
-                mPosicao = 0;
-            } else if (charC.contentEquals("\t")) {
-            } else if (charC.contentEquals(" ")) {
+            } else if (igual(charC,ESPACO)) {
 
             } else {
 
@@ -369,20 +272,8 @@ public class Lexer {
             mIndex += 1;
             mPosicao += 1;
 
-            if (mLinha_Min == -1) {
-                mLinha_Min = mPosicao;
-            } else {
-                if (mPosicao < mLinha_Min) {
-                    mLinha_Min = mPosicao;
-                }
-            }
-            if (mLinha_Max == -1) {
-                mLinha_Max = mPosicao;
-            } else {
-                if (mPosicao > mLinha_Max) {
-                    mLinha_Max = mPosicao;
-                }
-            }
+            organizar();
+
         }
 
         mLinhas = mLinha;
@@ -390,152 +281,62 @@ public class Lexer {
 
     }
 
-    public String ObterID() {
 
-        String ret = String.valueOf(mConteudo.charAt(mIndex));
+    public void organizar() {
+
+        if (mLinha_Min == -1) {
+            mLinha_Min = mPosicao;
+        } else {
+            if (mPosicao < mLinha_Min) {
+                mLinha_Min = mPosicao;
+            }
+        }
+        if (mLinha_Max == -1) {
+            mLinha_Max = mPosicao;
+        } else {
+            if (mPosicao > mLinha_Max) {
+                mLinha_Max = mPosicao;
+            }
+        }
+
+    }
+
+
+    public void avancar() {
+
         mIndex += 1;
         mPosicao += 1;
 
-        while (Continuar()) {
-            String charC = String.valueOf(mConteudo.charAt(mIndex));
-
-            if (ALFANUM.contains(charC)) {
-                ret += charC;
-                mPosicao += 1;
-
-            } else {
-                mIndex -= 1;
-                mPosicao -= 1;
-
-                break;
-            }
-            mIndex += 1;
-        }
-        return ret;
     }
 
-    public String ObterNUM() {
-        String ret = String.valueOf(mConteudo.charAt(mIndex));
-        mIndex += 1;
+    public void voltar() {
 
-        int eIndex = mIndex;
+        mIndex -= 1;
+        mPosicao -= 1;
 
-        boolean pontuar = false;
-
-        while (Continuar()) {
-            String charC = String.valueOf(mConteudo.charAt(mIndex));
-
-            if (NUM.contains(charC)) {
-                ret += charC;
-            } else if (charC.contentEquals(".")) {
-                pontuar = true;
-                mIndex += 1;
-                break;
-            } else {
-                mIndex -= 1;
-                break;
-            }
-            mIndex += 1;
-        }
-
-
-        if (pontuar) {
-            boolean pontuou = false;
-            ret += ".";
-
-            while (Continuar()) {
-                String charC = String.valueOf(mConteudo.charAt(mIndex));
-
-                if (NUM.contains(charC)) {
-                    ret += charC;
-                    pontuou = true;
-                } else {
-                    mIndex -= 1;
-
-                    break;
-                }
-                mIndex += 1;
-            }
-
-            if (!pontuou) {
-                errar("Numerop invalido !", mLinha, mPosicao);
-            }
-        }
-
-
-        return ret;
     }
 
-    public String ObterComentario() {
-        String ret = String.valueOf(mConteudo.charAt(mIndex));
-        mIndex += 1;
-        while (Continuar()) {
-            String charC = String.valueOf(mConteudo.charAt(mIndex));
-
-            if (charC.contentEquals("\n")) {
-                mLinha += 1;
-                mPosicao = 0;
-                break;
-            } else {
-                ret += charC;
-            }
-            mIndex += 1;
-        }
-        return ret;
+    public int getPosicao() {
+        return mPosicao;
     }
 
-    public String ObterComentarioGrande() {
-        String ret = "##";
-
-        mIndex += 2;
-
-        while (Continuar()) {
-            String charC = String.valueOf(mConteudo.charAt(mIndex));
-
-            String charP = "";
-            if (mIndex + 1 < mTamanho) {
-                charP = String.valueOf(mConteudo.charAt(mIndex + 1));
-                if (charC.contentEquals("#") && charP.contentEquals("#")) {
-                    mIndex += 1;
-                    ret += "##";
-                    break;
-                } else {
-                    ret += charC;
-                }
-            }
-
-
-            mIndex += 1;
-        }
-        return ret;
+    public int getLinha() {
+        return mLinha;
     }
 
+    public String getCorrente() {
+        return String.valueOf(mConteudo.charAt(mIndex));
+    }
 
-    public String ObterTexto(String eFinalizador) {
-        String ret = "";
-        mIndex += 1;
-        int eIndex = mIndex;
+    public String getFuturo() {
+        return String.valueOf(mConteudo.charAt(mIndex + 1));
+    }
 
-        boolean finalizado = false;
+    public void descerLinha() {
 
-        while (Continuar()) {
-            String charC = String.valueOf(mConteudo.charAt(mIndex));
+        mLinha += 1;
+        mPosicao = 0;
 
-            if (charC.contentEquals(eFinalizador)) {
-                finalizado = true;
-                break;
-            } else {
-                ret += charC;
-            }
-            mIndex += 1;
-        }
-
-        if (finalizado == false) {
-            errar("Texto nao finalizado !", mLinha, mPosicao);
-
-        }
-
-        return ret;
     }
 
     public String getData() {

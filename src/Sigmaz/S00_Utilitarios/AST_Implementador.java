@@ -1,5 +1,4 @@
-package Sigmaz.S07_Executor;
-import Sigmaz.S00_Utilitarios.AST;
+package Sigmaz.S00_Utilitarios;
 
 public class AST_Implementador {
 
@@ -17,7 +16,43 @@ public class AST_Implementador {
         return mExecute2;
     }
 
-    public AST criar_ExecuteFunction2Args(String eMaior, String eFuncao,String eArg1,String eValor1,String eArg2,String eValor2) {
+
+    public AST criar_Proc_InstrucaoID(AST ASTPai, String eNome, String eValor) {
+
+        AST mProc = ASTPai.criarBranch(eNome);
+        mProc.setNome(eValor);
+        mProc.setValor("ID");
+
+        return mProc;
+    }
+
+    public AST crar_Reg_ValueID(AST ASTPai, String eRegistrador, String eReceber) {
+
+        AST mReg = ASTPai.criarBranch("REG");
+        mReg.setNome(eRegistrador);
+
+        AST mValue = mReg.criarBranch("VALUE");
+        mValue.setNome(eReceber);
+        mValue.setValor("ID");
+
+        return mReg;
+    }
+
+    public AST criar_Proc(AST ASTPai) {
+        return ASTPai.criarBranch("PROC");
+    }
+
+    public AST criar_Proc_InstrucaoText(AST ASTPai, String eNome, String eValor) {
+
+        AST mProc = ASTPai.criarBranch(eNome);
+        mProc.setNome(eValor);
+        mProc.setValor("Text");
+
+        return mProc;
+    }
+
+
+    public AST criar_ExecuteFunction2Args(String eMaior, String eFuncao, String eArg1, String eValor1, String eArg2, String eValor2) {
 
 
         AST mExecute2 = new AST("EXECUTE");
@@ -26,7 +61,7 @@ public class AST_Implementador {
         AST mInternal2 = mExecute2.criarBranch("INTERNAL");
         mInternal2.setNome(eFuncao);
         mInternal2.setValor("STRUCT_FUNCT");
-       AST eArgs =  mInternal2.criarBranch("ARGUMENTS");
+        AST eArgs = mInternal2.criarBranch("ARGUMENTS");
 
         AST a1 = eArgs.criarBranch("ARGUMENT");
         a1.setNome(eArg1);
@@ -46,7 +81,43 @@ public class AST_Implementador {
         return mDefWhile;
     }
 
-    public AST criar_DefCom_ValueStructFunction(String eNome, AST eTipo,String eNomeStruct,String eFuncaoStruct) {
+    public AST criarDef_ComRegistrador(AST ASTPai, String eNome, String eTipo, String eRegistrador) {
+
+
+        AST mDef = ASTPai.criarBranch("DEF");
+        mDef.setNome(eNome);
+
+        AST ASTTipo = mDef.criarBranch("TYPE");
+        ASTTipo.setNome(eTipo);
+        ASTTipo.setValor("CONCRETE");
+
+        AST ASTValue = mDef.criarBranch("VALUE");
+        ASTValue.setNome(eRegistrador);
+        ASTValue.setValor("REG");
+
+
+        return mDef;
+    }
+
+    public AST criar_Def_ValueText(AST ASTPai, String eNome, String eTipo, String eTexto) {
+
+
+        AST mDef = ASTPai.criarBranch("DEF");
+        mDef.setNome(eNome);
+
+        AST ASTTipo = mDef.criarBranch("TYPE");
+        ASTTipo.setNome(eTipo);
+        ASTTipo.setValor("CONCRETE");
+
+        AST ASTValue = mDef.criarBranch("VALUE");
+        ASTValue.setNome(eTexto);
+        ASTValue.setValor("Text");
+
+
+        return mDef;
+    }
+
+    public AST criar_DefCom_ValueStructFunction(String eNome, AST eTipo, String eNomeStruct, String eFuncaoStruct) {
         AST mDefWhile = new AST("DEF");
         mDefWhile.setNome(eNome);
         mDefWhile.getASTS().add(eTipo);
@@ -76,19 +147,19 @@ public class AST_Implementador {
     }
 
 
-    public void adicionar(AST eLocal,AST eNovo){
+    public void adicionar(AST eLocal, AST eNovo) {
 
         eLocal.getASTS().add(eNovo);
 
     }
 
-    public void copiarBranches(AST eLocal,AST eOutro){
+    public void copiarBranches(AST eLocal, AST eOutro) {
 
         eLocal.getASTS().addAll(eOutro.getASTS());
 
     }
 
-    public AST criar_CondicaoStruct_Func(String eStruct,String eFunc){
+    public AST criar_CondicaoStruct_Func(String eStruct, String eFunc) {
 
         AST mCondition = new AST("CONDITION");
         mCondition.setNome(eStruct);
@@ -102,7 +173,7 @@ public class AST_Implementador {
         return mCondition;
     }
 
-    public AST criar_InitGenerico(String eStruct,String mTipagem){
+    public AST criar_InitGenerico(String eStruct, String mTipagem) {
 
         AST eAST = new AST("INIT");
         eAST.setNome(eStruct);

@@ -35,16 +35,12 @@ act pular ( ) {
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }
 operator == ( a : int , b : int ) : bool {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R5 EQUAL R6;
-
-     }
-
-	return reg @R1;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 EQUAL R6;
+	}
+	return reg @ R1;
 }

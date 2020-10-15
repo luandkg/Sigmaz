@@ -1,6 +1,6 @@
 package Sigmaz.S07_Executor.RunValueTypes;
 
-import Sigmaz.S07_Executor.AST_Implementador;
+import Sigmaz.S00_Utilitarios.AST_Implementador;
 import Sigmaz.S07_Executor.Escopo;
 import Sigmaz.S07_Executor.Item;
 import Sigmaz.S07_Executor.RunTime;

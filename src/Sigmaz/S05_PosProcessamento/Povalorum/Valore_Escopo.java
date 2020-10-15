@@ -292,6 +292,8 @@ public class Valore_Escopo {
 
             } else if (mAST.mesmoTipo("USING")) {
 
+            } else if (mAST.mesmoTipo("MOVE_DATA")) {
+
             } else {
 
 

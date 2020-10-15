@@ -138,248 +138,8 @@ package Tempo {
 			def formatado : string = string_append ( f1 , ":", f2 , ":", f3 );
 			return formatado;
 		}
-		func getData_Formatado ( ) : string {
-			def mDia : int = 0;
-			def mMes : int = 0;
-			def mAno : int = 0;
 
-	 PROC -> {
 
-                            SET R5;
-                                MOV 0;
-                                PROC CHRONOS_DAY;
-
-                         }
-
-                    	 mDia   =  reg @R5;
-
-    					 PROC -> {
-
-                                SET R5;
-                                    MOV 0;
-                                    PROC CHRONOS_MONTH;
-
-                             }
-
-                        	 mMes   =  reg @R5;
-
-    					 PROC -> {
-
-                                SET R5;
-                                    MOV 0;
-                                    PROC CHRONOS_YEAR;
-
-                             }
-
-                        	 mAno   =  reg @R5;
-
-			def f1 : string = num_to_string ( mDia );
-			def f2 : string = num_to_string ( mMes );
-			def f3 : string = num_to_string ( mAno );
-			if ( menor ( string_length ( f1 ) , 2 ) ) -> {
-				f1 = string_append ( "0", f1 );
-			}
-			if ( menor ( string_length ( f2 ) , 2 ) ) -> {
-				f2 = string_append ( "0", f2 );
-			}
-			def formatado : string = string_append ( f1 , "/", f2 , "/", f3 );
-			return formatado;
-		}
-		func getDataTempo_Formatado ( ) : string {
-			def mHora : int = 0;
-			def mMinuto : int = 0;
-			def mSegundo : int = 0;
-			def mDia : int = 0;
-			def mMes : int = 0;
-			def mAno : int = 0;
-
-			 PROC -> {
-
-                    SET R5;
-                        MOV 0;
-                        PROC CHRONOS_SECOND;
-
-                 }
-
-            	 mSegundo   =  reg @R5;
-
-
-		 PROC -> {
-
-                SET R5;
-                    MOV 0;
-                    PROC CHRONOS_MINUTE;
-
-             }
-
-        	 mMinuto   =  reg @R5;
-
-
-	 PROC -> {
-
-            SET R5;
-                MOV 0;
-                PROC CHRONOS_HOUR;
-
-         }
-
-    	 mHora   =  reg @R5;
-
-
-				 PROC -> {
-
-                        SET R5;
-                            MOV 0;
-                            PROC CHRONOS_DAY;
-
-                     }
-
-                	 mDia   =  reg @R5;
-
-					 PROC -> {
-
-                            SET R5;
-                                MOV 0;
-                                PROC CHRONOS_MONTH;
-
-                         }
-
-                    	 mMes   =  reg @R5;
-
-					 PROC -> {
-
-                            SET R5;
-                                MOV 0;
-                                PROC CHRONOS_YEAR;
-
-                         }
-
-                    	 mAno   =  reg @R5;
-
-			def f1 : string = num_to_string ( mDia );
-			def f2 : string = num_to_string ( mMes );
-			def f3 : string = num_to_string ( mAno );
-			if ( menor ( string_length ( f1 ) , 2 ) ) -> {
-				f1 = string_append ( "0", f1 );
-			}
-			if ( menor ( string_length ( f2 ) , 2 ) ) -> {
-				f2 = string_append ( "0", f2 );
-			}
-			def alfa : string = string_append ( f1 , "/", f2 , "/", f3 );
-			def p1 : string = num_to_string ( mHora );
-			def p2 : string = num_to_string ( mMinuto );
-			def p3 : string = num_to_string ( mSegundo );
-			if ( menor ( string_length ( p1 ) , 2 ) ) -> {
-				p1 = string_append ( "0", p1 );
-			}
-			if ( menor ( string_length ( p2 ) , 2 ) ) -> {
-				p2 = string_append ( "0", p2 );
-			}
-			if ( menor ( string_length ( p3 ) , 2 ) ) -> {
-				p3 = string_append ( "0", p3 );
-			}
-			def beta : string = string_append ( p1 , ":", p2 , ":", p3 );
-			def formatado : string = string_append ( alfa , " ", beta );
-			return formatado;
-		}
-		func getTempoData_Formatado ( ) : string {
-			def mHora : int = 0;
-			def mMinuto : int = 0;
-			def mSegundo : int = 0;
-			def mDia : int = 0;
-			def mMes : int = 0;
-			def mAno : int = 0;
-
-			 PROC -> {
-
-                    SET R5;
-                        MOV 0;
-                        PROC CHRONOS_SECOND;
-
-                 }
-
-            	 mSegundo   =  reg @R5;
-
-
-		 PROC -> {
-
-                SET R5;
-                    MOV 0;
-                    PROC CHRONOS_MINUTE;
-
-             }
-
-        	 mMinuto   =  reg @R5;
-
-
-	 PROC -> {
-
-            SET R5;
-                MOV 0;
-                PROC CHRONOS_HOUR;
-
-         }
-
-    	 mHora   =  reg @R5;
-
-
-				 PROC -> {
-
-                        SET R5;
-                            MOV 0;
-                            PROC CHRONOS_DAY;
-
-                     }
-
-                	 mDia   =  reg @R5;
-
-					 PROC -> {
-
-                            SET R5;
-                                MOV 0;
-                                PROC CHRONOS_MONTH;
-
-                         }
-
-                    	 mMes   =  reg @R5;
-
-					 PROC -> {
-
-                            SET R5;
-                                MOV 0;
-                                PROC CHRONOS_YEAR;
-
-                         }
-
-                    	 mAno   =  reg @R5;
-
-
-			def f1 : string = num_to_string ( mDia );
-			def f2 : string = num_to_string ( mMes );
-			def f3 : string = num_to_string ( mAno );
-			if ( menor ( string_length ( f1 ) , 2 ) ) -> {
-				f1 = string_append ( "0", f1 );
-			}
-			if ( menor ( string_length ( f2 ) , 2 ) ) -> {
-				f2 = string_append ( "0", f2 );
-			}
-			def alfa : string = string_append ( f1 , "/", f2 , "/", f3 );
-			def p1 : string = num_to_string ( mHora );
-			def p2 : string = num_to_string ( mMinuto );
-			def p3 : string = num_to_string ( mSegundo );
-			if ( menor ( string_length ( p1 ) , 2 ) ) -> {
-				p1 = string_append ( "0", p1 );
-			}
-			if ( menor ( string_length ( p2 ) , 2 ) ) -> {
-				p2 = string_append ( "0", p2 );
-			}
-			if ( menor ( string_length ( p3 ) , 2 ) ) -> {
-				p3 = string_append ( "0", p3 );
-			}
-			def beta : string = string_append ( p1 , ":", p2 , ":", p3 );
-			def formatado : string = string_append ( beta , " ", alfa );
-			return formatado;
-		}
 		
 	}
 
@@ -448,6 +208,55 @@ package Tempo {
 			def formatado : string = string_append ( f1 , "/", f2 , "/", f3 );
 			return formatado;
 		}
+
+		explicit:
+				func getData_Formatado ( ) : string {
+        			def mDia : int = 0;
+        			def mMes : int = 0;
+        			def mAno : int = 0;
+
+        	 PROC -> {
+
+                                    SET R5;
+                                        MOV 0;
+                                        PROC CHRONOS_DAY;
+
+                                 }
+
+                            	 mDia   =  reg @R5;
+
+            					 PROC -> {
+
+                                        SET R5;
+                                            MOV 0;
+                                            PROC CHRONOS_MONTH;
+
+                                     }
+
+                                	 mMes   =  reg @R5;
+
+            					 PROC -> {
+
+                                        SET R5;
+                                            MOV 0;
+                                            PROC CHRONOS_YEAR;
+
+                                     }
+
+                                	 mAno   =  reg @R5;
+
+        			def f1 : string = num_to_string ( mDia );
+        			def f2 : string = num_to_string ( mMes );
+        			def f3 : string = num_to_string ( mAno );
+        			if ( menor ( string_length ( f1 ) , 2 ) ) -> {
+        				f1 = string_append ( "0", f1 );
+        			}
+        			if ( menor ( string_length ( f2 ) , 2 ) ) -> {
+        				f2 = string_append ( "0", f2 );
+        			}
+        			def formatado : string = string_append ( f1 , "/", f2 , "/", f3 );
+        			return formatado;
+        		}
 		
 	}
 

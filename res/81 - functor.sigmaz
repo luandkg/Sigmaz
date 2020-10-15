@@ -1,90 +1,57 @@
 call iniciar -> operando ( );
-
 default -> int {
 	return 0;
 }
-
 default -> num {
 	return 0.0;
 }
 
 act operando ( ) {
-
-    def a : int = 12;
-
-    def TT : num = default;
+	def a : int = 12;
+	def TT : num = default;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
-    def c : int = functor<int>somatorio(12,8);
-    def d : num = functor<num>somatorio(12.4,8.6);
-    #def e : bool = functor<bool>somatorio(true,false);
-    #def f : num = auto<num>somatorio(12.4,8.6);
-
-    def duplo : int = functor<int>somatorio(12,8) ++ functor<int>somatorio(20,20);
-
-
-    auto <num>somatorio(0.6,0.4);
-
-    functor <num>somatorio(0.6,21.5);
-
-    def o1 : num = functor<num>obliviar(40.4,9.6);
-    def o2 : num = functor<num>obliviar(5.4);
-
-    def o3 : int = functor<int>obliviar(12,8);
-    def o4 : int = functor<int>obliviar(12);
-
-
+	def c : int = functor < int > somatorio ( 12 , 8 );
+	def d : num = functor < num > somatorio ( 12.4 , 8.6 );
+	
+	#def e : bool = functor<bool>somatorio(true,false);
+	
+	#def f : num = auto<num>somatorio(12.4,8.6);
+	def duplo : int = functor < int > somatorio ( 12 , 8 ) ++ functor < int > somatorio ( 20 , 20 );
+	auto < num > somatorio ( 0.6 , 0.4 );
+	functor < num > somatorio ( 0.6 , 21.5 );
+	def o1 : num = functor < num > obliviar ( 40.4 , 9.6 );
+	def o2 : num = functor < num > obliviar ( 5.4 );
+	def o3 : int = functor < int > obliviar ( 12 , 8 );
+	def o4 : int = functor < int > obliviar ( 12 );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
-
 }
-
-
-functor <T> somatorio(a : T, b : T) : T {
-
-    def c : T = a ++ b;
-
+functor < T > somatorio ( a : T , b : T ) : T {
+	def c : T = a ++ b;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
-    return c;
+	return c;
 }
-
 operator ++ ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 ADD R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 ADD R6;
+	}
+	return reg @ R7;
 }
-
 operator ++ ( a : num , b : num ) : num {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 SAX R10;
-
-     }
-
-	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 SAX R10;
+	}
+	return reg @ R11;
 }
-
-
-functor <T> obliviar(a : T, opt b : T = default ) : T {
-
-    def c : T = a ++ b;
-
+functor < T > obliviar ( a : T , opt b : T = default ) : T {
+	def c : T = a ++ b;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
-    return c;
+	return c;
 }

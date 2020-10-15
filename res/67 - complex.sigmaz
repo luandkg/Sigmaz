@@ -17,9 +17,8 @@ struct G12 at Modelo {
 	
 }
 func typeof ( a : any ) : string {
-	def ret : string = "";
-	invoke casting -> typeof ( a ) :: ret;
-	return ret;
+	reg @ R17 -> a;
+	return reg @ R17;
 }
 type Par {
 	define P1 : int = 0;

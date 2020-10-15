@@ -26,3 +26,17 @@ operator !! ( a : bool , b : bool ) : bool {
 
 	return reg @R3;
 }
+
+director ! ( a : bool  ) : bool {
+	reg @R1 -> a;
+
+     PROC -> {
+
+        SET R3;
+            MOV FALSE;
+        BOOL_INVERSE R1;
+
+     }
+
+	return reg @R3;
+}

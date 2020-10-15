@@ -1,37 +1,21 @@
 call iniciar -> operando ( );
-
-
 default -> int {
 	return 0;
 }
-
 default -> num {
 	return 0.0;
 }
 
 act operando ( ) {
-
-    def a : int = 12;
-
-    auto <int> correr(12,5);
-
-    auto <int> mover(30,15);
-    auto <int> mover(30);
-
+	def a : int = 12;
+	auto < int > correr ( 12 , 5 );
+	auto < int > mover ( 30 , 15 );
+	auto < int > mover ( 30 );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
-
 }
-
-auto <T> correr(a : T, b : T) {
-
+auto < T > correr ( a : T , b : T ) {
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
 }
-
-
-auto <T> mover(a : T, opt b : T = default) {
-
+auto < T > mover ( a : T , opt b : T = default ) {
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
 }

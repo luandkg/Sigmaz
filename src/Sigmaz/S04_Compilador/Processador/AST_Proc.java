@@ -88,6 +88,17 @@ public class AST_Proc {
                 AST_Instrucao mAST = new AST_Instrucao(mCompiler);
                 mAST.init(AST_Corrente);
 
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("NUM_INT")) {
+
+                AST_Instrucao mAST = new AST_Instrucao(mCompiler);
+                mAST.init(AST_Corrente);
+
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("NUM_DEC")) {
+
+                AST_Instrucao mAST = new AST_Instrucao(mCompiler);
+                mAST.init(AST_Corrente);
+
+
             } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("STAGE")) {
 
                 AST_Instrucao mAST = new AST_Instrucao(mCompiler);
@@ -99,6 +110,11 @@ public class AST_Proc {
                 AST_Instrucao mAST = new AST_Instrucao(mCompiler);
                 mAST.init(AST_Corrente);
 
+
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("BOOL_INVERSE")) {
+
+                AST_Instrucao mAST = new AST_Instrucao(mCompiler);
+                mAST.init(AST_Corrente);
 
 
             } else {

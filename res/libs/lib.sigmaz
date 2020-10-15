@@ -40,20 +40,34 @@ type Par in ( T1 , T2 ) {
 act trash ( a : any ) {
 	invoke __COMPILER__ -> OBJECT ( a ) :: REMOVE;
 }
+
 func isNull ( ObjetoNulo : any ) : bool {
-	def c : bool;
-	invoke casting -> cast_isnull ( ObjetoNulo ) :: c;
-	return c;
+
+	  reg @R0 -> ObjetoNulo;
+	  return reg @R0;
+
 }
+
 director ! ( a : bool ) : bool {
-	invoke casting -> inverse ( a ) :: a;
-	return a;
+	reg @R1 -> a;
+
+     PROC -> {
+
+        SET R2;
+        BOOL_INVERSE R1;
+
+     }
+
+	return reg @R2;
 }
+
 func typeof ( a : any ) : string {
-	def ret : string = "";
-	invoke casting -> typeof ( a ) :: ret;
-	return ret;
+
+	reg @R17 -> a;
+    return reg @R17;
+
 }
+
 type Tipado {
 	define A : int = 0;
 	define B : int = 0;

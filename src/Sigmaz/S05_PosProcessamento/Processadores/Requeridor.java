@@ -12,21 +12,25 @@ public class Requeridor {
 
 
     private PosProcessador mPosProcessador;
+    private ArrayList<AST> mRequisicoes;
 
     public Requeridor(PosProcessador ePosProcessador) {
 
         mPosProcessador = ePosProcessador;
+        mRequisicoes = new ArrayList<AST>();
 
     }
 
+    public ArrayList<AST> getRequisicoes(){ return mRequisicoes;}
 
-    public void init(ArrayList<AST> mTodos, String mLocalLibs,ArrayList<AST> mRequisicoes) {
+
+    public void init(ArrayList<AST> mTodos, String mLocalLibs) {
 
         mPosProcessador.mensagem("");
         mPosProcessador.mensagem(" ------------------ FASE REQUERIDOR ----------------------- ");
         mPosProcessador.mensagem("");
 
-
+        mRequisicoes.clear();
 
         // IMPORTANDO BIBLIOTECAS EXTERNAS
 

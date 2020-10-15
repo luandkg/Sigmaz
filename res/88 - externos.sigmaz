@@ -1,19 +1,12 @@
-
 define versao : int = 1;
 mockiz guardado : int = 6;
-
-
-func ateOnde(a:int) : int {
-
-    if (a == 1) -> { return -1; }
-
+func ateOnde ( a : int ) : int {
+	if ( a == 1 ) -> {
+		return -1;
+	}
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-
-
-    return 0;
-
+	return 0;
 }
-
 operator == ( a : int , b : int ) : bool {
 	def c : bool;
 	def c1 : int = a;
@@ -21,7 +14,6 @@ operator == ( a : int , b : int ) : bool {
 	invoke math -> operator_equal_int ( c1 , c2 ) :: c;
 	return c;
 }
-
 operator ++ ( a : int , b : int ) : int {
 	def c : int;
 	def c1 : int = a;
@@ -32,65 +24,39 @@ operator ++ ( a : int , b : int ) : int {
 
 #refer Caixas;
 refer Linhas;
-
 call Escopos -> {
-
-    def A : int = 12;
-
-    def B : int = Geral->CAMPO;
-
-    #def C : int = Vermelha->VALOR;
-
-    def l1 : Linha_Branca = init Linha_Branca();
-
+	def A : int = 12;
+	def B : int = Geral -> CAMPO;
+	
+	#def C : int = Vermelha->VALOR;
+	def l1 : Linha_Branca = init Linha_Branca ( );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-
 }
 
-
-struct Geral{
-
-    explicit:
-        define CAMPO : int = 10;
-
+struct Geral {
+	explicit : define CAMPO : int = 10;
 }
-
 package Caixas {
+	struct Vermelha {
+		explicit : define VALOR : int = 30;
+	}
 
-    struct Vermelha {
-
-        explicit:
-            define VALOR : int = 30;
-
-    }
-
-    struct Azul {
-
-        explicit:
-            define VALOR : int = 40;
-
-    }
-
+	struct Azul {
+		explicit : define VALOR : int = 40;
+	}
+	
 }
-
 package Linhas {
-
-    refer Caixas;
-
-    struct Linha_Branca{
-
-        define Valor : int = 0;
-
-        init Linha_Branca(){
-
-            Valor = Vermelha->VALOR;
-
-    	    invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
-
-        }
-
-    }
-
+	refer Caixas;
+	struct Linha_Branca {
+		define Valor : int = 0;
+		init Linha_Branca ( ) {
+			Valor = Vermelha -> VALOR;
+			invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
+		}
+		
+	}
+	
 }

@@ -71,7 +71,7 @@ public class Castificador {
 
                 } else if (gAST.mesmoTipo("SETTER")) {
 
-                    processar_Setter(mAST.getNome(), gAST,eASTPai);
+                    processar_Setter(mAST.getNome(), gAST, eASTPai);
 
                 }
 
@@ -100,14 +100,14 @@ public class Castificador {
 
         for (AST iAST : eCastGetter.getASTS()) {
 
-            if (iAST.mesmoTipo("RETURN")){
+            if (iAST.mesmoTipo("RETURN")) {
                 mPosProcessador.errar("Cast " + eCast + " Getter " + eTipoVar + " : Nao pode possuir RETURN ");
                 return;
             }
 
         }
 
-            // CRIAR UMA FUNC TIPO_CAST ( A : GETTER ) : TIPO_CAST
+        // CRIAR UMA FUNC TIPO_CAST ( A : GETTER ) : TIPO_CAST
         AST AST_Func_Get = new AST("FUNCTION");
 
         AST_Func_Get.setNome(eNome);
@@ -146,17 +146,9 @@ public class Castificador {
         AST_betavalue.setValor("NULL");
 
 
-        AST AST_Invoke = AST_Func_Body.criarBranch("INVOKE");
-        AST_Invoke.setNome("casting");
-        AST_Invoke.setValor("move_content");
-
-        AST AST_Invoke_Exit = AST_Invoke.criarBranch("EXIT");
-        AST_Invoke_Exit.setNome(aNome);
-        AST AST_Invoke_Arguments = AST_Invoke.criarBranch("ARGUMENTS");
-
-        AST AST_Invoke_Argument_1 = AST_Invoke_Arguments.criarBranch("ARGUMENT");
-        AST_Invoke_Argument_1.setNome(eNomeVar);
-        AST_Invoke_Argument_1.setValor("ID");
+        AST AST_MOVEDATA = AST_Func_Body.criarBranch("MOVE_DATA");
+        AST_MOVEDATA.setNome(aNome);
+        AST_MOVEDATA.setValor(eNomeVar);
 
 
         AST AST_Func_Ret = AST_Func_Body.criarBranch("RETURN");
@@ -202,7 +194,7 @@ public class Castificador {
 
         for (AST iAST : eCastSetter.getASTS()) {
 
-            if (iAST.mesmoTipo("RETURN")){
+            if (iAST.mesmoTipo("RETURN")) {
                 mPosProcessador.errar("Cast " + eCast + " Setter " + eTipoVar + " : Nao pode possuir RETURN ");
                 return;
             }
@@ -244,17 +236,22 @@ public class Castificador {
         AST_betavalue.setValor("NULL");
 
 
-        AST AST_Invoke = AST_Func_Body.criarBranch("INVOKE");
-        AST_Invoke.setNome("casting");
-        AST_Invoke.setValor("move_content");
+        //AST AST_Invoke = AST_Func_Body.criarBranch("INVOKE");
+     //   AST_Invoke.setNome("casting");
+     //   AST_Invoke.setValor("move_content");
 
-        AST AST_Invoke_Exit = AST_Invoke.criarBranch("EXIT");
-        AST_Invoke_Exit.setNome(eNomeVar);
-        AST AST_Invoke_Arguments = AST_Invoke.criarBranch("ARGUMENTS");
+     //   AST AST_Invoke_Exit = AST_Invoke.criarBranch("EXIT");
+     //   AST_Invoke_Exit.setNome(eNomeVar);
+     //   AST AST_Invoke_Arguments = AST_Invoke.criarBranch("ARGUMENTS");
 
-        AST AST_Invoke_Argument_1 = AST_Invoke_Arguments.criarBranch("ARGUMENT");
-        AST_Invoke_Argument_1.setNome("alfa");
-        AST_Invoke_Argument_1.setValor("ID");
+      //  AST AST_Invoke_Argument_1 = AST_Invoke_Arguments.criarBranch("ARGUMENT");
+      //  AST_Invoke_Argument_1.setNome("alfa");
+      //  AST_Invoke_Argument_1.setValor("ID");
+
+
+        AST AST_MOVEDATA = AST_Func_Body.criarBranch("MOVE_DATA");
+        AST_MOVEDATA.setNome(eNomeVar);
+        AST_MOVEDATA.setValor("alfa");
 
 
         for (AST iAST : eCastSetter.getASTS()) {
@@ -275,7 +272,7 @@ public class Castificador {
 
         AST Setter_Ret = AST_Func_Body.criarBranch("RETURN");
 
-        AST  Setter_Ret_Value = Setter_Ret.criarBranch("VALUE");
+        AST Setter_Ret_Value = Setter_Ret.criarBranch("VALUE");
 
         Setter_Ret_Value.setNome(eNomeVar);
         Setter_Ret_Value.setValor("ID");
@@ -283,9 +280,9 @@ public class Castificador {
 
         eCastSetter.getASTS().add(Setter_Ret);
 
-         //   System.out.println(eCastSetter.ImprimirArvoreDeInstrucoes());
+        //   System.out.println(eCastSetter.ImprimirArvoreDeInstrucoes());
 
-           //  System.out.println(AST_Func_Get.ImprimirArvoreDeInstrucoes());
+        //  System.out.println(AST_Func_Get.ImprimirArvoreDeInstrucoes());
 
     }
 

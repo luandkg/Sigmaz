@@ -1,8 +1,5 @@
 call iniciar -> operando ( );
-
-
 act operando ( ) {
-
 	def a1 : num = 10.0;
 	def a2 : num = 10.0;
 	def a3 : bool = true;
@@ -15,48 +12,35 @@ act operando ( ) {
 	def bb : num = somar ( 2.0 , 5.0 );
 	def bl : bool = true;
 	def ll : bool = igual ( bl , igual ( false , false ) );
-
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
 func somar ( a : num , b : num ) : num {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 SAX R10;
-
-     }
-
-	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 SAX R10;
+	}
+	return reg @ R11;
 }
 func dividir ( a : num , b : num ) : num {
-	reg @R9 -> a;
-        reg @R10 -> b;
-
-         PROC -> {
-
-            SET R11;
-                MOV 0.0;
-                OPE R9 INK R10;
-
-         }
-
-    	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 INK R10;
+	}
+	return reg @ R11;
 }
 func igual ( a : bool , b : bool ) : bool {
-	reg @R1 -> a;
-        reg @R2 -> b;
-
-         PROC -> {
-
-            SET R3;
-                MOV FALSE;
-                OPE R1 MATCH R2;
-
-         }
-
-    	return reg @R3;
+	reg @ R1 -> a;
+	reg @ R2 -> b;
+	PROC -> {
+		SET R3;
+		MOV FALSE;
+		OPE R1 MATCH R2;
+	}
+	return reg @ R3;
 }

@@ -1,196 +1,146 @@
 call iniciar -> inicio ( );
-
 act println ( a : string , b : int ) {
-
-	   reg @R13 -> a;
-       reg @R5 -> b;
-
-         PROC -> {
-            PROC CHANGE_LINE;
-            PRINT R13;
-            SET R13;
-            MOV "";
-            INT_STRING R5;
-            PRINT R13;
-         }
-
+	reg @ R13 -> a;
+	reg @ R5 -> b;
+	PROC -> {
+		PROC CHANGE_LINE;
+		PRINT R13;
+		SET R13;
+		MOV "";
+		INT_STRING R5;
+		PRINT R13;
+	}
+	
 }
 
 act println ( a : string , b : bool ) {
-
-	   reg @R13 -> a;
-       reg @R1 -> b;
-
-         PROC -> {
-            PROC CHANGE_LINE;
-            PRINT R13;
-            SET R13;
-            MOV "";
-            BOOL_STRING R1;
-            PRINT R13;
-         }
-
+	reg @ R13 -> a;
+	reg @ R1 -> b;
+	PROC -> {
+		PROC CHANGE_LINE;
+		PRINT R13;
+		SET R13;
+		MOV "";
+		BOOL_STRING R1;
+		PRINT R13;
+	}
+	
 }
 func isNull ( ObjetoNulo : any ) : bool {
-	def c : bool;
-	invoke casting -> cast_isnull ( ObjetoNulo ) :: c;
-	return c;
+	reg @ R0 -> ObjetoNulo;
+	return reg @ R0;
 }
 func int ( a : int ) : int {
 	return a;
 }
 operator ++ ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 ADD R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 ADD R6;
+	}
+	return reg @ R7;
 }
 operator -- ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 SUB R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 SUB R6;
+	}
+	return reg @ R7;
 }
 operator ** ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 MUX R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 MUX R6;
+	}
+	return reg @ R7;
 }
 operator // ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 DIV R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 DIV R6;
+	}
+	return reg @ R7;
 }
 operator == ( a : int , b : int ) : bool {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R5 EQUAL R6;
-
-     }
-
-	return reg @R1;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 EQUAL R6;
+	}
+	return reg @ R1;
 }
 operator !! ( a : int , b : int ) : bool {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R5 DIFF R6;
-
-     }
-
-	return reg @R1;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 DIFF R6;
+	}
+	return reg @ R1;
 }
 director ! ( a : int ) : int {
-	reg @R5 -> a;
-
-     PROC -> {
-
-        SET R6;
-            MOV 0;
-            OPE R5 MUX -1;
-
-     }
-
-	return reg @R6;
+	reg @ R5 -> a;
+	PROC -> {
+		SET R6;
+		MOV 0;
+		OPE R5 MUX -1;
+	}
+	return reg @ R6;
 }
 func somar ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 ADD R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 ADD R6;
+	}
+	return reg @ R7;
 }
 func subtrair ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 SUB R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 SUB R6;
+	}
+	return reg @ R7;
 }
 func multiplicar ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 MUX R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 MUX R6;
+	}
+	return reg @ R7;
 }
 func dividir ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 DIV R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 DIV R6;
+	}
+	return reg @ R7;
 }
 func resto ( a : int , b : int ) : int {
 	def c : int;
@@ -198,123 +148,88 @@ func resto ( a : int , b : int ) : int {
 	return c;
 }
 func menor ( a : int , b : int ) : bool {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R5 LESS R6;
-
-     }
-
-	return reg @R1;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 LESS R6;
+	}
+	return reg @ R1;
 }
 func maior ( a : int , b : int ) : bool {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R5 GREAT R6;
-
-     }
-
-	return reg @R1;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 GREAT R6;
+	}
+	return reg @ R1;
 }
 func menor_igual ( a : int , b : int ) : bool {
-
-    def ret : bool = false;
-
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R5 LESS R6;
-
-     }
-
-	def e_menor : bool =  reg @R1;
-
-		reg @R5 -> a;
-        reg @R6 -> b;
-
-         PROC -> {
-
-            SET R1;
-                MOV FALSE;
-                OPE R5 EQUAL R6;
-
-         }
-
-    	def e_igual : bool =  reg @R1;
-
-
-
-	if (e_menor) -> { ret = true; }
-	if (e_igual) -> { ret = true; }
-
-
+	def ret : bool = false;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 LESS R6;
+	}
+	def e_menor : bool = reg @ R1;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 EQUAL R6;
+	}
+	def e_igual : bool = reg @ R1;
+	if ( e_menor ) -> {
+		ret = true;
+	}
+	if ( e_igual ) -> {
+		ret = true;
+	}
 	return ret;
 }
 func igual ( a : int , b : int ) : bool {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R5 EQUAL R6;
-
-     }
-
-	return reg @R1;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 EQUAL R6;
+	}
+	return reg @ R1;
 }
 func diferente ( a : int , b : int ) : bool {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R5 DIFF R6;
-
-     }
-
-	return reg @R1;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 DIFF R6;
+	}
+	return reg @ R1;
 }
 operator !! ( a : bool , b : bool ) : bool {
-	reg @R1 -> a;
-    reg @R2 -> b;
-
-     PROC -> {
-
-        SET R3;
-            MOV FALSE;
-            OPE R1 UNMATCH R2;
-
-     }
-
-	return reg @R3;
+	reg @ R1 -> a;
+	reg @ R2 -> b;
+	PROC -> {
+		SET R3;
+		MOV FALSE;
+		OPE R1 UNMATCH R2;
+	}
+	return reg @ R3;
 }
 
 act trash ( a : any ) {
-
 	def existe : bool = false;
-
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	invoke __COMPILER__ -> EXISTS ( a ) :: existe;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	invoke __COMPILER__ -> STRUCTS ( ) :: INSTANCES;
-
 	if ( existe ) -> {
 		invoke __COMPILER__ -> OBJECT ( a ) :: REMOVE;
 	}
@@ -370,13 +285,10 @@ struct Lista in ( T ) {
 			def mAnterior : Item >> ( T ) = null;
 			def mCorrente : Item >> ( T ) = mPrimeiro;
 			def mIndice : int = 0;
-			def mUltimoIndice : int = mQuantidade -- 1 ;
-
+			def mUltimoIndice : int = mQuantidade -- 1;
 			while ( isNull ( mCorrente ) == false ) -> {
 				if ( mCorrente.getValor ( ) == a ) -> {
-
 					println ( "Removendo : ", a );
-
 					if ( mIndice == 0 ) -> {
 						if ( mQuantidade == 1 ) -> {
 							mPrimeiro = null;
@@ -384,19 +296,14 @@ struct Lista in ( T ) {
 						}others {
 							mPrimeiro = mPrimeiro.getProximo ( );
 						}
-
-											println ( " R : ", 1 );
-
+						println ( " R : ", 1 );
 					}other ( mIndice == mUltimoIndice ) -> {
 						mAnterior.setProximo ( null );
 						mUltimo = mAnterior;
-																	println ( " R : ", 2 );
-
+						println ( " R : ", 2 );
 					}others {
 						mAnterior.setProximo ( mCorrente.getProximo ( ) );
-
-																	println ( " R : ", 3 );
-
+						println ( " R : ", 3 );
 					}
 					mQuantidade = subtrair ( mQuantidade , 1 );
 					trash ( mCorrente );
@@ -559,9 +466,7 @@ struct Iterador in ( T ) {
 	}
 	
 }
-
 refer Delicia;
-
 act inicio ( ) {
 	def ls : Lista >> ( string ) = init Lista ( ) >> ( string );
 	def lsi : Iterador >> ( Lista >> ( string ) ) = init Iterador ( ls ) >> ( Lista >> ( string ) );
@@ -585,36 +490,27 @@ act inicio ( ) {
 		println ( "-> ", iterando.getValor ( ) );
 		iterando.proximo ( );
 	}
-
 	println ( " DEBUG  ", 2 );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
-
 	println ( "Remover Item : ", 10 );
 	ig.remover ( 10 );
-
 	ig.listar ( );
 	println ( "Quantidade  : ", ig.getQuantidade ( ) );
-
 	println ( "Remover Item : ", 40 );
 	ig.remover ( 40 );
 	ig.listar ( );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
-
 	println ( "Remover Item : ", 60 );
 	ig.remover ( 60 );
 	ig.listar ( );
-
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
-
 	println ( "Remover Item : ", 15 );
 	ig.remover ( 15 );
 	ig.listar ( );
-
 	println ( "Quantidade # : ", ig.getQuantidade ( ) );
-		println ( "Adicionar Item : ", 70 );
-
+	println ( "Adicionar Item : ", 70 );
 	ig.adicionar ( 70 );
-
+	
 	#ig.listar ( );
 	iterando.iniciar ( );
 	while ( iterando.continuar ( ) ) -> {
@@ -653,8 +549,6 @@ act inicio ( ) {
 		println ( "-> ", iterar.getValor ( ) );
 		iterar.proximo ( );
 	}
-
-
 	def Frutas : Lista >> ( Fruta ) = init Lista ( ) >> ( Fruta );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	Frutas.adicionar ( init Fruta ( ) );
@@ -691,53 +585,38 @@ func operador_ou ( a : bool , b : bool ) : bool {
 	return c;
 }
 operator == ( a : bool , b : bool ) : bool {
-	reg @R1 -> a;
-    reg @R2 -> b;
-
-     PROC -> {
-
-        SET R3;
-            MOV FALSE;
-            OPE R1 MATCH R2;
-
-     }
-
-	return reg @R3;
+	reg @ R1 -> a;
+	reg @ R2 -> b;
+	PROC -> {
+		SET R3;
+		MOV FALSE;
+		OPE R1 MATCH R2;
+	}
+	return reg @ R3;
 }
 func maior_igual ( a : int , b : int ) : bool {
- def ret : bool = false;
-
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R5 GREAT R6;
-
-     }
-
-	def e_maior : bool =  reg @R1;
-
-		reg @R5 -> a;
-        reg @R6 -> b;
-
-         PROC -> {
-
-            SET R1;
-                MOV FALSE;
-                OPE R5 EQUAL R6;
-
-         }
-
-    	def e_igual : bool =  reg @R1;
-
-
-
-	if (e_maior) -> { ret = true; }
-	if (e_igual) -> { ret = true; }
-
-
+	def ret : bool = false;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 GREAT R6;
+	}
+	def e_maior : bool = reg @ R1;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 EQUAL R6;
+	}
+	def e_igual : bool = reg @ R1;
+	if ( e_maior ) -> {
+		ret = true;
+	}
+	if ( e_igual ) -> {
+		ret = true;
+	}
 	return ret;
 }

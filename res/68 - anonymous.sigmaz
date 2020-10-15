@@ -1,30 +1,20 @@
 call iniciar -> {
-
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
-
 	local -> ( ) {
 		def t : int = -12;
 		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	}
-
 	@ ( );
 	local -> ( a : int , b : int ) : int {
-	reg @R5 -> a;
-        reg @R6 -> b;
-
-         PROC -> {
-
-            SET R7;
-                MOV 0;
-                OPE R5 ADD R6;
-
-         }
-
-    	return reg @R7;
+		reg @ R5 -> a;
+		reg @ R6 -> b;
+		PROC -> {
+			SET R7;
+			MOV 0;
+			OPE R5 ADD R6;
+		}
+		return reg @ R7;
 	}
-
-	def t : int = @ ( 20, 50 );
-
-
+	def t : int = @ ( 20 , 50 );
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }

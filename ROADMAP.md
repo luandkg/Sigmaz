@@ -444,3 +444,13 @@ Linguagem de Programação Estruturada - Implementações
 
 		2020 10 13 -->> Implementação do Stage no Processador
 
+
+		2020 10 14 -->> Implementação do Stage no Processador
+		2020 10 14 -->> Implementação do Tokenizador
+		2020 10 14 -->> Divisão do Lexer : Lexer e Tokenizador
+
+
+		2020 10 15 -->> PosProcessador Modelador Biblioteca Externa
+		2020 10 15 -->> PosProcessador Tipador Biblioteca Externa
+		2020 10 15 -->> PosProcessador Valorador Biblioteca Externa
+

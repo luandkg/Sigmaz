@@ -1,4 +1,5 @@
 
+
 # OPERADORES INT
 func int ( a : int ) : int {
 	return a;

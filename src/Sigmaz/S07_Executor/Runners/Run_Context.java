@@ -445,7 +445,6 @@ public class Run_Context {
         for (AST mAST : getStagesContexto(mEscopo)) {
             // System.out.println(" -->> " + mAST.getNome());
 
-            int i = 0;
 
             for (AST sAST : mAST.getBranch("STAGES").getASTS()) {
                 //  System.out.println("\t :: " + sAST.getNome());
@@ -455,13 +454,12 @@ public class Run_Context {
                     if (tmp.contentEquals(eStage)) {
 
                         retStage.setNulo(false);
-                        retStage.setValor(String.valueOf(i), mRunTime, null);
+                        retStage.setValor(sAST.getValor(), mRunTime, null);
                         retStage.setTipo(mAST.getValor());
                         break;
                     }
                 }
 
-                i += 1;
             }
         }
 

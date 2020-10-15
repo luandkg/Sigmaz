@@ -51,7 +51,6 @@ act operando ( ) {
 	#def n5 : neg = n1**-2;
 	def primario : int = 12;
 	def secundario : neg = null;
-	invoke casting -> move_content ( primario ) :: secundario;
 	def terciario : neg = neg ( -13 );
 	def i1 : int = n1;
 	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
@@ -61,74 +60,54 @@ struct XA {
 	
 }
 operator ++ ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 ADD R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 ADD R6;
+	}
+	return reg @ R7;
 }
 operator ** ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 MUX R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 MUX R6;
+	}
+	return reg @ R7;
 }
 func somar ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 ADD R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 ADD R6;
+	}
+	return reg @ R7;
 }
 func maior ( a : int , b : int ) : bool {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R5 GREAT R6;
-
-     }
-
-	return reg @R1;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 GREAT R6;
+	}
+	return reg @ R1;
 }
 func menor ( a : int , b : int ) : bool {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R5 LESS R6;
-
-     }
-
-	return reg @R1;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 LESS R6;
+	}
+	return reg @ R1;
 }
 cast neg {
 	getter a : int -> {
@@ -151,7 +130,7 @@ cast neg {
 operator ** ( a : neg , b : neg ) : neg {
 	def a1 : int = a;
 	def b1 : int = b;
-	def c : int = a1**b1;
+	def c : int = a1 ** b1;
 	if ( maior ( c , 0 ) ) -> {
 		exception "Operacao invalida entre os negativos !";
 	}
@@ -161,7 +140,7 @@ operator ** ( a : neg , b : neg ) : neg {
 operator ** ( a : neg , b : int ) : neg {
 	def a1 : int = a;
 	def b1 : int = b;
-	def c : int = a1**b1;
+	def c : int = a1 ** b1;
 	if ( maior ( c , 0 ) ) -> {
 		exception "Operacao invalida entre os negativos !";
 	}

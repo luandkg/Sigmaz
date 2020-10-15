@@ -78,13 +78,27 @@ public class Run_Proc {
 
                 instrucao_BOOL_STRING(mAST);
 
+            } else if (mAST.mesmoTipo("BOOL_INVERSE")) {
+
+                instrucao_BOOL_INVERSE(mAST);
+
+            } else if (mAST.mesmoTipo("NUM_INT")) {
+
+                instrucao_NUM_INT(mAST);
+
+            } else if (mAST.mesmoTipo("NUM_DEC")) {
+
+                instrucao_NUM_DEC(mAST);
+
+
+
             } else if (mAST.mesmoTipo("PRINT")) {
 
                 instrucao_PRINT(mAST);
 
-            } else if (mAST.mesmoTipo("STAGE")) {
+          //  } else if (mAST.mesmoTipo("STAGE")) {
 
-                instrucao_STAGE(mAST);
+            //    instrucao_STAGE(mAST);
 
 
             } else if (mAST.mesmoTipo("PROC")) {
@@ -205,6 +219,115 @@ public class Run_Proc {
         }
 
     }
+
+    public void instrucao_BOOL_INVERSE(AST eAST){
+
+        Registrado eConteudo = getConteudo(eAST);
+
+        if(eConteudo.getTipo().contentEquals("Logico")){
+            Registrado mRegistrado = new Registrado();
+
+            if (eConteudo.getConteudo().contentEquals("true")){
+                mRegistrado.atribuir("false","Logico");
+            }else{
+                mRegistrado.atribuir("true","Logico");
+            }
+
+            mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mRegistrado);
+
+        }else{
+            mRunTime.errar(mLocal, "Processador - A Instrucao BOOL_INVERSE so executa com logicos !");
+        }
+
+    }
+
+
+    public void instrucao_NUM_INT(AST eAST){
+
+        Registrado eConteudo = getConteudo(eAST);
+
+        if(eConteudo.getTipo().contentEquals("Real")){
+
+            String s = String.valueOf(eConteudo.getConteudo());
+            String inteiro = "";
+
+            int index = 0;
+            int o = s.length();
+            while (index < o) {
+                String v = s.charAt(index) + "";
+                if (v.contentEquals(".")) {
+                    break;
+                } else {
+                    inteiro += v;
+                }
+                index += 1;
+            }
+
+
+
+            Registrado mRegistrado = new Registrado();
+            mRegistrado.atribuir(inteiro + ".0","Real");
+
+            mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mRegistrado);
+
+        }else{
+            mRunTime.errar(mLocal, "Processador - A Instrucao NUM_INT so executa com Reais !");
+        }
+
+    }
+
+    public void instrucao_NUM_DEC(AST eAST){
+
+        Registrado eConteudo = getConteudo(eAST);
+
+        if(eConteudo.getTipo().contentEquals("Real")){
+
+
+
+            String p1 = eConteudo.getConteudo();
+            if (mRunTime.getErros().size() > 0) {
+                return;
+            }
+            String s = String.valueOf(p1);
+            String inteiro = "";
+
+            int index = 0;
+            int o = s.length();
+            while (index < o) {
+                String v = s.charAt(index) + "";
+                if (v.contentEquals(".")) {
+                    index += 1;
+                    break;
+                } else {
+
+                }
+                index += 1;
+            }
+
+            while (index < o) {
+                String v = s.charAt(index) + "";
+
+                inteiro += v;
+
+                index += 1;
+            }
+            if (inteiro.length() == 0) {
+                inteiro = "0";
+            }
+
+
+
+            Registrado mRegistrado = new Registrado();
+            mRegistrado.atribuir("0." + inteiro,"Real");
+
+            mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mRegistrado);
+
+        }else{
+            mRunTime.errar(mLocal, "Processador - A Instrucao NUM_DEC so executa com Reais !");
+        }
+
+    }
+
 
 
     public void instrucao_PRINT(AST eAST){

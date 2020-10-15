@@ -42,6 +42,9 @@ public class Run_Reg {
             if (ASTCorrente.getNome().contentEquals("R0")) {
 
                 mRunTime.getProcessador().aplicar_nulo(ASTCorrente.getNome(), "true");
+            } else if (ASTCorrente.getNome().contentEquals("R17")) {
+
+                mRunTime.getProcessador().aplicar_tipo(ASTCorrente.getNome(), mAST.getRetornoTipo());
 
             } else {
 
@@ -57,6 +60,9 @@ public class Run_Reg {
 
                     mRunTime.getProcessador().aplicar_nulo(ASTCorrente.getNome(), "false");
 
+                } else if (ASTCorrente.getNome().contentEquals("R17")) {
+
+                    mRunTime.getProcessador().aplicar_tipo(ASTCorrente.getNome(), mAST.getRetornoTipo());
 
                 } else {
 
@@ -76,32 +82,13 @@ public class Run_Reg {
 
                         mRunTime.getProcessador().aplicar_texto(ASTCorrente.getNome(), mAST.getConteudo());
 
-
                     } else {
 
-
-                        Run_Context mRC = new Run_Context(mRunTime);
-                        String eQual =mRC.getQualificador(mAST.getRetornoTipo(),mEscopo);
-
-                        if (eQual.contentEquals("STAGES")){
-
-
-                            mRunTime.getProcessador().aplicar_stage(ASTCorrente.getNome(), mAST.getConteudo());
-
-
-                        }else{
-
-
-                            mRunTime.errar(mLocal, "O registrador " + ASTCorrente.getNome() + "  nao pode receber o tipo " + mAST.getRetornoTipo());
-
-                        }
-
-
+                        mRunTime.errar(mLocal, "O registrador " + ASTCorrente.getNome() + "  nao pode receber o tipo " + mAST.getRetornoTipo());
 
                     }
 
                 }
-
 
 
             } else {

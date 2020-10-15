@@ -28,14 +28,12 @@ act operando ( ) {
 }
 
 act println ( a : string , b : string ) {
-
-	   reg @R13 -> a;
-       reg @R14 -> b;
-
-         PROC -> {
-            PROC CHANGE_LINE;
-            PRINT R13;
-            PRINT R14;
-         }
-
+	reg @ R13 -> a;
+	reg @ R14 -> b;
+	PROC -> {
+		PROC CHANGE_LINE;
+		PRINT R13;
+		PRINT R14;
+	}
+	
 }

@@ -1,30 +1,25 @@
-func num_to_string ( a : num ) : string {
-	def c : string;
-	invoke casting -> num_to_string ( a ) :: c;
-	return c;
-}
-func bool_to_string ( a : bool ) : string {
-	def c : string;
-	invoke casting -> bool_to_string ( a ) :: c;
-	return c;
-}
-func int_to_string ( a : int ) : string {
-	def c : string;
-	invoke casting -> int_to_string ( a ) :: c;
-	return c;
-}
-func string_to_bool ( a : string ) : bool {
-	def c : bool;
-	invoke casting -> cast_sb ( a ) :: c;
-	return c;
-}
+
 func inteiro ( a : num ) : num {
-	def c : num;
-	invoke casting -> cast_integer ( a ) :: c;
-	return c;
+	reg @R9 -> a;
+
+     PROC -> {
+
+        SET R10;
+            MOV 0.0;
+            NUM_INT R9;
+     }
+
+	return reg @R10;
 }
 func decimal ( a : num ) : num {
-	def c : num;
-	invoke casting -> cast_decimal ( a ) :: c;
-	return c;
+	reg @R9 -> a;
+
+     PROC -> {
+
+        SET R10;
+            MOV 0.0;
+            NUM_DEC R9;
+     }
+
+	return reg @R10;
 }

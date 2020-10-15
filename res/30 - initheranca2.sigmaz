@@ -52,45 +52,46 @@ struct Animal with Qualidade {
 		return c;
 	}
 
-act println ( a : string , b : int ) {
-	PROC -> {
-		PROC CHANGE_LINE;
-	}
-	reg @R13 -> a;
-	PROC -> {
-		PRINT R13;
-	}
-
-	reg @R5 -> b;
-	PROC -> {
-		SET R13;
-		MOV "";
-		INT_STRING R5;
-		PRINT R13;
-	}
-}
-
-act println ( a : string , b : string ) {
-	PROC -> {
-		PROC CHANGE_LINE;
-	}
-	reg @R13 -> a;
-	PROC -> {
-		PRINT R13;
+	act println ( a : string , b : int ) {
+		PROC -> {
+			PROC CHANGE_LINE;
+		}
+		reg @ R13 -> a;
+		PROC -> {
+			PRINT R13;
+		}
+		reg @ R5 -> b;
+		PROC -> {
+			SET R13;
+			MOV "";
+			INT_STRING R5;
+			PRINT R13;
+		}
+		
 	}
 
-	reg @R13 -> b;
-	PROC -> {
-		PRINT R13;
+	act println ( a : string , b : string ) {
+		PROC -> {
+			PROC CHANGE_LINE;
+		}
+		reg @ R13 -> a;
+		PROC -> {
+			PRINT R13;
+		}
+		reg @ R13 -> b;
+		PROC -> {
+			PRINT R13;
+		}
+		
 	}
-}
 
-act println ( a : string ) {
-	reg @R13 -> a;
-	PROC -> {
-		PROC CHANGE_LINE;
-		PRINT R13;
+	act println ( a : string ) {
+		reg @ R13 -> a;
+		PROC -> {
+			PROC CHANGE_LINE;
+			PRINT R13;
+		}
+		
 	}
-}
 	
 }

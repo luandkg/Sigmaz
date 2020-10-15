@@ -33,16 +33,12 @@ act alterador_Pessoa ( az : Pessoa ) {
 	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
 }
 func somar ( a : int , b : int ) : int {
-	reg @R5 -> a;
-    reg @R6 -> b;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 ADD R6;
-
-     }
-
-	return reg @R7;
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 ADD R6;
+	}
+	return reg @ R7;
 }

@@ -24,11 +24,11 @@ public class InvokeCasting {
     public void init(String eAcao, String eSaida, AST ASTArgumentos) {
 
         int i = mRun_Invoke.argumentosContagem(ASTArgumentos);
-        if (i == 1) {
+        //if (i == 1) {
 
-            argumentos_1num(eAcao, eSaida, ASTArgumentos);
+         //   argumentos_1num(eAcao, eSaida, ASTArgumentos);
 
-        } else if (i == 2) {
+        if (i == 2) {
 
             argumentos_2num(eAcao, eSaida, ASTArgumentos);
 
