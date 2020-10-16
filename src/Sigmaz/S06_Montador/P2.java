@@ -44,10 +44,10 @@ public class P2 {
 
         analisar();
 
-        OLM mOLM = new OLM();
+        ASTDocumento mASTDocumento = new ASTDocumento();
 
-         String mDocumentoNovo = mOLM.toDocumento(lsAST);
-        String mDocumentoReduzido = mOLM.toDocumentoReduzido(lsAST);
+        // String mDocumentoNovo = mOLM.toDocumento(lsAST);
+        String mDocumentoReduzido = mASTDocumento.toDocumentoReduzido(lsAST);
 
         mTamanho = mDocumentoReduzido.length();
 
@@ -88,13 +88,13 @@ public class P2 {
 
         mDesempacotado.clear();
 
-        OLM mOLM = new OLM();
+        ASTDocumento mASTDocumento = new ASTDocumento();
 
-        mOLM.parserDocumento(eConteudo);
+        mASTDocumento.parserDocumento(eConteudo);
 
-        if (mOLM.getOk()) {
+        if (mASTDocumento.getOk()) {
 
-            mDesempacotado = mOLM.getASTS();
+            mDesempacotado = mASTDocumento.getASTS();
 
             analisar();
 

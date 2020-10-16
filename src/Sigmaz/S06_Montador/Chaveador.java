@@ -6,18 +6,19 @@ public class Chaveador {
 
     private int mTamanho;
 
-    public Chaveador() {
+    public Chaveador(int eTamanho) {
 
-        mCrifrador = new int[6];
-        mTamanho=6;
+        mCrifrador = new int[eTamanho];
+        mTamanho=eTamanho;
 
-        mCrifrador[0] = 10;
-        mCrifrador[1] = 56;
-        mCrifrador[2] = 130;
-        mCrifrador[3] = 22;
-        mCrifrador[4] = 12;
-        mCrifrador[5] = 80;
+        for(int i=0;i<eTamanho;i++){
+            mCrifrador[i]=0;
+        }
 
+    }
+
+    public void set(int e,int eValor){
+        mCrifrador[e] = eValor;
     }
 
     public int[] getChave() {

@@ -44,7 +44,7 @@ public class AppSigmaz {
 
         int ARQUIVO = 44;
 
-        switch (Fases.TESTES) {
+        switch (Fases.COMPILAR_E_EXECUTAR_DETALHADO) {
 
             case MONTAR_PLANO_COMPILACAO -> AppUtils.PLANO_COMPILACAO(ARQUIVO, mArquivos, mLOCAL_PLANOS, mLocalLibs);
 

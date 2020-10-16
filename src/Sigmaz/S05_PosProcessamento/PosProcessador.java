@@ -104,7 +104,6 @@ public class PosProcessador {
             mValorador.init(mASTS, mRequisicoes);
         }
 
-        gravarCabecalho(mCabecalho, mASTS);
 
 
     }
@@ -121,71 +120,6 @@ public class PosProcessador {
         return mMensageiro;
     }
 
-    public void gravarCabecalho(Cabecalho eCabecalho, ArrayList<AST> mASTS) {
-
-        UUID mUUID = new UUID();
-
-
-        for (AST eAST : mASTS) {
-
-
-            AST mCabecalho = new AST("HEADER");
-            mCabecalho.setNome("1");
-            mCabecalho.setValor("Num");
-
-            AST ma = mCabecalho.criarBranch("AUTHORES");
-
-            for (String eAutor : eCabecalho.getAutores()) {
-
-                AST tmpA = ma.criarBranch("AUTHOR");
-                tmpA.setValor(eAutor);
-
-            }
-
-            AST AVersao = mCabecalho.criarBranch("VERSION");
-            AVersao.setValor(eCabecalho.getVersao());
-
-            AST AC = mCabecalho.criarBranch("COMPANY");
-            AC.setValor(eCabecalho.getCompanhia());
-
-            AST ePrivado = mCabecalho.criarBranch("PRIVATE");
-            ePrivado.setValor(mUUID.getUUID());
-
-            AST ePublico = mCabecalho.criarBranch("PUBLIC");
-            ePublico.setValor(mUUID.getUUID());
-
-            AST eShared = mCabecalho.criarBranch("SHARED");
-            eShared.setValor(mUUID.getUUID());
-
-            AST eDevelopment = mCabecalho.criarBranch("DEVELOPMENT");
-
-            AST ePre = eDevelopment.criarBranch("PREPROCESSOR");
-            ePre.setNome(eCabecalho.getPreProcessor());
-            ePre.setValor(eCabecalho.getPreProcessor_UUID());
-
-
-            AST eLexer = eDevelopment.criarBranch("LEXER");
-            eLexer.setNome(eCabecalho.getLexer());
-            eLexer.setValor(eCabecalho.getLexer_UUID());
-
-            AST eParser = eDevelopment.criarBranch("PARSER");
-            eParser.setNome(eCabecalho.getParser());
-            eParser.setValor(eCabecalho.getParser_UUID());
-
-            AST eCompiler = eDevelopment.criarBranch("COMPILER");
-            eCompiler.setNome(eCabecalho.getCompiler());
-            eCompiler.setValor(eCabecalho.getCompiler_UUID());
-
-            AST ePosProcessor = eDevelopment.criarBranch("POSPROCESSOR");
-            ePosProcessor.setNome(eCabecalho.getPosProcessor());
-            ePosProcessor.setValor(eCabecalho.getPosProcessor_UUID());
-
-            eAST.getASTS().add(0, mCabecalho);
-
-        }
-
-
-    }
 
 
     public ArrayList<String> getErros() {

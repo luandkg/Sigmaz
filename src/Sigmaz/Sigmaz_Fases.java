@@ -258,6 +258,7 @@ public class Sigmaz_Fases {
 
         executar_PosProcessamento(CompilerC, eLocalLibs);
 
+
         executar_Montagem(CompilerC, mSaida);
 
         mIntervalo.marqueFim();
@@ -281,7 +282,7 @@ public class Sigmaz_Fases {
 
     }
 
-    public void executar(String eSaida){
+    public void executar(String eSaida) {
 
         Sigmaz_Executor mSigmaz_Executor = new Sigmaz_Executor();
 
@@ -290,14 +291,81 @@ public class Sigmaz_Fases {
 
         mSigmaz_Executor.executar(eSaida);
 
-        if (mSigmaz_Executor.temErros()){
-            for(String mErro : mSigmaz_Executor.getErros()){
+        if (mSigmaz_Executor.temErros()) {
+            for (String mErro : mSigmaz_Executor.getErros()) {
                 mErros_Execucao.add(mErro);
-                mTemErros=true;
+                mTemErros = true;
             }
         }
 
     }
+
+    public void gravarCabecalho(Cabecalho eCabecalho, ArrayList<AST> mASTS) {
+
+        UUID mUUID = new UUID();
+
+        mASTS.clear();
+
+
+
+
+        AST ma = new AST("AUTHORES");
+        mASTS.add(ma);
+
+        for (String eAutor : eCabecalho.getAutores()) {
+
+            AST tmpA = ma.criarBranch("AUTHOR");
+            tmpA.setValor(eAutor);
+
+        }
+
+        AST AVersao = new AST("VERSION");
+        AVersao.setValor(eCabecalho.getVersao());
+        mASTS.add(AVersao);
+
+        AST AC = new AST("COMPANY");
+        AC.setValor(eCabecalho.getCompanhia());
+        mASTS.add(AC);
+
+        AST ePrivado = new AST("PRIVATE");
+        ePrivado.setValor(mUUID.getUUID());
+        mASTS.add(ePrivado);
+
+        AST ePublico = new AST("PUBLIC");
+        ePublico.setValor(mUUID.getUUID());
+        mASTS.add(ePublico);
+
+        AST eShared = new AST("SHARED");
+        eShared.setValor(mUUID.getUUID());
+        mASTS.add(eShared);
+
+        AST eDevelopment = new AST("DEVELOPMENT");
+        mASTS.add(eDevelopment);
+
+        AST ePre = eDevelopment.criarBranch("PREPROCESSOR");
+        ePre.setNome(eCabecalho.getPreProcessor());
+        ePre.setValor(eCabecalho.getPreProcessor_UUID());
+
+
+        AST eLexer = eDevelopment.criarBranch("LEXER");
+        eLexer.setNome(eCabecalho.getLexer());
+        eLexer.setValor(eCabecalho.getLexer_UUID());
+
+        AST eParser = eDevelopment.criarBranch("PARSER");
+        eParser.setNome(eCabecalho.getParser());
+        eParser.setValor(eCabecalho.getParser_UUID());
+
+        AST eCompiler = eDevelopment.criarBranch("COMPILER");
+        eCompiler.setNome(eCabecalho.getCompiler());
+        eCompiler.setValor(eCabecalho.getCompiler_UUID());
+
+        AST ePosProcessor = eDevelopment.criarBranch("POSPROCESSOR");
+        ePosProcessor.setNome(eCabecalho.getPosProcessor());
+        ePosProcessor.setValor(eCabecalho.getPosProcessor_UUID());
+
+
+    }
+
 
     public void initSemExecucao(String eArquivo, String mSaida, String eLocalLibs, int mOpcao) {
         ArrayList<String> aa = new ArrayList<String>();
@@ -730,10 +798,14 @@ public class Sigmaz_Fases {
 
         if (mFase == Fases.MONTAGEM) {
 
+            ArrayList<AST> mASTCabecalhos = new ArrayList<AST>();
+
+            gravarCabecalho(mCabecalho, mASTCabecalhos);
+
 
             Montador MontadorC = new Montador();
 
-            MontadorC.compilar(CompilerC.getASTS(), mSaida);
+            MontadorC.compilar(mASTCabecalhos, CompilerC.getASTS(), mSaida);
 
             mASTS = CompilerC.getASTS();
 

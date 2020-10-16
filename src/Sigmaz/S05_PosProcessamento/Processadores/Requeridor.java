@@ -63,10 +63,15 @@ public class Requeridor {
 
                                     mPosProcessador.mensagem("\t - Encontrada : Sim");
                                     mPosProcessador.mensagem("\t - Status : OK");
+                                    mPosProcessador.mensagem("\t - Chave : " + RunTimeC.getShared());
 
+                                    AST mBiblioteca = RunTimeC.getBranch("SIGMAZ");
 
                                     Contador mContador = new Contador();
-                                    mContador.init(RunTimeC.getBranch("SIGMAZ"));
+                                    mContador.init(mBiblioteca);
+
+
+                                    ASTC.setValor(RunTimeC.getShared());
 
                                     mPosProcessador.mensagem("");
 

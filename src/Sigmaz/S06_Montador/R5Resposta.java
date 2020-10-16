@@ -4,6 +4,7 @@ public class R5Resposta {
 
     private boolean mOk;
     private String mConteudo;
+    private  byte[] mData;
 
     public R5Resposta() {
 
@@ -22,8 +23,15 @@ public class R5Resposta {
         mOk = true;
     }
 
+    public void validarComData( byte[] eData) {
+        mData = eData;
+        mOk = true;
+    }
+
     public boolean getOk() {
         return mOk;
     }
     public String getConteudo(){return mConteudo;}
+    public  byte[] getData(){return mData;}
+
 }

@@ -1,39 +1,39 @@
 package Sigmaz.S06_Montador;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 
 public class R5 {
 
+    Chaveador mChaveador ;
 
-    public R5Resposta guardar(String eDocumento, String eArquivo) {
+    public R5(Chaveador eChave){
+
+        mChaveador=eChave;
+
+    }
+
+    public R5Resposta guardar(String eDocumento) {
 
         R5Resposta mR5Resposta = new R5Resposta();
 
-        byte[] bytes = eDocumento.getBytes(StandardCharsets.UTF_8);
+        byte[] mGuardado = eDocumento.getBytes(StandardCharsets.UTF_8);
+
+        int mIndex = 0;
+        int mTamanho = eDocumento.length();
+
+        int mChave_Index = 0;
+        int mChave_Tamanho = mChaveador.getChaveTamanho();
 
 
-        int i = 0;
-        int o = eDocumento.length();
+        while (mIndex < mTamanho) {
+            int novo = (int) mGuardado[mIndex];
 
 
-        Chaveador mChaveador = new Chaveador();
-
-        int ic = 0;
-        int oc = mChaveador.getChaveTamanho();
-
-
-        while (i < o) {
-            int novo = (int) bytes[i];
-
-
-            novo += mChaveador.getChave()[ic];
-            ic += 1;
-            if (ic == oc) {
-                ic = 0;
+            novo += mChaveador.getChave()[mChave_Index];
+            mChave_Index += 1;
+            if (mChave_Index == mChave_Tamanho) {
+                mChave_Index = 0;
             }
 
             if (novo > 255) {
@@ -41,81 +41,57 @@ public class R5 {
             }
 
 
-            bytes[i] = (byte) novo;
-            i += 1;
+            mGuardado[mIndex] = (byte) novo;
+            mIndex += 1;
         }
 
-        try {
 
-            File arq = new File(eArquivo);
-            if (arq.exists()) {
-                arq.delete();
-            }
+        mR5Resposta.validarComData(mGuardado);
 
-
-            Files.write(Paths.get(eArquivo), bytes);
-
-            mR5Resposta.validar("");
-
-        } catch (IOException e) {
-            mR5Resposta.anular();
-        }
 
         return mR5Resposta;
     }
 
-    public R5Resposta revelar(String eArquivo) {
+    public R5Resposta revelar(byte[] eDados) {
 
-        String mDecompilado = "";
+        String mDecifrando = "";
 
         R5Resposta mR5Resposta = new R5Resposta();
 
+        int mIndex = 0;
+        int mTamanho = eDados.length;
 
-        Chaveador mChaveador = new Chaveador();
-
-
-        int ic = 0;
-        int oc = mChaveador.getChaveTamanho();
-
-        try {
-            byte[] l = Files.readAllBytes(Paths.get(eArquivo));
-
-            int li = 0;
-            int lo = l.length;
-
-            while (li < lo) {
-                int novo = (int) l[li];
-
-                //	novo -= auxilador;
-
-                novo -= mChaveador.getChave()[ic];
-                ic += 1;
-                if (ic == oc) {
-                    ic = 0;
-                }
+        int mChave_Index = 0;
+        int mChave_Tamanho = mChaveador.getChaveTamanho();
 
 
-                if (novo < 0) {
-                    novo += 256;
-                }
+        while (mIndex < mTamanho) {
+            int novo = (int) eDados[mIndex];
 
 
-                l[li] = (byte) novo;
-                li += 1;
+            novo -= mChaveador.getChave()[mChave_Index];
+            mChave_Index += 1;
+            if (mChave_Index == mChave_Tamanho) {
+                mChave_Index = 0;
             }
 
 
-            mDecompilado = new String(l, StandardCharsets.UTF_8);
+            if (novo < 0) {
+                novo += 256;
+            }
 
 
-            // System.out.println("Decompilado : " + saida);
-
-            mR5Resposta.validar(mDecompilado);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            mR5Resposta.anular();
+            eDados[mIndex] = (byte) novo;
+            mIndex += 1;
         }
+
+
+        mDecifrando = new String(eDados, StandardCharsets.UTF_8);
+
+        // System.out.println("Decifrado : " + saida);
+
+        mR5Resposta.validar(mDecifrando);
+
 
         return mR5Resposta;
     }

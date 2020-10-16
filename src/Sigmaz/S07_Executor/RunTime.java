@@ -15,8 +15,12 @@ import Sigmaz.S00_Utilitarios.Tempo;
 
 public class RunTime {
 
+    private ArrayList<AST> mCabecalho;
     private ArrayList<AST> mASTS;
+
+
     private ArrayList<String> mErros;
+    private ArrayList<String> mMensagens;
 
     private Escopo mEscopoGlobal;
     private Global mGlobal;
@@ -34,13 +38,20 @@ public class RunTime {
 
     private boolean mMostrar_Mensagens;
 
+    private float mTempo_Leitura;
     private float mTempo_Processamento;
     private float mTempo_Organizacao;
     private float mTempo_Execucao;
 
+
+    public float getTempo_Leitura() {
+        return mTempo_Leitura;
+    }
+
     public float getTempo_Processamento() {
         return mTempo_Processamento;
     }
+
 
     public float getTempo_Organizacao() {
         return mTempo_Organizacao;
@@ -53,9 +64,11 @@ public class RunTime {
     public RunTime() {
 
         mASTS = new ArrayList<>();
+        mCabecalho = new ArrayList<>();
+
 
         mErros = new ArrayList<>();
-
+        mMensagens = new ArrayList<String>();
 
         mGlobalPackages = new ArrayList<AST>();
 
@@ -71,6 +84,7 @@ public class RunTime {
         mProcessador = new Processador(this);
 
         mLocal_Bibliotecas = "";
+        mTempo_Leitura = 0.0F;
         mTempo_Processamento = 0.0F;
         mTempo_Organizacao = 0.0F;
         mTempo_Execucao = 0.0F;
@@ -80,6 +94,7 @@ public class RunTime {
     public void limpar() {
 
         mErros.clear();
+        mMensagens.clear();
 
         mGlobalPackages.clear();
 
@@ -120,6 +135,10 @@ public class RunTime {
         return mASTS;
     }
 
+    public ArrayList<String> getMensagens() {
+        return mMensagens;
+    }
+
     public ArrayList<String> getErros() {
         return mErros;
     }
@@ -138,13 +157,26 @@ public class RunTime {
 
         Montador mMontador = new Montador();
 
-        mASTS = mMontador.Decompilar(eArquivo);
+        OMLRun mOMLRun = mMontador.Decompilar(eArquivo);
 
+        mCabecalho = mOMLRun.getCabecalho();
+        mASTS = mOMLRun.getCodigo();
+
+
+        mTempo_Leitura = mMontador.getTempo_Leitura();
         mTempo_Processamento = mMontador.getTempo_Processamento();
         mTempo_Organizacao = mMontador.getTempo_Organizacao();
 
+        if (mMontador.getMensagens().size() > 0) {
+            for (String e : mMontador.getMensagens()) {
+                mMensagens.add(e);
+            }
+        }
+
         if (mMontador.getErros().size() > 0) {
-            mErros.add("Objeto corrompido !");
+            for (String e : mMontador.getErros()) {
+                mErros.add(e);
+            }
         }
 
     }
@@ -202,7 +234,10 @@ public class RunTime {
 
     public void requerer() {
 
-        ArrayList<String> mRequiscoes = new ArrayList<>();
+
+        // IMPORTANDO BIBLIOTECAS EXTERNAS
+
+        ArrayList<AST> mReq = new ArrayList<AST>();
 
 
         for (AST ASTCGlobal : mASTS) {
@@ -211,8 +246,7 @@ public class RunTime {
                 for (AST ASTC : ASTCGlobal.getASTS()) {
                     if (ASTC.mesmoTipo("REQUIRED")) {
 
-                        String mReq = mLocal + ASTC.getNome() + ".sigmad";
-                        mRequiscoes.add(mReq);
+                        mReq.add(ASTC);
 
 
                     }
@@ -222,37 +256,65 @@ public class RunTime {
             }
         }
 
-        // IMPORTANDO BIBLIOTECAS EXTERNAS
 
-        for (String mReq : mRequiscoes) {
+        ArrayList<String> mRequiscoes = new ArrayList<>();
 
-            File arq = new File(mReq);
+        int i = 0;
+        int o = mReq.size();
 
-            if (arq.exists()) {
+        while (i < o) {
+
+            AST ASTReq = mReq.get(i);
 
 
-                RunTime RunTimeC = new RunTime();
+            String mLocalBiblioteca = mLocal + ASTReq.getNome() + ".sigmad";
 
-                try {
-                    RunTimeC.init(mReq);
+            if (!mRequiscoes.contains(mReq)) {
 
-                    for (AST ASTR : RunTimeC.getBranch("SIGMAZ").getASTS()) {
+                //    System.out.println("Importando :: " + ASTReq.getValor());
 
-                        this.getBranch("SIGMAZ").getASTS().add(ASTR);
 
+                mRequiscoes.add(mLocalBiblioteca);
+
+                File arq = new File(mLocalBiblioteca);
+
+                if (arq.exists()) {
+
+
+                    RunTime RunTimeC = new RunTime();
+
+                    try {
+                        RunTimeC.init(mLocalBiblioteca);
+
+                        AST mBiblioteca = RunTimeC.getBranch("SIGMAZ");
+
+                        if (ASTReq.getValor().contentEquals(RunTimeC.getShared())) {
+
+                            for (AST ASTR : mBiblioteca.getASTS()) {
+
+                                this.getBranch("SIGMAZ").getASTS().add(ASTR);
+
+                            }
+
+                        } else {
+                            mErros.add("Biblioteca " + ASTReq.getNome() + " : Problema com Chave Compartilhada !");
+                        }
+
+
+                    } catch (Exception e) {
+                        mErros.add("Biblioteca " + ASTReq.getNome() + " : Problema ao carregar !");
                     }
 
-
-                } catch (Exception e) {
-                    mErros.add("Biblioteca " + mReq + " : Problema ao carregar !");
+                } else {
+                    mErros.add("Biblioteca " + ASTReq.getNome() + " : Nao Encontrado !");
                 }
 
-            } else {
-                mErros.add("Biblioteca " + mReq + " : Nao Encontrado !");
+
             }
 
-        }
 
+            i += 1;
+        }
 
     }
 
@@ -422,6 +484,19 @@ public class RunTime {
 
     }
 
+    public String getShared() {
+
+        String ret = "";
+
+        for (AST eAST : mCabecalho) {
+            if (eAST.mesmoTipo("SHARED")) {
+                ret = eAST.getValor();
+                break;
+            }
+        }
+
+        return ret;
+    }
 
     public int getInstrucoes() {
 

@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import Sigmaz.S01_PreProcessamento.Etapa;
 import Sigmaz.S01_PreProcessamento.PreProcessamento;
 import Sigmaz.S00_Utilitarios.*;
+import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
 
 public class Compiler {
 
-
+    private ArrayList<AST> mCabecalhos;
     private ArrayList<AST> mASTS;
 
 
@@ -39,6 +40,7 @@ public class Compiler {
 
     public Compiler() {
 
+        mCabecalhos= new ArrayList<>();
         mASTS = new ArrayList<>();
 
 
@@ -78,6 +80,11 @@ public class Compiler {
 
     public boolean estaPre() {
         return mCorrentePreprocessando;
+    }
+
+
+    public ArrayList<AST> getCabecalhos() {
+        return mCabecalhos;
     }
 
     public ArrayList<AST> getASTS() {
@@ -200,7 +207,10 @@ public class Compiler {
             mErros_Compiler.add(mGrupoDeErro);
         }
 
+
+
     }
+
 
 
     public void initPreProcessamento(String eArquivo, int mOpcao) {

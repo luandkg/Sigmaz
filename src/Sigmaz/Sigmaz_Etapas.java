@@ -514,7 +514,7 @@ public class Sigmaz_Etapas {
 
             Montador MontadorC = new Montador();
 
-            MontadorC.compilar(CompilerC.getASTS(), mSaida);
+            MontadorC.compilar(CompilerC.getCabecalhos(),CompilerC.getASTS(), mSaida);
 
 
 

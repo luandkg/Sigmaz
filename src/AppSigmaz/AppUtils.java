@@ -157,7 +157,7 @@ public class AppUtils {
             Sigmaz_Fases SigmazC = new Sigmaz_Fases();
 
             SigmazC.mostrarDebug(true);
-            SigmazC.setMostrarArvoreRunTime(true);
+            SigmazC.setMostrarArvoreRunTime(false);
             SigmazC.setMostrar_ArvoreFalhou(false);
 
             SigmazC.init(mOpcional.getConteudo(), eCompilado, eLocalLibs, 1);
