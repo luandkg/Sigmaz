@@ -465,4 +465,8 @@ Linguagem de Programação Estruturada - Implementações
 
 
 		2020 10 19 -->> ReOrganização das Mensagens de Debug
+		2020 10 19 -->> Compilador em Etapas
+		2020 10 19 -->> Contador de Referências
+		2020 10 19 -->> Coletor de Lixo : Structs
+		2020 10 19 -->> Coletor de Lixo : Types
 

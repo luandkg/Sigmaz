@@ -72,17 +72,20 @@ public class Run_Def {
 
 
             if (mAST.getIsPrimitivo()) {
-                mEscopo.criarDefinicaoNula(eAST.getNome(), mAST.getRetornoTipo());
+                mEscopo.criarDefinicaoNula(eNome, mAST.getRetornoTipo());
             } else if (mAST.getIsStruct()) {
-                mEscopo.criarDefinicaoStructNula(eAST.getNome(), mAST.getRetornoTipo());
+                mEscopo.criarDefinicaoStructNula(eNome, mAST.getRetornoTipo());
             }
 
         } else {
 
             if (mAST.getIsPrimitivo()) {
-                mEscopo.criarDefinicao(eAST.getNome(), mAST.getRetornoTipo(), mAST.getConteudo());
+                mEscopo.criarDefinicao(eNome, mAST.getRetornoTipo(), mAST.getConteudo());
             } else if (mAST.getIsStruct()) {
-                mEscopo.criarDefinicaoStruct(eAST.getNome(), mAST.getRetornoTipo(), mAST.getConteudo());
+                mEscopo.criarDefinicaoStruct(eNome, mAST.getRetornoTipo(), mAST.getConteudo());
+
+                mRunTime.getHeap().aumentar(mAST.getConteudo());
+
             }
 
         }
@@ -134,6 +137,8 @@ public class Run_Def {
             } else if (mAST.getIsStruct()) {
 
                 mEscopo.criarDefinicaoStruct(eAST.getNome(), mAST.getRetornoTipo(), mAST.getConteudo());
+
+                mRunTime.getHeap().aumentar(mAST.getConteudo());
 
             }
 

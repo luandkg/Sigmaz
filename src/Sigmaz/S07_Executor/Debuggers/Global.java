@@ -283,22 +283,7 @@ public class Global {
     public void listarInstances() {
 
 
-        System.out.println(" ######################### GLOBAL - INSTANCES ############################ ");
-
-        for(Run_Type rt : mEscopo.getRunTime().getHeap().getTypes_Instances()){
-
-            System.out.println("\t - TYPE :: " + rt.getNome());
-
-        }
-
-       for(Run_Struct rs : mEscopo.getRunTime().getHeap().getStructs_Instances()){
-
-           System.out.println("\t - STRUCT :: " + rs.getNome());
-
-       }
-
-
-        System.out.println(" ######################### ##### ############################ ");
+        mEscopo.getRunTime().getHeap().ListarInstancias();
 
     }
 

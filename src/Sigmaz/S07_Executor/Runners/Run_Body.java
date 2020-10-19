@@ -244,6 +244,13 @@ public class Run_Body {
                 mItem.setTipo(mAST.getRetornoTipo());
                 mEscopo.setRetornado(true);
 
+                if (mItem.getIsEstrutura()){
+                    if (mItem.getTemValor()){
+                        mRunTime.getHeap().aumentar(mItem.getValor(mRunTime,mEscopo));
+                    }
+                }
+
+
                 //   System.out.println("ESCOPO :: " + mEscopo.getNome() + " -> RETURNED " + mItem.getValor( mRunTime, mEscopo));
 
                 break;
@@ -400,6 +407,30 @@ public class Run_Body {
 
 
         }
+
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
+
+       // System.out.println("Saindo do Escopo : " + mEscopo.getNome());
+
+      //  mRunTime.getHeap().ListarInstancias();
+
+       // System.out.println("Aplicar Reducao");
+
+
+        for (Item eItem : mEscopo.getStacks()) {
+
+          //  System.out.println("\t - " + mEscopo.getNome() + " --- " + eItem.getNome());
+
+            if (eItem.getTemValor()) {
+                if (eItem.getIsEstrutura()) {
+                    mRunTime.getHeap().reduzir(eItem.getValor(mRunTime, mEscopo));
+                }
+            }
+        }
+
+       // mRunTime.getHeap().ListarInstancias();
 
 
     }

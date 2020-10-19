@@ -24,7 +24,7 @@ public class Heap {
         mHEAPID = 0;
         mVECTORID = 0;
 
-        mLocal="Heap";
+        mLocal = "Heap";
         mRunTime = eRunTime;
     }
 
@@ -67,6 +67,89 @@ public class Heap {
         mTypes_Instances.add(eEscopo);
     }
 
+
+    public void aumentar(String eNome) {
+
+        boolean enc = false;
+
+        if (!enc) {
+            for (Run_Struct mRun_Struct : mStructs_Instances) {
+                if (mRun_Struct.mesmoNome(eNome)) {
+                    mRun_Struct.refAumentar();
+
+                  //  System.out.println("GC Aumentando :: " + eNome);
+
+                    enc = true;
+                    break;
+                }
+            }
+        }
+
+        if (!enc) {
+            for (Run_Type mRun_Struct : mTypes_Instances) {
+                if (mRun_Struct.mesmoNome(eNome)) {
+                    mRun_Struct.refAumentar();
+
+                   // System.out.println("GC Aumentando :: " + eNome);
+
+                    enc = true;
+                    break;
+                }
+            }
+        }
+
+    }
+
+    public void reduzir(String eNome) {
+
+        boolean enc = false;
+
+        if (eNome == null) {
+            return;
+        }
+
+        if (!enc) {
+            for (Run_Struct mRun_Struct : mStructs_Instances) {
+                if (mRun_Struct.mesmoNome(eNome)) {
+                    mRun_Struct.refDiminuir();
+
+                    if (mRun_Struct.getRefs() == 0) {
+                        mStructs_Instances.remove(mRun_Struct);
+                    //    System.out.println("GC Coletando Lixo :: " + eNome);
+                    }else{
+
+                      //  System.out.println("GC Reduzindo :: " + eNome);
+
+
+                    }
+
+                    enc = true;
+                    break;
+                }
+            }
+        }
+
+        if (!enc) {
+            for (Run_Type mRun_Struct : mTypes_Instances) {
+                if (mRun_Struct.mesmoNome(eNome)) {
+                    mRun_Struct.refDiminuir();
+
+                    if (mRun_Struct.getRefs() == 0) {
+                        mTypes_Instances.remove(mRun_Struct);
+                    //    System.out.println("GC Coletando Lixo :: " + eNome);
+
+                    }else{
+                    //    System.out.println("GC Reduzindo :: " + eNome);
+
+                    }
+
+                    enc = true;
+                    break;
+                }
+            }
+        }
+
+    }
 
     public void removerStruct(String eNome) {
 
@@ -167,5 +250,27 @@ public class Heap {
 
     }
 
+
+    public void ListarInstancias() {
+
+        System.out.println(" ######################### GLOBAL - INSTANCES ############################ ");
+
+        for (Run_Type rt : getTypes_Instances()) {
+
+            System.out.println("\t - TYPE :: " + rt.getNome() + " -->> " + rt.getRefs());
+
+        }
+
+        for (Run_Struct rs : getStructs_Instances()) {
+
+            System.out.println("\t - STRUCT :: " + rs.getNome() + " -->> " + rs.getRefs());
+
+        }
+
+
+        System.out.println(" ######################### ##### ############################ ");
+
+
+    }
 
 }

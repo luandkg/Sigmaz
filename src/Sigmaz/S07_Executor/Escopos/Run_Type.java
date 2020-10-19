@@ -29,6 +29,8 @@ public class Run_Type {
     private ArrayList<String> mAlocados;
     private AST mBases;
 
+    private int mRefs;
+
     public Run_Type(RunTime eRunTime) {
 
         mRunTime = eRunTime;
@@ -38,6 +40,21 @@ public class Run_Type {
 
         mAlocados = new ArrayList<>();
         mBases = null;
+        mRefs = 0;
+    }
+
+    public int getRefs() {
+        return mRefs;
+    }
+
+    public void refAumentar() {
+        mRefs += 1;
+    }
+
+    public void refDiminuir() {
+        if (mRefs>0){
+            mRefs -= 1;
+        }
     }
 
     public boolean mesmoNome(String eNome) {
@@ -82,7 +99,6 @@ public class Run_Type {
 
 
         boolean enc = false;
-
 
 
         Run_Context mRun_Context = new Run_Context(mRunTime);
@@ -199,18 +215,18 @@ public class Run_Type {
 
             } else {
 
-                String frase_precisa = SemanticaPortugues.getConcordancia(mStructGeneric.getASTS().size(),"tipo","tipos");
-                String frase_precisagenericos = SemanticaPortugues.getConcordancia(mStructGeneric.getASTS().size(),"generico","genericos");
+                String frase_precisa = SemanticaPortugues.getConcordancia(mStructGeneric.getASTS().size(), "tipo", "tipos");
+                String frase_precisagenericos = SemanticaPortugues.getConcordancia(mStructGeneric.getASTS().size(), "generico", "genericos");
 
-                String frase_recebeu = SemanticaPortugues.getConcordancia(init_Generic.getASTS().size(),"tipo","tipos");
-                String frase_recebeugenericos = SemanticaPortugues.getConcordancia(init_Generic.getASTS().size(),"generico","genericos");
+                String frase_recebeu = SemanticaPortugues.getConcordancia(init_Generic.getASTS().size(), "tipo", "tipos");
+                String frase_recebeugenericos = SemanticaPortugues.getConcordancia(init_Generic.getASTS().size(), "generico", "genericos");
 
                 String frase_precisafinal = frase_precisa + " " + frase_precisagenericos + " !";
                 String frase_recebeufinal = frase_recebeu + " " + frase_recebeugenericos + " !";
 
 
                 mRunTime.errar(mLocal, "Type " + mStructNome + " : Tipos abstratos nao conferem !");
-                mRunTime.errar(mLocal, "Type " + mStructNome + " : Precisa de " + mStructGeneric.getASTS().size() + " " +frase_precisafinal);
+                mRunTime.errar(mLocal, "Type " + mStructNome + " : Precisa de " + mStructGeneric.getASTS().size() + " " + frase_precisafinal);
                 mRunTime.errar(mLocal, "Type " + mStructNome + " : Recebeu " + init_Generic.getASTS().size() + " " + frase_recebeufinal);
 
             }
@@ -230,13 +246,13 @@ public class Run_Type {
                 if (i == o) {
                     eGenericoTexto += eB.getNome();
                 } else {
-                    eGenericoTexto += eB.getNome()+",";
+                    eGenericoTexto += eB.getNome() + ",";
                 }
 
                 i += 1;
             }
 
-            eGenericoTexto =mStructNome + " <" + eGenericoTexto + ">";
+            eGenericoTexto = mStructNome + " <" + eGenericoTexto + ">";
 
             mRunTime.errar(mLocal, "Type " + mStructNome + " : Precisa retornar uma Instancia Generica " + eGenericoTexto);
 

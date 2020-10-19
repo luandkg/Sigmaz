@@ -2,6 +2,8 @@ package Sigmaz.S07_Executor.Runners;
 
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S07_Executor.Escopo;
+import Sigmaz.S07_Executor.Escopos.Run_Struct;
+import Sigmaz.S07_Executor.Item;
 import Sigmaz.S07_Executor.RunTime;
 
 public class Run_Debug {
@@ -32,6 +34,37 @@ public class Run_Debug {
         } else if (ASTCorrente.mesmoNome("REGRESSIVE")) {
 
             regressive(ASTCorrente.getValor());
+
+
+        } else if (ASTCorrente.mesmoNome("STRUCT")) {
+
+           // mEscopo.getRegressiveDebug().mapear_regressive_stack();
+
+            boolean enc = false;
+
+            for (Item eItem : mEscopo.getStacksAll()) {
+                if (eItem.getNome().contentEquals("this")) {
+
+                    if (eItem.getIsEstrutura()) {
+
+                        if (!eItem.getNulo()) {
+
+                            Run_Struct rs = mRunTime.getHeap().getRun_Struct(eItem.getValor(mRunTime,mEscopo));
+                            rs.debug();
+
+
+                        }
+                    }
+
+                    enc = true;
+                    break;
+                }
+            }
+
+            if (!enc) {
+                mRunTime.errar(mLocal, "Debug STRUCT IMPOSSIVEL !");
+            }
+
 
         } else {
 

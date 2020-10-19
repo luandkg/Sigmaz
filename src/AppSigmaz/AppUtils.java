@@ -158,7 +158,7 @@ public class AppUtils {
 
             SigmazC.mostrarDebug(true);
 
-            SigmazC.setMostrarArvoreRunTime(false);
+            SigmazC.setMostrarArvoreRunTime(true);
             SigmazC.setMostrar_ArvoreFalhou(false);
 
 

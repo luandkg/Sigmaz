@@ -32,6 +32,7 @@ public class Run_Struct {
     private ArrayList<String> mStack_All;
     private String mLocal;
     private ArrayList<String> mRefers;
+    private int mRefs;
 
     public Run_Struct(RunTime eRunTime) {
 
@@ -51,7 +52,24 @@ public class Run_Struct {
 
         mStack_All = new ArrayList<String>();
         mRefers = new ArrayList<String>();
+        mRefs = 0;
+
     }
+
+    public int getRefs() {
+        return mRefs;
+    }
+
+    public void refAumentar() {
+        mRefs += 1;
+    }
+
+    public void refDiminuir() {
+        if (mRefs > 0) {
+            mRefs -= 1;
+        }
+    }
+
 
     public void setNome(String eNome) {
         mNome = eNome;
@@ -121,7 +139,7 @@ public class Run_Struct {
 
         mStructNome = ASTCorrente.getNome();
 
-        long HEAPID =mRunTime.getHeap().getHEAPID();
+        long HEAPID = mRunTime.getHeap().getHEAPID();
         mNome = "<Struct::" + mStructNome + ":" + HEAPID + ">";
 
 
@@ -137,9 +155,6 @@ public class Run_Struct {
         }
 
         boolean enc = false;
-
-
-
 
 
         // EXTERNALIZAR
@@ -578,7 +593,6 @@ public class Run_Struct {
         String mConferencia = mPreparadorDeArgumentos.getTipagem(mArgumentos);
 
 
-
         String mExigencia = "";
 
         for (Index_Action mIndex_Function : mEscopo.getOO().getInits_All()) {
@@ -765,17 +779,17 @@ public class Run_Struct {
 
     }
 
-    public void destruct(){
+    public void destruct() {
 
-     //   System.out.println("DESTRUIR :: " + this.getNome());
+        //   System.out.println("DESTRUIR :: " + this.getNome());
 
-      //  System.out.println(mStructCorpo.getImpressao());
-
-
-        for(AST eAST : mStructCorpo.getASTS()){
+        //  System.out.println(mStructCorpo.getImpressao());
 
 
-            if (eAST.mesmoTipo("DESTRUCT")){
+        for (AST eAST : mStructCorpo.getASTS()) {
+
+
+            if (eAST.mesmoTipo("DESTRUCT")) {
 
                 Escopo mEscopoInterno = new Escopo(mRunTime, this.getEscopo());
                 mEscopoInterno.setNome(this.getNome() + "::DESTRUCT");
@@ -784,6 +798,134 @@ public class Run_Struct {
                 mAST.init(eAST.getBranch("BODY"));
 
             }
+        }
+
+
+    }
+
+
+    public void debug() {
+
+        if (mRunTime.getVisibilidade()) {
+
+
+            System.out.println("################# STRUCT : " + mNome + " ##########################");
+
+            mapear_stack();
+
+
+        }
+
+
+
+    }
+
+    public void mapear_stack() {
+
+        System.out.println(" - PARAM : ");
+        ArrayList<Item> ls_Param = new ArrayList<>();
+        for (Item i : mEscopo.getParametros()) {
+            ls_Param.add(i);
+        }
+
+        System.out.println("\t - NAO NULOS : ");
+
+        for (Item i : ls_Param) {
+            if (i.getNulo() == false) {
+                mostrarItem(i);
+
+            }
+        }
+
+
+        System.out.println("\t - NULOS : ");
+        for (Item i : ls_Param) {
+
+            if (i.getNulo()) {
+                mostrarItem(i);
+
+            }
+        }
+
+
+        ArrayList<Item> ls_Defines = new ArrayList<>();
+        ArrayList<Item> ls_Constants = new ArrayList<>();
+
+        for (Item i : mEscopo.getStacks()) {
+            if (i.getModo() == 0) {
+                ls_Defines.add(i);
+
+            } else if (i.getModo() == 1) {
+                ls_Constants.add(i);
+            }
+
+            // System.out.println("DEFINICAO :: " + i.getNome());
+        }
+
+        System.out.println(" - DEFINES : ");
+
+
+        System.out.println("\t - NAO NULOS : ");
+
+        for (Item i : ls_Defines) {
+            if (!i.getNulo()) {
+                mostrarItem(i);
+
+            }
+        }
+
+
+        System.out.println("\t - NULOS : ");
+        for (Item i : ls_Defines) {
+
+            if (i.getNulo()) {
+                mostrarItem(i);
+
+            }
+        }
+
+        System.out.println(" - CONSTANTS : ");
+
+
+        System.out.println("\t - NAO NULOS : ");
+
+        for (Item i : ls_Constants) {
+            if (i.getNulo() == false) {
+                mostrarItem(i);
+
+            }
+        }
+
+
+        System.out.println("\t - NULOS : ");
+        for (Item i : ls_Constants) {
+
+            if (i.getNulo()) {
+                mostrarItem(i);
+
+            }
+        }
+
+    }
+
+    public void mostrarItem(Item eItem) {
+
+
+        if (eItem.getNulo()) {
+            System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " = NULL");
+        } else {
+
+
+            if (eItem.getIsEstrutura()) {
+
+
+                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " -> " + eItem.getValor(mEscopo.getRunTime(),mEscopo));
+
+
+            } else {
+                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " = " + eItem.getValor(mEscopo.getRunTime(),mEscopo));
+            }
+
         }
 
 

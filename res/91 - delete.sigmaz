@@ -22,6 +22,11 @@ call Remocao -> {
 
     def alfa : Objeto = init Objeto(12);
 
+
+    def vv : int  = alfa.getSI().getGuardado();
+
+
+
     def beta : Objeto = init Objeto(13);
 
 	DEBUG -> LOCAL :: STACK;
@@ -33,7 +38,27 @@ call Remocao -> {
 	DEBUG -> LOCAL :: STACK;
 	DEBUG -> GLOBAL :: INSTANCES;
 
+    indo();
+    indo();
+    indo();
+
 }
+
+act indo(){
+
+    def aga : Usuario = start Usuario {  Nome="Agatha";    Idade=52;  };
+
+    def eta : Usuario=aga;
+
+    def SI2 : SubItem = init SubItem();
+    def SI3 : SubItem = init SubItem();
+
+	DEBUG -> GLOBAL :: INSTANCES;
+
+
+}
+
+
 
 type Usuario{
     define Nome : string = "";
@@ -49,7 +74,11 @@ struct Objeto {
         this.mA = a;
         this.mSI = init SubItem();
 
+	    #DEBUG -> STRUCT :: STACK;
+
     }
+
+    func  getSI() : SubItem { return mSI; }
 
     destruct -> {
         delete mSI;
@@ -69,6 +98,17 @@ struct Objeto {
 
 struct SubItem {
 
+
+    init SubItem(){
+
+        mGuardado= 15;
+
+    }
+
+    restrict:
+        define mGuardado : int = 0;
+    all:
+        func getGuardado() : int {return mGuardado;}
 
 }
 

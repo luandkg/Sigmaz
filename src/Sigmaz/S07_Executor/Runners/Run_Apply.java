@@ -50,6 +50,13 @@ public class Run_Apply {
         }
 
 
+        if (!mAST.getIsNulo()){
+            if (mAST.getIsStruct()){
+                mRunTime.getHeap().aumentar(mAST.getConteudo());
+            }
+        }
+
+
         if (mAplicador.getReferencia() == null) {
             mRunTime.errar(mLocal, "Referencia nao encontrada !");
         } else {
@@ -60,11 +67,22 @@ public class Run_Apply {
                 return;
             }
 
+
+
             if (mAplicador.getReferencia().getModo() == 2) {
+
                 mAplicador.getReferencia().setValor(mAST.getConteudo(),mRunTime,mEscopo);
                 mAplicador.getReferencia().setNulo(mAST.getIsNulo());
                 mAplicador.getReferencia().setIsEstrutura(mAST.getIsStruct());
                 mAplicador.getReferencia().setTipo(mAST.getRetornoTipo());
+
+                if (! mAplicador.getReferencia().getNulo()){
+                    if (mAplicador.getReferencia().getIsEstrutura()){
+                        mRunTime.getHeap().aumentar(mAST.getConteudo());
+                    }
+                }
+
+
             } else {
 
 
@@ -75,6 +93,13 @@ public class Run_Apply {
 
                 mAplicador.getReferencia().setValor(mAST.getConteudo(),mRunTime,mEscopo);
                 mAplicador.getReferencia().setNulo(mAST.getIsNulo());
+
+                if (! mAplicador.getReferencia().getNulo()){
+                    if (mAplicador.getReferencia().getIsEstrutura()){
+                        mRunTime.getHeap().aumentar(mAST.getConteudo());
+                    }
+                }
+
             }
 
 

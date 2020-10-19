@@ -77,6 +77,7 @@ public class Run_Moc{
             } else if (mAST.getIsStruct()) {
 
                 mEscopo.criarConstanteStruct(eAST.getNome(), mAST.getRetornoTipo(), mAST.getConteudo());
+                mRunTime.getHeap().aumentar(mAST.getConteudo());
 
             }
 
@@ -128,6 +129,7 @@ public class Run_Moc{
             } else if (mAST.getIsStruct()) {
 
                 mEscopo.criarConstanteStruct(eAST.getNome(), mAST.getRetornoTipo(), mAST.getConteudo());
+                mRunTime.getHeap().aumentar(mAST.getConteudo());
 
             }
 

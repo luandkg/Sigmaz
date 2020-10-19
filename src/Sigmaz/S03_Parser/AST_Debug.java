@@ -18,16 +18,17 @@ public class AST_Debug {
 
         Token TokenA = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma SETA");
 
-        Token TokenB = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado { LOCAL | GLOBAL | REGRESSIVE }");
+        Token TokenB = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado { LOCAL | GLOBAL | REGRESSIVE | STRUCT }");
 
         if (TokenB.mesmoConteudo_SemCS("LOCAL")) {
 
         } else if (TokenB.mesmoConteudo_SemCS("GLOBAL")) {
 
         } else if (TokenB.mesmoConteudo_SemCS("REGRESSIVE")) {
+        } else if (TokenB.mesmoConteudo_SemCS("STRUCT")) {
 
         } else {
-            mCompiler.errarCompilacao("Era esperado { LOCAL | GLOBAL | REGRESSIVE }", TokenB);
+            mCompiler.errarCompilacao("Era esperado { LOCAL | GLOBAL | REGRESSIVE  | STRUCT }", TokenB);
         }
 
         Token TokenC = mCompiler.getTokenAvanteStatus(TokenTipo.QUAD, "Era esperado :: ");

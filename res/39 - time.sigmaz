@@ -1,5 +1,8 @@
 call iniciar -> inicio ( );
+
+
 act inicio ( ) {
+
 	def agora : Tempo = getTempo ( );
 	def hora : int = agora.getHora ( );
 	def minuto : int = agora.getMinuto ( );
@@ -8,7 +11,10 @@ act inicio ( ) {
 	def formatado2 : string = getTempo_Formatado ( );
 	def formatado3 : string = getData_Formatado ( );
 	DEBUG -> REGRESSIVE :: ALL;
+
 }
+
+
 func int_to_string ( a : int ) : string {
 	reg @ R5 -> a;
 	PROC -> {

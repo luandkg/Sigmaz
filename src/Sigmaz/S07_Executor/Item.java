@@ -43,6 +43,10 @@ public class Item {
         return mNulo;
     }
 
+    public boolean getTemValor() {
+        return !mNulo;
+    }
+
     public void setNulo(boolean eNulo) {
         mNulo = eNulo;
     }
@@ -99,8 +103,6 @@ public class Item {
 
             Run_Arrow mRun_Arrow = new Run_Arrow(eRunTime);
             return mRun_Arrow.operadorSeta(mV, eEscopo, this.getTipo()).getValor(eRunTime, eEscopo);
-
-
 
 
         } else {

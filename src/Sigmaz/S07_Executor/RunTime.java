@@ -179,6 +179,9 @@ public class RunTime {
 
     }
 
+
+
+
     public String getArvoreDeInstrucoes() {
 
         String ret = "";
