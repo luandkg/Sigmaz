@@ -7,7 +7,7 @@ act pular ( ) {
 	sacola1.aumentar ( 2 );
 	def t : int = sacola1.getQuantidade ( );
 	def s : int = somar ( 2 , sacola1.getQuantidade ( ) );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 	
 	#sacola1.mostrar_struct();
 	

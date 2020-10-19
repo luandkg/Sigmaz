@@ -102,6 +102,11 @@ public class Run_Internal {
         }
         Item eItem = null;
 
+        if (eInternal==null){
+            mRunTime.errar(mLocal,"Internal Nulo !");
+            return null;
+        }
+
         if (eInternal.mesmoValor("STRUCT_OBJECT")) {
 
             //  System.out.println("\t - ESTRUTURA OBJECT : " + eInternal.getNome());

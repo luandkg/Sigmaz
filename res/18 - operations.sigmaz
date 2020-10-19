@@ -6,7 +6,7 @@ act pular ( ) {
 	def t : bool = "a"!! "ab";
 	def somatorio : num = 10.0 -- 12.0;
 	def m1 : num = 10.0 ** 2.0;
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 operator == ( a : bool , b : bool ) : bool {
 	reg @ R1 -> a;

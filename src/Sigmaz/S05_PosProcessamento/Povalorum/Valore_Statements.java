@@ -1,6 +1,7 @@
 package Sigmaz.S05_PosProcessamento.Povalorum;
 
 import Sigmaz.S00_Utilitarios.Mensageiro;
+import Sigmaz.S05_PosProcessamento.Processadores.Valorador;
 import Sigmaz.S05_PosProcessamento.Pronoco.Pronoco;
 import Sigmaz.S05_PosProcessamento.Pronoco.Pronoco_Def;
 import Sigmaz.S00_Utilitarios.AST;
@@ -10,11 +11,11 @@ import java.util.ArrayList;
 
 public class Valore_Statements {
 
-    Mensageiro mMensageiro;
+    Valorador mValorador;
     Valoramento mValoramento;
 
-    public Valore_Statements(Mensageiro eMensageiro, Valoramento eValoramento) {
-        mMensageiro = eMensageiro;
+    public Valore_Statements(Valorador eValorador, Valoramento eValoramento) {
+        mValorador = eValorador;
         mValoramento = eValoramento;
     }
 
@@ -48,7 +49,7 @@ public class Valore_Statements {
 
     public void atribuidor_If(String ePrefixo, AST mAST, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + " ESCOPO : IF");
+        mValorador.mensagem(ePrefixo + " ESCOPO : IF");
 
         Pronoco mAqui = new Pronoco("IF");
         mAqui.setSuperior(mAtribuindo);
@@ -82,7 +83,7 @@ public class Valore_Statements {
     public void atribuidor_when(String ePrefixo, AST mAST, Pronoco mAtribuindo) {
 
 
-        mMensageiro.mensagem(ePrefixo + " ESCOPO : WHEN");
+        mValorador.mensagem(ePrefixo + " ESCOPO : WHEN");
 
         mValoramento.valore(ePrefixo + "\t", mAST.getBranch("CHOOSABLE"), mAtribuindo);
 
@@ -116,7 +117,7 @@ public class Valore_Statements {
     public void atribuidor_While(String ePrefixo, AST mAST, Pronoco mAtribuindo) {
 
 
-        mMensageiro.mensagem(ePrefixo + " ESCOPO : WHILE");
+        mValorador.mensagem(ePrefixo + " ESCOPO : WHILE");
 
         mValoramento.valore(ePrefixo + "\t", mAST.getBranch("CONDITION"), mAtribuindo);
 
@@ -131,7 +132,7 @@ public class Valore_Statements {
     public void atribuidor_Step(String ePrefixo, AST mAST, Pronoco mAtribuindo) {
 
 
-        mMensageiro.mensagem(ePrefixo + " ESCOPO : STEP");
+        mValorador.mensagem(ePrefixo + " ESCOPO : STEP");
 
         for (AST eOutro : mAST.getBranch("ARGUMENTS").getASTS()) {
 
@@ -149,7 +150,7 @@ public class Valore_Statements {
 
     public void atribuidor_StepDef(String ePrefixo, AST mAST, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + " ESCOPO : STEPDEF");
+        mValorador.mensagem(ePrefixo + " ESCOPO : STEPDEF");
 
         Pronoco mOutros = new Pronoco("STEPDEF");
         mOutros.setSuperior(mAtribuindo);
@@ -157,8 +158,8 @@ public class Valore_Statements {
 
         if (mAtribuindo.existeNesse(mAST.getNome())) {
 
-            mMensageiro.mensagem(" Variavel Duplicada : " + mAST.getNome());
-            mMensageiro.getErros().add("Variavel Duplicada : " + mAST.getNome());
+            mValorador.mensagem(" Variavel Duplicada : " + mAST.getNome());
+            mValorador.getErros().add("Variavel Duplicada : " + mAST.getNome());
 
         } else {
             mAtribuindo.adicionarDefine(new Pronoco_Def(mAST.getNome()));
@@ -180,7 +181,7 @@ public class Valore_Statements {
     public void atribuidor_daz(String ePrefixo, AST mAST, Pronoco mAtribuindo) {
 
 
-        mMensageiro.mensagem(ePrefixo + " ESCOPO : DAZ");
+        mValorador.mensagem(ePrefixo + " ESCOPO : DAZ");
 
         mValoramento.valore(ePrefixo + "\t", mAST.getBranch("CHOOSABLE"), mAtribuindo);
 
@@ -248,22 +249,22 @@ public class Valore_Statements {
         Pronoco gAtribuindo = new Pronoco("TRY");
         gAtribuindo.setSuperior(mAtribuindo);
 
-        mMensageiro.mensagem(mAST.getImpressao());
+        mValorador.mensagem(mAST.getImpressao());
 
         if (mAST.getBranch("LOGIC").mesmoNome("TRUE")) {
 
             if (mAtribuindo.existeNesse(mAST.getBranch("LOGIC").getValor())) {
             } else {
-                mMensageiro.mensagem(" Variavel nao encontrada : " + mAST.getBranch("LOGIC").getValor());
-                mMensageiro.getErros().add("Variavel nao encontrada : " + mAST.getBranch("LOGIC").getValor());
+                mValorador.mensagem(" Variavel nao encontrada : " + mAST.getBranch("LOGIC").getValor());
+                mValorador.getErros().add("Variavel nao encontrada : " + mAST.getBranch("LOGIC").getValor());
             }
         }
         if (mAST.getBranch("MESSAGE").mesmoNome("TRUE")) {
 
             if (mAtribuindo.existeNesse(mAST.getBranch("MESSAGE").getValor())) {
             } else {
-                mMensageiro.mensagem(" Variavel nao encontrada : " + mAST.getBranch("MESSAGE").getValor());
-                mMensageiro.getErros().add("Variavel nao encontrada : " + mAST.getBranch("MESSAGE").getValor());
+                mValorador.mensagem(" Variavel nao encontrada : " + mAST.getBranch("MESSAGE").getValor());
+                mValorador.getErros().add("Variavel nao encontrada : " + mAST.getBranch("MESSAGE").getValor());
             }
         }
 

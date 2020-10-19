@@ -44,11 +44,11 @@ act emPOST ( ) {
 	def v : int = f;
 	def g : pos = f;
 	def m : int = 100;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 	def igual : bool = f == g;
 	def diferente : bool = f !! g;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 	def p1 : int = int ( f );
 	def p2 : pos = pos ( 12 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }

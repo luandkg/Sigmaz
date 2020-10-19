@@ -13,5 +13,5 @@ act inicio ( ) {
 	def DataTempo : string = TempoData -> getDataTempo_Formatado ( );
 	def TempoData_Externo : string = TempoData -> getTempoData_Formatado ( );
 	def DataTempo_Externo : string = TempoData -> getDataTempo_Formatado ( );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 }

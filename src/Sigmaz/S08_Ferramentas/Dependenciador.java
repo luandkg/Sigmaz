@@ -1,7 +1,7 @@
 package Sigmaz.S08_Ferramentas;
 
-import Sigmaz.S04_Compilador.Compiler;
 import Sigmaz.S00_Utilitarios.GrupoDeErro;
+import Sigmaz.Sigmaz_Compilador;
 
 import java.util.ArrayList;
 
@@ -21,9 +21,9 @@ public class Dependenciador {
 
     }
 
-    public void init_debug(String eArquivo) {
+    public void init_debug(String eArquivo,String mLocallibs) {
 
-        init(eArquivo);
+        init(eArquivo,mLocallibs);
 
         System.out.println("");
         System.out.println("############## DEPENDENCIAS ###############");
@@ -47,10 +47,10 @@ public class Dependenciador {
 
     }
 
-    public void init(String eArquivo) {
+    public void init(String eArquivo,String mLocalLibs) {
 
-        Compiler CompilerC = new Compiler();
-        CompilerC.init(eArquivo, 0);
+        Sigmaz_Compilador CompilerC = new Sigmaz_Compilador();
+        CompilerC.initSemObjeto(eArquivo, mLocalLibs,0);
 
         mDependencias.clear();
 

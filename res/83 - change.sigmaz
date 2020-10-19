@@ -13,7 +13,7 @@ act mudar ( ) {
 	}
 	def depois_a_duploX5 : int = duplo_X5.a;
 	def depois_b_duploX5 : int = duplo_X5.b;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }
 type Duplo {
 	define a : int = 0;

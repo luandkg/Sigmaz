@@ -9,11 +9,11 @@ call iniciar -> {
 	AssertC.testar ( "Teste 2", true );
 	AssertC.testar ( "Teste 3", false );
 	AssertC.listar ( );
-	invoke __COMPILER__ -> STRUCTS ( ) :: INSTANCES;
+	DEBUG -> REGRESSIVE :: ALL;
 	AssertC.limpar ( );
 	AssertC.limpar ( );
-	invoke __COMPILER__ -> STRUCTS ( ) :: INSTANCES;
+	DEBUG -> REGRESSIVE :: ALL;
 	
 	#def ASSERTABLE : Lista >> ( ASSERT_ITEM ) = AssertC.ASSERTABLE;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 }

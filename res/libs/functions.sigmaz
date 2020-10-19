@@ -1,36 +1,22 @@
 
 #   FUNCTIONS
-
-func aleatorio(min:int,max:int):int {
-
-     reg @R5 -> min;
-     reg @R6 -> max;
-
-     PROC -> {
-
-        SET R7;
-            MOV 0;
-            OPE R5 ALE R6;
-
-     }
-
-	return reg @R7;
+func aleatorio ( min : int , max : int ) : int {
+	reg @ R5 -> min;
+	reg @ R6 -> max;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 ALE R6;
+	}
+	return reg @ R7;
 }
-
-
-
-func aleatorio(min:num,max:num):num {
-
-     reg @R9 -> min;
-     reg @R10 -> max;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 OZU R10;
-
-     }
-
-	return reg @R11;
+func aleatorio ( min : num , max : num ) : num {
+	reg @ R9 -> min;
+	reg @ R10 -> max;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 OZU R10;
+	}
+	return reg @ R11;
 }

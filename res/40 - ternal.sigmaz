@@ -4,7 +4,7 @@ act inicio ( ) {
 	def alfa : num = if ( maior ( valor , 2.0 ) ) :: ( +1.0 ) not ( -1.0 );
 	def beta : num = if ( maior ( 5.0 , 2.0 ) ) :: ( +1.0 );
 	def gama : num = if ( maior ( valor , 2.0 ) ) :: ( +1.0 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 func maior ( a : num , b : num ) : bool {
 	reg @ R9 -> a;

@@ -10,18 +10,16 @@ import java.util.ArrayList;
 public class Potiparum_Sigmaz {
 
     private Simplificador mSimplificador;
-    private Mensageiro mMensageiro;
 
     private  Potiparum mPotiparum;
     private  Potiparum_Tipificador mPotiparum_Tipificador;
     private Potiparum_Escopos mPotiparum_Escopos;
     private Potiparum_Sigmaz mPotiparum_Sigmaz;
 
-    public Potiparum_Sigmaz(Potiparum ePotiparum, Mensageiro eMensageiro) {
+    public Potiparum_Sigmaz(Potiparum ePotiparum ) {
 
         mPotiparum = ePotiparum;
         mSimplificador = mPotiparum.getSimplificador();
-        mMensageiro = eMensageiro;
 
 
     }
@@ -39,9 +37,6 @@ public class Potiparum_Sigmaz {
     }
 
 
-    public Mensageiro getMensageiro() {
-        return mMensageiro;
-    }
 
     public Potiparum_Tipificador getPotiparum_Tipificador() {
         return mPotiparum_Tipificador;
@@ -68,14 +63,14 @@ public class Potiparum_Sigmaz {
 
         if (retorno_ok) {
 
-            getMensageiro().   mensagem(ePrefixo + "DEFINE " + eNome + " -->> OK ");
+           mPotiparum.  mensagem(ePrefixo + "DEFINE " + eNome + " -->> OK ");
 
         } else {
 
             String mErro = "DEFINE " + eNome + " -->> TIPAGEM INVALIDA ";
 
-            getMensageiro().  mensagem(ePrefixo + mErro);
-            getMensageiro().  errar(mErro);
+           mPotiparum. mensagem(ePrefixo + mErro);
+           mPotiparum. errar(mErro);
         }
 
 
@@ -93,14 +88,14 @@ public class Potiparum_Sigmaz {
 
         if (retorno_ok) {
 
-            getMensageiro().   mensagem(ePrefixo + "MOCKIZ " + eNome + " -->> OK ");
+           mPotiparum.  mensagem(ePrefixo + "MOCKIZ " + eNome + " -->> OK ");
 
         } else {
 
             String mErro = "MOCKIZ " + eNome + " -->> TIPAGEM INVALIDA ";
 
-            getMensageiro().   mensagem(ePrefixo + mErro);
-            getMensageiro().  errar(mErro);
+           mPotiparum.  mensagem(ePrefixo + mErro);
+           mPotiparum. errar(mErro);
         }
 
 
@@ -114,7 +109,7 @@ public class Potiparum_Sigmaz {
         Pronoco mNovoEscopo = new Pronoco(eNome);
         mNovoEscopo.setSuperior(mEscopo);
 
-        getMensageiro().mensagem(ePrefixo + eNome + " -->> OK ");
+        mPotiparum.mensagem(ePrefixo + eNome + " -->> OK ");
         if (mAST.mesmoValor("AUTO")) {
             getPotiparum_Escopos().conferirCorpo(ePrefixo + "\t", mAST.getBranch("BODY"), mNovoEscopo);
         }
@@ -135,7 +130,7 @@ public class Potiparum_Sigmaz {
 
         if (argumentos_ok.size() == 0) {
 
-            getMensageiro().mensagem(ePrefixo + eNome + " -->> OK ");
+            mPotiparum.mensagem(ePrefixo + eNome + " -->> OK ");
 
             getPotiparum_Escopos().conferirCorpo(ePrefixo + "\t", mAST.getBranch("BODY"), mNovoEscopo);
 
@@ -162,7 +157,7 @@ public class Potiparum_Sigmaz {
 
         if (genericos_ok.size() == 0 && argumentos_ok.size() == 0) {
 
-            getMensageiro().mensagem(ePrefixo + eNome + " -->> OK ");
+            mPotiparum.mensagem(ePrefixo + eNome + " -->> OK ");
 
             getPotiparum_Escopos().conferirCorpo(ePrefixo + "\t", mAST.getBranch("BODY"), mNovoEscopo);
 
@@ -187,7 +182,7 @@ public class Potiparum_Sigmaz {
 
         if (argumentos_ok.size() == 0 && retorno_ok) {
 
-            getMensageiro().mensagem(ePrefixo + eNome + " -->> OK ");
+            mPotiparum.mensagem(ePrefixo + eNome + " -->> OK ");
 
             getPotiparum_Escopos().conferirCorpo(ePrefixo + "\t", mAST.getBranch("BODY"), mNovoEscopo);
 
@@ -215,7 +210,7 @@ public class Potiparum_Sigmaz {
 
         if (genericos_ok.size() == 0 && argumentos_ok.size() == 0 && retorno_ok) {
 
-            getMensageiro().mensagem(ePrefixo + eNome + " -->> OK ");
+            mPotiparum.mensagem(ePrefixo + eNome + " -->> OK ");
 
             getPotiparum_Escopos().conferirCorpo(ePrefixo + "\t", mAST.getBranch("BODY"), mNovoEscopo);
 
@@ -241,7 +236,7 @@ public class Potiparum_Sigmaz {
 
         if (argumentos_ok.size() == 0 && retorno_ok) {
 
-            getMensageiro().mensagem(ePrefixo + eNome + " -->> OK ");
+            mPotiparum.mensagem(ePrefixo + eNome + " -->> OK ");
 
             getPotiparum_Escopos().conferirCorpo(ePrefixo + "\t", mAST.getBranch("BODY"), mNovoEscopo);
 
@@ -266,7 +261,7 @@ public class Potiparum_Sigmaz {
 
         if (argumentos_ok.size() == 0 && retorno_ok) {
 
-            getMensageiro().mensagem(ePrefixo + eNome + " -->> OK ");
+            mPotiparum.mensagem(ePrefixo + eNome + " -->> OK ");
 
             getPotiparum_Escopos().conferirCorpo(ePrefixo + "\t", mAST.getBranch("BODY"), mNovoEscopo);
 

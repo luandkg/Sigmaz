@@ -13,9 +13,7 @@ struct Sacola {
 
 
    act mostrar()  {
-
-        invoke __COMPILER__ -> SHOW_REGRESSIVE () :: STACK;
-
+DEBUG -> REGRESSIVE :: STACK;
     }
 
     act mostrar_detalhes(){
@@ -29,7 +27,7 @@ struct Sacola {
 
     act mostrar_struct(){
 
-        invoke __COMPILER__ -> SHOW_REGRESSIVE () :: ALL;
+       DEBUG -> REGRESSIVE :: STACK;
 
     }
 

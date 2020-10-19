@@ -144,11 +144,13 @@ public class Montador {
 
             mMensageiro.mensagem("\tOLM Titulo : " + mOLMCabecalho.getTitulo());
             mMensageiro.mensagem("\tOLM Versao : " + mOLMCabecalho.getVersao());
-            mMensageiro.mensagem("\tOLM Setor Cabecalho : " + mOLMCabecalho.getSetorCabecalho());
+
+            mMensageiro.mensagem("\tOLM Setor Sigmaz : " + mOLMCabecalho.getSetorSigmaz());
             mMensageiro.mensagem("\tOLM Setor Codigo : " + mOLMCabecalho.getSetorCodigo());
-            mMensageiro.mensagem("\tOLM Cabecalho Tamanho : " + mOLMCabecalho.getCabecalho_Tamanho());
+            mMensageiro.mensagem("\tOLM Setor Assinatura : " + mOLMCabecalho.getAssinatura_Inicio());
+
+            mMensageiro.mensagem("\tOLM Sigmaz Tamanho : " + mOLMCabecalho.getSigmaz_Tamanho());
             mMensageiro.mensagem("\tOLM Codigo Tamanho : " + mOLMCabecalho.getCodigo_Tamanho());
-            mMensageiro.mensagem("\tOLM Assinatura : " + mOLMCabecalho.getAssinatura_Inicio());
             mMensageiro.mensagem("\tOLM Assinatura Tamanho : " + mOLMCabecalho.getAssinatura_Tamanho());
 
             for (AST eC : ASTCabecalho) {
@@ -216,8 +218,8 @@ public class Montador {
         mMensageiro.mensagem("OLM Titulo : " + mOLMCabecalho.getTitulo());
         mMensageiro.mensagem("OLM Versao : " + mOLMCabecalho.getVersao());
 
-        mMensageiro.mensagem("OLM Cabecalho : " + mOLMCabecalho.getSetorCabecalho());
-        mMensageiro.mensagem("OLM Cabecalho Tamanho : " + mOLMCabecalho.getCabecalho_Tamanho());
+        mMensageiro.mensagem("OLM Sigmaz : " + mOLMCabecalho.getSetorSigmaz());
+        mMensageiro.mensagem("OLM Sigmaz Tamanho : " + mOLMCabecalho.getSigmaz_Tamanho());
 
         mMensageiro.mensagem("OLM Codigo : " + mOLMCabecalho.getSetorCodigo());
         mMensageiro.mensagem("OLM Codigo Tamanho : " + mOLMCabecalho.getCodigo_Tamanho());
@@ -234,7 +236,7 @@ public class Montador {
 
                 boolean mProblemaCabecalho = false;
 
-                byte[] mCabecalho = mArquivador.lerBloco(mOLMCabecalho.getSetorCabecalho(), mOLMCabecalho.getCabecalho_Tamanho(), eArquivo);
+                byte[] mCabecalho = mArquivador.lerBloco(mOLMCabecalho.getSetorSigmaz(), mOLMCabecalho.getSigmaz_Tamanho(), eArquivo);
 
 
                 R5Resposta mASTCabecalho = mDesSegurador_Cabecalho.revelar(mCabecalho);

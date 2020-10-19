@@ -10,7 +10,7 @@ call iniciar -> {
 	def ou_2 : bool = operador_ou ( true , false );
 	def ou_3 : bool = operador_ou ( false , true );
 	def ou_4 : bool = operador_ou ( false , false );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 operator == ( a : bool , b : bool ) : bool {
 	reg @ R1 -> a;

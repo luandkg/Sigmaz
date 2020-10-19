@@ -1,6 +1,6 @@
 call iniciar -> operando ( );
 act operando ( ) {
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 	def cc : num = 0.0;
 	while ( menor ( cc , 20.0 ) ) -> {
 		def ac : num = cc;

@@ -26,7 +26,7 @@ public class Tipador {
         mSimplificador = new Simplificador();
         mPosProcessador = eAnalisador;
         mMensageiro = mPosProcessador.getMensageiro();
-        mPotiparum = new Potiparum(this, mMensageiro);
+        mPotiparum = new Potiparum(this);
 
         mPrimitivos = new ArrayList<String>();
         mPrimitivos.add("num");
@@ -47,37 +47,47 @@ public class Tipador {
         return mPotiparum;
     }
 
+    public boolean getDebug(){return mPosProcessador.getDebug_Tipador();}
+    public void mensagem(String e) {
+        if (mPosProcessador.getDebug_Tipador()) {
+            mPosProcessador.mensagem(e);
+        }
+    }
+
+    public void errar(String e) {
+        mPosProcessador.errar(e);
+    }
 
     public void init(ArrayList<AST> mASTS) {
 
 
-        mPosProcessador.mensagem("");
-        mPosProcessador.mensagem(" ------------------ FASE TIPADOR ----------------------- ");
-        mPosProcessador.mensagem("");
+        mensagem("");
+        mensagem(" ------------------ FASE TIPADOR ----------------------- ");
+        mensagem("");
 
         Pronoco mPronoco = new Pronoco("SIGMAZ");
 
 
         for (String e : mPrimitivos) {
-            mPosProcessador.mensagem("\t - TIPO PRIMITIVO :  " + e);
+            mensagem("\t - TIPO PRIMITIVO :  " + e);
 
             mPronoco.adicionarPrimitivo(e);
         }
 
-        mPosProcessador.mensagem("");
+        mensagem("");
 
         ArrayList<AST> mPacotes = new ArrayList<AST>();
 
         for (AST mRequisicao : mPosProcessador.getRequisicoes()) {
 
-            mPosProcessador.mensagem("Biblioteca Externa");
+            mensagem("Biblioteca Externa");
 
 
-                for (AST eAlgumaCoisa : mRequisicao.getASTS()) {
-                    if (eAlgumaCoisa.mesmoTipo("PACKAGE")) {
-                        mPacotes.add(eAlgumaCoisa);
-                    }
+            for (AST eAlgumaCoisa : mRequisicao.getASTS()) {
+                if (eAlgumaCoisa.mesmoTipo("PACKAGE")) {
+                    mPacotes.add(eAlgumaCoisa);
                 }
+            }
 
 
         }
@@ -100,7 +110,7 @@ public class Tipador {
                 getPotiparum().chegarTipagens_novo("\t", mPacotes, mPronoco, ASTCGlobal);
 
                 for (AST mAST : mPacotes) {
-                    mPosProcessador.mensagem("\t" + "Sigmaz Package :  " + mAST.getNome());
+                    mensagem("\t" + "Sigmaz Package :  " + mAST.getNome());
 
                     Pronoco mPronocoPacote = new Pronoco(mAST.getNome());
                     mPronocoPacote.setSuperior(mPronoco);
@@ -136,7 +146,7 @@ public class Tipador {
 
                         mPronoco.adicionarCast(mAST.getNome());
 
-                        mPosProcessador.mensagem(ePrefixo + "- Tipo CAST : " + ASTPackage.getNome() + "<>" + mAST.getNome());
+                        mensagem(ePrefixo + "- Tipo CAST : " + ASTPackage.getNome() + "<>" + mAST.getNome());
 
                     } else if (mAST.mesmoTipo("STRUCT")) {
 
@@ -145,19 +155,19 @@ public class Tipador {
 
                         if (mExtended.mesmoNome("STRUCT")) {
 
-                            mPosProcessador.mensagem(ePrefixo + "- Tipo STRUCT : " + ASTPackage.getNome() + "<>" + mAST.getNome());
+                            mensagem(ePrefixo + "- Tipo STRUCT : " + ASTPackage.getNome() + "<>" + mAST.getNome());
                             mPronoco.adicionarStruct(mAST.getNome());
 
                         } else if (mExtended.mesmoNome("STAGES")) {
-                            mPosProcessador.mensagem(ePrefixo + "- Tipo STAGE : " + ASTPackage.getNome() + "<>" + mAST.getNome());
+                            mensagem(ePrefixo + "- Tipo STAGE : " + ASTPackage.getNome() + "<>" + mAST.getNome());
                             mPronoco.adicionarStage(mAST.getNome());
 
                         } else if (mExtended.mesmoNome("TYPE")) {
-                            mPosProcessador.mensagem(ePrefixo + "- Tipo TYPE : " + ASTPackage.getNome() + "<>" + mAST.getNome());
+                            mensagem(ePrefixo + "- Tipo TYPE : " + ASTPackage.getNome() + "<>" + mAST.getNome());
                             mPronoco.adicionarType(mAST.getNome());
 
                         } else if (mExtended.mesmoNome("MODEL")) {
-                            mPosProcessador.mensagem(ePrefixo + "- Tipo MODEL : " + ASTPackage.getNome() + "<>" + mAST.getNome());
+                            mensagem(ePrefixo + "- Tipo MODEL : " + ASTPackage.getNome() + "<>" + mAST.getNome());
                             mPronoco.adicionarModel(mAST.getNome());
 
                         }

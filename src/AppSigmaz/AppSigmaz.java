@@ -42,13 +42,13 @@ public class AppSigmaz {
 
         String mLocalGerador = "res/gerador/";
 
-        int ARQUIVO = 44;
+        int ARQUIVO = 73;
 
-        switch (Fases.COMPILAR_E_EXECUTAR_DETALHADO) {
+        switch (Fases.TESTES) {
 
             case MONTAR_PLANO_COMPILACAO -> AppUtils.PLANO_COMPILACAO(ARQUIVO, mArquivos, mLOCAL_PLANOS, mLocalLibs);
 
-            case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos);
+            case DEPENDENCIAS -> AppUtils.DEPENDENCIA(ARQUIVO, mArquivos,mLocalLibs);
             case ESTRUTURADOR -> AppUtils.ESTRUTURAL(ARQUIVO, mArquivos, mCompilado, mLocalLibs);
             case INTERNO -> AppUtils.INTERNO(ARQUIVO, mArquivos, mCompilado, mLocalLibs, mInternos);
 
@@ -75,8 +75,8 @@ public class AppSigmaz {
             case INTELLISENSE_BIBLIOTECA -> AppUtils.INTELISENSE_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad, mLocalLibs, mIntellisense);
 
             case LEXER -> AppUtils.LEXER(ARQUIVO, mArquivos);
-            case TODO -> AppUtils.TODO(ARQUIVO, mArquivos);
-            case COMENTARIOS -> AppUtils.COMENTARIOS(ARQUIVO, mArquivos);
+            case TODO -> AppUtils.TODO(ARQUIVO, mArquivos,mLocalLibs);
+            case COMENTARIOS -> AppUtils.COMENTARIOS(ARQUIVO, mArquivos,mLocalLibs);
 
             case MAKE_LEXER -> AppMake.MAKE_LEXER(ARQUIVO, mMakes);
             case MAKE_EXECUTAR -> AppMake.MAKE_EXECUTAR(ARQUIVO, mMakes);

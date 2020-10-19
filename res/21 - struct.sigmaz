@@ -8,14 +8,14 @@ struct Pessoa {
 	}
 
 	act mostrar ( ) {
-		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 	}
 	
 }
 
 act pular ( ) {
 	def P1 : Pessoa = init Pessoa ( );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
+	DEBUG -> REGRESSIVE :: ALL;
 	alterador_Pessoa ( P1 );
 	P1.nome = "Alice";
 	P1.mostrar ( );
@@ -30,7 +30,7 @@ act alterador_Pessoa ( az : Pessoa ) {
 	#def b : string = t.nome.pular().criar(12==13);
 	def nome1 : string = az.getNome ( );
 	def nome2 : string = az.nome;
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 func somar ( a : int , b : int ) : int {
 	reg @ R5 -> a;

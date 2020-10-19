@@ -7,21 +7,31 @@ import Sigmaz.S00_Utilitarios.AST;
 
 public class Referenciador {
 
-    private PosProcessador mAnalisador;
+    private PosProcessador mPosProcessador;
 
-    public Referenciador(PosProcessador eAnalisador) {
+    public Referenciador(PosProcessador ePosProcessador) {
 
-        mAnalisador = eAnalisador;
+        mPosProcessador = ePosProcessador;
 
+    }
+
+    public void mensagem(String e) {
+        if (mPosProcessador.getDebug_Referenciador()) {
+            mPosProcessador.mensagem(e);
+        }
+    }
+
+    public void errar(String e) {
+        mPosProcessador.errar(e);
     }
 
 
     public void init(ArrayList<AST> mTodos) {
 
 
-        mAnalisador.mensagem("");
-        mAnalisador.mensagem(" ------------------ FASE REFERENCIADOR ----------------------- ");
-        mAnalisador.mensagem("");
+       mensagem("");
+        mensagem(" ------------------ FASE REFERENCIADOR ----------------------- ");
+       mensagem("");
 
 
         ArrayList<AST> mPacotes = new ArrayList<AST>();
@@ -50,7 +60,7 @@ public class Referenciador {
 
         for (AST mPacote : mPacotes) {
 
-            mAnalisador.mensagem("Analisando Pacote " + mPacote.getNome());
+           mensagem("Analisando Pacote " + mPacote.getNome());
 
             ArrayList<AST> mEstruturas = new ArrayList<AST>();
             ArrayList<AST> mRefers = new ArrayList<AST>();
@@ -63,11 +73,11 @@ public class Referenciador {
                 }
             }
 
-            mAnalisador.mensagem("\t -  REFERS : ");
+          mensagem("\t -  REFERS : ");
             for (AST mRefer : mRefers) {
-                mAnalisador.mensagem("\t\t -  REFER : " + mRefer.getNome());
+              mensagem("\t\t -  REFER : " + mRefer.getNome());
             }
-            mAnalisador.mensagem("\t -  STRUCTS : ");
+            mensagem("\t -  STRUCTS : ");
             for (AST mStruct : mEstruturas) {
 
                 mStruct.getBranch("REFERS").criarBranch("BY").setNome(mPacote.getNome());
@@ -76,38 +86,38 @@ public class Referenciador {
                     mStruct.getBranch("REFERS").criarBranch("BY").setNome(mRefer.getNome());
                 }
 
-                mAnalisador.mensagem("\t\t -  STRUCT : " + mStruct.getNome());
+               mensagem("\t\t -  STRUCT : " + mStruct.getNome());
 
 
 
                 for (AST mRefer : mStruct.getBranch("REFERS").getASTS()) {
-                    mAnalisador.mensagem("\t\t\t -  BY : " + mRefer.getNome());
+                 mensagem("\t\t\t -  BY : " + mRefer.getNome());
                 }
             }
 
         }
 
-        mAnalisador.mensagem("Analisando Global " );
+      mensagem("Analisando Global " );
 
 
-        mAnalisador.mensagem("\t -  REFERS : ");
+      mensagem("\t -  REFERS : ");
         for (AST mRefer : mGlobalRefer) {
-            mAnalisador.mensagem("\t\t -  REFER : " + mRefer.getNome());
+            mensagem("\t\t -  REFER : " + mRefer.getNome());
         }
-        mAnalisador.mensagem("\t -  STRUCTS : ");
+        mensagem("\t -  STRUCTS : ");
         for (AST mStruct : mGlobalStruct) {
 
             for (AST mRefer : mGlobalRefer) {
                 mStruct.getBranch("REFERS").criarBranch("BY").setNome(mRefer.getNome());
             }
 
-            mAnalisador.mensagem("\t\t -  STRUCT : " + mStruct.getNome());
+          mensagem("\t\t -  STRUCT : " + mStruct.getNome());
 
 
 
 
             for (AST mRefer : mStruct.getBranch("REFERS").getASTS()) {
-                mAnalisador.mensagem("\t\t\t -  BY : " + mRefer.getNome());
+             mensagem("\t\t\t -  BY : " + mRefer.getNome());
             }
         }
 

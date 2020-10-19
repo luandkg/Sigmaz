@@ -53,7 +53,7 @@ act operando ( ) {
 	def secundario : neg = null;
 	def terciario : neg = neg ( -13 );
 	def i1 : int = n1;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }
 
 struct XA {

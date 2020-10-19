@@ -15,10 +15,17 @@ public class Castificador {
 
     }
 
+
+    public void mensagem(String e){
+        if (mPosProcessador.getDebug_Cast()){
+            mPosProcessador.mensagem(e);
+        }
+    }
+
     public void init(ArrayList<AST> mTodos) {
 
-        mPosProcessador.mensagem("");
-        mPosProcessador.mensagem(" ------------------ FASE CAST ----------------------- ");
+        mensagem("");
+        mensagem(" ------------------ FASE CAST ----------------------- ");
 
 
         for (AST mAST : mTodos) {
@@ -26,7 +33,7 @@ public class Castificador {
             if (mAST.mesmoTipo("SIGMAZ")) {
 
 
-                mPosProcessador.mensagem("");
+                mensagem("");
 
                 for (AST ePacote : mAST.getASTS()) {
                     if (ePacote.mesmoTipo("PACKAGE")) {
@@ -61,7 +68,7 @@ public class Castificador {
 
         for (AST mAST : eCasts) {
 
-            mPosProcessador.mensagem("\t - CAST : " + mAST.getNome());
+            mensagem("\t - CAST : " + mAST.getNome());
 
             for (AST gAST : mAST.getASTS()) {
 
@@ -91,7 +98,7 @@ public class Castificador {
     public void processar_Getter(String eCast, AST eCastGetter, AST ASTAvo) {
 
 
-        mPosProcessador.mensagem("\t\t - GETTER " + eCast + " :: " + eCastGetter.getValor());
+        mensagem("\t\t - GETTER " + eCast + " :: " + eCastGetter.getValor());
 
         String eNome = eCast;
         String eNomeVar = eCastGetter.getNome();
@@ -183,7 +190,7 @@ public class Castificador {
     public void processar_Setter(String eCast, AST eCastSetter, AST ASTAvo) {
 
 
-        mPosProcessador.mensagem("\t\t - SETTER " + eCast + " :: " + eCastSetter.getValor());
+        mensagem("\t\t - SETTER " + eCast + " :: " + eCastSetter.getValor());
 
         String eNome = eCast;
         String eNomeVar = eCastSetter.getNome();

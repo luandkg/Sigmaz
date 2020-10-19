@@ -11,57 +11,51 @@ import java.util.ArrayList;
 public class Potiparum_Tipificador {
 
     private Simplificador mSimplificador;
-    private Mensageiro mMensageiro;
     private Potiparum mPotiparum;
 
-    public Potiparum_Tipificador(Potiparum ePotiparum,Mensageiro eMensageiro){
+    public Potiparum_Tipificador(Potiparum ePotiparum) {
 
-        mPotiparum=ePotiparum;
+        mPotiparum = ePotiparum;
         mSimplificador = mPotiparum.getSimplificador();
-        mMensageiro=eMensageiro;
     }
 
-    public void index(){
+    public void index() {
 
     }
 
-    public Simplificador getSimplificador(){
+    public Simplificador getSimplificador() {
         return mSimplificador;
     }
 
-    public Tipador getTipador(){
+    public Tipador getTipador() {
         return mPotiparum.getTipador();
-    }
-
-    public Mensageiro getMensageiro(){
-        return mMensageiro;
     }
 
 
     public void status_GenericoArgumentoRetorno(String ePrefixo, String eNome, ArrayList<String> genericos_ok, ArrayList<String> argumentos_ok, boolean retorno_ok) {
 
         if (genericos_ok.size() > 0) {
-            getMensageiro(). mensagem(ePrefixo + eNome + " -->> TIPAGEM DE GENERICOS INVALIDA ");
-            getMensageiro(). errar(eNome + " -->> TIPAGEM DE GENERICOS INVALIDA ");
+            mPotiparum.mensagem(ePrefixo + eNome + " -->> TIPAGEM DE GENERICOS INVALIDA ");
+            mPotiparum.errar(eNome + " -->> TIPAGEM DE GENERICOS INVALIDA ");
             for (String e : genericos_ok) {
-                getMensageiro().   mensagem(ePrefixo + "\t" + e);
-                getMensageiro().   errar(eNome + " -->> " + e);
+                mPotiparum.mensagem(ePrefixo + "\t" + e);
+                mPotiparum.errar(eNome + " -->> " + e);
             }
         }
 
         if (argumentos_ok.size() > 0) {
-            getMensageiro().  mensagem(ePrefixo + eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
-            getMensageiro().  errar(eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
+            mPotiparum.mensagem(ePrefixo + eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
+            mPotiparum.errar(eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
             for (String e : argumentos_ok) {
-                getMensageiro().      mensagem(ePrefixo + "\t" + e);
-                getMensageiro().      errar(eNome + " -->> " + e);
+                mPotiparum.mensagem(ePrefixo + "\t" + e);
+                mPotiparum.errar(eNome + " -->> " + e);
             }
         }
 
 
         if (!retorno_ok) {
-            getMensageiro().   mensagem(ePrefixo + eNome + " -->> TIPAGEM DE RETORNO INVALIDA ");
-            getMensageiro().  errar(eNome + " -->> TIPAGEM DE RETORNO INVALIDA ");
+            mPotiparum.mensagem(ePrefixo + eNome + " -->> TIPAGEM DE RETORNO INVALIDA ");
+            mPotiparum.errar(eNome + " -->> TIPAGEM DE RETORNO INVALIDA ");
         }
 
     }
@@ -69,20 +63,20 @@ public class Potiparum_Tipificador {
     public void status_GenericoArgumento(String ePrefixo, String eNome, ArrayList<String> genericos_ok, ArrayList<String> argumentos_ok) {
 
         if (genericos_ok.size() > 0) {
-            getMensageiro().  mensagem(ePrefixo + eNome + " -->> TIPAGEM DE GENERICOS INVALIDA ");
-            getMensageiro().  errar(eNome + " -->> TIPAGEM DE GENERICOS INVALIDA ");
+            mPotiparum.mensagem(ePrefixo + eNome + " -->> TIPAGEM DE GENERICOS INVALIDA ");
+            mPotiparum.errar(eNome + " -->> TIPAGEM DE GENERICOS INVALIDA ");
             for (String e : genericos_ok) {
-                getMensageiro().     mensagem(ePrefixo + "\t" + e);
-                getMensageiro().    errar(eNome + " -->> " + e);
+                mPotiparum.mensagem(ePrefixo + "\t" + e);
+                mPotiparum.errar(eNome + " -->> " + e);
             }
         }
 
         if (argumentos_ok.size() > 0) {
-            getMensageiro().  mensagem(ePrefixo + eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
-            getMensageiro().  errar(eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
+            mPotiparum.mensagem(ePrefixo + eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
+            mPotiparum.errar(eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
             for (String e : argumentos_ok) {
-                getMensageiro().   mensagem(ePrefixo + "\t" + e);
-                getMensageiro().   errar(eNome + " -->> " + e);
+                mPotiparum.mensagem(ePrefixo + "\t" + e);
+                mPotiparum.errar(eNome + " -->> " + e);
             }
         }
 
@@ -92,11 +86,11 @@ public class Potiparum_Tipificador {
     public void status_Argumento(String ePrefixo, String eNome, ArrayList<String> argumentos_ok) {
 
         if (argumentos_ok.size() > 0) {
-            getMensageiro(). mensagem(ePrefixo + eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
-            getMensageiro(). errar(eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
+            mPotiparum.mensagem(ePrefixo + eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
+            mPotiparum.errar(eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
             for (String e : argumentos_ok) {
-                getMensageiro(). mensagem(ePrefixo + "\t" + e);
-                getMensageiro().errar(eNome + " -->> " + e);
+                mPotiparum.mensagem(ePrefixo + "\t" + e);
+                mPotiparum.errar(eNome + " -->> " + e);
             }
         }
 
@@ -106,18 +100,18 @@ public class Potiparum_Tipificador {
 
 
         if (argumentos_ok.size() > 0) {
-            getMensageiro(). mensagem(ePrefixo + eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
-            getMensageiro(). errar(eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
+            mPotiparum.mensagem(ePrefixo + eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
+            mPotiparum.errar(eNome + " -->> TIPAGEM DE ALGUMENTOS INVALIDA ");
             for (String e : argumentos_ok) {
-                getMensageiro().   mensagem(ePrefixo + "\t" + e);
-                getMensageiro().   errar(eNome + " -->> " + e);
+                mPotiparum.mensagem(ePrefixo + "\t" + e);
+                mPotiparum.errar(eNome + " -->> " + e);
             }
         }
 
 
         if (!retorno_ok) {
-            getMensageiro().   mensagem(ePrefixo + eNome + " -->> TIPAGEM DE RETORNO INVALIDA ");
-            getMensageiro().   errar(eNome + " -->> TIPAGEM DE RETORNO INVALIDA ");
+            mPotiparum.mensagem(ePrefixo + eNome + " -->> TIPAGEM DE RETORNO INVALIDA ");
+            mPotiparum.errar(eNome + " -->> TIPAGEM DE RETORNO INVALIDA ");
         }
 
     }

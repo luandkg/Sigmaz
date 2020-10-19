@@ -18,11 +18,12 @@ public class OLM {
 
         mArquivador.limpar(eArquivo);
 
+        // OLM -> Cabececalho + Sigmaz + Codigo
 
         mArquivador.marcar(Titulo, Versao, eArquivo);
 
-        long eSetorCab_Inicio = mArquivador.criarSetor(eArquivo);
-        long eSetorCab_Tamanho = mArquivador.criarSetor(eArquivo);
+        long eSetorSigmaz_Inicio = mArquivador.criarSetor(eArquivo);
+        long eSetorSigmaz_Tamanho = mArquivador.criarSetor(eArquivo);
 
         long eSetorDados_Inicio = mArquivador.criarSetor(eArquivo);
         long eSetorDados_Tamanho = mArquivador.criarSetor(eArquivo);
@@ -36,13 +37,13 @@ public class OLM {
         long mSetorAssinatura = mArquivador.guardarSetor(mAssinatura, eArquivo);
 
 
-        mArquivador.marcarLocal(eSetorCab_Inicio, mSetorCab, eArquivo);
+        mArquivador.marcarLocal(eSetorSigmaz_Inicio, mSetorCab, eArquivo);
         mArquivador.marcarLocal(eSetorDados_Inicio, mSetorDados, eArquivo);
         mArquivador.marcarLocal(eSetorAssinatura_Inicio, mSetorAssinatura, eArquivo);
 
 
 
-        mArquivador.marcarLocal(eSetorCab_Tamanho, mCabecalho.length, eArquivo);
+        mArquivador.marcarLocal(eSetorSigmaz_Tamanho, mCabecalho.length, eArquivo);
         mArquivador.marcarLocal(eSetorDados_Tamanho,  mCodigo.length, eArquivo);
         mArquivador.marcarLocal(eSetorAssinatura_Tamanho,  mAssinatura.length, eArquivo);
 

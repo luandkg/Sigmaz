@@ -9,10 +9,10 @@ public class OLMCabecalho {
     private String mTitulo;
     private int mVersao;
 
-    private long mSetorCabecalho;
+    private long mSetorSigmaz;
     private long mSetorCodigo;
 
-    private long mCabecalho_Tamanho;
+    private long mSetorSigmaz_Tamanho;
     private long mCodigo_Tamanho;
 
     private long mAssinatura_Inicio;
@@ -23,10 +23,10 @@ public class OLMCabecalho {
         mTitulo = "";
         mVersao = 0;
 
-        mSetorCabecalho = 0;
+        mSetorSigmaz = 0;
         mSetorCodigo = 0;
 
-        mCabecalho_Tamanho = 0;
+        mSetorSigmaz_Tamanho = 0;
         mCodigo_Tamanho = 0;
 
         mAssinatura_Inicio = 0;
@@ -41,16 +41,16 @@ public class OLMCabecalho {
         return mVersao;
     }
 
-    public long getSetorCabecalho() {
-        return mSetorCabecalho;
+    public long getSetorSigmaz() {
+        return mSetorSigmaz;
     }
 
     public long getSetorCodigo() {
         return mSetorCodigo;
     }
 
-    public long getCabecalho_Tamanho() {
-        return mCabecalho_Tamanho;
+    public long getSigmaz_Tamanho() {
+        return mSetorSigmaz_Tamanho;
     }
 
     public long getCodigo_Tamanho() {
@@ -76,8 +76,8 @@ public class OLMCabecalho {
         mTitulo = ma.readStringPrefix(3);
         mVersao = ma.readInt();
 
-        mSetorCabecalho = ma.readLong();
-        mCabecalho_Tamanho = ma.readLong();
+        mSetorSigmaz = ma.readLong();
+        mSetorSigmaz_Tamanho = ma.readLong();
 
         mSetorCodigo = ma.readLong();
         mCodigo_Tamanho = ma.readLong();
@@ -91,14 +91,14 @@ public class OLMCabecalho {
     }
 
 
-    public void definir(String eTitulo, int eVersao, long eSetorCabecalho, long eCabecalho_Tamanho, long eSetorCodigo, long eCodigo_Tamanho, long eSetorAssinatura, long eAssinatura_Tamanho) {
+    public void definir(String eTitulo, int eVersao, long eSetorSigmaz, long eSetorSigmaz_Tamanho, long eSetorCodigo, long eCodigo_Tamanho, long eSetorAssinatura, long eAssinatura_Tamanho) {
 
 
         mTitulo = eTitulo;
         mVersao = eVersao;
 
-        mSetorCabecalho = eSetorCabecalho;
-        mCabecalho_Tamanho = eCabecalho_Tamanho;
+        mSetorSigmaz = eSetorSigmaz;
+        mSetorSigmaz_Tamanho = eSetorSigmaz_Tamanho;
 
         mSetorCodigo = eSetorCodigo;
         mCodigo_Tamanho = eCodigo_Tamanho;

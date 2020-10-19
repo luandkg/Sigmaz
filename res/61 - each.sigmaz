@@ -3,8 +3,10 @@ call iniciar -> inicio ( );
 refer Lista;
 refer Iterador;
 act inicio ( ) {
+
 	def aa : int = -1;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
+
 	def ListaNumerica : Lista >> ( int ) = init Lista ( ) >> ( int );
 	ListaNumerica.adicionar ( 10 );
 	ListaNumerica.adicionar ( 20 );
@@ -30,8 +32,6 @@ act inicio ( ) {
 	def t3_A : int = t3.A;
 	def t3_B : int = t3.B;
 	
-	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-	
-	#invoke __COMPILER__ -> HEAP ( ) :: ALL;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+	DEBUG -> REGRESSIVE :: ALL;
 }

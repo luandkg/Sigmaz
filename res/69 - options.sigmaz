@@ -9,12 +9,12 @@ call iniciar -> {
 	fofocar ( w );
 	fofocar ( );
 	def ga : num = gral ( 5.0 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: FUNCTIONS;
+	DEBUG -> REGRESSIVE :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }
 
 act fofocar ( opt ref r : num = 50.0 , opt a : num = 5.0 ) {
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }
 
 #act fofocando ( opt ref r : num = 50.0 ,  a : num ) {invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;}
@@ -30,33 +30,29 @@ func som ( g : num , opt v : bool = false ) : num {
 }
 
 act algo ( opt a : num = 5.0 ) {
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+	DEBUG -> REGRESSIVE :: ACTIONS;
 }
 
 act duplo ( opt a : num = 5.0 , opt b : num = 2.0 ) {
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+	DEBUG -> REGRESSIVE :: ACTIONS;
 }
 
 act quazar ( opt a : num = 5.0 , opt b : num = 12.0 ) {
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+	DEBUG -> REGRESSIVE :: ACTIONS;
 }
 
 act normal ( a : num , b : num ) {
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+	DEBUG -> REGRESSIVE :: ACTIONS;
 }
 func gral ( g : num , opt ref v : bool = false ) : num {
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 	return g;
 }
 package COX {
 	struct Coxa {
 		act encoxar ( a : num , opt b : bool = false , opt c : num = 12.0 ) {
-			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+	DEBUG -> REGRESSIVE :: STACK;
+	DEBUG -> REGRESSIVE :: ACTIONS;
 		}
 		
 	}

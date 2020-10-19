@@ -32,7 +32,7 @@ public class Runner_Ident {
 
 
                 Dependenciador mDependenciador = new Dependenciador();
-                mDependenciador.init(TempSource_Item);
+                mDependenciador.init(TempSource_Item,mRunMake.getBuild());
 
                 if (!mDependenciador.getTemErros()) {
 

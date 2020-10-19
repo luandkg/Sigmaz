@@ -1,6 +1,8 @@
 package Sigmaz.S07_Executor.Debuggers;
 
 import Sigmaz.S07_Executor.Escopo;
+import Sigmaz.S07_Executor.Escopos.Run_Struct;
+import Sigmaz.S07_Executor.Escopos.Run_Type;
 import Sigmaz.S07_Executor.Item;
 
 import java.util.ArrayList;
@@ -80,18 +82,6 @@ public class Global {
     }
 
 
-    public void ListarRegressiveStack() {
-
-
-        System.out.println(" ######################### STACK - REGRESSIVE STACK ############################ ");
-
-
-        mEscopo.getDebug().mapear_regressive_stack();
-
-
-        System.out.println(" ######################### ##### ############################ ");
-
-    }
 
     public void mapear_stack() {
 
@@ -288,4 +278,28 @@ public class Global {
 
 
     }
+
+
+    public void listarInstances() {
+
+
+        System.out.println(" ######################### GLOBAL - INSTANCES ############################ ");
+
+        for(Run_Type rt : mEscopo.getRunTime().getHeap().getTypes_Instances()){
+
+            System.out.println("\t - TYPE :: " + rt.getNome());
+
+        }
+
+       for(Run_Struct rs : mEscopo.getRunTime().getHeap().getStructs_Instances()){
+
+           System.out.println("\t - STRUCT :: " + rs.getNome());
+
+       }
+
+
+        System.out.println(" ######################### ##### ############################ ");
+
+    }
+
 }

@@ -10,7 +10,7 @@ struct Matematica {
 	act recursor ( a : int ) {
 		def b : int = somar_inteiro ( a , 1 );
 		println ( "Valor B : ", b );
-		invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 		if ( menor ( b , 20 ) ) -> {
 			recursor ( b );
 		}

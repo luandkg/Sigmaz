@@ -31,5 +31,5 @@ package Animais {
 refer Animais;
 call iniciar -> {
 	def G : Gato = init Gato ( 12.0 );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 }

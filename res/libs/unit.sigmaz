@@ -22,8 +22,6 @@ package TesteUnitario {
 				nome = teste;
 				resultado = a;
 			};
-			
-			#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 			Assertivas.adicionar ( aa );
 		}
 

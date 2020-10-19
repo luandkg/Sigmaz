@@ -1,35 +1,21 @@
-func int ( a : num  ) : int {
-
-	reg @R9 -> a;
-
-     PROC -> {
-
-        SET R5;
-            MOV 0;
-            INT R9;
-
-     }
-
-	return reg @R5;
+func int ( a : num ) : int {
+	reg @ R9 -> a;
+	PROC -> {
+		SET R5;
+		MOV 0;
+		INT R9;
+	}
+	return reg @ R5;
 }
-
-
-func num ( a : int  ) : num {
-
-	reg @R5 -> a;
-
-     PROC -> {
-
-        SET R9;
-            MOV 0.0;
-            REAL R5;
-
-     }
-
-	return reg @R9;
+func num ( a : int ) : num {
+	reg @ R5 -> a;
+	PROC -> {
+		SET R9;
+		MOV 0.0;
+		REAL R5;
+	}
+	return reg @ R9;
 }
-
-
 operator ++ ( a : int , b : num ) : num {
 	def a1 : num = num ( a );
 	def b1 : num = num ( a );
@@ -40,8 +26,6 @@ operator ++ ( a : num , b : int ) : num {
 	def b1 : num = num ( a );
 	return a1 ++ b1;
 }
-
-
 operator -- ( a : int , b : num ) : num {
 	def a1 : num = num ( a );
 	def b1 : num = num ( a );
@@ -52,9 +36,6 @@ operator -- ( a : num , b : int ) : num {
 	def b1 : num = num ( a );
 	return a1 -- b1;
 }
-
-
-
 operator ** ( a : int , b : num ) : num {
 	def a1 : num = num ( a );
 	def b1 : num = num ( a );
@@ -65,7 +46,6 @@ operator ** ( a : num , b : int ) : num {
 	def b1 : num = num ( a );
 	return a1 ** b1;
 }
-
 operator // ( a : int , b : num ) : num {
 	def a1 : num = num ( a );
 	def b1 : num = num ( a );
@@ -76,4 +56,3 @@ operator // ( a : num , b : int ) : num {
 	def b1 : num = num ( a );
 	return a1 // b1;
 }
-

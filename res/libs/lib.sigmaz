@@ -17,14 +17,13 @@ import "container/lista.sigmaz";
 import "container/vetor.sigmaz";
 import "container/iterador.sigmaz";
 import "pacote_tempo.sigmaz";
-
 import "ecossistema.sigmaz";
 import "cores.sigmaz";
 import "unit.sigmaz";
 import "marcadores.sigmaz";
 import "idealismo.sigmaz";
 stages Numeros -> {
-	POSITIVO , NEGATIVO , ZERO 
+	POSITIVO , NEGATIVO , ZERO
 }
 stages Comparacao -> {
 	MAIOR , MENOR , IGUAL 
@@ -38,36 +37,78 @@ type Par in ( T1 , T2 ) {
 }
 
 act trash ( a : any ) {
-	invoke __COMPILER__ -> OBJECT ( a ) :: REMOVE;
+	delete a;
 }
-
+func isStruct ( a : any ) : bool {
+	def ret : bool = false;
+	reg @ R18 -> a;
+	def modo : string = reg @ R18;
+	if ( modo == "STRUCT") -> {
+		ret = true;
+	}
+	return ret;
+}
+func isStages ( a : any ) : bool {
+	def ret : bool = false;
+	reg @ R18 -> a;
+	def modo : string = reg @ R18;
+	if ( modo == "STAGES") -> {
+		ret = true;
+	}
+	return ret;
+}
+func isModel ( a : any ) : bool {
+	def ret : bool = false;
+	reg @ R18 -> a;
+	def modo : string = reg @ R18;
+	if ( modo == "MODEL") -> {
+		ret = true;
+	}
+	return ret;
+}
+func isExternal ( a : any ) : bool {
+	def ret : bool = false;
+	reg @ R18 -> a;
+	def modo : string = reg @ R18;
+	if ( modo == "EXTERNAL") -> {
+		ret = true;
+	}
+	return ret;
+}
+func isCast ( a : any ) : bool {
+	def ret : bool = false;
+	reg @ R18 -> a;
+	def modo : string = reg @ R18;
+	if ( modo == "CAST") -> {
+		ret = true;
+	}
+	return ret;
+}
+func isPrimitive ( a : any ) : bool {
+	def ret : bool = false;
+	reg @ R18 -> a;
+	def modo : string = reg @ R18;
+	if ( modo == "PRIMITIVE") -> {
+		ret = true;
+	}
+	return ret;
+}
 func isNull ( ObjetoNulo : any ) : bool {
-
-	  reg @R0 -> ObjetoNulo;
-	  return reg @R0;
-
+	reg @ R0 -> ObjetoNulo;
+	return reg @ R0;
 }
-
 director ! ( a : bool ) : bool {
-	reg @R1 -> a;
-
-     PROC -> {
-
-        SET R2;
-        BOOL_INVERSE R1;
-
-     }
-
-	return reg @R2;
+	reg @ R1 -> a;
+	PROC -> {
+		SET R2;
+		BOOL_INVERSE R1;
+	}
+	return reg @ R2;
 }
-
 func typeof ( a : any ) : string {
-
-	reg @R17 -> a;
-    return reg @R17;
-
+	reg @ R17 -> a;
+	return reg @ R17;
 }
-
 type Tipado {
 	define A : int = 0;
 	define B : int = 0;
@@ -104,7 +145,7 @@ struct TesteGeral {
 struct Objeto {
 	all : 
 	act trash ( ) {
-		invoke __COMPILER__ -> OBJECT ( this ) :: REMOVE;
+		delete this;
 	}
 	func equal ( ObjetoCorrente : Objeto ) : bool {
 		return false;

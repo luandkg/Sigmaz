@@ -18,10 +18,21 @@ public class Argumentador {
 
     }
 
+    public void mensagem(String e) {
+        if (mPosProcessador.getDebug_Argumentador()) {
+            mPosProcessador.mensagem(e);
+        }
+    }
+
+    public void errar(String e) {
+        mPosProcessador.errar(e);
+    }
+
+
     public void init(ArrayList<AST> mTodos) {
 
-        mPosProcessador.mensagem("");
-        mPosProcessador.mensagem(" ------------------ FASE ARGUMENTADOR ----------------------- ");
+       mensagem("");
+       mensagem(" ------------------ FASE ARGUMENTADOR ----------------------- ");
 
 
         for (AST mAST : mTodos) {
@@ -29,7 +40,7 @@ public class Argumentador {
             if (mAST.mesmoTipo("SIGMAZ")) {
 
 
-                mPosProcessador.mensagem("");
+               mensagem("");
 
                 for (AST ePacote : mAST.getASTS()) {
                     if (ePacote.mesmoTipo("PACKAGE")) {
@@ -56,100 +67,100 @@ public class Argumentador {
 
             if (mAST.mesmoTipo("ACTION")) {
 
-                mPosProcessador.mensagem("Action " + mSimplificador.getAction(mAST));
+               mensagem("Action " + mSimplificador.getAction(mAST));
                 detalhes(mAST.getBranch("ARGUMENTS"));
 
                 if (opcionalCorreto(mAST.getBranch("ARGUMENTS"))) {
 
                 } else {
-                    mPosProcessador.errar("Action " + mSimplificador.getAction(mAST) + " : Apos um Argumento opcional todos os restantes devem ser opcionais !");
+                    errar("Action " + mSimplificador.getAction(mAST) + " : Apos um Argumento opcional todos os restantes devem ser opcionais !");
                 }
 
             } else if (mAST.mesmoTipo("FUNCTION")) {
 
 
-                mPosProcessador.mensagem("Function " + mSimplificador.getFuction(mAST));
+                mensagem("Function " + mSimplificador.getFuction(mAST));
                 detalhes(mAST.getBranch("ARGUMENTS"));
 
                 if (opcionalCorreto(mAST.getBranch("ARGUMENTS"))) {
 
                 } else {
-                    mPosProcessador.errar("Function " + mSimplificador.getFuction(mAST) + " : Apos um Argumento opcional todos os restantes devem ser opcionais !");
+                   errar("Function " + mSimplificador.getFuction(mAST) + " : Apos um Argumento opcional todos os restantes devem ser opcionais !");
                 }
 
             } else if (mAST.mesmoTipo("PROTOTYPE_AUTO")) {
 
-                mPosProcessador.mensagem("Auto " + mSimplificador.getAuto(mAST));
+               mensagem("Auto " + mSimplificador.getAuto(mAST));
                 detalhes(mAST.getBranch("ARGUMENTS"));
 
                 if (opcionalCorreto(mAST.getBranch("ARGUMENTS"))) {
 
 
                 } else {
-                    mPosProcessador.errar("Auto " + mSimplificador.getAuto(mAST) + " : Apos um Argumento opcional todos os restantes devem ser opcionais !");
+                 errar("Auto " + mSimplificador.getAuto(mAST) + " : Apos um Argumento opcional todos os restantes devem ser opcionais !");
                 }
 
             } else if (mAST.mesmoTipo("PROTOTYPE_FUNCTOR")) {
 
-                mPosProcessador.mensagem("Functor " + mSimplificador.getFunctor(mAST));
+                mensagem("Functor " + mSimplificador.getFunctor(mAST));
                 detalhes(mAST.getBranch("ARGUMENTS"));
 
                 if (opcionalCorreto(mAST.getBranch("ARGUMENTS"))) {
 
                 } else {
-                    mPosProcessador.errar("Functor " + mSimplificador.getFunctor(mAST) + " : Apos um Argumento opcional todos os restantes devem ser opcionais !");
+                    errar("Functor " + mSimplificador.getFunctor(mAST) + " : Apos um Argumento opcional todos os restantes devem ser opcionais !");
                 }
 
             } else if (mAST.mesmoTipo("OPERATOR")) {
 
-                mPosProcessador.mensagem("Operator " + mSimplificador.getOperator(mAST));
+             mensagem("Operator " + mSimplificador.getOperator(mAST));
                 detalhes(mAST.getBranch("ARGUMENTS"));
 
                 if (semOpcionais(mAST.getBranch("ARGUMENTS"))) {
 
                 } else {
-                    mPosProcessador.errar("Operator " + mSimplificador.getOperator(mAST) + " : Nao pode possuir um argumento opcional !");
+                  errar("Operator " + mSimplificador.getOperator(mAST) + " : Nao pode possuir um argumento opcional !");
                 }
 
                 if (getContagemSemOpcional(mAST.getBranch("ARGUMENTS")) == 2){
 
                 } else {
-                    mPosProcessador.errar("Operator " + mSimplificador.getOperator(mAST) + " : Deve possuir 2 argumentos !");
+                 errar("Operator " + mSimplificador.getOperator(mAST) + " : Deve possuir 2 argumentos !");
                 }
 
             } else if (mAST.mesmoTipo("DIRECTOR")) {
 
-                mPosProcessador.mensagem("Director " + mSimplificador.getDirector(mAST));
+               mensagem("Director " + mSimplificador.getDirector(mAST));
                 detalhes(mAST.getBranch("ARGUMENTS"));
 
                 if (semOpcionais(mAST.getBranch("ARGUMENTS"))) {
 
                 } else {
-                    mPosProcessador.errar("Director " + mSimplificador.getDirector(mAST) + " : Nao pode possuir um argumento opcional !");
+                 errar("Director " + mSimplificador.getDirector(mAST) + " : Nao pode possuir um argumento opcional !");
                 }
 
                 if (getContagemSemOpcional(mAST.getBranch("ARGUMENTS")) == 1){
 
                 } else {
-                    mPosProcessador.errar("Director " + mSimplificador.getDirector(mAST) + " : Deve possuir 1 argumento !");
+                    errar("Director " + mSimplificador.getDirector(mAST) + " : Deve possuir 1 argumento !");
                 }
 
             } else if (mAST.mesmoTipo("MARK")) {
 
-                mPosProcessador.mensagem("Mark " + mSimplificador.getMark(mAST));
+              mensagem("Mark " + mSimplificador.getMark(mAST));
                 detalhes(mAST.getBranch("ARGUMENTS"));
 
                 if (semOpcionais(mAST.getBranch("ARGUMENTS"))) {
 
                 } else {
-                    mPosProcessador.errar("Mark " + mSimplificador.getMark(mAST) + " : Nao pode possuir um argumento opcional !");
+                    errar("Mark " + mSimplificador.getMark(mAST) + " : Nao pode possuir um argumento opcional !");
                 }
 
                 if (getContagemSemOpcional(mAST.getBranch("ARGUMENTS")) == 1){
 
 
                 } else {
-                    mPosProcessador.errar("Mark " + mSimplificador.getMark(mAST) + " : Deve possuir 1 argumento !");
+                errar("Mark " + mSimplificador.getMark(mAST) + " : Deve possuir 1 argumento !");
                 }
             }
 
@@ -166,15 +177,15 @@ public class Argumentador {
 
     public void detalhes(AST eAST) {
 
-        mPosProcessador.mensagem("\t Argumentacao :  " + getArgumentacao(eAST));
-        mPosProcessador.mensagem("");
-        mPosProcessador.mensagem("\t Valores :  " + contagemValor(eAST));
-        mPosProcessador.mensagem("\t Constantes :  " + contagemConstante(eAST));
-        mPosProcessador.mensagem("\t Referenciaveis :  " + contagemRef(eAST));
+        mensagem("\t Argumentacao :  " + getArgumentacao(eAST));
+        mensagem("");
+     mensagem("\t Valores :  " + contagemValor(eAST));
+        mensagem("\t Constantes :  " + contagemConstante(eAST));
+       mensagem("\t Referenciaveis :  " + contagemRef(eAST));
 
-        mPosProcessador.mensagem("\t Opcionais :  " + contagemOpcional(eAST));
-        mPosProcessador.mensagem("\t Opcionais Constantes :  " + contagemOpcionalConstante(eAST));
-        mPosProcessador.mensagem("\t Opcionais Referenciaveis :  " + contagemOpcionalRef(eAST));
+      mensagem("\t Opcionais :  " + contagemOpcional(eAST));
+        mensagem("\t Opcionais Constantes :  " + contagemOpcionalConstante(eAST));
+       mensagem("\t Opcionais Referenciaveis :  " + contagemOpcionalRef(eAST));
 
 
     }

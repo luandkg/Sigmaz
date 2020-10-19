@@ -1,6 +1,7 @@
 package Sigmaz.S05_PosProcessamento.Povalorum;
 
 import Sigmaz.S00_Utilitarios.Mensageiro;
+import Sigmaz.S05_PosProcessamento.Processadores.Valorador;
 import Sigmaz.S05_PosProcessamento.Pronoco.*;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S07_Executor.Debuggers.Simplificador;
@@ -9,40 +10,40 @@ import java.util.ArrayList;
 
 public class Valore_ValueComplex {
 
-    Mensageiro mMensageiro;
-    Valoramento mValorador;
+    Valorador mValorador;
+    Valoramento mValoramento;
 
-    public Valore_ValueComplex(Mensageiro eMensageiro, Valoramento eValorador) {
-        mMensageiro = eMensageiro;
+    public Valore_ValueComplex(Valorador eValorador, Valoramento eValoramento) {
+        mValoramento = eValoramento;
         mValorador = eValorador;
     }
 
     public Valore_Statements getValore_Statements() {
-        return mValorador.getValore_Statements();
+        return mValoramento.getValore_Statements();
     }
 
     public Valore_ValueComplex getValore_Hiper() {
-        return mValorador.getValore_Hiper();
+        return mValoramento.getValore_Hiper();
     }
 
     public Valore_Value getValore_Tipos() {
-        return mValorador.getValore_Tipos();
+        return mValoramento.getValore_Tipos();
     }
 
     public Valoramento getValoramento() {
-        return mValorador;
+        return mValoramento;
     }
 
     public Simplificador getSimplificador() {
-        return mValorador.getSimplificador();
+        return mValoramento.getSimplificador();
     }
 
     public ArrayList<String> getRegistradores() {
-        return mValorador.getRegistradores();
+        return mValoramento.getRegistradores();
     }
 
     public Valore_Escopo getValore_Escopo() {
-        return mValorador.getValore_Escopo();
+        return mValoramento.getValore_Escopo();
     }
 
     public void emInit(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
@@ -50,8 +51,8 @@ public class Valore_ValueComplex {
         if (!mAtribuindo.existeStruct(mValue.getNome())) {
 
 
-            mMensageiro.errar("Struct nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
-            mMensageiro.mensagem(ePrefixo + "Struct nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
+            mValorador.errar("Struct nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
+            mValorador.mensagem(ePrefixo + "Struct nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
 
 
         }
@@ -63,7 +64,7 @@ public class Valore_ValueComplex {
 
         String eStaged = mValue.getBranch("STAGED").getNome();
 
-        mMensageiro.mensagem(ePrefixo + "Avaliando STAGES " + mValue.getNome() + " :: " + eStaged);
+        mValorador.mensagem(ePrefixo + "Avaliando STAGES " + mValue.getNome() + " :: " + eStaged);
 
 
         if (mAtribuindo.existeStage(mValue.getNome())) {
@@ -75,16 +76,16 @@ public class Valore_ValueComplex {
 
             } else {
 
-                mMensageiro.errar("Stage nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome() + "::" + eStaged);
-                mMensageiro.mensagem(ePrefixo + "Stage nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome() + "::" + eStaged);
+                mValorador.errar("Stage nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome() + "::" + eStaged);
+                mValorador.mensagem(ePrefixo + "Stage nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome() + "::" + eStaged);
 
 
             }
 
         } else {
 
-            mMensageiro.errar("Stages nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
-            mMensageiro.mensagem(ePrefixo + "Stages nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
+            mValorador.errar("Stages nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
+            mValorador.mensagem(ePrefixo + "Stages nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
 
 
         }
@@ -94,7 +95,7 @@ public class Valore_ValueComplex {
 
     public void emStruct(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + "Avaliando STRUCT Com Variavel " + mValue.getNome());
+        mValorador.mensagem(ePrefixo + "Avaliando STRUCT Com Variavel " + mValue.getNome());
 
 
         if (mAtribuindo.existeAteAqui(mValue.getNome())) {
@@ -113,8 +114,8 @@ public class Valore_ValueComplex {
 
         } else {
 
-            mMensageiro.errar("Variavel nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
-            mMensageiro.mensagem(ePrefixo + "Variavel nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
+            mValorador.errar("Variavel nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
+            mValorador.mensagem(ePrefixo + "Variavel nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
 
 
         }
@@ -124,14 +125,14 @@ public class Valore_ValueComplex {
 
     public void emInternal(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + "Avaliando Internal Tipo " + mValue.getValor());
-        mMensageiro.mensagem(ePrefixo + "Avaliando Internal Campo " + mValue.getNome());
+        mValorador.mensagem(ePrefixo + "Avaliando Internal Tipo " + mValue.getValor());
+        mValorador.mensagem(ePrefixo + "Avaliando Internal Campo " + mValue.getNome());
 
         if (mValue.mesmoValor("STRUCT_FUNCT")) {
 
             for (AST mAST : mValue.getBranch("ARGUMENTS").getASTS()) {
 
-                mValorador.valore(ePrefixo, mAST, mAtribuindo);
+                mValoramento.valore(ePrefixo, mAST, mAtribuindo);
 
             }
 
@@ -146,14 +147,14 @@ public class Valore_ValueComplex {
             }
 
         } else {
-            mMensageiro.errar(" Internal Tipo Desconhecido : " + mValue.getValor());
+            mValorador.errar(" Internal Tipo Desconhecido : " + mValue.getValor());
         }
 
     }
 
     public void emExtern(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + "Avaliando EXTERN " + mValue.getNome());
+        mValorador.mensagem(ePrefixo + "Avaliando EXTERN " + mValue.getNome());
 
 
 
@@ -164,7 +165,7 @@ public class Valore_ValueComplex {
             }
 
         } else {
-            mMensageiro.errar(" Extern Desconhecido : " + mValue.getNome());
+            mValorador.errar(" Extern Desconhecido : " + mValue.getNome());
         }
 
 
@@ -174,7 +175,7 @@ public class Valore_ValueComplex {
 
     public void emExternSemRetorno(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + "Avaliando EXTERN " + mValue.getNome());
+        mValorador.mensagem(ePrefixo + "Avaliando EXTERN " + mValue.getNome());
 
 
 
@@ -185,7 +186,7 @@ public class Valore_ValueComplex {
             }
 
         } else {
-            mMensageiro.errar( " Extern Desconhecido : " + mValue.getNome());
+            mValorador.errar( " Extern Desconhecido : " + mValue.getNome());
         }
 
 
@@ -195,27 +196,27 @@ public class Valore_ValueComplex {
 
     public void emInternalExtern(String ePrefixo,Pronoco_Extern mExtern, AST mValue, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + "Avaliando Internal Extern Tipo " + mValue.getValor());
-        mMensageiro.mensagem(ePrefixo + "Avaliando Internal Extern Campo " + mValue.getNome());
+        mValorador.mensagem(ePrefixo + "Avaliando Internal Extern Tipo " + mValue.getValor());
+        mValorador.mensagem(ePrefixo + "Avaliando Internal Extern Campo " + mValue.getNome());
 
 
 
         if (mValue.mesmoValor("STRUCT_FUNCT")) {
 
-            mMensageiro.mensagem(ePrefixo + "Avaliando Internal Extern STRUCT_FUNCT " + mValue.getNome());
+            mValorador.mensagem(ePrefixo + "Avaliando Internal Extern STRUCT_FUNCT " + mValue.getNome());
 
             if (mExtern.existeFunction(mValue.getNome())){
 
             }else{
 
-                mMensageiro.errar(ePrefixo + " Internal Extern Extern STRUCT_FUNCT " + mValue.getNome() + " Nao existente !");
+                mValorador.errar(ePrefixo + " Internal Extern Extern STRUCT_FUNCT " + mValue.getNome() + " Nao existente !");
 
             }
 
 
             for (AST mAST : mValue.getBranch("ARGUMENTS").getASTS()) {
 
-                mValorador.valore(ePrefixo, mAST, mAtribuindo);
+                mValoramento.valore(ePrefixo, mAST, mAtribuindo);
 
             }
 
@@ -230,34 +231,34 @@ public class Valore_ValueComplex {
             }
 
         } else {
-            mMensageiro.errar(ePrefixo + " Internal Extern Tipo Desconhecido : " + mValue.getValor());
+            mValorador.errar(ePrefixo + " Internal Extern Tipo Desconhecido : " + mValue.getValor());
         }
 
     }
 
     public void emInternalExternSemRetorno(String ePrefixo,Pronoco_Extern mExtern, AST mValue, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + "\t Tipo " + mValue.getValor());
-        mMensageiro.mensagem(ePrefixo + "\t Campo " + mValue.getNome());
+        mValorador.mensagem(ePrefixo + "\t Tipo " + mValue.getValor());
+        mValorador.mensagem(ePrefixo + "\t Campo " + mValue.getNome());
 
 
 
         if (mValue.mesmoValor("STRUCT_FUNCT")) {
 
-            mMensageiro.mensagem(ePrefixo + "\t STRUCT_FUNCT " + mValue.getNome());
+            mValorador.mensagem(ePrefixo + "\t STRUCT_FUNCT " + mValue.getNome());
 
             if (mExtern.existeActionFunction(mValue.getNome())){
 
             }else{
 
-                mMensageiro.errar( mExtern.getNome() + " -> " + mValue.getNome() + " : Acao Explicita ou Funcao Explicita Nao existente !");
+                mValorador.errar( mExtern.getNome() + " -> " + mValue.getNome() + " : Acao Explicita ou Funcao Explicita Nao existente !");
 
             }
 
 
             for (AST mAST : mValue.getBranch("ARGUMENTS").getASTS()) {
 
-                mValorador.valore(ePrefixo, mAST, mAtribuindo);
+                mValoramento.valore(ePrefixo, mAST, mAtribuindo);
 
             }
 
@@ -272,7 +273,7 @@ public class Valore_ValueComplex {
             }
 
         } else {
-            mMensageiro.errar(ePrefixo + " Internal Extern Tipo Desconhecido : " + mValue.getValor());
+            mValorador.errar(ePrefixo + " Internal Extern Tipo Desconhecido : " + mValue.getValor());
         }
 
     }
@@ -280,7 +281,7 @@ public class Valore_ValueComplex {
 
     public void emStart(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo+"Avaliando START TYPE " + mValue.getNome());
+        mValorador.mensagem(ePrefixo+"Avaliando START TYPE " + mValue.getNome());
 
 
         if (mAtribuindo.existeType(mValue.getNome())) {
@@ -288,8 +289,8 @@ public class Valore_ValueComplex {
 
         } else {
 
-            mMensageiro.errar("Type nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
-            mMensageiro.mensagem(ePrefixo+"Type nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
+            mValorador.errar("Type nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
+            mValorador.mensagem(ePrefixo+"Type nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getNome());
 
 
         }
@@ -302,7 +303,7 @@ public class Valore_ValueComplex {
         for (AST mAST : eASTPai.getASTS()) {
 
 
-            mMensageiro.mensagem(ePrefixo + "Valorando INIT : " + getSimplificador().getAction(mAST));
+            mValorador.mensagem(ePrefixo + "Valorando INIT : " + getSimplificador().getAction(mAST));
 
             Pronoco mAqui = new Pronoco(eStruct);
             mAqui.setSuperior(mAtribuindo);
@@ -343,7 +344,7 @@ public class Valore_ValueComplex {
             if (mAST.mesmoTipo("DEFINE")) {
 
 
-                mMensageiro.mensagem(ePrefixo + "Valorando DEFINE : " + mSimplificador.getDefine(mAST));
+                mValorador.mensagem(ePrefixo + "Valorando DEFINE : " + mSimplificador.getDefine(mAST));
 
                 if (mAST.existeBranch("VALUE")) {
                     Pronoco mAqui = mAtribuindo;
@@ -361,7 +362,7 @@ public class Valore_ValueComplex {
             } else if (mAST.mesmoTipo("MOCKIZ")) {
 
 
-                mMensageiro.mensagem(ePrefixo + "Valorando MOCKIZ : " + mSimplificador.getMockiz(mAST));
+                mValorador.mensagem(ePrefixo + "Valorando MOCKIZ : " + mSimplificador.getMockiz(mAST));
 
                 if (mAST.existeBranch("VALUE")) {
                     Pronoco mAqui = mAtribuindo;
@@ -382,7 +383,7 @@ public class Valore_ValueComplex {
 
             if (mAST.mesmoTipo("ACTION")) {
 
-                mMensageiro.mensagem(ePrefixo + "\tValorando ACTION : " + eStruct + " -> " + mSimplificador.getAction(mAST));
+                mValorador.mensagem(ePrefixo + "\tValorando ACTION : " + eStruct + " -> " + mSimplificador.getAction(mAST));
 
                 Pronoco mAqui = new Pronoco(eStruct);
                 mAqui.setSuperior(mAtribuindo);
@@ -395,7 +396,7 @@ public class Valore_ValueComplex {
 
             } else if (mAST.mesmoTipo("FUNCTION")) {
 
-                mMensageiro.mensagem(ePrefixo + "\tValorando FUNCTION : " + eStruct + " -> " + mSimplificador.getFuction(mAST));
+                mValorador.mensagem(ePrefixo + "\tValorando FUNCTION : " + eStruct + " -> " + mSimplificador.getFuction(mAST));
 
                 Pronoco mAqui = new Pronoco(eStruct);
                 mAqui.setSuperior(mAtribuindo);
@@ -407,7 +408,7 @@ public class Valore_ValueComplex {
 
             } else if (mAST.mesmoTipo("AUTO")) {
 
-                mMensageiro.mensagem(ePrefixo + "\tValorando AUTO : " + eStruct + " -> " + mSimplificador.getAuto(mAST));
+                mValorador.mensagem(ePrefixo + "\tValorando AUTO : " + eStruct + " -> " + mSimplificador.getAuto(mAST));
 
                 Pronoco mAqui = new Pronoco(eStruct);
                 mAqui.setSuperior(mAtribuindo);
@@ -418,7 +419,7 @@ public class Valore_ValueComplex {
 
             } else if (mAST.mesmoTipo("FUNCTOR")) {
 
-                mMensageiro.mensagem(ePrefixo + "\tValorando FUNCTOR : " + eStruct + " -> " + mSimplificador.getFunctor(mAST));
+                mValorador.mensagem(ePrefixo + "\tValorando FUNCTOR : " + eStruct + " -> " + mSimplificador.getFunctor(mAST));
 
                 Pronoco mAqui = new Pronoco(eStruct);
                 mAqui.setSuperior(mAtribuindo);
@@ -429,7 +430,7 @@ public class Valore_ValueComplex {
 
             } else if (mAST.mesmoTipo("INIT")) {
 
-                mMensageiro.mensagem(ePrefixo + "\tValorando INIT : " + eStruct + " -> " + mSimplificador.getAction(mAST));
+                mValorador.mensagem(ePrefixo + "\tValorando INIT : " + eStruct + " -> " + mSimplificador.getAction(mAST));
 
                 Pronoco mAqui = new Pronoco(eStruct);
                 mAqui.setSuperior(mAtribuindo);
@@ -440,7 +441,7 @@ public class Valore_ValueComplex {
 
             }
 
-            if (mMensageiro.getErros().size() > 0) {
+            if (mValorador.getErros().size() > 0) {
                 break;
             }
 

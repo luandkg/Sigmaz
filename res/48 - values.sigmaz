@@ -68,7 +68,7 @@ act inicio ( ) {
 	def f : bool = ! true;
 	def g : bool = ! 10 == 10;
 	def h : bool = ! false == ( 10 == 20 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 func acionar ( a : int , b : int ) : int {
 	return a ++ b;

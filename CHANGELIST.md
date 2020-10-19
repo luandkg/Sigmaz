@@ -93,3 +93,10 @@ Linguagem de Programação Estruturada - Alterações
 		2020 10 14 -->> Remoção do Invocador STAGES
 		2020 10 14 -->> Divisão do Lexer : Lexer e Tokenizador
 
+
+		2020 10 16 -->> Remoção do Invocador COMPILER
+		2020 10 16 -->> Alteração de Invoke Compiler para DEBUG
+
+
+		2020 10 19 -->> ReOrganização das Mensagens de Debug
+

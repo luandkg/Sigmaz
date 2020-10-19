@@ -13,5 +13,7 @@ act inicio ( ) {
 	def hora : string = Tempo -> getTempo_Formatado ( );
 	def data : string = Data -> getData_Formatado ( );
 
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+	DEBUG -> LOCAL :: STACK;
+
 }

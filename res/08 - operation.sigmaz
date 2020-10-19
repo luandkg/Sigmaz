@@ -4,7 +4,7 @@ act operando ( ) {
 	def a2 : num = 10.0;
 	def a3 : num = a1 ++ a2;
 	def t1 : bool = a1 == a2;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 operator ++ ( a : num , b : num ) : num {
 	reg @ R9 -> a;

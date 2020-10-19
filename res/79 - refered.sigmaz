@@ -10,14 +10,14 @@ act operando ( ) {
 	def axb : int = XA -> mValor;
 	extern_refered XA_VALOR :: XA -> mValor;
 	def igual : bool = 4 == 4;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 	def ma : Fases = Fases :: A;
 	def mb : Fases = Fases :: B;
 	def mc : Fases = Fases :: C;
 	def t : int = Fases -> valueOf ( ma );
 	def ts : string = Fases -> nameOf ( ma );
 	def rt : Fases = Fases -> get ( t );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }
 stages Fases -> {
 	A , B , C 
@@ -28,7 +28,7 @@ struct XA {
 	act reduzir ( ) {
 		mValor = mValor -- 50;
 		def mv : int = mValor;
-		invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 	}
 	func ral ( a : int ) : int {
 		return a ++ 5;
@@ -49,7 +49,7 @@ struct XA {
 		mOculto = 200;
 		mValor = 100;
 		reduzir ( );
-		invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 	}
 	
 }

@@ -11,7 +11,6 @@ public class Run_Body {
     private Escopo mEscopo;
 
 
-
     private String mLocal;
 
     private Item mItem;
@@ -26,9 +25,9 @@ public class Run_Body {
 
     }
 
-    public Item getRetorno(){ return mItem; }
-
-
+    public Item getRetorno() {
+        return mItem;
+    }
 
 
     public boolean getCancelado() {
@@ -58,9 +57,9 @@ public class Run_Body {
         // System.out.println("\n  -->> Continuando : " + mEscopo.getNome());
     }
 
-    public void Retorne(Item eItem){
+    public void Retorne(Item eItem) {
         mEscopo.retorne(eItem);
-        mItem=eItem;
+        mItem = eItem;
     }
 
     public void init(AST ASTCorrente) {
@@ -77,7 +76,7 @@ public class Run_Body {
 
             // System.out.println("\n  -->> EX :: " + fAST.getTipo() + " :: " + mRunTime.getErros().size());
 
-           // System.out.println("BODY - 0 " + fAST.getTipo() + " = " + mRunTime.getErros().size());
+            // System.out.println("BODY - 0 " + fAST.getTipo() + " = " + mRunTime.getErros().size());
 
             if (mRunTime.getErros().size() > 0) {
                 break;
@@ -101,7 +100,7 @@ public class Run_Body {
                 Run_Moc mAST = new Run_Moc(mRunTime, mEscopo);
                 mAST.init(fAST);
 
-            } else   if (fAST.mesmoTipo("LET")) {
+            } else if (fAST.mesmoTipo("LET")) {
 
 
                 Run_Def mAST = new Run_Def(mRunTime, mEscopo);
@@ -134,7 +133,7 @@ public class Run_Body {
                 mAST.init(fAST);
 
                 if (mRunTime.getErros().size() > 0) {
-                    break ;
+                    break;
                 }
 
                 if (mAST.getCancelado()) {
@@ -144,7 +143,7 @@ public class Run_Body {
                     Continuar();
                 }
 
-                if (mAST.getRetornado()){
+                if (mAST.getRetornado()) {
                     Retorne(mAST.getRetorno());
                     break;
                 }
@@ -154,7 +153,7 @@ public class Run_Body {
                 Run_While mAST = new Run_While(mRunTime, mEscopo);
                 mAST.init(fAST);
 
-                if (mAST.getRetornado()){
+                if (mAST.getRetornado()) {
                     Retorne(mAST.getRetorno());
                     break;
                 }
@@ -164,7 +163,7 @@ public class Run_Body {
                 Run_Loop mAST = new Run_Loop(mRunTime, mEscopo);
                 mAST.init(fAST);
 
-                if (mAST.getRetornado()){
+                if (mAST.getRetornado()) {
                     Retorne(mAST.getRetorno());
                     break;
                 }
@@ -174,7 +173,7 @@ public class Run_Body {
                 Run_Step mAST = new Run_Step(mRunTime, mEscopo);
                 mAST.init(fAST);
 
-                if (mAST.getRetornado()){
+                if (mAST.getRetornado()) {
                     Retorne(mAST.getRetorno());
                     break;
                 }
@@ -184,7 +183,7 @@ public class Run_Body {
                 Run_Step mAST = new Run_Step(mRunTime, mEscopo);
                 mAST.initDef(fAST);
 
-                if (mAST.getRetornado()){
+                if (mAST.getRetornado()) {
                     Retorne(mAST.getRetorno());
                     break;
                 }
@@ -201,7 +200,7 @@ public class Run_Body {
                     Continuar();
                 }
 
-                if (mAST.getRetornado()){
+                if (mAST.getRetornado()) {
                     Retorne(mAST.getRetorno());
                     break;
                 }
@@ -218,7 +217,7 @@ public class Run_Body {
                     Continuar();
                 }
 
-                if (mAST.getRetornado()){
+                if (mAST.getRetornado()) {
                     Retorne(mAST.getRetorno());
                     break;
                 }
@@ -226,14 +225,14 @@ public class Run_Body {
             } else if (fAST.mesmoTipo("RETURN")) {
 
 
-              //  System.out.println("ESCOPO :: " + mEscopo.getNome() + " -> RETURN ");
+                //  System.out.println("ESCOPO :: " + mEscopo.getNome() + " -> RETURN ");
 
                 Run_Value mAST = new Run_Value(mRunTime, mEscopo);
                 mAST.init(fAST.getBranch("VALUE"), "<<ANY>>");
 
                 // System.out.println("Retorando de Corpo -> " + mAST.getConteudo() + "  Tipo : " + mAST.getRetornoTipo());
                 if (mRunTime.getErros().size() > 0) {
-                    break ;
+                    break;
                 }
 
                 mItem = new Item("RETURNABLE");
@@ -245,9 +244,9 @@ public class Run_Body {
                 mItem.setTipo(mAST.getRetornoTipo());
                 mEscopo.setRetornado(true);
 
-             //   System.out.println("ESCOPO :: " + mEscopo.getNome() + " -> RETURNED " + mItem.getValor( mRunTime, mEscopo));
+                //   System.out.println("ESCOPO :: " + mEscopo.getNome() + " -> RETURNED " + mItem.getValor( mRunTime, mEscopo));
 
-                break ;
+                break;
 
 
             } else if (fAST.mesmoTipo("EXECUTE")) {
@@ -262,7 +261,7 @@ public class Run_Body {
                 Run_Try mAST = new Run_Try(mRunTime, mEscopo);
                 mAST.init(fAST);
 
-                if (mAST.getRetornado()){
+                if (mAST.getRetornado()) {
                     Retorne(mAST.getRetorno());
                     break;
                 }
@@ -273,7 +272,7 @@ public class Run_Body {
                 Run_Each mAST = new Run_Each(mRunTime, mEscopo);
                 mAST.init(fAST);
 
-                if (mAST.getRetornado()){
+                if (mAST.getRetornado()) {
                     Retorne(mAST.getRetorno());
                     break;
                 }
@@ -296,22 +295,21 @@ public class Run_Body {
 
 
                 Run_Value mAST = new Run_Value(mRunTime, mEscopo);
-                mAST.init(fAST,"<<ANY>>");
+                mAST.init(fAST, "<<ANY>>");
 
             } else if (fAST.mesmoTipo("EXECUTE_INIT")) {
 
-              //  System.out.println("Bora Aqui");
+                //  System.out.println("Bora Aqui");
 
-               // System.out.println(fAST.ImprimirArvoreDeInstrucoes());
+                // System.out.println(fAST.ImprimirArvoreDeInstrucoes());
 
                 Run_Any mAST = new Run_Any(mRunTime);
-                mAST.init_inits(fAST,mEscopo,mEscopo,mEscopo.getAO().getInitsCompleto());
-
+                mAST.init_inits(fAST, mEscopo, mEscopo, mEscopo.getAO().getInitsCompleto());
 
 
             } else if (fAST.mesmoTipo("EXTERN_REFERED")) {
 
-                Run_ExplicitRefered mRER = new Run_ExplicitRefered(mRunTime,mEscopo);
+                Run_ExplicitRefered mRER = new Run_ExplicitRefered(mRunTime, mEscopo);
                 mRER.init(fAST);
 
 
@@ -322,7 +320,7 @@ public class Run_Body {
             } else if (fAST.mesmoTipo("EXECUTE_LOCAL")) {
 
                 Run_ExecuteLocal mRun_ExecuteLocal = new Run_ExecuteLocal(mRunTime, mEscopo);
-               mRun_ExecuteLocal.initSemRetorno(fAST);
+                mRun_ExecuteLocal.initSemRetorno(fAST);
 
             } else if (fAST.mesmoTipo("EXECUTE_AUTO")) {
 
@@ -344,16 +342,16 @@ public class Run_Body {
 
             } else if (fAST.mesmoTipo("SCOPE")) {
 
-                Escopo eNovoEscopo =  new Escopo(mRunTime,mEscopo);
+                Escopo eNovoEscopo = new Escopo(mRunTime, mEscopo);
                 eNovoEscopo.setNome("SUB::" + mEscopo.getNome());
 
-                Run_Body mAST = new Run_Body(mRunTime,eNovoEscopo);
+                Run_Body mAST = new Run_Body(mRunTime, eNovoEscopo);
                 mAST.init(fAST);
 
-                if (mAST.getRetornado()){
+                if (mAST.getRetornado()) {
 
                     if (mRunTime.getErros().size() > 0) {
-                        break ;
+                        break;
                     }
 
                     mEscopo.retorne(mAST.getRetorno());
@@ -378,20 +376,30 @@ public class Run_Body {
                 Run_MoveData mAST = new Run_MoveData(mRunTime, mEscopo);
                 mAST.init(fAST);
 
-            }else if (fAST.mesmoTipo("STAGE_GET")){
+            } else if (fAST.mesmoTipo("STAGE_GET")) {
 
                 Run_Stages mAST = new Run_Stages(mRunTime, mEscopo);
                 mAST.init(fAST);
 
+            } else if (fAST.mesmoTipo("DEBUG")) {
+
+                Run_Debug mRun_Debug = new Run_Debug(mRunTime, mEscopo);
+                mRun_Debug.init(fAST);
+
+            } else if (fAST.mesmoTipo("DELETE")) {
+
+                Run_Delete mRun_Delete = new Run_Delete(mRunTime, mEscopo);
+                mRun_Delete.init(fAST);
+
+
             } else {
 
-               mRunTime.errar(mLocal,"Dentro do Escopo  : " + fAST.getTipo());
+                mRunTime.errar(mLocal, "Dentro do Escopo  : " + fAST.getTipo());
 
             }
 
 
         }
-
 
 
     }

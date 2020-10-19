@@ -7,12 +7,12 @@ act mutavel ( ) {
 	mut bb = "oie";
 	mut cc = true;
 	mut dd = "null";
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 	dd = false;
 	bb = false;
 	cc = 40;
 	aa = "ei";
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 	aa = null;
 	mut a = 12;
 	mut b = 12.3;
@@ -32,5 +32,5 @@ act mutavel ( ) {
 	mut h = b ++ a;
 	mut i = a ++ d;
 	mut j = d ++ a;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }

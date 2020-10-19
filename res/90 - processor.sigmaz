@@ -63,7 +63,7 @@ call Processadores -> {
 	def data_segundo : int = getData_Segundo ( );
 	def aleatorio_int : int = aleatorio ( 0 , 100 );
 	def aleatorio_num : num = aleatorio ( 0.0 , 100.0 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 operator == ( a : bool , b : bool ) : bool {
 	reg @ R1 -> a;

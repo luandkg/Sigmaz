@@ -7,7 +7,7 @@ act inicio ( ) {
 	def formatado : string = agora.getFormatado ( );
 	def formatado2 : string = getTempo_Formatado ( );
 	def formatado3 : string = getData_Formatado ( );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 func int_to_string ( a : int ) : string {
 	reg @ R5 -> a;

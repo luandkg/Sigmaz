@@ -47,11 +47,11 @@ call iniciar -> {
 	def aa : int = somatorio ( 3 , 7 );
 	def bb : int = 10 ++ 12;
 	def cc : int = ! -5;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }
 
 act dentro ( v : int ) {
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }
 func somatorio ( a : int , b : int ) : int {
 	reg @ R5 -> a;

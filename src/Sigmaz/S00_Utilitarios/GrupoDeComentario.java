@@ -1,6 +1,6 @@
 package Sigmaz.S00_Utilitarios;
 
-import Sigmaz.S03_Parser.Token;
+import Sigmaz.S02_Lexer.Token;
 
 import java.util.ArrayList;
 

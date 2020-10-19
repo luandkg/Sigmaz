@@ -2,7 +2,7 @@ package Make.Run;
 
 import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
 import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.Sigmaz_Fases;
+import Sigmaz.Sigmaz_Compilador;
 
 import java.util.ArrayList;
 
@@ -26,7 +26,7 @@ public class Runner_Make {
         eCabecalho.setVersao(mRunMake.getVersao());
         eCabecalho.setCompanhia(mRunMake.getCompanhia());
 
-        Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+        Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
 
       //  SigmazC.setObject(mRunMake.getObject());
        // SigmazC.setPosProcess(mRunMake.getPosProcess());

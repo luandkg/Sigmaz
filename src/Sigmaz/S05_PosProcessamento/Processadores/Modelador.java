@@ -33,12 +33,20 @@ public class Modelador {
         return mRefers;
     }
 
+    public void mensagem(String e) {
+
+        if (mAnalisador.getDebug_Alocador()) {
+
+            mAnalisador.mensagem(e);
+
+        }
+    }
 
     public void init(ArrayList<AST> mTodos) {
 
-        mAnalisador.mensagem("");
-        mAnalisador.mensagem(" ------------------ FASE MODELAGEM ----------------------- ");
-        mAnalisador.mensagem("");
+        mensagem("");
+        mensagem(" ------------------ FASE MODELAGEM ----------------------- ");
+        mensagem("");
 
         ArrayList<AST> mPacotes = new ArrayList<AST>();
 
@@ -52,11 +60,11 @@ public class Modelador {
 
                     mPacotesRequisitados.add(mAST);
 
-                    mAnalisador.mensagem(" Pacote Externo :: " + mAST.getNome());
+                    mensagem(" Pacote Externo :: " + mAST.getNome());
 
                 } else if (mAST.mesmoTipo("MODEL")) {
 
-                    mAnalisador.mensagem(" Modelo Externo :: " + mAST.getNome());
+                    mensagem(" Modelo Externo :: " + mAST.getNome());
 
                     mModelosRequisitados.add(mAST);
 
@@ -162,30 +170,30 @@ public class Modelador {
         } else {
 
             if (eRaiz) {
-                mAnalisador.mensagem("------------------------- MODEL " + eNome + " --------------------------");
+                mensagem("------------------------- MODEL " + eNome + " --------------------------");
             } else {
-                mAnalisador.mensagem("------------------------- MODEL - PACKAGE : " + eNome + " --------------------------");
+                mensagem("------------------------- MODEL - PACKAGE : " + eNome + " --------------------------");
             }
 
-            mAnalisador.mensagem(" MODELS : " + modelos.size());
+            mensagem(" MODELS : " + modelos.size());
 
             for (AST Struct_AST : modelos) {
-                mAnalisador.mensagem("\t - " + Struct_AST.getNome());
+                mensagem("\t - " + Struct_AST.getNome());
             }
 
-            mAnalisador.mensagem(" STRUCTS : " + mEstruturasComModelos.size());
+            mensagem(" STRUCTS : " + mEstruturasComModelos.size());
             for (AST Struct_AST : mEstruturasComModelos) {
-                mAnalisador.mensagem("\t - " + Struct_AST.getNome() + " -> " + Struct_AST.getBranch("MODEL").getNome());
+                mensagem("\t - " + Struct_AST.getNome() + " -> " + Struct_AST.getBranch("MODEL").getNome());
             }
 
-            mAnalisador.mensagem("");
+            mensagem("");
 
             for (AST Struct_AST : mEstruturasComModelos) {
 
                 String eModel_Nome = Struct_AST.getBranch("MODEL").getNome();
 
-                mAnalisador.mensagem(" MODELANDO : " + Struct_AST.getNome());
-                mAnalisador.mensagem("\t - " + Struct_AST.getNome());
+                mensagem(" MODELANDO : " + Struct_AST.getNome());
+                mensagem("\t - " + Struct_AST.getNome());
 
                 if (mNomes.contains(eModel_Nome)) {
 
@@ -198,7 +206,7 @@ public class Modelador {
 
             }
 
-            mAnalisador.mensagem("---------------------------------------------------------------------------");
+            mensagem("---------------------------------------------------------------------------");
 
 
         }

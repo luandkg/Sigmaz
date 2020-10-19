@@ -8,24 +8,30 @@ import Sigmaz.S00_Utilitarios.AST;
 
 public class Estagiador {
 
-    private PosProcessador mAnalisador;
+    private PosProcessador mPosProcessador;
 
     private boolean mExterno;
 
-    public Estagiador(PosProcessador eAnalisador) {
+    public Estagiador(PosProcessador ePosProcessador) {
 
-        mAnalisador = eAnalisador;
+        mPosProcessador = ePosProcessador;
         mExterno = true;
 
     }
 
 
+    public void mensagem(String e){
+        if (mPosProcessador.getDebug_UnionType()){
+            mPosProcessador.mensagem(e);
+        }
+    }
+
     public void init(ArrayList<AST> mTodos) {
 
 
-        mAnalisador.mensagem("");
-        mAnalisador.mensagem(" ------------------ FASE ESTAGIADOR ----------------------- ");
-        mAnalisador.mensagem("");
+        mensagem("");
+     mensagem(" ------------------ FASE ESTAGIADOR ----------------------- ");
+     mensagem("");
 
 
         for (AST mSigmaz : mTodos) {
@@ -40,7 +46,7 @@ public class Estagiador {
 
 
                             AST mStageDef = mStruct;
-                            mAnalisador.mensagem(" Estagiar : " + mStageDef.getNome());
+                          mensagem(" Estagiar : " + mStageDef.getNome());
 
                             organizar(mStageDef);
 
@@ -61,7 +67,7 @@ public class Estagiador {
                                 if (PackageStruct.getBranch("EXTENDED").mesmoNome("STAGES")) {
 
                                     AST mStageDef = PackageStruct;
-                                    mAnalisador.mensagem(" Estagiar : " + PackageStruct.getNome() + "<>" + mStageDef.getNome());
+                                   mensagem(" Estagiar : " + PackageStruct.getNome() + "<>" + mStageDef.getNome());
 
                                     organizar(mStageDef);
 
@@ -132,7 +138,7 @@ public class Estagiador {
         AST mNome = mCorpo.criarBranch("FUNCTION");
         mNome.setNome("nameOf");
 
-        mAnalisador.mensagem(" Function : " + mStageDef.getNome() + " -> nameOf() ");
+        mensagem(" Function : " + mStageDef.getNome() + " -> nameOf() ");
 
         criarTipagemConcreta(mNome, "string");
 
@@ -211,7 +217,7 @@ public class Estagiador {
 
         criarTipagemConcreta(mNome, "int");
 
-        mAnalisador.mensagem(" Function : " + mStageDef.getNome() + " -> valueOf() ");
+      mensagem(" Function : " + mStageDef.getNome() + " -> valueOf() ");
 
         mNome.criarBranch("VISIBILITY").setNome("EXPLICIT");
         AST mArguments = mNome.criarBranch("ARGUMENTS");
@@ -290,7 +296,7 @@ public class Estagiador {
 
         criarTipagemConcreta(mNome, mStageDef.getNome());
 
-        mAnalisador.mensagem(" Function : " + mStageDef.getNome() + " -> get() ");
+        mensagem(" Function : " + mStageDef.getNome() + " -> get() ");
 
         mNome.criarBranch("VISIBILITY").setNome("EXPLICIT");
         AST mArguments = mNome.criarBranch("ARGUMENTS");
@@ -453,7 +459,7 @@ public class Estagiador {
         String p1 = mStageDef.getNome() + "_1";
         String p2 = mStageDef.getNome() + "_2";
 
-        mAnalisador.mensagem(" OPERATOR : " + mStageDef.getNome() + " -> " + mOperacao);
+        mensagem(" OPERATOR : " + mStageDef.getNome() + " -> " + mOperacao);
 
         AST mMATCH = mSigmaz.criarBranch("OPERATOR");
         mMATCH.setNome(mOperacao);

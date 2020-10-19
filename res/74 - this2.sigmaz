@@ -3,9 +3,9 @@ act inicio ( ) {
 	def q1 : Quadro = init Quadro ( 15 );
 	
 	# q1.this.mudar();
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 	def v1 : int = q1.getValor ( );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }
 
 struct Quadro {
@@ -16,7 +16,7 @@ struct Quadro {
 	}
 	all : 
 	init Quadro ( aValor : int ) {
-		invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 		this.valor = aValor;
 		this.mudar ( );
 	}

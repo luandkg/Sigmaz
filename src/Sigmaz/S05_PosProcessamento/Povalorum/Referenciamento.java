@@ -2,6 +2,7 @@ package Sigmaz.S05_PosProcessamento.Povalorum;
 
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S00_Utilitarios.Mensageiro;
+import Sigmaz.S05_PosProcessamento.Processadores.Valorador;
 import Sigmaz.S05_PosProcessamento.Pronoco.Pronoco;
 import Sigmaz.S05_PosProcessamento.Pronoco.Pronoco_Pacote;
 
@@ -9,11 +10,11 @@ import java.util.ArrayList;
 
 public class Referenciamento {
 
-    private Mensageiro mMensageiro;
+    private Valorador mValorador;
 
-    public Referenciamento(Mensageiro eMensageiro) {
+    public Referenciamento(Valorador eValorador) {
 
-        mMensageiro = eMensageiro;
+        mValorador = eValorador;
 
 
     }
@@ -31,7 +32,7 @@ public class Referenciamento {
                     mRefers.add(eRefer);
 
 
-                    mMensageiro.mensagem(ePrefixo+"REFER " + eRefer);
+                    mValorador.mensagem(ePrefixo+"REFER " + eRefer);
 
                     boolean enc = false;
 
@@ -39,7 +40,7 @@ public class Referenciamento {
 
                         if (ePacote.getNome().contentEquals(eRefer)) {
 
-                            Simbolismo ms = new Simbolismo(mMensageiro);
+                            Simbolismo ms = new Simbolismo(mValorador);
                             ms.realizarSimbolismo(ePrefixo,ePacote.getAST(),mAtribuindo);
 
                             enc = true;
@@ -50,7 +51,7 @@ public class Referenciamento {
 
                     if (!enc) {
 
-                        mMensageiro.errar("Pacote nao encontrado : " + eRefer);
+                        mValorador.errar("Pacote nao encontrado : " + eRefer);
 
                     }
                 }

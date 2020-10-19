@@ -4,7 +4,7 @@ func ateOnde ( a : int ) : int {
 	if ( a == 1 ) -> {
 		return -1;
 	}
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 	return 0;
 }
 operator == ( a : int , b : int ) : bool {
@@ -21,25 +21,24 @@ call Escopos -> {
 	def A : int = 12;
 	{
 		def B : int = 13;
-		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-		invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
+
 	}
 	{
 		def C : int = 15;
 		def D : int = A;
-		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-		invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
+
 	}
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
+
 	
 	#def v : int = @();
 	local -> ( v : int ) {
 		def t : int = v;
-		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 	}
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: LOCAL;
+	DEBUG -> REGRESSIVE :: ALL;
 	@ ( 54 );
 	local -> ( a : num , b : num ) : num {
 		reg @ R9 -> a;
@@ -64,13 +63,14 @@ call Escopos -> {
 		}
 		def t1 : num = @ ( 2.2 , 3.3 );
 		def t2 : int = @ ( 2 , 3 );
-		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: LOCAL;
-		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
+
 	}
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: LOCAL;
+	DEBUG -> REGRESSIVE :: ALL;
 	def t : num = @ ( 20.0 , 50.0 );
 	def r0 : int = ateOnde ( 0 );
 	def r1 : int = ateOnde ( 1 );
 	def r2 : int = ateOnde ( 2 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
+
 }

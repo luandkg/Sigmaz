@@ -2,7 +2,7 @@ package AppSigmaz;
 
 import Sigmaz.S00_Utilitarios.*;
 import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
-import Sigmaz.Sigmaz_Fases;
+import Sigmaz.Sigmaz_Compilador;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -62,7 +62,7 @@ public class SigmazTestes {
         for (String Arquivo : mArquivos) {
 
 
-            Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+            Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
 
             SigmazC.setMostrar_Fases(false);
             SigmazC.mostrarDebug(false);
@@ -79,7 +79,7 @@ public class SigmazTestes {
 
             if (SigmazC.temErros()) {
 
-                if (SigmazC.getFase() == Sigmaz_Fases.Fases.PRE_PROCESSAMENTO) {
+                if (SigmazC.getFase() == Sigmaz_Compilador.Fases.PRE_PROCESSAMENTO) {
 
                     parou = "PRE-PROCESSAMENTO";
 
@@ -90,7 +90,7 @@ public class SigmazTestes {
                         }
                     }
 
-                } else if (SigmazC.getFase() == Sigmaz_Fases.Fases.LEXER) {
+                } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.LEXER) {
 
                     parou = "LEXER";
 
@@ -101,9 +101,9 @@ public class SigmazTestes {
                         }
                     }
 
-                } else if (SigmazC.getFase() == Sigmaz_Fases.Fases.COMPILER) {
+                } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.PARSER) {
 
-                    parou = "COMPILER";
+                    parou = "PARSER";
 
                     for (GrupoDeErro eGE : SigmazC.getErros_Compiler()) {
                         mDocumento.adicionarLinha(2, eGE.getArquivo());
@@ -112,7 +112,7 @@ public class SigmazTestes {
                         }
                     }
 
-                } else if (SigmazC.getFase() == Sigmaz_Fases.Fases.POS_PROCESSAMENTO) {
+                } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.POS_PROCESSAMENTO) {
 
                     parou = "POS-PROCESSAMENTO";
 
@@ -120,11 +120,11 @@ public class SigmazTestes {
                         mDocumento.adicionarLinha(2, Erro);
                     }
 
-                } else if (SigmazC.getFase() == Sigmaz_Fases.Fases.MONTAGEM) {
+                } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.MONTAGEM) {
 
                     parou = "MONTAGEM";
 
-                } else if (SigmazC.getFase() == Sigmaz_Fases.Fases.PRONTO) {
+                } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.PRONTO) {
 
                     parou = "EXECUCAO";
 

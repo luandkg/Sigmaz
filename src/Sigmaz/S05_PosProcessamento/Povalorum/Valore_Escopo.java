@@ -2,6 +2,7 @@ package Sigmaz.S05_PosProcessamento.Povalorum;
 
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S00_Utilitarios.Mensageiro;
+import Sigmaz.S05_PosProcessamento.Processadores.Valorador;
 import Sigmaz.S05_PosProcessamento.Pronoco.*;
 import Sigmaz.S07_Executor.Debuggers.Simplificador;
 
@@ -9,11 +10,11 @@ import java.util.ArrayList;
 
 public class Valore_Escopo {
 
-    Mensageiro mMensageiro;
+    Valorador mValorador;
     Valoramento mValoramento;
 
-    public Valore_Escopo(Mensageiro eMensageiro, Valoramento eValoramento) {
-        mMensageiro = eMensageiro;
+    public Valore_Escopo(Valorador eValorador, Valoramento eValoramento) {
+        mValorador = eValorador;
         mValoramento = eValoramento;
     }
 
@@ -123,7 +124,7 @@ public class Valore_Escopo {
 
             } else if (mAST.mesmoTipo("EXCEPTION")) {
 
-                mMensageiro.mensagem(ePrefixo + "ESCOPO : EXCEPTION");
+                mValorador.mensagem(ePrefixo + "ESCOPO : EXCEPTION");
                 mValoramento.valore(ePrefixo + "\t", mAST.getBranch("VALUE"), mAtribuindo);
 
 
@@ -154,7 +155,7 @@ public class Valore_Escopo {
             } else if (mAST.mesmoTipo("STARTED")) {
             } else if (mAST.mesmoTipo("EACH")) {
 
-                mMensageiro.mensagem(ePrefixo + "Valorando EACH ");
+                mValorador.mensagem(ePrefixo + "Valorando EACH ");
 
                 Pronoco mAqui = new Pronoco("EACH");
                 mAqui.setSuperior(mAtribuindo);
@@ -164,8 +165,8 @@ public class Valore_Escopo {
 
                 if (mAqui.existeNesse(eDef.getNome())) {
 
-                    mMensageiro.mensagem(" Argumento Duplicado : " + eDef.getNome());
-                    mMensageiro.getErros().add("Argumento Duplicado : " + eDef.getNome());
+                    mValorador.mensagem(" Argumento Duplicado : " + eDef.getNome());
+                    mValorador.getErros().add("Argumento Duplicado : " + eDef.getNome());
 
                 } else {
                     mAqui.adicionarDefine(new Pronoco_Def(eDef.getNome()));
@@ -194,7 +195,7 @@ public class Valore_Escopo {
             } else if (mAST.mesmoTipo("LOCAL")) {
 
 
-                mMensageiro.mensagem(ePrefixo + "Valorando LOCAL : " + getSimplificador().getFuction(mAST));
+                mValorador.mensagem(ePrefixo + "Valorando LOCAL : " + getSimplificador().getFuction(mAST));
 
                 Pronoco mAqui = new Pronoco("LOCAL");
                 mAqui.setSuperior(mAtribuindo);
@@ -206,7 +207,7 @@ public class Valore_Escopo {
 
             } else if (mAST.mesmoTipo("EXECUTE_LOCAL")) {
 
-                mMensageiro.mensagem(ePrefixo + "Valorando EXECUTE_LOCAL : " + getSimplificador().getFuction(mAST));
+                mValorador.mensagem(ePrefixo + "Valorando EXECUTE_LOCAL : " + getSimplificador().getFuction(mAST));
 
                 Pronoco mAqui = new Pronoco("EXECUTE_LOCAL");
                 mAqui.setSuperior(mAtribuindo);
@@ -215,7 +216,7 @@ public class Valore_Escopo {
 
             } else if (mAST.mesmoTipo("EXECUTE_AUTO")) {
 
-                mMensageiro.mensagem(ePrefixo + "Valorando EXECUTE_AUTO : " + getSimplificador().getAction(mAST));
+                mValorador.mensagem(ePrefixo + "Valorando EXECUTE_AUTO : " + getSimplificador().getAction(mAST));
 
                 Pronoco mAqui = new Pronoco("EXECUTE_AUTO");
                 mAqui.setSuperior(mAtribuindo);
@@ -228,13 +229,13 @@ public class Valore_Escopo {
                 if (getRegistradores().contains(mAST.getNome())) {
 
                 } else {
-                    mMensageiro.errar("Registrado Desconhecido : " + mAtribuindo.getRegressivo() + " :: " + mAST.getNome());
+                    mValorador.errar("Registrado Desconhecido : " + mAtribuindo.getRegressivo() + " :: " + mAST.getNome());
                 }
 
 
             } else if (mAST.mesmoTipo("LOOP")) {
 
-                mMensageiro.mensagem(ePrefixo + "Valorando LOOP ");
+                mValorador.mensagem(ePrefixo + "Valorando LOOP ");
 
                 Pronoco mAqui = new Pronoco("LOOP");
                 mAqui.setSuperior(mAtribuindo);
@@ -243,7 +244,7 @@ public class Valore_Escopo {
 
             } else if (mAST.mesmoTipo("SCOPE")) {
 
-                mMensageiro.mensagem(ePrefixo + "Valorando SCOPE ");
+                mValorador.mensagem(ePrefixo + "Valorando SCOPE ");
 
                 Pronoco mAqui = new Pronoco("SCOPE");
                 mAqui.setSuperior(mAtribuindo);
@@ -257,20 +258,20 @@ public class Valore_Escopo {
 
             } else if (mAST.mesmoTipo("EXTERN_REFERED")) {
 
-                mMensageiro.mensagem(ePrefixo + "EXTERN_REFERED ");
+                mValorador.mensagem(ePrefixo + "EXTERN_REFERED ");
 
                 String mExternRefered =mAST.getNome();
                 String mStruct = mAST.getBranch("STRUCT").getNome();
                 String mRefered = mAST.getBranch("REFERED").getNome();
 
-                mMensageiro.mensagem(ePrefixo + "\t - Extern Refered : " + mAST.getNome());
-                mMensageiro.mensagem(ePrefixo + "\t - Struct : " + mStruct);
-                mMensageiro.mensagem(ePrefixo + "\t - Refered : "+mRefered);
+                mValorador.mensagem(ePrefixo + "\t - Extern Refered : " + mAST.getNome());
+                mValorador.mensagem(ePrefixo + "\t - Struct : " + mStruct);
+                mValorador.mensagem(ePrefixo + "\t - Refered : "+mRefered);
 
                 if (mAtribuindo.existeNesse(mExternRefered)) {
 
-                    mMensageiro.mensagem(ePrefixo +" Argumento Duplicado : " + mExternRefered);
-                    mMensageiro.getErros().add("Argumento Duplicado : " + mExternRefered);
+                    mValorador.mensagem(ePrefixo +" Argumento Duplicado : " + mExternRefered);
+                    mValorador.getErros().add("Argumento Duplicado : " + mExternRefered);
 
                 } else {
                     mAtribuindo.adicionarDefine(new Pronoco_Def(mExternRefered));
@@ -281,7 +282,7 @@ public class Valore_Escopo {
                 if (mAtribuindo.existeExtern(mStruct)) {
 
                 }else{
-                    mMensageiro.errar("Struct desconhecida : " + mAtribuindo.getRegressivo() + " :: " + mStruct);
+                    mValorador.errar("Struct desconhecida : " + mAtribuindo.getRegressivo() + " :: " + mStruct);
                 }
 
 
@@ -294,16 +295,21 @@ public class Valore_Escopo {
 
             } else if (mAST.mesmoTipo("MOVE_DATA")) {
 
+            } else if (mAST.mesmoTipo("DEBUG")) {
+
+            } else if (mAST.mesmoTipo("DELETE")) {
+
+
             } else {
 
 
-                mMensageiro.errar("Escopo Desconhecido : " + mAtribuindo.getRegressivo() + " :: " + mAST.getTipo());
+                mValorador.errar("Escopo Desconhecido : " + mAtribuindo.getRegressivo() + " :: " + mAST.getTipo());
 
-                mMensageiro.mensagem(ePrefixo + mAST.getImpressao());
+                mValorador.mensagem(ePrefixo + mAST.getImpressao());
 
             }
 
-            if (mMensageiro.getErros().size() > 0) {
+            if (mValorador.getErros().size() > 0) {
                 break;
             }
 

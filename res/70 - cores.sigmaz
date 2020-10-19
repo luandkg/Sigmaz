@@ -7,7 +7,7 @@ package Cores {
 
 	struct Cor {
 		init Cor ( r : int , g : int , b : int ) {
-			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 			this.mR = r;
 			this.mG = g;
 			this.mB = b;
@@ -27,7 +27,7 @@ package Cores {
 			return mB;
 		}
 		explicit : func getCor ( r : int , g : int , b : int ) : Cor {
-			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 			def t : Cor = init Cor ( r , g , b );
 			return t;
 		}
@@ -40,11 +40,14 @@ call iniciar -> {
 	def r : int = 100;
 	def g : int = 50;
 	def b : int = 80;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+	DEBUG -> REGRESSIVE :: STACK;
 	def cor1 : Cor = Cor -> getCor ( r , g , b );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
+
 	def cor1_r : int = cor1.getR ( );
 	def cor1_g : int = cor1.getG ( );
 	def cor1_b : int = cor1.getB ( );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+
+	DEBUG -> REGRESSIVE :: STACK;
 }

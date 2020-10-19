@@ -12,7 +12,7 @@ act operando ( ) {
 	def bb : num = somar ( 2.0 , 5.0 );
 	def bl : bool = true;
 	def ll : bool = igual ( bl , igual ( false , false ) );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> LOCAL :: ALL;
 }
 func somar ( a : num , b : num ) : num {
 	reg @ R9 -> a;

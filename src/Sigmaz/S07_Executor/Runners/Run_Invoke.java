@@ -30,37 +30,38 @@ public class Run_Invoke {
         String eSaida = mSaida.getNome();
 
 
-        if (eNome.contentEquals("__COMPILER__")) {
+        // if (eNome.contentEquals("__COMPILER__")) {
 
 
-            InvokeCompiler mCor = new InvokeCompiler(mRunTime, mEscopo, this);
-            mCor.init(eAcao, eSaida, mArgumentos);
+        //   InvokeCompiler mCor = new InvokeCompiler(mRunTime, mEscopo, this);
+        //   mCor.init(eAcao, eSaida, mArgumentos);
 
-       // } else if (eNome.contentEquals("terminal")) {
+        // } else if (eNome.contentEquals("terminal")) {
 
-       //     InvokeTerminal mCor = new InvokeTerminal(mRunTime, mEscopo, this);
-         //   mCor.init(eAcao, eSaida, mArgumentos);
+        //     InvokeTerminal mCor = new InvokeTerminal(mRunTime, mEscopo, this);
+        //   mCor.init(eAcao, eSaida, mArgumentos);
 
-        } else if (eNome.contentEquals("casting")) {
+        //} else
+        if (eNome.contentEquals("casting")) {
 
             InvokeCasting mCor = new InvokeCasting(mRunTime, mEscopo, this);
             mCor.init(eAcao, eSaida, mArgumentos);
 
 
-      //  } else if (eNome.contentEquals("math")) {
+            //  } else if (eNome.contentEquals("math")) {
 
-         //   InvokeMath mCor = new InvokeMath(mRunTime, mEscopo, this);
-           // mCor.init(eAcao, eSaida, mArgumentos);
+            //   InvokeMath mCor = new InvokeMath(mRunTime, mEscopo, this);
+            // mCor.init(eAcao, eSaida, mArgumentos);
 
-      //  } else if (eNome.contentEquals("stages")) {
+            //  } else if (eNome.contentEquals("stages")) {
 
-       //     InvokeStages mCor = new InvokeStages(mRunTime, mEscopo, this);
-           // mCor.init(eAcao, eSaida, mArgumentos);
+            //     InvokeStages mCor = new InvokeStages(mRunTime, mEscopo, this);
+            // mCor.init(eAcao, eSaida, mArgumentos);
 
-        //} else if (eNome.contentEquals("__UTILS__")) {
+            //} else if (eNome.contentEquals("__UTILS__")) {
 
-         //   InvokeUtils mCor = new InvokeUtils(mRunTime, mEscopo, this);
-       //     mCor.init(eAcao, eSaida, mArgumentos);
+            //   InvokeUtils mCor = new InvokeUtils(mRunTime, mEscopo, this);
+            //     mCor.init(eAcao, eSaida, mArgumentos);
 
         } else {
 
@@ -523,7 +524,7 @@ public class Run_Invoke {
 
                 //System.out.println(" \t - Argumento : " + eAST.getNome() + " : " + eAST.getValor());
 
-                if (i==e){
+                if (i == e) {
 
                     if (eAST.mesmoValor("ID")) {
                         String eRet = "";
@@ -571,13 +572,13 @@ public class Run_Invoke {
 
                 //System.out.println(" \t - Argumento : " + eAST.getNome() + " : " + eAST.getValor());
 
-                if (i==e){
+                if (i == e) {
 
                     if (eAST.mesmoValor("ID")) {
                         String eRet = "";
 
                         if (eAST.mesmoNome("true") || eAST.mesmoNome("false")) {
-                            eRet =  "bool";
+                            eRet = "bool";
                         } else {
                             eRet = mEscopo.getDefinidoTipo(eAST.getNome());
                         }
@@ -586,9 +587,9 @@ public class Run_Invoke {
 
 
                     } else if (eAST.mesmoValor("Num")) {
-                        ret ="int";
+                        ret = "int";
                     } else if (eAST.mesmoValor("Float")) {
-                        ret ="num";
+                        ret = "num";
                     } else if (eAST.mesmoValor("Text")) {
                         ret = "string";
                     }
@@ -619,7 +620,7 @@ public class Run_Invoke {
 
                 //System.out.println(" \t - Argumento : " + eAST.getNome() + " : " + eAST.getValor());
 
-                if (i==e){
+                if (i == e) {
 
                     ret = eAST.getNome();
 

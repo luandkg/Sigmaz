@@ -5,10 +5,9 @@ refer Vetor;
 act inicio ( ) {
 	def i : int = 12;
 	
-	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	def vGeral : Vetor >> ( int ) = init Vetor ( 5 ) >> ( int );
 	println ( "Listar VETOR");
-	vGeral.mudarTodos ( 5 );
+	vGeral.mudarTodos ( 2 );
 	vGeral.listar ( );
 	println ( " Tamanho :: ", vGeral.getQuantidade ( ) );
 	def tt : int = 50;
@@ -24,11 +23,11 @@ act inicio ( ) {
 	}
 	println ( "----- ----- ------  ------");
 	println ( " 2 ----- ----- ------  ------");
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 	def v2 : Vetor >> ( int ) = {
 		10 , 20 
 	};
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 	println ( " 3 ----- ----- ------  ------");
 	v2.listar ( );
 	
@@ -72,7 +71,7 @@ act inicio ( ) {
 		println ( "Lista RefBloco -> ", a.getValor ( ) );
 	}
 	def pla : Bloco = init Bloco ( );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 	def nn : Vetor >> ( Bloco ) = {
 		pla 
 	};

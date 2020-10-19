@@ -1,9 +1,9 @@
 package Make.Compiler;
 
 import Sigmaz.S00_Utilitarios.*;
-import Sigmaz.S03_Parser.Lexer;
-import Sigmaz.S03_Parser.Token;
-import Sigmaz.S03_Parser.TokenTipo;
+import Sigmaz.S02_Lexer.Lexer;
+import Sigmaz.S02_Lexer.Token;
+import Sigmaz.S02_Lexer.TokenTipo;
 
 import java.io.File;
 import java.util.ArrayList;

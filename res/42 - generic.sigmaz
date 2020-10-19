@@ -2,9 +2,9 @@ call iniciar -> inicio ( );
 define GERAL : Item >> ( num ) = null;
 act inicio ( ) {
 	def ig : Item >> ( num ) = init Item ( ) >> ( num );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 	def a : num = ig.getA ( );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 
 struct Item in ( T ) {

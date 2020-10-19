@@ -16,10 +16,17 @@ public class Heranca {
     }
 
 
+    public void mensagem(String e){
+        if (mPosProcessador.getDebug_Heranca()){
+            mPosProcessador.mensagem(e);
+        }
+    }
+
+
     public void init(ArrayList<AST> mTodos) {
 
-        mPosProcessador.mensagem("");
-        mPosProcessador.mensagem(" ------------------ FASE HERANCA ----------------------- ");
+        mensagem("");
+       mensagem(" ------------------ FASE HERANCA ----------------------- ");
 
 
         ArrayList<AST> mPacotes = new ArrayList<AST>();
@@ -35,7 +42,7 @@ public class Heranca {
                 }
 
 
-                mPosProcessador.mensagem("");
+                mensagem("");
 
                 for (AST ePacote : mAST.getASTS()) {
                     if (ePacote.mesmoTipo("PACKAGE")) {
@@ -72,15 +79,15 @@ public class Heranca {
         ArrayList<String> mRefers = getRefers(mRaiz);
 
         if (mRaiz.mesmoTipo("PACKAGE")) {
-            mPosProcessador.mensagem("PACOTE : " + mRaiz.getNome());
+           mensagem("PACOTE : " + mRaiz.getNome());
         } else {
-            mPosProcessador.mensagem("SIGMAZ : " + mRaiz.getTipo());
+        mensagem("SIGMAZ : " + mRaiz.getTipo());
         }
 
         if (mRefers.size() > 0) {
-            mPosProcessador.mensagem("");
+            mensagem("");
             for (String eRefer : mRefers) {
-                mPosProcessador.mensagem("\t - REFER : " + eRefer);
+                mensagem("\t - REFER : " + eRefer);
             }
         }
 
@@ -97,14 +104,14 @@ public class Heranca {
 
         }
 
-        mPosProcessador.mensagem("");
+        mensagem("");
         for (AST eAST : mRaiz.getASTS()) {
             if (eAST.mesmoTipo("STRUCT")) {
                 if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
 
                     if (eAST.getBranch("WITH").mesmoValor("TRUE")) {
 
-                        mPosProcessador.mensagem("\t - STRUCT : " + eAST.getNome() + " :: HERANCA");
+                        mensagem("\t - STRUCT : " + eAST.getNome() + " :: HERANCA");
 
                         String eBase = eAST.getBranch("WITH").getNome();
 
@@ -113,7 +120,7 @@ public class Heranca {
 
                     } else {
 
-                        mPosProcessador.mensagem("\t - STRUCT : " + eAST.getNome() + " :: CONCRETA");
+                        mensagem("\t - STRUCT : " + eAST.getNome() + " :: CONCRETA");
 
 
                     }
@@ -124,7 +131,7 @@ public class Heranca {
         }
 
 
-        mPosProcessador.mensagem("");
+       mensagem("");
 
     }
 
@@ -139,8 +146,8 @@ public class Heranca {
         boolean BaseEmPacote = false;
 
 
-        mPosProcessador.mensagem("\t\t - MONTAGEM : " + eStruct.getNome() + " -->> " + eBase_Nome);
-        mPosProcessador.mensagem("\t\t\t  - ESTRUTURA : " + eStruct.getNome());
+     mensagem("\t\t - MONTAGEM : " + eStruct.getNome() + " -->> " + eBase_Nome);
+        mensagem("\t\t\t  - ESTRUTURA : " + eStruct.getNome());
 
 
         for (AST eAST : mStructs) {
@@ -199,14 +206,14 @@ public class Heranca {
 
         if (BaseEnc) {
 
-            mPosProcessador.mensagem("\t\t\t  - BASE : " + eBase_Nome + " -->> " + eLocal);
+        mensagem("\t\t\t  - BASE : " + eBase_Nome + " -->> " + eLocal);
 
 
             if (eBase.getBranch("WITH").mesmoValor("TRUE")) {
 
                 // ArrayList<String> pRefers = getRefers(mPacote);
 
-                mPosProcessador.mensagem("\t\t\t  - CONCRETA : NAO -->> " + eBase.getBranch("WITH").getNome());
+                mensagem("\t\t\t  - CONCRETA : NAO -->> " + eBase.getBranch("WITH").getNome());
 
 
                 if (BaseEmPacote) {
@@ -226,7 +233,7 @@ public class Heranca {
 
             } else {
 
-                mPosProcessador.mensagem("\t\t\t  - CONCRETA : SIM ");
+              mensagem("\t\t\t  - CONCRETA : SIM ");
 
                 herdarAgora(eNomePacote, eStruct, eBase);
 
@@ -238,7 +245,7 @@ public class Heranca {
             mPosProcessador.getErros().add("Struct " + eBase_Nome + " : Nao encontrado !");
         }
 
-        mPosProcessador.mensagem("");
+       mensagem("");
 
     }
 
@@ -338,28 +345,27 @@ public class Heranca {
             }
 
 
-            mPosProcessador.mensagem("\t\t\t--------------------- MONTAR BASE -----------------------------");
+          mensagem("\t\t\t--------------------- MONTAR BASE -----------------------------");
 
-            mPosProcessador.mensagem("\t\t\t  - BASE : " + eStruct.getNome());
+            mensagem("\t\t\t  - BASE : " + eStruct.getNome());
 
 
-            mPosProcessador.mensagem("\t\t\t  - HERDAR :  " + eBase_Nome + " -->> " + eLocal);
+          mensagem("\t\t\t  - HERDAR :  " + eBase_Nome + " -->> " + eLocal);
 
             if (eStruct.getBranch("WITH").mesmoValor("TRUE")) {
-
-                mPosProcessador.mensagem("\t\t\t  - CONCRETA : NAO -->> " + eStruct.getBranch("WITH").getNome());
+mensagem("\t\t\t  - CONCRETA : NAO -->> " + eStruct.getBranch("WITH").getNome());
 
             } else {
-                mPosProcessador.mensagem("\t\t\t  - CONCRETA : SIM ");
+            mensagem("\t\t\t  - CONCRETA : SIM ");
             }
 
         } else {
 
-            mPosProcessador.mensagem("\t\t\t--------------------- MONTAR BASE -----------------------------");
+            mensagem("\t\t\t--------------------- MONTAR BASE -----------------------------");
 
-            mPosProcessador.mensagem("\t\t\t  - BASE : " + eStruct.getNome());
+            mensagem("\t\t\t  - BASE : " + eStruct.getNome());
 
-            mPosProcessador.mensagem("\t\t\t  - CONCRETA : SIM ");
+            mensagem("\t\t\t  - CONCRETA : SIM ");
         }
 
 
@@ -399,7 +405,7 @@ public class Heranca {
         String eBaseNome = Base.getNome();
 
 
-        mPosProcessador.mensagem("\t\t\t--------------------- HERDAR -----------------------------");
+      mensagem("\t\t\t--------------------- HERDAR -----------------------------");
 
 
         AST Base_Inits = Base.getBranch("INITS");
@@ -419,9 +425,9 @@ public class Heranca {
             mSuperGenerica = "Sim";
         }
 
-        mPosProcessador.mensagem("\t\t\t  - Super  : " + eStructNome + " - Generics " + mSuperGenerica + " (" + Super_Generics.getASTS().size() + ")" + "   Base : " + eBaseNome + " - Generics " + mBaseGenerica + " (" + Base_Generics.getASTS().size() + ")");
+        mensagem("\t\t\t  - Super  : " + eStructNome + " - Generics " + mSuperGenerica + " (" + Super_Generics.getASTS().size() + ")" + "   Base : " + eBaseNome + " - Generics " + mBaseGenerica + " (" + Base_Generics.getASTS().size() + ")");
 
-        mPosProcessador.mensagem("\t\t\t  - Super  : " + eStructNome + " - Inits (" + Super_Inits.getASTS().size() + ")" + "   Base : " + eBaseNome + " - Inits (" + Base_Inits.getASTS().size() + ")");
+        mensagem("\t\t\t  - Super  : " + eStructNome + " - Inits (" + Super_Inits.getASTS().size() + ")" + "   Base : " + eBaseNome + " - Inits (" + Base_Inits.getASTS().size() + ")");
 
         if (mBaseGenerica.contentEquals("Sim")) {
 
@@ -446,7 +452,7 @@ public class Heranca {
                         v += 1;
                     } else {
 
-                        mPosProcessador.mensagem("A Struct " + eStructNome + " precisa ter o tipo generico : " + eg);
+                       mensagem("A Struct " + eStructNome + " precisa ter o tipo generico : " + eg);
                         mPosProcessador.getErros().add("A Struct " + eStructNome + " precisa ter o tipo generico : " + eg);
 
                     }
@@ -455,7 +461,7 @@ public class Heranca {
 
 
             } else {
-                mPosProcessador.mensagem("A Struct " + eStructNome + " precisa ser Generica !");
+                mensagem("A Struct " + eStructNome + " precisa ser Generica !");
                 mPosProcessador.getErros().add("A Struct " + eStructNome + " precisa ser Generica !");
             }
 
@@ -496,14 +502,14 @@ public class Heranca {
 
 
                         } else {
-                            mPosProcessador.mensagem("\t\t\t  - Struct " + eStructNome + " deve ter um chamador com o mesmo nome da Struct Base : " + eBaseNome);
+                           mensagem("\t\t\t  - Struct " + eStructNome + " deve ter um chamador com o mesmo nome da Struct Base : " + eBaseNome);
                             mPosProcessador.getErros().add("  - Struct " + eStructNome + " deve ter um chamador com o mesmo nome da Struct Base : " + eBaseNome);
                             return;
                         }
 
 
                     } else {
-                        mPosProcessador.mensagem("\t\t\t  - Struct " + eStructNome + " deve ter um chamador ! ");
+                        mensagem("\t\t\t  - Struct " + eStructNome + " deve ter um chamador ! ");
                         mPosProcessador.getErros().add("  - Struct " + eStructNome + " deve ter um chamador ! ");
                         return;
                     }
@@ -511,7 +517,7 @@ public class Heranca {
 
 
             } else {
-                mPosProcessador.mensagem("\t\t\t  - Struct " + eStructNome + " deve possuir um inicializador  ");
+               mensagem("\t\t\t  - Struct " + eStructNome + " deve possuir um inicializador  ");
                 mPosProcessador.getErros().add("  - Struct " + eStructNome + " deve possuir um inicializador  ");
                 return;
             }
@@ -581,7 +587,7 @@ public class Heranca {
         }
 
         if (mAllows.size()>0){
-            mPosProcessador.mensagem("\t\t\t  -->> ALLOW ");
+         mensagem("\t\t\t  -->> ALLOW ");
         }
 
         for (AST eAllow : mAllows) {
@@ -606,11 +612,13 @@ public class Heranca {
 
             if (enc){
 
-                mPosProcessador.mensagem("\t\t\t  - Struct " + eStructNome + " :: " + AST_Visibilidade.getNome() + " " + eAllow.getTipo() + " " + eAllow.getNome() + " !");
+               mensagem("\t\t\t  - Struct " + eStructNome + " :: " + AST_Visibilidade.getNome() + " " + eAllow.getTipo() + " " + eAllow.getNome() + " !");
 
            }else{
+
+                mensagem("\t\t\t  - Struct " + eStructNome + " :: " + AST_Visibilidade.getNome() + " " + eAllow.getTipo() + " " + eAllow.getNome() + " Nao encontrado !");
+
                 mPosProcessador.getErros().add(" - Struct " + eStructNome + " :: " + AST_Visibilidade.getNome() + " " + eAllow.getTipo() + " " + eAllow.getNome() + " Nao encontrado !");
-                mPosProcessador.mensagem("\t\t\t  - Struct " + eStructNome + " :: " + AST_Visibilidade.getNome() + " " + eAllow.getTipo() + " " + eAllow.getNome() + " Nao encontrado !");
 
 
             }

@@ -5,14 +5,14 @@ act inicio ( ) {
 	try a with b -> {
 		def g : int = 12;
 	}
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 	def c : bool = false;
 	try c -> {
 		def g : num = "oi";
 	}
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 	try -> {
 		def g : num = "oi";
 	}
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 }

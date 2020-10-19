@@ -9,5 +9,5 @@ act inicio ( ) {
                         linhas
     ##
 	def a : int = 10;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }

@@ -29,5 +29,5 @@ call iniciar -> {
 	def G : Gato = init Gato ( 12.0 );
 	def g_idade : num = G.getIdade ( );
 	def g_pelos : bool = G.getTemPelos ( );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 }

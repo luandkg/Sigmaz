@@ -2,6 +2,7 @@ package Sigmaz.S05_PosProcessamento.Povalorum;
 
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S00_Utilitarios.Mensageiro;
+import Sigmaz.S05_PosProcessamento.Processadores.Valorador;
 import Sigmaz.S05_PosProcessamento.Pronoco.Pronoco;
 import Sigmaz.S05_PosProcessamento.Pronoco.Pronoco_Def;
 import Sigmaz.S05_PosProcessamento.Pronoco.Pronoco_Moc;
@@ -11,11 +12,11 @@ import java.util.ArrayList;
 
 public class Valore_Sigmaz {
 
-    Mensageiro mMensageiro;
+    Valorador mValorador;
     Valoramento mValoramento;
 
-    public Valore_Sigmaz(Mensageiro eMensageiro, Valoramento eValoramento) {
-        mMensageiro = eMensageiro;
+    public Valore_Sigmaz(Valorador eValorador, Valoramento eValoramento) {
+        mValorador = eValorador;
         mValoramento = eValoramento;
     }
 
@@ -51,7 +52,7 @@ public class Valore_Sigmaz {
     public void valore_Call(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
 
 
-        mMensageiro.mensagem(ePrefixo + "Valorando CALL : " + getSimplificador().getCall(mValue));
+        mValorador.mensagem(ePrefixo + "Valorando CALL : " + getSimplificador().getCall(mValue));
 
         Pronoco mAqui = new Pronoco(getSimplificador().getCall(mValue));
         mAqui.setSuperior(mAtribuindo);
@@ -66,8 +67,8 @@ public class Valore_Sigmaz {
 
             } else {
 
-                mMensageiro.errar("Action ou Function nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getBranch("SENDING").getNome());
-                mMensageiro.mensagem(ePrefixo + "Variavel nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getBranch("SENDING").getNome());
+                mValorador.errar("Action ou Function nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getBranch("SENDING").getNome());
+                mValorador.mensagem(ePrefixo + "Variavel nao existente : " + mAtribuindo.getRegressivo() + " :: " + mValue.getBranch("SENDING").getNome());
 
 
             }
@@ -78,7 +79,7 @@ public class Valore_Sigmaz {
 
         } else {
 
-            mMensageiro.errar("Call com Problemas : " + mAtribuindo.getRegressivo() );
+            mValorador.errar("Call com Problemas : " + mAtribuindo.getRegressivo() );
 
         }
 
@@ -88,7 +89,7 @@ public class Valore_Sigmaz {
 
     public void valore_Action(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + "Valorando ACTION : " + getSimplificador().getAction(mValue));
+        mValorador.mensagem(ePrefixo + "Valorando ACTION : " + getSimplificador().getAction(mValue));
 
         Pronoco mAqui = new Pronoco(getSimplificador().getAction(mValue));
         mAqui.setSuperior(mAtribuindo);
@@ -104,7 +105,7 @@ public class Valore_Sigmaz {
     public void valore_Function(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
 
 
-        mMensageiro.mensagem(ePrefixo + "Valorando FUNCTION : " + getSimplificador().getFuction(mValue));
+        mValorador.mensagem(ePrefixo + "Valorando FUNCTION : " + getSimplificador().getFuction(mValue));
 
         Pronoco mAqui = new Pronoco(getSimplificador().getFuction(mValue));
         mAqui.setSuperior(mAtribuindo);
@@ -119,7 +120,7 @@ public class Valore_Sigmaz {
 
     public void valore_Director(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + "Valorando DIRECTOR : " + getSimplificador().getDirector(mValue));
+        mValorador.mensagem(ePrefixo + "Valorando DIRECTOR : " + getSimplificador().getDirector(mValue));
 
         Pronoco mAqui = new Pronoco(getSimplificador().getDirector(mValue));
         mAqui.setSuperior(mAtribuindo);
@@ -134,7 +135,7 @@ public class Valore_Sigmaz {
 
     public void valore_Operator(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + "Valorando OPERATOR : " + getSimplificador().getOperator(mValue));
+        mValorador.mensagem(ePrefixo + "Valorando OPERATOR : " + getSimplificador().getOperator(mValue));
 
         Pronoco mAqui = new Pronoco(getSimplificador().getOperator(mValue));
         mAqui.setSuperior(mAtribuindo);
@@ -149,7 +150,7 @@ public class Valore_Sigmaz {
 
     public void valore_Marker(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + "Valorando MARKER : " + getSimplificador().getMark(mValue));
+        mValorador.mensagem(ePrefixo + "Valorando MARKER : " + getSimplificador().getMark(mValue));
 
         Pronoco mAqui = new Pronoco(getSimplificador().getOperator(mValue));
         mAqui.setSuperior(mAtribuindo);
@@ -164,7 +165,7 @@ public class Valore_Sigmaz {
 
     public void valore_Auto(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + "Valorando AUTO : " + getSimplificador().getAuto(mValue));
+        mValorador.mensagem(ePrefixo + "Valorando AUTO : " + getSimplificador().getAuto(mValue));
         Pronoco mAqui = new Pronoco(getSimplificador().getAuto(mValue));
         mAqui.setSuperior(mAtribuindo);
 
@@ -178,7 +179,7 @@ public class Valore_Sigmaz {
 
     public void valore_Functor(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + "Valorando FUNCTOR : " + getSimplificador().getFunctor(mValue));
+        mValorador.mensagem(ePrefixo + "Valorando FUNCTOR : " + getSimplificador().getFunctor(mValue));
         Pronoco mAqui = new Pronoco(getSimplificador().getFunctor(mValue));
         mAqui.setSuperior(mAtribuindo);
 
@@ -193,7 +194,7 @@ public class Valore_Sigmaz {
 
     public void valore_Define(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + "Valorando DEFINE : " + getSimplificador().getDefine(mValue));
+        mValorador.mensagem(ePrefixo + "Valorando DEFINE : " + getSimplificador().getDefine(mValue));
 
         if (mValue.existeBranch("VALUE")) {
             Pronoco mAqui = mAtribuindo;
@@ -212,7 +213,7 @@ public class Valore_Sigmaz {
 
     public void valore_Mockiz(String ePrefixo, AST mValue, Pronoco mAtribuindo) {
 
-        mMensageiro.mensagem(ePrefixo + "Valorando MOCKIZ : " + getSimplificador().getMockiz(mValue));
+        mValorador.mensagem(ePrefixo + "Valorando MOCKIZ : " + getSimplificador().getMockiz(mValue));
 
         if (mValue.existeBranch("VALUE")) {
             Pronoco mAqui = mAtribuindo;

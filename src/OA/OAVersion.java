@@ -83,7 +83,7 @@ public class OAVersion {
 
         Pacote Releases = OA.UnicoPacote("Releases");
         for (Pacote P : Releases.getPacotes()) {
-            P.salvarLinear();
+            P.setLinear();
         }
 
         //  int Trabalhos = Branches.getPacotes().size() * 24;
@@ -138,6 +138,14 @@ public class OAVersion {
         OA.Identifique("Branch").setValor(Hoje);
         OA.Identifique("Works").setValor(String.valueOf(Trabalhos));
         OA.Identifique("Full").setValor(Full);
+
+        for (Pacote P : Branches.getPacotes()) {
+            P.setLinear();
+        }
+
+        for (Pacote P : Releases.getPacotes()) {
+            P.setLinear();
+        }
 
         arquivo.Salvar(mArquivo);
     }

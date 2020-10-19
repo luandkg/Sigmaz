@@ -37,7 +37,7 @@ call iniciar -> {
 	def tc1 : CPar = start CPar {
 		
 	};
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 package Pacote_A {
 	refer Pacote_B;
@@ -106,7 +106,7 @@ package Pacote_C {
 		restrict : 
 		act passar ( a : int ) {
 			def b : int = a;
-			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 		}
 		
 	}

@@ -145,7 +145,7 @@ package Vetor {
 		}
 
 		act mostrarStruct ( ) {
-			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+			DEBUG -> REGRESSIVE :: ALL;
 		}
 
 		act destruir ( ) {
@@ -157,10 +157,19 @@ package Vetor {
 				while ( isNull ( mCorrente ) == false ) -> {
 					mAnterior = mCorrente;
 					mCorrente = mCorrente.getProximo ( );
-					trash ( mAnterior );
+					
+					#trash ( mAnterior );
+					if ( isNull ( mAnterior ) == false ) -> {
+						delete mAnterior;
+					}
 					mQuantidade = subtrair ( mQuantidade , 1 );
 				}
-				trash ( mAnterior );
+				
+				#trash ( mAnterior );
+				if ( isNull ( mCorrente ) == false ) -> {
+					delete mCorrente;
+				}
+				
 			}
 			mPrimeiro = null;
 			mUltimo = null;

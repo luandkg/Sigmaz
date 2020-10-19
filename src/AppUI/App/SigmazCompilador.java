@@ -6,7 +6,6 @@ import AppUI.Mottum.UI.Clicavel;
 import AppUI.Mottum.Utils.Escritor;
 import AppUI.Mottum.Windows;
 import Sigmaz.Sigmaz_Etapas;
-import Sigmaz.Sigmaz_Fases;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -19,15 +18,15 @@ public class SigmazCompilador extends Cena {
     private Escritor TextoGrande;
     private Escritor TextoPequeno;
 
-    BotaoCor BTN_CRIAR;
+    private BotaoCor BTN_CRIAR;
 
-    Clicavel mClicavel;
+    private Clicavel mClicavel;
 
     boolean mPode;
 
     boolean mContinuar;
     int mPassos;
-    Sigmaz_Etapas SigmazC;
+    private Sigmaz_Etapas SigmazC;
 
     private String mETAPA_PRE_PROCESSAMENTO;
     private String mETAPA_LEXER;
@@ -77,13 +76,19 @@ public class SigmazCompilador extends Cena {
         if (mContinuar) {
 
             try {
+
                 Thread.sleep(200);
 
             } catch (Exception e) {
+
             }
 
 
             SigmazC.continuar();
+
+            System.out.println(SigmazC.getContinuar() + " :: " + "Passo : " + mPassos + " -->> " + SigmazC.getEtapa() + " :: " + SigmazC.getSubEtapa());
+
+            mPassos+=1;
 
             mETAPA_PRE_PROCESSAMENTO = SigmazC.getPreProcessamento();
             mETAPA_LEXER = SigmazC.getLexer();
@@ -99,9 +104,6 @@ public class SigmazCompilador extends Cena {
         } else {
             mPode = true;
         }
-
-        int epx = (int) mWindows.getMouse().x;
-        int epy = (int) mWindows.getMouse().y;
 
 
         if (mClicavel.getClicado()) {

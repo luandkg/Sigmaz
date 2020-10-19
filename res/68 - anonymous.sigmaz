@@ -1,8 +1,8 @@
 call iniciar -> {
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ACTIONS;
+	DEBUG -> REGRESSIVE :: STACK;
 	local -> ( ) {
 		def t : int = -12;
-		invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 	}
 	@ ( );
 	local -> ( a : int , b : int ) : int {
@@ -16,5 +16,5 @@ call iniciar -> {
 		return reg @ R7;
 	}
 	def t : int = @ ( 20 , 50 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }

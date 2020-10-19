@@ -16,10 +16,21 @@ public class Opcionador {
 
     }
 
+    public void mensagem(String e) {
+        if (mPosProcessador.getDebug_Opcionador()) {
+            mPosProcessador.mensagem(e);
+        }
+    }
+
+    public void errar(String e) {
+        mPosProcessador.errar(e);
+    }
+
+
     public void init(ArrayList<AST> mTodos) {
 
-        mPosProcessador.mensagem("");
-        mPosProcessador.mensagem(" ------------------ FASE OPCIONADOR ----------------------- ");
+       mensagem("");
+        mensagem(" ------------------ FASE OPCIONADOR ----------------------- ");
 
 
         for (AST mAST : mTodos) {
@@ -27,7 +38,7 @@ public class Opcionador {
             if (mAST.mesmoTipo("SIGMAZ")) {
 
 
-                mPosProcessador.mensagem("");
+              mensagem("");
 
                 for (AST ePacote : mAST.getASTS()) {
                     if (ePacote.mesmoTipo("PACKAGE")) {
@@ -57,7 +68,7 @@ public class Opcionador {
 
                 if (getOpcionais(mAST.getBranch("ARGUMENTS")) > 0) {
 
-                    mPosProcessador.mensagem("Action " + mAST.getNome() + " :: OPT " + getOpcionais(mAST.getBranch("ARGUMENTS")));
+                 mensagem("Action " + mAST.getNome() + " :: OPT " + getOpcionais(mAST.getBranch("ARGUMENTS")));
 
                     action_desopcionar(mAST.copiar(), mInserirActions);
                     removerOpcionais(mAST.getBranch("ARGUMENTS"));
@@ -70,7 +81,7 @@ public class Opcionador {
 
                 if (getOpcionais(mAST.getBranch("ARGUMENTS")) > 0) {
 
-                    mPosProcessador.mensagem("Function " + mAST.getNome() + " :: OPT " + getOpcionais(mAST.getBranch("ARGUMENTS")));
+               mensagem("Function " + mAST.getNome() + " :: OPT " + getOpcionais(mAST.getBranch("ARGUMENTS")));
 
                     function_desopcionar(mAST.copiar(), mInserirActions);
                     removerOpcionais(mAST.getBranch("ARGUMENTS"));
@@ -81,7 +92,7 @@ public class Opcionador {
 
                 if (getOpcionais(mAST.getBranch("ARGUMENTS")) > 0) {
 
-                    mPosProcessador.mensagem("Auto " + mAST.getNome() + " :: OPT " + getOpcionais(mAST.getBranch("ARGUMENTS")));
+                    mensagem("Auto " + mAST.getNome() + " :: OPT " + getOpcionais(mAST.getBranch("ARGUMENTS")));
 
                     auto_desopcionar(mAST.copiar(), mInserirActions);
                     removerOpcionais(mAST.getBranch("ARGUMENTS"));
@@ -93,7 +104,7 @@ public class Opcionador {
 
                 if (getOpcionais(mAST.getBranch("ARGUMENTS")) > 0) {
 
-                    mPosProcessador.mensagem("Functor " + mAST.getNome() + " :: OPT " + getOpcionais(mAST.getBranch("ARGUMENTS")));
+              mensagem("Functor " + mAST.getNome() + " :: OPT " + getOpcionais(mAST.getBranch("ARGUMENTS")));
 
                     functor_desopcionar(mAST.copiar(), mInserirActions);
                     removerOpcionais(mAST.getBranch("ARGUMENTS"));
@@ -184,7 +195,7 @@ public class Opcionador {
         }
 
 
-        mPosProcessador.mensagem("Criando Opcional Action : " + eAction.getNome() + " por " + eCom.getNome());
+        mensagem("Criando Opcional Action : " + eAction.getNome() + " por " + eCom.getNome());
 
         nAction.getBranch("BODY").getASTS().clear();
 
@@ -320,7 +331,7 @@ public class Opcionador {
             }
         }
 
-        mPosProcessador.mensagem("Criando Opcional Action : " + eAction.getNome() + " Sem opcionais");
+       mensagem("Criando Opcional Action : " + eAction.getNome() + " Sem opcionais");
 
 
         tAction.getBranch("BODY").getASTS().clear();
@@ -435,7 +446,7 @@ public class Opcionador {
         }
 
 
-        mPosProcessador.mensagem("Criando Opcional Function : " + eAction.getNome() + " por " + eCom.getNome());
+       mensagem("Criando Opcional Function : " + eAction.getNome() + " por " + eCom.getNome());
 
         nAction.getBranch("BODY").getASTS().clear();
 
@@ -574,7 +585,7 @@ public class Opcionador {
             }
         }
 
-        mPosProcessador.mensagem("Criando Opcional Function : " + eAction.getNome() + " Sem opcionais");
+       mensagem("Criando Opcional Function : " + eAction.getNome() + " Sem opcionais");
 
 
         tAction.getBranch("BODY").getASTS().clear();
@@ -674,7 +685,7 @@ public class Opcionador {
         }
 
 
-        mPosProcessador.mensagem("Criando Opcional Function : " + eAction.getNome() + " por " + eCom.getNome());
+      mensagem("Criando Opcional Function : " + eAction.getNome() + " por " + eCom.getNome());
 
         nAction.getBranch("BODY").getASTS().clear();
 
@@ -814,7 +825,7 @@ public class Opcionador {
             }
         }
 
-        mPosProcessador.mensagem("Criando Opcional Auto : " + eAction.getNome() + " Sem opcionais");
+        mensagem("Criando Opcional Auto : " + eAction.getNome() + " Sem opcionais");
 
 
         tAction.getBranch("BODY").getASTS().clear();
@@ -949,7 +960,7 @@ public class Opcionador {
             }
         }
 
-        mPosProcessador.mensagem("Criando Opcional Functor : " + eAction.getNome() + " Sem opcionais");
+        mensagem("Criando Opcional Functor : " + eAction.getNome() + " Sem opcionais");
 
 
         tAction.getBranch("BODY").getASTS().clear();

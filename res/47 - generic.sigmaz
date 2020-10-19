@@ -11,7 +11,7 @@ act inicio ( ) {
 	#trash(c);
 	r.VA.setX ( 50.0 );
 	def duplo : num = r.VA.getX ( );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 
 act trash ( a : any ) {

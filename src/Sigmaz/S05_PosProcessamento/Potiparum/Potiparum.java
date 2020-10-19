@@ -11,27 +11,27 @@ import java.util.ArrayList;
 public class Potiparum {
 
     private Simplificador mSimplificador;
-    private Mensageiro mMensageiro;
 
     private Tipador mTipador;
     private Potiparum_Tipificador mPotiparum_Tipificador;
     private Potiparum_Escopos mPotiparum_Escopos;
     private Potiparum_Sigmaz mPotiparum_Sigmaz;
 
-    public Potiparum(Tipador eTipador, Mensageiro eMensageiro) {
+    public Potiparum(Tipador eTipador) {
 
         mTipador = eTipador;
         mSimplificador = mTipador.getSimplificador();
-        mMensageiro = eMensageiro;
 
-        mPotiparum_Sigmaz = new Potiparum_Sigmaz(this, mMensageiro);
-        mPotiparum_Tipificador = new Potiparum_Tipificador(this, mMensageiro);
-        mPotiparum_Escopos = new Potiparum_Escopos(this, mMensageiro);
+        mPotiparum_Sigmaz = new Potiparum_Sigmaz(this);
+        mPotiparum_Tipificador = new Potiparum_Tipificador(this);
+        mPotiparum_Escopos = new Potiparum_Escopos(this);
 
 
         index();
 
     }
+
+
 
     public void index() {
 
@@ -62,8 +62,14 @@ public class Potiparum {
         return mSimplificador;
     }
 
-    public Mensageiro getMensageiro() {
-        return mMensageiro;
+    public void mensagem(String e) {
+        if (mTipador.getDebug()) {
+            mTipador.mensagem(e);
+        }
+    }
+
+    public void errar(String e) {
+        mTipador.errar(e);
     }
 
 
@@ -73,7 +79,7 @@ public class Potiparum {
         // USAR PACKAGES
         for (AST ASTC : ASTPai.getASTS()) {
             if (ASTC.mesmoTipo("REFER")) {
-                getMensageiro().mensagem(ePrefixo + "REFERENCIANDO PACOTE " + ASTC.getNome());
+                mensagem(ePrefixo + "REFERENCIANDO PACOTE " + ASTC.getNome());
                 getTipador().Usar(mPacotes, ePrefixo + "\t", ASTC.getNome(), ePronoco);
             }
         }
@@ -84,7 +90,7 @@ public class Potiparum {
 
                 ePronoco.adicionarCast(mAST.getNome());
 
-                getMensageiro().mensagem(ePrefixo + "- Tipo CAST : " + mAST.getNome());
+              mensagem(ePrefixo + "- Tipo CAST : " + mAST.getNome());
 
             } else if (mAST.mesmoTipo("STRUCT")) {
 
@@ -92,16 +98,15 @@ public class Potiparum {
                 AST mExtended = mAST.getBranch("EXTENDED");
 
                 if (mExtended.mesmoNome("STRUCT")) {
-                    getMensageiro().mensagem(ePrefixo + "- Tipo STRUCT : " + mAST.getNome());
+                    mensagem(ePrefixo + "- Tipo STRUCT : " + mAST.getNome());
 
                     ePronoco.adicionarStruct(mAST.getNome());
 
-                } else if (mExtended.mesmoNome("STAGES")) {
-                    getMensageiro().mensagem(ePrefixo + "- Tipo STAGE : " + mAST.getNome());
+                } else if (mExtended.mesmoNome("STAGES")) { mensagem(ePrefixo + "- Tipo STAGE : " + mAST.getNome());
 
                     ePronoco.adicionarStage(mAST.getNome());
                 } else if (mExtended.mesmoNome("TYPE")) {
-                    getMensageiro().mensagem(ePrefixo + "- Tipo TYPE : " + mAST.getNome());
+                  mensagem(ePrefixo + "- Tipo TYPE : " + mAST.getNome());
 
                     ePronoco.adicionarType(mAST.getNome());
 
@@ -153,7 +158,7 @@ public class Potiparum {
 
             } else if (mAST.mesmoTipo("STRUCT")) {
 
-                getMensageiro().mensagem(ePrefixo + "STRUCT " + mAST.getNome());
+                mensagem(ePrefixo + "STRUCT " + mAST.getNome());
 
                 AST mExtended = mAST.getBranch("EXTENDED");
 
@@ -168,11 +173,11 @@ public class Potiparum {
                         ArrayList<String> genericos_ok = getPotiparum_Tipificador().conferirGenericos(mAST.getBranch("GENERIC"), mStructPronoco);
 
                         if (genericos_ok.size() > 0) {
-                            getMensageiro().mensagem(ePrefixo + mAST.getNome() + " -->> TIPAGEM DE GENERICOS INVALIDA ");
-                            getMensageiro().errar(mAST.getNome() + " -->> TIPAGEM DE GENERICOS INVALIDA ");
+                     mensagem(ePrefixo + mAST.getNome() + " -->> TIPAGEM DE GENERICOS INVALIDA ");
+                           errar(mAST.getNome() + " -->> TIPAGEM DE GENERICOS INVALIDA ");
                             for (String e : genericos_ok) {
-                                getMensageiro().mensagem(ePrefixo + "\t" + e);
-                                getMensageiro().errar(mAST.getNome() + " -->> " + e);
+                                mensagem(ePrefixo + "\t" + e);
+                              errar(mAST.getNome() + " -->> " + e);
                             }
                         }
 

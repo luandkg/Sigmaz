@@ -1,10 +1,11 @@
 define versao : int = 1;
 mockiz guardado : int = 6;
+
 func ateOnde ( a : int ) : int {
 	if ( a == 1 ) -> {
 		return -1;
 	}
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 	return 0;
 }
 operator == ( a : int , b : int ) : bool {
@@ -30,9 +31,8 @@ call Escopos -> {
 	
 	#def C : int = Vermelha->VALOR;
 	def l1 : Linha_Branca = init Linha_Branca ( );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
+
 }
 
 struct Geral {
@@ -54,7 +54,7 @@ package Linhas {
 		define Valor : int = 0;
 		init Linha_Branca ( ) {
 			Valor = Vermelha -> VALOR;
-			invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 		}
 		
 	}

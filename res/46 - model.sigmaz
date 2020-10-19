@@ -1,7 +1,7 @@
 call iniciar -> inicio ( );
 define A : num = 10.0;
 act inicio ( ) {
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: STACK;
 }
 
 #struct Relator at Relax {}

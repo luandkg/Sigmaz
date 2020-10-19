@@ -71,7 +71,7 @@ act pular ( ) {
 	def pint : int = pos ( 2 );
 	def nint : int = neg ( -2 );
 	def nn : neg = neg ( -2 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 func positivar ( p1 : pos , p2 : pos ) : pos {
 	p1 = p2;

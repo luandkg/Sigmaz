@@ -454,3 +454,15 @@ Linguagem de Programação Estruturada - Implementações
 		2020 10 15 -->> PosProcessador Tipador Biblioteca Externa
 		2020 10 15 -->> PosProcessador Valorador Biblioteca Externa
 
+
+		2020 10 16 -->> Implementação Comando DEBUG
+
+
+		2020 10 18 -->> Delete
+		2020 10 18 -->> Destruct
+		2020 10 18 -->> Delete TYPE
+		2020 10 18 -->> Delete STRUCT - Chama Destruct
+
+
+		2020 10 19 -->> ReOrganização das Mensagens de Debug
+

@@ -54,5 +54,5 @@ call iniciar -> {
 	}
 	);
 	def na : int = P1.PNumeral.A;
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 }

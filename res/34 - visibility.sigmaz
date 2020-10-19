@@ -12,9 +12,8 @@ act pular ( ) {
 	sacola2.aumentar ( 2 );
 	sacola2.crivar ( 4 );
 	def rr : bool = sacola1 == sacola2;
-	invoke __COMPILER__ -> SHOW_HEAP ( ) :: ALL;
-	invoke __COMPILER__ -> OBJECT ( sacola2 ) :: REMOVE;
-	invoke __COMPILER__ -> SHOW_HEAP ( ) :: ALL;
+		DEBUG -> REGRESSIVE :: ALL;
+
 }
 
 struct Sacola {
@@ -34,7 +33,7 @@ struct Sacola {
 	}
 
 	act mostrar ( ) {
-		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 	}
 
 	act mostrar_detalhes ( ) {
@@ -44,16 +43,16 @@ struct Sacola {
 	}
 
 	act mostrar_struct ( ) {
-		invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 	}
 	func someisso ( a : int , b : int ) : int {
 		return somar ( a , b );
 	}
 	all : 
 	explicit : operator == ( a : Sacola , b : Sacola ) : bool {
-		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: STACK;
 		def t : bool = a.itens == b.itens;
-		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 		return t;
 	}
 	

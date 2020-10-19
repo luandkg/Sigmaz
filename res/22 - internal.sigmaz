@@ -17,7 +17,7 @@ struct Pessoa {
 	}
 
 	act mostrar ( ) {
-		invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 	}
 	
 }
@@ -32,7 +32,7 @@ act pular ( ) {
 	p2.setIdade ( 12 );
 	p2.mostrar ( );
 	def igual : bool = p1.getIdade ( ) == p2.getIdade ( );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 operator == ( a : int , b : int ) : bool {
 	reg @ R5 -> a;

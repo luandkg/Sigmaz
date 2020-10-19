@@ -1,20 +1,36 @@
 mark Km ( a : int ) : int {
-	def c : int;
-	invoke math -> operator_mux_int ( a , 1000 ) :: c;
-	return c;
+	reg @ R5 -> a;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 MUX 1000;
+	}
+	return reg @ R7;
 }
 mark Hm ( a : int ) : int {
-	def c : int;
-	invoke math -> operator_mux_int ( a , 100 ) :: c;
-	return c;
+	reg @ R5 -> a;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 MUX 100;
+	}
+	return reg @ R7;
 }
 mark Dam ( a : int ) : int {
-	def c : int;
-	invoke math -> operator_mux_int ( a , 10 ) :: c;
-	return c;
+	reg @ R5 -> a;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 MUX 10;
+	}
+	return reg @ R7;
 }
 mark m ( a : int ) : int {
-	def c : int;
-	invoke math -> operator_mux_int ( a , 1 ) :: c;
-	return c;
+	reg @ R5 -> a;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 MUX 1;
+	}
+	return reg @ R7;
 }

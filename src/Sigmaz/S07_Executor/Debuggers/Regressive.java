@@ -184,7 +184,7 @@ public class Regressive {
 
     public void ListarActions() {
 
-        System.out.println(" ######################### LOCAL : ACTIONS - " + mEscopo.getNome() + " ############################ ");
+        System.out.println(" ######################### REGRESSIVE : ACTIONS - " + mEscopo.getNome() + " ############################ ");
 
         listar_Actions();
 
@@ -194,7 +194,7 @@ public class Regressive {
 
     public void ListarFunctions() {
 
-        System.out.println(" ######################### FUNCTIONS - " + mEscopo.getNome() + " ############################ ");
+        System.out.println(" ######################### REGRESSIVE : FUNCTIONS - " + mEscopo.getNome() + " ############################ ");
 
         listar_Functions();
 
@@ -204,7 +204,7 @@ public class Regressive {
 
     public void ListarOperators() {
 
-        System.out.println(" ######################### FUNCTIONS - " + mEscopo.getNome() + " ############################ ");
+        System.out.println(" ######################### REGRESSIVE : FUNCTIONS - " + mEscopo.getNome() + " ############################ ");
 
         listar_Operators();
 
@@ -214,7 +214,7 @@ public class Regressive {
 
     public void ListarStages() {
 
-        System.out.println(" ######################### LOCAL : STAGES - " + mEscopo.getNome() + " ############################ ");
+        System.out.println(" ######################### REGRESSIVE : STAGES - " + mEscopo.getNome() + " ############################ ");
 
         listar_Stages();
 
@@ -224,7 +224,7 @@ public class Regressive {
 
     public void ListarStructs() {
 
-        System.out.println(" ######################### LOCAL : STRUCTS - " + mEscopo.getNome() + " ############################ ");
+        System.out.println(" ######################### REGRESSIVE : STRUCTS - " + mEscopo.getNome() + " ############################ ");
         Run_Context mRun_Context = new Run_Context(mEscopo.getRunTime());
 
         for (AST ASTC : mRun_Context.getStructsContexto(mEscopo)) {
@@ -243,7 +243,7 @@ public class Regressive {
 
     public void ListarPackages() {
 
-        System.out.println(" ######################### LOCAL : PACKAGES - " + mEscopo.getNome() + " ############################ ");
+        System.out.println(" ######################### REGRESSIVE : PACKAGES - " + mEscopo.getNome() + " ############################ ");
 
         listar_Packages();
 
@@ -253,7 +253,7 @@ public class Regressive {
 
     public void ListarExterns() {
 
-        System.out.println(" ######################### LOCAL : EXTERNS - " + mEscopo.getNome() + " ############################ ");
+        System.out.println(" ######################### REGRESSIVE : EXTERNS - " + mEscopo.getNome() + " ############################ ");
 
         listar_Externs();
 
@@ -263,7 +263,7 @@ public class Regressive {
 
     public void ListarRefers() {
 
-        System.out.println(" ######################### LOCAL : REFERS - " + mEscopo.getNome() + " ############################ ");
+        System.out.println(" ######################### REGRESSIVE : REFERS - " + mEscopo.getNome() + " ############################ ");
 
         listar_Refers();
 
@@ -273,7 +273,7 @@ public class Regressive {
 
     public void ListarLocal() {
 
-        System.out.println(" ######################### LOCAL : LOCAL - " + mEscopo.getNome() + " ############################ ");
+        System.out.println(" ######################### REGRESSIVE : LOCAL - " + mEscopo.getNome() + " ############################ ");
 
         listar_Local();
 
@@ -435,7 +435,7 @@ public class Regressive {
     public void ListarAll() {
 
 
-        System.out.println(" #########################  LOCAL " + mEscopo.getNome() + " ############################ ");
+        System.out.println(" #########################  REGRESSIVE " + mEscopo.getNome() + " ############################ ");
 
 
         mapear_regressive_stack();

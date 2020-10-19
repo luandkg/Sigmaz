@@ -346,25 +346,6 @@ public class Run_Proc {
 
     }
 
-    public void instrucao_STAGE(AST eAST){
-
-        Registrado eConteudo = getConteudo(eAST);
-        String eSetada = mRunTime.getProcessador().getApontando();
-
-        if(eConteudo.getTipo().contentEquals("Stage")){
-
-
-            Registrado mr = new Registrado();
-            mr.atribuir(eConteudo.getConteudo(), "Inteiro");
-
-
-            mRunTime.getProcessador().aplicar(eSetada, mr);
-
-        }else{
-            mRunTime.errar(mLocal, "Processador - A Instrucao STAGE so executa com Stage !");
-        }
-
-    }
 
     public void instrucao_SIZE(AST eAST) {
 

@@ -2,9 +2,9 @@ call iniciar -> inicio ( );
 define A : int = 10;
 act inicio ( ) {
 	def valor : int = 1;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 	def T : int = COISAS -> CG ( 5 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 stages DIAS -> {
 	SEGUNDA , TERCA 

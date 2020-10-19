@@ -15,7 +15,7 @@ call iniciar -> {
 		b = 3;
 	};
 	voz j_a = j.a;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }
 
 struct Bloco {

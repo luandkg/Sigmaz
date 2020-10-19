@@ -16,10 +16,17 @@ public class Unificador {
 
     }
 
+
+    public void mensagem(String e){
+        if (mPosProcessador.getDebug_UnionType()){
+            mPosProcessador.mensagem(e);
+        }
+    }
+
     public void init(ArrayList<AST> mTodos) {
 
-        mPosProcessador.mensagem("");
-        mPosProcessador.mensagem(" ------------------ FASE TYPE UNION ----------------------- ");
+        mensagem("");
+        mensagem(" ------------------ FASE TYPE UNION ----------------------- ");
 
 
         for (AST mAST : mTodos) {
@@ -27,7 +34,7 @@ public class Unificador {
             if (mAST.mesmoTipo("SIGMAZ")) {
 
 
-                mPosProcessador.mensagem("");
+                mensagem("");
 
                 for (AST ePacote : mAST.getASTS()) {
                     if (ePacote.mesmoTipo("PACKAGE")) {
@@ -69,13 +76,13 @@ public class Unificador {
 
         for (AST mAST : eTypes) {
 
-            mPosProcessador.mensagem("\t - TYPE : " + mAST.getNome());
+            mensagem("\t - TYPE : " + mAST.getNome());
 
         }
 
         for (AST mAST : eUnions) {
 
-            mPosProcessador.mensagem("\t - TYPE UNION : " + mAST.getNome());
+            mensagem("\t - TYPE UNION : " + mAST.getNome());
 
 
             AST eBases = mAST.getBranch("BASES");
@@ -84,7 +91,7 @@ public class Unificador {
             ArrayList<String> mCampos = new ArrayList<String>();
 
             for (AST bAST : eBases.getASTS()) {
-                mPosProcessador.mensagem("\t\t - BASE : " + bAST.getNome());
+                mensagem("\t\t - BASE : " + bAST.getNome());
 
 
                 boolean enc = false;
@@ -100,36 +107,36 @@ public class Unificador {
 
 
                 if (enc) {
-                    mPosProcessador.mensagem("\t\t\t - Existe : Sim");
+                    mensagem("\t\t\t - Existe : Sim");
 
                     boolean ok = false;
 
 
                     if (bAST.getBranch("GENERIC").mesmoNome("FALSE") && eBaseType.getBranch("GENERIC").mesmoNome("FALSE")) {
 
-                        mPosProcessador.mensagem("\t\t\t - Pedido Generico : Nao");
-                        mPosProcessador.mensagem("\t\t\t - Base Generico : Nao");
+                        mensagem("\t\t\t - Pedido Generico : Nao");
+                        mensagem("\t\t\t - Base Generico : Nao");
 
                         ok = true;
 
                     } else if (bAST.getBranch("GENERIC").mesmoNome("FALSE") && eBaseType.getBranch("GENERIC").mesmoNome("TRUE")) {
 
-                        mPosProcessador.mensagem("\t\t\t - Pedido Generico : Nao");
-                        mPosProcessador.mensagem("\t\t\t - Base Generico : Sim");
+                        mensagem("\t\t\t - Pedido Generico : Nao");
+                        mensagem("\t\t\t - Base Generico : Sim");
 
                         mPosProcessador.errar("Type  " + bAST.getNome() + " : E generica !");
 
                     } else if (bAST.getBranch("GENERIC").mesmoNome("TRUE") && eBaseType.getBranch("GENERIC").mesmoNome("FALSE")) {
 
-                        mPosProcessador.mensagem("\t\t\t - Pedido Generico : Sim");
-                        mPosProcessador.mensagem("\t\t\t - Base Generico : Nao");
+                        mensagem("\t\t\t - Pedido Generico : Sim");
+                        mensagem("\t\t\t - Base Generico : Nao");
 
                         mPosProcessador.errar("Type  " + bAST.getNome() + " : Nao e generica !");
 
                     } else if (bAST.getBranch("GENERIC").mesmoNome("TRUE") && eBaseType.getBranch("GENERIC").mesmoNome("TRUE")) {
 
-                        mPosProcessador.mensagem("\t\t\t - Pedido Generico : Sim");
-                        mPosProcessador.mensagem("\t\t\t - Base Generico : Sim");
+                        mensagem("\t\t\t - Pedido Generico : Sim");
+                        mensagem("\t\t\t - Base Generico : Sim");
 
                         ok = true;
 
@@ -201,7 +208,7 @@ public class Unificador {
 
 
                 } else {
-                    mPosProcessador.mensagem("\t\t\t - Existe : Nao");
+                    mensagem("\t\t\t - Existe : Nao");
                     mPosProcessador.errar("Base Type " + bAST.getNome() + " : Nao encontrada !");
                 }
 

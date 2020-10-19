@@ -9,12 +9,8 @@ package MAIS {
 	struct Mais {
 		all : 
 		act mostraral ( ) {
-			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
-			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
-			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STRUCTS;
-			
+	        DEBUG -> REGRESSIVE :: ALL;
 			#def e : Esconder = init Esconder("a");
-			
 		}
 		
 	}
@@ -34,7 +30,7 @@ package Objetos {
 		}
 
 		act mostrarStruct ( ) {
-			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 		}
 		
 	}
@@ -59,7 +55,7 @@ package Objetos {
 		}
 
 		act mostrarStruct ( ) {
-			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 		}
 		
 	}
@@ -84,15 +80,15 @@ package Objetos {
 		}
 
 		act mostrarStruct ( ) {
-			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 		}
 
 		act mostrarAcumulador ( ) {
-			
-			#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
-			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
-			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STRUCTS;
-			invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
+
+			DEBUG -> LOCAL :: REFER;
+			DEBUG -> LOCAL :: STRUCTS;
+
+
 			def qa : Q3 = start Q3 {
 				a = 10.0;
 				b = 12.0;
@@ -128,16 +124,13 @@ act inicio ( ) {
 	def c : Acumulador >> ( num ) = Acumulador1;
 	c.guardar ( 2.0 );
 	
-	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	
-	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: REFER;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STRUCTS;
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
+
+	DEBUG -> REGRESSIVE :: ALL;
+
 	Acumulador1.mostrarAcumulador ( );
 	def qa : Q2 = start Q2 {
 		a = 10.0;
 		b = 12.0;
 	};
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 }

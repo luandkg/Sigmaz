@@ -47,7 +47,7 @@ package Blocos {
 
 	struct Blocos {
 		explicit : act Blocar ( a : int , b : int ) {
-			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: EXTERNS;
+	DEBUG -> REGRESSIVE :: ALL;
 			Terminal -> println ( " -->> Valor A : ", a );
 		}
 		
@@ -87,5 +87,5 @@ call iniciar -> {
 	def bg : BGeral = init BGeral ( 15 );
 	Blocos -> Blocar ( 7 , 1 );
 	def bga : int = bg.getA ( );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 }

@@ -3,6 +3,8 @@ package Gerador;
 import LuanDKG.Texto;
 import Sigmaz.S00_Utilitarios.Documento;
 
+import java.util.ArrayList;
+
 public class BioGerador {
 
     String mLocalPasta;
@@ -19,6 +21,7 @@ public class BioGerador {
         criarOperadores();
         criarOrganismo();
         criarMamiferos();
+        criarRepteis();
 
     }
 
@@ -29,6 +32,7 @@ public class BioGerador {
         mDocumento.adicionarLinha(0, "");
         mDocumento.adicionarLinha(0, "import \"operadores.sigmaz\";");
         mDocumento.adicionarLinha(0, "import \"mamiferos.sigmaz\";");
+        mDocumento.adicionarLinha(0, "import \"repteis.sigmaz\";");
 
         mDocumento.adicionarLinha(0, "");
 
@@ -37,6 +41,7 @@ public class BioGerador {
 
         mDocumento.adicionarLinha(0, "");
         mDocumento.adicionarLinha(0, "refer Mamiferos;");
+        mDocumento.adicionarLinha(0, "refer Repteis;");
 
         mDocumento.adicionarLinha(0, "");
         mDocumento.adicionarLinha(0, "call iniciar -> { ");
@@ -50,19 +55,28 @@ public class BioGerador {
         mDocumento.adicionarLinha(1, "def Lobinho_Fuc : Lobo = init Lobo('Fuc',12);");
         mDocumento.adicionarLinha(1, "");
         mDocumento.adicionarLinha(1, "def Lobinho_Fuc_idade : int = Lobinho_Fuc.getIdade();");
+        mDocumento.adicionarLinha(1, "def Lobinho_Fuc_especie : string = Lobinho_Fuc.getEspecie();");
 
         mDocumento.adicionarLinha(1, "");
         mDocumento.adicionarLinha(1, "Gatinho_Ana.envelhecer(3);");
 
         mDocumento.adicionarLinha(1, "def Gatinho_Ana_idade : int = Gatinho_Ana.getIdade();");
+        mDocumento.adicionarLinha(1, "def Gatinho_Ana_especie : string = Gatinho_Ana.getEspecie();");
+
+
+        mDocumento.adicionarLinha(1, "def mamifero_1 : Mamifero = Gatinho_Ana;");
+        mDocumento.adicionarLinha(1, "def mamifero_2 : Mamifero = Lobinho_Fuc;");
+
+        mDocumento.adicionarLinha(1, "def Tartaruga_Carlos : Tartaruga = init Tartaruga('Carlos',112);");
+        mDocumento.adicionarLinha(1, "def reptil_1 : Reptil = Tartaruga_Carlos;");
+
 
         mDocumento.adicionarLinha(0, "");
 
-        mDocumento.adicionarLinha(1, "invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;");
-        mDocumento.adicionarLinha(1, "invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;");
+        mDocumento.adicionarLinha(1, "DEBUG -> LOCAL :: STACK;");
+        mDocumento.adicionarLinha(1, "DEBUG -> REGRESSIVE :: STACK;");
 
         mDocumento.adicionarLinha(0, "}");
-
 
 
         mDocumento.adicionarLinha(0, "");
@@ -132,6 +146,8 @@ public class BioGerador {
         mDocumento.adicionarLinha(2, "} ");
 
         mDocumento.adicionarLinha(2, "restrict: ");
+
+        mDocumento.adicionarLinha(3, "define especie : string;");
         mDocumento.adicionarLinha(3, "define nome : string;");
         mDocumento.adicionarLinha(3, "define idade : int;");
 
@@ -139,6 +155,7 @@ public class BioGerador {
         mDocumento.adicionarLinha(2, "all: ");
         mDocumento.adicionarLinha(3, "func getIdade() : int { return idade;}");
         mDocumento.adicionarLinha(3, "act envelhecer(eMais : int) { idade = idade++eMais;}");
+        mDocumento.adicionarLinha(3, "func getEspecie() : string { return especie;}");
 
 
         mDocumento.adicionarLinha(1, "}");
@@ -165,20 +182,91 @@ public class BioGerador {
 
         mDocumento.adicionarLinha(0, "");
 
-        mDocumento.adicionarLinha(1, "struct Gato with Mamifero {");
-        mDocumento.adicionarLinha(2, "init Gato (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) {} ");
-        mDocumento.adicionarLinha(1, "}");
+        ArrayList<String> mAnimais = new ArrayList<String>();
+        mAnimais.add("Gato");
+        mAnimais.add("Cachorro");
+        mAnimais.add("Lobo");
+        mAnimais.add("Rato");
+        mAnimais.add("Rinoceronte");
+        mAnimais.add("Golfinho");
+        mAnimais.add("Baleia");
+        mAnimais.add("Ramster");
 
-        mDocumento.adicionarLinha(0, "");
+        for(String mAnimal : mAnimais){
 
-        mDocumento.adicionarLinha(1, "struct Lobo with Mamifero {");
-        mDocumento.adicionarLinha(2, "init Lobo (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) {} ");
-        mDocumento.adicionarLinha(1, "}");
+            mDocumento.adicionarLinha("");
+
+            mDocumento.adicionarLinha(1, "struct " + mAnimal + " with Mamifero {");
+            mDocumento.adicionarLinha(2, "init " + mAnimal + " (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { ");
+
+
+            mDocumento.adicionarLinha(3, "especie = " + "\"" + mAnimal + "\";");
+
+            mDocumento.adicionarLinha(2, "} ");
+
+
+
+            mDocumento.adicionarLinha(1, "}");
+
+
+
+        }
 
         mDocumento.adicionarLinha(0, "}");
+
 
         Texto.Escrever(mLocalPasta + "mamiferos.sigmaz", mDocumento.getConteudo());
 
     }
+
+    public void criarRepteis() {
+
+        Documento mDocumento = new Documento();
+
+        mDocumento.adicionarLinha(0, "import \"organismos.sigmaz\";");
+
+        mDocumento.adicionarLinha(0, "package Repteis {");
+        mDocumento.adicionarLinha(1, "refer Vida;");
+
+        mDocumento.adicionarLinha(1, "struct Reptil with Organismo {");
+        mDocumento.adicionarLinha(2, "init Reptil (eNome:string,eIdade:int) -> Organismo (eNome,eIdade) {} ");
+        mDocumento.adicionarLinha(1, "}");
+
+        mDocumento.adicionarLinha(0, "");
+
+        ArrayList<String> mAnimais = new ArrayList<String>();
+        mAnimais.add("Tartaruga");
+        mAnimais.add("Cobra");
+        mAnimais.add("Crocodilho");
+        mAnimais.add("Dinossauro");
+
+
+        for(String mAnimal : mAnimais){
+
+            mDocumento.adicionarLinha("");
+
+            mDocumento.adicionarLinha(1, "struct " + mAnimal + " with Reptil {");
+            mDocumento.adicionarLinha(2, "init " + mAnimal + " (eNome:string,eIdade:int) -> Reptil (eNome,eIdade) { ");
+
+
+            mDocumento.adicionarLinha(3, "especie = " + "\"" + mAnimal + "\";");
+
+            mDocumento.adicionarLinha(2, "} ");
+
+
+
+            mDocumento.adicionarLinha(1, "}");
+
+
+
+        }
+
+        mDocumento.adicionarLinha(0, "}");
+
+
+        Texto.Escrever(mLocalPasta + "repteis.sigmaz", mDocumento.getConteudo());
+
+    }
+
 
 }

@@ -10,8 +10,6 @@ import java.io.File;
 import java.util.ArrayList;
 
 import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S00_Utilitarios.Documentador;
-import Sigmaz.S00_Utilitarios.Tempo;
 
 public class RunTime {
 
@@ -182,8 +180,6 @@ public class RunTime {
     }
 
     public String getArvoreDeInstrucoes() {
-
-        Documentador DC = new Documentador();
 
         String ret = "";
 

@@ -28,10 +28,8 @@ call Mark -> {
 	def metragem_3 : int = 10 Km ++ 12 Dam;
 	def metragem_4 : int = metragem_3 Km;
 	def metragem_5 : int = ! ( ! 10 Km );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: STACK;
-	invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: MARK;
+	DEBUG -> REGRESSIVE :: STACK;
+
 }
 director ! ( a : int ) : int {
 	reg @ R5 -> a;

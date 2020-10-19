@@ -1,0 +1,74 @@
+call Remocao -> {
+
+    def u1 : Usuario = start Usuario {  Nome="Luan";    Idade=27;  };
+    def u2 : Usuario = start Usuario {  Nome="Alice";   Idade=34; };
+    def u3 : Usuario = start Usuario {  Nome="Alex";    Idade=20;  };
+
+    def valor : int = 12;
+
+	DEBUG -> LOCAL :: STACK;
+	DEBUG -> GLOBAL :: INSTANCES;
+
+    delete u2;
+    delete valor;
+
+    delete start Usuario {  Nome="Bruna";    Idade=25;  };
+
+
+
+	DEBUG -> LOCAL :: STACK;
+	DEBUG -> GLOBAL :: INSTANCES;
+
+
+    def alfa : Objeto = init Objeto(12);
+
+    def beta : Objeto = init Objeto(13);
+
+	DEBUG -> LOCAL :: STACK;
+	DEBUG -> GLOBAL :: INSTANCES;
+
+    delete alfa;
+
+
+	DEBUG -> LOCAL :: STACK;
+	DEBUG -> GLOBAL :: INSTANCES;
+
+}
+
+type Usuario{
+    define Nome : string = "";
+    define Idade : int = 0;
+}
+
+
+struct Objeto {
+
+
+    init Objeto( a : int) {
+
+        this.mA = a;
+        this.mSI = init SubItem();
+
+    }
+
+    destruct -> {
+        delete mSI;
+    }
+
+
+
+    restrict:
+        define mA : int;
+        define mSI : SubItem;
+
+    all:
+        func getA() : int { return mA; }
+
+}
+
+
+struct SubItem {
+
+
+}
+

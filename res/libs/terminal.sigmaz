@@ -1,53 +1,64 @@
- act print_empty ( ) {
-    PROC -> {
-        PROC CHANGE_LINE;
-    }
-   }
+act print_empty ( ) {
+	PROC -> {
+		PROC CHANGE_LINE;
+	}
+	
+}
 
- # PRINT - 1 ARGUMENTO
+# PRINT - 1 ARGUMENTO
 act print ( a : string ) {
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
+
 act print ( a : num ) {
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
+
 act print ( a : bool ) {
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
+
 act print ( a : int ) {
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
- # PRINTLN - 1 ARGUMENTO
+
+# PRINTLN - 1 ARGUMENTO
 act println ( a : string ) {
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PROC CHANGE_LINE;
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : num ) {
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		PROC CHANGE_LINE;
 		SET R13;
@@ -55,9 +66,11 @@ act println ( a : num ) {
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : bool ) {
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		PROC CHANGE_LINE;
 		SET R13;
@@ -65,9 +78,11 @@ act println ( a : bool ) {
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : int ) {
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		PROC CHANGE_LINE;
 		SET R13;
@@ -75,10399 +90,10160 @@ act println ( a : int ) {
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
- # PRINTLN - 2 ARGUMENTOS
+
+# PRINTLN - 2 ARGUMENTOS
 act println ( a : string , b : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : string , b : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : string , b : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : string , b : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : num , b : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : num , b : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : num , b : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : num , b : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : bool , b : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : bool , b : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : bool , b : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : bool , b : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : int , b : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : int , b : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : int , b : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
+
 act println ( a : int , b : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
- # PRINTLN - 3 ARGUMENTOS
-act println ( a : string , b : string ,c : string ) {
+
+# PRINTLN - 3 ARGUMENTOS
+act println ( a : string , b : string , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : num ) {
+
+act println ( a : string , b : string , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : bool ) {
+
+act println ( a : string , b : string , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : int ) {
+
+act println ( a : string , b : string , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : string ) {
+
+act println ( a : string , b : num , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : num ) {
+
+act println ( a : string , b : num , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : bool ) {
+
+act println ( a : string , b : num , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : int ) {
+
+act println ( a : string , b : num , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : string ) {
+
+act println ( a : string , b : bool , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : num ) {
+
+act println ( a : string , b : bool , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : bool ) {
+
+act println ( a : string , b : bool , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : int ) {
+
+act println ( a : string , b : bool , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : string ) {
+
+act println ( a : string , b : int , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : num ) {
+
+act println ( a : string , b : int , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : bool ) {
+
+act println ( a : string , b : int , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : int ) {
+
+act println ( a : string , b : int , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : string ) {
+
+act println ( a : num , b : string , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : num ) {
+
+act println ( a : num , b : string , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : bool ) {
+
+act println ( a : num , b : string , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : int ) {
+
+act println ( a : num , b : string , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : string ) {
+
+act println ( a : num , b : num , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : num ) {
+
+act println ( a : num , b : num , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : bool ) {
+
+act println ( a : num , b : num , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : int ) {
+
+act println ( a : num , b : num , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : string ) {
+
+act println ( a : num , b : bool , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : num ) {
+
+act println ( a : num , b : bool , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : bool ) {
+
+act println ( a : num , b : bool , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : int ) {
+
+act println ( a : num , b : bool , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : string ) {
+
+act println ( a : num , b : int , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : num ) {
+
+act println ( a : num , b : int , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : bool ) {
+
+act println ( a : num , b : int , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : int ) {
+
+act println ( a : num , b : int , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : string ) {
+
+act println ( a : bool , b : string , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : num ) {
+
+act println ( a : bool , b : string , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : bool ) {
+
+act println ( a : bool , b : string , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : int ) {
+
+act println ( a : bool , b : string , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : string ) {
+
+act println ( a : bool , b : num , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : num ) {
+
+act println ( a : bool , b : num , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : bool ) {
+
+act println ( a : bool , b : num , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : int ) {
+
+act println ( a : bool , b : num , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : string ) {
+
+act println ( a : bool , b : bool , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : num ) {
+
+act println ( a : bool , b : bool , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : bool ) {
+
+act println ( a : bool , b : bool , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : int ) {
+
+act println ( a : bool , b : bool , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : string ) {
+
+act println ( a : bool , b : int , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : num ) {
+
+act println ( a : bool , b : int , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : bool ) {
+
+act println ( a : bool , b : int , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : int ) {
+
+act println ( a : bool , b : int , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : string ) {
+
+act println ( a : int , b : string , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : num ) {
+
+act println ( a : int , b : string , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : bool ) {
+
+act println ( a : int , b : string , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : int ) {
+
+act println ( a : int , b : string , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : string ) {
+
+act println ( a : int , b : num , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : num ) {
+
+act println ( a : int , b : num , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : bool ) {
+
+act println ( a : int , b : num , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : int ) {
+
+act println ( a : int , b : num , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : string ) {
+
+act println ( a : int , b : bool , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : num ) {
+
+act println ( a : int , b : bool , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : bool ) {
+
+act println ( a : int , b : bool , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : int ) {
+
+act println ( a : int , b : bool , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : string ) {
+
+act println ( a : int , b : int , c : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : num ) {
+
+act println ( a : int , b : int , c : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : bool ) {
+
+act println ( a : int , b : int , c : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : int ) {
+
+act println ( a : int , b : int , c : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
- # PRINTLN - 4 ARGUMENTOS
-act println ( a : string , b : string ,c : string , d : string ) {
+
+# PRINTLN - 4 ARGUMENTOS
+act println ( a : string , b : string , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : string , d : num ) {
+
+act println ( a : string , b : string , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : string , d : bool ) {
+
+act println ( a : string , b : string , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : string , d : int ) {
+
+act println ( a : string , b : string , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : num , d : string ) {
+
+act println ( a : string , b : string , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : num , d : num ) {
+
+act println ( a : string , b : string , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : num , d : bool ) {
+
+act println ( a : string , b : string , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : num , d : int ) {
+
+act println ( a : string , b : string , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : bool , d : string ) {
+
+act println ( a : string , b : string , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : bool , d : num ) {
+
+act println ( a : string , b : string , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : bool , d : bool ) {
+
+act println ( a : string , b : string , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : bool , d : int ) {
+
+act println ( a : string , b : string , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : int , d : string ) {
+
+act println ( a : string , b : string , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : int , d : num ) {
+
+act println ( a : string , b : string , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : int , d : bool ) {
+
+act println ( a : string , b : string , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : string ,c : int , d : int ) {
+
+act println ( a : string , b : string , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : string , d : string ) {
+
+act println ( a : string , b : num , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : string , d : num ) {
+
+act println ( a : string , b : num , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : string , d : bool ) {
+
+act println ( a : string , b : num , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : string , d : int ) {
+
+act println ( a : string , b : num , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : num , d : string ) {
+
+act println ( a : string , b : num , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : num , d : num ) {
+
+act println ( a : string , b : num , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : num , d : bool ) {
+
+act println ( a : string , b : num , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : num , d : int ) {
+
+act println ( a : string , b : num , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : bool , d : string ) {
+
+act println ( a : string , b : num , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : bool , d : num ) {
+
+act println ( a : string , b : num , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : bool , d : bool ) {
+
+act println ( a : string , b : num , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : bool , d : int ) {
+
+act println ( a : string , b : num , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : int , d : string ) {
+
+act println ( a : string , b : num , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : int , d : num ) {
+
+act println ( a : string , b : num , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : int , d : bool ) {
+
+act println ( a : string , b : num , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : num ,c : int , d : int ) {
+
+act println ( a : string , b : num , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : string , d : string ) {
+
+act println ( a : string , b : bool , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : string , d : num ) {
+
+act println ( a : string , b : bool , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : string , d : bool ) {
+
+act println ( a : string , b : bool , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : string , d : int ) {
+
+act println ( a : string , b : bool , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : num , d : string ) {
+
+act println ( a : string , b : bool , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : num , d : num ) {
+
+act println ( a : string , b : bool , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : num , d : bool ) {
+
+act println ( a : string , b : bool , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : num , d : int ) {
+
+act println ( a : string , b : bool , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : bool , d : string ) {
+
+act println ( a : string , b : bool , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : bool , d : num ) {
+
+act println ( a : string , b : bool , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : bool , d : bool ) {
+
+act println ( a : string , b : bool , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : bool , d : int ) {
+
+act println ( a : string , b : bool , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : int , d : string ) {
+
+act println ( a : string , b : bool , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : int , d : num ) {
+
+act println ( a : string , b : bool , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : int , d : bool ) {
+
+act println ( a : string , b : bool , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : bool ,c : int , d : int ) {
+
+act println ( a : string , b : bool , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : string , d : string ) {
+
+act println ( a : string , b : int , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : string , d : num ) {
+
+act println ( a : string , b : int , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : string , d : bool ) {
+
+act println ( a : string , b : int , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : string , d : int ) {
+
+act println ( a : string , b : int , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : num , d : string ) {
+
+act println ( a : string , b : int , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : num , d : num ) {
+
+act println ( a : string , b : int , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : num , d : bool ) {
+
+act println ( a : string , b : int , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : num , d : int ) {
+
+act println ( a : string , b : int , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : bool , d : string ) {
+
+act println ( a : string , b : int , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : bool , d : num ) {
+
+act println ( a : string , b : int , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : bool , d : bool ) {
+
+act println ( a : string , b : int , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : bool , d : int ) {
+
+act println ( a : string , b : int , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : int , d : string ) {
+
+act println ( a : string , b : int , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : int , d : num ) {
+
+act println ( a : string , b : int , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : int , d : bool ) {
+
+act println ( a : string , b : int , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : string , b : int ,c : int , d : int ) {
+
+act println ( a : string , b : int , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R13 -> a;
+	reg @ R13 -> a;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : string , d : string ) {
+
+act println ( a : num , b : string , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : string , d : num ) {
+
+act println ( a : num , b : string , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : string , d : bool ) {
+
+act println ( a : num , b : string , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : string , d : int ) {
+
+act println ( a : num , b : string , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : num , d : string ) {
+
+act println ( a : num , b : string , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : num , d : num ) {
+
+act println ( a : num , b : string , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : num , d : bool ) {
+
+act println ( a : num , b : string , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : num , d : int ) {
+
+act println ( a : num , b : string , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : bool , d : string ) {
+
+act println ( a : num , b : string , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : bool , d : num ) {
+
+act println ( a : num , b : string , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : bool , d : bool ) {
+
+act println ( a : num , b : string , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : bool , d : int ) {
+
+act println ( a : num , b : string , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : int , d : string ) {
+
+act println ( a : num , b : string , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : int , d : num ) {
+
+act println ( a : num , b : string , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : int , d : bool ) {
+
+act println ( a : num , b : string , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : string ,c : int , d : int ) {
+
+act println ( a : num , b : string , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : string , d : string ) {
+
+act println ( a : num , b : num , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : string , d : num ) {
+
+act println ( a : num , b : num , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : string , d : bool ) {
+
+act println ( a : num , b : num , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : string , d : int ) {
+
+act println ( a : num , b : num , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : num , d : string ) {
+
+act println ( a : num , b : num , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : num , d : num ) {
+
+act println ( a : num , b : num , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : num , d : bool ) {
+
+act println ( a : num , b : num , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : num , d : int ) {
+
+act println ( a : num , b : num , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : bool , d : string ) {
+
+act println ( a : num , b : num , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : bool , d : num ) {
+
+act println ( a : num , b : num , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : bool , d : bool ) {
+
+act println ( a : num , b : num , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : bool , d : int ) {
+
+act println ( a : num , b : num , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : int , d : string ) {
+
+act println ( a : num , b : num , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : int , d : num ) {
+
+act println ( a : num , b : num , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : int , d : bool ) {
+
+act println ( a : num , b : num , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : num ,c : int , d : int ) {
+
+act println ( a : num , b : num , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : string , d : string ) {
+
+act println ( a : num , b : bool , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : string , d : num ) {
+
+act println ( a : num , b : bool , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : string , d : bool ) {
+
+act println ( a : num , b : bool , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : string , d : int ) {
+
+act println ( a : num , b : bool , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : num , d : string ) {
+
+act println ( a : num , b : bool , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : num , d : num ) {
+
+act println ( a : num , b : bool , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : num , d : bool ) {
+
+act println ( a : num , b : bool , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : num , d : int ) {
+
+act println ( a : num , b : bool , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : bool , d : string ) {
+
+act println ( a : num , b : bool , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : bool , d : num ) {
+
+act println ( a : num , b : bool , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : bool , d : bool ) {
+
+act println ( a : num , b : bool , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : bool , d : int ) {
+
+act println ( a : num , b : bool , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : int , d : string ) {
+
+act println ( a : num , b : bool , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : int , d : num ) {
+
+act println ( a : num , b : bool , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : int , d : bool ) {
+
+act println ( a : num , b : bool , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : bool ,c : int , d : int ) {
+
+act println ( a : num , b : bool , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : string , d : string ) {
+
+act println ( a : num , b : int , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : string , d : num ) {
+
+act println ( a : num , b : int , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : string , d : bool ) {
+
+act println ( a : num , b : int , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : string , d : int ) {
+
+act println ( a : num , b : int , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : num , d : string ) {
+
+act println ( a : num , b : int , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : num , d : num ) {
+
+act println ( a : num , b : int , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : num , d : bool ) {
+
+act println ( a : num , b : int , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : num , d : int ) {
+
+act println ( a : num , b : int , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : bool , d : string ) {
+
+act println ( a : num , b : int , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : bool , d : num ) {
+
+act println ( a : num , b : int , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : bool , d : bool ) {
+
+act println ( a : num , b : int , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : bool , d : int ) {
+
+act println ( a : num , b : int , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : int , d : string ) {
+
+act println ( a : num , b : int , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : int , d : num ) {
+
+act println ( a : num , b : int , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : int , d : bool ) {
+
+act println ( a : num , b : int , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : num , b : int ,c : int , d : int ) {
+
+act println ( a : num , b : int , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R9 -> a;
+	reg @ R9 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : string , d : string ) {
+
+act println ( a : bool , b : string , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : string , d : num ) {
+
+act println ( a : bool , b : string , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : string , d : bool ) {
+
+act println ( a : bool , b : string , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : string , d : int ) {
+
+act println ( a : bool , b : string , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : num , d : string ) {
+
+act println ( a : bool , b : string , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : num , d : num ) {
+
+act println ( a : bool , b : string , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : num , d : bool ) {
+
+act println ( a : bool , b : string , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : num , d : int ) {
+
+act println ( a : bool , b : string , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : bool , d : string ) {
+
+act println ( a : bool , b : string , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : bool , d : num ) {
+
+act println ( a : bool , b : string , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : bool , d : bool ) {
+
+act println ( a : bool , b : string , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : bool , d : int ) {
+
+act println ( a : bool , b : string , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : int , d : string ) {
+
+act println ( a : bool , b : string , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : int , d : num ) {
+
+act println ( a : bool , b : string , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : int , d : bool ) {
+
+act println ( a : bool , b : string , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : string ,c : int , d : int ) {
+
+act println ( a : bool , b : string , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : string , d : string ) {
+
+act println ( a : bool , b : num , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : string , d : num ) {
+
+act println ( a : bool , b : num , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : string , d : bool ) {
+
+act println ( a : bool , b : num , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : string , d : int ) {
+
+act println ( a : bool , b : num , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : num , d : string ) {
+
+act println ( a : bool , b : num , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : num , d : num ) {
+
+act println ( a : bool , b : num , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : num , d : bool ) {
+
+act println ( a : bool , b : num , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : num , d : int ) {
+
+act println ( a : bool , b : num , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : bool , d : string ) {
+
+act println ( a : bool , b : num , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : bool , d : num ) {
+
+act println ( a : bool , b : num , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : bool , d : bool ) {
+
+act println ( a : bool , b : num , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : bool , d : int ) {
+
+act println ( a : bool , b : num , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : int , d : string ) {
+
+act println ( a : bool , b : num , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : int , d : num ) {
+
+act println ( a : bool , b : num , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : int , d : bool ) {
+
+act println ( a : bool , b : num , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : num ,c : int , d : int ) {
+
+act println ( a : bool , b : num , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : string , d : string ) {
+
+act println ( a : bool , b : bool , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : string , d : num ) {
+
+act println ( a : bool , b : bool , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : string , d : bool ) {
+
+act println ( a : bool , b : bool , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : string , d : int ) {
+
+act println ( a : bool , b : bool , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : num , d : string ) {
+
+act println ( a : bool , b : bool , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : num , d : num ) {
+
+act println ( a : bool , b : bool , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : num , d : bool ) {
+
+act println ( a : bool , b : bool , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : num , d : int ) {
+
+act println ( a : bool , b : bool , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : bool , d : string ) {
+
+act println ( a : bool , b : bool , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : bool , d : num ) {
+
+act println ( a : bool , b : bool , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : bool , d : bool ) {
+
+act println ( a : bool , b : bool , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : bool , d : int ) {
+
+act println ( a : bool , b : bool , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : int , d : string ) {
+
+act println ( a : bool , b : bool , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : int , d : num ) {
+
+act println ( a : bool , b : bool , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : int , d : bool ) {
+
+act println ( a : bool , b : bool , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : bool ,c : int , d : int ) {
+
+act println ( a : bool , b : bool , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : string , d : string ) {
+
+act println ( a : bool , b : int , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : string , d : num ) {
+
+act println ( a : bool , b : int , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : string , d : bool ) {
+
+act println ( a : bool , b : int , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : string , d : int ) {
+
+act println ( a : bool , b : int , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : num , d : string ) {
+
+act println ( a : bool , b : int , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : num , d : num ) {
+
+act println ( a : bool , b : int , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : num , d : bool ) {
+
+act println ( a : bool , b : int , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : num , d : int ) {
+
+act println ( a : bool , b : int , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : bool , d : string ) {
+
+act println ( a : bool , b : int , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : bool , d : num ) {
+
+act println ( a : bool , b : int , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : bool , d : bool ) {
+
+act println ( a : bool , b : int , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : bool , d : int ) {
+
+act println ( a : bool , b : int , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : int , d : string ) {
+
+act println ( a : bool , b : int , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : int , d : num ) {
+
+act println ( a : bool , b : int , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : int , d : bool ) {
+
+act println ( a : bool , b : int , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : bool , b : int ,c : int , d : int ) {
+
+act println ( a : bool , b : int , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R1 -> a;
+	reg @ R1 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : string , d : string ) {
+
+act println ( a : int , b : string , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : string , d : num ) {
+
+act println ( a : int , b : string , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : string , d : bool ) {
+
+act println ( a : int , b : string , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : string , d : int ) {
+
+act println ( a : int , b : string , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : num , d : string ) {
+
+act println ( a : int , b : string , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : num , d : num ) {
+
+act println ( a : int , b : string , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : num , d : bool ) {
+
+act println ( a : int , b : string , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : num , d : int ) {
+
+act println ( a : int , b : string , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : bool , d : string ) {
+
+act println ( a : int , b : string , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : bool , d : num ) {
+
+act println ( a : int , b : string , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : bool , d : bool ) {
+
+act println ( a : int , b : string , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : bool , d : int ) {
+
+act println ( a : int , b : string , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : int , d : string ) {
+
+act println ( a : int , b : string , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : int , d : num ) {
+
+act println ( a : int , b : string , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : int , d : bool ) {
+
+act println ( a : int , b : string , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : string ,c : int , d : int ) {
+
+act println ( a : int , b : string , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> b;
+	reg @ R13 -> b;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : string , d : string ) {
+
+act println ( a : int , b : num , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : string , d : num ) {
+
+act println ( a : int , b : num , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : string , d : bool ) {
+
+act println ( a : int , b : num , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : string , d : int ) {
+
+act println ( a : int , b : num , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : num , d : string ) {
+
+act println ( a : int , b : num , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : num , d : num ) {
+
+act println ( a : int , b : num , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : num , d : bool ) {
+
+act println ( a : int , b : num , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : num , d : int ) {
+
+act println ( a : int , b : num , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : bool , d : string ) {
+
+act println ( a : int , b : num , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : bool , d : num ) {
+
+act println ( a : int , b : num , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : bool , d : bool ) {
+
+act println ( a : int , b : num , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : bool , d : int ) {
+
+act println ( a : int , b : num , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : int , d : string ) {
+
+act println ( a : int , b : num , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : int , d : num ) {
+
+act println ( a : int , b : num , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : int , d : bool ) {
+
+act println ( a : int , b : num , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : num ,c : int , d : int ) {
+
+act println ( a : int , b : num , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> b;
+	reg @ R9 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : string , d : string ) {
+
+act println ( a : int , b : bool , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : string , d : num ) {
+
+act println ( a : int , b : bool , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : string , d : bool ) {
+
+act println ( a : int , b : bool , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : string , d : int ) {
+
+act println ( a : int , b : bool , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : num , d : string ) {
+
+act println ( a : int , b : bool , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : num , d : num ) {
+
+act println ( a : int , b : bool , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : num , d : bool ) {
+
+act println ( a : int , b : bool , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : num , d : int ) {
+
+act println ( a : int , b : bool , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : bool , d : string ) {
+
+act println ( a : int , b : bool , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : bool , d : num ) {
+
+act println ( a : int , b : bool , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : bool , d : bool ) {
+
+act println ( a : int , b : bool , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : bool , d : int ) {
+
+act println ( a : int , b : bool , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : int , d : string ) {
+
+act println ( a : int , b : bool , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : int , d : num ) {
+
+act println ( a : int , b : bool , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : int , d : bool ) {
+
+act println ( a : int , b : bool , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : bool ,c : int , d : int ) {
+
+act println ( a : int , b : bool , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> b;
+	reg @ R1 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : string , d : string ) {
+
+act println ( a : int , b : int , c : string , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : string , d : num ) {
+
+act println ( a : int , b : int , c : string , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : string , d : bool ) {
+
+act println ( a : int , b : int , c : string , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : string , d : int ) {
+
+act println ( a : int , b : int , c : string , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> c;
+	reg @ R13 -> c;
 	PROC -> {
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : num , d : string ) {
+
+act println ( a : int , b : int , c : num , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : num , d : num ) {
+
+act println ( a : int , b : int , c : num , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : num , d : bool ) {
+
+act println ( a : int , b : int , c : num , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : num , d : int ) {
+
+act println ( a : int , b : int , c : num , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> c;
+	reg @ R9 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : bool , d : string ) {
+
+act println ( a : int , b : int , c : bool , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : bool , d : num ) {
+
+act println ( a : int , b : int , c : bool , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : bool , d : bool ) {
+
+act println ( a : int , b : int , c : bool , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : bool , d : int ) {
+
+act println ( a : int , b : int , c : bool , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> c;
+	reg @ R1 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : int , d : string ) {
+
+act println ( a : int , b : int , c : int , d : string ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R13 -> d;
+	reg @ R13 -> d;
 	PROC -> {
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : int , d : num ) {
+
+act println ( a : int , b : int , c : int , d : num ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R9 -> d;
+	reg @ R9 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : int , d : bool ) {
+
+act println ( a : int , b : int , c : int , d : bool ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R1 -> d;
+	reg @ R1 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
 		PRINT R13;
 	}
+	
 }
-act println ( a : int , b : int ,c : int , d : int ) {
+
+act println ( a : int , b : int , c : int , d : int ) {
 	PROC -> {
 		PROC CHANGE_LINE;
 	}
-	reg @R5 -> a;
+	reg @ R5 -> a;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> b;
+	reg @ R5 -> b;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> c;
+	reg @ R5 -> c;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
-
-	reg @R5 -> d;
+	reg @ R5 -> d;
 	PROC -> {
 		SET R13;
 		MOV "";
 		INT_STRING R5;
 		PRINT R13;
 	}
+	
 }

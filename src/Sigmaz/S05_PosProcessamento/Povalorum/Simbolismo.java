@@ -3,6 +3,7 @@ package Sigmaz.S05_PosProcessamento.Povalorum;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S00_Utilitarios.AgrupadorAST;
 import Sigmaz.S00_Utilitarios.Mensageiro;
+import Sigmaz.S05_PosProcessamento.Processadores.Valorador;
 import Sigmaz.S05_PosProcessamento.Pronoco.*;
 import Sigmaz.S07_Executor.Debuggers.Simplificador;
 
@@ -10,13 +11,13 @@ import java.util.ArrayList;
 
 public class Simbolismo {
 
-    private Mensageiro mMensageiro;
+    private Valorador mValorador;
     private Simplificador mSimplificador;
     private AgrupadorAST mAgrupadorAST;
 
-    public Simbolismo(Mensageiro eMensageiro) {
+    public Simbolismo(Valorador eValorador) {
 
-        mMensageiro = eMensageiro;
+        mValorador = eValorador;
         mSimplificador = new Simplificador();
         mAgrupadorAST = new AgrupadorAST();
 
@@ -120,11 +121,11 @@ public class Simbolismo {
 
         for (AST mAST : mCalls) {
 
-            if (mMensageiro.getErros().size() > 0) {
+            if (mValorador.getErros().size() > 0) {
                 break;
             }
 
-            mMensageiro.mensagem(ePrefixo + eNomeGeral+ " Call : " + mSimplificador.getCall(mAST));
+            mValorador.mensagem(ePrefixo + eNomeGeral+ " Call : " + mSimplificador.getCall(mAST));
 
         }
 
@@ -135,26 +136,26 @@ public class Simbolismo {
 
         for (AST mAST : mActions) {
 
-            if (mMensageiro.getErros().size() > 0) {
+            if (mValorador.getErros().size() > 0) {
                 break;
             }
 
             Pronoco_Action mS = new Pronoco_Action(mAST);
             mAtribuindos.adicionarAction(mS);
-            mMensageiro.mensagem(ePrefixo + eNomeGeral + " Action " + mS.getDefinicao());
+            mValorador.mensagem(ePrefixo + eNomeGeral + " Action " + mS.getDefinicao());
 
         }
 
         for (AST mAST : mFunctions) {
 
-            if (mMensageiro.getErros().size() > 0) {
+            if (mValorador.getErros().size() > 0) {
                 break;
             }
 
             Pronoco_Function mS = new Pronoco_Function(mAST);
             mAtribuindos.adicionarFunction(mS);
 
-            mMensageiro.mensagem(ePrefixo + eNomeGeral+ " Function " + mS.getDefinicao());
+            mValorador.mensagem(ePrefixo + eNomeGeral+ " Function " + mS.getDefinicao());
 
         }
 
@@ -164,28 +165,28 @@ public class Simbolismo {
 
         for (AST mAST : mAutos) {
 
-            if (mMensageiro.getErros().size() > 0) {
+            if (mValorador.getErros().size() > 0) {
                 break;
             }
 
             Pronoco_Auto mS = new Pronoco_Auto(mAST);
             mAtribuindos.adicionarAuto(mS);
 
-            mMensageiro.mensagem(ePrefixo + eNomeGeral+ " Auto " + mS.getDefinicao());
+            mValorador.mensagem(ePrefixo + eNomeGeral+ " Auto " + mS.getDefinicao());
 
         }
 
 
         for (AST mAST : mFunctores) {
 
-            if (mMensageiro.getErros().size() > 0) {
+            if (mValorador.getErros().size() > 0) {
                 break;
             }
 
             Pronoco_Functor mS = new Pronoco_Functor(mAST);
             mAtribuindos.adicionarFunctor(mS);
 
-            mMensageiro.mensagem(ePrefixo + eNomeGeral+ " Functor " + mS.getDefinicao());
+            mValorador.mensagem(ePrefixo + eNomeGeral+ " Functor " + mS.getDefinicao());
 
         }
 
@@ -195,7 +196,7 @@ public class Simbolismo {
 
         for (AST mAST : mStructs) {
 
-            if (mMensageiro.getErros().size() > 0) {
+            if (mValorador.getErros().size() > 0) {
                 break;
             }
 
@@ -206,8 +207,8 @@ public class Simbolismo {
             Pronoco_Extern mE = new Pronoco_Extern(mAST);
             mAtribuindos.adicionarExtern(mE);
 
-            mMensageiro.mensagem(ePrefixo + eNomeGeral+" Struct " + mAST.getNome());
-            mMensageiro.mensagem(ePrefixo + eNomeGeral+" External " + mAST.getNome());
+            mValorador.mensagem(ePrefixo + eNomeGeral+" Struct " + mAST.getNome());
+            mValorador.mensagem(ePrefixo + eNomeGeral+" External " + mAST.getNome());
 
         }
 
@@ -219,14 +220,14 @@ public class Simbolismo {
 
         for (AST mAST : mExternals) {
 
-            if (mMensageiro.getErros().size() > 0) {
+            if (mValorador.getErros().size() > 0) {
                 break;
             }
 
             Pronoco_Extern mE = new Pronoco_Extern(mAST);
             mAtribuindos.adicionarExtern(mE);
 
-            mMensageiro.mensagem(ePrefixo + eNomeGeral+" External " + mAST.getNome());
+            mValorador.mensagem(ePrefixo + eNomeGeral+" External " + mAST.getNome());
 
         }
 
@@ -238,14 +239,14 @@ public class Simbolismo {
 
         for (AST mAST : mTypes) {
 
-            if (mMensageiro.getErros().size() > 0) {
+            if (mValorador.getErros().size() > 0) {
                 break;
             }
 
             Pronoco_Type mE = new Pronoco_Type(mAST);
             mAtribuindos.adicionarTypes(mE);
 
-            mMensageiro.mensagem(ePrefixo + eNomeGeral+" Type " + mAST.getNome());
+            mValorador.mensagem(ePrefixo + eNomeGeral+" Type " + mAST.getNome());
 
         }
 
@@ -256,7 +257,7 @@ public class Simbolismo {
 
         for (AST mAST : mStages) {
 
-            if (mMensageiro.getErros().size() > 0) {
+            if (mValorador.getErros().size() > 0) {
                 break;
             }
 
@@ -272,13 +273,13 @@ public class Simbolismo {
 
             mAtribuindos.adicionarStages(ms);
 
-            mMensageiro.mensagem(ePrefixo +eNomeGeral+ " Stages " + mAST.getNome());
+            mValorador.mensagem(ePrefixo +eNomeGeral+ " Stages " + mAST.getNome());
 
             Pronoco_Extern me = new Pronoco_Extern(mAST);
 
             mAtribuindos.adicionarExtern(me);
 
-            mMensageiro.mensagem(ePrefixo +eNomeGeral+ " Extern " + mAST.getNome());
+            mValorador.mensagem(ePrefixo +eNomeGeral+ " Extern " + mAST.getNome());
 
 
         }
@@ -290,13 +291,13 @@ public class Simbolismo {
 
         for (AST mAST : mModels) {
 
-            if (mMensageiro.getErros().size() > 0) {
+            if (mValorador.getErros().size() > 0) {
                 break;
             }
 
 
 
-            mMensageiro.mensagem(ePrefixo + eNomeGeral+" Model " + mAST.getNome()+ " ->> IMPLEMENTAR");
+            mValorador.mensagem(ePrefixo + eNomeGeral+" Model " + mAST.getNome()+ " ->> IMPLEMENTAR");
 
         }
 

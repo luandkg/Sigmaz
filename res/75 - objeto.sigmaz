@@ -1,5 +1,4 @@
 
-#import "libs/lib.sigmaz";
 struct Objeto {
 	all : 
 	init Objeto ( ) {
@@ -7,7 +6,7 @@ struct Objeto {
 	}
 
 	act trash ( ) {
-		invoke __COMPILER__ -> OBJECT ( this ) :: REMOVE;
+		delete this;
 	}
 	func equal ( ObjetoCorrente : Objeto ) : bool {
 		return false;
@@ -75,15 +74,20 @@ call iniciar -> {
 	def obj_9 : O3 = init O3 ( 13 );
 	def igual3 : bool = obj_8.equal ( obj_9 );
 	def hash_o8 : string = obj_8.hash ( );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	invoke __COMPILER__ -> STRUCTS ( ) :: INSTANCES;
-	obj_1.trash ( );
+
+	DEBUG -> REGRESSIVE :: STACK;
+	DEBUG -> GLOBAL :: INSTANCES;
+
+	#obj_1.trash ( );
 	obj_2.trash ( );
 	obj_3.trash ( );
 	obj_4.trash ( );
-	
+
 	#obj_5.trash();
 	obj_8.trash ( );
 	obj_9.trash ( );
-	invoke __COMPILER__ -> STRUCTS ( ) :: INSTANCES;
+
+	DEBUG -> REGRESSIVE :: STACK;
+	DEBUG -> GLOBAL :: INSTANCES;
+
 }

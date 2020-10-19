@@ -9,17 +9,15 @@ import Sigmaz.S07_Executor.Debuggers.Simplificador;
 public class Potiparum_Escopos {
 
     private Simplificador mSimplificador;
-    private Mensageiro mMensageiro;
 
     private Potiparum mPotiparum;
     private Potiparum_Tipificador mPotiparum_Tipificador;
     private Potiparum_Sigmaz mPotiparum_Sigmaz;
 
-    public Potiparum_Escopos(Potiparum ePotiparum, Mensageiro eMensageiro) {
+    public Potiparum_Escopos(Potiparum ePotiparum ) {
 
         mPotiparum = ePotiparum;
         mSimplificador = mPotiparum.getSimplificador();
-        mMensageiro = eMensageiro;
 
 
     }
@@ -37,9 +35,6 @@ public class Potiparum_Escopos {
 
 
 
-    public Mensageiro getMensageiro() {
-        return mMensageiro;
-    }
 
     public Potiparum_Tipificador getPotiparum_Tipificador() {
         return mPotiparum_Tipificador;
@@ -60,10 +55,10 @@ public class Potiparum_Escopos {
                 boolean retorno_ok = getPotiparum_Tipificador().conferirTipo(mAST.getBranch("TYPE"), mEscopo);
 
                 if (retorno_ok) {
-                    getMensageiro().mensagem(ePrefixo + "MOC " + mUtilitario.getDefine_Definicao(mAST) + " -->> OK ");
+                    mPotiparum.mensagem(ePrefixo + "MOC " + mUtilitario.getDefine_Definicao(mAST) + " -->> OK ");
                 } else {
-                    getMensageiro().mensagem(ePrefixo + "MOC " + mUtilitario.getDefine_Definicao(mAST) + " -->> TIPAGEM INVALIDA ");
-                    getMensageiro().errar("MOC " + mUtilitario.getDefine_Definicao(mAST) + " -->> TIPAGEM INVALIDA ");
+                    mPotiparum.mensagem(ePrefixo + "MOC " + mUtilitario.getDefine_Definicao(mAST) + " -->> TIPAGEM INVALIDA ");
+                    mPotiparum.errar("MOC " + mUtilitario.getDefine_Definicao(mAST) + " -->> TIPAGEM INVALIDA ");
                 }
 
             } else if (mAST.mesmoTipo("DEF")) {
@@ -71,10 +66,10 @@ public class Potiparum_Escopos {
                 boolean retorno_ok = getPotiparum_Tipificador().conferirTipo(mAST.getBranch("TYPE"), mEscopo);
 
                 if (retorno_ok) {
-                    getMensageiro().mensagem(ePrefixo + "DEF " + mUtilitario.getDefine_Definicao(mAST) + " -->> OK ");
+                    mPotiparum.mensagem(ePrefixo + "DEF " + mUtilitario.getDefine_Definicao(mAST) + " -->> OK ");
                 } else {
-                    getMensageiro().mensagem(ePrefixo + "DEF " + mUtilitario.getDefine_Definicao(mAST) + " -->> TIPAGEM INVALIDA ");
-                    getMensageiro().errar("DEF " + mUtilitario.getDefine_Definicao(mAST) + " -->> TIPAGEM INVALIDA ");
+                    mPotiparum.mensagem(ePrefixo + "DEF " + mUtilitario.getDefine_Definicao(mAST) + " -->> TIPAGEM INVALIDA ");
+                    mPotiparum.errar("DEF " + mUtilitario.getDefine_Definicao(mAST) + " -->> TIPAGEM INVALIDA ");
                 }
 
             } else if (mAST.mesmoTipo("IF")) {

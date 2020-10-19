@@ -1,7 +1,7 @@
 package Make.Compiler;
 
-import Sigmaz.S03_Parser.Token;
-import Sigmaz.S03_Parser.TokenTipo;
+import Sigmaz.S02_Lexer.Token;
+import Sigmaz.S02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
 
 public class AST_Remove {

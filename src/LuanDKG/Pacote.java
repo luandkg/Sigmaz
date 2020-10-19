@@ -586,8 +586,12 @@ public class Pacote {
     }
 
 
-    public void salvarLinear() {
+    public void setLinear() {
         mLinear = true;
+    }
+
+    public boolean getLinear() {
+       return mLinear;
     }
 
 }

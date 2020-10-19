@@ -1,8 +1,8 @@
 package Sigmaz.S08_Ferramentas;
 
-import Sigmaz.S03_Parser.Lexer;
-import Sigmaz.S03_Parser.Token;
-import Sigmaz.S03_Parser.TokenTipo;
+import Sigmaz.S02_Lexer.Lexer;
+import Sigmaz.S02_Lexer.Token;
+import Sigmaz.S02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.Erro;
 
 import javax.imageio.ImageIO;
@@ -237,20 +237,10 @@ public class Syntax_HighLight {
         mSintaxando.ePos = 0;
         mSintaxando.mQuantidade = LexerC.getTokens().size();
         mSintaxando.eFonte_Tamanho = 12;
-        mSintaxando.eFonte_EntreLinhas = 15;
+        mSintaxando.eFonte_EntreLinhas = 20;
         mSintaxando.eFonte = new Font("TimesRoman", Font.BOLD, mSintaxando.eFonte_Tamanho);
 
-        //  int mQuantidade = LexerC.getTokens().size();
-        // int mIndex = 0;
 
-        // int mTab = 0;
-
-
-        //  int eLinha = 0;
-        //  int ePos = 0;
-
-        //  int eFonte_Tamanho = 12;
-        //  int eFonte_EntreLinhas = 25;
 
 
         int IMAGEM_LARGURA = 100;

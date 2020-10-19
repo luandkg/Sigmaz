@@ -5,7 +5,7 @@ import Sigmaz.Intellisenses.Intellisense;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S00_Utilitarios.Erro;
 import Sigmaz.S00_Utilitarios.GrupoDeErro;
-import Sigmaz.Sigmaz_Fases;
+import Sigmaz.Sigmaz_Compilador;
 import Sigmaz.S08_Ferramentas.Syntax_HighLight;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class Runner_Generate {
 
     private void intellisense(AST ASTCGlobal) {
 
-        Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+        Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
 
        SigmazC.setMostrar_Fases(false);
         SigmazC.setMostrarArvoreRunTime(false);
@@ -83,7 +83,7 @@ public class Runner_Generate {
 
     private void dep(AST ASTCGlobal) {
 
-        Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+        Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
 
        // SigmazC.setObject(mRunMake.getObject());
      //   SigmazC.setPosProcess(mRunMake.getPosProcess());
@@ -103,7 +103,7 @@ public class Runner_Generate {
 
 
                 Dependenciador mDependenciador = new Dependenciador();
-                mDependenciador.init(TempSource_Item);
+                mDependenciador.init(TempSource_Item,mRunMake.getBuild());
 
 
                 if (!mDependenciador.getTemErros()){

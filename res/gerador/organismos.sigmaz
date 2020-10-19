@@ -5,10 +5,12 @@ package Vida {
 			 idade = eIdade; 
 		} 
 		restrict: 
+			define especie : string;
 			define nome : string;
 			define idade : int;
 		all: 
 			func getIdade() : int { return idade;}
 			act envelhecer(eMais : int) { idade = idade++eMais;}
+			func getEspecie() : string { return especie;}
 	}
 }

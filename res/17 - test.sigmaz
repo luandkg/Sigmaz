@@ -157,7 +157,7 @@ act operando ( geral : num ) {
 		a1 = somar ( a1 , 1.0 );
 	}
 	print_empty ( );
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 
 act operar ( geral : num ) {

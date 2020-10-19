@@ -5,11 +5,52 @@ package Mamiferos {
 		init Mamifero (eNome:string,eIdade:int) -> Organismo (eNome,eIdade) {} 
 	}
 
+
 	struct Gato with Mamifero {
-		init Gato (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) {} 
+		init Gato (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
+			especie = "Gato";
+		} 
+	}
+
+	struct Cachorro with Mamifero {
+		init Cachorro (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
+			especie = "Cachorro";
+		} 
 	}
 
 	struct Lobo with Mamifero {
-		init Lobo (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) {} 
+		init Lobo (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
+			especie = "Lobo";
+		} 
+	}
+
+	struct Rato with Mamifero {
+		init Rato (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
+			especie = "Rato";
+		} 
+	}
+
+	struct Rinoceronte with Mamifero {
+		init Rinoceronte (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
+			especie = "Rinoceronte";
+		} 
+	}
+
+	struct Golfinho with Mamifero {
+		init Golfinho (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
+			especie = "Golfinho";
+		} 
+	}
+
+	struct Baleia with Mamifero {
+		init Baleia (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
+			especie = "Baleia";
+		} 
+	}
+
+	struct Ramster with Mamifero {
+		init Ramster (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
+			especie = "Ramster";
+		} 
 	}
 }

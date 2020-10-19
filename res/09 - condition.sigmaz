@@ -38,7 +38,7 @@ act operando ( ) {
 	println ( "4 <= 6 : ", cei3 );
 	def CC : bool = ( 10.0 == 12.0 ) == false;
 	def w : string = ( "Luan");
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 func maior_igual ( a : num , b : num ) : bool {
 	reg @ R9 -> a;

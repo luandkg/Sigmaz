@@ -6,10 +6,10 @@ import Sigmaz.S07_Executor.UML;
 import Sigmaz.S08_Ferramentas.Dependenciador;
 import Sigmaz.Intellisenses.Intellisense;
 import Sigmaz.Intellisenses.IntellisenseTheme;
-import Sigmaz.S03_Parser.Lexer;
-import Sigmaz.S03_Parser.Token;
+import Sigmaz.S02_Lexer.Lexer;
+import Sigmaz.S02_Lexer.Token;
 import Sigmaz.Sigmaz_Executor;
-import Sigmaz.Sigmaz_Fases;
+import Sigmaz.Sigmaz_Compilador;
 
 import Sigmaz.S08_Ferramentas.Comentarios;
 import Sigmaz.S08_Ferramentas.Todos;
@@ -84,7 +84,7 @@ public class AppUtils {
         if (mOpcional.estaValido()) {
 
 
-            Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+            Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
             SigmazC.initSemExecucao(mOpcional.getConteudo(), eCompilado, eLocalLibs, 2);
 
 
@@ -103,7 +103,7 @@ public class AppUtils {
         if (mOpcional.estaValido()) {
 
 
-            Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+            Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
             SigmazC.initSemExecucao(mOpcional.getConteudo(), eCompilado, eLocalLibs, 1);
 
 
@@ -122,7 +122,7 @@ public class AppUtils {
 
         if (mOpcional.estaValido()) {
 
-            Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+            Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
 
             SigmazC.mostrarDebug(true);
             SigmazC.setMostrarArvoreRunTime(false);
@@ -154,11 +154,36 @@ public class AppUtils {
 
         if (mOpcional.estaValido()) {
 
-            Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+            Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
 
             SigmazC.mostrarDebug(true);
+
             SigmazC.setMostrarArvoreRunTime(false);
             SigmazC.setMostrar_ArvoreFalhou(false);
+
+
+            SigmazC.setDebug_PreProcessamento(false);
+            SigmazC.setDebug_Lexer(true);
+            SigmazC.setDebug_Parser(true);
+            SigmazC.setDebug_Comentario(true);
+
+            SigmazC.setDebug_Montagem(false);
+
+            SigmazC.setDebug_PosProcessador_Requisidor(false);
+
+            SigmazC.setDebug_PosProcessador_Cast(false);
+            SigmazC.setDebug_PosProcessador_UnionType(false);
+            SigmazC.setDebug_PosProcessador_Heranca(false);
+            SigmazC.setDebug_PosProcessador_Modelador(false);
+            SigmazC.setDebug_PosProcessador_Estagiador(false);
+
+            SigmazC.setDebug_PosProcessador_Referenciador(false);
+            SigmazC.setDebug_PosProcessador_Argumentador(false);
+            SigmazC.setDebug_PosProcessador_Opcionador(false);
+
+            SigmazC.setDebug_PosProcessador_Alocador(false);
+            SigmazC.setDebug_PosProcessador_Tipador(false);
+            SigmazC.setDebug_PosProcessador_Valorador(false);
 
             SigmazC.init(mOpcional.getConteudo(), eCompilado, eLocalLibs, 1);
 
@@ -194,13 +219,13 @@ public class AppUtils {
     public static void MONTAR_BIBLIOTECA(String eArquivo, String eSaida, String eLocalLibs) {
 
 
-        Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+        Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
         SigmazC.initSemExecucao(eArquivo, eSaida, eLocalLibs, 2);
 
 
     }
 
-    public static void DEPENDENCIA(int eIndice, ArrayList<String> mArquivos) {
+    public static void DEPENDENCIA(int eIndice, ArrayList<String> mArquivos,String mLocallibs) {
 
 
         Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
@@ -209,7 +234,7 @@ public class AppUtils {
 
 
             Dependenciador mDependenciador = new Dependenciador();
-            mDependenciador.init_debug(mOpcional.getConteudo());
+            mDependenciador.init_debug(mOpcional.getConteudo(),mLocallibs);
 
 
         } else {
@@ -227,7 +252,7 @@ public class AppUtils {
 
         if (mOpcional.estaValido()) {
 
-            Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+            Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
             SigmazC.initSemExecucao(mOpcional.getConteudo(), eSaida, eLocalLibs, 1);
 
             if (!SigmazC.temErros()) {
@@ -256,7 +281,7 @@ public class AppUtils {
 
         if (mOpcional.estaValido()) {
 
-            Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+            Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
             SigmazC.initSemExecucao(mOpcional.getConteudo(), eSaida, eLocalLibs, 1);
 
             if (!SigmazC.temErros()) {
@@ -282,7 +307,7 @@ public class AppUtils {
 
         if (mOpcional.estaValido()) {
 
-            Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+            Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
             SigmazC.initSemExecucao(mOpcional.getConteudo(), eSaida, eLocalLibs, 1);
 
             if (!SigmazC.temErros()) {
@@ -307,7 +332,7 @@ public class AppUtils {
     public static void INTELISENSE_BIBLIOTECA(String eFonte, String eSaida, String eLocalLibs, String eGrafico) {
 
 
-        Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+        Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
         SigmazC.initSemExecucao(eFonte, eSaida, eLocalLibs, 1);
 
         if (!SigmazC.temErros()) {
@@ -331,7 +356,7 @@ public class AppUtils {
 
         if (mOpcional.estaValido()) {
 
-            Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+            Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
             SigmazC.initSemExecucao(mOpcional.getConteudo(), eSaida, eLocalLibs, 1);
 
             if (!SigmazC.temErros()) {
@@ -354,7 +379,7 @@ public class AppUtils {
     public static void UML_BIBLIOTECA(String eFonte, String eSaida, String eLocalLibs, String eGrafico) {
 
 
-        Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+        Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
         SigmazC.initSemExecucao(eFonte, eSaida, eLocalLibs, 1);
 
 
@@ -497,7 +522,7 @@ public class AppUtils {
 
     }
 
-    public static void COMENTARIOS(int eIndice, ArrayList<String> mArquivos) {
+    public static void COMENTARIOS(int eIndice, ArrayList<String> mArquivos,String mLocalLibs) {
 
 
         int iContando = 0;
@@ -512,7 +537,7 @@ public class AppUtils {
 
                 Comentarios comentariosC = new Comentarios();
 
-                comentariosC.init(mArquivo);
+                comentariosC.init(mArquivo,mLocalLibs);
 
                 break;
             }
@@ -525,7 +550,7 @@ public class AppUtils {
 
     }
 
-    public static void TODO(int eIndice, ArrayList<String> mArquivos) {
+    public static void TODO(int eIndice, ArrayList<String> mArquivos,String mLocallibs) {
 
         Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
 
@@ -534,7 +559,7 @@ public class AppUtils {
 
             Todos TodosC = new Todos();
 
-            TodosC.init(mOpcional.getConteudo());
+            TodosC.init(mOpcional.getConteudo(),mLocallibs);
 
 
         } else {
@@ -555,7 +580,7 @@ public class AppUtils {
 
             String eLocalPlano = eLocalPlanos + eArq.getName() + ".png";
 
-            Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+            Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
 
             SigmazC.mostrarDebug(true);
             SigmazC.setMostrarArvoreRunTime(false);
@@ -579,7 +604,7 @@ public class AppUtils {
 
         String mArquivo = eLocalGerador + "bio.sigmaz";
 
-        Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+        Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
 
         SigmazC.mostrarDebug(true);
         SigmazC.setMostrarArvoreRunTime(false);
@@ -599,7 +624,7 @@ public class AppUtils {
         String mArquivo = eLocalGerador + "bio.sigmaz";
 
 
-        Sigmaz_Fases SigmazC = new Sigmaz_Fases();
+        Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
         SigmazC.initSemExecucao(mArquivo, eSaida, eLocalLibs, 1);
 
         if (!SigmazC.temErros()) {

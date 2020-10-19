@@ -2,9 +2,9 @@ package Sigmaz.S08_Ferramentas;
 
 import Sigmaz.S00_Utilitarios.Erro;
 import Sigmaz.S00_Utilitarios.Texto;
-import Sigmaz.S03_Parser.Lexer;
-import Sigmaz.S03_Parser.Token;
-import Sigmaz.S03_Parser.TokenTipo;
+import Sigmaz.S02_Lexer.Lexer;
+import Sigmaz.S02_Lexer.Token;
+import Sigmaz.S02_Lexer.TokenTipo;
 
 import java.util.Calendar;
 

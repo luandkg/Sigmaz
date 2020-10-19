@@ -9,7 +9,7 @@ default -> num {
 act operando ( ) {
 	def a : int = 12;
 	def TT : num = default;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> LOCAL :: STACK;
 	def c : int = functor < int > somatorio ( 12 , 8 );
 	def d : num = functor < num > somatorio ( 12.4 , 8.6 );
 	
@@ -23,11 +23,11 @@ act operando ( ) {
 	def o2 : num = functor < num > obliviar ( 5.4 );
 	def o3 : int = functor < int > obliviar ( 12 , 8 );
 	def o4 : int = functor < int > obliviar ( 12 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }
 functor < T > somatorio ( a : T , b : T ) : T {
 	def c : T = a ++ b;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> LOCAL :: STACK;
 	return c;
 }
 operator ++ ( a : int , b : int ) : int {
@@ -52,6 +52,6 @@ operator ++ ( a : num , b : num ) : num {
 }
 functor < T > obliviar ( a : T , opt b : T = default ) : T {
 	def c : T = a ++ b;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> LOCAL :: STACK;
 	return c;
 }

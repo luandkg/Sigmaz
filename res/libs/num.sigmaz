@@ -3,299 +3,214 @@
 func num ( a : num ) : num {
 	return a;
 }
-
-
 operator ++ ( a : num , b : num ) : num {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 SAX R10;
-
-     }
-
-	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 SAX R10;
+	}
+	return reg @ R11;
 }
 operator -- ( a : num , b : num ) : num {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 VEZ R10;
-
-     }
-
-	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 VEZ R10;
+	}
+	return reg @ R11;
 }
 operator ** ( a : num , b : num ) : num {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 PUC R10;
-
-     }
-
-	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 PUC R10;
+	}
+	return reg @ R11;
 }
 operator // ( a : num , b : num ) : num {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 INK R10;
-
-     }
-
-	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 INK R10;
+	}
+	return reg @ R11;
 }
 operator == ( a : num , b : num ) : bool {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R9 OPUAL R10;
-
-     }
-
-	return reg @R1;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R9 OPUAL R10;
+	}
+	return reg @ R1;
 }
 operator !! ( a : num , b : num ) : bool {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R9 TOLL R10;
-
-     }
-
-	return reg @R1;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R9 TOLL R10;
+	}
+	return reg @ R1;
 }
 director ! ( a : num ) : num {
-	reg @R9 -> a;
-
-     PROC -> {
-
-        SET R10;
-            MOV 0.0;
-            OPE R9 PUC -1.0;
-
-     }
-
-	return reg @R10;
+	reg @ R9 -> a;
+	PROC -> {
+		SET R10;
+		MOV 0.0;
+		OPE R9 PUC -1.0;
+	}
+	return reg @ R10;
 }
 func somar ( a : num , b : num ) : num {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 SAX R10;
-
-     }
-
-	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 SAX R10;
+	}
+	return reg @ R11;
 }
 func subtrair ( a : num , b : num ) : num {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 VEZ R10;
-
-     }
-
-	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 VEZ R10;
+	}
+	return reg @ R11;
 }
 func multiplicar ( a : num , b : num ) : num {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 PUC R10;
-
-     }
-
-	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 PUC R10;
+	}
+	return reg @ R11;
 }
 func dividir ( a : num , b : num ) : num {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 INK R10;
-
-     }
-
-	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 INK R10;
+	}
+	return reg @ R11;
 }
 func resto ( a : num , b : num ) : num {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R11;
-            MOV 0.0;
-            OPE R9 DUM R10;
-
-     }
-
-	return reg @R11;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 DUM R10;
+	}
+	return reg @ R11;
 }
 func menor ( a : num , b : num ) : bool {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R9 MOZZ R10;
-
-     }
-
-	return reg @R1;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R9 MOZZ R10;
+	}
+	return reg @ R1;
 }
 func maior ( a : num , b : num ) : bool {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R9 DROEN R10;
-
-     }
-
-	return reg @R1;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R9 DROEN R10;
+	}
+	return reg @ R1;
 }
 func menor_igual ( a : num , b : num ) : bool {
-    def ret : bool = false;
-
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R9 MOZZ R10;
-
-     }
-
-	def e_menor : bool =  reg @R1;
-
-			reg @R9 -> a;
-            reg @R10 -> b;
-
-             PROC -> {
-
-                SET R1;
-                    MOV FALSE;
-                    OPE R9 OPUAL R10;
-
-             }
-
-        def e_igual : bool =  reg @R1;
-
-	if (e_menor) -> { ret = true; }
-    if (e_igual) -> { ret = true; }
-
-    return ret;
-
+	def ret : bool = false;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R9 MOZZ R10;
+	}
+	def e_menor : bool = reg @ R1;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R9 OPUAL R10;
+	}
+	def e_igual : bool = reg @ R1;
+	if ( e_menor ) -> {
+		ret = true;
+	}
+	if ( e_igual ) -> {
+		ret = true;
+	}
+	return ret;
 }
 func maior_igual ( a : num , b : num ) : bool {
-
-    def ret : bool = false;
-
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R9 DROEN R10;
-
-     }
-
-	def e_maior : bool =  reg @R1;
-
-		reg @R9 -> a;
-        reg @R10 -> b;
-
-         PROC -> {
-
-            SET R1;
-                MOV FALSE;
-                OPE R9 OPUAL R10;
-
-         }
-
-    def e_igual : bool =  reg @R1;
-
-    	if (e_maior) -> { ret = true; }
-        if (e_igual) -> { ret = true; }
-
-        return ret;
-
+	def ret : bool = false;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R9 DROEN R10;
+	}
+	def e_maior : bool = reg @ R1;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R9 OPUAL R10;
+	}
+	def e_igual : bool = reg @ R1;
+	if ( e_maior ) -> {
+		ret = true;
+	}
+	if ( e_igual ) -> {
+		ret = true;
+	}
+	return ret;
 }
 func igual ( a : num , b : num ) : bool {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R9 OPUAL R10;
-
-     }
-
-	return reg @R1;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R9 OPUAL R10;
+	}
+	return reg @ R1;
 }
 func diferente ( a : num , b : num ) : bool {
-	reg @R9 -> a;
-    reg @R10 -> b;
-
-     PROC -> {
-
-        SET R1;
-            MOV FALSE;
-            OPE R9 TOLL R10;
-
-     }
-
-	return reg @R1;
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R9 TOLL R10;
+	}
+	return reg @ R1;
 }

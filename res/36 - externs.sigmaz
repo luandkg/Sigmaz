@@ -22,15 +22,13 @@ struct Pessoa {
 call iniciar -> inicio ( );
 act inicio ( ) {
 	def pa : num = 10.0;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 	def valor : num = Pessoa -> publico;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 	def P1 : Pessoa = init Pessoa ( );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	invoke __COMPILER__ -> UNIQUE_STRUCT ( P1 ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 	Pessoa -> publico = 2.0;
 	Pessoa -> tipo = Tipos :: ZETA;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 }
 func somar_inteiro ( a : num , b : num ) : num {
 	reg @ R9 -> a;

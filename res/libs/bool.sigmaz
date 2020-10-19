@@ -1,42 +1,29 @@
 operator == ( a : bool , b : bool ) : bool {
-	reg @R1 -> a;
-    reg @R2 -> b;
-
-     PROC -> {
-
-        SET R3;
-            MOV FALSE;
-            OPE R1 MATCH R2;
-
-     }
-
-	return reg @R3;
+	reg @ R1 -> a;
+	reg @ R2 -> b;
+	PROC -> {
+		SET R3;
+		MOV FALSE;
+		OPE R1 MATCH R2;
+	}
+	return reg @ R3;
 }
 operator !! ( a : bool , b : bool ) : bool {
-	reg @R1 -> a;
-    reg @R2 -> b;
-
-     PROC -> {
-
-        SET R3;
-            MOV FALSE;
-            OPE R1 UNMATCH R2;
-
-     }
-
-	return reg @R3;
+	reg @ R1 -> a;
+	reg @ R2 -> b;
+	PROC -> {
+		SET R3;
+		MOV FALSE;
+		OPE R1 UNMATCH R2;
+	}
+	return reg @ R3;
 }
-
-director ! ( a : bool  ) : bool {
-	reg @R1 -> a;
-
-     PROC -> {
-
-        SET R3;
-            MOV FALSE;
-        BOOL_INVERSE R1;
-
-     }
-
-	return reg @R3;
+director ! ( a : bool ) : bool {
+	reg @ R1 -> a;
+	PROC -> {
+		SET R3;
+		MOV FALSE;
+		BOOL_INVERSE R1;
+	}
+	return reg @ R3;
 }

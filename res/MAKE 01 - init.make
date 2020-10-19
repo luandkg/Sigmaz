@@ -74,7 +74,7 @@ status -> " -->> Executando MAKE pela primeira vez";
     set version -> "1.0.0";
     set company -> "DKG SOFTWARES";
 
-    make library "num.a" with -> { "libs/neg.sigmaz" , "libs/pos.sigmaz" };
+    make library "num.a" with -> { "libs/num.sigmaz", "libs/neg.sigmaz" , "libs/pos.sigmaz" };
 
     status -> " -->> ARVORE DA BIBLIOTECA -> NUM";
 

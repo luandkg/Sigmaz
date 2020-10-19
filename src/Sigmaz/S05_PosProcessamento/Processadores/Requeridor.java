@@ -26,9 +26,13 @@ public class Requeridor {
 
     public void init(ArrayList<AST> mTodos, String mLocalLibs) {
 
-        mPosProcessador.mensagem("");
-        mPosProcessador.mensagem(" ------------------ FASE REQUERIDOR ----------------------- ");
-        mPosProcessador.mensagem("");
+        if (mPosProcessador.getDebug_Requeridor()){
+            mPosProcessador.mensagem("");
+            mPosProcessador.mensagem(" ------------------ FASE REQUERIDOR ----------------------- ");
+            mPosProcessador.mensagem("");
+        }
+
+
 
         mRequisicoes.clear();
 
@@ -47,7 +51,12 @@ public class Requeridor {
                         if (!mRequisicoes_Unicamente.contains(mReq)) {
 
                             mRequisicoes_Unicamente.add(mReq);
-                            mPosProcessador.mensagem("Biblioteca Externa " + ASTC.getNome() + " -> " + mReq);
+
+                            if (mPosProcessador.getDebug_Requeridor()) {
+                                mPosProcessador.mensagem("Biblioteca Externa " + ASTC.getNome() + " -> " + mReq);
+
+                            }
+
 
                             File arq = new File(mReq);
 
@@ -61,9 +70,14 @@ public class Requeridor {
 
                                     mRequisicoes.add(RunTimeC.getBranch("SIGMAZ"));
 
-                                    mPosProcessador.mensagem("\t - Encontrada : Sim");
-                                    mPosProcessador.mensagem("\t - Status : OK");
-                                    mPosProcessador.mensagem("\t - Chave : " + RunTimeC.getShared());
+                                    if (mPosProcessador.getDebug_Requeridor()) {
+
+                                        mPosProcessador.mensagem("\t - Encontrada : Sim");
+                                        mPosProcessador.mensagem("\t - Status : OK");
+                                        mPosProcessador.mensagem("\t - Chave : " + RunTimeC.getShared());
+
+                                    }
+
 
                                     AST mBiblioteca = RunTimeC.getBranch("SIGMAZ");
 
@@ -73,30 +87,39 @@ public class Requeridor {
 
                                     ASTC.setValor(RunTimeC.getShared());
 
-                                    mPosProcessador.mensagem("");
+                                    if (mPosProcessador.getDebug_Requeridor()) {
 
-                                    mPosProcessador.mensagem("\t - Actions : " +mContador.getActions());
-                                    mPosProcessador.mensagem("\t - Functions : " +mContador.getFunctions());
-                                    mPosProcessador.mensagem("\t - Autos : " +mContador.getAutos());
-                                    mPosProcessador.mensagem("\t - Functors : " +mContador.getFunctors());
-                                    mPosProcessador.mensagem("\t - Casts : " +mContador.getCasts());
-                                    mPosProcessador.mensagem("\t - Stages : " +mContador.getStages());
-                                    mPosProcessador.mensagem("\t - Types : " +mContador.getTypes());
-                                    mPosProcessador.mensagem("\t - Structs : " +mContador.getStructs());
-                                    mPosProcessador.mensagem("\t - Models : " +mContador.getModels());
-                                    mPosProcessador.mensagem("\t - Externals : " +mContador.getExternals());
-                                    mPosProcessador.mensagem("\t - Packages : " +mContador.getPackages());
+                                        mPosProcessador.mensagem("");
+
+                                        mPosProcessador.mensagem("\t - Actions : " +mContador.getActions());
+                                        mPosProcessador.mensagem("\t - Functions : " +mContador.getFunctions());
+                                        mPosProcessador.mensagem("\t - Autos : " +mContador.getAutos());
+                                        mPosProcessador.mensagem("\t - Functors : " +mContador.getFunctors());
+                                        mPosProcessador.mensagem("\t - Casts : " +mContador.getCasts());
+                                        mPosProcessador.mensagem("\t - Stages : " +mContador.getStages());
+                                        mPosProcessador.mensagem("\t - Types : " +mContador.getTypes());
+                                        mPosProcessador.mensagem("\t - Structs : " +mContador.getStructs());
+                                        mPosProcessador.mensagem("\t - Models : " +mContador.getModels());
+                                        mPosProcessador.mensagem("\t - Externals : " +mContador.getExternals());
+                                        mPosProcessador.mensagem("\t - Packages : " +mContador.getPackages());
+
+                                    }
 
 
 
                                 } catch (Exception e) {
 
-                                    mPosProcessador.mensagem("\t - Status : Corrompida");
+                                    if (mPosProcessador.getDebug_Requeridor()) {
+                                        mPosProcessador.mensagem("\t - Status : Corrompida");
+                                    }
+
                                     mPosProcessador.errar("Biblioteca " + mReq + " : Problema ao carregar !");
                                 }
 
                             } else {
-                                mPosProcessador.mensagem("\t - Encontrada : Nao");
+                                if (mPosProcessador.getDebug_Requeridor()) {
+                                    mPosProcessador.mensagem("\t - Encontrada : Nao");
+                                }
                                 mPosProcessador.errar("Biblioteca " + mReq + " : Nao encontrada !");
 
                             }

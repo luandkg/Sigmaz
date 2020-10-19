@@ -8,7 +8,7 @@ act vamos_herdar ( ) {
 	a1.mostrar ( );
 	def f : Fungo = init Fungo ( 12 );
 	def g : int = f.Quantidade;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 
 struct Qualidade {

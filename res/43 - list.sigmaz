@@ -226,10 +226,7 @@ operator !! ( a : bool , b : bool ) : bool {
 
 act trash ( a : any ) {
 	def existe : bool = false;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	invoke __COMPILER__ -> EXISTS ( a ) :: existe;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	invoke __COMPILER__ -> STRUCTS ( ) :: INSTANCES;
+	DEBUG -> REGRESSIVE :: ALL;
 	if ( existe ) -> {
 		invoke __COMPILER__ -> OBJECT ( a ) :: REMOVE;
 	}
@@ -306,7 +303,9 @@ struct Lista in ( T ) {
 						println ( " R : ", 3 );
 					}
 					mQuantidade = subtrair ( mQuantidade , 1 );
-					trash ( mCorrente );
+
+					if  ( isNull ( mCorrente ) == false ) -> {delete mCorrente;}
+
 					cancel;
 				}
 				
@@ -339,9 +338,13 @@ struct Lista in ( T ) {
 			while ( isNull ( mCorrente ) == false ) -> {
 				mAnterior = mCorrente;
 				mCorrente = mCorrente.getProximo ( );
-				trash ( mAnterior );
+
+				if  ( isNull ( mAnterior ) == false ) -> {delete mAnterior;}
+
 			}
-			trash ( mAnterior );
+
+			if  ( isNull ( mCorrente ) == false ) -> {delete mCorrente;}
+
 		}
 		mPrimeiro = null;
 		mUltimo = null;
@@ -550,7 +553,8 @@ act inicio ( ) {
 		iterar.proximo ( );
 	}
 	def Frutas : Lista >> ( Fruta ) = init Lista ( ) >> ( Fruta );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> LOCAL :: STACK;
+
 	Frutas.adicionar ( init Fruta ( ) );
 	
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;

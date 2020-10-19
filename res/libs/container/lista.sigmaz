@@ -54,7 +54,9 @@ package Lista {
 							mAnterior.setProximo ( mCorrente.getProximo ( ) );
 						}
 						mQuantidade = subtrair ( mQuantidade , 1 );
-						trash ( mCorrente );
+						if ( isNull ( mCorrente ) == false ) -> {
+							delete mCorrente;
+						}
 						cancel;
 					}
 					
@@ -69,7 +71,7 @@ package Lista {
 		}
 
 		act listar ( ) {
-			invoke __COMPILER__ -> STRUCTS ( ) :: INSTANCES;
+			DEBUG -> GLOBAL :: INSTANCES;
 			if ( isNull ( mPrimeiro ) == false ) -> {
 				def mCorrente : Item >> ( T ) = mPrimeiro;
 				while ( isNull ( mCorrente ) == false ) -> {
@@ -91,10 +93,19 @@ package Lista {
 				while ( isNull ( mCorrente ) == false ) -> {
 					mAnterior = mCorrente;
 					mCorrente = mCorrente.getProximo ( );
-					trash ( mAnterior );
+					
+					#trash ( mAnterior );
+					if ( isNull ( mAnterior ) == false ) -> {
+						delete mAnterior;
+					}
 					mQuantidade = subtrair ( mQuantidade , 1 );
 				}
-				trash ( mAnterior );
+				
+				#trash ( mAnterior );
+				if ( isNull ( mCorrente ) == false ) -> {
+					delete mCorrente;
+				}
+				
 			}
 			mPrimeiro = null;
 			mUltimo = null;
@@ -127,7 +138,7 @@ package Lista {
 		}
 
 		act mostrarStruct ( ) {
-			invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL;
+			DEBUG -> REGRESSIVE :: ALL;
 		}
 		
 	}

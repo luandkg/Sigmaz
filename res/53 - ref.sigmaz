@@ -31,7 +31,7 @@ act passador ( a : int ) {
 }
 
 act referenciador ( ref a : int ) {
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 	a = 10;
 }
 func janelador ( a : int ) : bool {

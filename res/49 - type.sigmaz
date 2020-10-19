@@ -31,19 +31,19 @@ act inicio ( ) {
 	};
 	def cs_p1_nome : string = CasalC.P1.nome;
 	def cs_p1 : Pessoa = CasalC.P1;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 	
 	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 	a.nome = "Jana";
-	invoke __COMPILER__ -> TYPES ( ) :: INSTANCES;
+	DEBUG -> REGRESSIVE :: STACK;
 	trash ( c );
-	invoke __COMPILER__ -> TYPES ( ) :: INSTANCES;
+	DEBUG -> REGRESSIVE :: STACK;
 	def a_nome2 : string = a.nome;
 	def t : num = a.TAXA;
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }
 
 act trash ( a : any ) {
-	invoke __COMPILER__ -> OBJECT ( a ) :: REMOVE;
+	DEBUG -> REGRESSIVE :: STACK;
 }

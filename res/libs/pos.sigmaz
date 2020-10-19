@@ -1,6 +1,10 @@
 cast pos {
-	getter a : num -> {		}
-	setter b : num -> {		}
+	getter a : num -> {
+		
+	}
+	setter b : num -> {
+		
+	}
 	
 }
 operator == ( a : pos , b : pos ) : bool {

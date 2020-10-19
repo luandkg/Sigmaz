@@ -765,4 +765,28 @@ public class Run_Struct {
 
     }
 
+    public void destruct(){
+
+     //   System.out.println("DESTRUIR :: " + this.getNome());
+
+      //  System.out.println(mStructCorpo.getImpressao());
+
+
+        for(AST eAST : mStructCorpo.getASTS()){
+
+
+            if (eAST.mesmoTipo("DESTRUCT")){
+
+                Escopo mEscopoInterno = new Escopo(mRunTime, this.getEscopo());
+                mEscopoInterno.setNome(this.getNome() + "::DESTRUCT");
+
+                Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
+                mAST.init(eAST.getBranch("BODY"));
+
+            }
+        }
+
+
+    }
+
 }

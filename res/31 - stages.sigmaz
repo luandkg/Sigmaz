@@ -1,12 +1,12 @@
 call iniciar -> varios_estagios ( );
 act varios_estagios ( ) {
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 	def cor1 : CORES = CORES :: AMARELO;
 	def cor2 : CORES = CORES :: AZUL;
 	
 	#def igual : bool = CORES::AZUL == CORES::AMARELO;
 	cor2 = CORES :: BRANCO;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 }
 stages CORES -> {
 	AMARELO , VERMELHO , AZUL , BRANCO 

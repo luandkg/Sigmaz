@@ -16,10 +16,10 @@ public class Alocador {
 
     public void init(ArrayList<AST> mASTS) {
 
+            mensagem("");
+            mensagem(" ------------------ FASE ALOCADOR ----------------------- ");
+            mensagem("");
 
-        mensagem("");
-        mensagem(" ------------------ FASE ALOCADOR ----------------------- ");
-        mensagem("");
 
         for (AST ASTCGlobal : mASTS) {
 
@@ -31,7 +31,8 @@ public class Alocador {
                 for (AST mAST : ASTCGlobal.getASTS()) {
                     if (mAST.mesmoTipo("PACKAGE")) {
 
-                        mensagem("PACKAGE : " + mAST.getNome());
+                            mensagem("PACKAGE : " + mAST.getNome());
+
 
                         checarAlocacao("","", mAST);
                     }
@@ -160,7 +161,10 @@ public class Alocador {
     }
 
     private void mensagem(String eMensagem) {
-        mPosProcessador.mensagem(eMensagem);
+
+        if (mPosProcessador.getDebug_Alocador()) {
+            mPosProcessador.mensagem(eMensagem);
+        }
     }
 
 

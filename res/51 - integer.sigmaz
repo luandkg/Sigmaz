@@ -6,5 +6,5 @@ act inicio ( ) {
 	def c : int = dividir ( a , b );
 	def d : int = 12 ++ 8;
 	def g : int = ! d;
-	invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 }

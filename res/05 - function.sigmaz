@@ -6,7 +6,9 @@ define TGA : num = somar ( 10.0 , 5.0 );
 define DUPLO : num = somar ( 10.0 , somar ( 1.0 , 1.0 ) );
 define ABERTO : bool = true;
 define FECHADO : bool = false;
-invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL;
+
+DEBUG -> GLOBAL :: STACK;
+
 func somar ( a : num , b : num ) : num {
 	reg @ R9 -> a;
 	reg @ R10 -> b;

@@ -3,6 +3,7 @@ package Sigmaz.S05_PosProcessamento.Povalorum;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S00_Utilitarios.AgrupadorAST;
 import Sigmaz.S00_Utilitarios.Mensageiro;
+import Sigmaz.S05_PosProcessamento.Processadores.Valorador;
 import Sigmaz.S05_PosProcessamento.Pronoco.*;
 import Sigmaz.S07_Executor.Debuggers.Simplificador;
 
@@ -13,7 +14,7 @@ public class Valoramento {
     private Simplificador mSimplificador;
     private AgrupadorAST mAgrupadorAST;
 
-    private Mensageiro mMensageiro;
+    private Valorador mValorador;
 
     private Valore_Sigmaz mValore_Sigmaz;
     private Valore_Escopo mValore_Escopo;
@@ -23,17 +24,17 @@ public class Valoramento {
 
     private ArrayList<String> mRegistradores;
 
-    public Valoramento(Mensageiro eMensageiro) {
+    public Valoramento(Valorador eValorador) {
 
-        mMensageiro = eMensageiro;
+        mValorador = eValorador;
         mSimplificador = new Simplificador();
         mAgrupadorAST = new AgrupadorAST();
 
-        mValore_Sigmaz = new Valore_Sigmaz(eMensageiro, this);
-        mValore_Escopo = new Valore_Escopo(eMensageiro, this);
-        mValore_Statements = new Valore_Statements(eMensageiro, this);
-        mValore_ValueComplex = new Valore_ValueComplex(eMensageiro, this);
-        mValore_Value = new Valore_Value(eMensageiro, this);
+        mValore_Sigmaz = new Valore_Sigmaz(mValorador, this);
+        mValore_Escopo = new Valore_Escopo(mValorador, this);
+        mValore_Statements = new Valore_Statements(mValorador, this);
+        mValore_ValueComplex = new Valore_ValueComplex(mValorador, this);
+        mValore_Value = new Valore_Value(mValorador, this);
 
         mRegistradores = new ArrayList<String>();
 
@@ -72,7 +73,7 @@ public class Valoramento {
 
         for (AST mAST : eASTPai.getASTS()) {
 
-            if (mMensageiro.getErros().size() > 0) {
+            if (mValorador.getErros().size() > 0) {
                 break;
             }
 
@@ -119,7 +120,7 @@ public class Valoramento {
 
             }
 
-            if (mMensageiro.getErros().size() > 0) {
+            if (mValorador.getErros().size() > 0) {
                 break;
             }
         }
@@ -133,13 +134,13 @@ public class Valoramento {
                 mAqui.setSuperior(mAtribuindo);
 
 
-                if (mMensageiro.getErros().size() > 0) {
+                if (mValorador.getErros().size() > 0) {
                     break;
                 }
 
                 if (mAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
 
-                    mMensageiro.mensagem(ePrefixo + "Valorando STRUCT : " + mAST.getNome());
+                    mValorador.mensagem(ePrefixo + "Valorando STRUCT : " + mAST.getNome());
 
                     getValore_Hiper().emStruct_Corpo(ePrefixo + "\t", mAST.getNome(), mAST.getBranch("BODY"), mAqui);
 
@@ -162,8 +163,8 @@ public class Valoramento {
 
             if (mAtribuindo.existeNesse(mAST.getNome())) {
 
-                mMensageiro.mensagem(" Argumento Duplicado : " + mAST.getNome());
-                mMensageiro.getErros().add("Argumento Duplicado : " + mAST.getNome());
+                mValorador.mensagem(" Argumento Duplicado : " + mAST.getNome());
+                mValorador.getErros().add("Argumento Duplicado : " + mAST.getNome());
 
             } else {
                 mAtribuindo.adicionarDefine(new Pronoco_Def(mAST.getNome()));
@@ -179,23 +180,23 @@ public class Valoramento {
 
         if (mValue.mesmoValor("NULL")) {
 
-            mMensageiro.mensagem(ePrefixo + "Valore NULL");
+            mValorador.mensagem(ePrefixo + "Valore NULL");
 
         } else if (mValue.mesmoValor("Text")) {
 
-            mMensageiro.mensagem(ePrefixo + "Valore Text : " + mValue.getNome());
+            mValorador.mensagem(ePrefixo + "Valore Text : " + mValue.getNome());
 
         } else if (mValue.mesmoValor("Num")) {
 
-            mMensageiro.mensagem(ePrefixo + "Valore Num : " + mValue.getNome());
+            mValorador.mensagem(ePrefixo + "Valore Num : " + mValue.getNome());
 
         } else if (mValue.mesmoValor("Float")) {
 
-            mMensageiro.mensagem(ePrefixo + "Valore Float : " + mValue.getNome());
+            mValorador.mensagem(ePrefixo + "Valore Float : " + mValue.getNome());
 
         } else if (mValue.mesmoValor("ID")) {
 
-            mMensageiro.mensagem(ePrefixo + "Valore ID : " + mValue.getNome());
+            mValorador.mensagem(ePrefixo + "Valore ID : " + mValue.getNome());
 
             mValore_Value.valore_ID(ePrefixo, mValue, mAtribuindo);
 
@@ -271,7 +272,7 @@ public class Valoramento {
 
         } else if (mValue.mesmoValor("EXECUTE_FUNCTOR")) {
 
-            mMensageiro.mensagem(ePrefixo + "Valorando EXECUTE_FUNCTOR : " + mValue.getNome());
+            mValorador.mensagem(ePrefixo + "Valorando EXECUTE_FUNCTOR : " + mValue.getNome());
 
             Pronoco mAqui = new Pronoco("EXECUTE_FUNCTOR");
             mAqui.setSuperior(mAtribuindo);
@@ -283,10 +284,10 @@ public class Valoramento {
         } else {
 
 
-            mMensageiro.errar("Atribuidor Desconhecido  : " + mAtribuindo.getRegressivo() + " :: " + mValue.getValor());
-            mMensageiro.mensagem(ePrefixo + "Atribuidor Desconhecido  : " + mAtribuindo.getRegressivo() + " :: " + mValue.getValor());
+            mValorador.errar("Atribuidor Desconhecido  : " + mAtribuindo.getRegressivo() + " :: " + mValue.getValor());
+            mValorador.mensagem(ePrefixo + "Atribuidor Desconhecido  : " + mAtribuindo.getRegressivo() + " :: " + mValue.getValor());
 
-            mMensageiro.mensagem(mValue.getImpressao());
+            mValorador.mensagem(mValue.getImpressao());
 
         }
 
@@ -349,8 +350,8 @@ public class Valoramento {
         } else {
 
 
-            mMensageiro.errar("Atribuidor Sem Retorno Desconhecido  : " + mAtribuindo.getRegressivo() + " :: " + mValue.getValor());
-            mMensageiro.mensagem("Atribuidor Sem Retorno Desconhecido  : " + mAtribuindo.getRegressivo() + " :: " + mValue.getValor());
+            mValorador.errar("Atribuidor Sem Retorno Desconhecido  : " + mAtribuindo.getRegressivo() + " :: " + mValue.getValor());
+            mValorador.mensagem("Atribuidor Sem Retorno Desconhecido  : " + mAtribuindo.getRegressivo() + " :: " + mValue.getValor());
 
 
         }
@@ -366,8 +367,8 @@ public class Valoramento {
 
         if (mAtribuindo.existeNesse(mAST.getNome())) {
 
-            mMensageiro.mensagem(ePrefixo + " Alocação Duplicada : " + mAST.getNome());
-            mMensageiro.getErros().add("Alocação Duplicada : " + mAST.getNome());
+            mValorador.mensagem(ePrefixo + " Alocação Duplicada : " + mAST.getNome());
+            mValorador.getErros().add("Alocação Duplicada : " + mAST.getNome());
 
 
         }
@@ -377,11 +378,11 @@ public class Valoramento {
             valore(ePrefixo, mValue, mAtribuindo);
         }
 
-        if (mMensageiro.getErros().size() > 0) {
+        if (mValorador.getErros().size() > 0) {
             status = "PROBLEMA";
         }
 
-        mMensageiro.mensagem(ePrefixo + " " + mAST.getTipo() + " " + mAST.getNome() + " ->  " + status);
+        mValorador.mensagem(ePrefixo + " " + mAST.getTipo() + " " + mAST.getNome() + " ->  " + status);
 
 
     }

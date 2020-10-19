@@ -1,175 +1,94 @@
-
-func num_to_string(a:int) : string {
-
-    reg @R5 -> a;
-
-     PROC -> {
-
-        SET R13;
-            MOV "";
-            INT_STRING R5;
-
-     }
-
-	return reg @R13;
-
+func num_to_string ( a : int ) : string {
+	reg @ R5 -> a;
+	PROC -> {
+		SET R13;
+		MOV "";
+		INT_STRING R5;
+	}
+	return reg @ R13;
 }
-
-
-func string_length(a:string) : int {
-
-    reg @R13 -> a;
-
-     PROC -> {
-
-        SET R5;
-            MOV 0;
-            SIZE R13;
-
-     }
-
-	return reg @R5;
-
+func string_length ( a : string ) : int {
+	reg @ R13 -> a;
+	PROC -> {
+		SET R5;
+		MOV 0;
+		SIZE R13;
+	}
+	return reg @ R5;
 }
-
-
-
-
 func getChar ( a : string , b : int ) : string {
-
-    reg @R13 -> a;
-    reg @R5 -> b;
-
-     PROC -> {
-
-        SET R14;
-            MOV "";
-            OPE R13 CHAR R5;
-
-     }
-
-	return reg @R14;
+	reg @ R13 -> a;
+	reg @ R5 -> b;
+	PROC -> {
+		SET R14;
+		MOV "";
+		OPE R13 CHAR R5;
+	}
+	return reg @ R14;
 }
-
-func string_append(a:string,b:string) : int {
-
-    reg @R13 -> a;
-    reg @R14 -> b;
-
-     PROC -> {
-
-        SET R13;
-            APPEND R14;
-
-     }
-
-	return reg @R13;
-
+func string_append ( a : string , b : string ) : int {
+	reg @ R13 -> a;
+	reg @ R14 -> b;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
 }
-
 func string_append ( a : string , b : string , c : string ) : string {
-
-    reg @R13 -> a;
-    reg @R14 -> b;
-
-     PROC -> {
-
-        SET R13;
-            APPEND R14;
-
-     }
-
-    reg @R14 -> c;
-
-     PROC -> {
-
-        SET R13;
-            APPEND R14;
-
-     }
-
-	return reg @R13;
-
+	reg @ R13 -> a;
+	reg @ R14 -> b;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	reg @ R14 -> c;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
 }
-
-
 func string_append ( a : string , b : string , c : string , d : string ) : string {
-
-    reg @R13 -> a;
-    reg @R14 -> b;
-
-     PROC -> {
-
-        SET R13;
-            APPEND R14;
-
-     }
-
-    reg @R14 -> c;
-
-     PROC -> {
-
-        SET R13;
-            APPEND R14;
-
-     }
-
-    reg @R14 -> d;
-
-     PROC -> {
-
-        SET R13;
-            APPEND R14;
-
-     }
-
-	return reg @R13;
-
+	reg @ R13 -> a;
+	reg @ R14 -> b;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	reg @ R14 -> c;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	reg @ R14 -> d;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
 }
-
-
-
 func string_append ( a : string , b : string , c : string , d : string , e : string ) : string {
-
-
-    reg @R13 -> a;
-    reg @R14 -> b;
-
-     PROC -> {
-
-        SET R13;
-            APPEND R14;
-
-     }
-
-    reg @R14 -> c;
-
-     PROC -> {
-
-        SET R13;
-            APPEND R14;
-
-     }
-
-    reg @R14 -> d;
-
-     PROC -> {
-
-        SET R13;
-            APPEND R14;
-
-     }
-
-         reg @R14 -> e;
-
-          PROC -> {
-
-             SET R13;
-                 APPEND R14;
-
-          }
-
-
-	return reg @R13;
-
+	reg @ R13 -> a;
+	reg @ R14 -> b;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	reg @ R14 -> c;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	reg @ R14 -> d;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	reg @ R14 -> e;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
 }

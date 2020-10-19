@@ -124,9 +124,8 @@ act valores ( ) {
 	def inu : num = ! 2.5;
 	def zero : int = default;
 	def logico : bool = default;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
-	invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: AUTO;
-	invoke __COMPILER__ -> SHOW_REGRESSIVE ( ) :: FUNCTOR;
+	DEBUG -> REGRESSIVE :: STACK;
+
 }
 default -> int {
 	return 0;
@@ -164,11 +163,11 @@ director ! ( a : num ) : num {
 }
 functor < T > somatorio ( a : T , b : T ) : T {
 	def c : T = a ++ b;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 	return c;
 }
 auto < T > chamatorio ( a : T ) {
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }
 operator ++ ( a : int , b : int ) : int {
 	reg @ R5 -> a;

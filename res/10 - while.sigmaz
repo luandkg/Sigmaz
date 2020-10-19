@@ -13,7 +13,7 @@ act operando ( ) {
 		a1 = somar ( a1 , 1.0 );
 	}
 	
-	# invoke __COMPILER__ -> SHOW_SCOPE () :: ALL;
+	DEBUG -> REGRESSIVE :: ALL;
 	
 }
 func somar ( a : num , b : num ) : num {

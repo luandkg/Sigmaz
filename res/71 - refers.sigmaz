@@ -37,7 +37,7 @@ package Blocos {
 		}
 		operator ++ ( a : CXA >> ( T ) , b : CXA >> ( T ) ) : CXA >> ( T ) {
 			def tt : T = a.getValor ( ) ++ b.getValor ( );
-			invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 			return init CXA ( tt ) >> ( T );
 		}
 		director ! ( a : CXA >> ( T ) ) : CXA {
@@ -90,9 +90,9 @@ call iniciar -> {
 	def a1_valor : num = a1.getValor ( );
 	def a2_valor : num = a2.getValor ( );
 	def tt : bool = true;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 	def a3 : CXA >> ( num ) = a1 ++ a2;
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 	def a3_valor : num = a3.getValor ( );
 	def a4 : CXA >> ( num ) = ! a3;
 	def a4_valor : num = a4.getValor ( );
@@ -101,5 +101,5 @@ call iniciar -> {
 	
 	#  def a : string = a4;
 	def r : num = azucrinar ( 1.0 , 2.0 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }

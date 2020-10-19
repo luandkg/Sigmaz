@@ -43,5 +43,5 @@ act inicio ( ) {
 	sa.nivelar ( 2 );
 	G.guardar ( sa );
 	G.passar ( ).cortar ( 5 );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: ALL;
 }

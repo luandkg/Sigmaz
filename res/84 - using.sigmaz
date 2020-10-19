@@ -21,7 +21,7 @@ act mudar ( ) {
 	def g1 : Caixa = init Caixa ( 13 );
 	def g1_valor : int = g1.getValor ( );
 	def g1_valor3 : int = g1.get3 ( );
-	invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
+	DEBUG -> REGRESSIVE :: STACK;
 }
 
 struct Caixa {

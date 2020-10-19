@@ -41,21 +41,25 @@ public class Run_This {
 
         //    System.out.println(ASTCorrente.ImprimirArvoreDeInstrucoes());
 
+            if (ASTCorrente.existeBranch("INTERNAL")){
+                Run_Internal mRun_Internal = new Run_Internal(mRunTime);
+                mItem = mRun_Internal.Struct_DentroDiretoStruct(mItem.getValor(mRunTime,mEscopo), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
 
-            Run_Internal mRun_Internal = new Run_Internal(mRunTime);
+                if (mRunTime.getErros().size() > 0) {
+                    return null;
+                }
 
-
-            mItem = mRun_Internal.Struct_DentroDiretoStruct(mItem.getValor(mRunTime,mEscopo), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
-
-            if (mRunTime.getErros().size() > 0) {
-                return null;
             }
 
 
-        } else if (eQualificador.contentEquals("TYPE")) {
-            Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
-            mItem = mRun_Internal.Struct_DentroType(mItem.getTipo(),mItem.getValor(mRunTime,mEscopo), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
+        } else if (eQualificador.contentEquals("TYPE")) {
+
+            if (ASTCorrente.existeBranch("INTERNAL")) {
+                Run_Internal mRun_Internal = new Run_Internal(mRunTime);
+                mItem = mRun_Internal.Struct_DentroType(mItem.getTipo(),mItem.getValor(mRunTime,mEscopo), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
+            }
+
 
         } else {
             mRunTime.errar(mLocal, "CAST nao possui operador PONTO !");

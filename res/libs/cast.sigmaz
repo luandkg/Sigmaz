@@ -1,25 +1,18 @@
-
 func inteiro ( a : num ) : num {
-	reg @R9 -> a;
-
-     PROC -> {
-
-        SET R10;
-            MOV 0.0;
-            NUM_INT R9;
-     }
-
-	return reg @R10;
+	reg @ R9 -> a;
+	PROC -> {
+		SET R10;
+		MOV 0.0;
+		NUM_INT R9;
+	}
+	return reg @ R10;
 }
 func decimal ( a : num ) : num {
-	reg @R9 -> a;
-
-     PROC -> {
-
-        SET R10;
-            MOV 0.0;
-            NUM_DEC R9;
-     }
-
-	return reg @R10;
+	reg @ R9 -> a;
+	PROC -> {
+		SET R10;
+		MOV 0.0;
+		NUM_DEC R9;
+	}
+	return reg @ R10;
 }
