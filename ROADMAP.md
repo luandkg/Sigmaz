@@ -469,4 +469,13 @@ Linguagem de Programação Estruturada - Implementações
 		2020 10 19 -->> Contador de Referências
 		2020 10 19 -->> Coletor de Lixo : Structs
 		2020 10 19 -->> Coletor de Lixo : Types
+		2020 10 19 -->> Remoção do Invock CAST
+		2020 10 19 -->> Remoção do Invock COMPILER
+		2020 10 19 -->> Remoção do Run_Invock
+
+
+		2020 10 20 -->> Implementação do Operador []
+		2020 10 20 -->> Operador Col Get
+		2020 10 20 -->> Operador Col Set
+		2020 10 20 -->> Operador APPEND
 

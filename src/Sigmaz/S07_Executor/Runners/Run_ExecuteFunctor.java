@@ -1,5 +1,6 @@
 package Sigmaz.S07_Executor.Runners;
 
+import Sigmaz.S00_Utilitarios.Utilitario;
 import Sigmaz.S07_Executor.Alterador;
 import Sigmaz.S07_Executor.Escopo;
 import Sigmaz.S07_Executor.Indexador.Index_Function;
@@ -99,18 +100,20 @@ public class Run_ExecuteFunctor {
             Run_Arguments mPreparadorDeArgumentos = new Run_Arguments();
 
             ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, mEscopo, ASTCorrente.getBranch("ARGUMENTS"));
+            Utilitario mUtilitario = new Utilitario();
 
-            String mTipagem = mPreparadorDeArgumentos.getTipagem(mArgumentos);
+            String mTipagem = mUtilitario.getArgumentos(mArgumentos);
 
             Index_Function mIndex_Function = new Index_Function(mRunTime, mEscopo, Guardado);
             mIndex_Function.resolverTipagem(mEscopo.getRefers());
 
             Run_Arguments mRunArguments = new Run_Arguments();
 
-            int contagem = mRunArguments.conferirArgumentos(mRunTime, mEscopo, mIndex_Function.getArgumentos(), mArgumentos);
+            int contagem = mRunArguments.conferirArgumentos(mRunTime, mIndex_Function.getArgumentos(), mArgumentos);
             if (contagem == mArgumentos.size()) {
+                Run_Escopo mRun_Escopo = new Run_Escopo();
 
-             return   mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos,eRetorno);
+             return   mRun_Escopo.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos,eRetorno);
 
             } else {
 

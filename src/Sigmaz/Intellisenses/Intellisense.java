@@ -506,6 +506,41 @@ public class Intellisense {
             }
         }
 
+
+        mais += 70;
+
+        g.setColor(Color.BLACK);
+        g.fillRect(x + 50, mais, eLargura / 2, 15);
+
+        for (AST Sub2 : Sub.getASTS()) {
+
+            if (Sub2.mesmoTipo("COL_GET")) {
+
+                String eConteudo = mUtils.getColGet(Sub2);
+
+                g.setColor(Color.BLACK);
+                leftString(g, new Rectangle(x + 30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), IMG_OPERATOR_ALL);
+
+                mais += 30;
+
+            }
+        }
+
+        for (AST Sub2 : Sub.getASTS()) {
+
+            if (Sub2.mesmoTipo("COL_SET")) {
+
+                String eConteudo = mUtils.getColSet(Sub2);
+
+                g.setColor(Color.BLACK);
+                leftString(g, new Rectangle(x + 30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), IMG_OPERATOR_ALL);
+
+                mais += 30;
+
+            }
+        }
+
+
         return mais;
 
     }

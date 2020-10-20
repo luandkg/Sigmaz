@@ -1,4 +1,7 @@
 package Vetor {
+
+    refer Item;
+
 	struct Vetor in ( T ) {
 		init Vetor ( eTamanho : int ) {
 			if ( maior_igual ( eTamanho , 0 ) ) -> {
@@ -37,6 +40,14 @@ package Vetor {
 		func getQuantidade ( ) : int {
 			return mQuantidade;
 		}
+
+	block -> get[ v : int ] : T {
+        return get(v);
+    }
+
+    block -> set[ v : int ] -> ( v1 : T )  {
+        set(v,v1);
+    }
 
 		act listar ( ) {
 			if ( isNull ( mPrimeiro ) == false ) -> {
@@ -178,29 +189,6 @@ package Vetor {
 		
 	}
 
-	struct Item in ( T ) {
-		restrict : 
-		define mValor : T = null;
-		define mProximo : Item >> ( T ) = null;
-		all : 
-		func getValor ( ) : T {
-			return mValor;
-		}
 
-		act setValor ( eValor : T ) {
-			mValor = eValor;
-		}
-		func getProximo ( ) : Item >> ( T ) {
-			return mProximo;
-		}
-
-		act setProximo ( eProximo : Item >> ( T ) ) {
-			mProximo = eProximo;
-		}
-		func getProximo ( ) : Item >> ( T ) {
-			return mProximo;
-		}
-		
-	}
 	
 }

@@ -374,6 +374,24 @@ public class AST_ValueTypes {
 
     }
 
+    public void dentro_colchete(AST ASTPai, boolean mTemTipo, AST mTipo) {
+
+        ASTPai.setValor("COL");
+
+
+        ReceberArgumentos_Colchete(ASTPai, mTemTipo, mTipo);
+
+        if (mCompiler.getTokenFuturo().getTipo() == TokenTipo.PONTO){
+
+            mCompiler.proximo();
+
+            ReceberNovoEscopo(ASTPai,mTemTipo,mTipo);
+
+        }
+
+
+    }
+
     public void dentro_struct(AST ASTPai, boolean mTemTipo, AST mTipo) {
 
         ASTPai.setValor("STRUCT");
@@ -477,10 +495,24 @@ public class AST_ValueTypes {
                 mCompiler.voltar();
             }
 
+        } else if (TokenD.getTipo() == TokenTipo.COLCHETE_ABRE) {
+
+            AST mASTSub = ASTPai.criarBranch("INTERNAL");
+
+            dentro_colchete(mASTSub, mTemTipo, mTipo);
+
 
         } else {
             System.out.println("Era esperado um ID : " + TokenD.getConteudo());
         }
+
+    }
+
+    public void ReceberNovoEscopo_Col(AST ASTPai, boolean mTemTipo, AST mTipo) {
+
+
+        ReceberArgumentos_Colchete(ASTPai,mTemTipo,mTipo);
+
 
     }
 
@@ -656,6 +688,181 @@ public class AST_ValueTypes {
 
         if (!saiu) {
             mCompiler.errarCompilacao("Era esperado fechar parenteses" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
+        }
+
+    }
+
+    public void ReceberArgumentos_Colchete(AST ASTAvo, boolean mTemTipo, AST mTipo) {
+
+        // System.out.println("AST_VALUE -> Receber Argumentos Colhete");
+
+        AST ASTPai = ASTAvo.criarBranch("ARGUMENTS");
+
+
+        boolean saiu = false;
+        boolean mais = false;
+
+        while (mCompiler.Continuar()) {
+            Token TokenD = mCompiler.getTokenAvante();
+            if (TokenD.getTipo() == TokenTipo.COLCHETE_FECHA) {
+
+                if (mais) {
+                    mCompiler.errarCompilacao("Era esperado outro parametro", TokenD);
+                }
+
+                saiu = true;
+                break;
+            } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
+
+                mais = false;
+
+
+                AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
+
+                AST_Value mAST = new AST_Value(mCompiler);
+                mAST.setBuscadorDeArgumentos_Colchete();
+
+                mCompiler.voltar();
+
+                if (mTemTipo) {
+                    mAST.sePrecisarTipar(mTipo);
+                }
+                mAST.init(ASTCorrente);
+                ASTCorrente.setTipo("ARGUMENT");
+
+                Token P2 = mCompiler.getTokenCorrente();
+
+
+                if (P2.getTipo() == TokenTipo.VIRGULA) {
+                    mais = true;
+                } else if (P2.getTipo() == TokenTipo.COLCHETE_FECHA) {
+                    saiu = true;
+                    break;
+                }
+            } else if (TokenD.getTipo() == TokenTipo.NUMERO_FLOAT) {
+
+                mais = false;
+
+
+                AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
+
+                AST_Value mAST = new AST_Value(mCompiler);
+                mAST.setBuscadorDeArgumentos_Colchete();
+
+                mCompiler.voltar();
+
+                if (mTemTipo) {
+                    mAST.sePrecisarTipar(mTipo);
+                }
+
+                mAST.init(ASTCorrente);
+                ASTCorrente.setTipo("ARGUMENT");
+
+                Token P2 = mCompiler.getTokenCorrente();
+
+
+                if (P2.getTipo() == TokenTipo.VIRGULA) {
+                    mais = true;
+                } else if (P2.getTipo() == TokenTipo.COLCHETE_FECHA) {
+                    saiu = true;
+                    break;
+                }
+
+            } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
+
+                mais = false;
+
+
+                AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
+
+                AST_Value mAST = new AST_Value(mCompiler);
+                mAST.setBuscadorDeArgumentos_Colchete();
+
+                mCompiler.voltar();
+
+                if (mTemTipo) {
+                    mAST.sePrecisarTipar(mTipo);
+                }
+
+                mAST.init(ASTCorrente);
+                ASTCorrente.setTipo("ARGUMENT");
+
+                Token P2 = mCompiler.getTokenCorrente();
+                if (P2.getTipo() == TokenTipo.VIRGULA) {
+                    mais = true;
+                } else if (P2.getTipo() == TokenTipo.COLCHETE_FECHA) {
+                    saiu = true;
+                    break;
+                }
+
+            } else if (TokenD.getTipo() == TokenTipo.ID) {
+
+
+                mais = false;
+
+
+                AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
+
+                mCompiler.voltar();
+
+                AST_Value mAST = new AST_Value(mCompiler);
+                mAST.setBuscadorDeArgumentos_Colchete();
+
+                if (mTemTipo) {
+                    mAST.sePrecisarTipar(mTipo);
+                }
+                mAST.init(ASTCorrente);
+
+                ASTCorrente.setTipo("ARGUMENT");
+
+                Token P2 = mCompiler.getTokenCorrente();
+                if (P2.getTipo() == TokenTipo.VIRGULA) {
+                    mais = true;
+                } else if (P2.getTipo() == TokenTipo.COLCHETE_FECHA) {
+                    saiu = true;
+                    break;
+                }
+
+            } else if (TokenD.getTipo() == TokenTipo.PARENTESES_ABRE) {
+
+                mais = false;
+
+                mCompiler.voltar();
+
+                AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
+                ASTCorrente.setValor("CONTAINER");
+
+                AST ASTV = ASTCorrente.criarBranch("VALUE");
+
+
+                AST_Value mAST = new AST_Value(mCompiler);
+                if (mTemTipo) {
+                    mAST.sePrecisarTipar(mTipo);
+                }
+                mAST.setBuscadorDeArgumentos();
+
+                mAST.init(ASTV);
+                ASTV.setTipo("VALUE");
+
+
+                Token P2 = mCompiler.getTokenCorrente();
+
+                if (P2.getTipo() == TokenTipo.VIRGULA) {
+                    mais = true;
+                } else if (P2.getTipo() == TokenTipo.COLCHETE_FECHA) {
+                    saiu = true;
+                    break;
+                }
+
+
+            } else {
+                mCompiler.errarCompilacao("Era esperado um argumento : " + TokenD.getConteudo(), TokenD);
+                break;
+            }
+        }
+
+        if (!saiu) {
+            mCompiler.errarCompilacao("Era esperado fechar colchete" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
         }
 
     }

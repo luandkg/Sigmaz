@@ -204,6 +204,28 @@ public class Valoramento {
 
             mValore_Value.valore_Funct(ePrefixo, mValue, mAtribuindo);
 
+        } else if (mValue.mesmoValor("COL")) {
+
+
+            for (AST mAST : mValue.getASTS()) {
+                if (mAST.mesmoTipo("ARGUMENT") && mAST.mesmoValor("FUNCT")) {
+
+                    valore(ePrefixo, mAST, mAtribuindo);
+
+
+                }
+            }
+        } else if (mValue.mesmoValor("STRUCT_COLSET")) {
+
+
+            for (AST mAST : mValue.getASTS()) {
+                if (mAST.mesmoTipo("ARGUMENT") && mAST.mesmoValor("FUNCT")) {
+                    valore(ePrefixo, mAST, mAtribuindo);
+                }
+            }
+
+
+
         } else if (mValue.mesmoValor("TERNAL")) {
 
             mValore_Value.valore_Ternal(ePrefixo, mValue, mAtribuindo);

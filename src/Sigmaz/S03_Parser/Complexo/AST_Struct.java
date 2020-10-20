@@ -3,6 +3,7 @@ package Sigmaz.S03_Parser.Complexo;
 import Sigmaz.S03_Parser.Alocador.AST_Alocador;
 import Sigmaz.S03_Parser.Alocador.AST_Def;
 import Sigmaz.S03_Parser.Bloco.*;
+import Sigmaz.S03_Parser.Bloco.AST_Col;
 import Sigmaz.S03_Parser.Organizador.AST_Generic;
 import Sigmaz.S03_Parser.Parser;
 import Sigmaz.S02_Lexer.Token;
@@ -187,6 +188,13 @@ public class AST_Struct {
 
                 AST_Function mAST = new AST_Function(mCompiler);
                 mAST.init(AST_Corpo, VISIBILIDADE);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("block")) {
+
+                AST_Col mAST = new AST_Col(mCompiler);
+                mAST.init(AST_Corpo, VISIBILIDADE);
+
+
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 

@@ -1,6 +1,7 @@
 package Sigmaz.S00_Utilitarios;
 
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S07_Executor.Item;
 
 import java.util.ArrayList;
 
@@ -59,6 +60,58 @@ public class Utilitario {
 
 
         return mTipagem;
+
+    }
+
+
+    public String getArgumentos(ArrayList<Item> mArgumentos){
+
+
+        String mTipagem = "";
+
+
+        int i = 0;
+        int o = mArgumentos.size();
+        for (Item ie : mArgumentos) {
+
+            i += 1;
+
+            if (i < o) {
+                mTipagem += ie.getTipo() + " , ";
+            } else {
+                mTipagem += ie.getTipo() + " ";
+            }
+
+
+        }
+
+        return " ( " + mTipagem + " ) ";
+
+    }
+
+
+    public String getArgumentosCol(ArrayList<Item> mArgumentos){
+
+
+        String mTipagem = "";
+
+
+        int i = 0;
+        int o = mArgumentos.size();
+        for (Item ie : mArgumentos) {
+
+            i += 1;
+
+            if (i < o) {
+                mTipagem += ie.getTipo() + " , ";
+            } else {
+                mTipagem += ie.getTipo() + " ";
+            }
+
+
+        }
+
+        return " [ " + mTipagem + " ] ";
 
     }
 

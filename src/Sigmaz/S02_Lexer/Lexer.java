@@ -32,6 +32,9 @@ public class Lexer {
     private final String IGUAL = "=";
     private final String VIRGULA = ",";
 
+    private final String E = "&";
+
+
     private final String PARENTESES_ABRE = "(";
     private final String PARENTESES_FECHA = ")";
 
@@ -209,6 +212,10 @@ public class Lexer {
             } else if (igual(charC,MAIOR)) {
 
                 mTokens.add(mTokenizador.getMaior());
+
+            } else if (igual(charC,E)) {
+
+                mTokens.add(mTokenizador.getE());
 
             } else if (igual(charC,CERQUILHA)) {
 

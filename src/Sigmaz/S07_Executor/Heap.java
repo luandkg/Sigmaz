@@ -72,6 +72,11 @@ public class Heap {
 
         boolean enc = false;
 
+
+        if (eNome == null) {
+            return;
+        }
+
         if (!enc) {
             for (Run_Struct mRun_Struct : mStructs_Instances) {
                 if (mRun_Struct.mesmoNome(eNome)) {
@@ -90,7 +95,7 @@ public class Heap {
                 if (mRun_Struct.mesmoNome(eNome)) {
                     mRun_Struct.refAumentar();
 
-                   // System.out.println("GC Aumentando :: " + eNome);
+                 //   System.out.println("GC Aumentando :: " + eNome);
 
                     enc = true;
                     break;
@@ -115,10 +120,10 @@ public class Heap {
 
                     if (mRun_Struct.getRefs() == 0) {
                         mStructs_Instances.remove(mRun_Struct);
-                    //    System.out.println("GC Coletando Lixo :: " + eNome);
+                      //  System.out.println("GC Coletando Lixo :: " + eNome);
                     }else{
 
-                      //  System.out.println("GC Reduzindo :: " + eNome);
+                       // System.out.println("GC Reduzindo :: " + eNome);
 
 
                     }
@@ -136,10 +141,10 @@ public class Heap {
 
                     if (mRun_Struct.getRefs() == 0) {
                         mTypes_Instances.remove(mRun_Struct);
-                    //    System.out.println("GC Coletando Lixo :: " + eNome);
+                      //  System.out.println("GC Coletando Lixo :: " + eNome);
 
                     }else{
-                    //    System.out.println("GC Reduzindo :: " + eNome);
+                   //    System.out.println("GC Reduzindo :: " + eNome);
 
                     }
 
@@ -270,6 +275,31 @@ public class Heap {
 
         System.out.println(" ######################### ##### ############################ ");
 
+
+    }
+
+
+    public void limparEscopo(Escopo mEscopo){
+
+        // System.out.println("Saindo do Escopo : " + mEscopo.getNome());
+
+        //  mRunTime.getHeap().ListarInstancias();
+
+        //System.out.println("Aplicar Reducao");
+
+
+        for (Item eItem : mEscopo.getStacks()) {
+
+            //  System.out.println("\t - " + mEscopo.getNome() + " --- " + eItem.getNome());
+
+            if (eItem.getTemValor()) {
+                if (eItem.getIsEstrutura()) {
+                    mRunTime.getHeap().reduzir(eItem.getValor(mRunTime, mEscopo));
+                }
+            }
+        }
+
+        // mRunTime.getHeap().ListarInstancias();
 
     }
 

@@ -1,4 +1,7 @@
 package Lista {
+
+    refer Item;
+
 	struct Lista in ( T ) {
 		restrict : 
 		define mPrimeiro : Item >> ( T ) = null;
@@ -137,46 +140,45 @@ package Lista {
 			return ret;
 		}
 
+		act setValor ( indice : int , valor : T )  {
+			if ( maior_igual ( indice , 0 ) ) -> {
+				def contando : int = 0;
+				def enc : bool = false;
+				if ( isNull ( mPrimeiro ) == false ) -> {
+					def mCorrente : Item >> ( T ) = mPrimeiro;
+					while ( isNull ( mCorrente ) == false ) -> {
+						if ( contando == indice ) -> {
+							  mCorrente.setValor ( valor );
+							enc = true;
+						}
+						contando = somar ( contando , 1 );
+						mCorrente = mCorrente.getProximo ( );
+					}
+
+				}
+				if ( enc == false ) -> {
+					exception "Indice invalido !";
+				}
+
+			}others {
+				exception "Indice invalido !";
+			}
+		}
+
+	block -> get[ v : int ] : T {
+        return getValor(v);
+    }
+
+    block -> set[ v : int ] -> ( v1 : T )  {
+        setValor(v,v1);
+    }
+
+
 		act mostrarStruct ( ) {
 			DEBUG -> REGRESSIVE :: ALL;
 		}
 		
 	}
 
-	struct Item in ( T ) {
-		restrict : 
-		define mValor : T = null;
-		define mProximo : Item >> ( T ) = null;
-		all : 
-		init Item ( ) {
-			
-		}
-		init Item ( eValor : T ) {
-			mValor = eValor;
-		}
-		init Item ( eValor : T , eProximo : T ) {
-			mValor = eValor;
-			mProximo = eProximo;
-		}
-		all : 
-		func getValor ( ) : T {
-			return mValor;
-		}
 
-		act setValor ( eValor : T ) {
-			mValor = eValor;
-		}
-		func getProximo ( ) : Item >> ( T ) {
-			return mProximo;
-		}
-
-		act setProximo ( eProximo : Item >> ( T ) ) {
-			mProximo = eProximo;
-		}
-		func getProximo ( ) : Item >> ( T ) {
-			return mProximo;
-		}
-		
-	}
-	
 }

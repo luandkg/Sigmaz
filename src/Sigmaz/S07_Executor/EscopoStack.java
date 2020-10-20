@@ -250,42 +250,6 @@ public class EscopoStack {
         }
     }
 
-    public void criarParametro(String eNome, String eTipo, String eValor) {
-
-        boolean enc = existeAqui(eNome, mEscopo.getParametros());
-
-        if (enc) {
-            mRunTime.getErros().add("Parametro Duplicado : " + eNome);
-        } else {
-            Item Novo = new Item(eNome);
-            Novo.setModo(0);
-            Novo.setTipo(eTipo);
-            Novo.setValor(eValor,mRunTime,mEscopo);
-            Novo.setNulo(false);
-
-            mEscopo.getParametros().add(Novo);
-
-        }
-    }
-
-    public void criarParametroNulo(String eNome, String eTipo) {
-
-        boolean enc = existeAqui(eNome, mEscopo.getParametros());
-
-        if (enc) {
-            mRunTime.getErros().add("Parametro Duplicado : " + eNome);
-        } else {
-            Item Novo = new Item(eNome);
-            Novo.setModo(0);
-            Novo.setTipo(eTipo);
-            Novo.setValor("",mRunTime,mEscopo);
-            Novo.setNulo(true);
-
-            mEscopo.getParametros().add(Novo);
-
-        }
-    }
-
     public boolean existeAqui(String eNome, ArrayList<Item> mProcurar) {
 
         boolean enc = false;
@@ -299,51 +263,6 @@ public class EscopoStack {
         return enc;
     }
 
-    public void criarParametroStruct(String eNome, String eTipo, String eRef) {
-
-        boolean enc = existeAqui(eNome, mEscopo.getParametros());
-
-        if (enc) {
-            mRunTime.getErros().add("Parametro Duplicado : " + eNome);
-        } else {
-            Item Novo = new Item(eNome);
-            Novo.setModo(0);
-            Novo.setTipo(eTipo);
-
-            Novo.setNulo(false);
-            Novo.setIsEstrutura(true);
-            Novo.setPrimitivo(false);
-            Novo.setValor(eRef,mRunTime,mEscopo);
-
-            //   System.out.println("\t - Passando Parametro Struct : " + eRef );
-
-            mEscopo.getParametros().add(Novo);
-
-        }
-    }
-
-    public void criarParametroStructNula(String eNome, String eTipo) {
-
-        boolean enc = existeAqui(eNome, mEscopo.getParametros());
-
-        if (enc) {
-            mRunTime.getErros().add("Parametro Duplicado : " + eNome);
-        } else {
-            Item Novo = new Item(eNome);
-            Novo.setModo(0);
-            Novo.setTipo(eTipo);
-
-            Novo.setNulo(true);
-            Novo.setIsEstrutura(true);
-            Novo.setPrimitivo(false);
-            Novo.setValor("",mRunTime,mEscopo);
-
-            //   System.out.println("\t - Passando Parametro Struct : " + eRef );
-
-            mEscopo.getParametros().add(Novo);
-
-        }
-    }
 
 
     public void setDefinido(String eNome, String eValor) {
@@ -370,25 +289,7 @@ public class EscopoStack {
 
     }
 
-    public void alterarTipo(String eNome, String eTipoAtual, String eTipoNovo) {
 
-
-        Item mItem = getItem(eNome);
-        if (mItem.getTipo().contentEquals(eTipoAtual)) {
-            mItem.setTipo(eTipoNovo);
-            if (mItem.getIsReferenciavel()) {
-
-                mItem.getReferencia().setTipo(eTipoNovo);
-
-            }
-        } else {
-            mRunTime.getErros().add("Nao foi possivel alterar o tipo : " + mItem.getNome());
-        }
-
-        //System.out.println("Aplicando Valor em : " + eNome + " -->> " + eValor);
-
-
-    }
 
     public void setDefinidoStruct(String eNome, String eValor) {
 
@@ -459,13 +360,7 @@ public class EscopoStack {
         boolean enc = false;
         Item ret = null;
 
-        for (Item i : mEscopo.getParametros()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-                ret = i;
-                return ret;
-            }
-        }
+
 
         for (Item i : mEscopo.getStacks()) {
             if (i.getNome().contentEquals(eNome)) {
@@ -571,13 +466,7 @@ public class EscopoStack {
 
         if (mEscopo.getEscopoAnterior() != null) {
 
-            for (Item i : mEscopo.getEscopoAnterior().getParametros()) {
-                if (i.getNome().contentEquals(eNome)) {
-                    enc = true;
-                    IC = i;
-                    break;
-                }
-            }
+
 
 
             for (Item i : mEscopo.getEscopoAnterior().getStacks()) {

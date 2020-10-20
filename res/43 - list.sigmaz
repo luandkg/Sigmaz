@@ -375,6 +375,37 @@ struct Lista in ( T ) {
 		}
 		return ret;
 	}
+
+
+	act setValor ( indice : int ,valor : T)  {
+		def ret : int = null;
+		if ( maior_igual ( indice , 0 ) ) -> {
+			def contando : int = 0;
+			def enc : bool = false;
+			if ( isNull ( mPrimeiro ) == false ) -> {
+				def mCorrente : Item >> ( T ) = mPrimeiro;
+				while ( isNull ( mCorrente ) == false ) -> {
+					if ( contando == indice ) -> {
+						mCorrente.setValor ( valor );
+						enc = true;
+					}
+					contando = somar ( contando , 1 );
+					mCorrente = mCorrente.getProximo ( );
+				}
+
+			}
+			if ( enc == false ) -> {
+				exception "Indice invalido !";
+			}
+
+		}others {
+			exception "Indice invalido !";
+		}
+	}
+
+
+
+
 	
 }
 
@@ -481,6 +512,12 @@ act inicio ( ) {
 	ig.adicionar ( 40 );
 	ig.adicionar ( 50 );
 	ig.adicionar ( 60 );
+
+
+
+
+
+
 	def b : int = ig.getQuantidade ( );
 	println ( "Quantidade : ", ig.getQuantidade ( ) );
 	

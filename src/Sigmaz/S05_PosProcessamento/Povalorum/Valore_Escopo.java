@@ -288,7 +288,6 @@ public class Valore_Escopo {
 
             } else if (mAST.mesmoTipo("PROC")) {
 
-                //   valore_Proc(ePrefixo, mAST, mAtribuindo);
             } else if (mAST.mesmoTipo("CHANGE")) {
 
             } else if (mAST.mesmoTipo("USING")) {
@@ -299,6 +298,7 @@ public class Valore_Escopo {
 
             } else if (mAST.mesmoTipo("DELETE")) {
 
+            } else if (mAST.mesmoTipo("STRUCT_COLSET")) {
 
             } else {
 

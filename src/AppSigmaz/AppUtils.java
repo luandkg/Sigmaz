@@ -157,17 +157,18 @@ public class AppUtils {
             Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
 
             SigmazC.mostrarDebug(true);
+            SigmazC.setMostrar_Erros(true);
 
             SigmazC.setMostrarArvoreRunTime(true);
-            SigmazC.setMostrar_ArvoreFalhou(false);
+            SigmazC.setMostrar_ArvoreFalhou(true);
 
 
-            SigmazC.setDebug_PreProcessamento(false);
+            SigmazC.setDebug_PreProcessamento(true);
             SigmazC.setDebug_Lexer(true);
             SigmazC.setDebug_Parser(true);
             SigmazC.setDebug_Comentario(true);
 
-            SigmazC.setDebug_Montagem(false);
+            SigmazC.setDebug_Montagem(true);
 
             SigmazC.setDebug_PosProcessador_Requisidor(false);
 

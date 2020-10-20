@@ -992,7 +992,7 @@ public class Sigmaz_Compilador {
 
                 mETAPA_POS_PROCESSAMENTO = mSTATUS_FALHOU;
 
-                mOrganizadorDeErros.getPosProcessador(getErros_PosProcessamento());
+                mOrganizadorDeErros.getPosProcessador(PosProcessadorC.getErros());
 
 
             }

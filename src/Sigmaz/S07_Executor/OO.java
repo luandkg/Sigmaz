@@ -63,6 +63,13 @@ public class OO {
     private ArrayList<Index_Function> mMarcadores_Extern;
 
 
+    private ArrayList<Index_Function> mColGet;
+    private ArrayList<Index_Function> mColGet_All;
+    private ArrayList<Index_Function> mColGet_Restrict;
+    private ArrayList<Index_Action> mColSet;
+    private ArrayList<Index_Action> mColSet_All;
+    private ArrayList<Index_Action> mColSet_Restrict;
+
 
     public OO(Escopo eEscopo, RunTime eRunTime) {
 
@@ -83,7 +90,7 @@ public class OO {
         mFunctions = new ArrayList<Index_Function>();
         mDirectors = new ArrayList<Index_Function>();
         mOperations = new ArrayList<Index_Function>();
-        mMarcadores=new ArrayList<Index_Function>();
+        mMarcadores = new ArrayList<Index_Function>();
 
 
         mCasts = new ArrayList<AST>();
@@ -118,6 +125,13 @@ public class OO {
         mMarcadores_All = new ArrayList<Index_Function>();
         mMarcadores_Restrict = new ArrayList<Index_Function>();
         mMarcadores_Extern = new ArrayList<Index_Function>();
+
+        mColGet = new ArrayList<Index_Function>();
+        mColGet_All = new ArrayList<Index_Function>();
+        mColGet_Restrict = new ArrayList<Index_Function>();
+        mColSet = new ArrayList<Index_Action>();
+        mColSet_All = new ArrayList<Index_Action>();
+        mColSet_Restrict = new ArrayList<Index_Action>();
 
 
     }
@@ -173,6 +187,14 @@ public class OO {
         mMarcadores_Restrict.clear();
         mMarcadores_Extern.clear();
 
+        mColGet.clear();
+        mColGet_All.clear();
+        mColGet_Restrict.clear();
+        mColSet.clear();
+        mColSet_All.clear();
+        mColSet_Restrict.clear();
+
+
     }
 
 
@@ -187,7 +209,7 @@ public class OO {
         mGuardados.add(eAST);
         mStructGuardados.add(eAST);
 
-     //   System.out.println("Escopo : " + mEscopo.getNome() + " Guardando " + eAST.getTipo() + " -> " + eAST.getNome());
+        //   System.out.println("Escopo : " + mEscopo.getNome() + " Guardando " + eAST.getTipo() + " -> " + eAST.getNome());
 
         if (eAST.mesmoTipo("ACTION")) {
 
@@ -240,6 +262,7 @@ public class OO {
             }
 
 
+
         } else if (eAST.mesmoTipo("OPERATOR")) {
 
             Index_Function mFunc = new Index_Function(mRunTime, mEscopo, eAST);
@@ -280,6 +303,49 @@ public class OO {
                 mDirectors_Restrict.add(mFunc);
 
             }
+
+
+        } else if (eAST.mesmoTipo("COL_GET")) {
+
+            Index_Function mFunc = new Index_Function(mRunTime, mEscopo, eAST);
+
+            mColGet.add(mFunc);
+
+
+            if (mFunc.isExplicit()) {
+
+
+            } else if (mFunc.isAll()) {
+
+                mColGet_All.add(mFunc);
+
+            } else if (mFunc.isRestrict()) {
+
+                mColGet_Restrict.add(mFunc);
+
+            }
+
+        } else if (eAST.mesmoTipo("COL_SET")) {
+
+            Index_Action mFunc = new Index_Action(mRunTime, mEscopo, eAST);
+
+            mColSet.add(mFunc);
+
+
+            if (mFunc.isExplicit()) {
+
+
+            } else if (mFunc.isAll()) {
+
+                mColSet_All.add(mFunc);
+
+            } else if (mFunc.isRestrict()) {
+
+                mColSet_Restrict.add(mFunc);
+
+            }
+
+
         } else if (eAST.mesmoTipo("CAST")) {
 
             mCasts.add(eAST);
@@ -335,7 +401,6 @@ public class OO {
         }
 
     }
-
 
 
     public ArrayList<AST> getStruct() {
@@ -538,22 +603,30 @@ public class OO {
         return gc;
     }
 
-/*    public ArrayList<AST> getCastsCompleto() {
 
-        ArrayList<AST> gc = new ArrayList<AST>();
+    public ArrayList<Index_Function> getColGet() {
+        return mColGet;
+    }
 
-        for (AST mIndex_Function : getCasts()) {
-            gc.add(mIndex_Function);
-        }
+    public ArrayList<Index_Function> getColGet_All() {
+        return mColGet_All;
+    }
 
-        if (getEscopo().getEscopoAnterior() != null) {
-            for (AST mIndex_Function : getEscopo().getEscopoAnterior().getCastsCompleto()) {
-                gc.add(mIndex_Function);
-            }
-        }
+    public ArrayList<Index_Function> getColGet_Restrict() {
+        return mColGet_Restrict;
+    }
 
-        return gc;
-   }*/
+    public ArrayList<Index_Action> getColSet() {
+        return mColSet;
+    }
+
+    public ArrayList<Index_Action> getColSet_All() {
+        return mColSet_All;
+    }
+
+    public ArrayList<Index_Action> getColSet_Restrict() {
+        return mColSet_Restrict;
+    }
 
 
     public ArrayList<Index_Action> getInitsCompleto() {

@@ -99,4 +99,10 @@ Linguagem de Programação Estruturada - Alterações
 
 
 		2020 10 19 -->> ReOrganização das Mensagens de Debug
+		2020 10 19 -->> Remoção do Invock CAST
+		2020 10 19 -->> Remoção do Invock COMPILER
+		2020 10 19 -->> Remoção do Run_Invock
+
+
+		2020 10 20 -->> Run_Any - Inicializador de Struct
 

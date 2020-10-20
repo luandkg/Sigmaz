@@ -13,9 +13,12 @@ import "num.sigmaz";
 import "int_num.sigmaz";
 import "pos.sigmaz";
 import "neg.sigmaz";
+
+import "container/item.sigmaz";
 import "container/lista.sigmaz";
 import "container/vetor.sigmaz";
 import "container/iterador.sigmaz";
+
 import "pacote_tempo.sigmaz";
 import "ecossistema.sigmaz";
 import "cores.sigmaz";

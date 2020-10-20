@@ -1,5 +1,6 @@
 package Sigmaz.S07_Executor.Runners;
 
+import Sigmaz.S00_Utilitarios.Utilitario;
 import Sigmaz.S07_Executor.Escopo;
 import Sigmaz.S07_Executor.Indexador.Index_Action;
 import Sigmaz.S07_Executor.Item;
@@ -37,8 +38,9 @@ public class Run_ExecuteLocal {
         if (mRunTime.getErros().size() > 0) {
             return null;
         }
+        Utilitario mUtilitario = new Utilitario();
 
-        String mTipagem = mPreparadorDeArgumentos.getTipagem(mArgumentos);
+        String mTipagem = mUtilitario.getArgumentos(mArgumentos);
 
 
         for (AST eLocal : mEscopo.getLocais()) {
@@ -58,11 +60,12 @@ public class Run_ExecuteLocal {
 
                 if (mIndex_Function.getArgumentos().size() == mArgumentos.size()) {
 
-                    int contagem = mRunArguments.conferirArgumentos(mRunTime, mEscopo, mIndex_Function.getArgumentos(), mArgumentos);
+                    int contagem = mRunArguments.conferirArgumentos(mRunTime, mIndex_Function.getArgumentos(), mArgumentos);
                     if (contagem == mArgumentos.size()) {
+                        Run_Escopo mRun_Escopo = new Run_Escopo();
 
                         executada = true;
-                        return mPreparadorDeArgumentos.executar_ActionComRetorno(mRunTime, mEscopo, mIndex_Function, mArgumentos, "<<ANY>>");
+                        return mRun_Escopo.executar_ActionComRetorno(mRunTime, mEscopo, mIndex_Function, mArgumentos, "<<ANY>>");
 
                     }
 
@@ -105,8 +108,9 @@ public class Run_ExecuteLocal {
         if (mRunTime.getErros().size() > 0) {
             return;
         }
+        Utilitario mUtilitario = new Utilitario();
 
-        String mTipagem = mPreparadorDeArgumentos.getTipagem(mArgumentos);
+        String mTipagem = mUtilitario.getArgumentos(mArgumentos);
 
 
         for (AST eLocal : mEscopo.getLocais()) {
@@ -123,11 +127,13 @@ public class Run_ExecuteLocal {
 
             if (mIndex_Function.getArgumentos().size() == mArgumentos.size()) {
 
-                int contagem = mRunArguments.conferirArgumentos(mRunTime, mEscopo, mIndex_Function.getArgumentos(), mArgumentos);
+                int contagem = mRunArguments.conferirArgumentos(mRunTime, mIndex_Function.getArgumentos(), mArgumentos);
                 if (contagem == mArgumentos.size()) {
 
                     executada = true;
-                    mPreparadorDeArgumentos.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
+                    Run_Escopo mRun_Escopo = new Run_Escopo();
+
+                    mRun_Escopo.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
                     break;
 
                 }

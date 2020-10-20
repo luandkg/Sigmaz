@@ -47,6 +47,9 @@ public class AST_Operator {
         } else if (TokenC.getTipo() == TokenTipo.RECEBER) {
 
             definir(ASTPai, "LESS");
+        } else if (TokenC.getTipo() == TokenTipo.ANEXADOR) {
+
+            definir(ASTPai, "APPEND");
 
         } else {
             mCompiler.errarCompilacao("Era esperado o operador da OPERATION !", TokenC);

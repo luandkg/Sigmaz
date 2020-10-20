@@ -7,6 +7,8 @@ import Sigmaz.S07_Executor.Item;
 import Sigmaz.S07_Executor.RunTime;
 import Sigmaz.S00_Utilitarios.AST;
 
+import java.util.ArrayList;
+
 public class Run_This {
 
     private RunTime mRunTime;
@@ -140,5 +142,50 @@ public class Run_This {
         return eItem;
     }
 
+    public Item operadorCol(String eNome, AST ASTCorrente, Escopo mEscopo, String eRetorno) {
+
+        String eConstante = "this";
+
+        Item mItem = mEscopo.getItem(eConstante);
+
+        if (mRunTime.getErros().size() > 0) {
+            return null;
+        }
+
+        Run_Context mRun_Context = new Run_Context(mRunTime);
+
+
+        ArrayList<String> aRefers = mEscopo.getRefers();
+        aRefers.addAll(mEscopo.getRefersOcultas());
+
+        String eQualificador = mRun_Context.getQualificador(mItem.getTipo(), mEscopo);
+
+        // System.out.println("Qualificar " + mItem.getNome() + " : " + mItem.getTipo() + " -->> " + eQualificador);
+
+
+        if (eQualificador.contentEquals("STRUCT")) {
+
+
+            //   System.out.println("STRUCT :: " + mItem.getValor(mRunTime, mEscopo));
+
+            Run_Struct rs = mRunTime.getHeap().getRun_Struct(mItem.getValor(mRunTime, mEscopo));
+
+            mItem = rs.init_ColGet_This(ASTCorrente.getNome(), ASTCorrente, mEscopo, eRetorno);
+
+            if (ASTCorrente.existeBranch("INTERNAL")) {
+                Run_Internal mRun_Internal = new Run_Internal(mRunTime);
+
+                mItem = mRun_Internal.Struct_DentroStruct(mItem.getValor(mRunTime, mEscopo), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
+
+            }
+
+
+        } else {
+
+            mRunTime.errar(mLocal, "CAST ou TYPE nao possui operador COL  :  " + eQualificador + " :: " + mItem.getTipo());
+        }
+
+        return mItem;
+    }
 
 }

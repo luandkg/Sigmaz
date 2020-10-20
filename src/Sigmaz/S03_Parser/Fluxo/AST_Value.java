@@ -9,7 +9,6 @@ public class AST_Value {
 
     private Parser mCompiler;
 
-    //   private TokenTipo mTerminar;
     private String mTerminarErro;
 
     private boolean mTemTipo;
@@ -24,8 +23,6 @@ public class AST_Value {
     public AST_Value(Parser eCompiler) {
 
         mCompiler = eCompiler;
-        // mTerminar = TokenTipo.PONTOVIRGULA;
-        mTerminarErro = "Era esperado um ponto e virgula ! : ";
         mTemTipo = false;
         mTipo = null;
 
@@ -36,11 +33,22 @@ public class AST_Value {
 
     }
 
+
+
     public void setBuscadorDeArgumentos() {
 
         mTerminadorPrimario = TokenTipo.VIRGULA;
         mTerminadorSecundario = TokenTipo.PARENTESES_FECHA;
         mTerminadorErro = "Era esperado uma virgula ou um fechador de paresenteses !";
+
+    }
+
+
+    public void setBuscadorDeArgumentos_Colchete() {
+
+        mTerminadorPrimario = TokenTipo.VIRGULA;
+        mTerminadorSecundario = TokenTipo.COLCHETE_FECHA;
+        mTerminadorErro = "Era esperado uma virgula ou um fechador de colchete !";
 
     }
 
@@ -189,6 +197,9 @@ public class AST_Value {
                 mCompiler.voltar();
             } else if (mCompiler.getTokenCorrente().getTipo() == TokenTipo.RECEBER) {
                 mCompiler.voltar();
+            } else if (mCompiler.getTokenCorrente().getTipo() == TokenTipo.ANEXADOR) {
+                mCompiler.voltar();
+
             }
 
             //  System.out.println("Apos Negador Voltar : " + mCompiler.getTokenCorrente().getConteudo());
@@ -298,6 +309,8 @@ public class AST_Value {
                     operation_final("GREAT", ASTPai);
                 } else if (TokenC2.getTipo() == TokenTipo.RECEBER) {
                     operation_final("LESS", ASTPai);
+                } else if (TokenC2.getTipo() == TokenTipo.ANEXADOR) {
+                    operation_final("APPEND", ASTPai);
 
 
                 } else if (TokenC2.getTipo() == TokenTipo.PONTO) {
@@ -325,6 +338,12 @@ public class AST_Value {
 
                     SegundaParte(ASTPai);
 
+                } else if (TokenC2.getTipo() == TokenTipo.COLCHETE_ABRE) {
+
+
+                    mAST_ValueTypes.dentro_colchete(ASTPai, mTemTipo, mTipo);
+
+                    SegundaParte(ASTPai);
 
                 } else {
 
@@ -372,6 +391,8 @@ public class AST_Value {
                     operation_final("GREAT", ASTPai);
                 } else if (TokenC2.getTipo() == TokenTipo.RECEBER) {
                     operation_final("LESS", ASTPai);
+                } else if (TokenC2.getTipo() == TokenTipo.ANEXADOR) {
+                    operation_final("APPEND", ASTPai);
 
                 } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
 
@@ -399,6 +420,13 @@ public class AST_Value {
                 } else if (TokenC2.getTipo() == TokenTipo.PARENTESES_ABRE) {
 
                     mAST_ValueTypes.dentro_funct(ASTPai, mTemTipo, mTipo);
+
+                    SegundaParte(ASTPai);
+
+                } else if (TokenC2.getTipo() == TokenTipo.COLCHETE_ABRE) {
+
+
+                    mAST_ValueTypes.dentro_colchete(ASTPai, mTemTipo, mTipo);
 
                     SegundaParte(ASTPai);
 
@@ -444,6 +472,8 @@ public class AST_Value {
             operation_final("GREAT", ASTPai);
         } else if (TokenC3.getTipo() == TokenTipo.RECEBER) {
             operation_final("LESS", ASTPai);
+        } else if (TokenC3.getTipo() == TokenTipo.ANEXADOR) {
+            operation_final("APPEND", ASTPai);
 
         } else if (TokenC3.getTipo() == mTerminadorPrimario) {
 
@@ -613,6 +643,13 @@ public class AST_Value {
 
                     terminar();
 
+                } else if (TokenC2.getTipo() == TokenTipo.COLCHETE_ABRE) {
+
+
+                    mAST_ValueTypes.dentro_colchete(ASTPai, mTemTipo, mTipo);
+
+                    terminar();
+
                 } else if (TokenC2.getTipo() == TokenTipo.QUAD) {
 
 
@@ -770,6 +807,11 @@ public class AST_Value {
 
 
                     mAST_ValueTypes.dentro_funct(ASTPai, mTemTipo, mTipo);
+
+                } else if (TokenC2.getTipo() == TokenTipo.COLCHETE_ABRE) {
+
+
+                    mAST_ValueTypes.dentro_colchete(ASTPai, mTemTipo, mTipo);
 
 
                 } else if (TokenC2.getTipo() == TokenTipo.QUAD) {

@@ -86,6 +86,9 @@ public class RunValueType_Operator {
         } else if (eModo.mesmoNome("LESS")) {
 
             realizarOperacao(eRunValue,"LESS", mRun_Esquerda, mRun_Direita, eRetorno);
+        } else if (eModo.mesmoNome("APPEND")) {
+
+            realizarOperacao(eRunValue,"APPEND", mRun_Esquerda, mRun_Direita, eRetorno);
 
         } else {
             mRunTime.errar(mLocal, "Comparador Desconhecido : " + eModo.getNome());

@@ -64,30 +64,6 @@ public class Local {
 
     public void mapear_stack() {
 
-        System.out.println(" - PARAM : ");
-        ArrayList<Item> ls_Param = new ArrayList<>();
-        for (Item i : mEscopo.getParametros()) {
-            ls_Param.add(i);
-        }
-
-        System.out.println("\t - NAO NULOS : ");
-
-        for (Item i : ls_Param) {
-            if (i.getNulo() == false) {
-                mostrarItem(i);
-
-            }
-        }
-
-
-        System.out.println("\t - NULOS : ");
-        for (Item i : ls_Param) {
-
-            if (i.getNulo()) {
-                mostrarItem(i);
-
-            }
-        }
 
 
         ArrayList<Item> ls_Defines = new ArrayList<>();

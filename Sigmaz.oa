@@ -1,10 +1,10 @@
    PACOTE OA
     {
       ID Version = "1"
-      ID Branch = "19/10/2020"
-      ID Works = "42"
-      ID Full = "1.196.42"
-      ID Releaser = "1.196.42 R3"
+      ID Branch = "20/10/2020"
+      ID Works = "27"
+      ID Full = "1.203.27"
+      ID Releaser = "1.203.27 R5"
       PACOTE Branches
        {
          PACOTE Branch {  ID Date = "13/6/2020" ID Start = "13/6/2020 11:18:28" ID Update = "13/6/2020 13:41:15" ID End = "13/6/2020 15:14:10" ID Status = "RED" ID Count = "73" } 
@@ -85,7 +85,8 @@
          PACOTE Branch {  ID Date = "15/10/2020" ID Start = "15/10/2020 5:6:31" ID Update = "15/10/2020 9:11:45" ID End = "16/10/2020 9:59:51" ID Status = "RED" ID Count = "84" } 
          PACOTE Branch {  ID Date = "16/10/2020" ID Start = "16/10/2020 9:59:51" ID Update = "16/10/2020 8:45:47" ID End = "18/10/2020 11:48:40" ID Status = "RED" ID Count = "108" } 
          PACOTE Branch {  ID Date = "18/10/2020" ID Start = "18/10/2020 11:48:40" ID Update = "18/10/2020 5:17:29" ID End = "19/10/2020 10:8:15" ID Status = "RED" ID Count = "159" } 
-         PACOTE Branch {  ID Date = "19/10/2020" ID Start = "19/10/2020 10:8:15" ID Update = "19/10/2020 6:19:19" ID End = "." ID Status = "GREEN" ID Count = "176" } 
+         PACOTE Branch {  ID Date = "19/10/2020" ID Start = "19/10/2020 10:8:15" ID Update = "19/10/2020 9:0:43" ID End = "20/10/2020 11:20:6" ID Status = "RED" ID Count = "253" } 
+         PACOTE Branch {  ID Date = "20/10/2020" ID Start = "20/10/2020 11:20:7" ID Update = "20/10/2020 5:58:55" ID End = "." ID Status = "GREEN" ID Count = "258" } 
        } 
       PACOTE Releases
        {
@@ -146,6 +147,7 @@
          PACOTE Release {  ID Date = "15/10/2020" ID Releaser = "1.187.49 R1" } 
          PACOTE Release {  ID Date = "16/10/2020" ID Releaser = "1.190.7 R2" } 
          PACOTE Release {  ID Date = "18/10/2020" ID Releaser = "1.193.16 R3" } 
-         PACOTE Release {  ID Date = "19/10/2020" ID Releaser = "1.196.42 R3" } 
+         PACOTE Release {  ID Date = "19/10/2020" ID Releaser = "1.198.19 R5" } 
+         PACOTE Release {  ID Date = "20/10/2020" ID Releaser = "1.203.27 R5" } 
        } 
     } 

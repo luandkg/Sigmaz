@@ -39,10 +39,6 @@ public class Run_Alocadores {
                 Run_Moc mAST = new Run_Moc(mRunTime, mEscopo);
                 mAST.init(ASTC);
 
-            } else if (ASTC.mesmoTipo("INVOKE")) {
-
-                Run_Invoke mAST = new Run_Invoke(mRunTime, mEscopo);
-                mAST.init(ASTC);
 
             }
 

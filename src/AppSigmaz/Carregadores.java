@@ -158,6 +158,7 @@ public class Carregadores {
         mArquivos.add("res/89 - posprocessamento.sigmaz");
         mArquivos.add("res/90 - processor.sigmaz");
         mArquivos.add("res/91 - delete.sigmaz");
+        mArquivos.add("res/92 - container.sigmaz");
 
         return mArquivos;
     }

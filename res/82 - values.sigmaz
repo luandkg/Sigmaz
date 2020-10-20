@@ -13,7 +13,21 @@ act valores ( ) {
 	def n1 : i5 = 0;
 	def n2 : i5 = 5;
 	def n3 : i5 = 5;
-	
+
+	def t0 : string =  "Meu Nome e : " && "Luan";
+
+	def t1 : string = "Luan " && 1992;
+	def t2 : string =  1992 && " - Luan";
+
+    def t3 : string = "Luan " && true;
+	def t4 : string =  false && " - Luan";
+
+	def t5 : string = "Luan " && 1.65;
+	def t6 : string =  1.65 && " - Luan";
+
+
+		DEBUG -> REGRESSIVE :: STACK;
+
 	#def n4 : i5 = 6;
 	
 	#def n5: i5 = -1;
@@ -39,17 +53,28 @@ act valores ( ) {
 	def ternario_2 : int = if ( 1 == 0 ) :: ( +1 ) not ( -1 );
 	def ternario_3 : int = if ( 1 == 1 ) :: ( +1 );
 	def ternario_4 : int = if ( 1 == 0 ) :: ( +1 );
+
+		DEBUG -> REGRESSIVE :: STACK;
+
 	def caixa_A : Caixa = init Caixa ( 5 );
 	def caixa_B : Caixa = init Caixa ( 15 );
+
+
 	def caixa_C : Caixa = caixa_A ++ caixa_B;
+
 	def valor_c : int = caixa_C.getValor ( );
 	def caixa_E : Caixa = init Caixa ( 2 ) ++ init Caixa ( 100 );
 	def valor_e : int = caixa_E.getValor ( );
-	
+
 	#def valor_f_1 : int = init Caixa(12).getValor();
-	
+							DEBUG -> REGRESSIVE :: STACK;
+DEBUG -> GLOBAL :: INSTANCES;
+
 	#def valor_f_2 : int = (init Caixa(12)).getValor();
 	def valor_h : int = somar ( caixa_A.getValor ( ) , caixa_B.getValor ( ) );
+
+							DEBUG -> REGRESSIVE :: STACK;
+
 	def valor_g : int = somar_caixas ( init Caixa ( 22 ) , init Caixa ( 8 ) );
 	def valor_i : int = somar_caixas ( init Caixa ( 20 ) ++ init Caixa ( 10 ) , init Caixa ( 20 ) ++ init Caixa ( 20 ) );
 	def duplo_X1 : Duplo = start Duplo {
@@ -60,6 +85,8 @@ act valores ( ) {
 		a = 30;
 		b = 10;
 	};
+
+
 	def duplo_X3 : Duplo = duplo_X1 ++ duplo_X2;
 	def duplo_X3_a : int = duplo_X3.a;
 	def duplo_X3_b : int = duplo_X3.b;
@@ -384,3 +411,147 @@ operator ++ ( d1 : Duplo , d2 : Duplo ) : Duplo {
 	};
 	
 }
+
+
+
+operator && ( a : string , b : string ) : string {
+	reg @ R13 -> a;
+	reg @ R14 -> b;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
+}
+
+operator && ( a : string , b : int ) : string {
+
+	reg @ R5 -> b;
+	PROC -> {
+		SET R13;
+		MOV "";
+		INT_STRING R5;
+	}
+
+	def b1 : string = reg @ R13;
+
+
+	reg @ R13 -> a;
+	reg @ R14 -> b1;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
+}
+
+operator && ( a : int , b : string ) : string {
+
+	reg @ R5 -> a;
+	PROC -> {
+		SET R13;
+		MOV "";
+		INT_STRING R5;
+	}
+
+	def a1 : string = reg @ R13;
+
+
+	reg @ R13 -> a1;
+	reg @ R14 -> b;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
+}
+
+
+
+
+operator && ( a : string , b : num ) : string {
+
+	reg @ R9 -> b;
+	PROC -> {
+		SET R13;
+		MOV "";
+		NUM_STRING R9;
+	}
+
+	def b1 : string = reg @ R13;
+
+
+	reg @ R13 -> a;
+	reg @ R14 -> b1;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
+}
+
+
+operator && ( a : num , b : string ) : string {
+
+	reg @ R9 -> a;
+	PROC -> {
+		SET R13;
+		MOV "";
+		NUM_STRING R9;
+	}
+
+	def a2 : string = reg @ R13;
+
+
+	reg @ R13 -> a2;
+	reg @ R14 -> b;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
+}
+
+
+operator && ( a : string , b : bool ) : string {
+
+	reg @ R1 -> b;
+	PROC -> {
+		SET R13;
+		MOV "";
+		BOOL_STRING R1;
+	}
+
+	def b1 : string = reg @ R13;
+
+
+	reg @ R13 -> a;
+	reg @ R14 -> b1;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
+}
+
+operator && ( a : bool , b : string ) : string {
+
+	reg @R1 -> a;
+	PROC -> {
+		SET R13;
+		MOV "";
+		BOOL_STRING R1;
+	}
+
+	def a2 : string = reg @ R13;
+
+
+	reg @ R13 -> a2;
+	reg @ R14 -> b;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
+}
+

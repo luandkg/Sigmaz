@@ -429,6 +429,39 @@ public class Tokenizador {
         return mTokenRetorno;
     }
 
+    public Token getE() {
+
+        String charP = "";
+
+        Token mTokenRetorno = null;
+
+        if (mLexer.TemProximo()) {
+            charP = mLexer.getFuturo();
+        }
+
+        if (charP.contentEquals("&")) {
+
+            int eInicio = mLexer.getPosicao();
+            int eFim = mLexer.getPosicao();
+
+            mLexer.avancar();
+
+            mTokenRetorno = new Token(TokenTipo.ANEXADOR, "&&", eInicio, eFim, mLexer.getLinha());
+
+
+        } else {
+
+            int eInicio = mLexer.getPosicao();
+            int eFim = mLexer.getPosicao();
+
+            mLexer.errar("Lexema Desconhecido &",mLexer.getLinha(),eInicio);
+
+
+        }
+
+        return mTokenRetorno;
+    }
+
     public Token getComentario() {
 
         String charP = "";

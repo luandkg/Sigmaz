@@ -21,6 +21,13 @@ public class Utils {
         return eAST.getNome() + " (" + getModelParametragem(eAST) + ") : " + getTipagem(eAST.getBranch("TYPE"));
     }
 
+    public String getColGet(AST eAST){
+        return "GET [" + getParametragem(eAST) + "] : " + getTipagem(eAST.getBranch("TYPE"));
+    }
+
+    public String getColSet(AST eAST){
+        return "SET [" + getParametragem(eAST) + "] -> " + getValometragem(eAST);
+    }
 
     public String getDefine(AST eAST){
         return eAST.getNome() + " : " + getTipagem(eAST.getBranch("TYPE"));
@@ -74,6 +81,35 @@ public class Utils {
 
         return ret;
     }
+
+    public String getValometragem(AST eAST) {
+        String ret = "";
+
+        int total = eAST.getBranch("VALUES").getASTS().size();
+
+        if (total > 0) {
+
+
+            for (int ii = 0; ii < total; ii++) {
+                AST eArg = eAST.getBranch("VALUES").getASTS().get(ii);
+
+                if (ii < total - 1) {
+                    ret += eArg.getNome() + " : " + getTipagem(eArg.getBranch("TYPE")) + " , ";
+                } else {
+                    ret += eArg.getNome() + " : " + getTipagem(eArg.getBranch("TYPE")) + "";
+                }
+
+            }
+
+        } else {
+            ret = " ";
+
+        }
+
+
+        return ret;
+    }
+
 
     public String getModelParametragem(AST eAST) {
         String ret = "";

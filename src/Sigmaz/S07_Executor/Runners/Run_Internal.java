@@ -6,6 +6,7 @@ import Sigmaz.S07_Executor.Escopos.Run_Type;
 import Sigmaz.S07_Executor.Item;
 import Sigmaz.S07_Executor.RunTime;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S07_Executor.RunValueTypes.RunValueType_Col;
 
 import java.util.ArrayList;
 
@@ -77,12 +78,24 @@ public class Run_Internal {
                 eItem = mRun_Dot.operadorPontoStruct(mEstruturador, eItem, eInternal.getBranch("INTERNAL"), mEscopo, eRetorno);
 
             }
+        } else if (eInternal.mesmoValor("COL")) {
 
+
+            Run_Dot mrd = new Run_Dot(mRunTime);
+            eItem=mrd.operadorColDireto(eLocal,eInternal, mEscopo,eRetorno);
+
+            if (eInternal.existeBranch("INTERNAL")) {
+                //  System.out.println("PONTEIRO :: " + eItem.getValor() + " Dentro de Function -> " + eInternal.getBranch("INTERNAL").getNome());
+                Run_Dot mRun_Dot = new Run_Dot(mRunTime);
+
+                eItem = mRun_Dot.operadorPontoStruct(mEstruturador, eItem, eInternal.getBranch("INTERNAL"), mEscopo, eRetorno);
+
+            }
 
         } else {
 
             mRunTime.errar(mLocal, "AST_Value --> STRUCTURED VALUE !");
-
+            mRunTime.errar(mLocal, eInternal.getValor());
         }
 
         return eItem;
@@ -102,8 +115,8 @@ public class Run_Internal {
         }
         Item eItem = null;
 
-        if (eInternal==null){
-            mRunTime.errar(mLocal,"Internal Nulo !");
+        if (eInternal == null) {
+            mRunTime.errar(mLocal, "Internal Nulo !");
             return null;
         }
 
@@ -165,20 +178,20 @@ public class Run_Internal {
 
             String c = String.valueOf(eTipo.charAt(i));
             if (c.contentEquals("<")) {
-                int i2 = i+1;
-                if (i2<o){
-                    if (String.valueOf(eTipo.charAt(i2)).contentEquals(">")){
-                        ret="";
-                        i+=1;
-                    }else{
+                int i2 = i + 1;
+                if (i2 < o) {
+                    if (String.valueOf(eTipo.charAt(i2)).contentEquals(">")) {
+                        ret = "";
+                        i += 1;
+                    } else {
                         break;
                     }
-                }else{
+                } else {
                     break;
                 }
 
-            }else{
-                ret+=c;
+            } else {
+                ret += c;
             }
             i += 1;
         }
@@ -192,7 +205,7 @@ public class Run_Internal {
         eTipoOrigem = limparGenericos(eTipoOrigem);
 
 
-      // System.out.println("Tipo Origem : " + aTipo + " -->> " + eTipoOrigem);
+        // System.out.println("Tipo Origem : " + aTipo + " -->> " + eTipoOrigem);
 
         // System.out.println("Escopo :: " + mEscopo.getNome());
 
@@ -201,11 +214,11 @@ public class Run_Internal {
         ArrayList<String> eCampos = new ArrayList<String>();
 
         for (String eRefer : mEscopo.getRefers()) {
-      //      System.out.println("Refer -->> " + eRefer);
+            //      System.out.println("Refer -->> " + eRefer);
 //
         }
-            for (AST eType : eRun_Context.getTypesContexto(mEscopo)) {
-          //  System.out.println("Type -->> " + eType.getNome());
+        for (AST eType : eRun_Context.getTypesContexto(mEscopo)) {
+            //  System.out.println("Type -->> " + eType.getNome());
             if (eType.getNome().contentEquals(eTipoOrigem)) {
 
                 for (AST eItem : eType.getBranch("BODY").getASTS()) {
@@ -220,7 +233,7 @@ public class Run_Internal {
 
                 for (String eCampo : eCampos) {
 
-              //     System.out.println("\t - " + eCampo);
+                    //     System.out.println("\t - " + eCampo);
 
                 }
                 break;

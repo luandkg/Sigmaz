@@ -5,10 +5,7 @@ import Sigmaz.S07_Executor.Indexador.Index_Action;
 import Sigmaz.S07_Executor.Indexador.Index_Function;
 import Sigmaz.S07_Executor.Item;
 import Sigmaz.S07_Executor.RunTime;
-import Sigmaz.S07_Executor.Runners.Run_Arguments;
-import Sigmaz.S07_Executor.Runners.Run_Context;
-import Sigmaz.S07_Executor.Runners.Run_Def;
-import Sigmaz.S07_Executor.Runners.Run_Moc;
+import Sigmaz.S07_Executor.Runners.*;
 import Sigmaz.S00_Utilitarios.AST;
 
 import java.util.ArrayList;
@@ -310,8 +307,9 @@ public class Run_Explicit {
                         break;
                     }
 
+                    Run_Escopo mRun_Escopo = new Run_Escopo();
 
-                    mRet = mPreparadorDeArgumentos.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eRetorne);
+                    mRet = mRun_Escopo.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eRetorne);
 
                     //  System.out.println("\t - Executar :  " + mIndex_Function.getNome() + " RET ::: " + mRet);
 
@@ -384,8 +382,9 @@ public class Run_Explicit {
 
 
                      //   mEscopo.getDebug().ListarActions();
+                        Run_Escopo mRun_Escopo = new Run_Escopo();
 
-                        mPreparadorDeArgumentos.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
+                        mRun_Escopo.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
 
                     } else {
                         mRunTime.errar(mLocal, "Function Explicit " + mNome + "." + ASTCorrente.getNome() + " : Retorno incompativel !");

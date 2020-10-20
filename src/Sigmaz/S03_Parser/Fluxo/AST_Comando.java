@@ -34,7 +34,7 @@ public class AST_Comando {
             if (P2.getTipo() == TokenTipo.PONTOVIRGULA) {
 
             } else {
-                mCompiler.errarCompilacao("Era esperado um ponto e virgula ! : " + P2.getConteudo(),P2);
+                mCompiler.errarCompilacao("Era esperado um ponto e virgula ! : " + P2.getConteudo(), P2);
             }
         } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
 
@@ -47,7 +47,7 @@ public class AST_Comando {
             if (P2.getTipo() == TokenTipo.PONTOVIRGULA) {
 
             } else {
-                mCompiler.errarCompilacao("Era esperado um ponto e virgula ! : " + P2.getConteudo(),P2);
+                mCompiler.errarCompilacao("Era esperado um ponto e virgula ! : " + P2.getConteudo(), P2);
             }
 
         } else if (TokenD.getTipo() == TokenTipo.ID) {
@@ -80,8 +80,8 @@ public class AST_Comando {
 
                 ASTCorrente.setValor("STRUCT");
 
-                AST_ValueTypes mA = new AST_ValueTypes(mCompiler) ;
-                mA.ReceberNovoEscopo(ASTCorrente,false,null);
+                AST_ValueTypes mA = new AST_ValueTypes(mCompiler);
+                mA.ReceberNovoEscopo(ASTCorrente, false, null);
 
                 Token P3 = mCompiler.getTokenAvante();
 
@@ -111,23 +111,64 @@ public class AST_Comando {
 
                     ASTDireita.setValor("STRUCT");
 
-                    if (ASTDireita.mesmoNome("this")){
-                      if (ASTDireita.existeBranch("INTERNAL")){
-                          ASTDireita.getBranch("INTERNAL").setTipo("INTERNAL_THIS");
-                      }
+                    if (ASTDireita.mesmoNome("this")) {
+                        if (ASTDireita.existeBranch("INTERNAL")) {
+                            ASTDireita.getBranch("INTERNAL").setTipo("INTERNAL_THIS");
+                        }
                     }
 
 
                 } else {
                     mCompiler.errarCompilacao("Era esperado um ponto e virgula ! : " + P3.getConteudo(), P3);
                 }
+
+            } else if (P2.getTipo() == TokenTipo.COLCHETE_ABRE) {
+
+                ASTCorrente.setValor("STRUCT_COLGET");
+
+                AST_ValueTypes mA = new AST_ValueTypes(mCompiler);
+                mA.ReceberNovoEscopo_Col(ASTCorrente, false, null);
+
+                Token P3 = mCompiler.getTokenAvante();
+
+                if (P3.getTipo() == TokenTipo.PONTOVIRGULA) {
+
+
+                } else if (P3.getTipo() == TokenTipo.IGUAL) {
+
+                    AST ASTDireita = ASTCorrente.copiar();
+                    ASTDireita.setTipo("STRUCT_SET");
+
+                    ASTCorrente.getASTS().clear();
+                    ASTCorrente.setNome("");
+                    ASTCorrente.setValor("");
+
+                    ASTCorrente.setTipo("STRUCT_COLSET");
+                    ASTCorrente.getASTS().add(ASTDireita);
+
+                    AST ASTC = ASTCorrente.criarBranch("VALUE");
+
+                    AST_Value mAST = new AST_Value(mCompiler);
+
+                    mAST.init(ASTC);
+
+                    if (ASTDireita.mesmoNome("this")) {
+                        ASTDireita.setTipo("STRUCT_SET_THIS");
+                    }
+
+
+                } else {
+                    mCompiler.errarCompilacao("Era esperado um ponto e virgula ! : " + P3.getConteudo(), P3);
+                }
+
+
             } else if (P2.getTipo() == TokenTipo.SETA) {
 
                 ASTCorrente.setValor("STRUCT_EXTERN");
 
 
-                AST_ValueTypes mA = new AST_ValueTypes(mCompiler) ;
-                mA.ReceberNovoEscopo(ASTCorrente,false,null);
+                AST_ValueTypes mA = new AST_ValueTypes(mCompiler);
+                mA.ReceberNovoEscopo(ASTCorrente, false, null);
 
                 Token P3 = mCompiler.getTokenAvante();
 
@@ -162,22 +203,20 @@ public class AST_Comando {
                 }
 
 
-
             } else if (P2.getTipo() == TokenTipo.PARENTESES_ABRE) {
 
                 ASTCorrente.setValor("FUNCT");
 
-              //  AST_Value_Argument mAVA = new AST_Value_Argument(mCompiler);
-             //   mAVA.ReceberArgumentos(ASTCorrente);
+                //  AST_Value_Argument mAVA = new AST_Value_Argument(mCompiler);
+                //   mAVA.ReceberArgumentos(ASTCorrente);
 
                 AST_ValueTypes mAVA = new AST_ValueTypes(mCompiler);
-                mAVA.ReceberArgumentos(ASTCorrente,false,null);
+                mAVA.ReceberArgumentos(ASTCorrente, false, null);
 
 
                 Token P3 = mCompiler.getTokenAvante();
 
                 if (P3.getTipo() == TokenTipo.PONTOVIRGULA) {
-
 
 
                 } else if (P3.getTipo() == TokenTipo.IGUAL) {
@@ -199,8 +238,6 @@ public class AST_Comando {
                     mAST.init(ASTC);
 
 
-
-
                 } else {
                     mCompiler.errarCompilacao("Era esperado um ponto e virgula ! : " + P3.getConteudo(), P3);
                 }
@@ -216,9 +253,6 @@ public class AST_Comando {
 
 
     }
-
-
-
 
 
 }

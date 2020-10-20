@@ -155,7 +155,13 @@ public class Index_Action {
     }
 
     public boolean mesmoArgumentos(Escopo gEscopo, ArrayList<Item> eArgumentos) {
-        return mRunArguments.mesmoArgumentos(mRunTime, gEscopo, mArgumentos, eArgumentos);
+
+        int v1 = mRunArguments.conferirArgumentos(mRunTime, mArgumentos, eArgumentos);
+        int v2 = mArgumentos.size();
+
+        //System.out.println("MA :: " + v1 + " x " + v2);
+
+        return v1 == v2;
     }
 
     public String getDefinicao() {

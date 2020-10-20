@@ -2,7 +2,6 @@ package Sigmaz.S07_Executor.Escopos;
 
 import Sigmaz.S07_Executor.Alterador;
 import Sigmaz.S07_Executor.Escopo;
-import Sigmaz.S07_Executor.Indexador.Index_Action;
 import Sigmaz.S07_Executor.Item;
 import Sigmaz.S07_Executor.RunTime;
 
@@ -21,6 +20,8 @@ public class Run_Struct {
 
     private String mStructNome;
     private int mTamanho;
+
+    private AST mAST_Struct;
 
     private AST mStructGeneric;
     private AST mStructCorpo;
@@ -148,13 +149,9 @@ public class Run_Struct {
         mStack_All.clear();
 
 
-        AST mAST_Struct = null;
-
         for (String e : mRefers) {
             mEscopo.adicionarRefer(e);
         }
-
-        boolean enc = false;
 
 
         // EXTERNALIZAR
@@ -163,61 +160,10 @@ public class Run_Struct {
         }
 
 
-        //   System.out.println(BuscadorDeArgumentos.getNome() + " -> Structs : " + BuscadorDeArgumentos.getStructs().size() );
+        boolean enc = procurarStruct(BuscadorDeArgumentos);
 
-        // System.out.println("ESCOPO :: " + mEscopo.getNome());
-        //  for (String eRefer : BuscadorDeArgumentos.getRefers()) {
-
-        //   System.out.println( "\t   PAST REFER -->> " + eRefer);
-
-        //   }
-        //   for (AST ASTC : mRunTime.getStructsContexto(BuscadorDeArgumentos.getRefers())) {
-        //      System.out.println( "\t   STRUCT -->> " + ASTC.getNome());
-        //  }
-        Run_Context mRun_Context = new Run_Context(mRunTime);
-
-        for (AST ASTC : mRun_Context.getStructsContexto(BuscadorDeArgumentos)) {
-
-            if (ASTC.mesmoTipo("STRUCT")) {
-                if (ASTC.mesmoNome(mStructNome)) {
-
-                    // System.out.println(ASTC.ImprimirArvoreDeInstrucoes());
-
-
-                    mStructGeneric = ASTC.getBranch("GENERIC");
-
-                    mBases = ASTC.getBranch("BASES");
-
-                    //System.out.println(mBases.ImprimirArvoreDeInstrucoes());
-
-                    enc = true;
-
-                    mAST_Struct = ASTC;
-
-                    AST init_Extend = ASTC.getBranch("EXTENDED");
-
-                    if (init_Extend.mesmoNome("STRUCT")) {
-
-                        mBaseado = ASTC.getBranch("WITH").getNome();
-                        //  System.out.println(mNome + " com " + mBaseado);
-
-                        // System.out.println(mBases.ImprimirArvoreDeInstrucoes());
-
-                    } else if (init_Extend.mesmoNome("TYPE")) {
-                        mRunTime.errar(mLocal, "Type " + mStructNome + " : Nao pode ser instanciada como Struct !");
-                        return;
-                    } else if (init_Extend.mesmoNome("STAGES")) {
-                        mRunTime.errar(mLocal, "Struct " + mStructNome + " : Nao pode ser instanciada !");
-                        return;
-                    } else if (init_Extend.mesmoNome("EXTERNAL")) {
-                        mRunTime.errar(mLocal, "Struct " + mStructNome + " : Nao pode ser instanciada !");
-                        return;
-                    }
-
-
-                }
-
-            }
+        if (mRunTime.getErros().size() > 0) {
+            return;
         }
 
         if (!enc) {
@@ -225,89 +171,23 @@ public class Run_Struct {
             return;
         }
 
-        AST mRefers = mAST_Struct.getBranch("REFERS");
-        ArrayList<String> dRefers = new ArrayList<String>();
 
-        ArrayList<AST> eReferenciados = new ArrayList<AST>();
-
-        for (AST ASTC : mRefers.getASTS()) {
-
-            String eRefer = ASTC.getNome();
-
-            eReferenciados.add(mRunTime.getPacote(eRefer));
-
-
-            dRefers.add(eRefer);
-            mEscopo.adicionarRefer(eRefer);
-
-        }
-        for (AST ASTC : eReferenciados) {
-
-            for (AST mDentro : ASTC.getASTS()) {
-
-                //    System.out.println("\t\t\t -> Recebendo " + mDentro.getNome());
-                mEscopo.guardar(mDentro);
-
-            }
-
-        }
+        referenciar();
 
         AST init_Generic = ASTCorrente.getBranch("GENERIC");
-        String structTipagem = "";
-        int StructContagem = 0;
 
         Run_GetType mRun_GetType = new Run_GetType(mRunTime, BuscadorDeArgumentos);
 
 
-        for (String eref : BuscadorDeArgumentos.getRefers()) {
-            mEscopo.adicionarReferOculto(eref);
-        }
-        for (String eref : BuscadorDeArgumentos.getRefersOcultas()) {
-            mEscopo.adicionarReferOculto(eref);
-        }
+        mEscopo.adicionarReferDe(BuscadorDeArgumentos);
 
         mRun_GetType.adicionarRefers(mEscopo.getRefersOcultas());
 
-        for (AST ASTC : mStructGeneric.getASTS()) {
-            structTipagem += "<" + mRun_GetType.getTipagem(ASTC) + ">";
-            StructContagem += 1;
-        }
 
-        String initTipagem = "";
-        int initContagem = 0;
-
-        for (AST ASTC : init_Generic.getASTS()) {
-            initTipagem += "<" + mRun_GetType.getTipagem(ASTC) + ">";
-            initContagem += 1;
-
-            // for(String eref : mEscopo.getRefersOcultas()){
-            //     System.out.println("Me ref Oculto : " + eref + " da Struct " + mAST_Struct.getNome());
-            // }
-
-            // for(String eref : BuscadorDeArgumentos.getRefers()){
-            //     System.out.println("Tem ref : " + eref+ " em Escopo " + BuscadorDeArgumentos.getNome());
-            // }
+        mRun_GetType.tiparMultiplo(mStructGeneric);
 
 
-            // System.out.println("Iniciando Struct " + mStructNome + " :: Generico = " + mRun_GetType.getTipagem(ASTC));
-        }
-
-        //  System.out.println("Struct : " + mStructNome);
-        //System.out.println("\t - Init : " + mStructNome + initTipagem);
-        // System.out.println("\t - Tipagem : " + mStructNome + structTipagem);
-
-        String mTipando = "";
-
-
-        for (AST ASTC : init_Generic.getASTS()) {
-            mTipando += "<" + mRun_GetType.getTipagemSemAlteracao(ASTC) + ">";
-
-        }
-
-
-        mTipoCompleto = mRun_GetType.getTipagemSimples(mStructNome) + mTipando;
-
-        //   System.out.println(" -->> TIPANDO STRUCT :: " + mTipoCompleto);
+        mTipoCompleto = mRun_GetType.getTipagemSimples(mStructNome) + mRun_GetType.semTiparMultiplo(init_Generic);
 
 
         mStructCorpo = mAST_Struct.getBranch("BODY").copiar();
@@ -325,72 +205,8 @@ public class Run_Struct {
             return;
         }
 
-        if (init_Generic.mesmoNome("TRUE") && mStructGeneric.mesmoNome("TRUE")) {
 
-
-            if (StructContagem == initContagem) {
-
-                Alterador mAlterador = new Alterador();
-
-
-                //  System.out.println("ALTERADOR " + eNome);
-
-                int i = 0;
-                //      for (AST eSub : mStructGeneric.getASTS()) {
-                for (AST eSub : init_Generic.getASTS()) {
-
-                    AST sInit = mStructGeneric.getASTS().get(i);
-
-                    //   System.out.println("Alterando " + sInit.getNome() + " -> " + eSub.ImprimirArvoreDeInstrucoes());
-
-                    mAlterador.adicionar(sInit.getNome(), eSub);
-
-                    //   init_Generic.getBranch("TYPE").ImprimirArvoreDeInstrucoes();
-
-                    i += 1;
-                }
-
-                mAlterador.alterar(mStructInits);
-                mAlterador.alterar(mStructCorpo);
-
-
-                // System.out.println(mStructInits.ImprimirArvoreDeInstrucoes());
-                // System.out.println(mStructCorpo.ImprimirArvoreDeInstrucoes());
-
-
-            } else {
-
-                mRunTime.errar(mLocal, "Struct " + mStructNome + " : Tipos abstratos nao conferem !");
-
-            }
-
-
-        } else if (init_Generic.mesmoNome("FALSE") && mStructGeneric.mesmoNome("FALSE")) {
-
-        } else if (init_Generic.mesmoNome("FALSE") && mStructGeneric.mesmoNome("TRUE")) {
-            mRunTime.errar(mLocal, "Struct " + mStructNome + " : Precisa retornar uma Instancia Generica !");
-        } else if (init_Generic.mesmoNome("TRUE") && mStructGeneric.mesmoNome("FALSE")) {
-
-
-            if (init_Generic.getASTS().size() == 0) {
-
-            } else {
-                mRunTime.errar(mLocal, "Struct " + mStructNome + " : Nao e Generica !");
-            }
-
-
-        } else {
-            mRunTime.errar(mLocal, "Struct " + mStructNome + " : Nao e Generica !");
-        }
-
-        if (mRunTime.getVisibilidade()) {
-
-            //  System.out.println("########################### GENERIC ############################");
-            //  mStructInits.ImprimirArvoreDeInstrucoes();
-            //  mStructCorpo.ImprimirArvoreDeInstrucoes();
-            //   System.out.println("########################### ####### ############################");
-
-        }
+        struct_Generic(init_Generic);
 
 
         for (AST eAST : mStructCorpo.getASTS()) {
@@ -398,8 +214,6 @@ public class Run_Struct {
             if (eAST.mesmoTipo("OPERATOR")) {
 
                 BuscadorDeArgumentos.guardar(eAST);
-
-                //   System.out.println("Guardando Operador - " +eAST.ImprimirArvoreDeInstrucoes() );
 
             } else if (eAST.mesmoTipo("DIRECTOR")) {
 
@@ -409,21 +223,12 @@ public class Run_Struct {
 
         }
 
-        //   System.out.println(" ----- OPERADOR" );
-
-        // BuscadorDeArgumentos.getDebug().listar_Directors();
-
 
         for (AST ASTC : mStructInits.getASTS()) {
             mEscopo.guardarStruct(ASTC);
             mEscopo.guardar(ASTC);
         }
 
-        //  System.out.println("Inicializadores de " + mStructNome + " = " + mStructInits.getASTS().size());
-
-        //  for (Index_Action mIndex_Function : mEscopo.getOO().getInits()) {
-        //       System.out.println("\t - INIT :  " + mIndex_Function.getNome() + " -> " + mIndex_Function.getParametragem());
-        // }
 
         if (mRunTime.getErros().size() > 0) {
             return;
@@ -450,6 +255,13 @@ public class Run_Struct {
                 mEscopo.guardar(ASTC);
                 mEscopo.guardarStruct(ASTC);
 
+            } else if (ASTC.mesmoTipo("COL_GET")) {
+                mEscopo.guardar(ASTC);
+                mEscopo.guardarStruct(ASTC);
+
+            } else if (ASTC.mesmoTipo("COL_SET")) {
+                mEscopo.guardar(ASTC);
+                mEscopo.guardarStruct(ASTC);
             }
 
         }
@@ -528,25 +340,13 @@ public class Run_Struct {
         }
 
 
-        //    System.out.println(mStructInits.ImprimirArvoreDeInstrucoes());
-        //  System.out.println(mStructCorpo.ImprimirArvoreDeInstrucoes());
-
-
         if (mStructInits.getASTS().size() > 0) {
 
-            //  System.out.println(" I - Iniciar STRUCT :: " + mNome);
 
-            // for (AST ASTC : mStructInits.getASTS()) {
-            //     System.out.println("\t G :: " + ASTC.getNome());
-            // }
+            Run_Any mRA = new Run_Any(mRunTime);
 
-            // System.out.println("Iniciar STRUCT :: " + mStructNome);
+            mRA.Inicializador(mStructNome, ASTCorrente, BuscadorDeArgumentos, mEscopo, mLocal);
 
-            Inicializador(mStructNome, ASTCorrente, BuscadorDeArgumentos);
-
-            //  System.out.println("Iniciado STRUCT :: " + mStructNome + " :: " + mRunTime.getErros().size());
-
-            //  System.out.println(" I - Fim STRUCT :: " + mNome);
 
         } else {
 
@@ -554,13 +354,158 @@ public class Run_Struct {
                 mRunTime.errar(mLocal, "Struct " + mStructNome + " nao possui Init com argumentos !");
             }
 
-            // System.out.println("Argumentos " + ASTCorrente.getBranch("ARGUMENTS").getASTS().size());
-
         }
 
 
     }
 
+    public void referenciar() {
+
+        AST mRefers = mAST_Struct.getBranch("REFERS");
+        ArrayList<String> dRefers = new ArrayList<String>();
+
+        ArrayList<AST> eReferenciados = new ArrayList<AST>();
+
+        for (AST ASTC : mRefers.getASTS()) {
+
+            String eRefer = ASTC.getNome();
+
+            eReferenciados.add(mRunTime.getPacote(eRefer));
+
+
+            dRefers.add(eRefer);
+            mEscopo.adicionarRefer(eRefer);
+
+        }
+        for (AST ASTC : eReferenciados) {
+
+            for (AST mDentro : ASTC.getASTS()) {
+
+                //    System.out.println("\t\t\t -> Recebendo " + mDentro.getNome());
+                mEscopo.guardar(mDentro);
+
+            }
+
+        }
+
+    }
+
+    public boolean procurarStruct(Escopo BuscadorDeArgumentos) {
+
+        boolean enc = false;
+
+        Run_Context mRun_Context = new Run_Context(mRunTime);
+
+        for (AST ASTC : mRun_Context.getStructsContexto(BuscadorDeArgumentos)) {
+
+            if (ASTC.mesmoTipo("STRUCT")) {
+                if (ASTC.mesmoNome(mStructNome)) {
+
+                    mStructGeneric = ASTC.getBranch("GENERIC");
+
+                    mBases = ASTC.getBranch("BASES");
+
+                    enc = true;
+
+                    mAST_Struct = ASTC;
+
+                    AST init_Extend = ASTC.getBranch("EXTENDED");
+
+                    if (init_Extend.mesmoNome("STRUCT")) {
+
+                        mBaseado = ASTC.getBranch("WITH").getNome();
+
+                    } else if (init_Extend.mesmoNome("TYPE")) {
+                        mRunTime.errar(mLocal, "Type " + mStructNome + " : Nao pode ser instanciada como Struct !");
+                    } else if (init_Extend.mesmoNome("STAGES")) {
+                        mRunTime.errar(mLocal, "Struct " + mStructNome + " : Nao pode ser instanciada !");
+                    } else if (init_Extend.mesmoNome("EXTERNAL")) {
+                        mRunTime.errar(mLocal, "Struct " + mStructNome + " : Nao pode ser instanciada !");
+                    }
+
+
+                }
+
+            }
+        }
+
+        return enc;
+    }
+
+
+    public void struct_Generic(AST inicializador_Generic) {
+
+        int initContagem = 0;
+        int StructContagem = 0;
+
+        for (AST ASTC : mStructGeneric.getASTS()) {
+            StructContagem += 1;
+        }
+
+        for (AST ASTC : inicializador_Generic.getASTS()) {
+            initContagem += 1;
+        }
+
+
+        if (inicializador_Generic.mesmoNome("TRUE") && mStructGeneric.mesmoNome("TRUE")) {
+
+
+            if (StructContagem == initContagem) {
+
+                Alterador mAlterador = new Alterador();
+
+
+                //  System.out.println("ALTERADOR " + eNome);
+
+                int i = 0;
+                //      for (AST eSub : mStructGeneric.getASTS()) {
+                for (AST eSub : inicializador_Generic.getASTS()) {
+
+                    AST sInit = mStructGeneric.getASTS().get(i);
+
+                    //   System.out.println("Alterando " + sInit.getNome() + " -> " + eSub.ImprimirArvoreDeInstrucoes());
+
+                    mAlterador.adicionar(sInit.getNome(), eSub);
+
+                    //   init_Generic.getBranch("TYPE").ImprimirArvoreDeInstrucoes();
+
+                    i += 1;
+                }
+
+                mAlterador.alterar(mStructInits);
+                mAlterador.alterar(mStructCorpo);
+
+
+                // System.out.println(mStructInits.ImprimirArvoreDeInstrucoes());
+                // System.out.println(mStructCorpo.ImprimirArvoreDeInstrucoes());
+
+
+            } else {
+
+                mRunTime.errar(mLocal, "Struct " + mStructNome + " : Tipos abstratos nao conferem !");
+
+            }
+
+
+        } else if (inicializador_Generic.mesmoNome("FALSE") && mStructGeneric.mesmoNome("FALSE")) {
+
+        } else if (inicializador_Generic.mesmoNome("FALSE") && mStructGeneric.mesmoNome("TRUE")) {
+            mRunTime.errar(mLocal, "Struct " + mStructNome + " : Precisa retornar uma Instancia Generica !");
+        } else if (inicializador_Generic.mesmoNome("TRUE") && mStructGeneric.mesmoNome("FALSE")) {
+
+
+            if (inicializador_Generic.getASTS().size() == 0) {
+
+            } else {
+                mRunTime.errar(mLocal, "Struct " + mStructNome + " : Nao e Generica !");
+            }
+
+
+        } else {
+            mRunTime.errar(mLocal, "Struct " + mStructNome + " : Nao e Generica !");
+        }
+
+    }
 
     public ArrayList<AST> getFunctions() {
 
@@ -573,88 +518,6 @@ public class Run_Struct {
 
         }
         return ls;
-
-    }
-
-
-    public void Inicializador(String eOrigem, AST ASTCorrente, Escopo BuscadorDeArgumentos) {
-
-        ArrayList<Item> mArgumentos = mPreparadorDeArgumentos.preparar_argumentos(mRunTime, BuscadorDeArgumentos, ASTCorrente.getBranch("ARGUMENTS"));
-
-        boolean enc = false;
-        boolean algum = false;
-
-        if (mRunTime.getErros().size() > 0) {
-            return;
-        }
-
-        // System.out.println("\t -->> Inicializando :  " + ASTCorrente.getNome());
-
-        String mConferencia = mPreparadorDeArgumentos.getTipagem(mArgumentos);
-
-
-        String mExigencia = "";
-
-        for (Index_Action mIndex_Function : mEscopo.getOO().getInits_All()) {
-
-
-            if (mRunTime.getErros().size() > 0) {
-                break;
-            }
-            enc = true;
-
-            mIndex_Function.resolverTipagem(mEscopo.getRefers());
-
-            // System.out.println("Init :: " + mIndex_Function.getDefinicao());
-
-            //   System.out.println("Escopo :: " + mEscopo.getNome());
-
-            mExigencia = mIndex_Function.getParametragem();
-
-            if (mIndex_Function.mesmoNome(eOrigem) && mIndex_Function.mesmoArgumentos(mEscopo, mArgumentos)) {
-
-
-                algum = true;
-
-
-                if (mRunTime.getErros().size() > 0) {
-                    break;
-                }
-
-                int ai = 0;
-
-                for (Item ArgumentoC : mArgumentos) {
-                    ArgumentoC.setNome(mIndex_Function.getParamentos().get(ai));
-                    ai += 1;
-                }
-
-
-                mPreparadorDeArgumentos.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
-
-                if (mRunTime.getErros().size() > 0) {
-                    return;
-                }
-
-                break;
-            } else {
-
-                //  mConferencia = "";
-
-            }
-
-
-        }
-
-
-        if (enc) {
-            if (!algum) {
-                mRunTime.errar(mLocal, "Init  " + eOrigem + "." + ASTCorrente.getNome() + " : Argumentos incompativeis !");
-                mRunTime.errar(mLocal, mExigencia + " vs " + mConferencia);
-            }
-        } else {
-            mRunTime.errar(mLocal, "Init  " + eOrigem + "." + ASTCorrente.getNome() + " : Nao Encontrada !");
-        }
-
 
     }
 
@@ -683,7 +546,6 @@ public class Run_Struct {
         boolean enc = false;
         Item mRet = null;
 
-        // System.out.println("Operador Ponto -> " +mStructNome + "." + ASTCorrente.getNome()  );
 
         if (mStack_All.contains(ASTCorrente.getNome())) {
             for (Item mItem : mEscopo.getOO().getStacks()) {
@@ -716,9 +578,7 @@ public class Run_Struct {
         boolean enc = false;
         Item mRet = null;
 
-        // System.out.println("Operador Ponto -> " +mStructNome + "." + ASTCorrente.getNome()  );
 
-        //if (mStack_All.contains(ASTCorrente.getNome())){
         for (Item mItem : mEscopo.getOO().getStacks()) {
 
 
@@ -729,7 +589,7 @@ public class Run_Struct {
             }
 
         }
-        // }
+
 
 
         if (!enc) {
@@ -779,6 +639,39 @@ public class Run_Struct {
 
     }
 
+
+    public Item init_ColGet(String eNome,AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
+
+        Run_Any mRun_Any = new Run_Any(mRunTime);
+
+        return mRun_Any.init_ColGet(ASTCorrente,this.getStructNome(), BuscadorDeVariaveis, mEscopo, eRetorne, mEscopo.getOO().getColGet_All());
+
+    }
+
+    public Item init_ColGet_This(String eNome,AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
+
+        Run_Any mRun_Any = new Run_Any(mRunTime);
+
+        return mRun_Any.init_ColGet(ASTCorrente,this.getStructNome(), BuscadorDeVariaveis, mEscopo, eRetorne, mEscopo.getOO().getColGet());
+
+    }
+
+    public void init_ColSet(AST ASTCorrente , Escopo BuscadorDeVariaveis, Run_Value eRun_Value) {
+
+        Run_Any mRun_Any = new Run_Any(mRunTime);
+
+         mRun_Any.init_ColSet(ASTCorrente,this.getStructNome(), BuscadorDeVariaveis, mEscopo, eRun_Value, mEscopo.getOO().getColSet_All());
+
+    }
+
+    public void init_ColSet_This(AST ASTCorrente , Escopo BuscadorDeVariaveis, Run_Value eRun_Value) {
+
+        Run_Any mRun_Any = new Run_Any(mRunTime);
+
+        mRun_Any.init_ColSet(ASTCorrente,this.getStructNome(), BuscadorDeVariaveis, mEscopo, eRun_Value, mEscopo.getOO().getColSet());
+
+    }
+
     public void destruct() {
 
         //   System.out.println("DESTRUIR :: " + this.getNome());
@@ -817,35 +710,9 @@ public class Run_Struct {
         }
 
 
-
     }
 
     public void mapear_stack() {
-
-        System.out.println(" - PARAM : ");
-        ArrayList<Item> ls_Param = new ArrayList<>();
-        for (Item i : mEscopo.getParametros()) {
-            ls_Param.add(i);
-        }
-
-        System.out.println("\t - NAO NULOS : ");
-
-        for (Item i : ls_Param) {
-            if (i.getNulo() == false) {
-                mostrarItem(i);
-
-            }
-        }
-
-
-        System.out.println("\t - NULOS : ");
-        for (Item i : ls_Param) {
-
-            if (i.getNulo()) {
-                mostrarItem(i);
-
-            }
-        }
 
 
         ArrayList<Item> ls_Defines = new ArrayList<>();
@@ -919,11 +786,11 @@ public class Run_Struct {
             if (eItem.getIsEstrutura()) {
 
 
-                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " -> " + eItem.getValor(mEscopo.getRunTime(),mEscopo));
+                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " -> " + eItem.getValor(mEscopo.getRunTime(), mEscopo));
 
 
             } else {
-                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " = " + eItem.getValor(mEscopo.getRunTime(),mEscopo));
+                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " = " + eItem.getValor(mEscopo.getRunTime(), mEscopo));
             }
 
         }

@@ -1,0 +1,29 @@
+package Item{
+
+
+struct Item in ( T ) {
+		restrict :
+		define mValor : T = null;
+		define mProximo : Item >> ( T ) = null;
+		all :
+		func getValor ( ) : T {
+			return mValor;
+		}
+
+		act setValor ( eValor : T ) {
+			mValor = eValor;
+		}
+		func getProximo ( ) : Item >> ( T ) {
+			return mProximo;
+		}
+
+		act setProximo ( eProximo : Item >> ( T ) ) {
+			mProximo = eProximo;
+		}
+		func getProximo ( ) : Item >> ( T ) {
+			return mProximo;
+		}
+
+	}
+
+}

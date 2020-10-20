@@ -13,7 +13,6 @@ import Sigmaz.S00_Utilitarios.AST;
 
 public class Escopo {
 
-    private ArrayList<Item> mParam;
     private ArrayList<Item> mStacks;
 
 
@@ -42,8 +41,9 @@ public class Escopo {
     private ArrayList<String> mRefers;
     private ArrayList<String> mRefersOcultas;
 
-    private int mAutoID;
-    private int mFunctorID;
+    // FUNCAO LOCAL
+    private boolean mTemLocal = false;
+    private AST mLocal;
 
 
     public void setNome(String eNome) {
@@ -71,7 +71,6 @@ public class Escopo {
     public Escopo(RunTime eRunTime, Escopo eEscopoAnterior) {
 
 
-        mParam = new ArrayList<>();
         mStacks = new ArrayList<>();
 
         mRunTime = eRunTime;
@@ -94,8 +93,6 @@ public class Escopo {
 
         mExternos = new ArrayList<Run_Explicit>();
 
-        mAutoID = 0;
-        mFunctorID = 0;
 
         mDebug = new EscopoDebug(this);
         mRegressive = new Regressive(this);
@@ -152,6 +149,17 @@ public class Escopo {
 
 
         return mRet;
+    }
+
+    public void adicionarReferDe(Escopo outroEscopo) {
+
+        for (String eref : outroEscopo.getRefers()) {
+            adicionarReferOculto(eref);
+        }
+        for (String eref : outroEscopo.getRefersOcultas()) {
+            adicionarReferOculto(eref);
+        }
+
     }
 
     public void adicionarReferOculto(String eRefer) {
@@ -293,7 +301,6 @@ public class Escopo {
 
     public ArrayList<Index_Action> getActionsCompleto() {
         return mAO.getActionsCompleto();
-
     }
 
     public ArrayList<Index_Action> getActionFunctionsCompleto() {
@@ -321,9 +328,6 @@ public class Escopo {
         return mStacks;
     }
 
-    public ArrayList<Item> getParametros() {
-        return mParam;
-    }
 
     public void passarParametroByValue(String eNome, Item eItem) {
 
@@ -400,7 +404,7 @@ public class Escopo {
 
         boolean enc = false;
 
-        for (Item i : getParametros()) {
+        for (Item i : getStacks()) {
             if (i.getNome().contentEquals(eNome)) {
                 enc = true;
 
@@ -549,10 +553,6 @@ public class Escopo {
 
     }
 
-
-    public void alterarTipo(String eNome, String eTipoAtual, String eTipoNovo) {
-        mEscopoStack.alterarTipo(eNome, eTipoAtual, eTipoNovo);
-    }
 
     public ArrayList<Item> getStacksAll() {
 
@@ -709,10 +709,6 @@ public class Escopo {
 
     }
 
-    public void criarParametro(String eNome, String eTipo, String eValor) {
-        mEscopoStack.criarParametro(eNome, eTipo, eValor);
-    }
-
 
     // STRUCT
 
@@ -735,16 +731,20 @@ public class Escopo {
 
     // PARAMETRO
 
+    public void criarParametro(String eNome, String eTipo, String eValor) {
+        mEscopoStack.alocarPrimitivo(eNome, eTipo, false, true, eValor);
+    }
+
     public void criarParametroNulo(String eNome, String eTipo) {
-        mEscopoStack.criarParametroNulo(eNome, eTipo);
+        mEscopoStack.alocarPrimitivo(eNome, eTipo, false, false, "");
     }
 
     public void criarParametroStructNula(String eNome, String eTipo) {
-        mEscopoStack.criarParametroStructNula(eNome, eTipo);
+        mEscopoStack.criarDefinicaoStructNula(eNome, eTipo);
     }
 
     public void criarParametroStruct(String eNome, String eTipo, String eRef) {
-        mEscopoStack.criarParametroStruct(eNome, eTipo, eRef);
+        mEscopoStack.criarDefinicaoStruct(eNome, eTipo, eRef);
     }
 
 
@@ -779,10 +779,6 @@ public class Escopo {
         return mEscopoStack.getItem(eNome);
     }
 
-
-    // FUNCAO LOCAL
-    private boolean mTemLocal = false;
-    private AST mLocal;
 
     public void definirLocal(AST eLocal) {
 

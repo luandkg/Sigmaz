@@ -66,6 +66,8 @@ public class Run_Body {
 
         // System.out.println("\n  -->> Em Corpo para Retornar : " + eReturne + " :: " + ASTCorrente.getASTS().size());
 
+       //  System.out.println("\n  -->> Run_Body :: " + mEscopo.getNome());
+
         for (AST fAST : ASTCorrente.getASTS()) {
 
             // System.out.println("\n  -->> IN :: " + fAST.getTipo());
@@ -116,10 +118,7 @@ public class Run_Body {
                 Run_Mut mAST = new Run_Mut(mRunTime, mEscopo);
                 mAST.init(fAST);
 
-            } else if (fAST.mesmoTipo("INVOKE")) {
 
-                Run_Invoke mAST = new Run_Invoke(mRunTime, mEscopo);
-                mAST.init(fAST);
 
             } else if (fAST.mesmoTipo("APPLY")) {
 
@@ -225,12 +224,9 @@ public class Run_Body {
             } else if (fAST.mesmoTipo("RETURN")) {
 
 
-                //  System.out.println("ESCOPO :: " + mEscopo.getNome() + " -> RETURN ");
-
                 Run_Value mAST = new Run_Value(mRunTime, mEscopo);
                 mAST.init(fAST.getBranch("VALUE"), "<<ANY>>");
 
-                // System.out.println("Retorando de Corpo -> " + mAST.getConteudo() + "  Tipo : " + mAST.getRetornoTipo());
                 if (mRunTime.getErros().size() > 0) {
                     break;
                 }
@@ -244,14 +240,12 @@ public class Run_Body {
                 mItem.setTipo(mAST.getRetornoTipo());
                 mEscopo.setRetornado(true);
 
-                if (mItem.getIsEstrutura()){
-                    if (mItem.getTemValor()){
-                        mRunTime.getHeap().aumentar(mItem.getValor(mRunTime,mEscopo));
+                if (mItem.getIsEstrutura()) {
+                    if (mItem.getTemValor()) {
+                        mRunTime.getHeap().aumentar(mItem.getValor(mRunTime, mEscopo));
                     }
                 }
 
-
-                //   System.out.println("ESCOPO :: " + mEscopo.getNome() + " -> RETURNED " + mItem.getValor( mRunTime, mEscopo));
 
                 break;
 
@@ -306,9 +300,6 @@ public class Run_Body {
 
             } else if (fAST.mesmoTipo("EXECUTE_INIT")) {
 
-                //  System.out.println("Bora Aqui");
-
-                // System.out.println(fAST.ImprimirArvoreDeInstrucoes());
 
                 Run_Any mAST = new Run_Any(mRunTime);
                 mAST.init_inits(fAST, mEscopo, mEscopo, mEscopo.getAO().getInitsCompleto());
@@ -350,7 +341,7 @@ public class Run_Body {
             } else if (fAST.mesmoTipo("SCOPE")) {
 
                 Escopo eNovoEscopo = new Escopo(mRunTime, mEscopo);
-                eNovoEscopo.setNome("SUB::" + mEscopo.getNome());
+                eNovoEscopo.setNome("SUBSCOPE::" + mEscopo.getNome());
 
                 Run_Body mAST = new Run_Body(mRunTime, eNovoEscopo);
                 mAST.init(fAST);
@@ -398,6 +389,11 @@ public class Run_Body {
                 Run_Delete mRun_Delete = new Run_Delete(mRunTime, mEscopo);
                 mRun_Delete.init(fAST);
 
+            } else if (fAST.mesmoTipo("STRUCT_COLSET")) {
+
+                Run_StructColSet mRun_StructColSet = new Run_StructColSet(mRunTime, mEscopo);
+                mRun_StructColSet.init(fAST);
+
 
             } else {
 
@@ -412,25 +408,8 @@ public class Run_Body {
             return;
         }
 
-       // System.out.println("Saindo do Escopo : " + mEscopo.getNome());
 
-      //  mRunTime.getHeap().ListarInstancias();
-
-       // System.out.println("Aplicar Reducao");
-
-
-        for (Item eItem : mEscopo.getStacks()) {
-
-          //  System.out.println("\t - " + mEscopo.getNome() + " --- " + eItem.getNome());
-
-            if (eItem.getTemValor()) {
-                if (eItem.getIsEstrutura()) {
-                    mRunTime.getHeap().reduzir(eItem.getValor(mRunTime, mEscopo));
-                }
-            }
-        }
-
-       // mRunTime.getHeap().ListarInstancias();
+        mRunTime.getHeap().limparEscopo(mEscopo);
 
 
     }

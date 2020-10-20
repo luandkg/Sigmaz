@@ -50,9 +50,15 @@ act inicio ( ) {
 		a1 , a2 , a2 , a2 , a1 
 	};
 	v6.listar ( );
+
+	println ( " 4 ----- ----- ------  ------ ");
+
 	def v7 : Vetor >> ( Bloco ) = {
 		init Bloco ( 15 ) , init Bloco ( 16 ) 
 	};
+
+	println ( " 5 ----- ----- ------  ------ ");
+
 	each a : Bloco :: ( v7 ) -> {
 		println ( "Lista Bloco -> ", a.getValor ( ) );
 	}

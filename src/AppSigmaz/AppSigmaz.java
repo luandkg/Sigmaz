@@ -42,7 +42,7 @@ public class AppSigmaz {
 
         String mLocalGerador = "res/gerador/";
 
-        int ARQUIVO = 91;
+        int ARQUIVO = 82;
 
         switch (Fases.COMPILAR_E_EXECUTAR_DETALHADO) {
 

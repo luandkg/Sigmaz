@@ -137,7 +137,7 @@ public class Index_Function {
     }
 
     public boolean mesmoArgumentos(Escopo gEscopo, ArrayList<Item> eArgumentos) {
-        return mRunArguments.mesmoArgumentos(mRunTime, gEscopo, mArgumentos, eArgumentos);
+        return mRunArguments.conferirArgumentos(mRunTime, mArgumentos, eArgumentos) == eArgumentos.size();
     }
 
     public boolean getEstaResolvido() {

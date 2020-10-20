@@ -385,7 +385,7 @@ public class Valore_ValueComplex {
 
                 mValorador.mensagem(ePrefixo + "\tValorando ACTION : " + eStruct + " -> " + mSimplificador.getAction(mAST));
 
-                Pronoco mAqui = new Pronoco(eStruct);
+                Pronoco mAqui = new Pronoco(mAST.getNome());
                 mAqui.setSuperior(mAtribuindo);
 
                 getValoramento().     obterVarArgumentos(mAST.getBranch("ARGUMENTS"), mAqui);
@@ -398,7 +398,7 @@ public class Valore_ValueComplex {
 
                 mValorador.mensagem(ePrefixo + "\tValorando FUNCTION : " + eStruct + " -> " + mSimplificador.getFuction(mAST));
 
-                Pronoco mAqui = new Pronoco(eStruct);
+                Pronoco mAqui = new Pronoco(mAST.getNome());
                 mAqui.setSuperior(mAtribuindo);
 
                 getValoramento().    obterVarArgumentos(mAST.getBranch("ARGUMENTS"), mAqui);
@@ -410,7 +410,7 @@ public class Valore_ValueComplex {
 
                 mValorador.mensagem(ePrefixo + "\tValorando AUTO : " + eStruct + " -> " + mSimplificador.getAuto(mAST));
 
-                Pronoco mAqui = new Pronoco(eStruct);
+                Pronoco mAqui = new Pronoco(mAST.getNome());
                 mAqui.setSuperior(mAtribuindo);
 
                 getValoramento().      obterVarArgumentos(mAST.getBranch("ARGUMENTS"), mAqui);

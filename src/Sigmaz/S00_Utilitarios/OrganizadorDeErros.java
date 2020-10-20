@@ -61,11 +61,11 @@ public class OrganizadorDeErros {
 
     }
 
-    public void getPosProcessador(ArrayList<String> mErros) {
+    public void getPosProcessador(ArrayList<String> eErros) {
 
         mErros.add("\n\t ERROS DE POS PROCESSAMENTO : ");
 
-        for (String eErro : mErros) {
+        for (String eErro : eErros) {
             mErros.add("\t\t    ->> "  + eErro);
         }
 

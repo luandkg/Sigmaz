@@ -262,6 +262,13 @@ public class Run_Value {
             mRunValueType_Reg.init(this,ASTCorrente,eRetorno);
 
 
+        } else if (ASTCorrente.getValor().contentEquals("COL")) {
+
+
+            RunValueType_Col mRunValueType_Col = new RunValueType_Col(mRunTime,mEscopo);
+            mRunValueType_Col.init(this,ASTCorrente,eRetorno);
+
+
         } else {
 
 

@@ -140,7 +140,15 @@ public class Run_GetType {
         return mPrefixo + mSufixo;
     }
 
-    public String getTipagem(AST eAST) {
+    public void tiparMultiplo(AST eAST) {
+
+        for (AST ASTC : eAST.getASTS()) {
+            getTipagem(ASTC) ;
+        }
+
+    }
+
+        public String getTipagem(AST eAST) {
 
 
         String mTipagem = getTipagemSimples(eAST.getNome());
@@ -198,6 +206,16 @@ public class Run_GetType {
 
     }
 
+    public String semTiparMultiplo(AST eAST){
+
+        String mTipando = "";
+
+        for (AST ASTC : eAST.getASTS()) {
+            mTipando += "<" + getTipagemSemAlteracao(ASTC) + ">";
+        }
+
+        return mTipando;
+    }
 
     public String getTipagemSemAlteracao(AST eAST) {
 
