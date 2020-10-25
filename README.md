@@ -38,7 +38,7 @@
     -> Controle de Fluxo : If While Step Loop
     -> Ações
     -> Funções
-    -> Operadores  ++ -- ** // == !!
+    -> Operadores  ++ -- ** // == !! &&
     -> Diretores   !
     -> Casts : Re-Interpretação de Primitivos
     -> Stages : Enumeradores

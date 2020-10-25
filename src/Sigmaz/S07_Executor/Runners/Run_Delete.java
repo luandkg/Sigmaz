@@ -29,7 +29,7 @@ public class Run_Delete {
 
 
         Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mEscopo);
-        Run_Value mRun_Value = mRun_Valoramento.init(eAST.getNome(), mValor, "<<ANY>>", "<<ANY>>");
+        Run_Value mRun_Value = mRun_Valoramento.init(eAST.getNome(), mValor, "<<ANY>>");
 
 
         if (mRunTime.getErros().size() > 0) {

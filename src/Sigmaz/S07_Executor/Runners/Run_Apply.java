@@ -46,7 +46,7 @@ public class Run_Apply {
         if (mAplicador.getReferencia().getModo() == 2) {
             mAST = mRun_Valoramento.initSemCast(mAplicador.getReferencia().getNome(), mValue, mAplicador.getRetornoTipo(),"<<ANY>>");
         } else {
-            mAST = mRun_Valoramento.init(mAplicador.getReferencia().getNome(), mValue, mAplicador.getRetornoTipo(),"<<ANY>>");
+            mAST = mRun_Valoramento.init(mAplicador.getReferencia().getNome(), mValue, mAplicador.getRetornoTipo());
         }
 
 

@@ -7,33 +7,38 @@ import Sigmaz.S07_Executor.RunTime;
 import java.util.ArrayList;
 import Sigmaz.S00_Utilitarios.AST;
 
-public class Run_Moc{
+public class Run_Voz{
 
     private ArrayList<Item> mStacks;
     private RunTime mRunTime;
     private Escopo mEscopo;
     private String mLocal;
 
-    public Run_Moc(RunTime eRunTime, Escopo eEscopo) {
+    public Run_Voz(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
-        mLocal = "Run_Moc";
+        mLocal = "Run_Voz";
 
     }
 
 
-    public void init(AST eAST) {
+
+    public void initVoz(AST eAST) {
 
 
         AST mValor = eAST.getBranch("VALUE");
 
         Run_GetType mRun_GetType = new Run_GetType(mRunTime, mEscopo);
 
-        String mTipagem = mRun_GetType.getTipagem(eAST.getBranch("TYPE"));
 
         Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mEscopo);
-        Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, mTipagem);
+        Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, "<<ANY>>");
+
+        if (mAST.getRetornoTipo().contentEquals("<<ANY>>")){
+            mRunTime.getErros().add("O retorno de uma constante definida a partir de VOZ nao pode ser nula");
+        }
+
 
         if (mRunTime.getErros().size() > 0) {
             return;

@@ -75,11 +75,6 @@ public class Run_Body {
 
         //  System.out.println("\n  -->> Run_Body :: " + mEscopo.getNome());
 
-        for (AST fAST : ASTCorrente.getASTS()) {
-
-            // System.out.println("\n  -->> IN :: " + fAST.getTipo());
-
-        }
 
         for (AST fAST : ASTCorrente.getASTS()) {
 
@@ -112,12 +107,12 @@ public class Run_Body {
             } else if (fAST.mesmoTipo("LET")) {
 
 
-                Run_Def mAST = new Run_Def(mRunTime, mEscopo);
+                Run_Let mAST = new Run_Let(mRunTime, mEscopo);
                 mAST.initLet(fAST);
 
             } else if (fAST.mesmoTipo("VOZ")) {
 
-                Run_Moc mAST = new Run_Moc(mRunTime, mEscopo);
+                Run_Voz mAST = new Run_Voz(mRunTime, mEscopo);
                 mAST.initVoz(fAST);
 
             } else if (fAST.mesmoTipo("MUT")) {
@@ -230,28 +225,11 @@ public class Run_Body {
             } else if (fAST.mesmoTipo("RETURN")) {
 
 
-                Run_Value mAST = new Run_Value(mRunTime, mEscopo);
-                mAST.init(fAST.getBranch("VALUE"), mEsperaRetornar);
+                Run_Return mRun_Return = new Run_Return(mRunTime, mEscopo);
 
-                if (mRunTime.getErros().size() > 0) {
-                    break;
-                }
+                mItem = mRun_Return.init(fAST,mEsperaRetornar);
 
-                mItem = new Item("RETURNABLE");
-
-                mItem.setNulo(mAST.getIsNulo());
-                mItem.setPrimitivo(mAST.getIsPrimitivo());
-                mItem.setIsEstrutura(mAST.getIsStruct());
-                mItem.setValor(mAST.getConteudo(), mRunTime, mEscopo);
-                mItem.setTipo(mAST.getRetornoTipo());
                 mEscopo.setRetornado(true);
-
-                if (mItem.getIsEstrutura()) {
-                    if (mItem.getTemValor()) {
-                        mRunTime.getHeap().aumentar(mItem.getValor(mRunTime, mEscopo));
-                    }
-                }
-
 
                 break;
 

@@ -45,7 +45,7 @@ public class Run_Reg {
         }
 
         Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mEscopo);
-        Run_Value mAST = mRun_Valoramento.init(ASTCorrente.getNome(), mValor, mRetornarTipo, mRetornarTipo);
+        Run_Value mAST = mRun_Valoramento.init(ASTCorrente.getNome(), mValor, mRetornarTipo);
 
 
         //System.out.println("Registrador : " + eRegistrador + " = " + mAST.getConteudo());

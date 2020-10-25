@@ -31,7 +31,7 @@ public class Run_Mut {
 
 
         Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mEscopo);
-        Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, "<<ANY>>","<<ANY>>");
+        Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, "<<ANY>>");
 
         if (mRunTime.getErros().size() > 0) {
             return;

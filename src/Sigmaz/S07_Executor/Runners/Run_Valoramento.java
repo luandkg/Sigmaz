@@ -21,7 +21,7 @@ public class Run_Valoramento {
 
     }
 
-    public Run_Value init(String eNome, AST mValor, String mTipagem, String mTipoAntepassado) {
+    public Run_Value init(String eNome, AST mValor, String mTipagem) {
 
 
      //   System.out.println("\t\tValoramento : " + eNome);
