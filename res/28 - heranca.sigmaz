@@ -1,4 +1,5 @@
 call iniciar -> vamos_herdar ( );
+
 act vamos_herdar ( ) {
 	escrever ( "Executando 1");
 	def a1 : Animal = init Animal ( );
@@ -12,6 +13,7 @@ act vamos_herdar ( ) {
 }
 
 struct Qualidade {
+    all:
 	define qualidade : string = "";
 	act setQualidade ( a : string ) {
 		qualidade = a;
@@ -70,20 +72,25 @@ struct EstreptoCocos with Bacteria {
 }
 
 struct Animal with Qualidade {
-	define idade : int = 0;
+
 	init Animal ( ) -> Qualidade ( ) {
-		
+
 	}
+	all:
+	define idade : int = 0;
+
 
 	act setIdade ( a : int ) {
 		idade = a;
 	}
 
 	act mostrar ( ) {
-		println ( " --- ANIMAL --- ");
-		println ( "");
-		println ( "     - IDADE : ", idade );
-		println ( "     - QUALIDADE : ", qualidade );
+		println (" --- ANIMAL --- ");
+		println ("");
+		println ("     - IDADE : ", idade );
+		println ("     - QUALIDADE : ", qualidade );
+		println ("");
+
 	}
 
 	act println ( a : string , b : int ) {
@@ -135,9 +142,9 @@ struct Base {
 		
 	}
 	all : 
-	define SAL : int = 0;
-	define BOC : int = 12;
-	mockiz VEZ : int = 15;
+	    define SAL : int = 0;
+	    define BOC : int = 12;
+	    mockiz VEZ : int = 15;
 }
 
 struct ItemBase with Base {

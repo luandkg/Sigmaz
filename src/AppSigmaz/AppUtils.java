@@ -159,21 +159,21 @@ public class AppUtils {
             SigmazC.mostrarDebug(true);
             SigmazC.setMostrar_Erros(true);
 
-            SigmazC.setMostrarArvoreRunTime(true);
-            SigmazC.setMostrar_ArvoreFalhou(true);
+            SigmazC.setMostrarArvoreRunTime(false);
+            SigmazC.setMostrar_ArvoreFalhou(false);
 
 
-            SigmazC.setDebug_PreProcessamento(true);
-            SigmazC.setDebug_Lexer(true);
-            SigmazC.setDebug_Parser(true);
-            SigmazC.setDebug_Comentario(true);
+            SigmazC.setDebug_PreProcessamento(false);
+            SigmazC.setDebug_Lexer(false);
+            SigmazC.setDebug_Parser(false);
+            SigmazC.setDebug_Comentario(false);
 
-            SigmazC.setDebug_Montagem(true);
+            SigmazC.setDebug_Montagem(false);
 
             SigmazC.setDebug_PosProcessador_Requisidor(false);
 
             SigmazC.setDebug_PosProcessador_Cast(false);
-            SigmazC.setDebug_PosProcessador_UnionType(false);
+            SigmazC.setDebug_PosProcessador_Unificador(false);
             SigmazC.setDebug_PosProcessador_Heranca(false);
             SigmazC.setDebug_PosProcessador_Modelador(false);
             SigmazC.setDebug_PosProcessador_Estagiador(false);
@@ -185,6 +185,7 @@ public class AppUtils {
             SigmazC.setDebug_PosProcessador_Alocador(false);
             SigmazC.setDebug_PosProcessador_Tipador(false);
             SigmazC.setDebug_PosProcessador_Valorador(false);
+            SigmazC.setDebug_PosProcessador_Estruturador(false);
 
             SigmazC.init(mOpcional.getConteudo(), eCompilado, eLocalLibs, 1);
 

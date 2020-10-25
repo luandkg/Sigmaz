@@ -1,5 +1,6 @@
 package Sigmaz.S07_Executor.Escopos;
 
+import Sigmaz.S00_Utilitarios.Utilitario;
 import Sigmaz.S07_Executor.Alterador;
 import Sigmaz.S07_Executor.Escopo;
 import Sigmaz.S07_Executor.Item;
@@ -26,6 +27,7 @@ public class Run_Struct {
     private AST mStructGeneric;
     private AST mStructCorpo;
     private AST mStructInits;
+    private AST mDestruct;
 
     private AST mBases;
     private String mBaseado;
@@ -34,6 +36,8 @@ public class Run_Struct {
     private String mLocal;
     private ArrayList<String> mRefers;
     private int mRefs;
+
+    private String mHerdadeDe;
 
     public Run_Struct(RunTime eRunTime) {
 
@@ -48,6 +52,7 @@ public class Run_Struct {
         mStructCorpo = null;
         mBases = null;
         mBaseado = "";
+        mHerdadeDe = "";
 
         mPreparadorDeArgumentos = new Run_Arguments();
 
@@ -227,6 +232,7 @@ public class Run_Struct {
         for (AST ASTC : mStructInits.getASTS()) {
             mEscopo.guardarStruct(ASTC);
             mEscopo.guardar(ASTC);
+         //   System.out.println("Passando Init : " + ASTC.getNome());
         }
 
 
@@ -255,11 +261,11 @@ public class Run_Struct {
                 mEscopo.guardar(ASTC);
                 mEscopo.guardarStruct(ASTC);
 
-            } else if (ASTC.mesmoTipo("COL_GET")) {
+            } else if (ASTC.mesmoTipo("GETTER")) {
                 mEscopo.guardar(ASTC);
                 mEscopo.guardarStruct(ASTC);
 
-            } else if (ASTC.mesmoTipo("COL_SET")) {
+            } else if (ASTC.mesmoTipo("SETTER")) {
                 mEscopo.guardar(ASTC);
                 mEscopo.guardarStruct(ASTC);
             }
@@ -328,7 +334,7 @@ public class Run_Struct {
                 AST eCopia = AST_Call.copiar();
 
                 eCopia.setTipo("EXECUTE_INIT");
-                eCopia.setValor("");
+                eCopia.setValor(mHerdadeDe);
 
                 AST_BODY.getASTS().add(0, eCopia);
 
@@ -401,9 +407,14 @@ public class Run_Struct {
             if (ASTC.mesmoTipo("STRUCT")) {
                 if (ASTC.mesmoNome(mStructNome)) {
 
+
+                    mHerdadeDe = ASTC.getBranch("WITH").getNome();
+
                     mStructGeneric = ASTC.getBranch("GENERIC");
 
                     mBases = ASTC.getBranch("BASES");
+
+                    mDestruct = ASTC.getBranch("DESTRUCT");
 
                     enc = true;
 
@@ -435,16 +446,14 @@ public class Run_Struct {
 
     public void struct_Generic(AST inicializador_Generic) {
 
-        int initContagem = 0;
-        int StructContagem = 0;
+        Utilitario mu = new Utilitario();
 
-        for (AST ASTC : mStructGeneric.getASTS()) {
-            StructContagem += 1;
-        }
 
-        for (AST ASTC : inicializador_Generic.getASTS()) {
-            initContagem += 1;
-        }
+        int StructContagem = mStructGeneric.getASTS().size();
+        int initContagem = inicializador_Generic.getASTS().size();
+
+
+        String mAbstratos = mu.getAbastratos(mStructGeneric);
 
 
         if (inicializador_Generic.mesmoNome("TRUE") && mStructGeneric.mesmoNome("TRUE")) {
@@ -474,6 +483,7 @@ public class Run_Struct {
 
                 mAlterador.alterar(mStructInits);
                 mAlterador.alterar(mStructCorpo);
+                mAlterador.alterar(mDestruct);
 
 
                 // System.out.println(mStructInits.ImprimirArvoreDeInstrucoes());
@@ -483,6 +493,7 @@ public class Run_Struct {
             } else {
 
                 mRunTime.errar(mLocal, "Struct " + mStructNome + " : Tipos abstratos nao conferem !");
+                mRunTime.errar(mLocal, "Struct " + mStructNome + " : Precisa de implementar os tipos abstratos " + mAbstratos);
 
             }
 
@@ -591,7 +602,6 @@ public class Run_Struct {
         }
 
 
-
         if (!enc) {
             mRunTime.errar(mLocal, mStructNome + "." + ASTCorrente.getNome() + " : Membro nao encontrado !");
         }
@@ -604,8 +614,18 @@ public class Run_Struct {
 
         Run_Any mRun_Any = new Run_Any(mRunTime);
 
-        return mRun_Any.init_Function(ASTCorrente, BuscadorDeVariaveis, mEscopo, eRetorne, mEscopo.getOO().getFunctions_All());
-        // return mRun_Any.init_Function(ASTCorrente, BuscadorDeVariaveis, mEscopo, eRetorne,mStructNome + "." + ASTCorrente.getNome(), mEscopo.getOO().getFunctions_All());
+        Item eItem = mRun_Any.init_Function(ASTCorrente, BuscadorDeVariaveis, mEscopo, eRetorne, mEscopo.getOO().getFunctions_All());
+
+        if (eRetorne.contentEquals("<<ANY>>")) {
+            eRetorne = eItem.getTipo();
+        }
+
+        if (eItem.getTipo().contentEquals(eRetorne)) {
+        } else {
+            mRunTime.errar("Run_Arguments", "Era esperado retornar " + eRetorne + " mas retornou " + eItem.getTipo());
+        }
+
+        return eItem;
 
     }
 
@@ -640,35 +660,35 @@ public class Run_Struct {
     }
 
 
-    public Item init_ColGet(String eNome,AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
+    public Item init_Getter(String eNome, AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
 
         Run_Any mRun_Any = new Run_Any(mRunTime);
 
-        return mRun_Any.init_ColGet(ASTCorrente,this.getStructNome(), BuscadorDeVariaveis, mEscopo, eRetorne, mEscopo.getOO().getColGet_All());
+        return mRun_Any.init_Getter(ASTCorrente, this.getStructNome(), BuscadorDeVariaveis, mEscopo, eRetorne, mEscopo.getOO().getColGet_All());
 
     }
 
-    public Item init_ColGet_This(String eNome,AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
+    public Item init_Getter_This(String eNome, AST ASTCorrente, Escopo BuscadorDeVariaveis, String eRetorne) {
 
         Run_Any mRun_Any = new Run_Any(mRunTime);
 
-        return mRun_Any.init_ColGet(ASTCorrente,this.getStructNome(), BuscadorDeVariaveis, mEscopo, eRetorne, mEscopo.getOO().getColGet());
+        return mRun_Any.init_Getter(ASTCorrente, this.getStructNome(), BuscadorDeVariaveis, mEscopo, eRetorne, mEscopo.getOO().getColGet());
 
     }
 
-    public void init_ColSet(AST ASTCorrente , Escopo BuscadorDeVariaveis, Run_Value eRun_Value) {
+    public void init_Setter(AST ASTCorrente, Escopo BuscadorDeVariaveis, Run_Value eRun_Value) {
 
         Run_Any mRun_Any = new Run_Any(mRunTime);
 
-         mRun_Any.init_ColSet(ASTCorrente,this.getStructNome(), BuscadorDeVariaveis, mEscopo, eRun_Value, mEscopo.getOO().getColSet_All());
+        mRun_Any.init_Setter(ASTCorrente, this.getStructNome(), BuscadorDeVariaveis, mEscopo, eRun_Value, mEscopo.getOO().getSetter());
 
     }
 
-    public void init_ColSet_This(AST ASTCorrente , Escopo BuscadorDeVariaveis, Run_Value eRun_Value) {
+    public void init_Setter_This(AST ASTCorrente, Escopo BuscadorDeVariaveis, Run_Value eRun_Value) {
 
         Run_Any mRun_Any = new Run_Any(mRunTime);
 
-        mRun_Any.init_ColSet(ASTCorrente,this.getStructNome(), BuscadorDeVariaveis, mEscopo, eRun_Value, mEscopo.getOO().getColSet());
+        mRun_Any.init_Setter(ASTCorrente, this.getStructNome(), BuscadorDeVariaveis, mEscopo, eRun_Value, mEscopo.getOO().getSetter());
 
     }
 
@@ -678,20 +698,11 @@ public class Run_Struct {
 
         //  System.out.println(mStructCorpo.getImpressao());
 
+        Escopo mEscopoInterno = new Escopo(mRunTime, this.getEscopo());
+        mEscopoInterno.setNome(this.getNome() + "::DESTRUCT");
 
-        for (AST eAST : mStructCorpo.getASTS()) {
-
-
-            if (eAST.mesmoTipo("DESTRUCT")) {
-
-                Escopo mEscopoInterno = new Escopo(mRunTime, this.getEscopo());
-                mEscopoInterno.setNome(this.getNome() + "::DESTRUCT");
-
-                Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
-                mAST.init(eAST.getBranch("BODY"));
-
-            }
-        }
+        Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
+        mAST.init(mDestruct);
 
 
     }

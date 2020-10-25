@@ -107,7 +107,7 @@ public class RunValueType_Operator {
 
 
         Run_Any mRun_Matchable = new Run_Any(mRunTime);
-        Item mItem = mRun_Matchable.init_Operation(eOperacao, mRun_Esquerda, mRun_Direita, mEscopo, eRetorno);
+        Item mItem = mRun_Matchable.init_Operation(eOperacao, mRun_Esquerda, mRun_Direita, mEscopo,eRetorno);
 
 
         if (mRunTime.getErros().size() > 0) {

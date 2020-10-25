@@ -239,6 +239,26 @@ public class Alterador {
                 }
                 alterar(eAST.getBranch("ARGUMENTS"));
 
+            } else if (eAST.mesmoTipo("GETTER")) {
+
+                alterarTipo(eAST);
+
+                alterar(eAST.getBranch("ARGUMENTS"));
+
+
+                if (eAST.existeBranch("BODY")) {
+                    alterar(eAST.getBranch("BODY"));
+                }
+            } else if (eAST.mesmoTipo("SETTER")) {
+
+                if (eAST.existeBranch("BODY")) {
+                    alterar(eAST.getBranch("BODY"));
+                }
+
+                alterar(eAST.getBranch("ARGUMENTS"));
+
+                alterar(eAST.getBranch("VALUES"));
+
             } else if (eAST.mesmoTipo("RETURN")) {
 
                 if (eAST.existeBranch("GENERIC")) {

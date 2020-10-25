@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Run_Escopo {
 
-    public void executar_Action(RunTime mRunTime, Escopo mStructEscopo, Index_Action mFunction, ArrayList<Item> mArgumentos) {
+    public void executar_SemRetorno(RunTime mRunTime, Escopo mStructEscopo, Index_Action mFunction, ArrayList<Item> mArgumentos) {
 
         Run_Arguments mRun_Arguments = new Run_Arguments();
 
@@ -21,7 +21,7 @@ public class Run_Escopo {
         mRun_Arguments.passarParametros(mEscopoInterno, mFunction.getArgumentos(), mArgumentos);
 
         if (mRunTime.getErros().size() > 0) {
-            return ;
+            return;
         }
         AST mASTBody = mFunction.getPonteiro().getBranch("BODY");
 
@@ -30,129 +30,52 @@ public class Run_Escopo {
 
     }
 
-
-    public Item executar_Function(RunTime mRunTime, Escopo mStructEscopo, Index_Function mFunction, ArrayList<Item> mArgumentos, String eReturne ) {
-
-
-        Item Saida = new Item("");
-
-        Saida.setTipo(mFunction.getTipo());
-
+    public Item executar_ComRetorno(RunTime mRunTime, Escopo mStructEscopo, Index_Function mFunction, ArrayList<Item> mArgumentos, String eReturne) {
 
 
         Escopo mEscopoInterno = new Escopo(mRunTime, mStructEscopo);
         mEscopoInterno.setNome(mFunction.getNome());
 
 
-        for (String eRefer : mStructEscopo.getRefers()) {
-            mEscopoInterno.adicionarRefer(eRefer);
-        }
+     //   System.out.println("\t\t EXECUTANDO :: " + mFunction.getDefinicao());
 
         Run_Arguments mRun_Arguments = new Run_Arguments();
 
-        mRun_Arguments.  passarParametros(mEscopoInterno, mFunction.getArgumentos(), mArgumentos);
+        mRun_Arguments.passarParametros(mEscopoInterno, mFunction.getArgumentos(), mArgumentos);
 
         AST mASTBody = mFunction.getPonteiro().getBranch("BODY");
 
         Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
+        mAST.esperaRetornar(eReturne);
         mAST.init(mASTBody);
 
-        if (mRunTime.getErros().size() > 0) {
-            return null;
-        }
-
-        //  if (mFunction.getTipo().contentEquals(mAST.getRetorno().getTipo())){
-        //  }else{
-        //  System.out.println("Voltando Tipo : " + mAST.getRetorno().getTipo());
-        // System.out.println("Esperava Tipo : " + mFunction.getTipo());
-        //    mRunTime.errar("Run_Arguments","Era esperado retornar " + mFunction.getTipo() + " mas retornou " + mAST.getRetorno().getTipo());
-        //    mRunTime.errar("RA",mFunction.getPonteiro().getImpressao());
-        // }
-
-        Saida = mAST.getRetorno();
+        Item eRetornoItem = mAST.getRetorno();
 
         if (mRunTime.getErros().size() > 0) {
-            return null;
+            return eRetornoItem;
         }
 
-        if (Saida.getNulo()) {
-            Saida.setTipo(eReturne);
-        }
-
-        //   System.out.println("EXECUTAR Function Retorando -> " + mFunction.getNome() + " " + Saida.getValor(mRunTime,mEscopoInterno) + " :: " +Saida.getTipo() );
-
-
-        if (mRunTime.getErros().size() > 0) {
-            return null;
+        if (mFunction.getTipo().contentEquals(mAST.getRetorno().getTipo())) {
+        } else {
+            mRunTime.errar("Run_Arguments", "A Funcao " + mFunction.getDefinicao() + " esperava retornar " + mFunction.getTipo() + " mas retornou " + mAST.getRetorno().getTipo());
         }
 
 
-        if (Saida.getTipo().contentEquals("bool")) {
-            Saida.setPrimitivo(true);
-        } else if (Saida.getTipo().contentEquals("num")) {
-            Saida.setPrimitivo(true);
-        } else if (Saida.getTipo().contentEquals("string")) {
-            Saida.setPrimitivo(true);
+
+        if (eRetornoItem.getNulo()) {
+      //      System.out.println("\t\t  - Retornando -->> " + eRetornoItem.getNome() + " : " + eRetornoItem.getTipo() + " -- NULO");
+        } else {
+       //     System.out.println("\t\t  - Retornando -->> " + eRetornoItem.getNome() + " : " + eRetornoItem.getTipo() + " = " + eRetornoItem.getValor(mRunTime, mEscopoInterno));
         }
 
 
-        // System.out.println("  Retornando -> " + mAST.getConteudo());
 
-        return Saida;
+      //  System.out.println("\t\t  - Voltando Tipo : " + mAST.getRetorno().getTipo());
+      //  System.out.println("\t\t  - Esperava Tipo : " + mFunction.getTipo());
+    //    System.out.println("\t\t  - Anterior Esperava Tipo : " + eReturne);
+
+
+        return eRetornoItem;
     }
-
-    public Item executar_ActionComRetorno(RunTime mRunTime, Escopo mStructEscopo, Index_Action mFunction, ArrayList<Item> mArgumentos, String eReturne ) {
-
-
-        Item Saida = new Item("");
-
-        Escopo mEscopoInterno = new Escopo(mRunTime, mStructEscopo);
-        mEscopoInterno.setNome(mFunction.getNome());
-
-
-        for (String eRefer : mStructEscopo.getRefers()) {
-
-            mEscopoInterno.adicionarRefer(eRefer);
-
-        }
-        Run_Arguments mRun_Arguments = new Run_Arguments();
-
-        mRun_Arguments. passarParametros(mEscopoInterno, mFunction.getArgumentos(), mArgumentos);
-
-        AST mASTBody = mFunction.getPonteiro().getBranch("BODY");
-
-        Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
-        mAST.init(mASTBody);
-
-
-        if (mRunTime.getErros().size() > 0) {
-            return null;
-        }
-
-        Saida = mAST.getRetorno();
-
-        if (Saida.getNulo()) {
-            Saida.setTipo(eReturne);
-        }
-
-
-        if (mRunTime.getErros().size() > 0) {
-            return null;
-        }
-
-        if (Saida.getTipo().contentEquals("bool")) {
-            Saida.setPrimitivo(true);
-        } else if (Saida.getTipo().contentEquals("num")) {
-            Saida.setPrimitivo(true);
-        } else if (Saida.getTipo().contentEquals("string")) {
-            Saida.setPrimitivo(true);
-        }
-
-
-        return Saida;
-    }
-
-
-
 
 }

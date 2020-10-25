@@ -1,35 +1,39 @@
 package Tempo {
 	struct Tempo {
+
+			init Tempo ( h : int , m : int , s : int ) {
+    			mHora = h;
+    			mMinuto = m;
+    			mSegundo = s;
+    		}
+    		init Tempo ( ) {
+    			PROC -> {
+    				SET R5;
+    				MOV 0;
+    				PROC CHRONOS_SECOND;
+    			}
+    			mSegundo = reg @ R5;
+    			PROC -> {
+    				SET R5;
+    				MOV 0;
+    				PROC CHRONOS_MINUTE;
+    			}
+    			mMinuto = reg @ R5;
+    			PROC -> {
+    				SET R5;
+    				MOV 0;
+    				PROC CHRONOS_HOUR;
+    			}
+    			mHora = reg @ R5;
+    		}
+
+
 		restrict : 
 		define mHora : int = 0;
 		define mMinuto : int = 0;
 		define mSegundo : int = 0;
 		all : 
-		init Tempo ( h : int , m : int , s : int ) {
-			mHora = h;
-			mMinuto = m;
-			mSegundo = s;
-		}
-		init Tempo ( ) {
-			PROC -> {
-				SET R5;
-				MOV 0;
-				PROC CHRONOS_SECOND;
-			}
-			mSegundo = reg @ R5;
-			PROC -> {
-				SET R5;
-				MOV 0;
-				PROC CHRONOS_MINUTE;
-			}
-			mMinuto = reg @ R5;
-			PROC -> {
-				SET R5;
-				MOV 0;
-				PROC CHRONOS_HOUR;
-			}
-			mHora = reg @ R5;
-		}
+
 		func getHora ( ) : int {
 			return mHora;
 		}
@@ -106,36 +110,39 @@ package Tempo {
 	}
 
 	struct Data {
+
+			init Data ( d : int , m : int , a : int ) {
+    			mDia = d;
+    			mMes = m;
+    			mAno = a;
+    		}
+    		init Data ( ) {
+    			PROC -> {
+    				SET R5;
+    				MOV 0;
+    				PROC CHRONOS_DAY;
+    			}
+    			mDia = reg @ R5;
+    			PROC -> {
+    				SET R5;
+    				MOV 0;
+    				PROC CHRONOS_MONTH;
+    			}
+    			mMes = reg @ R5;
+    			PROC -> {
+    				SET R5;
+    				MOV 0;
+    				PROC CHRONOS_YEAR;
+    			}
+    			mAno = reg @ R5;
+    		}
+
 		restrict : 
 		define mDia : int = 0;
 		define mMes : int = 0;
 		define mAno : int = 0;
 		all : 
-		init Data ( d : int , m : int , a : int ) {
-			mDia = d;
-			mMes = m;
-			mAno = a;
-		}
-		init Data ( ) {
-			PROC -> {
-				SET R5;
-				MOV 0;
-				PROC CHRONOS_DAY;
-			}
-			mDia = reg @ R5;
-			PROC -> {
-				SET R5;
-				MOV 0;
-				PROC CHRONOS_MONTH;
-			}
-			mMes = reg @ R5;
-			PROC -> {
-				SET R5;
-				MOV 0;
-				PROC CHRONOS_YEAR;
-			}
-			mAno = reg @ R5;
-		}
+
 		func getDia ( ) : int {
 			return mDia;
 		}
@@ -195,6 +202,55 @@ package Tempo {
 	}
 
 	struct TempoData {
+
+
+			init TempoData ( h : int , mi : int , s : int , d : int , me : int , a : int ) {
+    			mHora = h;
+    			mMinuto = mi;
+    			mSegundo = s;
+    			mDia = d;
+    			mMes = me;
+    			mAno = a;
+    		}
+    		init TempoData ( ) {
+    			PROC -> {
+    				SET R5;
+    				MOV 0;
+    				PROC CHRONOS_SECOND;
+    			}
+    			mSegundo = reg @ R5;
+    			PROC -> {
+    				SET R5;
+    				MOV 0;
+    				PROC CHRONOS_MINUTE;
+    			}
+    			mMinuto = reg @ R5;
+    			PROC -> {
+    				SET R5;
+    				MOV 0;
+    				PROC CHRONOS_HOUR;
+    			}
+    			mHora = reg @ R5;
+    			PROC -> {
+    				SET R5;
+    				MOV 0;
+    				PROC CHRONOS_DAY;
+    			}
+    			mDia = reg @ R5;
+    			PROC -> {
+    				SET R5;
+    				MOV 0;
+    				PROC CHRONOS_MONTH;
+    			}
+    			mMes = reg @ R5;
+    			PROC -> {
+    				SET R5;
+    				MOV 0;
+    				PROC CHRONOS_YEAR;
+    			}
+    			mAno = reg @ R5;
+    		}
+
 		restrict : 
 		define mHora : int = 0;
 		define mMinuto : int = 0;
@@ -203,52 +259,7 @@ package Tempo {
 		define mMes : int = 0;
 		define mAno : int = 0;
 		all : 
-		init TempoData ( h : int , mi : int , s : int , d : int , me : int , a : int ) {
-			mHora = h;
-			mMinuto = mi;
-			mSegundo = s;
-			mDia = d;
-			mMes = me;
-			mAno = a;
-		}
-		init TempoData ( ) {
-			PROC -> {
-				SET R5;
-				MOV 0;
-				PROC CHRONOS_SECOND;
-			}
-			mSegundo = reg @ R5;
-			PROC -> {
-				SET R5;
-				MOV 0;
-				PROC CHRONOS_MINUTE;
-			}
-			mMinuto = reg @ R5;
-			PROC -> {
-				SET R5;
-				MOV 0;
-				PROC CHRONOS_HOUR;
-			}
-			mHora = reg @ R5;
-			PROC -> {
-				SET R5;
-				MOV 0;
-				PROC CHRONOS_DAY;
-			}
-			mDia = reg @ R5;
-			PROC -> {
-				SET R5;
-				MOV 0;
-				PROC CHRONOS_MONTH;
-			}
-			mMes = reg @ R5;
-			PROC -> {
-				SET R5;
-				MOV 0;
-				PROC CHRONOS_YEAR;
-			}
-			mAno = reg @ R5;
-		}
+
 		func getHora ( ) : int {
 			return mHora;
 		}

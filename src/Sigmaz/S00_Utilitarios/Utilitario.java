@@ -115,4 +115,28 @@ public class Utilitario {
 
     }
 
+
+    public String getAbastratos(AST mGenericos){
+
+        String mTipagem = "";
+
+
+        int i = 0;
+        int o = mGenericos.getASTS().size();
+
+        for (AST ie : mGenericos.getASTS()) {
+
+            i += 1;
+
+            if (i < o) {
+                mTipagem += ie.getNome() + " , ";
+            } else {
+                mTipagem += ie.getNome() + " ";
+            }
+
+
+        }
+
+        return mTipagem;
+    }
 }

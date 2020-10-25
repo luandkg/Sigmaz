@@ -1,5 +1,6 @@
 call iniciar -> pular ( );
 struct Pessoa {
+all:
 	define nome : string = "";
 	define idade : int = 0;
 	act setNome ( _nome : string ) {

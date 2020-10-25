@@ -25,6 +25,7 @@ import "cores.sigmaz";
 import "unit.sigmaz";
 import "marcadores.sigmaz";
 import "idealismo.sigmaz";
+
 stages Numeros -> {
 	POSITIVO , NEGATIVO , ZERO
 }
@@ -174,12 +175,15 @@ struct O2 with Objeto {
 }
 
 struct O3 with Objeto {
-	restrict : 
-	define mValor : int = 0;
-	all : 
+
 	init O3 ( eValor : int ) -> Objeto ( ) {
 		mValor = eValor;
 	}
+
+	restrict : 
+	define mValor : int = 0;
+	all : 
+
 	func equal ( ObjetoCorrente : O3 ) : bool {
 		return this.mValor == ObjetoCorrente.getValor ( );
 	}

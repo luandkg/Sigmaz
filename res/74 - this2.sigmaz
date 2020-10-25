@@ -9,19 +9,21 @@ act inicio ( ) {
 }
 
 struct Quadro {
-	restrict : 
-	define valor : int = 0;
-	act mudar ( ) {
-		this.valor = -1;
-	}
-	all : 
 	init Quadro ( aValor : int ) {
-	DEBUG -> REGRESSIVE :: STACK;
-		this.valor = aValor;
-		this.mudar ( );
+    	DEBUG -> REGRESSIVE :: STACK;
+    		this.valor = aValor;
+    		this.mudar ( );
+
 	}
-	func getValor ( ) : int {
-		return this.valor;
-	}
+	restrict : 
+	    define valor : int = 0;
+	all:
+	    act mudar ( ) {
+		    this.valor = -1;
+	    }
+
+	    func getValor ( ) : int {
+		    return this.valor;
+	    }
 	
 }

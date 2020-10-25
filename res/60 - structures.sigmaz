@@ -69,7 +69,8 @@ act inicio ( ) {
 	DEBUG -> REGRESSIVE :: STACK;
 	println ( "DEBUG - ", 0 );
 	DEBUG -> REGRESSIVE :: STACK;
-	def iterar : Iterador >> ( Lista >> ( int ) ) = init Iterador ( ig ) >> ( Lista >> ( int ) );
+
+	def iterar : Iterador >> ( Lista >> ( int ), int ) = init Iterador ( ig ) >> ( Lista >> ( int ) , int );
 	println ( "DEBUG - ", 1 );
 	iterar.iniciar ( );
 	println ( "DEBUG - ", 2 );

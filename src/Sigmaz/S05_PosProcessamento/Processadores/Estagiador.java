@@ -21,7 +21,7 @@ public class Estagiador {
 
 
     public void mensagem(String e){
-        if (mPosProcessador.getDebug_UnionType()){
+        if (mPosProcessador.getDebug_Unificador()){
             mPosProcessador.mensagem(e);
         }
     }

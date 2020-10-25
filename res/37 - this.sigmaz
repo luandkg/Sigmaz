@@ -1,4 +1,5 @@
 struct Pessoa {
+all:
 	define idade : num = 0.0;
 	act aumentar ( ) {
 		idade = somar_inteiro ( idade , 1.0 );

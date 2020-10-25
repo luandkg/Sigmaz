@@ -364,19 +364,14 @@ public class AST_ValueTypes {
 
         ASTPai.setValor("FUNCT");
 
-        // AST_Value gAST = new AST_Value(mCompiler);
-        //AST_Value gAST = new AST_Value_Argument(mCompiler);
 
-        // if (mTemTipo) {
-        //     gAST.sePrecisarTipar(mTipo);
-        // }
         ReceberArgumentos(ASTPai, mTemTipo, mTipo);
 
     }
 
-    public void dentro_colchete(AST ASTPai, boolean mTemTipo, AST mTipo) {
+    public void dentro_Getter(AST ASTPai, boolean mTemTipo, AST mTipo) {
 
-        ASTPai.setValor("COL");
+        ASTPai.setValor("GETTER");
 
 
         ReceberArgumentos_Colchete(ASTPai, mTemTipo, mTipo);
@@ -499,7 +494,7 @@ public class AST_ValueTypes {
 
             AST mASTSub = ASTPai.criarBranch("INTERNAL");
 
-            dentro_colchete(mASTSub, mTemTipo, mTipo);
+            dentro_Getter(mASTSub, mTemTipo, mTipo);
 
 
         } else {
@@ -508,13 +503,7 @@ public class AST_ValueTypes {
 
     }
 
-    public void ReceberNovoEscopo_Col(AST ASTPai, boolean mTemTipo, AST mTipo) {
 
-
-        ReceberArgumentos_Colchete(ASTPai,mTemTipo,mTipo);
-
-
-    }
 
 
     public void ReceberArgumentos(AST ASTAvo, boolean mTemTipo, AST mTipo) {

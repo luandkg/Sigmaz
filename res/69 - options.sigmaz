@@ -50,9 +50,10 @@ func gral ( g : num , opt ref v : bool = false ) : num {
 }
 package COX {
 	struct Coxa {
+	    all:
 		act encoxar ( a : num , opt b : bool = false , opt c : num = 12.0 ) {
-	DEBUG -> REGRESSIVE :: STACK;
-	DEBUG -> REGRESSIVE :: ACTIONS;
+	        DEBUG -> REGRESSIVE :: STACK;
+	        DEBUG -> REGRESSIVE :: ACTIONS;
 		}
 		
 	}

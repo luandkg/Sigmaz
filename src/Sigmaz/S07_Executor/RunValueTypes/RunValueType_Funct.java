@@ -24,7 +24,7 @@ public class RunValueType_Funct {
 
     public void init(Run_Value eRunValue, AST ASTCorrente, String eRetorno) {
 
-        // System.out.println("Valorando  -> FUNCT " + ASTCorrente.getNome());
+      // System.out.println("\t\t FUNCT " + ASTCorrente.getNome() + " : Iniciar -> Retorne : " + eRetorno);
 
         Run_Any mAST = new Run_Any(mRunTime);
         Item eItem = mAST.init_Function(ASTCorrente, mEscopo, mEscopo, eRetorno, mEscopo.getFunctionsCompleto());
@@ -43,6 +43,7 @@ public class RunValueType_Funct {
 
         //  System.out.println("FUNCT EXIT  -> " + ASTCorrente.getNome() + " -> " + this.getConteudo() + " Primitivo : " + mIsPrimitivo + " Nulo : " + mIsNulo + " Tipo : " + mRetornoTipo);
 
+     //   System.out.println("\t\t FUNCT " + ASTCorrente.getNome() + " : Terminou -> Retorne : " + eRunValue.getRetornoTipo());
 
     }
 

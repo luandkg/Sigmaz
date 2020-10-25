@@ -19,14 +19,14 @@ public class AST_Destruct {
         Token TokenC = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma seta !");
 
 
-        AST AST_Corrente = new AST("DESTRUCT");
-        AST_Corrente.setNome(TokenC.getConteudo());
-        ASTPai.getASTS().add(AST_Corrente);
+      //  AST AST_Corrente = new AST("DESTRUCT");
+     //   AST_Corrente.setNome(TokenC.getConteudo());
+    //    ASTPai.getASTS().add(AST_Corrente);
 
-        AST AST_BODY = AST_Corrente.criarBranch("BODY");
+     //   AST AST_BODY = AST_Corrente.criarBranch("BODY");
 
         AST_Corpo mCorpo = new AST_Corpo(mCompiler);
-        mCorpo.init(AST_BODY);
+        mCorpo.init(ASTPai);
 
 
     }

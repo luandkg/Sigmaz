@@ -26,7 +26,7 @@ public class RunValueType_Marker {
         // System.out.println("Valorando  -> FUNCT " + ASTCorrente.getNome());
 
         Run_Any mAST = new Run_Any(mRunTime);
-        Item eItem = mAST.init_Mark(ASTCorrente, mEscopo, mEscopo, eRetorno, mEscopo.getMarcadoresCompleto());
+        Item eItem = mAST.init_Mark(ASTCorrente, mEscopo, eRetorno, mEscopo.getMarcadoresCompleto());
 
         // System.out.println("Ent ->> " + eRetorno);
 

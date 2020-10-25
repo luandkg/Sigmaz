@@ -63,6 +63,10 @@ public class Index_Action {
         return mPonteiroVisibility.mesmoNome("EXPLICIT");
     }
 
+    public boolean isInit() {
+        return mPonteiroVisibility.mesmoNome("INIT");
+    }
+
     public boolean isAll() {
         return mPonteiroVisibility.mesmoNome("ALL");
     }

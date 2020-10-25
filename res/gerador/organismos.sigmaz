@@ -1,6 +1,8 @@
 package Vida {
+
 	struct Organismo {
-		init Organismo ( eNome : string, eIdade : int ) {
+		init Organismo ( eEspecie : string, eNome : string, eIdade : int ) {
+			 especie = eEspecie; 
 			 nome = eNome; 
 			 idade = eIdade; 
 		} 

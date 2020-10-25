@@ -340,7 +340,7 @@ public class Regressive {
 
         for (AST mAST : mRun_Context.getTypesContexto(mEscopo)) {
             System.out.println("\t - " + mAST.getNome());
-            for (AST mGetter : mAST.getASTS()) {
+            for (AST mGetter : mAST.getBranch("BODY").getASTS()) {
                 System.out.println("\t\t - " + mGetter.getTipo() + " " + mGetter.getNome() + " : " + mSimplificador.getTipagem(mGetter.getBranch("TYPE")));
             }
         }

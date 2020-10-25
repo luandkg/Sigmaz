@@ -42,9 +42,10 @@ public class Sigmaz_Compilador {
     private boolean mDebug_Tipador;
     private boolean mDebug_Valorador;
     private boolean mDebug_Cast;
-    private boolean mDebug_UnionType;
+    private boolean mDebug_Unificador;
     private boolean mDebug_Heranca;
     private boolean mDebug_Opcionador;
+    private boolean mDebug_Estruturador;
 
     private boolean mDebug_Referenciador;
     private boolean mDebug_Argumentador;
@@ -118,11 +119,12 @@ public class Sigmaz_Compilador {
         mDebug_Tipador = true;
         mDebug_Valorador = true;
         mDebug_Cast = true;
-        mDebug_UnionType = true;
+        mDebug_Unificador = true;
         mDebug_Heranca = true;
         mDebug_Referenciador = true;
         mDebug_Argumentador = true;
         mDebug_Opcionador = true;
+        mDebug_Estruturador = true;
 
         mOrganizadorDeErros = new OrganizadorDeErros();
 
@@ -163,7 +165,7 @@ public class Sigmaz_Compilador {
         mPreProcessamento = "";
         mLexer_Processamento = "";
         mParser_Processamento = "";
-        mComentario_Processamento="";
+        mComentario_Processamento = "";
 
         mEtapas = new ArrayList<Etapa>();
 
@@ -247,12 +249,17 @@ public class Sigmaz_Compilador {
         mDebug_Valorador = e;
     }
 
+    public void setDebug_PosProcessador_Estruturador(boolean e) {
+        mDebug_Estruturador = e;
+    }
+
+
     public void setDebug_PosProcessador_Cast(boolean e) {
         mDebug_Cast = e;
     }
 
-    public void setDebug_PosProcessador_UnionType(boolean e) {
-        mDebug_UnionType = e;
+    public void setDebug_PosProcessador_Unificador(boolean e) {
+        mDebug_Unificador = e;
     }
 
     public void setDebug_PosProcessador_Heranca(boolean e) {
@@ -967,11 +974,12 @@ public class Sigmaz_Compilador {
             PosProcessadorC.setDebug_Valorador(mDebug_Valorador);
 
             PosProcessadorC.setDebug_Cast(mDebug_Cast);
-            PosProcessadorC.setDebug_UnionType(mDebug_UnionType);
+            PosProcessadorC.setDebug_Unificador(mDebug_Unificador);
             PosProcessadorC.setDebug_Heranca(mDebug_Heranca);
             PosProcessadorC.setDebug_Referenciador(mDebug_Referenciador);
             PosProcessadorC.setDebug_Argumentador(mDebug_Argumentador);
             PosProcessadorC.setDebug_Opcionador(mDebug_Opcionador);
+            PosProcessadorC.setDebug_Estruturador(mDebug_Estruturador);
 
 
             PosProcessadorC.init(getASTS(), mLocalLibs);
@@ -993,7 +1001,7 @@ public class Sigmaz_Compilador {
                 mETAPA_POS_PROCESSAMENTO = mSTATUS_FALHOU;
 
                 mOrganizadorDeErros.getPosProcessador(PosProcessadorC.getErros());
-
+                mErros_PosProcessamento.addAll(PosProcessadorC.getErros());
 
             }
 

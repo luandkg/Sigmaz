@@ -21,25 +21,20 @@ public class Run_Valoramento {
 
     }
 
-    public Run_Value init(String eNome, AST mValor, String mTipagem,String mTipoAntepassado) {
+    public Run_Value init(String eNome, AST mValor, String mTipagem, String mTipoAntepassado) {
 
-       //  System.out.println("Valorando  ->  " + mValor.getValor()+ " com DEFAULT " +mTipoAntepassado );
 
-        // System.out.println("Pas Retorno : " + mTipagem);
+     //   System.out.println("\t\tValoramento : " + eNome);
+     //   System.out.println("\t\tValoramento Inicio : " + mTipagem);
 
         Run_Context mRun_Context = new Run_Context(mRunTime);
 
         Run_Value mAST = new Run_Value(mRunTime, mEscopo);
         mAST.init(mValor, mTipagem);
 
-        // System.out.println("Def Retorno : " + mAST.getRetornoTipo());
-
-     //   System.out.println("Valoramento Type : " + mAST.getRetornoTipo());
-     //   System.out.println("Valoramento Primitivo : " + mAST.getIsPrimitivo());
-
+      //  System.out.println("\t\tValoramento Fim : " + mAST.getRetornoTipo());
 
         if (mRunTime.getErros().size() > 0) {
-            //    System.out.println(" -->> " + mRunTime.getErros().get(0));
             return mAST;
         }
 
@@ -47,8 +42,8 @@ public class Run_Valoramento {
             mAST.setRetornoTipo(mTipagem);
         }
 
-        if (mTipagem.contentEquals("<<ANY>>")){
-            mTipagem=mAST.getRetornoTipo();
+        if (mTipagem.contentEquals("<<ANY>>")) {
+            mTipagem = mAST.getRetornoTipo();
         }
 
         if (mRunTime.getErros().size() > 0) {
@@ -68,9 +63,6 @@ public class Run_Valoramento {
 
 
             if (mTipagem.contentEquals(mAST.getRetornoTipo()) || mTipagem.contentEquals("<<ANY>>")) {
-
-
-
 
 
             } else {
@@ -110,68 +102,64 @@ public class Run_Valoramento {
         } else if (mAST.getIsStruct()) {
 
 
-
             if (mTipagem.contentEquals(mAST.getRetornoTipo()) || mTipagem.contentEquals("<<ANY>>")) {
 
-            } else  if (mRun_Context.getQualificador(mAST.getRetornoTipo(), mEscopo).contentEquals("CAST")) {
+            } else if (mRun_Context.getQualificador(mAST.getRetornoTipo(), mEscopo).contentEquals("CAST")) {
 
                 mRunTime.errar(mLocal, "Retorno incompativel  : " + mTipagem + " x7 " + mAST.getRetornoTipo());
 
-            } else  if (mRun_Context.getQualificador(mAST.getRetornoTipo(), mEscopo).contentEquals("STRUCT")) {
+            } else if (mRun_Context.getQualificador(mAST.getRetornoTipo(), mEscopo).contentEquals("STRUCT")) {
 
-                    boolean temHeranca = false;
+                boolean temHeranca = false;
 
-                 //   System.out.println(" -->> RETORNANDO : " +mAST.getRetornoTipo() );
-                   //  System.out.println(" -->> PRECISAVA : " +mTipagem );
-                    //System.out.println(" -->> QUALIFICADOR : " + mRunTime.getQualificador(mAST.getRetornoTipo(),mEscopo.getRefers()) );
+                //   System.out.println(" -->> RETORNANDO : " +mAST.getRetornoTipo() );
+                //  System.out.println(" -->> PRECISAVA : " +mTipagem );
+                //System.out.println(" -->> QUALIFICADOR : " + mRunTime.getQualificador(mAST.getRetornoTipo(),mEscopo.getRefers()) );
 
-                    // AST mBases = ASTC.getBranch("BASES");
+                // AST mBases = ASTC.getBranch("BASES");
 
-                    Run_Struct eRS = mRunTime.getHeap().getRun_Struct(mAST.getConteudo());
+                Run_Struct eRS = mRunTime.getHeap().getRun_Struct(mAST.getConteudo());
 
-                    if (eRS.getBases().size()>0){
+                if (eRS.getBases().size() > 0) {
 
-                        for (String eBase : eRS.getBases()) {
-                            if (eBase.contentEquals(mTipagem)) {
-                                temHeranca = true;
-                                break;
-                            }
-                            //  System.out.println("\t ->> " + eBase );
+                    for (String eBase : eRS.getBases()) {
+                        if (eBase.contentEquals(mTipagem)) {
+                            temHeranca = true;
+                            break;
+                        }
+                        //  System.out.println("\t ->> " + eBase );
+                    }
+
+                    if (!temHeranca) {
+
+                        // System.out.println(" -->> RETORNANDO : " + mAST.getRetornoTipo() );
+                        //  System.out.println(" -->> RETORNANDO BASEADO : " + eRS.getBaseado() );
+                        //   System.out.println(" -->> RETORNANDO TIPO REAL : " + eRS.getTipoCompleto() );
+
+                        //  System.out.println(" -->> PRECISA : " + mTipagem );
+
+
+                        if (eRS.getTipoCompleto().contentEquals(mTipagem)) {
+
+                        } else {
+                            mRunTime.errar(mLocal, "Retorno incompativel  : " + mTipagem + " x4 " + mAST.getRetornoTipo() + " e Subtipo : " + eRS.getTipoCompleto());
                         }
 
-                        if (!temHeranca) {
-
-                            // System.out.println(" -->> RETORNANDO : " + mAST.getRetornoTipo() );
-                            //  System.out.println(" -->> RETORNANDO BASEADO : " + eRS.getBaseado() );
-                            //   System.out.println(" -->> RETORNANDO TIPO REAL : " + eRS.getTipoCompleto() );
-
-                            //  System.out.println(" -->> PRECISA : " + mTipagem );
-
-
-                            if (eRS.getTipoCompleto().contentEquals(mTipagem)) {
-
-                            } else {
-                                mRunTime.errar(mLocal, "Retorno incompativel  : " + mTipagem + " x4 " + mAST.getRetornoTipo() + " e Subtipo : " + eRS.getTipoCompleto());
-                            }
-
-
-                        }
-
-
-                    }else{
-
-
-                        mRunTime.errar(mLocal, "Retorno incompativel  : " + mTipagem + " x5 " + mAST.getRetornoTipo() );
-
-                        System.out.println(mValor.ImprimirArvoreDeInstrucoes());
 
                     }
 
 
+                } else {
 
 
+                    mRunTime.errar(mLocal, "Retorno incompativel  : " + mTipagem + " x5 " + mAST.getRetornoTipo());
 
-            } else  if (mRun_Context.getQualificador(mAST.getRetornoTipo(), mEscopo).contentEquals("TYPE")) {
+                    System.out.println(mValor.ImprimirArvoreDeInstrucoes());
+
+                }
+
+
+            } else if (mRun_Context.getQualificador(mAST.getRetornoTipo(), mEscopo).contentEquals("TYPE")) {
 
 
                 boolean temHeranca = false;
@@ -208,8 +196,8 @@ public class Run_Valoramento {
             } else {
 
 
-                    mRunTime.errar(mLocal, "Retorno incompativel  : " + mTipagem + " exc " + mAST.getRetornoTipo());
-                }
+                mRunTime.errar(mLocal, "Retorno incompativel  : " + mTipagem + " exc " + mAST.getRetornoTipo());
+            }
 
 
         } else {
@@ -223,15 +211,15 @@ public class Run_Valoramento {
             mAST.setRetornoTipo(mTipagem);
         }
 
-       // System.out.println("Valoramento Type : " + mAST.getRetornoTipo());
-       // System.out.println("Valoramento Primitivo : " + mAST.getIsPrimitivo());
+        // System.out.println("Valoramento Type : " + mAST.getRetornoTipo());
+        // System.out.println("Valoramento Primitivo : " + mAST.getIsPrimitivo());
 
 
         return mAST;
 
     }
 
-    public Run_Value initSemCast(String eNome, AST mValor, String mTipagem,String mTipoAntepassado) {
+    public Run_Value initSemCast(String eNome, AST mValor, String mTipagem, String mTipoAntepassado) {
 
         // System.out.println("Valorando  -> Def " + mValor.getValor());
 
@@ -278,8 +266,6 @@ public class Run_Valoramento {
 
 
         }
-
-
 
 
         return mAST;

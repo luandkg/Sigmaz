@@ -70,11 +70,15 @@ public class BioGerador {
         mDocumento.adicionarLinha(1, "def Tartaruga_Carlos : Tartaruga = init Tartaruga('Carlos',112);");
         mDocumento.adicionarLinha(1, "def reptil_1 : Reptil = Tartaruga_Carlos;");
 
+        mDocumento.adicionarLinha(1, "gato_envelhecer(Gatinho_Ana);");
+
+        mDocumento.adicionarLinha(1, "def Gatinho_Ana_idade2 : int = Gatinho_Ana.getIdade();");
 
         mDocumento.adicionarLinha(0, "");
 
         mDocumento.adicionarLinha(1, "DEBUG -> LOCAL :: STACK;");
         mDocumento.adicionarLinha(1, "DEBUG -> REGRESSIVE :: STACK;");
+        mDocumento.adicionarLinha(1, "DEBUG -> GLOBAL :: INSTANCES;");
 
         mDocumento.adicionarLinha(0, "}");
 
@@ -101,6 +105,14 @@ public class BioGerador {
             mDocumento.adicionarLinha(0, "func p_" + a + " ( a : int ) : int { return 12 ++ ( " + a + " ++ a );  } ");
 
         }
+
+        mDocumento.pularLinha();
+
+        mDocumento.adicionarLinha(0, "act gato_envelhecer ( a : Gato )  { ");
+        mDocumento.adicionarLinha(1, "a.envelhecer(1);");
+        mDocumento.adicionarLinha(1, "DEBUG -> GLOBAL :: INSTANCES;");
+        mDocumento.adicionarLinha(0, "}");
+
 
         Texto.Escrever(mLocalPasta + "bio.sigmaz", mDocumento.getConteudo());
 
@@ -136,10 +148,11 @@ public class BioGerador {
         Documento mDocumento = new Documento();
 
         mDocumento.adicionarLinha(0, "package Vida {");
-
+        mDocumento.pularLinha();
         mDocumento.adicionarLinha(1, "struct Organismo {");
 
-        mDocumento.adicionarLinha(2, "init Organismo ( eNome : string, eIdade : int ) {");
+        mDocumento.adicionarLinha(2, "init Organismo ( eEspecie : string, eNome : string, eIdade : int ) {");
+        mDocumento.adicionarLinha(3, " especie = eEspecie; ");
         mDocumento.adicionarLinha(3, " nome = eNome; ");
         mDocumento.adicionarLinha(3, " idade = eIdade; ");
 
@@ -172,12 +185,19 @@ public class BioGerador {
         Documento mDocumento = new Documento();
 
         mDocumento.adicionarLinha(0, "import \"organismos.sigmaz\";");
-
+        mDocumento.pularLinha();
         mDocumento.adicionarLinha(0, "package Mamiferos {");
+        mDocumento.pularLinha();
+
         mDocumento.adicionarLinha(1, "refer Vida;");
+        mDocumento.pularLinha();
 
         mDocumento.adicionarLinha(1, "struct Mamifero with Organismo {");
-        mDocumento.adicionarLinha(2, "init Mamifero (eNome:string,eIdade:int) -> Organismo (eNome,eIdade) {} ");
+        mDocumento.pularLinha();
+
+        mDocumento.adicionarLinha(2, "init Mamifero (eEspecie:string,eNome:string,eIdade:int) -> Organismo (eEspecie,eNome,eIdade) {} ");
+        mDocumento.pularLinha();
+
         mDocumento.adicionarLinha(1, "}");
 
         mDocumento.adicionarLinha(0, "");
@@ -194,13 +214,14 @@ public class BioGerador {
 
         for(String mAnimal : mAnimais){
 
-            mDocumento.adicionarLinha("");
+            mDocumento.pularLinha();
 
             mDocumento.adicionarLinha(1, "struct " + mAnimal + " with Mamifero {");
-            mDocumento.adicionarLinha(2, "init " + mAnimal + " (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { ");
+            mDocumento.pularLinha();
 
+            mDocumento.adicionarLinha(2, "init " + mAnimal + " (eNome:string,eIdade:int) -> Mamifero (" + "\"" + mAnimal + "\"" + ",eNome,eIdade) { ");
 
-            mDocumento.adicionarLinha(3, "especie = " + "\"" + mAnimal + "\";");
+            mDocumento.pularLinha();
 
             mDocumento.adicionarLinha(2, "} ");
 
@@ -224,13 +245,22 @@ public class BioGerador {
         Documento mDocumento = new Documento();
 
         mDocumento.adicionarLinha(0, "import \"organismos.sigmaz\";");
+        mDocumento.pularLinha();
 
         mDocumento.adicionarLinha(0, "package Repteis {");
+        mDocumento.pularLinha();
+
         mDocumento.adicionarLinha(1, "refer Vida;");
+        mDocumento.pularLinha();
 
         mDocumento.adicionarLinha(1, "struct Reptil with Organismo {");
-        mDocumento.adicionarLinha(2, "init Reptil (eNome:string,eIdade:int) -> Organismo (eNome,eIdade) {} ");
+        mDocumento.pularLinha();
+
+        mDocumento.adicionarLinha(2, "init Reptil (eEspecie:string,eNome:string,eIdade:int) -> Organismo (eEspecie,eNome,eIdade) {} ");
+        mDocumento.pularLinha();
+
         mDocumento.adicionarLinha(1, "}");
+        mDocumento.pularLinha();
 
         mDocumento.adicionarLinha(0, "");
 
@@ -243,13 +273,14 @@ public class BioGerador {
 
         for(String mAnimal : mAnimais){
 
-            mDocumento.adicionarLinha("");
+            mDocumento.pularLinha();
 
             mDocumento.adicionarLinha(1, "struct " + mAnimal + " with Reptil {");
-            mDocumento.adicionarLinha(2, "init " + mAnimal + " (eNome:string,eIdade:int) -> Reptil (eNome,eIdade) { ");
+            mDocumento.pularLinha();
 
+            mDocumento.adicionarLinha(2, "init " + mAnimal + " (eNome:string,eIdade:int) -> Reptil ("  + "\"" + mAnimal + "\"" +  ",eNome,eIdade) { ");
+            mDocumento.pularLinha();
 
-            mDocumento.adicionarLinha(3, "especie = " + "\"" + mAnimal + "\";");
 
             mDocumento.adicionarLinha(2, "} ");
 

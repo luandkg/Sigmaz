@@ -1,25 +1,29 @@
 package Blocos {
+
+    struct ACA {}
+
 	struct VALORADO in ( T ) {
+
+			init VALORADO ( a : T ) {
+    			mValor = a;
+    		}
+
 		restrict : 
 		define mValor : T = null;
 		all : 
-		init VALORADO ( a : T ) {
-			mValor = a;
-		}
+
 		
 	}
 
-	struct CX in ( T ) with VALORADO {
-		
-		#struct CX in ( T ) with VALORADO >> ( T ) {
-		all : 
+	struct CX in ( T ) with VALORADO >> (T) {
+
 		init CX ( a : T ) -> VALORADO ( a ) {
 			
 		}
 		
 	}
 
-	struct CXA in ( T ) with CX {
+	struct CXA in ( T ) with CX >> (T) {
 		init CXA ( eValor : T ) -> CX ( eValor ) {
 			
 		}
@@ -35,14 +39,7 @@ package Blocos {
 		act diminuir ( eValor : T ) {
 			this.mValor = mValor -- eValor;
 		}
-		operator ++ ( a : CXA >> ( T ) , b : CXA >> ( T ) ) : CXA >> ( T ) {
-			def tt : T = a.getValor ( ) ++ b.getValor ( );
-	DEBUG -> REGRESSIVE :: STACK;
-			return init CXA ( tt ) >> ( T );
-		}
-		director ! ( a : CXA >> ( T ) ) : CXA {
-			return init CXA ( a.getValor ( ) ** ( -1.0 ) ) >> ( T );
-		}
+
 		
 	}
 	
@@ -102,4 +99,14 @@ call iniciar -> {
 	#  def a : string = a4;
 	def r : num = azucrinar ( 1.0 , 2.0 );
 	DEBUG -> REGRESSIVE :: STACK;
+}
+
+operator ++ ( a : CXA >> ( num ) , b : CXA >> ( num ) ) : CXA >> ( num ) {
+			def tt : num = a.getValor ( ) ++ b.getValor ( );
+	        DEBUG -> REGRESSIVE :: STACK;
+			return init CXA ( tt ) >> ( num );
+}
+
+director ! ( a : CXA >> ( num ) ) : CXA >> ( num ) {
+			return init CXA ( a.getValor ( ) ** ( -1.0 ) ) >> ( num );
 }

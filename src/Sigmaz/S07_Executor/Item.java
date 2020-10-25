@@ -22,7 +22,8 @@ public class Item {
 
 
     public Item(String eNome) {
-        this.mNome = eNome;
+
+        mNome = eNome;
         mValor = "";
         mModo = 0;
         mTipo = "";
@@ -32,6 +33,7 @@ public class Item {
 
         mIsReferenciavel = false;
         mReferencia = null;
+
     }
 
     public void setNome(String eNome) {

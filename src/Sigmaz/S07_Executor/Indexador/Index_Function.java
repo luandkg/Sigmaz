@@ -80,6 +80,11 @@ public class Index_Function {
         return mPonteiroVisibility.mesmoNome("EXPLICIT");
     }
 
+    public boolean isInit() {
+        return mPonteiroVisibility.mesmoNome("INIT");
+    }
+
+
     public boolean isAll() {
         return mPonteiroVisibility.mesmoNome("ALL");
     }
@@ -165,6 +170,8 @@ public class Index_Function {
         //mRetornoTipo = mRun_GetType.getTipagem(mPonteiro.getBranch("TYPE"));
 
         //System.out.println("Resolvendo Tipagem : " + this.getDefinicao());
+
+        mRetornoTipo = mRun_GetType.getTipagem(mPonteiro.getBranch("TYPE"));
 
 
         mResolvido = true;

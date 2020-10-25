@@ -6,7 +6,6 @@ import Sigmaz.S07_Executor.Escopos.Run_Type;
 import Sigmaz.S07_Executor.Item;
 import Sigmaz.S07_Executor.RunTime;
 import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S07_Executor.RunValueTypes.RunValueType_Col;
 
 import java.util.ArrayList;
 
@@ -24,6 +23,8 @@ public class Run_Internal {
 
     public Item Struct_DentroStruct(String eLocal, AST eInternal, Escopo mEscopo, String eRetorno) {
 
+        Item eItem = new Item("");
+
         Run_Struct mEstruturador = mRunTime.getHeap().getRun_Struct(eLocal);
 
         // System.out.println(" - STRUCT : " + mEstruturador.getNome());
@@ -32,9 +33,8 @@ public class Run_Internal {
 
 
         if (mRunTime.getErros().size() > 0) {
-            return null;
+            return eItem;
         }
-        Item eItem = null;
 
 
         if (eInternal.mesmoValor("STRUCT_OBJECT")) {
@@ -42,13 +42,13 @@ public class Run_Internal {
             //  System.out.println("\t - ESTRUTURA OBJECT : " + eInternal.getNome());
 
             if (mRunTime.getErros().size() > 0) {
-                return null;
+                return eItem;
             }
 
             eItem = mEstruturador.init_Object(eInternal, mEscopo, "<<ANY>>");
 
             if (mRunTime.getErros().size() > 0) {
-                return null;
+                return eItem;
             }
 
             //  System.out.println("\t - ESTRUTURA OBJECT : " + eInternal.getNome() + " = " + eItem.getValor());
@@ -62,27 +62,26 @@ public class Run_Internal {
 
         } else if (eInternal.mesmoValor("STRUCT_FUNCT")) {
 
-            //    System.out.println("\t - ESTRUTURA STRUCT_FUNCT : " + eInternal.getNome());
+            //System.out.println("\t - ESTRUTURA STRUCT_FUNCT : " + eInternal.getNome());
 
 
-            eItem = mEstruturador.init_Function(eInternal, mEscopo, eRetorno);
+            eItem = mEstruturador.init_Function(eInternal, mEscopo, "<<ANY>>");
 
             if (mRunTime.getErros().size() > 0) {
-                return null;
+                return eItem;
             }
 
             if (eInternal.existeBranch("INTERNAL")) {
                 //  System.out.println("PONTEIRO :: " + eItem.getValor() + " Dentro de Function -> " + eInternal.getBranch("INTERNAL").getNome());
                 Run_Dot mRun_Dot = new Run_Dot(mRunTime);
-
-                eItem = mRun_Dot.operadorPontoStruct(mEstruturador, eItem, eInternal.getBranch("INTERNAL"), mEscopo, eRetorno);
+                eItem = mRun_Dot.operadorPontoStruct(mEstruturador, eItem, eInternal.getBranch("INTERNAL"), mEscopo, "<<ANY>>");
 
             }
-        } else if (eInternal.mesmoValor("COL")) {
+        } else if (eInternal.mesmoValor("GETTER")) {
 
 
             Run_Dot mrd = new Run_Dot(mRunTime);
-            eItem=mrd.operadorColDireto(eLocal,eInternal, mEscopo,eRetorno);
+            eItem = mrd.operadorColDireto(eLocal, eInternal, mEscopo, eRetorno);
 
             if (eInternal.existeBranch("INTERNAL")) {
                 //  System.out.println("PONTEIRO :: " + eItem.getValor() + " Dentro de Function -> " + eInternal.getBranch("INTERNAL").getNome());

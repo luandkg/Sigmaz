@@ -178,8 +178,28 @@ public class AST_Implementador {
         AST eAST = new AST("INIT");
         eAST.setNome(eStruct);
         AST eGen = eAST.criarBranch("GENERIC");
+
         AST eType = eGen.criarBranch("TYPE");
         eType.setNome(mTipagem);
+        eGen.setNome("TRUE");
+
+        AST eArgs = eAST.criarBranch("ARGUMENTS");
+
+        return eAST;
+    }
+
+    public AST criar_InitGenerico(String eStruct, String mT1,String mT2) {
+
+        AST eAST = new AST("INIT");
+        eAST.setNome(eStruct);
+        AST eGen = eAST.criarBranch("GENERIC");
+
+        AST eType = eGen.criarBranch("TYPE");
+        eType.setNome(mT1);
+
+        AST eType2 = eGen.criarBranch("TYPE");
+        eType2.setNome(mT2);
+
         eGen.setNome("TRUE");
 
         AST eArgs = eAST.criarBranch("ARGUMENTS");

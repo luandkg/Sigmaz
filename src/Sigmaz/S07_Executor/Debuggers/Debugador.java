@@ -17,17 +17,16 @@ public class Debugador {
 
         Run_Context mRun_Context = new Run_Context(mRunTime);
 
-        ArrayList<AST> mOperadores = mRun_Context.getOperatorsContexto(mEscopo);
+        ArrayList<Index_Function> mOperadores = mRun_Context.getOperatorsContexto(mEscopo);
 
 
         for (AST mAST : mEscopo.getGuardadosCompleto()) {
             System.out.println("\t - Guardado : " + mAST.getTipo() + " " + mAST.getNome());
         }
 
-        for (AST mAST : mOperadores) {
+        for (Index_Function mIndex_Function : mOperadores) {
 
-            Index_Function mIndex_Function = new Index_Function(mRunTime, mEscopo, mAST);
-            mIndex_Function.resolverTipagem(mEscopo.getRefers());
+
             System.out.println("\t - Operador : " + mIndex_Function.getDefinicao());
 
         }

@@ -258,23 +258,30 @@ public class Run_Context {
         return ret;
     }
 
-    public ArrayList<AST> getOperatorsContexto(Escopo gEscopo) {
+    public ArrayList<Index_Function> getOperatorsContexto(Escopo gEscopo) {
 
 
         ArrayList<String> mRefers = gEscopo.getRefers();
 
-        ArrayList<AST> ret = new ArrayList<AST>();
+        ArrayList<Index_Function> mRet = new ArrayList<Index_Function>();
 
 
-        for (Index_Function eAST : gEscopo.getOperationsCompleto()) {
-            ret.add(eAST.getPonteiro());
+        for (Index_Function mIndex_Function : gEscopo.getOperationsCompleto()) {
+
+            mRet.add(mIndex_Function);
+
+
         }
 
 
         for (AST mStruct : getStructsOuStagesContexto(gEscopo)) {
             for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
                 if (mStructBody.mesmoTipo("OPERATOR")) {
-                    ret.add(mStructBody);
+
+                    Index_Function mIndex_Function = new Index_Function(mRunTime, gEscopo, mStructBody);
+                    mIndex_Function.resolverTipagem(gEscopo.getRefers());
+
+                    mRet.add(mIndex_Function);
                 }
             }
         }
@@ -290,7 +297,9 @@ public class Run_Context {
                         for (AST mStructBody : eAST.getBranch("BODY").getASTS()) {
                             if (mStructBody.mesmoTipo("OPERATOR")) {
 
-                                ret.add(mStructBody);
+                                Index_Function mIndex_Function = new Index_Function(mRunTime, gEscopo, mStructBody);
+                                mIndex_Function.resolverTipagem(gEscopo.getRefers());
+                                mRet.add(mIndex_Function);
 
 
                             }
@@ -306,18 +315,18 @@ public class Run_Context {
         }
 
 
-        return ret;
+        return mRet;
     }
 
 
-    public ArrayList<AST> getDirectorsContexto(Escopo gEscopo) {
-        ArrayList<AST> ret = new ArrayList<AST>();
+    public ArrayList<Index_Function> getDirectorsContexto(Escopo gEscopo) {
+        ArrayList<Index_Function> ret = new ArrayList<Index_Function>();
 
 
         ArrayList<String> mRefers = gEscopo.getRefers();
 
         for (Index_Function eAST : gEscopo.getDirectorsCompleto()) {
-            ret.add(eAST.getPonteiro());
+            ret.add(eAST);
         }
 
 
@@ -325,7 +334,10 @@ public class Run_Context {
             for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
                 if (mStructBody.mesmoTipo("DIRECTOR")) {
 
-                    ret.add(mStructBody);
+                    Index_Function m = new Index_Function(mRunTime, gEscopo, mStructBody);
+                    m.resolverTipagem(gEscopo.getRefers());
+
+                    ret.add(m);
 
                 }
             }
@@ -342,8 +354,9 @@ public class Run_Context {
                         for (AST mStructBody : eAST.getBranch("BODY").getASTS()) {
                             if (mStructBody.mesmoTipo("DIRECTOR")) {
 
-                                ret.add(mStructBody);
-
+                                Index_Function m = new Index_Function(mRunTime, gEscopo, mStructBody);
+                                m.resolverTipagem(gEscopo.getRefers());
+                                ret.add(m);
 
                             }
                         }
@@ -485,12 +498,12 @@ public class Run_Context {
                 if (l.contentEquals("<")) {
                     i += 1;
 
-                    if(i<o){
+                    if (i < o) {
                         String l2 = String.valueOf(aNome.charAt(i));
-                        if(l2.contentEquals(">")){
+                        if (l2.contentEquals(">")) {
 
-                        }else{
-                            ePacoteDefinido="";
+                        } else {
+                            ePacoteDefinido = "";
                         }
                     }
                     break;
@@ -502,7 +515,7 @@ public class Run_Context {
 
         }
 
-       // System.out.println("Pacote :" + ePacoteDefinido);
+        // System.out.println("Pacote :" + ePacoteDefinido);
 
 
         if (aNome.contains("<>")) {
@@ -582,22 +595,22 @@ public class Run_Context {
 
         boolean enc = false;
 
-        if (!enc){
+        if (!enc) {
             for (AST eAST : mCasts) {
                 if (eAST.mesmoNome(eNome)) {
                     ret = "CAST";
-                    enc=true;
+                    enc = true;
                     break;
                 }
             }
         }
 
-        if (!enc){
+        if (!enc) {
 
             for (AST eAST : mStages) {
                 if (eAST.mesmoNome(eNome)) {
                     ret = "STAGES";
-                    enc=true;
+                    enc = true;
 
                     break;
                 }
@@ -605,12 +618,12 @@ public class Run_Context {
         }
 
 
-        if (!enc){
+        if (!enc) {
 
             for (AST eAST : mTipos) {
                 if (eAST.mesmoNome(eNome)) {
                     ret = "TYPE";
-                    enc=true;
+                    enc = true;
 
                     break;
                 }
@@ -618,14 +631,13 @@ public class Run_Context {
         }
 
 
-
-        if (!enc){
+        if (!enc) {
 
             for (AST eAST : mStructs) {
 
                 if (eAST.mesmoNome(eNome)) {
                     ret = "STRUCT";
-                    enc=true;
+                    enc = true;
 
                     break;
                 }
@@ -634,11 +646,12 @@ public class Run_Context {
         }
 
 
-
-
         return ret;
     }
 
+    public boolean getQualificadorIsStruct(String aNome, Escopo mEscopo) {
+        return getQualificador(aNome, mEscopo).contentEquals("STRUCT");
+    }
 
     public void incluirDoContexto(String eRefer, ArrayList<AST> mCasts, ArrayList<AST> mTipos, ArrayList<AST> Structs) {
 

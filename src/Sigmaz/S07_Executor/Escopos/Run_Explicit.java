@@ -309,7 +309,7 @@ public class Run_Explicit {
 
                     Run_Escopo mRun_Escopo = new Run_Escopo();
 
-                    mRet = mRun_Escopo.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos, eRetorne);
+                    mRet = mRun_Escopo.executar_ComRetorno(mRunTime, mEscopo, mIndex_Function, mArgumentos, eRetorne);
 
                     //  System.out.println("\t - Executar :  " + mIndex_Function.getNome() + " RET ::: " + mRet);
 
@@ -384,7 +384,7 @@ public class Run_Explicit {
                      //   mEscopo.getDebug().ListarActions();
                         Run_Escopo mRun_Escopo = new Run_Escopo();
 
-                        mRun_Escopo.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
+                        mRun_Escopo.executar_SemRetorno(mRunTime, mEscopo, mIndex_Function, mArgumentos);
 
                     } else {
                         mRunTime.errar(mLocal, "Function Explicit " + mNome + "." + ASTCorrente.getNome() + " : Retorno incompativel !");

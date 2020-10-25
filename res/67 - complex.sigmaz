@@ -3,7 +3,13 @@ stages Moradias -> {
 	CASA , APARTAMENTO 
 }
 
+struct G11{
+
+}
+
+
 struct G12 at Modelo {
+all:
 	act somar ( ) {
 		
 	}
@@ -16,6 +22,20 @@ struct G12 at Modelo {
 	}
 	
 }
+
+struct G13 with Complexo {
+	init G13 ( ) -> Complexo ( ) {
+
+	}
+}
+
+struct G14 with G13 {
+	init G14 ( ) -> G13 ( ) {
+
+	}
+}
+
+
 func typeof ( a : any ) : string {
 	reg @ R17 -> a;
 	return reg @ R17;

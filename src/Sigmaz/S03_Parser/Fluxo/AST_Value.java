@@ -341,7 +341,7 @@ public class AST_Value {
                 } else if (TokenC2.getTipo() == TokenTipo.COLCHETE_ABRE) {
 
 
-                    mAST_ValueTypes.dentro_colchete(ASTPai, mTemTipo, mTipo);
+                    mAST_ValueTypes.dentro_Getter(ASTPai, mTemTipo, mTipo);
 
                     SegundaParte(ASTPai);
 
@@ -426,7 +426,7 @@ public class AST_Value {
                 } else if (TokenC2.getTipo() == TokenTipo.COLCHETE_ABRE) {
 
 
-                    mAST_ValueTypes.dentro_colchete(ASTPai, mTemTipo, mTipo);
+                    mAST_ValueTypes.dentro_Getter(ASTPai, mTemTipo, mTipo);
 
                     SegundaParte(ASTPai);
 
@@ -646,7 +646,7 @@ public class AST_Value {
                 } else if (TokenC2.getTipo() == TokenTipo.COLCHETE_ABRE) {
 
 
-                    mAST_ValueTypes.dentro_colchete(ASTPai, mTemTipo, mTipo);
+                    mAST_ValueTypes.dentro_Getter(ASTPai, mTemTipo, mTipo);
 
                     terminar();
 
@@ -811,7 +811,7 @@ public class AST_Value {
                 } else if (TokenC2.getTipo() == TokenTipo.COLCHETE_ABRE) {
 
 
-                    mAST_ValueTypes.dentro_colchete(ASTPai, mTemTipo, mTipo);
+                    mAST_ValueTypes.dentro_Getter(ASTPai, mTemTipo, mTipo);
 
 
                 } else if (TokenC2.getTipo() == TokenTipo.QUAD) {

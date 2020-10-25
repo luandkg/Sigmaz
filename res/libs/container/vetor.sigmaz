@@ -94,11 +94,11 @@ package Vetor {
 					
 				}
 				if ( enc == false ) -> {
-					exception "Indice invalido !";
+					exception "Indice invalido : " && indice;
 				}
 				
 			}others {
-				exception "Indice invalido !";
+				exception "Indice invalido : " && indice;
 			}
 			return ret;
 		}
@@ -120,11 +120,11 @@ package Vetor {
 					
 				}
 				if ( enc == false ) -> {
-					exception "Indice invalido !";
+					exception "Indice invalido : " && indice;
 				}
 				
 			}others {
-				exception "Indice invalido !";
+				exception "Indice invalido : " && indice;
 			}
 			return ret;
 		}
@@ -146,11 +146,11 @@ package Vetor {
 					
 				}
 				if ( enc == false ) -> {
-					exception "Indice invalido !";
+					exception "Indice invalido : " && indice;
 				}
 				
 			}others {
-				exception "Indice invalido !";
+				exception "Indice invalido : " && indice;
 			}
 			
 		}

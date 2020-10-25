@@ -124,10 +124,10 @@ public class AST_Comando {
 
             } else if (P2.getTipo() == TokenTipo.COLCHETE_ABRE) {
 
-                ASTCorrente.setValor("STRUCT_COLGET");
+                ASTCorrente.setValor("STRUCT_GETTER");
 
                 AST_ValueTypes mA = new AST_ValueTypes(mCompiler);
-                mA.ReceberNovoEscopo_Col(ASTCorrente, false, null);
+                mA.ReceberArgumentos_Colchete(ASTCorrente, false, null);
 
                 Token P3 = mCompiler.getTokenAvante();
 
@@ -137,13 +137,13 @@ public class AST_Comando {
                 } else if (P3.getTipo() == TokenTipo.IGUAL) {
 
                     AST ASTDireita = ASTCorrente.copiar();
-                    ASTDireita.setTipo("STRUCT_SET");
+                    ASTDireita.setTipo("STRUCT_SETTER");
 
                     ASTCorrente.getASTS().clear();
                     ASTCorrente.setNome("");
                     ASTCorrente.setValor("");
 
-                    ASTCorrente.setTipo("STRUCT_COLSET");
+                    ASTCorrente.setTipo("STRUCT_SETTER");
                     ASTCorrente.getASTS().add(ASTDireita);
 
                     AST ASTC = ASTCorrente.criarBranch("VALUE");
@@ -206,9 +206,6 @@ public class AST_Comando {
             } else if (P2.getTipo() == TokenTipo.PARENTESES_ABRE) {
 
                 ASTCorrente.setValor("FUNCT");
-
-                //  AST_Value_Argument mAVA = new AST_Value_Argument(mCompiler);
-                //   mAVA.ReceberArgumentos(ASTCorrente);
 
                 AST_ValueTypes mAVA = new AST_ValueTypes(mCompiler);
                 mAVA.ReceberArgumentos(ASTCorrente, false, null);

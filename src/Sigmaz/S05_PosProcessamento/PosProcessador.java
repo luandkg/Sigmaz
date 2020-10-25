@@ -23,11 +23,12 @@ public class PosProcessador {
     private boolean mDebug_Tipador;
     private boolean mDebug_Valorador;
     private boolean mDebug_Cast;
-    private boolean mDebug_UnionType;
+    private boolean mDebug_Unificador;
     private boolean mDebug_Heranca;
     private boolean mDebug_Referenciador;
     private boolean mDebug_Argumentador;
     private boolean mDebug_Opcionador;
+    private boolean mDebug_Estruturador;
 
     private String mFase;
     private String mLocalLibs;
@@ -35,6 +36,8 @@ public class PosProcessador {
     private int mPosInt;
     private int mPosMax;
     private boolean mTerminou;
+
+
 
     public PosProcessador() {
 
@@ -52,11 +55,12 @@ public class PosProcessador {
         mDebug_Tipador = true;
         mDebug_Valorador = true;
         mDebug_Cast = true;
-        mDebug_UnionType = true;
+        mDebug_Unificador = true;
         mDebug_Heranca = true;
         mDebug_Referenciador = true;
         mDebug_Argumentador = true;
         mDebug_Opcionador = true;
+        mDebug_Estruturador=true;
 
         mFase = "";
 
@@ -93,8 +97,8 @@ public class PosProcessador {
         mDebug_Cast = e;
     }
 
-    public void setDebug_UnionType(boolean e) {
-        mDebug_UnionType = e;
+    public void setDebug_Unificador(boolean e) {
+        mDebug_Unificador = e;
     }
 
     public void setDebug_Heranca(boolean e) {
@@ -112,6 +116,13 @@ public class PosProcessador {
     public void setDebug_Opcionador(boolean e) {
         mDebug_Opcionador = e;
     }
+    public void setDebug_Estruturador(boolean e) {
+        mDebug_Estruturador = e;
+    }
+
+
+
+
 
     public boolean getDebug_Requeridor() {
         return mDebug_Requisidor;
@@ -141,8 +152,8 @@ public class PosProcessador {
         return mDebug_Cast;
     }
 
-    public boolean getDebug_UnionType() {
-        return mDebug_UnionType;
+    public boolean getDebug_Unificador() {
+        return mDebug_Unificador;
     }
 
     public boolean getDebug_Heranca() {
@@ -161,6 +172,10 @@ public class PosProcessador {
         return mDebug_Opcionador;
     }
 
+
+    public boolean getDebug_Estruturador() {
+        return mDebug_Estruturador;
+    }
 
     public ArrayList<AST> getRequisicoes() {
         return mRequisicoes;
@@ -184,7 +199,7 @@ public class PosProcessador {
 
         mFase = "";
         mPosInt = 0;
-        mPosMax = 11;
+        mPosMax = 12;
         mTerminou = false;
 
 
@@ -304,6 +319,14 @@ public class PosProcessador {
                     mValorador.init(mASTS, mRequisicoes);
                 }
 
+            } else if (mPosInt == 12) {
+
+                mFase = "Estruturador";
+
+                if (tudoOK()) {
+                    Estruturador mEstruturador = new Estruturador(this);
+                    mEstruturador.init(mASTS);
+                }
 
             }
 

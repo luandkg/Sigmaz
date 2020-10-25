@@ -204,7 +204,7 @@ public class Valoramento {
 
             mValore_Value.valore_Funct(ePrefixo, mValue, mAtribuindo);
 
-        } else if (mValue.mesmoValor("COL")) {
+        } else if (mValue.mesmoValor("GETTER")) {
 
 
             for (AST mAST : mValue.getASTS()) {
@@ -215,7 +215,7 @@ public class Valoramento {
 
                 }
             }
-        } else if (mValue.mesmoValor("STRUCT_COLSET")) {
+        } else if (mValue.mesmoValor("STRUCT_SETTER")) {
 
 
             for (AST mAST : mValue.getASTS()) {

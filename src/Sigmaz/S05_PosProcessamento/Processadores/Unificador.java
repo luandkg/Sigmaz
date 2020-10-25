@@ -1,14 +1,21 @@
 package Sigmaz.S05_PosProcessamento.Processadores;
 
+import Sigmaz.S00_Utilitarios.*;
+import Sigmaz.S05_PosProcessamento.ProcurandoStruct;
+import Sigmaz.S05_PosProcessamento.ProcurandoType;
 import Sigmaz.S07_Executor.Alterador;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
-import Sigmaz.S00_Utilitarios.AST;
 
 import java.util.ArrayList;
 
 public class Unificador {
 
     private PosProcessador mPosProcessador;
+
+    private String CRIADO = "2020 09 20";
+    private String ATUALIZADO = "2020 10 25";
+    private String VERSAO = "2.0";
+
 
     public Unificador(PosProcessador ePosProcessador) {
 
@@ -17,16 +24,20 @@ public class Unificador {
     }
 
 
-    public void mensagem(String e){
-        if (mPosProcessador.getDebug_UnionType()){
+    public void mensagem(String e) {
+        if (mPosProcessador.getDebug_Unificador()) {
             mPosProcessador.mensagem(e);
         }
+    }
+
+    public void errar(String e) {
+        mPosProcessador.errar(e);
     }
 
     public void init(ArrayList<AST> mTodos) {
 
         mensagem("");
-        mensagem(" ------------------ FASE TYPE UNION ----------------------- ");
+        mensagem(" ------------------ FASE UNIFICADOR ----------------------- ");
 
 
         for (AST mAST : mTodos) {
@@ -34,17 +45,22 @@ public class Unificador {
             if (mAST.mesmoTipo("SIGMAZ")) {
 
 
-                mensagem("");
+                ArrayList<SigmazPackage> mPacotes = new ArrayList<SigmazPackage>();
+                SigmazRaiz mSigmazRaiz = new SigmazRaiz(mAST);
 
-                for (AST ePacote : mAST.getASTS()) {
-                    if (ePacote.mesmoTipo("PACKAGE")) {
 
-                        processar(ePacote);
-
+                for (AST Struct_AST : mAST.getASTS()) {
+                    if (Struct_AST.mesmoTipo("PACKAGE")) {
+                        mPacotes.add(new SigmazPackage(Struct_AST));
                     }
                 }
 
-                processar(mAST);
+
+                processarSigmaz(mSigmazRaiz, mPacotes);
+
+                for (SigmazPackage ePacote : mPacotes) {
+                    processarPacote(mSigmazRaiz, ePacote, mPacotes);
+                }
 
 
             }
@@ -52,173 +68,373 @@ public class Unificador {
 
     }
 
-    public void processar(AST eASTPai) {
+    public void processarSigmaz(SigmazRaiz mSigmazRaiz, ArrayList<SigmazPackage> mPacotes) {
 
 
-        ArrayList<AST> eTypes = new ArrayList<AST>();
-        ArrayList<AST> eUnions = new ArrayList<AST>();
+        mensagem("-->> SIGMAZ");
+        mensagem("");
+
+        for (SigmazType eType : mSigmazRaiz.getTypes()) {
+
+            mensagem("\t - TYPE : " + eType.getNome() + " ->> " + eType.getCompletude());
+
+            if (eType.precisaUnir()) {
+                processeSigmaz("\t\t\t\t", eType, mSigmazRaiz, mPacotes);
+            }
+
+        }
 
 
-        for (AST mAST : eASTPai.getASTS()) {
+    }
 
-            if (mAST.mesmoTipo("STRUCT")) {
+    public void processarPacote(SigmazRaiz mSigmazRaiz, SigmazPackage mSigmazPackage, ArrayList<SigmazPackage> mPacotes) {
 
-                if (mAST.getBranch("EXTENDED").mesmoNome("TYPE_UNION")) {
-                    eUnions.add(mAST);
+        mensagem("-->> PACKAGE : " + mSigmazPackage.getNome());
+        mensagem("");
 
-                } else if (mAST.getBranch("EXTENDED").mesmoNome("TYPE")) {
-                    eTypes.add(mAST);
-                }
 
+        for (SigmazType eType : mSigmazPackage.getTypes()) {
+
+            mensagem("\t - TYPE : " + eType.getNome() + " ->> " + eType.getCompletude());
+
+            if (eType.precisaUnir()) {
+
+                processePackage("\t\t\t\t", eType, mSigmazRaiz, mSigmazPackage, mPacotes);
+
+
+            }
+
+        }
+
+
+    }
+
+
+    public void processeSigmaz(String ePrefixo, SigmazType eType, SigmazRaiz mSigmazRaiz, ArrayList<SigmazPackage> mPacotes) {
+
+        mensagem(ePrefixo + "------------------- UNIFICACAO ----------------------");
+
+        mensagem(ePrefixo + " - Nome : " + eType.getNome());
+
+        unifiqueSigmaz(ePrefixo, eType, mSigmazRaiz, mPacotes);
+
+        mensagem(ePrefixo + "--------------------------------------------------");
+
+    }
+
+
+    public void unifiqueSigmaz(String ePrefixo, SigmazType eType, SigmazRaiz mSigmazRaiz, ArrayList<SigmazPackage> mPacotes) {
+
+        AST eBases = eType.getLeitura().getBranch("BASES");
+
+        if (eBases.getASTS().size() == 2) {
+
+            AST eT1 = eBases.getASTS().get(0);
+            AST eT2 = eBases.getASTS().get(1);
+
+            mensagem(ePrefixo + " - Unificando : " + eT1.getNome() + " e " + eT2.getNome());
+
+
+            ProcurandoType mProcurandoT1 = new ProcurandoType(this);
+            mProcurandoT1.procurarSigmaz(eT1.getNome(), mSigmazRaiz, mPacotes);
+
+            ProcurandoType mProcurandoT2 = new ProcurandoType(this);
+            mProcurandoT2.procurarSigmaz(eT2.getNome(), mSigmazRaiz, mPacotes);
+
+
+            if (mProcurandoT1.getEncontrado()) {
+                mensagem(ePrefixo + " - T1 : " + eT1.getNome() + " ->> Sim :: " + mProcurandoT1.getOrigem());
+            } else {
+                mensagem(ePrefixo + " - T1 : " + eT1.getNome() + " ->> Nao");
+                errar("Type " + eT1.getNome() + " nao encontrada !");
+            }
+
+            if (mProcurandoT2.getEncontrado()) {
+                mensagem(ePrefixo + " - T2 : " + eT2.getNome() + " ->> Sim :: " + mProcurandoT2.getOrigem());
+            } else {
+                mensagem(ePrefixo + " - T2 : " + eT2.getNome() + " ->> Nao");
+                errar("Type " + eT2.getNome() + " nao encontrada !");
+            }
+
+            if (mProcurandoT1.getEncontrado() && mProcurandoT2.getEncontrado()) {
+
+
+
+                ArrayList<String> mCompondo = new ArrayList<String>();
+
+                AST eBase_01 = organizarBASE(ePrefixo, eType, mProcurandoT1.getType().getLeitura().copiar(), mCompondo, mProcurandoT1, mSigmazRaiz, mPacotes);
+
+                AST eBase_02 = organizarBASE(ePrefixo, eType, mProcurandoT2.getType().getLeitura().copiar(), mCompondo, mProcurandoT2, mSigmazRaiz, mPacotes);
+
+
+
+                ArrayList<String> mCampos = new ArrayList<String>();
+
+                realizarComposicao(ePrefixo, eType, mCampos, eT1, eBase_01);
+                realizarComposicao(ePrefixo, eType, mCampos, eT2, eBase_02);
+
+                eType.getAlteravel().getBranch("EXTENDED").setNome("TYPE");
+
+            }
+
+
+        } else {
+
+            errar("Houve um problema na unificao de " + eType.getNome());
+
+        }
+
+    }
+
+    public AST organizarBASE(String ePrefixo, SigmazType eType, AST eBase_01, ArrayList<String> mCompondo, ProcurandoType mProcurandoT1, SigmazRaiz mSigmazRaiz, ArrayList<SigmazPackage> mPacotes) {
+
+        if (mProcurandoT1.getType().precisaUnir()) {
+
+            eBase_01 = montarBase(ePrefixo, mCompondo, eBase_01, mProcurandoT1, mSigmazRaiz, mPacotes);
+
+            for (AST mBaseado : eBase_01.getBranch("BASES").getASTS()) {
+
+                eType.getAlteravel().getBranch("BASES").getASTS().add(mBaseado.copiar());
 
             }
         }
 
-        for (AST mAST : eTypes) {
+        return eBase_01;
+    }
 
-            mensagem("\t - TYPE : " + mAST.getNome());
+    public void unifiquePackage(String ePrefixo, SigmazType eType, SigmazRaiz mSigmazRaiz, SigmazPackage mSigmazPackage, ArrayList<SigmazPackage> mPacotes) {
+
+        AST eBases = eType.getLeitura().getBranch("BASES");
+
+        if (eBases.getASTS().size() == 2) {
+
+            AST eT1 = eBases.getASTS().get(0);
+            AST eT2 = eBases.getASTS().get(1);
+
+            mensagem(ePrefixo + " - Unificando : " + eT1.getNome() + " e " + eT2.getNome());
+
+
+            ProcurandoType mProcurandoT1 = new ProcurandoType(this);
+            mProcurandoT1.procurar(eT1.getNome(), mSigmazRaiz, mSigmazPackage, mPacotes);
+
+            ProcurandoType mProcurandoT2 = new ProcurandoType(this);
+            mProcurandoT2.procurar(eT2.getNome(), mSigmazRaiz, mSigmazPackage, mPacotes);
+
+
+            if (mProcurandoT1.getEncontrado()) {
+                mensagem(ePrefixo + " - T1 : " + eT1.getNome() + " ->> Sim :: " + mProcurandoT1.getOrigem());
+            } else {
+                mensagem(ePrefixo + " - T1 : " + eT1.getNome() + " ->> Nao");
+                errar("Type " + eT1.getNome() + " nao encontrada !");
+            }
+
+            if (mProcurandoT2.getEncontrado()) {
+                mensagem(ePrefixo + " - T2 : " + eT2.getNome() + " ->> Sim :: " + mProcurandoT2.getOrigem());
+            } else {
+                mensagem(ePrefixo + " - T2 : " + eT2.getNome() + " ->> Nao");
+                errar("Type " + eT2.getNome() + " nao encontrada !");
+            }
+
+            if (mProcurandoT1.getEncontrado() && mProcurandoT2.getEncontrado()) {
+
+
+                ArrayList<String> mCampos = new ArrayList<String>();
+
+                ArrayList<String> mCompondo = new ArrayList<String>();
+
+                AST eBase_01 = organizarBASE(ePrefixo, eType, mProcurandoT1.getType().getLeitura().copiar(), mCompondo, mProcurandoT1, mSigmazRaiz, mPacotes);
+
+                AST eBase_02 = organizarBASE(ePrefixo, eType, mProcurandoT2.getType().getLeitura().copiar(), mCompondo, mProcurandoT2, mSigmazRaiz, mPacotes);
+
+
+                realizarComposicao(ePrefixo, eType, mCampos, eT1, eBase_01);
+                realizarComposicao(ePrefixo, eType, mCampos, eT2, eBase_02);
+
+                eType.getAlteravel().getBranch("EXTENDED").setNome("TYPE");
+
+            }
+
+
+        } else {
+
+            errar("Houve um problema na unificao de " + eType.getNome());
 
         }
 
-        for (AST mAST : eUnions) {
+    }
 
-            mensagem("\t - TYPE UNION : " + mAST.getNome());
+    public void processePackage(String ePrefixo, SigmazType eType, SigmazRaiz mSigmazRaiz, SigmazPackage mSigmazPackage, ArrayList<SigmazPackage> mPacotes) {
 
+        mensagem(ePrefixo + "------------------- UNIFICACAO ----------------------");
 
-            AST eBases = mAST.getBranch("BASES");
-            AST eCorpo = mAST.getBranch("BODY");
+        mensagem(ePrefixo + " - Nome : " + eType.getNome());
 
-            ArrayList<String> mCampos = new ArrayList<String>();
+        unifiquePackage(ePrefixo, eType, mSigmazRaiz, mSigmazPackage, mPacotes);
 
-            for (AST bAST : eBases.getASTS()) {
-                mensagem("\t\t - BASE : " + bAST.getNome());
+        mensagem(ePrefixo + "--------------------------------------------------");
 
-
-                boolean enc = false;
-                AST eBaseType = null;
-
-                for (AST eType : eTypes) {
-                    if (eType.mesmoNome(bAST.getNome())) {
-                        enc = true;
-                        eBaseType = eType;
-                        break;
-                    }
-                }
+    }
 
 
-                if (enc) {
-                    mensagem("\t\t\t - Existe : Sim");
+    public void realizarComposicao(String ePrefixo, SigmazType eType, ArrayList<String> mCampos, AST ePedidoBase, AST eBaseType) {
 
-                    boolean ok = false;
+        String eNomeType = eType.getNome();
 
-
-                    if (bAST.getBranch("GENERIC").mesmoNome("FALSE") && eBaseType.getBranch("GENERIC").mesmoNome("FALSE")) {
-
-                        mensagem("\t\t\t - Pedido Generico : Nao");
-                        mensagem("\t\t\t - Base Generico : Nao");
-
-                        ok = true;
-
-                    } else if (bAST.getBranch("GENERIC").mesmoNome("FALSE") && eBaseType.getBranch("GENERIC").mesmoNome("TRUE")) {
-
-                        mensagem("\t\t\t - Pedido Generico : Nao");
-                        mensagem("\t\t\t - Base Generico : Sim");
-
-                        mPosProcessador.errar("Type  " + bAST.getNome() + " : E generica !");
-
-                    } else if (bAST.getBranch("GENERIC").mesmoNome("TRUE") && eBaseType.getBranch("GENERIC").mesmoNome("FALSE")) {
-
-                        mensagem("\t\t\t - Pedido Generico : Sim");
-                        mensagem("\t\t\t - Base Generico : Nao");
-
-                        mPosProcessador.errar("Type  " + bAST.getNome() + " : Nao e generica !");
-
-                    } else if (bAST.getBranch("GENERIC").mesmoNome("TRUE") && eBaseType.getBranch("GENERIC").mesmoNome("TRUE")) {
-
-                        mensagem("\t\t\t - Pedido Generico : Sim");
-                        mensagem("\t\t\t - Base Generico : Sim");
-
-                        ok = true;
-
-                    }
-
-                    if (ok) {
-
-                        AST AST_PedidoGenerico = bAST.getBranch("GENERIC");
-                        AST AST_BaseGenerico = eBaseType.getBranch("GENERIC");
-
-                        if (AST_PedidoGenerico.getASTS().size() == AST_BaseGenerico.getASTS().size()) {
-
-                            AST AST_BaseCorpo = eBaseType.getBranch("BODY").copiar();
-
-                            if (AST_PedidoGenerico.getASTS().size() == 0) {
+        AST eCorpo = eType.getAlteravel().getBranch("BODY");
 
 
-                            } else {
+        mensagem(ePrefixo + " - Compondo : " + ePedidoBase.getNome());
 
-                                Alterador mAlterador = new Alterador();
+        String mPrefixo = ePrefixo + "\t";
 
-
-                                int i = 0;
-                                for (AST eSub : AST_PedidoGenerico.getASTS()) {
-
-                                    AST sInit = AST_BaseGenerico.getASTS().get(i);
-
-                                    mAlterador.adicionar(sInit.getNome(), eSub);
-
-                                }
-
-                                mAlterador.alterar(AST_BaseCorpo);
-
-                            }
+        boolean ok = false;
 
 
+        if (ePedidoBase.getBranch("GENERIC").mesmoNome("FALSE") && eBaseType.getBranch("GENERIC").mesmoNome("FALSE")) {
 
-                            for (AST eCampo : AST_BaseCorpo.getASTS()) {
+            mensagem(mPrefixo + " - Pedido Generico : Nao");
+            mensagem(mPrefixo + " - Base Generico : Nao");
 
-                                if (!mCampos.contains(eCampo.getNome())) {
+            ok = true;
 
-                                    mCampos.add(eCampo.getNome());
+        } else if (ePedidoBase.getBranch("GENERIC").mesmoNome("TRUE") && eBaseType.getBranch("GENERIC").mesmoNome("TRUE")) {
 
-                                    eCorpo.getASTS().add(eCampo);
+            mensagem(mPrefixo + " - Pedido Generico : Sim");
+            mensagem(mPrefixo + " - Base Generico : Sim");
+
+            ok = true;
+
+        } else if (ePedidoBase.getBranch("GENERIC").mesmoNome("FALSE") && eBaseType.getBranch("GENERIC").mesmoNome("TRUE")) {
+
+            mensagem(mPrefixo + " - Pedido Generico : Nao");
+            mensagem(mPrefixo + " - Base Generico : Sim");
+
+            mPosProcessador.errar("Type  " + eBaseType.getNome() + " : E generica !");
+
+        } else if (ePedidoBase.getBranch("GENERIC").mesmoNome("TRUE") && eBaseType.getBranch("GENERIC").mesmoNome("FALSE")) {
+
+            mensagem(mPrefixo + " - Pedido Generico : Sim");
+            mensagem(mPrefixo + " - Base Generico : Nao");
+
+            mPosProcessador.errar("Type  " + eBaseType.getNome() + " : Nao e generica !");
 
 
-                                } else {
+        }
 
-                                    mPosProcessador.errar("Type Union " + mAST.getNome() + "." + eCampo.getNome() + " : Campo Duplicado !");
+        if (ok) {
 
-                                }
+            AST AST_PedidoGenerico = ePedidoBase.getBranch("GENERIC");
+            AST AST_BaseGenerico = eBaseType.getBranch("GENERIC");
 
+            if (AST_PedidoGenerico.getASTS().size() == AST_BaseGenerico.getASTS().size()) {
 
-                            }
+                AST AST_BaseCorpo = eBaseType.getBranch("BODY").copiar();
 
-                        } else {
-
-                            int pi = AST_BaseGenerico.getASTS().size();
-                            int ri = AST_PedidoGenerico.getASTS().size();
-
-                            mPosProcessador.errar("Type " + eBaseType.getNome() + " : Tipos genéricos nao correspondentes !");
-                            mPosProcessador.errar("Type " + eBaseType.getNome() + " : Precisa de " + pi + " Tipos genericos !");
-                            mPosProcessador.errar("Type " + eBaseType.getNome() + " : Recebeu " + ri + " Tipos genericos !");
-
-                        }
-
-                    }
-
+                if (AST_PedidoGenerico.getASTS().size() == 0) {
 
 
                 } else {
-                    mensagem("\t\t\t - Existe : Nao");
-                    mPosProcessador.errar("Base Type " + bAST.getNome() + " : Nao encontrada !");
+
+                    Alterador mAlterador = new Alterador();
+
+
+                    int i = 0;
+                    for (AST eSub : AST_PedidoGenerico.getASTS()) {
+
+                        AST sInit = AST_BaseGenerico.getASTS().get(i);
+
+                        mAlterador.adicionar(sInit.getNome(), eSub);
+
+                    }
+
+                    mAlterador.alterar(AST_BaseCorpo);
+
                 }
 
 
-            }
+                for (AST eCampo : AST_BaseCorpo.getASTS()) {
 
-            mAST.getBranch("EXTENDED").setNome("TYPE");
+                    if (!mCampos.contains(eCampo.getNome())) {
+
+                        mCampos.add(eCampo.getNome());
+
+                        eCorpo.getASTS().add(eCampo);
+
+
+                    } else {
+
+                        mPosProcessador.errar("Type Union " + eNomeType + "." + eCampo.getNome() + " : Campo Duplicado !");
+
+                    }
+
+
+                }
+
+            } else {
+
+                int pi = AST_BaseGenerico.getASTS().size();
+                int ri = AST_PedidoGenerico.getASTS().size();
+
+                mPosProcessador.errar("Type " + eNomeType + " : Tipos genéricos nao correspondentes !");
+                mPosProcessador.errar("Type " + eNomeType + " : Precisa de " + pi + " Tipos genericos !");
+                mPosProcessador.errar("Type " + eNomeType + " : Recebeu " + ri + " Tipos genericos !");
+
+            }
 
         }
 
+
+    }
+
+
+    public AST montarBase(String ePrefixo, ArrayList<String> mCompondo, AST eSuperAST, ProcurandoType vindoProcurandoStruct, SigmazRaiz mSigmazRaiz, ArrayList<SigmazPackage> mPacotes) {
+
+
+        SigmazType eSuper = new SigmazType(eSuperAST);
+
+        String mPrefixo = ePrefixo + "\t";
+
+        mensagem(mPrefixo + "------------------- MONTAGEM ----------------------");
+
+        mensagem(mPrefixo + " - TYPE : " + eSuper.getNome());
+        mensagem(mPrefixo + " - ORIGEM : " + vindoProcurandoStruct.getLocalOrigem());
+
+        if (vindoProcurandoStruct.isSigmaz()) {
+
+            SigmazType tmp = new SigmazType(eSuper.getLeitura().copiar());
+
+            unifiqueSigmaz(mPrefixo, tmp, mSigmazRaiz, mPacotes);
+
+            eSuperAST = tmp.getAlteravel();
+
+
+        } else if (vindoProcurandoStruct.isLocal()) {
+
+            mensagem(mPrefixo + " - LOCAL : " + vindoProcurandoStruct.getLocalNome());
+
+            SigmazType tmp = new SigmazType(eSuper.getLeitura().copiar());
+
+            unifiquePackage(mPrefixo, tmp, mSigmazRaiz, vindoProcurandoStruct.getLocalPackage(), mPacotes);
+
+            eSuperAST = tmp.getAlteravel();
+
+        } else if (vindoProcurandoStruct.isPackage()) {
+
+            mensagem(mPrefixo + " - PACKAGE : " + vindoProcurandoStruct.getPacote());
+
+            SigmazType tmp = new SigmazType(eSuper.getLeitura().copiar());
+
+            unifiquePackage(mPrefixo, tmp, mSigmazRaiz, vindoProcurandoStruct.getPackage(), mPacotes);
+
+            eSuperAST = tmp.getAlteravel();
+
+        }
+
+
+        mensagem(mPrefixo + " --------------------------------------------------");
+
+
+        return eSuperAST;
     }
 
 

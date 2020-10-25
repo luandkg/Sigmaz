@@ -66,9 +66,9 @@ public class OO {
     private ArrayList<Index_Function> mColGet;
     private ArrayList<Index_Function> mColGet_All;
     private ArrayList<Index_Function> mColGet_Restrict;
-    private ArrayList<Index_Action> mColSet;
-    private ArrayList<Index_Action> mColSet_All;
-    private ArrayList<Index_Action> mColSet_Restrict;
+
+    private ArrayList<Index_Action> mSetter;
+
 
 
     public OO(Escopo eEscopo, RunTime eRunTime) {
@@ -129,9 +129,8 @@ public class OO {
         mColGet = new ArrayList<Index_Function>();
         mColGet_All = new ArrayList<Index_Function>();
         mColGet_Restrict = new ArrayList<Index_Function>();
-        mColSet = new ArrayList<Index_Action>();
-        mColSet_All = new ArrayList<Index_Action>();
-        mColSet_Restrict = new ArrayList<Index_Action>();
+        mSetter = new ArrayList<Index_Action>();
+
 
 
     }
@@ -190,9 +189,9 @@ public class OO {
         mColGet.clear();
         mColGet_All.clear();
         mColGet_Restrict.clear();
-        mColSet.clear();
-        mColSet_All.clear();
-        mColSet_Restrict.clear();
+
+        mSetter.clear();
+
 
 
     }
@@ -305,7 +304,7 @@ public class OO {
             }
 
 
-        } else if (eAST.mesmoTipo("COL_GET")) {
+        } else if (eAST.mesmoTipo("GETTER")) {
 
             Index_Function mFunc = new Index_Function(mRunTime, mEscopo, eAST);
 
@@ -325,37 +324,23 @@ public class OO {
 
             }
 
-        } else if (eAST.mesmoTipo("COL_SET")) {
+        } else if (eAST.mesmoTipo("SETTER")) {
 
             Index_Action mFunc = new Index_Action(mRunTime, mEscopo, eAST);
 
-            mColSet.add(mFunc);
-
-
-            if (mFunc.isExplicit()) {
-
-
-            } else if (mFunc.isAll()) {
-
-                mColSet_All.add(mFunc);
-
-            } else if (mFunc.isRestrict()) {
-
-                mColSet_Restrict.add(mFunc);
-
-            }
-
+            mSetter.add(mFunc);
 
         } else if (eAST.mesmoTipo("CAST")) {
 
             mCasts.add(eAST);
         } else if (eAST.mesmoTipo("INIT")) {
 
+
             Index_Action mAct = new Index_Action(mRunTime, mEscopo, eAST);
 
             mInits.add(mAct);
 
-            if (mAct.isAll()) {
+            if (mAct.isInit()) {
                 mInits_All.add(mAct);
             }
 
@@ -367,8 +352,6 @@ public class OO {
 
             if (eAST.getBranch("EXTENDED").mesmoNome("STAGES")) {
                 mStages.add(eAST);
-
-                // AlocarStages(eAST, mEscopo);
             } else {
                 mStructs.add(eAST);
             }
@@ -616,17 +599,10 @@ public class OO {
         return mColGet_Restrict;
     }
 
-    public ArrayList<Index_Action> getColSet() {
-        return mColSet;
+    public ArrayList<Index_Action> getSetter() {
+        return mSetter;
     }
 
-    public ArrayList<Index_Action> getColSet_All() {
-        return mColSet_All;
-    }
-
-    public ArrayList<Index_Action> getColSet_Restrict() {
-        return mColSet_Restrict;
-    }
 
 
     public ArrayList<Index_Action> getInitsCompleto() {

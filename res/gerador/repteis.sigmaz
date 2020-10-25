@@ -1,32 +1,42 @@
 import "organismos.sigmaz";
+
 package Repteis {
+
 	refer Vida;
+
 	struct Reptil with Organismo {
-		init Reptil (eNome:string,eIdade:int) -> Organismo (eNome,eIdade) {} 
+
+		init Reptil (eEspecie:string,eNome:string,eIdade:int) -> Organismo (eEspecie,eNome,eIdade) {} 
+
 	}
 
 
+
 	struct Tartaruga with Reptil {
-		init Tartaruga (eNome:string,eIdade:int) -> Reptil (eNome,eIdade) { 
-			especie = "Tartaruga";
+
+		init Tartaruga (eNome:string,eIdade:int) -> Reptil ("Tartaruga",eNome,eIdade) { 
+
 		} 
 	}
 
 	struct Cobra with Reptil {
-		init Cobra (eNome:string,eIdade:int) -> Reptil (eNome,eIdade) { 
-			especie = "Cobra";
+
+		init Cobra (eNome:string,eIdade:int) -> Reptil ("Cobra",eNome,eIdade) { 
+
 		} 
 	}
 
 	struct Crocodilho with Reptil {
-		init Crocodilho (eNome:string,eIdade:int) -> Reptil (eNome,eIdade) { 
-			especie = "Crocodilho";
+
+		init Crocodilho (eNome:string,eIdade:int) -> Reptil ("Crocodilho",eNome,eIdade) { 
+
 		} 
 	}
 
 	struct Dinossauro with Reptil {
-		init Dinossauro (eNome:string,eIdade:int) -> Reptil (eNome,eIdade) { 
-			especie = "Dinossauro";
+
+		init Dinossauro (eNome:string,eIdade:int) -> Reptil ("Dinossauro",eNome,eIdade) { 
+
 		} 
 	}
 }

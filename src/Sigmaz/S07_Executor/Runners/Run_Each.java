@@ -71,45 +71,46 @@ public class Run_Each {
         mAST.init(mList, "<<ANY>>");
 
 
-       // System.out.println("Lista Tipo : " + mAST.getRetornoTipo());
-    //    System.out.println("Lista Tipo Ref : " + getTipo(mAST.getRetornoTipo()));
+      //  System.out.println("Lista Tipo : " + mAST.getRetornoTipo());
+      //  System.out.println("Lista Tipo Ref : " + getTipo(mAST.getRetornoTipo()));
      //   System.out.println("Lista Tipo Sub : " + getTipo(mAST.getRetornoTipo()));
+      //  System.out.println(ASTCorrente.getImpressao());
 
 
-       // String realTipagem = "";
+        // String realTipagem = "";
 
-      //  System.out.println("Item Tipo : " + mTipagem);
+        //  System.out.println("Item Tipo : " + mTipagem);
 
 
-       // String mIteradorTipo = "Iterador<>Iterador<" + mAST.getRetornoTipo() + ">";
+        // String mIteradorTipo = "Iterador<>Iterador<" + mAST.getRetornoTipo() + ">";
 
 
         if (getTipo(mAST.getRetornoTipo()).contentEquals("Lista")) {
 
 
-           // realTipagem = "Lista<>Lista<" + mTipagem + ">";
+            // realTipagem = "Lista<>Lista<" + mTipagem + ">";
             // realTipagem = mTipagem;
 
-          //  if (realTipagem.contentEquals((mAST.getRetornoTipo()))) {
+            //  if (realTipagem.contentEquals((mAST.getRetornoTipo()))) {
 
-          //  } else {
-          //      mRunTime.errar(mLocal, "O Tipo da variavel do Iterable nao e compativel : " + realTipagem + " vs " + (mAST.getRetornoTipo()));
-          //      return;
-         //   }
+            //  } else {
+            //      mRunTime.errar(mLocal, "O Tipo da variavel do Iterable nao e compativel : " + realTipagem + " vs " + (mAST.getRetornoTipo()));
+            //      return;
+            //   }
 
-          //  eTipado = "Lista";
+            //  eTipado = "Lista";
 
         } else if (getTipo(mAST.getRetornoTipo()).contentEquals("Vetor")) {
 
-          //  realTipagem = "Vetor<>Vetor<" + mTipagem + ">";
-          //  if (realTipagem.contentEquals((mAST.getRetornoTipo()))) {
+            //  realTipagem = "Vetor<>Vetor<" + mTipagem + ">";
+            //  if (realTipagem.contentEquals((mAST.getRetornoTipo()))) {
 
-           // } else {
+            // } else {
             //    mRunTime.errar(mLocal, "O Tipo da variavel do Iterable nao e compativel : " + realTipagem + " vs " + (mAST.getRetornoTipo()));
             //    return;
-           // }
+            // }
 
-           // eTipado = "Vetor";
+            // eTipado = "Vetor";
 
         } else {
             mRunTime.errar(mLocal, "O Iterable do Each precisa ser do tipo : Lista ou Vetor");
@@ -123,11 +124,10 @@ public class Run_Each {
         }
 
         // System.out.println("  EACH LISTA --> " + mAST.getRetornoTipo());
-       //  System.out.println("  EACH ITERADOR --> " + mIteradorTipo);
-       //  System.out.println("  EACH ITEM --> " + mTipagem);
+        //  System.out.println("  EACH ITERADOR --> " + mIteradorTipo);
+        //  System.out.println("  EACH ITEM --> " + mTipagem);
 
-       //  System.out.println("  ERROS = " + mRunTime.getErros().size());
-
+        //  System.out.println("  ERROS = " + mRunTime.getErros().size());
 
 
         if (mRunTime.getErros().size() > 0) {
@@ -136,10 +136,11 @@ public class Run_Each {
 
         AST_Implementador mImplementador = new AST_Implementador();
 
-        AST eAST = mImplementador.criar_InitGenerico("Iterador", mAST.getRetornoTipo());
+        AST eAST = mImplementador.criar_InitGenerico("Iterador", mAST.getRetornoTipo(), mTipagem);
+
         //AST eAST = mImplementador.criar_InitGenerico("Iterador",  mTipagem );
 
-       // System.out.println("Criar ITERADOR :: " + mTipagemInterador);
+        // System.out.println("Criar ITERADOR :: " + mTipagemInterador);
 
         AST eArgs = eAST.getBranch("ARGUMENTS");
 
@@ -157,12 +158,12 @@ public class Run_Each {
 
         mRun_Struct.init(eAST, EachEscopo);
 
-       // System.out.println("RUN STRUCT ITERADOR :: " + mRun_Struct.getNome());
-      //  System.out.println("RUN STRUCT ITERADOR TIPO :: " + mRun_Struct.getTipoCompleto());
+        // System.out.println("RUN STRUCT ITERADOR :: " + mRun_Struct.getNome());
+        //  System.out.println("RUN STRUCT ITERADOR TIPO :: " + mRun_Struct.getTipoCompleto());
 
-      //  System.out.println("ERROS :: " + mRunTime.getErros().size());
+        //  System.out.println("ERROS :: " + mRunTime.getErros().size());
 
-      //  System.out.println(eAST.getImpressao());
+        //  System.out.println(eAST.getImpressao());
 
 
         if (mRunTime.getErros().size() > 0) {
@@ -175,13 +176,13 @@ public class Run_Each {
 
         String eNome = mRun_Struct.getNome();
 
-       // String eTipoIterador = eTiparIterador + "<>Iterador<" +  mTipagem + ">";
+        // String eTipoIterador = eTiparIterador + "<>Iterador<" +  mTipagem + ">";
 
-       // EachEscopo.criarDefinicao(eNomeEach, eTiparIterador + "<>Iterador<" + eTipado + "<" + mTipagem + ">>", mRun_Struct.getNome());
+        // EachEscopo.criarDefinicao(eNomeEach, eTiparIterador + "<>Iterador<" + eTipado + "<" + mTipagem + ">>", mRun_Struct.getNome());
         EachEscopo.criarDefinicao(eNomeEach, mRun_Struct.getTipoCompleto(), mRun_Struct.getNome());
 
-       // System.out.println("Tipo Each Iteravel :: " + mTipagem);
-       // EachEscopo.getDebug().mapear_stack();
+        // System.out.println("Tipo Each Iteravel :: " + mTipagem);
+        // EachEscopo.getDebug().mapear_stack();
 
         AST mExecute = mImplementador.criar_ExecuteFunction(eNomeEach, "iniciar");
 

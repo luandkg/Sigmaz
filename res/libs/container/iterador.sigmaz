@@ -1,14 +1,15 @@
 package Iterador {
-	model Iteracao in ( G ) {
+
+	model Iteracao in ( G1 , G2 ) {
 		act iniciar ( );
 		act proximo ( );
 		func continuar ( ) : bool;
 		func getIndex ( ) : int;
-		func getValor ( ) : G;
+		func getValor ( ) : G2;
 	}
 
-	struct Iterador in ( T ) at Iteracao >> ( T ) {
-		init Iterador ( eLista : T ) {
+	struct Iterador in ( T1 , T2 ) at Iteracao >> ( T1 , T2 ) {
+		init Iterador ( eLista : T1 ) {
 			mLista = eLista;
 			mIndex = 0;
 			mTamanho = 0;
@@ -16,7 +17,7 @@ package Iterador {
 			mTerminou = false;
 		}
 		restrict : 
-		define mLista : T = null;
+		define mLista : T1 = null;
 		define mIndex : int = 0;
 		define mTamanho : int = 0;
 		define mIniciado : bool = false;
@@ -65,7 +66,7 @@ package Iterador {
 			}
 			return mIndex;
 		}
-		func getValor ( ) : T {
+		func getValor ( ) : T2 {
 			def ii : int = getIndex ( );
 			return mLista.getValor ( ii );
 		}

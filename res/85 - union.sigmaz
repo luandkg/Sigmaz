@@ -17,11 +17,75 @@ type Meshante in ( T ) {
 	define c : T = null;
 	define d : T = null;
 }
+
 type QuadMesh union Quad :: Mesh;
 type QuadranteMesh union Quadrante >> ( int ) :: Mesh;
 type QuadranteMesh_GS in ( A ) union Quadrante >> ( A ) :: Mesh;
 type QuaMeshante_GS in ( A ) union Quad :: Meshante >> ( A );
 type QuadranteMeshante in ( T , S ) union Quadrante >> ( T ) :: Meshante >> ( S );
+
+    type Reptil {
+        mockiz Grupo : string = "REPTIL";
+    }
+
+package Organismos {
+
+    type Mamifero {
+        mockiz Grupo : string = "MAMIFERO";
+    }
+
+    type Animal {
+        define Especie : string = "";
+        define Idade : int = 0;
+    }
+
+    type Gato union Animal :: Mamifero;
+    type Cachorro union Animal :: Mamifero;
+
+}
+
+package Deserto {
+
+    refer Organismos;
+
+    type Crocodilo union Animal :: Reptil;
+    type Crocodilo_Grande union Crocodilo :: GrandePorte;
+
+    type GatoGrande union Gato :: GrandePorte;
+
+    type GrandePorte {
+        define Porte : int = 3;
+    }
+
+}
+
+
+type Forma {
+    define Formato : string = "";
+}
+
+type Regular {
+    mockiz isRegular : bool = true;
+}
+
+type Irregular {
+    mockiz isRegular : bool = false;
+}
+
+type Mais {
+    mockiz mais : int = 3;
+}
+
+type Quadrado union Forma :: Regular;
+type Circulo union Forma :: Regular;
+type Poligono union Forma :: Irregular;
+
+type PoligonoMais union Poligono :: Mais;
+
+
+
+
+
 call iniciar -> {
 	def QuadMesh_1 : QuadMesh = start QuadMesh {
 		a = 1;

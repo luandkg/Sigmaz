@@ -8,6 +8,7 @@ act inicio ( ) {
 }
 
 struct Item in ( T ) {
+    all:
 	define A : T = null;
 	func getA ( ) : T {
 		def mA : T = A;

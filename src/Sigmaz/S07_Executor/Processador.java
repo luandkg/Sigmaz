@@ -124,6 +124,22 @@ public class Processador {
 
     }
 
+    public boolean isLogico(String eRegistrador) {
+        return mLogicos.contains(eRegistrador);
+    }
+
+    public boolean isInteiro(String eRegistrador) {
+        return mInteiros.contains(eRegistrador);
+    }
+
+    public boolean isReal(String eRegistrador) {
+        return mReais.contains(eRegistrador);
+    }
+
+    public boolean isTexto(String eRegistrador) {
+        return mTextos.contains(eRegistrador);
+    }
+
     public void apontar(String eRegistrador) {
 
         if (mRegistradores.contains(eRegistrador)) {
@@ -429,11 +445,11 @@ public class Processador {
 
             if (eRegistrador.contentEquals("R13")) {
                 mR13 = eConteudo;
-            }else if (eRegistrador.contentEquals("R14")) {
+            } else if (eRegistrador.contentEquals("R14")) {
                 mR14 = eConteudo;
-            }else if (eRegistrador.contentEquals("R15")) {
+            } else if (eRegistrador.contentEquals("R15")) {
                 mR15 = eConteudo;
-            }else if (eRegistrador.contentEquals("R16")) {
+            } else if (eRegistrador.contentEquals("R16")) {
                 mR16 = eConteudo;
             } else {
                 mRunTime.errar(mLocal, "O registrador " + eRegistrador + " nao pode receber esse conteudo : " + eConteudo);
@@ -460,8 +476,6 @@ public class Processador {
             mRunTime.errar(mLocal, "O registrador " + eRegistrador + " nao pode receber conteudo do tipo TYPE : " + eConteudo);
         }
     }
-
-
 
 
     public Registrado getRegistradorApontado() {
@@ -542,8 +556,6 @@ public class Processador {
                 if (eRegistrador.contentEquals("R17")) {
                     mRegistrado.atribuir(String.valueOf(mR17), "Tipo");
                 }
-
-
 
 
             } else {

@@ -15,8 +15,8 @@ public class AppSigmaz {
     public static void main(String[] args) {
 
 
-          //Gerador G = new Gerador();
-       // G.gerarPrint("res/libs/terminal.sigmaz");
+        //Gerador G = new Gerador();
+        // G.gerarPrint("res/libs/terminal.sigmaz");
 
         AUTO();
 
@@ -42,9 +42,9 @@ public class AppSigmaz {
 
         String mLocalGerador = "res/gerador/";
 
-        int ARQUIVO = 82;
+        int ARQUIVO = 92;
 
-        switch (Fases.COMPILAR_E_EXECUTAR_DETALHADO) {
+        switch (Fases.TESTES) {
 
             case MONTAR_PLANO_COMPILACAO -> AppUtils.PLANO_COMPILACAO(ARQUIVO, mArquivos, mLOCAL_PLANOS, mLocalLibs);
 

@@ -170,7 +170,7 @@ public class Run_This {
 
             Run_Struct rs = mRunTime.getHeap().getRun_Struct(mItem.getValor(mRunTime, mEscopo));
 
-            mItem = rs.init_ColGet_This(ASTCorrente.getNome(), ASTCorrente, mEscopo, eRetorno);
+            mItem = rs.init_Getter_This(ASTCorrente.getNome(), ASTCorrente, mEscopo, eRetorno);
 
             if (ASTCorrente.existeBranch("INTERNAL")) {
                 Run_Internal mRun_Internal = new Run_Internal(mRunTime);

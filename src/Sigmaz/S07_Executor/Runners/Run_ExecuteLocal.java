@@ -3,6 +3,7 @@ package Sigmaz.S07_Executor.Runners;
 import Sigmaz.S00_Utilitarios.Utilitario;
 import Sigmaz.S07_Executor.Escopo;
 import Sigmaz.S07_Executor.Indexador.Index_Action;
+import Sigmaz.S07_Executor.Indexador.Index_Function;
 import Sigmaz.S07_Executor.Item;
 import Sigmaz.S07_Executor.RunTime;
 
@@ -52,7 +53,7 @@ public class Run_ExecuteLocal {
 
 
 
-                Index_Action mIndex_Function = new Index_Action(mRunTime, mEscopo, eLocal);
+                Index_Function mIndex_Function = new Index_Function(mRunTime, mEscopo, eLocal);
                 mIndex_Function.setNome("LOCAL");
 
                 mIndex_Function.resolverTipagem(mEscopo.getRefers());
@@ -65,7 +66,7 @@ public class Run_ExecuteLocal {
                         Run_Escopo mRun_Escopo = new Run_Escopo();
 
                         executada = true;
-                        return mRun_Escopo.executar_ActionComRetorno(mRunTime, mEscopo, mIndex_Function, mArgumentos, "<<ANY>>");
+                        return mRun_Escopo.executar_ComRetorno(mRunTime, mEscopo, mIndex_Function, mArgumentos, "<<ANY>>");
 
                     }
 
@@ -133,7 +134,7 @@ public class Run_ExecuteLocal {
                     executada = true;
                     Run_Escopo mRun_Escopo = new Run_Escopo();
 
-                    mRun_Escopo.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
+                    mRun_Escopo.executar_SemRetorno(mRunTime, mEscopo, mIndex_Function, mArgumentos);
                     break;
 
                 }

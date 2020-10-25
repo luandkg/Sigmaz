@@ -23,6 +23,10 @@ public class Documento {
         }
     }
 
+    public void pularLinha() {
+        mConteudo += "\n";
+    }
+
     public void adicionarLinha(int mTab, String eConteudo) {
 
         String sTabs = "";

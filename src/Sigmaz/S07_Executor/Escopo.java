@@ -132,6 +132,12 @@ public class Escopo {
 
     public void adicionarRefer(String eRefer) {
         mRefers.add(eRefer);
+
+
+
+
+
+
     }
 
     public ArrayList<String> getRefers() {

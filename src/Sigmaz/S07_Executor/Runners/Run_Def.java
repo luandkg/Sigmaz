@@ -31,41 +31,30 @@ public class Run_Def {
 
         String mTipagem = mRun_GetType.getTipagemAntes(eAST.getBranch("TYPE"));
 
-      //  System.out.println("Def " + eNome + " : " + mTipagem);
-
-       // mRunTime.debugTodosOsTipos(mEscopo);
-
 
         if (!mRun_GetType.estaEmPacotado(mTipagem)) {
 
-            mTipagem=mRun_GetType.getTipagem(eAST.getBranch("TYPE"));
-
-           // System.out.println("Forcar Tipagem !");
+            mTipagem = mRun_GetType.getTipagem(eAST.getBranch("TYPE"));
 
         }
 
 
-       // System.out.println("Def " + eNome + " : " + mTipagem);
-
-
-        AST mValor = eAST.getBranch("VALUE");
+     //   System.out.println(" -->> Def : " + eAST.getNome() + " : " + mTipagem);
 
 
         Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mEscopo);
-        Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), mValor, mTipagem, mTipagem);
+        Run_Value mAST = mRun_Valoramento.init(eAST.getNome(), eAST.getBranch("VALUE"), mTipagem, mTipagem);
 
 
         if (mRunTime.getErros().size() > 0) {
             return;
         }
 
+      //  System.out.println("      Def Retorno : " + eAST.getNome() + " : " + mTipagem + " Retornou : " + mAST.getRetornoTipo());
 
         if (mAST.getRetornoTipo().contentEquals("<<ANY>>")) {
             mAST.setRetornoTipo(mTipagem);
         }
-
-
-        //   System.out.println("Def : " + eAST.getNome() + " : " + mAST.getRetornoTipo() + " -->> PRIMITIVO : " + mAST.getIsPrimitivo());
 
 
         if (mAST.getIsNulo()) {

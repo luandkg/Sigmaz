@@ -26,7 +26,7 @@ func getChar ( a : string , b : int ) : string {
 	}
 	return reg @ R14;
 }
-func string_append ( a : string , b : string ) : int {
+func string_append ( a : string , b : string ) : string {
 	reg @ R13 -> a;
 	reg @ R14 -> b;
 	PROC -> {
@@ -92,3 +92,148 @@ func string_append ( a : string , b : string , c : string , d : string , e : str
 	}
 	return reg @ R13;
 }
+
+
+
+
+operator && ( a : string , b : string ) : string {
+	reg @ R13 -> a;
+	reg @ R14 -> b;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
+}
+
+operator && ( a : string , b : int ) : string {
+
+	reg @ R5 -> b;
+	PROC -> {
+		SET R13;
+		MOV "";
+		INT_STRING R5;
+	}
+
+	def b1 : string = reg @ R13;
+
+
+	reg @ R13 -> a;
+	reg @ R14 -> b1;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
+}
+
+operator && ( a : int , b : string ) : string {
+
+	reg @ R5 -> a;
+	PROC -> {
+		SET R13;
+		MOV "";
+		INT_STRING R5;
+	}
+
+	def a1 : string = reg @ R13;
+
+
+	reg @ R13 -> a1;
+	reg @ R14 -> b;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
+}
+
+
+
+
+operator && ( a : string , b : num ) : string {
+
+	reg @ R9 -> b;
+	PROC -> {
+		SET R13;
+		MOV "";
+		NUM_STRING R9;
+	}
+
+	def b1 : string = reg @ R13;
+
+
+	reg @ R13 -> a;
+	reg @ R14 -> b1;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
+}
+
+
+operator && ( a : num , b : string ) : string {
+
+	reg @ R9 -> a;
+	PROC -> {
+		SET R13;
+		MOV "";
+		NUM_STRING R9;
+	}
+
+	def a2 : string = reg @ R13;
+
+
+	reg @ R13 -> a2;
+	reg @ R14 -> b;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
+}
+
+
+operator && ( a : string , b : bool ) : string {
+
+	reg @ R1 -> b;
+	PROC -> {
+		SET R13;
+		MOV "";
+		BOOL_STRING R1;
+	}
+
+	def b1 : string = reg @ R13;
+
+
+	reg @ R13 -> a;
+	reg @ R14 -> b1;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
+}
+
+operator && ( a : bool , b : string ) : string {
+
+	reg @R1 -> a;
+	PROC -> {
+		SET R13;
+		MOV "";
+		BOOL_STRING R1;
+	}
+
+	def a2 : string = reg @ R13;
+
+
+	reg @ R13 -> a2;
+	reg @ R14 -> b;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
+}
+

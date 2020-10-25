@@ -9,12 +9,15 @@ act vamos_herdar_com_init ( ) {
 }
 
 struct Qualidade {
-	define qualidade : string = "";
-	define idade : int = 0;
+
 	init Qualidade ( a : string , b2 : int ) {
 		qualidade = a;
 		idade = b2;
 	}
+	all:
+	define qualidade : string = "";
+	define idade : int = 0;
+
 
 	act setQualidade ( a : string ) {
 		qualidade = a;
@@ -34,6 +37,7 @@ struct Animal with Qualidade {
 		
 	}
 
+    all:
 	act mostrar ( ) {
 		println ( " --- ANIMAL --- ");
 		println ( "");

@@ -27,9 +27,12 @@ call iniciar -> {
 	def mamifero_2 : Mamifero = Lobinho_Fuc;
 	def Tartaruga_Carlos : Tartaruga = init Tartaruga('Carlos',112);
 	def reptil_1 : Reptil = Tartaruga_Carlos;
+	gato_envelhecer(Gatinho_Ana);
+	def Gatinho_Ana_idade2 : int = Gatinho_Ana.getIdade();
 
 	DEBUG -> LOCAL :: STACK;
 	DEBUG -> REGRESSIVE :: STACK;
+	DEBUG -> GLOBAL :: INSTANCES;
 }
 
 act s_1 ( ) { } 
@@ -61,3 +64,8 @@ func p_6 ( a : int ) : int { return 12 ++ ( 6 ++ a );  }
 func p_7 ( a : int ) : int { return 12 ++ ( 7 ++ a );  } 
 func p_8 ( a : int ) : int { return 12 ++ ( 8 ++ a );  } 
 func p_9 ( a : int ) : int { return 12 ++ ( 9 ++ a );  } 
+
+act gato_envelhecer ( a : Gato )  { 
+	a.envelhecer(1);
+	DEBUG -> GLOBAL :: INSTANCES;
+}

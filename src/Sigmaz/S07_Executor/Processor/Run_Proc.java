@@ -96,10 +96,6 @@ public class Run_Proc {
 
                 instrucao_PRINT(mAST);
 
-          //  } else if (mAST.mesmoTipo("STAGE")) {
-
-            //    instrucao_STAGE(mAST);
-
 
             } else if (mAST.mesmoTipo("PROC")) {
 
@@ -1134,7 +1130,7 @@ public class Run_Proc {
             } else if (eAST.mesmoNome_SCS("CHANGE_LINE")) {
 
                 if (mRunTime.getVisibilidade()){
-                    System.out.println("\n");
+                    System.out.print("\n");
                 }
 
             } else if (eAST.mesmoNome_SCS("CHRONOS_DAY")) {
@@ -1143,12 +1139,6 @@ public class Run_Proc {
                 Calendar c = Calendar.getInstance();
 
                 int dia = c.get(Calendar.DAY_OF_MONTH);
-                int mes = c.get(Calendar.MONTH) + 1;
-                int ano = c.get(Calendar.YEAR);
-
-                int hora = c.get(Calendar.HOUR);
-                int minutos = c.get(Calendar.MINUTE);
-                int segundos = c.get(Calendar.SECOND);
 
 
                 Registrado mReg = new Registrado();
@@ -1160,14 +1150,7 @@ public class Run_Proc {
 
                 Calendar c = Calendar.getInstance();
 
-                int dia = c.get(Calendar.DAY_OF_MONTH);
                 int mes = c.get(Calendar.MONTH) + 1;
-                int ano = c.get(Calendar.YEAR);
-
-                int hora = c.get(Calendar.HOUR);
-                int minutos = c.get(Calendar.MINUTE);
-                int segundos = c.get(Calendar.SECOND);
-
 
                 Registrado mReg = new Registrado();
                 mReg.atribuir(String.valueOf(mes), "Inteiro");
@@ -1178,13 +1161,8 @@ public class Run_Proc {
 
                 Calendar c = Calendar.getInstance();
 
-                int dia = c.get(Calendar.DAY_OF_MONTH);
-                int mes = c.get(Calendar.MONTH) + 1;
-                int ano = c.get(Calendar.YEAR);
+               int ano = c.get(Calendar.YEAR);
 
-                int hora = c.get(Calendar.HOUR);
-                int minutos = c.get(Calendar.MINUTE);
-                int segundos = c.get(Calendar.SECOND);
 
 
                 Registrado mReg = new Registrado();
@@ -1195,13 +1173,7 @@ public class Run_Proc {
 
                 Calendar c = Calendar.getInstance();
 
-                int dia = c.get(Calendar.DAY_OF_MONTH);
-                int mes = c.get(Calendar.MONTH) + 1;
-                int ano = c.get(Calendar.YEAR);
-
                 int hora = c.get(Calendar.HOUR);
-                int minutos = c.get(Calendar.MINUTE);
-                int segundos = c.get(Calendar.SECOND);
 
 
                 Registrado mReg = new Registrado();
@@ -1212,13 +1184,7 @@ public class Run_Proc {
 
                 Calendar c = Calendar.getInstance();
 
-                int dia = c.get(Calendar.DAY_OF_MONTH);
-                int mes = c.get(Calendar.MONTH) + 1;
-                int ano = c.get(Calendar.YEAR);
-
-                int hora = c.get(Calendar.HOUR);
-                int minutos = c.get(Calendar.MINUTE);
-                int segundos = c.get(Calendar.SECOND);
+              int minutos = c.get(Calendar.MINUTE);
 
 
                 Registrado mReg = new Registrado();
@@ -1229,13 +1195,7 @@ public class Run_Proc {
 
                 Calendar c = Calendar.getInstance();
 
-                int dia = c.get(Calendar.DAY_OF_MONTH);
-                int mes = c.get(Calendar.MONTH) + 1;
-                int ano = c.get(Calendar.YEAR);
-
-                int hora = c.get(Calendar.HOUR);
-                int minutos = c.get(Calendar.MINUTE);
-                int segundos = c.get(Calendar.SECOND);
+              int segundos = c.get(Calendar.SECOND);
 
 
                 Registrado mReg = new Registrado();

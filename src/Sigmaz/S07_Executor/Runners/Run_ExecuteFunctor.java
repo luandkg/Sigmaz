@@ -113,7 +113,7 @@ public class Run_ExecuteFunctor {
             if (contagem == mArgumentos.size()) {
                 Run_Escopo mRun_Escopo = new Run_Escopo();
 
-             return   mRun_Escopo.executar_Function(mRunTime, mEscopo, mIndex_Function, mArgumentos,eRetorno);
+             return   mRun_Escopo.executar_ComRetorno(mRunTime, mEscopo, mIndex_Function, mArgumentos,eRetorno);
 
             } else {
 

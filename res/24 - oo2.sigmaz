@@ -1,4 +1,6 @@
 struct Sacola {
+
+    all:
 	define itens : int = 0;
 	act aumentar ( g : int ) {
 		itens = somar_inteiro ( itens , g );

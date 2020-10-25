@@ -1,11 +1,13 @@
 call iniciar -> pular ( );
 struct Pessoa {
-	define nome : string;
-	define idade : int;
-	func getNome ( ) : string {
-		nome = "Luan Alves";
-		return nome;
-	}
+
+    all:
+	    define nome : string;
+	    define idade : int;
+	    func getNome ( ) : string {
+		    nome = "Luan Alves";
+		    return nome;
+	    }
 
 	act mostrar ( ) {
 	DEBUG -> REGRESSIVE :: ALL;

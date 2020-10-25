@@ -7,10 +7,13 @@ act inicializando ( ) {
 }
 
 struct Animal {
-	define idade : int = -1;
+
 	init Animal ( eIdade : int ) {
 		idade = eIdade;
 	}
+	all:
+	define idade : int = -1;
+
 
 	act setIdade ( a : int ) {
 		idade = a;

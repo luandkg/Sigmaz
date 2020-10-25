@@ -1,4 +1,103 @@
 call iniciar -> inicio ( );
+
+
+refer Delicia;
+
+
+act inicio ( ) {
+	def ls : Lista >> ( string ) = init Lista ( ) >> ( string );
+	def lsi : Iterador >> ( Lista >> ( string ) , string ) = init Iterador ( ls ) >> ( Lista >> ( string ) , string );
+	def ig : Lista >> ( int ) = init Lista ( ) >> ( int );
+	ig.adicionar ( 10 );
+	ig.adicionar ( 20 );
+	def a : int = ig.getQuantidade ( );
+	ig.adicionar ( 30 );
+	ig.adicionar ( 40 );
+	ig.adicionar ( 50 );
+	ig.adicionar ( 60 );
+
+
+	def b : int = ig.getQuantidade ( );
+	println ( "Quantidade : ", ig.getQuantidade ( ) );
+
+	#ig.listar ( );
+	println ( " DEBUG  ", 0 );
+	def iterando : Iterador >> ( Lista >> ( int ) ,int ) = init Iterador ( ig ) >> ( Lista >> ( int ) , int );
+	iterando.iniciar ( );
+	println ( " DEBUG  ", 1 );
+	while ( iterando.continuar ( ) ) -> {
+		println ( "-> ", iterando.getValor ( ) );
+		iterando.proximo ( );
+	}
+	println ( " DEBUG  ", 2 );
+	println ( "Quantidade : ", ig.getQuantidade ( ) );
+	println ( "Remover Item : ", 10 );
+	ig.remover ( 10 );
+	ig.listar ( );
+	println ( "Quantidade  : ", ig.getQuantidade ( ) );
+	println ( "Remover Item : ", 40 );
+	ig.remover ( 40 );
+	ig.listar ( );
+	println ( "Quantidade : ", ig.getQuantidade ( ) );
+	println ( "Remover Item : ", 60 );
+	ig.remover ( 60 );
+	ig.listar ( );
+	println ( "Quantidade : ", ig.getQuantidade ( ) );
+	println ( "Remover Item : ", 15 );
+	ig.remover ( 15 );
+	ig.listar ( );
+	println ( "Quantidade # : ", ig.getQuantidade ( ) );
+	println ( "Adicionar Item : ", 70 );
+	ig.adicionar ( 70 );
+
+	#ig.listar ( );
+	iterando.iniciar ( );
+	while ( iterando.continuar ( ) ) -> {
+		println ( "-> ", iterando.getValor ( ) );
+		iterando.proximo ( );
+	}
+	println ( "Quantidade : ", ig.getQuantidade ( ) );
+	ig.remover ( 50 );
+	ig.remover ( 20 );
+	ig.adicionar ( 15 );
+	ig.remover ( 70 );
+	ig.remover ( 15 );
+	ig.remover ( 30 );
+	ig.remover ( 15 );
+	ig.listar ( );
+	println ( "Quantidade : ", ig.getQuantidade ( ) );
+	ig.adicionar ( 5 );
+	ig.adicionar ( 2 );
+	ig.adicionar ( 3 );
+	ig.listar ( );
+	println ( "Quantidade : ", ig.getQuantidade ( ) );
+	ig.limpar ( );
+	ig.listar ( );
+	println ( "Quantidade : ", ig.getQuantidade ( ) );
+	ig.adicionar ( 1000 );
+	ig.listar ( );
+	println ( "Quantidade : ", ig.getQuantidade ( ) );
+	ig.adicionar ( 40 );
+	ig.adicionar ( 12 );
+	ig.adicionar ( 60 );
+	ig.adicionar ( 87 );
+	ig.adicionar ( 90 );
+	def iterar : Iterador >> ( Lista >> ( int ) , int ) = init Iterador ( ig ) >> ( Lista >> ( int ) , int );
+	iterar.iniciar ( );
+	while ( iterar.continuar ( ) ) -> {
+		println ( "-> ", iterar.getValor ( ) );
+		iterar.proximo ( );
+	}
+	def Frutas : Lista >> ( Fruta ) = init Lista ( ) >> ( Fruta );
+	DEBUG -> LOCAL :: STACK;
+
+	Frutas.adicionar ( init Fruta ( ) );
+
+
+}
+
+
+
 act println ( a : string , b : int ) {
 	reg @ R13 -> a;
 	reg @ R5 -> b;
@@ -26,13 +125,13 @@ act println ( a : string , b : bool ) {
 	}
 	
 }
+
 func isNull ( ObjetoNulo : any ) : bool {
 	reg @ R0 -> ObjetoNulo;
 	return reg @ R0;
 }
-func int ( a : int ) : int {
-	return a;
-}
+
+
 operator ++ ( a : int , b : int ) : int {
 	reg @ R5 -> a;
 	reg @ R6 -> b;
@@ -224,14 +323,6 @@ operator !! ( a : bool , b : bool ) : bool {
 	return reg @ R3;
 }
 
-act trash ( a : any ) {
-	def existe : bool = false;
-	DEBUG -> REGRESSIVE :: ALL;
-	if ( existe ) -> {
-		invoke __COMPILER__ -> OBJECT ( a ) :: REMOVE;
-	}
-	
-}
 
 struct Lista in ( T ) {
 	restrict : 
@@ -435,7 +526,7 @@ struct Item in ( T ) {
 	
 }
 
-struct Iterador in ( T ) {
+struct Iterador in ( T , T2) {
 	init Iterador ( eLista : T ) {
 		mLista = eLista;
 		mIndex = 0;
@@ -494,109 +585,10 @@ struct Iterador in ( T ) {
 		}
 		return mIndex;
 	}
-	func getValor ( ) : T {
+	func getValor ( ) : T2 {
 		def ii : int = getIndex ( );
 		return mLista.getValor ( ii );
 	}
-	
-}
-refer Delicia;
-act inicio ( ) {
-	def ls : Lista >> ( string ) = init Lista ( ) >> ( string );
-	def lsi : Iterador >> ( Lista >> ( string ) ) = init Iterador ( ls ) >> ( Lista >> ( string ) );
-	def ig : Lista >> ( int ) = init Lista ( ) >> ( int );
-	ig.adicionar ( 10 );
-	ig.adicionar ( 20 );
-	def a : int = ig.getQuantidade ( );
-	ig.adicionar ( 30 );
-	ig.adicionar ( 40 );
-	ig.adicionar ( 50 );
-	ig.adicionar ( 60 );
-
-
-
-
-
-
-	def b : int = ig.getQuantidade ( );
-	println ( "Quantidade : ", ig.getQuantidade ( ) );
-	
-	#ig.listar ( );
-	println ( " DEBUG  ", 0 );
-	def iterando : Iterador >> ( Lista >> ( int ) ) = init Iterador ( ig ) >> ( Lista >> ( int ) );
-	iterando.iniciar ( );
-	println ( " DEBUG  ", 1 );
-	while ( iterando.continuar ( ) ) -> {
-		println ( "-> ", iterando.getValor ( ) );
-		iterando.proximo ( );
-	}
-	println ( " DEBUG  ", 2 );
-	println ( "Quantidade : ", ig.getQuantidade ( ) );
-	println ( "Remover Item : ", 10 );
-	ig.remover ( 10 );
-	ig.listar ( );
-	println ( "Quantidade  : ", ig.getQuantidade ( ) );
-	println ( "Remover Item : ", 40 );
-	ig.remover ( 40 );
-	ig.listar ( );
-	println ( "Quantidade : ", ig.getQuantidade ( ) );
-	println ( "Remover Item : ", 60 );
-	ig.remover ( 60 );
-	ig.listar ( );
-	println ( "Quantidade : ", ig.getQuantidade ( ) );
-	println ( "Remover Item : ", 15 );
-	ig.remover ( 15 );
-	ig.listar ( );
-	println ( "Quantidade # : ", ig.getQuantidade ( ) );
-	println ( "Adicionar Item : ", 70 );
-	ig.adicionar ( 70 );
-	
-	#ig.listar ( );
-	iterando.iniciar ( );
-	while ( iterando.continuar ( ) ) -> {
-		println ( "-> ", iterando.getValor ( ) );
-		iterando.proximo ( );
-	}
-	println ( "Quantidade : ", ig.getQuantidade ( ) );
-	ig.remover ( 50 );
-	ig.remover ( 20 );
-	ig.adicionar ( 15 );
-	ig.remover ( 70 );
-	ig.remover ( 15 );
-	ig.remover ( 30 );
-	ig.remover ( 15 );
-	ig.listar ( );
-	println ( "Quantidade : ", ig.getQuantidade ( ) );
-	ig.adicionar ( 5 );
-	ig.adicionar ( 2 );
-	ig.adicionar ( 3 );
-	ig.listar ( );
-	println ( "Quantidade : ", ig.getQuantidade ( ) );
-	ig.limpar ( );
-	ig.listar ( );
-	println ( "Quantidade : ", ig.getQuantidade ( ) );
-	ig.adicionar ( 1000 );
-	ig.listar ( );
-	println ( "Quantidade : ", ig.getQuantidade ( ) );
-	ig.adicionar ( 40 );
-	ig.adicionar ( 12 );
-	ig.adicionar ( 60 );
-	ig.adicionar ( 87 );
-	ig.adicionar ( 90 );
-	def iterar : Iterador >> ( Lista >> ( int ) ) = init Iterador ( ig ) >> ( Lista >> ( int ) );
-	iterar.iniciar ( );
-	while ( iterar.continuar ( ) ) -> {
-		println ( "-> ", iterar.getValor ( ) );
-		iterar.proximo ( );
-	}
-	def Frutas : Lista >> ( Fruta ) = init Lista ( ) >> ( Fruta );
-	DEBUG -> LOCAL :: STACK;
-
-	Frutas.adicionar ( init Fruta ( ) );
-	
-	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-	
-	#invoke __COMPILER__ -> HEAP ( ) :: ALL;
 	
 }
 package Delicia {

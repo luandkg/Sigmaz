@@ -51,12 +51,15 @@ package Caixas {
 package Linhas {
 	refer Caixas;
 	struct Linha_Branca {
+
+			init Linha_Branca ( ) {
+    			Valor = Vermelha -> VALOR;
+    	DEBUG -> REGRESSIVE :: ALL;
+    		}
+
+    		all:
 		define Valor : int = 0;
-		init Linha_Branca ( ) {
-			Valor = Vermelha -> VALOR;
-	DEBUG -> REGRESSIVE :: ALL;
-		}
-		
+
 	}
 	
 }

@@ -132,7 +132,7 @@ public class Run_ExecuteAuto {
 
                 Run_Escopo mRun_Escopo = new Run_Escopo();
 
-                mRun_Escopo.executar_Action(mRunTime, mEscopo, mIndex_Function, mArgumentos);
+                mRun_Escopo.executar_SemRetorno(mRunTime, mEscopo, mIndex_Function, mArgumentos);
 
             }else{
 

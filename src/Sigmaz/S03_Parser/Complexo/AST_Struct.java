@@ -1,9 +1,12 @@
 package Sigmaz.S03_Parser.Complexo;
 
+import Sigmaz.S03_Parser.AST_Recebimentos;
 import Sigmaz.S03_Parser.Alocador.AST_Alocador;
 import Sigmaz.S03_Parser.Alocador.AST_Def;
 import Sigmaz.S03_Parser.Bloco.*;
-import Sigmaz.S03_Parser.Bloco.AST_Col;
+import Sigmaz.S03_Parser.Bloco.AST_Acessadores;
+import Sigmaz.S03_Parser.Fluxo.AST_Corpo;
+import Sigmaz.S03_Parser.Organizador.AST_Argumentos;
 import Sigmaz.S03_Parser.Organizador.AST_Generic;
 import Sigmaz.S03_Parser.Parser;
 import Sigmaz.S02_Lexer.Token;
@@ -42,6 +45,10 @@ public class AST_Struct {
             AST AST_With = AST_Corrente.criarBranch("WITH");
             AST_With.setValor("FALSE");
 
+            AST AST_WithGeneric = AST_With.criarBranch("GENERIC");
+            AST_WithGeneric.setValor("FALSE");
+
+
             AST AST_Model = AST_Corrente.criarBranch("MODEL");
             AST_Model.setValor("FALSE");
 
@@ -57,6 +64,10 @@ public class AST_Struct {
 
 
             AST AST_Inits = AST_Corrente.criarBranch("INITS");
+
+            AST AST_Corpo = AST_Corrente.criarBranch("BODY");
+
+            AST AST_Destruct = AST_Corrente.criarBranch("DESTRUCT");
 
 
             Token TokenFuturo = mCompiler.getTokenFuturo();
@@ -86,6 +97,18 @@ public class AST_Struct {
                     AST_With.setValor("TRUE");
 
                 }
+
+                Token Futuro2 = mCompiler.getTokenFuturo();
+                if (Futuro2.getTipo() == TokenTipo.ENVIAR) {
+
+                    AST_WithGeneric.setValor("TRUE");
+
+                    AST_Generic mg = new AST_Generic(mCompiler);
+                    mg.init(AST_WithGeneric);
+
+
+                }
+
             }
 
             Token Futuro_AT = mCompiler.getTokenFuturo();
@@ -120,7 +143,7 @@ public class AST_Struct {
                 }
             }
 
-            corpo(AST_Corrente, AST_Inits, TokenC.getConteudo());
+            corpo(AST_Corpo, AST_Inits, AST_Destruct, TokenC.getConteudo());
 
 
             if (AST_Inits.getASTS().size() == 0) {
@@ -148,12 +171,89 @@ public class AST_Struct {
     }
 
 
-    public void corpo(AST AST_Corrente, AST AST_Inits, String NomeStruct) {
+    public boolean podeTodos(String VISIBILIDADE) {
+
+        boolean ret = false;
+
+        if (VISIBILIDADE.contentEquals("ALL")) {
+            ret = true;
+        } else if (VISIBILIDADE.contentEquals("RESTRICT")) {
+            ret = true;
+        } else if (VISIBILIDADE.contentEquals("EXPLICIT")) {
+            ret = true;
+        } else if (VISIBILIDADE.contentEquals("IMPLICIT")) {
+            ret = true;
+        } else if (VISIBILIDADE.contentEquals("ALLOW")) {
+            ret = true;
+        }
+
+        return ret;
+
+    }
+
+    public boolean escopo_ForaARIE(String VISIBILIDADE) {
+
+        boolean ret = true;
+
+        if (VISIBILIDADE.contentEquals("ALL")) {
+            ret = false;
+        } else if (VISIBILIDADE.contentEquals("RESTRICT")) {
+            ret = false;
+        } else if (VISIBILIDADE.contentEquals("EXPLICIT")) {
+            ret = false;
+        } else if (VISIBILIDADE.contentEquals("IMPLICIT")) {
+            ret = false;
+        } else if (VISIBILIDADE.contentEquals("ALLOW")) {
+            ret = false;
+        }
+
+        return ret;
+
+    }
+
+    public boolean podeAlgum(String VISIBILIDADE) {
+
+        boolean ret = false;
+
+        if (VISIBILIDADE.contentEquals("ALL")) {
+            ret = true;
+        } else if (VISIBILIDADE.contentEquals("RESTRICT")) {
+            ret = true;
+        }
+
+        return ret;
+
+    }
 
 
-        AST AST_Corpo = AST_Corrente.criarBranch("BODY");
+    public boolean podeExtra(String VISIBILIDADE) {
 
-        String VISIBILIDADE = "ALL";
+        boolean ret = false;
+
+        if (VISIBILIDADE.contentEquals("EXTRA")) {
+            ret = true;
+        }
+
+        return ret;
+
+    }
+
+    public boolean podeAll(String VISIBILIDADE) {
+
+        boolean ret = false;
+
+        if (VISIBILIDADE.contentEquals("ALL")) {
+            ret = true;
+        }
+
+        return ret;
+
+    }
+
+    public void corpo(AST AST_Corpo, AST AST_Inits, AST AST_Destruct, String NomeStruct) {
+
+
+        String VISIBILIDADE = "INIT";
 
 
         Token TokenD = mCompiler.getTokenAvanteStatus(TokenTipo.CHAVE_ABRE, "Era esperado abrir chaves");
@@ -163,6 +263,7 @@ public class AST_Struct {
         }
 
 
+        int mInicializadores = 0;
         int mDestructs = 0;
 
 
@@ -173,91 +274,103 @@ public class AST_Struct {
             if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
                 saiu = true;
                 break;
+
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("init")) {
 
-                AST_StructInit mAST = new AST_StructInit(mCompiler);
-                mAST.init(AST_Inits, NomeStruct, VISIBILIDADE);
+                verificar_EscopoInit(VISIBILIDADE, TokenC);
+
+                inicializador(AST_Inits, NomeStruct, VISIBILIDADE);
+
+                mInicializadores += 1;
 
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
+
+                verificar_EscopoComum("Actions", VISIBILIDADE, TokenC);
 
                 AST_Action mAST = new AST_Action(mCompiler);
                 mAST.init(AST_Corpo, VISIBILIDADE);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
 
+                verificar_EscopoComum("Functions", VISIBILIDADE, TokenC);
+
                 AST_Function mAST = new AST_Function(mCompiler);
                 mAST.init(AST_Corpo, VISIBILIDADE);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("block")) {
 
-                AST_Col mAST = new AST_Col(mCompiler);
+                verificar_EscopoBloco(VISIBILIDADE, TokenC);
+
+                AST_Acessadores mAST = new AST_Acessadores(mCompiler);
                 mAST.init(AST_Corpo, VISIBILIDADE);
 
-
-
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
+
+                verificar_EscopoComum("Mockizes", VISIBILIDADE, TokenC);
 
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
                 mAST.init("MOCKIZ", AST_Corpo, VISIBILIDADE);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
 
+                verificar_EscopoComum("Defines", VISIBILIDADE, TokenC);
 
                 AST_Def mAST = new AST_Def(mCompiler);
                 mAST.init_Define(AST_Corpo, VISIBILIDADE);
 
+
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operator")) {
+
+                verificar_EscopoExtra("Operadores", VISIBILIDADE, TokenC);
 
                 AST_Operator mAST = new AST_Operator(mCompiler);
                 mAST.init(AST_Corpo);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("director")) {
 
+                verificar_EscopoExtra("Diretores", VISIBILIDADE, TokenC);
+
                 AST_Director mAST = new AST_Director(mCompiler);
                 mAST.init(AST_Corpo);
 
-
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("destruct")) {
+
+                verificar_EscopoDestrutor(VISIBILIDADE, TokenC);
 
 
                 AST_Destruct mAST = new AST_Destruct(mCompiler);
-                mAST.init(AST_Corpo);
+                mAST.init(AST_Destruct);
 
                 mDestructs += 1;
 
-                if (mDestructs>1){
-                    mCompiler.errarCompilacao("A Struct " + AST_Corrente.getNome() + " so pode ter um DESTRUCT !",  TokenC);
+                if (mDestructs > 1) {
+                    mCompiler.errarCompilacao("A Struct " + NomeStruct + " so pode ter um DESTRUCT !", TokenC);
                 }
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("all")) {
 
-                Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado :");
-
-                VISIBILIDADE = "ALL";
-
+                VISIBILIDADE = mudarEscopo("ALL");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("explicit")) {
 
-                Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado :");
+                VISIBILIDADE = mudarEscopo("EXPLICIT");
 
-                VISIBILIDADE = "EXPLICIT";
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("implicit")) {
 
-                Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado :");
-
-                VISIBILIDADE = "IMPLICIT";
+                VISIBILIDADE = mudarEscopo("IMPLICIT");
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("restrict")) {
 
-                Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado :");
+                VISIBILIDADE = mudarEscopo("RESTRICT");
 
-                VISIBILIDADE = "RESTRICT";
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("allow")) {
 
-                Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado :");
+                VISIBILIDADE = mudarEscopo("ALLOW");
 
-                VISIBILIDADE = "ALLOW";
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("extra")) {
+
+                VISIBILIDADE = mudarEscopo("EXTRA");
 
 
             } else {
@@ -268,11 +381,19 @@ public class AST_Struct {
             }
         }
 
+        if (mInicializadores == 0) {
 
-        if (mDestructs == 0) {
 
+            AST eInit = AST_Inits.criarBranch("INIT");
+            eInit.setNome(NomeStruct);
+
+            eInit.criarBranch("ARGUMENTS");
+            eInit.criarBranch("BODY");
+            eInit.criarBranch("VISIBILITY").setNome("INIT");
+            eInit.criarBranch("CALL").setValor("FALSE");
 
         }
+
 
         if (!saiu) {
             mCompiler.errarCompilacao("Era esperado fechar chaves" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
@@ -281,5 +402,132 @@ public class AST_Struct {
 
     }
 
+    public void inicializador(AST ASTPai, String NomeStruct,String Visibilidade) {
+
+        Token TokenC = mCompiler.getTokenAvante();
+
+        if (TokenC.getTipo() == TokenTipo.ID) {
+
+            AST AST_Corrente = new AST("INIT");
+            AST_Corrente.setNome(TokenC.getConteudo());
+            ASTPai.getASTS().add(AST_Corrente);
+
+
+            AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
+            AST_Visibilidade.setNome(Visibilidade);
+
+
+            AST AST_Call = AST_Corrente.criarBranch("CALL");
+            AST_Call.setValor("FALSE");
+
+            if (!TokenC.mesmoConteudo(NomeStruct)) {
+                mCompiler.errarCompilacao("O nome do INIT deve ser igual ao nome da Struct : " + NomeStruct + " -> INIT " + TokenC.getConteudo(), TokenC);
+            }
+
+            AST AST_Arguments = AST_Corrente.criarBranch("ARGUMENTS");
+            AST AST_BODY = AST_Corrente.criarBranch("BODY");
+
+            AST_Argumentos mArgumentos = new AST_Argumentos(mCompiler);
+            mArgumentos.init(AST_Arguments);
+
+            Token Futuro = mCompiler.getTokenFuturo();
+            if (Futuro.getTipo() == TokenTipo.SETA) {
+                mCompiler.Proximo();
+
+
+                Token TokenP = mCompiler.getTokenAvante();
+                if (TokenP.getTipo() == TokenTipo.ID) {
+
+                    AST_Call.setNome(TokenP.getConteudo());
+                    AST_Call.setValor("TRUE");
+
+                } else {
+                    mCompiler.errarCompilacao("Era esperado o nome do INIT da Struct Pai ", TokenP);
+                }
+
+
+                Token TokenI = mCompiler.getTokenAvante();
+                if (TokenI.getTipo() == TokenTipo.PARENTESES_ABRE) {
+
+
+                }else{
+                    mCompiler.errarCompilacao("Era esperado abrir parenteses",   TokenI);
+                }
+
+                AST_Recebimentos mRA = new AST_Recebimentos(mCompiler);
+                mRA.init(AST_Call.criarBranch("ARGUMENTS"));
+
+
+            }
+
+
+            AST_Corpo mCorpo = new AST_Corpo(mCompiler);
+            mCorpo.init(AST_BODY);
+
+
+
+        } else {
+            mCompiler.errarCompilacao("Era esperado o nome para uma INIT !", TokenC);
+        }
+
+
+    }
+
+
+    public String mudarEscopo(String eEscopo) {
+
+        Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado :");
+
+        return eEscopo;
+
+    }
+
+    public void verificar_EscopoInit(String VISIBILIDADE, Token TokenC) {
+        if (VISIBILIDADE.contentEquals("INIT")) {
+
+        } else {
+            mCompiler.errarCompilacao("Inicializadores so podem ser declarados fora de Escopos", TokenC);
+        }
+    }
+
+    public void verificar_EscopoDestrutor(String VISIBILIDADE, Token TokenC) {
+
+        if (!podeAll(VISIBILIDADE)) {
+            mCompiler.errarCompilacao("Destrutores so podem existir no escopo : ALL", TokenC);
+        }
+
+    }
+
+    public void verificar_EscopoComum(String eNome, String VISIBILIDADE, Token TokenC) {
+
+        if (VISIBILIDADE.contentEquals("INIT")) {
+            mCompiler.errarCompilacao(eNome + " precisam ter um escopo : ALL, RESTRICT, IMPLICIT ou EXPLICIT", TokenC);
+        } else {
+            if (escopo_ForaARIE(VISIBILIDADE)) {
+                mCompiler.errarCompilacao(eNome + " so podem existir nos escopos : ALL, RESTRICT, IMPLICIT ou EXPLICIT", TokenC);
+            }
+        }
+
+    }
+
+    public void verificar_EscopoBloco(String VISIBILIDADE, Token TokenC) {
+
+        if (VISIBILIDADE.contentEquals("INIT")) {
+            mCompiler.errarCompilacao("Blocos precisam ter um escopo : ALL", TokenC);
+        } else {
+            if (!VISIBILIDADE.contentEquals("ALL")) {
+                mCompiler.errarCompilacao("Blocos so podem existir no escopo : ALL", TokenC);
+            }
+        }
+
+    }
+
+    public void verificar_EscopoExtra(String eNome, String VISIBILIDADE, Token TokenC) {
+
+        if (!podeExtra(VISIBILIDADE)) {
+            mCompiler.errarCompilacao(eNome + " so podem existir no escopo : EXTRA", TokenC);
+        }
+
+    }
 
 }

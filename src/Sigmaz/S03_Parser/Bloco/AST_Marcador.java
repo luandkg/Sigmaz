@@ -1,4 +1,4 @@
-package Sigmaz.S03_Parser.Complexo;
+package Sigmaz.S03_Parser.Bloco;
 
 import Sigmaz.S03_Parser.Organizador.AST_Argumentos;
 import Sigmaz.S03_Parser.Fluxo.AST_Corpo;

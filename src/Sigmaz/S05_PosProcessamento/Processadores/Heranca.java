@@ -2,12 +2,21 @@ package Sigmaz.S05_PosProcessamento.Processadores;
 
 import java.util.ArrayList;
 
+import Sigmaz.S00_Utilitarios.SigmazPackage;
+import Sigmaz.S00_Utilitarios.SigmazRaiz;
+import Sigmaz.S00_Utilitarios.SigmazStruct;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S05_PosProcessamento.ProcurandoStruct;
+import Sigmaz.S07_Executor.Alterador;
 
 public class Heranca {
 
     private PosProcessador mPosProcessador;
+
+    private String CRIADO = "2020 09 10";
+    private String ATUALIZADO = "2020 10 21";
+    private String VERSAO = "2.0";
 
     public Heranca(PosProcessador ePosProcessador) {
 
@@ -16,385 +25,302 @@ public class Heranca {
     }
 
 
-    public void mensagem(String e){
-        if (mPosProcessador.getDebug_Heranca()){
+    public void mensagem(String e) {
+        if (mPosProcessador.getDebug_Heranca()) {
             mPosProcessador.mensagem(e);
         }
     }
 
+    public void errar(String eErro) {
+        mPosProcessador.errar(eErro);
+    }
+
+    public boolean temErros() {
+        return mPosProcessador.temErros();
+    }
 
     public void init(ArrayList<AST> mTodos) {
 
         mensagem("");
-       mensagem(" ------------------ FASE HERANCA ----------------------- ");
+        mensagem(" ------------------ FASE HERANCA ----------------------- ");
 
-
-        ArrayList<AST> mPacotes = new ArrayList<AST>();
 
         for (AST mAST : mTodos) {
 
             if (mAST.mesmoTipo("SIGMAZ")) {
 
+                ArrayList<SigmazPackage> mPacotes = new ArrayList<SigmazPackage>();
+                SigmazRaiz mSigmazRaiz = new SigmazRaiz(mAST);
+
+
                 for (AST Struct_AST : mAST.getASTS()) {
                     if (Struct_AST.mesmoTipo("PACKAGE")) {
-                        mPacotes.add(Struct_AST.copiar());
+                        mPacotes.add(new SigmazPackage(Struct_AST));
                     }
                 }
 
 
-                mensagem("");
+                processarSigmaz(mSigmazRaiz, mPacotes);
 
-                for (AST ePacote : mAST.getASTS()) {
-                    if (ePacote.mesmoTipo("PACKAGE")) {
-                        iniciarProcessamento(ePacote.getNome(), mPacotes, ePacote);
-                    }
+                for (SigmazPackage ePacote : mPacotes) {
+                    processarPacote(mSigmazRaiz, ePacote, mPacotes);
                 }
-
-                iniciarProcessamento("", mPacotes, mAST);
-
 
             }
+
         }
 
 
     }
 
-
-    public ArrayList<String> getRefers(AST eAST) {
-
-        ArrayList<String> mRefers = new ArrayList<String>();
-
-        for (AST PackageStruct : eAST.getASTS()) {
-            if (PackageStruct.mesmoTipo("REFER")) {
-                mRefers.add(PackageStruct.getNome());
-            }
-        }
-        return mRefers;
-    }
+    public void processarSigmaz(SigmazRaiz mSigmazRaiz, ArrayList<SigmazPackage> mPacotes) {
 
 
-    public void iniciarProcessamento(String ePacote, ArrayList<AST> mPacotes, AST mRaiz) {
-
-
-        ArrayList<String> mRefers = getRefers(mRaiz);
-
-        if (mRaiz.mesmoTipo("PACKAGE")) {
-           mensagem("PACOTE : " + mRaiz.getNome());
-        } else {
-        mensagem("SIGMAZ : " + mRaiz.getTipo());
-        }
-
-        if (mRefers.size() > 0) {
-            mensagem("");
-            for (String eRefer : mRefers) {
-                mensagem("\t - REFER : " + eRefer);
-            }
-        }
-
-
-        ArrayList<AST> mStructs = new ArrayList<AST>();
-
-
-        for (AST eAST : mRaiz.getASTS()) {
-            if (eAST.mesmoTipo("STRUCT")) {
-                if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
-                    mStructs.add(eAST.copiar());
-                }
-            }
-
-        }
+        mensagem("-->> SIGMAZ");
+        mensagem("");
 
         mensagem("");
-        for (AST eAST : mRaiz.getASTS()) {
-            if (eAST.mesmoTipo("STRUCT")) {
-                if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
-
-                    if (eAST.getBranch("WITH").mesmoValor("TRUE")) {
-
-                        mensagem("\t - STRUCT : " + eAST.getNome() + " :: HERANCA");
-
-                        String eBase = eAST.getBranch("WITH").getNome();
 
 
-                        montarStruct(ePacote, eAST, mStructs, mRefers, mPacotes);
+        for (SigmazStruct eStruct : mSigmazRaiz.getStructs()) {
+
+            mensagem("\t - STRUCT : " + eStruct.getNome() + " ->> " + eStruct.getCompletude());
+
+            ArrayList<String> mHerdando = new ArrayList<String>();
+
+            if (eStruct.isIncompleta()) {
+
+
+                ProcurandoStruct mProcurandoStruct = new ProcurandoStruct(this);
+                mProcurandoStruct.procurarSigmaz(eStruct.getBase(), mSigmazRaiz, mPacotes);
+
+                realizarMontagem(mHerdando, mSigmazRaiz, eStruct, mPacotes, mProcurandoStruct);
+
+            }
+
+        }
+
+
+    }
+
+
+    public void processarPacote(SigmazRaiz mSigmazRaiz, SigmazPackage mSigmazPackage, ArrayList<SigmazPackage> mPacotes) {
+
+        mensagem("-->> PACKAGE : " + mSigmazPackage.getNome());
+
+        mensagem("");
+
+
+        for (SigmazStruct eStruct : mSigmazPackage.getStructs()) {
+
+            mensagem("\t - STRUCT : " + eStruct.getNome() + " ->> " + eStruct.getCompletude());
+
+            ArrayList<String> mHerdando = new ArrayList<String>();
+
+            if (eStruct.isIncompleta()) {
+
+                ProcurandoStruct mProcurandoStruct = new ProcurandoStruct(this);
+                mProcurandoStruct.procurar(eStruct.getBase(), mSigmazRaiz, mSigmazPackage, mPacotes);
+
+                realizarMontagem(mHerdando, mSigmazRaiz, eStruct, mPacotes, mProcurandoStruct);
+
+            }
+
+        }
+
+
+    }
+
+
+    public void realizarMontagem(ArrayList<String> mHerdando, SigmazRaiz mSigmazRaiz, SigmazStruct eStruct, ArrayList<SigmazPackage> mPacotes, ProcurandoStruct mProcurandoStruct) {
+
+        String eBase = eStruct.getBase();
+
+        mensagem("\t          ------------------- MONTAGEM ----------------------");
+
+        mensagem("\t\t           - STRUCT : " + eStruct.getNome());
+        mensagem("\t\t           - FORMA : " + eStruct.getCompletude());
+
+        mensagem("\t\t           - BASE : " + eBase);
+
+
+        if (mProcurandoStruct.getOk()) {
+
+
+            String eEncontrado = "NAO";
+            if (mProcurandoStruct.getEncontrado()) {
+                eEncontrado = "SIM";
+            }
+
+            mensagem("\t\t           - ORIGEM : " + mProcurandoStruct.getOrigem());
+            mensagem("\t\t           - ENCONTRADO : " + eEncontrado);
+
+
+            if (mProcurandoStruct.getEncontrado()) {
+
+                mensagem("\t\t           - BASE FORMA : " + mProcurandoStruct.getStruct().getCompletude());
+
+                String incluir = mProcurandoStruct.getPacote() + "<>" + mProcurandoStruct.getStruct().getNome();
+                if (mHerdando.contains(incluir)) {
+                    errar("Heranca Ciclica  : " + eStruct.getNome() + " com " + mProcurandoStruct.getStruct().getNome());
+                } else {
+                    mHerdando.add(incluir);
+
+                    if (mProcurandoStruct.getStruct().isCompleta()) {
+
+                        herdarAgora(mProcurandoStruct.getPacote(), eStruct.getAlteravel(), mProcurandoStruct.getStruct().getLeitura().copiar());
 
                     } else {
 
-                        mensagem("\t - STRUCT : " + eAST.getNome() + " :: CONCRETA");
+                        AST mBaseMontada = montarBase(mHerdando, mProcurandoStruct.getStruct().getLeitura().copiar(), mProcurandoStruct, mSigmazRaiz, mPacotes);
 
+                        herdarAgora(mProcurandoStruct.getPacote(), eStruct.getAlteravel(), mBaseMontada.copiar());
 
                     }
 
                 }
+
+
+            } else {
+
+                errar("Struct Base  : " + eBase + " -->> NAO ENCONTRADO !");
+
             }
+
+
+        } else {
+
+            errar(mProcurandoStruct.getErro());
+            mensagem(mProcurandoStruct.getErro());
 
         }
 
 
-       mensagem("");
+        mensagem("\t          --------------------------------------------------");
 
     }
 
-    public void montarStruct(String eNomePacote, AST eStruct, ArrayList<AST> mStructs, ArrayList<String> mRefers, ArrayList<AST> mPacotes) {
+
+    public AST montarBase(ArrayList<String> mHerdando, AST eSuperAST, ProcurandoStruct vindoProcurandoStruct, SigmazRaiz mSigmazRaiz, ArrayList<SigmazPackage> mPacotes) {
 
 
-        String eBase_Nome = eStruct.getBranch("WITH").getNome();
-        AST eBase = null;
-        boolean BaseEnc = false;
-        String eLocal = ".";
-        AST ePacoteBase = null;
-        boolean BaseEmPacote = false;
+        SigmazStruct eSuper = new SigmazStruct(eSuperAST);
+
+        mensagem("\t          ------------------- MONTAGEM ----------------------");
+
+        mensagem("\t\t           - STRUCT : " + eSuper.getNome());
+        mensagem("\t\t           - FORMA : " + eSuper.getCompletude());
+
+        ProcurandoStruct mProcurandoStruct = new ProcurandoStruct(this);
+
+        String eBase = eSuper.getBase();
+
+        if (vindoProcurandoStruct.getEncontrado()) {
+
+            if (vindoProcurandoStruct.getEstaSigmaz()) {
+
+                mProcurandoStruct.procurarSigmaz(eBase, mSigmazRaiz, mPacotes);
+
+            } else if (vindoProcurandoStruct.getEstaLocal()) {
 
 
-     mensagem("\t\t - MONTAGEM : " + eStruct.getNome() + " -->> " + eBase_Nome);
-        mensagem("\t\t\t  - ESTRUTURA : " + eStruct.getNome());
-
-
-        for (AST eAST : mStructs) {
-            if (eAST.mesmoNome(eBase_Nome)) {
-
-                eLocal = "LOCAL";
-                eBase = eAST.copiar();
-                BaseEnc = true;
-                break;
-
-            }
-        }
-
-        if (!BaseEnc) {
-
-            for (String eRefer : mRefers) {
-
-                AST mPacote = null;
-                boolean PacoteEnc = false;
-
-                for (AST ePacote : mPacotes) {
-                    if (ePacote.mesmoNome(eRefer)) {
+                SigmazPackage mPacote = null;
+                for (SigmazPackage ePacote : mPacotes) {
+                    if (ePacote.mesmoNome(vindoProcurandoStruct.getPacote())) {
                         mPacote = ePacote;
-                        PacoteEnc = true;
                         break;
                     }
                 }
 
-                if (PacoteEnc) {
+                mProcurandoStruct.procurar(eBase, mSigmazRaiz, mPacote, mPacotes);
 
-                    for (AST eAST : mPacote.getASTS()) {
-                        if (eAST.mesmoNome(eBase_Nome)) {
-                            eLocal = "REFER : " + eRefer;
+            } else if (vindoProcurandoStruct.getEstaPacote()) {
 
-                            eBase = eAST.copiar();
-
-                            BaseEmPacote = true;
-                            ePacoteBase = mPacote;
-                            BaseEnc = true;
-                            break;
-                        }
-                    }
-
-                    if (BaseEnc) {
+                SigmazPackage mPacote = null;
+                for (SigmazPackage ePacote : mPacotes) {
+                    if (ePacote.mesmoNome(vindoProcurandoStruct.getPacote())) {
+                        mPacote = ePacote;
                         break;
                     }
-
-                } else {
-                    mPosProcessador.getErros().add("Pacote " + eRefer + " : Nao encontrado !");
-                    break;
                 }
 
+                mProcurandoStruct.procurar(eBase, mSigmazRaiz, mPacote, mPacotes);
+
+
             }
+
 
         }
 
-        if (BaseEnc) {
 
-        mensagem("\t\t\t  - BASE : " + eBase_Nome + " -->> " + eLocal);
+        if (eSuper.isIncompleta()) {
 
-
-            if (eBase.getBranch("WITH").mesmoValor("TRUE")) {
-
-                // ArrayList<String> pRefers = getRefers(mPacote);
-
-                mensagem("\t\t\t  - CONCRETA : NAO -->> " + eBase.getBranch("WITH").getNome());
+            mensagem("\t\t           - BASE : " + eSuper.getBase());
 
 
-                if (BaseEmPacote) {
+            if (mProcurandoStruct.getOk()) {
 
-                    AST nBase = montarBase(ePacoteBase.getNome(), eBase.copiar(), ePacoteBase.getASTS(), getRefers(ePacoteBase), mPacotes);
 
-                    herdarAgora(ePacoteBase.getNome(), eStruct, nBase);
-
-                } else {
-
-                    AST nBase = montarBase(eNomePacote, eBase.copiar(), mStructs, mRefers, mPacotes);
-
-                    herdarAgora(eNomePacote, eStruct, nBase);
-
+                String eEncontrado = "NAO";
+                if (mProcurandoStruct.getEncontrado()) {
+                    eEncontrado = "SIM";
                 }
 
-
-            } else {
-
-              mensagem("\t\t\t  - CONCRETA : SIM ");
-
-                herdarAgora(eNomePacote, eStruct, eBase);
-
-            }
+                mensagem("\t\t           - ORIGEM : " + mProcurandoStruct.getOrigem());
+                mensagem("\t\t           - ENCONTRADO : " + eEncontrado);
 
 
-        } else {
-            eLocal = "DESCONHECIDO";
-            mPosProcessador.getErros().add("Struct " + eBase_Nome + " : Nao encontrado !");
-        }
+                if (mProcurandoStruct.getEncontrado()) {
 
-       mensagem("");
+                    mensagem("\t\t           - BASE FORMA : " + mProcurandoStruct.getStruct().getCompletude());
 
-    }
-
-    public AST montarBase(String ePacoteNome, AST eStruct, ArrayList<AST> mStructs, ArrayList<String> mRefers, ArrayList<AST> mPacotes) {
-
-
-        AST eBase = null;
-        AST ePacoteBase = null;
-
-        boolean BaseEnc = false;
-        String onde = "";
-
-
-        if (eStruct.getBranch("WITH").mesmoValor("TRUE")) {
-
-            String eBase_Nome = eStruct.getBranch("WITH").getNome();
-            String eLocal = "";
-
-            for (AST eAST : mStructs) {
-                if (eAST.mesmoNome(eBase_Nome)) {
-
-                    eBase = eAST;
-                    BaseEnc = true;
-                    eLocal = "LOCAL";
-                    onde = "LOCAL";
-
-                    break;
-                }
-            }
-
-            if (!BaseEnc) {
-
-                for (String eRefer : mRefers) {
-
-                    AST mPacote = null;
-                    boolean PacoteEnc = false;
-
-                    for (AST ePacote : mPacotes) {
-                        if (ePacote.mesmoNome(eRefer)) {
-                            mPacote = ePacote;
-                            PacoteEnc = true;
-                            break;
-                        }
-                    }
-
-                    if (PacoteEnc) {
-
-                        for (AST eAST : mPacote.getASTS()) {
-                            if (eAST.mesmoNome(eBase_Nome)) {
-                                eLocal = "REFER : " + eRefer;
-                                onde = "REFER";
-
-                                eBase = eAST.copiar();
-                                ePacoteBase = mPacote;
-
-                                BaseEnc = true;
-                                break;
-                            }
-                        }
-
-                        if (BaseEnc) {
-                            break;
-                        }
-
+                    String incluir = mProcurandoStruct.getPacote() + "<>" + mProcurandoStruct.getStruct().getNome();
+                    if (mHerdando.contains(incluir)) {
+                        errar("Heranca Ciclica  : " + eSuper.getNome() + " com " + mProcurandoStruct.getStruct().getNome());
                     } else {
-                        mPosProcessador.getErros().add("Pacote " + eRefer + " : Nao encontrado !");
-                        break;
+                        mHerdando.add(incluir);
+
+                        if (mProcurandoStruct.getStruct().isCompleta()) {
+
+                            herdarAgora(mProcurandoStruct.getPacote(), eSuper.getAlteravel(), mProcurandoStruct.getStruct().getLeitura().copiar());
+
+                        } else {
+
+                            AST mBaseMontada = montarBase(mHerdando, mProcurandoStruct.getStruct().getLeitura().copiar(), mProcurandoStruct, mSigmazRaiz, mPacotes);
+
+                            if (temErros()) {
+                                return eSuperAST;
+                            }
+
+                            herdarAgora(mProcurandoStruct.getPacote(), eSuper.getAlteravel(), mBaseMontada.copiar());
+
+                        }
+
                     }
-
-                }
-
-            }
-
-
-            if (BaseEnc) {
-
-                if (onde.contentEquals("LOCAL")) {
-
-                    AST nBase = montarBase(ePacoteNome, eBase.copiar(), mStructs, mRefers, mPacotes);
-
-                    herdarAgora(ePacoteNome, eStruct, nBase);
-
-                } else if (onde.contentEquals("REFER")) {
-
-                    AST nBase = montarBase(ePacoteBase.getNome(), eBase.copiar(), ePacoteBase.getASTS(), getRefers(ePacoteBase), mPacotes);
-
-                    herdarAgora(ePacoteBase.getNome(), eStruct, nBase);
 
 
                 } else {
-                    mPosProcessador.getErros().add("Struct : " + eBase_Nome + " : Nao encontrada !");
+
+                    errar("Struct Base  : " + eBase + " -->> NAO ENCONTRADO !");
+
                 }
 
-            } else {
-                mPosProcessador.getErros().add("Struct : " + eBase_Nome + " : Nao encontrada !");
-
-            }
-
-
-          mensagem("\t\t\t--------------------- MONTAR BASE -----------------------------");
-
-            mensagem("\t\t\t  - BASE : " + eStruct.getNome());
-
-
-          mensagem("\t\t\t  - HERDAR :  " + eBase_Nome + " -->> " + eLocal);
-
-            if (eStruct.getBranch("WITH").mesmoValor("TRUE")) {
-mensagem("\t\t\t  - CONCRETA : NAO -->> " + eStruct.getBranch("WITH").getNome());
 
             } else {
-            mensagem("\t\t\t  - CONCRETA : SIM ");
-            }
 
-        } else {
+                errar(mProcurandoStruct.getErro());
+                mensagem(mProcurandoStruct.getErro());
 
-            mensagem("\t\t\t--------------------- MONTAR BASE -----------------------------");
-
-            mensagem("\t\t\t  - BASE : " + eStruct.getNome());
-
-            mensagem("\t\t\t  - CONCRETA : SIM ");
-        }
-
-
-        return eStruct;
-    }
-
-
-    public boolean checarArgumentos(AST mCall, String eBaseNome, ArrayList<AST> mInits) {
-
-        boolean ret = false;
-
-        int quantidade = mCall.getBranch("ARGUMENTS").getASTS().size();
-
-
-        for (AST mBaseInit : mInits) {
-
-            if (mBaseInit.mesmoNome(eBaseNome)) {
-                int init_quantidade = mBaseInit.getBranch("ARGUMENTS").getASTS().size();
-
-                if (init_quantidade == quantidade) {
-                    ret = true;
-                    break;
-                }
             }
 
 
         }
 
-        return ret;
+
+        mensagem("\t          --------------------------------------------------");
+
+
+        return eSuperAST;
     }
 
 
@@ -405,7 +331,7 @@ mensagem("\t\t\t  - CONCRETA : NAO -->> " + eStruct.getBranch("WITH").getNome())
         String eBaseNome = Base.getNome();
 
 
-      mensagem("\t\t\t--------------------- HERDAR -----------------------------");
+        mensagem("\t\t\t--------------------- HERDAR -----------------------------");
 
 
         AST Base_Inits = Base.getBranch("INITS");
@@ -425,47 +351,75 @@ mensagem("\t\t\t  - CONCRETA : NAO -->> " + eStruct.getBranch("WITH").getNome())
             mSuperGenerica = "Sim";
         }
 
-        mensagem("\t\t\t  - Super  : " + eStructNome + " - Generics " + mSuperGenerica + " (" + Super_Generics.getASTS().size() + ")" + "   Base : " + eBaseNome + " - Generics " + mBaseGenerica + " (" + Base_Generics.getASTS().size() + ")");
-
-        mensagem("\t\t\t  - Super  : " + eStructNome + " - Inits (" + Super_Inits.getASTS().size() + ")" + "   Base : " + eBaseNome + " - Inits (" + Base_Inits.getASTS().size() + ")");
-
-        if (mBaseGenerica.contentEquals("Sim")) {
-
-            if (mSuperGenerica.contentEquals("Sim")) {
+        mensagem("\t\t\t  - Super : " + eStructNome + " - Generics " + mSuperGenerica + " ( " + Super_Generics.getASTS().size() + " ) ");
 
 
-                ArrayList<String> mBaseGenericos = new ArrayList<String>();
-                ArrayList<String> mSuperGenericos = new ArrayList<String>();
+        AST SuperBase_With = Super.getBranch("WITH").getBranch("GENERIC");
+        String eSuperBaseGeneric = "Nao";
 
-                for (AST mBase_Generica : Base_Generics.getASTS()) {
-                    mBaseGenericos.add(mBase_Generica.getNome());
+        if (SuperBase_With.mesmoValor("TRUE")) {
+            eSuperBaseGeneric = "Sim";
+        }
+
+        mensagem("\t\t\t  - Super Base Generics : " + eBaseNome + " - Generics " + eSuperBaseGeneric + " ( " + SuperBase_With.getASTS().size() + " ) ");
+        mensagem("\t\t\t  - Base Generics  : " + eBaseNome + " - Generics " + mBaseGenerica + " ( " + Base_Generics.getASTS().size() + " ) ");
+
+
+        if (SuperBase_With.mesmoValor("FALSE") && Base_Generics.mesmoNome("TRUE")) {
+
+            mensagem("A Struct Base " + eBaseNome + " precisa implementar tipos genericos !");
+            errar("A Struct Base " + eBaseNome + " precisa implementar tipos genericos !");
+
+
+        } else if (SuperBase_With.mesmoValor("TRUE") && Base_Generics.mesmoNome("FALSE")) {
+
+            mensagem("A Struct " + eBaseNome + " nao e generica !");
+            errar("A Struct " + eBaseNome + " nao e generica !");
+
+        } else if (SuperBase_With.mesmoValor("TRUE") && Base_Generics.mesmoNome("TRUE")) {
+
+            ArrayList<String> mBaseGenericos = new ArrayList<String>();
+            ArrayList<AST> mSuperGenericos = new ArrayList<AST>();
+
+            for (AST mBase_Generica : Base_Generics.getASTS()) {
+                mBaseGenericos.add(mBase_Generica.getNome());
+            }
+
+            for (AST mSuper_Generica : SuperBase_With.getASTS()) {
+                mSuperGenericos.add(mSuper_Generica);
+            }
+
+            if (mBaseGenericos.size() == mSuperGenericos.size()) {
+
+                Alterador mAlterador = new Alterador();
+                int i = 0;
+
+                for (AST eSub : Base_Generics.getASTS()) {
+
+                    AST sInit = mSuperGenericos.get(i);
+
+                    mAlterador.adicionar(eSub.getNome(), sInit);
+                    mensagem("\t\t\t Alterando Tipo Abstrato : " + eSub.getNome() + " para " + sInit.getNome());
+                    i += 1;
                 }
-                for (AST mSuper_Generica : Super_Generics.getASTS()) {
-                    mSuperGenericos.add(mSuper_Generica.getNome());
-                }
 
-                int v = 0;
-                int vo = mBaseGenericos.size();
-                for (String eg : mBaseGenericos) {
-
-                    if (mSuperGenericos.contains(eg)) {
-                        v += 1;
-                    } else {
-
-                       mensagem("A Struct " + eStructNome + " precisa ter o tipo generico : " + eg);
-                        mPosProcessador.getErros().add("A Struct " + eStructNome + " precisa ter o tipo generico : " + eg);
-
-                    }
-
-                }
-
+                mAlterador.alterar(Base.getBranch("INITS"));
+                mAlterador.alterar(Base.getBranch("BODY"));
+                mAlterador.alterar(Base.getBranch("DESTRUCT"));
 
             } else {
-                mensagem("A Struct " + eStructNome + " precisa ser Generica !");
-                mPosProcessador.getErros().add("A Struct " + eStructNome + " precisa ser Generica !");
+
+                mensagem("A Struct Base " + eBaseNome + " precisa de " + mBaseGenericos.size() + " tipos genericos !");
+                errar("A Struct Base " + eBaseNome + " precisa de " + mBaseGenericos.size() + " tipos genericos !");
+
             }
 
         }
+
+
+        mensagem("\t\t\t  - Super  : " + eStructNome + " - Generics " + mSuperGenerica + " (" + Super_Generics.getASTS().size() + ")" + "   Base : " + eBaseNome + " - Generics " + mBaseGenerica + " (" + Base_Generics.getASTS().size() + ")");
+
+        mensagem("\t\t\t  - Super  : " + eStructNome + " - Inits (" + Super_Inits.getASTS().size() + ")" + "   Base : " + eBaseNome + " - Inits (" + Base_Inits.getASTS().size() + ")");
 
 
         ArrayList<AST> mSuper_Inits_Filtrados = new ArrayList<AST>();
@@ -491,18 +445,8 @@ mensagem("\t\t\t  - CONCRETA : NAO -->> " + eStruct.getBranch("WITH").getNome())
                         if (mCall.mesmoNome(eBaseNome)) {
 
 
-                           // if (checarArgumentos(mCall, eBaseNome, Base_Inits.getASTS())) {
-
-
-                           // } else {
-                           //     mPosProcessador.mensagem("\t\t\t  - Struct " + eStructNome + " com Chamador  " + eBaseNome + " : Quantidade de argumentos invalido !");
-                           //     mPosProcessador.getErros().add("  - Struct " + eStructNome + " com Chamador  " + eBaseNome + " : Quantidade de argumentos invalido !");
-                           //     return;
-                          //  }
-
-
                         } else {
-                           mensagem("\t\t\t  - Struct " + eStructNome + " deve ter um chamador com o mesmo nome da Struct Base : " + eBaseNome);
+                            mensagem("\t\t\t  - Struct " + eStructNome + " deve ter um chamador com o mesmo nome da Struct Base : " + eBaseNome);
                             mPosProcessador.getErros().add("  - Struct " + eStructNome + " deve ter um chamador com o mesmo nome da Struct Base : " + eBaseNome);
                             return;
                         }
@@ -517,7 +461,7 @@ mensagem("\t\t\t  - CONCRETA : NAO -->> " + eStruct.getBranch("WITH").getNome())
 
 
             } else {
-               mensagem("\t\t\t  - Struct " + eStructNome + " deve possuir um inicializador  ");
+                mensagem("\t\t\t  - Struct " + eStructNome + " deve possuir um inicializador  ");
                 mPosProcessador.getErros().add("  - Struct " + eStructNome + " deve possuir um inicializador  ");
                 return;
             }
@@ -537,14 +481,8 @@ mensagem("\t\t\t  - CONCRETA : NAO -->> " + eStruct.getBranch("WITH").getNome())
 
         // REALIZAR HERANCA INTERNA
 
-      //  System.out.println("Iniciar Heranca : " + Super.getNome());
 
-       // for (AST mBase_Init : Base_Inits.getASTS()) {
-       //     Super_Inits.getASTS().add(mBase_Init);
-      //      System.out.println("Herando init : " + mBase_Init.getNome());
-       // }
-
-            AST Base_Corpo = Base.getBranch("BODY");
+        AST Base_Corpo = Base.getBranch("BODY");
         AST Super_Corpo = Super.getBranch("BODY");
 
         for (AST migrando : Base.getBranch("BASES").getASTS()) {
@@ -571,8 +509,6 @@ mensagem("\t\t\t  - CONCRETA : NAO -->> " + eStruct.getBranch("WITH").getNome())
         }
 
 
-
-
         ArrayList<AST> mAllows = new ArrayList<AST>();
 
         for (AST eDentro : Super_Corpo.getASTS()) {
@@ -586,8 +522,8 @@ mensagem("\t\t\t  - CONCRETA : NAO -->> " + eStruct.getBranch("WITH").getNome())
 
         }
 
-        if (mAllows.size()>0){
-         mensagem("\t\t\t  -->> ALLOW ");
+        if (mAllows.size() > 0) {
+            mensagem("\t\t\t  -->> ALLOW ");
         }
 
         for (AST eAllow : mAllows) {
@@ -604,17 +540,17 @@ mensagem("\t\t\t  - CONCRETA : NAO -->> " + eStruct.getBranch("WITH").getNome())
                         AST_Visibilidade.setNome(Proc_Visibilidade.getNome());
                         Super_Corpo.getASTS().remove(eProcurando);
 
-                        enc=true;
+                        enc = true;
                         break;
                     }
                 }
             }
 
-            if (enc){
+            if (enc) {
 
-               mensagem("\t\t\t  - Struct " + eStructNome + " :: " + AST_Visibilidade.getNome() + " " + eAllow.getTipo() + " " + eAllow.getNome() + " !");
+                mensagem("\t\t\t  - Struct " + eStructNome + " :: " + AST_Visibilidade.getNome() + " " + eAllow.getTipo() + " " + eAllow.getNome() + " !");
 
-           }else{
+            } else {
 
                 mensagem("\t\t\t  - Struct " + eStructNome + " :: " + AST_Visibilidade.getNome() + " " + eAllow.getTipo() + " " + eAllow.getNome() + " Nao encontrado !");
 
@@ -623,7 +559,19 @@ mensagem("\t\t\t  - CONCRETA : NAO -->> " + eStruct.getBranch("WITH").getNome())
 
             }
 
+
         }
 
+
+        AST Base_Destruct = Base.getBranch("DESTRUCT");
+        AST Super_Destruct = Super.getBranch("DESTRUCT");
+
+        for (AST eDentro : Base_Destruct.getASTS()) {
+            Super_Destruct.getASTS().add(eDentro);
+        }
+
+
     }
+
+
 }

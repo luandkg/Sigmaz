@@ -278,6 +278,16 @@ public class Heap {
 
     }
 
+    public void organize(Item eItem,Escopo mEscopo){
+
+        if (eItem.getTemValor()) {
+            if (eItem.getIsEstrutura()) {
+               aumentar(eItem.getValor(mRunTime, mEscopo));
+            }
+        }
+
+    }
+
 
     public void limparEscopo(Escopo mEscopo){
 

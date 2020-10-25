@@ -22,17 +22,10 @@ public class SigmazCompilador extends Cena {
 
     private Clicavel mClicavel;
 
-    boolean mPode;
+    private boolean mPode;
 
-    boolean mContinuar;
-    int mPassos;
+    private  boolean mContinuar;
     private Sigmaz_Etapas SigmazC;
-
-    private String mETAPA_PRE_PROCESSAMENTO;
-    private String mETAPA_LEXER;
-    private String mETAPA_COMPILER;
-    private String mETAPA_POS_PROCESSAMENTO;
-    private String mETAPA_MONTAGEM;
 
 
     public SigmazCompilador(Windows eWindows) {
@@ -47,17 +40,7 @@ public class SigmazCompilador extends Cena {
 
         mPode = true;
         mContinuar = false;
-        mPassos = 0;
         SigmazC = new Sigmaz_Etapas();
-
-        String mSTATUS_NAO = "NAO REALIZADO";
-
-        mETAPA_PRE_PROCESSAMENTO = mSTATUS_NAO;
-        mETAPA_LEXER = mSTATUS_NAO;
-        mETAPA_COMPILER = mSTATUS_NAO;
-        mETAPA_POS_PROCESSAMENTO = mSTATUS_NAO;
-        mETAPA_MONTAGEM = mSTATUS_NAO;
-
 
     }
 
@@ -86,15 +69,7 @@ public class SigmazCompilador extends Cena {
 
             SigmazC.continuar();
 
-            System.out.println(SigmazC.getContinuar() + " :: " + "Passo : " + mPassos + " -->> " + SigmazC.getEtapa() + " :: " + SigmazC.getSubEtapa());
-
-            mPassos+=1;
-
-            mETAPA_PRE_PROCESSAMENTO = SigmazC.getPreProcessamento();
-            mETAPA_LEXER = SigmazC.getLexer();
-            mETAPA_COMPILER = SigmazC.getCompiler();
-            mETAPA_POS_PROCESSAMENTO = SigmazC.getPosProcessamento();
-            mETAPA_MONTAGEM = SigmazC.getMontagem();
+        //   System.out.println(SigmazC.getContinuar() + " :: " + "Passo : " + SigmazC.getPassos() + " -->> " + SigmazC.getEtapa() + " :: " + SigmazC.getSubEtapa());
 
 
             if (SigmazC.getTerminou()) {
@@ -117,8 +92,6 @@ public class SigmazCompilador extends Cena {
                 if (mPode) {
                     mPode = false;
 
-                    System.out.println("Compilar");
-
 
                     SigmazC.mostrarDebug(false);
 
@@ -127,14 +100,8 @@ public class SigmazCompilador extends Cena {
 
                     SigmazC.init(mCompilar, mCompilado, 1);
 
-                    mETAPA_PRE_PROCESSAMENTO = SigmazC.getPreProcessamento();
-                    mETAPA_LEXER = SigmazC.getLexer();
-                    mETAPA_COMPILER = SigmazC.getCompiler();
-                    mETAPA_POS_PROCESSAMENTO = SigmazC.getPosProcessamento();
-                    mETAPA_MONTAGEM = SigmazC.getMontagem();
 
                     mContinuar = true;
-                    mPassos = 0;
 
                 } else {
 
@@ -158,22 +125,22 @@ public class SigmazCompilador extends Cena {
 
         g.setColor(Color.RED);
 
-        TextoPequeno.EscreveNegrito(g, "PRE PROCESAMENTO : " + mETAPA_PRE_PROCESSAMENTO, 20, 200);
-        TextoPequeno.EscreveNegrito(g, "LEXER : " + mETAPA_LEXER, 20, 250);
-        TextoPequeno.EscreveNegrito(g, "COMPILER : " + mETAPA_COMPILER, 20, 300);
-        TextoPequeno.EscreveNegrito(g, "POS PROCESSAMENTO : " + mETAPA_POS_PROCESSAMENTO, 20, 350);
-        TextoPequeno.EscreveNegrito(g, "MONTAGEM : " + mETAPA_MONTAGEM, 20, 400);
+        TextoPequeno.EscreveNegrito(g, "PRE PROCESAMENTO : " + SigmazC.getPreProcessamento(), 20, 200);
+        TextoPequeno.EscreveNegrito(g, "LEXER : " + SigmazC.getLexer(), 20, 250);
+        TextoPequeno.EscreveNegrito(g, "PARSER : " + SigmazC.getCompiler(), 20, 300);
+        TextoPequeno.EscreveNegrito(g, "POS PROCESSAMENTO : " +  SigmazC.getPosProcessamento(), 20, 350);
+        TextoPequeno.EscreveNegrito(g, "MONTAGEM : " + SigmazC.getMontagem(), 20, 400);
 
 
-        barra(g, 0, mETAPA_PRE_PROCESSAMENTO);
+        barra(g, 0, SigmazC.getPreProcessamento());
 
-        barra(g, 1, mETAPA_LEXER);
+        barra(g, 1, SigmazC.getLexer());
 
-        barra(g, 2, mETAPA_COMPILER);
+        barra(g, 2, SigmazC.getCompiler());
 
-        barra(g, 3, mETAPA_POS_PROCESSAMENTO);
+        barra(g, 3, SigmazC.getPosProcessamento());
 
-        barra(g, 4, mETAPA_MONTAGEM);
+        barra(g, 4, SigmazC.getMontagem());
 
 
     }
@@ -187,11 +154,11 @@ public class SigmazCompilador extends Cena {
         if (status.contains("SUCESSO")) {
             g.setColor(new Color(0,128,0));
         } else if (status.contains("EXECUTANDO")) {
-            g.setColor(new Color(210,105,30));
+            g.setColor(new Color(255,225,53));
         } else if (status.contains("FALHOU")) {
-            g.setColor(Color.RED);
+            g.setColor(new Color(255,105,97));
         } else {
-            g.setColor(Color.BLACK);
+            g.setColor(new Color(105,105,105));
         }
 
         g.fillRect(ini + (n * tam) + (n * sep), 500, tam, 50);

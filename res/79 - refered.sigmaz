@@ -25,6 +25,7 @@ stages Fases -> {
 
 struct XA {
 	implicit : define mOculto : int = 100;
+
 	act reduzir ( ) {
 		mValor = mValor -- 50;
 		def mv : int = mValor;

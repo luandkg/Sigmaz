@@ -23,6 +23,21 @@ public class Montador {
     private Chaveador mChave_Cabecalho;
     private Chaveador mChave_Cogido;
 
+    private String mArquivo;
+
+    private boolean mTerminou;
+    private int mEtapa;
+    private ArrayList<AST> CASTCabecalho;
+    private ArrayList<AST> CASTCodigo;
+
+    private String CCabecalho;
+    private String CDocumento;
+
+    private  R5Resposta mCabecalho;
+    private  R5Resposta mCodigo;
+
+    private String mFase;
+
     public Montador() {
 
         mMensageiro = new Mensageiro();
@@ -60,6 +75,13 @@ public class Montador {
         mTempo_Processamento = 0.0F;
         mTempo_Organizacao = 0.0F;
 
+        mTerminou = false;
+        mEtapa = 1;
+        CCabecalho="";
+        CDocumento="";
+        mCabecalho=null;
+        mCodigo=null;
+
     }
 
     public float getTempo_Leitura() {
@@ -85,54 +107,114 @@ public class Montador {
 
     public void compilar(ArrayList<AST> ASTCabecalho, ArrayList<AST> ASTCodigo, String eArquivo) {
 
+
+
+        compilar_iniciar(ASTCabecalho,ASTCodigo,eArquivo);
+
+        while (!getTerminou()) {
+            continuar();
+        }
+
+
+    }
+
+
+
+    public void compilar_iniciar(ArrayList<AST> ASTCabecalho, ArrayList<AST> ASTCodigo, String eArquivo) {
+
         limpar();
+        mFase="";
+
+        CASTCabecalho = ASTCabecalho;
+        CASTCodigo = ASTCodigo;
+        mArquivo=eArquivo;
+
+        mFase="Codificando";
+    }
+
+    public String getFase(){
+        return mFase;
+    }
+
+    public void continuar() {
+
+        if (mEtapa == 1) {
 
 
-        R5 mSegurador_Cabecalho = new R5(mChave_Cabecalho);
-        R5 mSegurador_Codigo = new R5(mChave_Cogido);
-
-        P2 mPacotador_Cabecalho = new P2();
-        P2 mPacotador_Codigo = new P2();
+            P2 mCPacotador_Cabecalho = new P2();
+            P2 mCPacotador_Codigo = new P2();
 
 
-        mMensageiro.mensagem("");
-        mMensageiro.mensagem("############ MONTAGEM #################");
-        mMensageiro.mensagem("");
+            mMensageiro.mensagem("");
+            mMensageiro.mensagem("############ MONTAGEM #################");
+            mMensageiro.mensagem("");
 
 
-        Chronos_Intervalo mTempo_01 = new Chronos_Intervalo();
+            Chronos_Intervalo mTempo_01 = new Chronos_Intervalo();
 
-        mTempo_01.marqueInicio();
+            mTempo_01.marqueInicio();
 
-        String eCabecalho = mPacotador_Cabecalho.empacotar(ASTCabecalho);
+            CCabecalho = mCPacotador_Cabecalho.empacotar(CASTCabecalho);
 
-        mMensageiro.mensagem("\tCabecalho : " + mPacotador_Cabecalho.getObjetos());
-
-
-        String eDocumento = mPacotador_Codigo.empacotar(ASTCodigo);
-
-        mTempo_01.marqueFim();
+            mMensageiro.mensagem("\tCabecalho : " + mCPacotador_Cabecalho.getObjetos());
 
 
-        mMensageiro.mensagem("\tObjetos : " + mPacotador_Codigo.getObjetos());
-        mMensageiro.mensagem("\tInstrucoes : " + mPacotador_Codigo.getInstrucoes());
-        mMensageiro.mensagem("\tProfundidade : " + mPacotador_Codigo.getProfundidade());
+            CDocumento = mCPacotador_Codigo.empacotar(CASTCodigo);
 
-        mMensageiro.mensagem("\tTamanho : " + mPacotador_Codigo.getTamanho());
-        mMensageiro.mensagem("\tTempo de Empacotamento : " + mTempo_01.getIntervalo());
+            mTempo_01.marqueFim();
 
-        Chronos_Intervalo mTempo_02 = new Chronos_Intervalo();
 
-        mTempo_02.marqueInicio();
+            mMensageiro.mensagem("\tObjetos : " + mCPacotador_Codigo.getObjetos());
+            mMensageiro.mensagem("\tInstrucoes : " + mCPacotador_Codigo.getInstrucoes());
+            mMensageiro.mensagem("\tProfundidade : " + mCPacotador_Codigo.getProfundidade());
 
-        R5Resposta mCabecalho = mSegurador_Cabecalho.guardar(eCabecalho);
-        R5Resposta mCodigo = mSegurador_Codigo.guardar(eDocumento);
+            mMensageiro.mensagem("\tTamanho : " + mCPacotador_Codigo.getTamanho());
+            mMensageiro.mensagem("\tTempo de Empacotamento : " + mTempo_01.getIntervalo());
 
-        mTempo_02.marqueFim();
+            mEtapa=2;
 
-        mMensageiro.mensagem("\tTempo de Criptografia : " + mTempo_02.getIntervalo());
+            if (mMensageiro.temErros()){
+                mTerminou=true;
+            }
 
-        if (mCabecalho.getOk() && mCodigo.getOk()) {
+            mFase="Criptografando";
+
+
+        } else if (mEtapa == 2) {
+
+
+            R5 mCSegurador_Cabecalho = new R5(mChave_Cabecalho);
+            R5 mCSegurador_Codigo = new R5(mChave_Cogido);
+
+
+            Chronos_Intervalo mTempo_02 = new Chronos_Intervalo();
+
+            mTempo_02.marqueInicio();
+
+             mCabecalho = mCSegurador_Cabecalho.guardar(CCabecalho);
+             mCodigo = mCSegurador_Codigo.guardar(CDocumento);
+
+            mTempo_02.marqueFim();
+
+            mMensageiro.mensagem("\tTempo de Criptografia : " + mTempo_02.getIntervalo());
+
+            if (mCabecalho.getOk() && mCodigo.getOk()) {
+
+            } else {
+                mMensageiro.errar("Houve um problema na montagem !");
+            }
+
+            mEtapa=3;
+
+            if (mMensageiro.temErros()){
+                mTerminou=true;
+            }
+
+            mFase="Arquivando";
+
+
+        } else if (mEtapa == 3) {
+
 
             Chronos_Intervalo mTempo_03 = new Chronos_Intervalo();
             mTempo_03.marqueInicio();
@@ -140,7 +222,7 @@ public class Montador {
             Assinatura mAssinatura = new Assinatura();
 
 
-            OLMCabecalho mOLMCabecalho = OLM.criar(eArquivo, mCabecalho.getData(), mCodigo.getData(),mAssinatura.getData());
+            OLMCabecalho mOLMCabecalho = OLM.criar(mArquivo, mCabecalho.getData(), mCodigo.getData(), mAssinatura.getData());
 
             mMensageiro.mensagem("\tOLM Titulo : " + mOLMCabecalho.getTitulo());
             mMensageiro.mensagem("\tOLM Versao : " + mOLMCabecalho.getVersao());
@@ -153,7 +235,7 @@ public class Montador {
             mMensageiro.mensagem("\tOLM Codigo Tamanho : " + mOLMCabecalho.getCodigo_Tamanho());
             mMensageiro.mensagem("\tOLM Assinatura Tamanho : " + mOLMCabecalho.getAssinatura_Tamanho());
 
-            for (AST eC : ASTCabecalho) {
+            for (AST eC : CASTCabecalho) {
                 if (eC.mesmoTipo("PRIVATE")) {
                     mMensageiro.mensagem("\tChave Privada : " + eC.getValor());
                 } else if (eC.mesmoTipo("PUBLIC")) {
@@ -167,13 +249,18 @@ public class Montador {
 
             mMensageiro.mensagem("\tTempo de Escrita : " + mTempo_03.getIntervalo());
 
-        } else {
-            mMensageiro.errar("Houve um problema na montagem !");
-        }
 
+            mTerminou=true;
+            mFase="Concluido";
+
+        }
 
     }
 
+
+    public boolean getTerminou() {
+        return mTerminou;
+    }
 
     public OMLRun Decompilar(String eArquivo) {
 
@@ -249,10 +336,9 @@ public class Montador {
                     if (mDesemPacotador_Cabecalho.getOK()) {
 
 
-
                         if (mDesemPacotador_Cabecalho.getDesempacotado().size() == 0) {
                             mProblemaCabecalho = true;
-                        }else{
+                        } else {
 
                             int v = 0;
 
@@ -260,14 +346,14 @@ public class Montador {
 
                                 if (eC.mesmoTipo("PRIVATE")) {
                                     mMensageiro.mensagem("Chave Privada : " + eC.getValor());
-                                    v+=1;
+                                    v += 1;
                                 } else if (eC.mesmoTipo("PUBLIC")) {
                                     mMensageiro.mensagem("Chave Publica : " + eC.getValor());
-                                    v+=1;
+                                    v += 1;
 
                                 } else if (eC.mesmoTipo("SHARED")) {
                                     mMensageiro.mensagem("Chave Compartilhada : " + eC.getValor());
-                                    v+=1;
+                                    v += 1;
 
                                 }
 
@@ -275,7 +361,7 @@ public class Montador {
 
                             }
 
-                            if (v<3){
+                            if (v < 3) {
                                 mProblemaCabecalho = true;
                             }
 
@@ -325,7 +411,7 @@ public class Montador {
                     if (mDesemPacotador_Codigo.getOK()) {
                         ASTSaida = mDesemPacotador_Codigo.getDesempacotado();
 
-                        mOMLRun.carregar(mDesemPacotador_Cabecalho.getDesempacotado(),mDesemPacotador_Codigo.getDesempacotado());
+                        mOMLRun.carregar(mDesemPacotador_Cabecalho.getDesempacotado(), mDesemPacotador_Codigo.getDesempacotado());
 
                     } else {
                         mProblemaCodigo = true;

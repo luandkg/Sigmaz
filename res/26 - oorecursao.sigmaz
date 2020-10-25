@@ -7,6 +7,7 @@ act recursao ( h : int ) {
 }
 
 struct Matematica {
+all:
 	act recursor ( a : int ) {
 		def b : int = somar_inteiro ( a , 1 );
 		println ( "Valor B : ", b );

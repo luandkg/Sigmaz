@@ -14,6 +14,7 @@ public class Run_Body {
     private String mLocal;
 
     private Item mItem;
+    private String mEsperaRetornar;
 
     public Run_Body(RunTime eRunTime, Escopo eEscopo) {
 
@@ -22,6 +23,7 @@ public class Run_Body {
 
 
         mLocal = "Run_Body";
+        mEsperaRetornar = "<<ANY>>";
 
     }
 
@@ -62,11 +64,16 @@ public class Run_Body {
         mItem = eItem;
     }
 
+
+    public void esperaRetornar(String eRetorno) {
+        mEsperaRetornar = eRetorno;
+    }
+
     public void init(AST ASTCorrente) {
 
         // System.out.println("\n  -->> Em Corpo para Retornar : " + eReturne + " :: " + ASTCorrente.getASTS().size());
 
-       //  System.out.println("\n  -->> Run_Body :: " + mEscopo.getNome());
+        //  System.out.println("\n  -->> Run_Body :: " + mEscopo.getNome());
 
         for (AST fAST : ASTCorrente.getASTS()) {
 
@@ -117,7 +124,6 @@ public class Run_Body {
 
                 Run_Mut mAST = new Run_Mut(mRunTime, mEscopo);
                 mAST.init(fAST);
-
 
 
             } else if (fAST.mesmoTipo("APPLY")) {
@@ -225,7 +231,7 @@ public class Run_Body {
 
 
                 Run_Value mAST = new Run_Value(mRunTime, mEscopo);
-                mAST.init(fAST.getBranch("VALUE"), "<<ANY>>");
+                mAST.init(fAST.getBranch("VALUE"), mEsperaRetornar);
 
                 if (mRunTime.getErros().size() > 0) {
                     break;
@@ -389,10 +395,10 @@ public class Run_Body {
                 Run_Delete mRun_Delete = new Run_Delete(mRunTime, mEscopo);
                 mRun_Delete.init(fAST);
 
-            } else if (fAST.mesmoTipo("STRUCT_COLSET")) {
+            } else if (fAST.mesmoTipo("STRUCT_SETTER")) {
 
-                Run_StructColSet mRun_StructColSet = new Run_StructColSet(mRunTime, mEscopo);
-                mRun_StructColSet.init(fAST);
+                Run_Setter mRun_Setter = new Run_Setter(mRunTime, mEscopo);
+                mRun_Setter.init(fAST);
 
 
             } else {

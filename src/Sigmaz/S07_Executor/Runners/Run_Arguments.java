@@ -16,33 +16,48 @@ public class Run_Arguments {
 
         ArrayList<Item> mArgumentos = new ArrayList<Item>();
 
-        for (AST a : ASTCorrente.getASTS()) {
-            if (a.mesmoTipo("ARGUMENT")) {
+        if (ASTCorrente.getASTS().size()>0){
+
+           // System.out.println("\t\t Preparar Argumentos");
+
+            for (AST a : ASTCorrente.getASTS()) {
+                if (a.mesmoTipo("ARGUMENT")) {
 
 
-                Run_Value mAST = new Run_Value(mRunTime, mBuscadorDeVariaveis);
-                mAST.init(a, "<<ANY>>");
+                    Run_Value mAST = new Run_Value(mRunTime, mBuscadorDeVariaveis);
+                    mAST.init(a, "<<ANY>>");
 
 
-                Item v = new Item("");
-                v.setModo(0);
-                v.setNulo(mAST.getIsNulo());
-                v.setPrimitivo(mAST.getIsPrimitivo());
-                v.setIsEstrutura(mAST.getIsStruct());
-                v.setTipo(mAST.getRetornoTipo());
-                v.setValor(mAST.getConteudo(), mRunTime, mBuscadorDeVariaveis);
+                    Item v = new Item("");
+                    v.setModo(0);
+                    v.setNulo(mAST.getIsNulo());
+                    v.setPrimitivo(mAST.getIsPrimitivo());
+                    v.setIsEstrutura(mAST.getIsStruct());
+                    v.setTipo(mAST.getRetornoTipo());
+                    v.setValor(mAST.getConteudo(), mRunTime, mBuscadorDeVariaveis);
 
-                if (mAST.getIsReferenciavel()) {
-                    v.setIsReferenciavel(true);
-                    v.setReferencia(mAST.getReferencia());
+                    if (mAST.getIsReferenciavel()) {
+                        v.setIsReferenciavel(true);
+                        v.setReferencia(mAST.getReferencia());
+                    }
+
+
+                    if (v.getNulo()) {
+                    //    System.out.println("\t\t\t - Argumento -->> " + v.getNome() + " : " + v.getTipo() + " -- NULO");
+                    } else {
+                       // System.out.println("\t\t\t - Argumento -->> " + v.getNome() + " : " + v.getTipo() + " = " + v.getValor(mRunTime, mBuscadorDeVariaveis));
+                    }
+
+                    mArgumentos.add(v);
+
+
                 }
-
-                mArgumentos.add(v);
-
 
             }
 
         }
+
+
 
         return mArgumentos;
 
@@ -57,6 +72,9 @@ public class Run_Arguments {
 
                 for (int argC = 0; argC < eParametros.size(); argC++) {
 
+                    Index_Argument eParametro = eParametros.get(argC);
+                    Item eArgumento = mArgumentos.get(argC);
+
 
                     if (eParametros.get(argC).getModo().contentEquals("VALUE")) {
                         mEscopoInterno.passarParametroByValue(eParametros.get(argC).getNome(), mArgumentos.get(argC));
@@ -67,10 +85,12 @@ public class Run_Arguments {
                         return;
                     }
 
-                    if (mArgumentos.get(argC).getTemValor()) {
-                        if (mArgumentos.get(argC).getIsEstrutura()) {
-                            mEscopoInterno.getRunTime().getHeap().aumentar(mArgumentos.get(argC).getValor(mEscopoInterno.getRunTime(), mEscopoInterno));
-                        }
+                    mEscopoInterno.getRunTime().getHeap().organize(mArgumentos.get(argC), mEscopoInterno);
+
+                    if (eArgumento.getNulo()) {
+                     //   System.out.println("\t\t - Passando Param : " + eParametro.getNome() + " : " + eArgumento.getTipo() + " -->> NULO");
+                    } else {
+                    //    System.out.println("\t\t - Passando Param : " + eParametro.getNome() + " : " + eArgumento.getTipo() + " = " + eArgumento.getValor(mEscopoInterno.getRunTime(), mEscopoInterno));
                     }
 
 
@@ -100,7 +120,7 @@ public class Run_Arguments {
     }
 
 
-    public int conferirArgumentos(RunTime mRunTime,  ArrayList<Index_Argument> mParametros, ArrayList<Item> eArgumentos) {
+    public int conferirArgumentos(RunTime mRunTime, ArrayList<Index_Argument> mParametros, ArrayList<Item> eArgumentos) {
 
         int v = 0;
         int i = 0;
@@ -117,7 +137,7 @@ public class Run_Arguments {
                 String eArgumento = mArgumentos.getTipo();
                 String eParametro = mParametros.get(i).getTipo();
 
-                //    System.out.println("\t - Conferindo Tipo :  " + mArgumentos.getValor(mRunTime,mEscopo) + " de " + eArgumento + " e " + eArgumento);
+                //  System.out.println("\t - Conferindo Tipo :  " + eParametro + " e " + eArgumento);
 
                 if (eArgumento.contentEquals(eParametro)) {
                     v += 1;
@@ -139,7 +159,7 @@ public class Run_Arguments {
                 }
 
                 if (mRunTime.getErros().size() > 0) {
-                    break ;
+                    break;
                 }
 
             }
@@ -149,9 +169,9 @@ public class Run_Arguments {
 
         }
 
-       // if(i!=v){
-       //     System.out.println("\t - Conferiu :: " + v + " e " + i + " de " + argumentacao);
-      //  }
+        // if(i!=v){
+        //     System.out.println("\t - Conferiu :: " + v + " e " + i + " de " + argumentacao);
+        //  }
 
 
         return v;

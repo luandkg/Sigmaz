@@ -9,17 +9,17 @@ import Sigmaz.S07_Executor.Runners.Run_This;
 import Sigmaz.S07_Executor.Runners.Run_Value;
 import Sigmaz.S00_Utilitarios.AST;
 
-public class RunValueType_Col {
+public class RunValueType_Getter {
 
     private RunTime mRunTime;
     private Escopo mEscopo;
     private String mLocal;
 
-    public RunValueType_Col(RunTime eRunTime, Escopo eEscopo) {
+    public RunValueType_Getter(RunTime eRunTime, Escopo eEscopo) {
 
         mRunTime = eRunTime;
         mEscopo = eEscopo;
-        mLocal = "Run_Value -> Col";
+        mLocal = "Run_Value -> Getter";
 
     }
 

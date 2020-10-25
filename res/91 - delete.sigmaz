@@ -78,6 +78,7 @@ struct Objeto {
 
     }
 
+    all:
     func  getSI() : SubItem { return mSI; }
 
     destruct -> {
@@ -109,6 +110,32 @@ struct SubItem {
         define mGuardado : int = 0;
     all:
         func getGuardado() : int {return mGuardado;}
+
+}
+
+struct ZA with ZE {
+
+    init ZA () -> ZE() { }
+
+    restrict:
+        define mA : int = 0;
+
+    all:
+    destruct -> {
+        delete mA;
+    }
+
+}
+
+struct ZE {
+
+   restrict:
+        define mE : int = 0;
+
+    all:
+    destruct -> {
+        delete mE;
+    }
 
 }
 

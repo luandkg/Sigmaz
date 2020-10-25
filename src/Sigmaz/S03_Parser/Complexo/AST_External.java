@@ -103,11 +103,14 @@ public class AST_External {
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
                 mAST.init("DEFINE",AST_Corpo,VISIBILIDADE);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operator")) {
 
-                AST_Operator mAST = new AST_Operator(mCompiler);
-                mAST.init(AST_Corpo);
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("explicit")) {
 
+                VISIBILIDADE = mudarEscopo("EXPLICIT");
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("implicit")) {
+
+                VISIBILIDADE = mudarEscopo("IMPLICIT");
 
             } else {
 
@@ -122,5 +125,13 @@ public class AST_External {
         }
     }
 
+
+    public String mudarEscopo(String eEscopo) {
+
+        Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado :");
+
+        return eEscopo;
+
+    }
 
 }

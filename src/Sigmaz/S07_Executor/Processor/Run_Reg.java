@@ -29,8 +29,26 @@ public class Run_Reg {
         AST mValor = ASTCorrente.getBranch("VALUE");
 
 
+        String mRetornarTipo = "<<ANY>>";
+
+        String eRegistrador = ASTCorrente.getNome();
+
+
+        if (mRunTime.getProcessador().isLogico(eRegistrador)) {
+            mRetornarTipo = "bool";
+        } else if (mRunTime.getProcessador().isInteiro(eRegistrador)) {
+            mRetornarTipo = "int";
+        } else if (mRunTime.getProcessador().isReal(eRegistrador)) {
+            mRetornarTipo = "num";
+        } else if (mRunTime.getProcessador().isTexto(eRegistrador)) {
+            mRetornarTipo = "string";
+        }
+
         Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mEscopo);
-        Run_Value mAST = mRun_Valoramento.init(ASTCorrente.getNome(), mValor, "<<ANY>>", "<<ANY>>");
+        Run_Value mAST = mRun_Valoramento.init(ASTCorrente.getNome(), mValor, mRetornarTipo, mRetornarTipo);
+
+
+        //System.out.println("Registrador : " + eRegistrador + " = " + mAST.getConteudo());
 
 
         if (mRunTime.getErros().size() > 0) {

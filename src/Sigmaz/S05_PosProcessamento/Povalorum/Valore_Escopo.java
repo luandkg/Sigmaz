@@ -298,7 +298,7 @@ public class Valore_Escopo {
 
             } else if (mAST.mesmoTipo("DELETE")) {
 
-            } else if (mAST.mesmoTipo("STRUCT_COLSET")) {
+            } else if (mAST.mesmoTipo("STRUCT_SETTER")) {
 
             } else {
 

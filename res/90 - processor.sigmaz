@@ -192,7 +192,7 @@ func getTamanho ( a : string ) : int {
 	}
 	return reg @ R5;
 }
-func texto_unir ( a : string , b : string ) : int {
+func texto_unir ( a : string , b : string ) : string {
 	reg @ R13 -> a;
 	reg @ R14 -> b;
 	PROC -> {

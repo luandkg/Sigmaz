@@ -109,11 +109,7 @@ func getData_Formatado ( ) : string {
 
 
 struct Tempo {
-	restrict : 
-	define mHora : int = 0;
-	define mMinuto : int = 0;
-	define mSegundo : int = 0;
-	all : 
+
 	init Tempo ( h : int , m : int , s : int ) {
 
 
@@ -126,29 +122,34 @@ struct Tempo {
 
 	init Tempo ( ) {
 
-    def aa : int = 6;
+	PROC -> {
+    			SET R5;
+    			MOV 0;
+    			PROC CHRONOS_SECOND;
+    		}
+    		mSegundo = reg @ R5;
+    		PROC -> {
+    			SET R5;
+    			MOV 0;
+    			PROC CHRONOS_MINUTE;
+    		}
+    		mMinuto = reg @ R5;
+    		PROC -> {
+    			SET R5;
+    			MOV 0;
+    			PROC CHRONOS_HOUR;
+    		}
+    		mHora = reg @ R5;
 
-
-
-		PROC -> {
-			SET R5;
-			MOV 0;
-			PROC CHRONOS_SECOND;
-		}
-		mSegundo = reg @ R5;
-		PROC -> {
-			SET R5;
-			MOV 0;
-			PROC CHRONOS_MINUTE;
-		}
-		mMinuto = reg @ R5;
-		PROC -> {
-			SET R5;
-			MOV 0;
-			PROC CHRONOS_HOUR;
-		}
-		mHora = reg @ R5;
 	}
+
+	restrict : 
+	define mHora : int = 0;
+	define mMinuto : int = 0;
+	define mSegundo : int = 0;
+	all : 
+
+
 	func getHora ( ) : int {
 		return mHora;
 	}
@@ -178,11 +179,7 @@ struct Tempo {
 }
 
 struct Data {
-	restrict : 
-	define mDia : int = 0;
-	define mMes : int = 0;
-	define mAno : int = 0;
-	all : 
+
 	init Data ( d : int , m : int , a : int ) {
 		mDia = d;
 		mMes = m;
@@ -208,6 +205,13 @@ struct Data {
 		}
 		mAno = reg @ R5;
 	}
+
+	restrict : 
+	define mDia : int = 0;
+	define mMes : int = 0;
+	define mAno : int = 0;
+	all : 
+
 	func getDia ( ) : int {
 		return mDia;
 	}
@@ -258,7 +262,7 @@ func string_length ( a : string ) : int {
 	}
 	return reg @ R5;
 }
-func string_append ( a : string , b : string ) : int {
+func string_append ( a : string , b : string ) : string {
 	reg @ R13 -> a;
 	reg @ R14 -> b;
 	PROC -> {

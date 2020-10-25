@@ -20,6 +20,7 @@ struct Sacola {
 	init Sacola ( ) {
 		
 	}
+	all:
 	define itens : int = 0;
 	all : 
 	act aumentar ( g : int ) {
@@ -48,15 +49,7 @@ struct Sacola {
 	func someisso ( a : int , b : int ) : int {
 		return somar ( a , b );
 	}
-	all : 
-	explicit : operator == ( a : Sacola , b : Sacola ) : bool {
-	DEBUG -> REGRESSIVE :: STACK;
-		def t : bool = a.itens == b.itens;
-	DEBUG -> REGRESSIVE :: ALL;
-		return t;
-	}
-	
-	#extern : operation !! (a : Sacola,b : Sacola) : bool { return a.itens !! b.itens; }
+	explicit :
 	func someisso ( a : int , b : int ) : int {
 		return somar ( a , b );
 	}
@@ -68,5 +61,13 @@ struct Sacola {
 	func tratar ( a : int , b : int ) : int {
 		return somar ( a , b );
 	}
+
+	extra:
+		operator == ( a : Sacola , b : Sacola ) : bool {
+    	DEBUG -> REGRESSIVE :: STACK;
+    		def t : bool = a.itens == b.itens;
+    	DEBUG -> REGRESSIVE :: ALL;
+    		return t;
+    	}
 	
 }

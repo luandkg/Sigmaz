@@ -389,15 +389,17 @@ struct Caixa {
 	act setValor ( a : int ) {
 		mValor = a;
 	}
-	operator ++ ( a : Caixa , b : Caixa ) : Caixa {
-		return init Caixa ( a.getValor ( ) ++ b.getValor ( ) );
-	}
+
 	explicit : func CAIXADOR ( ) : int {
 		return 12;
 	}
 	func ENCAIXADOR ( a : int ) : int {
 		return a;
 	}
+	extra:
+		operator ++ ( a : Caixa , b : Caixa ) : Caixa {
+    		return init Caixa ( a.getValor ( ) ++ b.getValor ( ) );
+    	}
 	
 }
 type Duplo {

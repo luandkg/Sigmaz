@@ -8,19 +8,16 @@ import Sigmaz.S02_Lexer.Token;
 import Sigmaz.S02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
 
-public class AST_Col {
+public class AST_Acessadores {
 
     private Parser mCompiler;
 
-    public AST_Col(Parser eCompiler) {
+    public AST_Acessadores(Parser eCompiler) {
         mCompiler = eCompiler;
     }
 
     public void init(AST ASTPai, String Visibilidade) {
 
-
-        AST AST_Corrente = new AST("COL");
-        ASTPai.getASTS().add(AST_Corrente);
 
 
         Token TokenSeta = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma SETA");
@@ -30,8 +27,9 @@ public class AST_Col {
 
         if (TokenID.mesmoConteudo("get")) {
 
-            AST_Corrente.setTipo("COL_GET");
-            AST_Corrente.setNome("COL_GET");
+            AST AST_Corrente = new AST("GETTER");
+            AST_Corrente.setNome("GETTER");
+            ASTPai.getASTS().add(AST_Corrente);
 
             AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
             AST_Visibilidade.setNome(Visibilidade);
@@ -50,8 +48,10 @@ public class AST_Col {
 
         } else if (TokenID.mesmoConteudo("set")) {
 
-            AST_Corrente.setTipo("COL_SET");
-            AST_Corrente.setNome("COL_SET");
+
+            AST AST_Corrente = new AST("SETTER");
+            AST_Corrente.setNome("SETTER");
+            ASTPai.getASTS().add(AST_Corrente);
 
             AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
             AST_Visibilidade.setNome(Visibilidade);
@@ -74,7 +74,6 @@ public class AST_Col {
 
 
         }else{
-
             mCompiler.errarCompilacao("Era esperado GET ou SET",TokenID);
         }
 

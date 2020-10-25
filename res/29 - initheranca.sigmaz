@@ -9,10 +9,13 @@ act vamos_herdar_com_init ( ) {
 }
 
 struct Qualidade {
-	define qualidade : string = "";
+
 	init Qualidade ( a : string ) {
 		qualidade = a;
 	}
+	all:
+	define qualidade : string = "";
+
 
 	act setQualidade ( a : string ) {
 		qualidade = a;
@@ -24,10 +27,13 @@ struct Qualidade {
 }
 
 struct Animal with Qualidade {
-	define idade : int = 0;
+
 	init Animal ( v2 : string , i : int ) -> Qualidade ( v2 ) {
 		idade = i;
 	}
+	all:
+	define idade : int = 0;
+
 
 	act setIdade ( a : int ) {
 		idade = a;

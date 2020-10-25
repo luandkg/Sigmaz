@@ -79,6 +79,9 @@ public class Sigmaz_Etapas {
     private String mEtapa;
     private String mSubEtapa;
 
+    private Montador MontadorC;
+    private int mPosInt;
+    private int mPassos;
 
     public enum Fases {
         PRE_PROCESSAMENTO, LEXER, PARSER, POS_PROCESSAMENTO, MONTAGEM, PRONTO;
@@ -126,6 +129,7 @@ public class Sigmaz_Etapas {
         mPreInt = 0;
         mEstaPreProcessando = false;
         mPreProcessando = "";
+        mPassos = 0;
 
         mCorrentePreprocessando = false;
         mCorrenteParseando = false;
@@ -159,91 +163,11 @@ public class Sigmaz_Etapas {
 
     }
 
-    public String getEtapa() {
-        return mEtapa;
-    }
-
-    public String getSubEtapa() {
-        return mSubEtapa;
-    }
-
-    public void limpar() {
-
-        mFase = Sigmaz_Etapas.Fases.PRE_PROCESSAMENTO;
-
-        mETAPA_PRE_PROCESSAMENTO = mSTATUS_NAO;
-        mETAPA_LEXER = mSTATUS_NAO;
-        mETAPA_PARSER = mSTATUS_NAO;
-        mETAPA_POS_PROCESSAMENTO = mSTATUS_NAO;
-        mETAPA_MONTAGEM = mSTATUS_NAO;
-
-        mDebugMensagens.clear();
-        mDebugMensagens.clear();
-
-        mTemErros = false;
-
-        mErros_Lexer.clear();
-        mErros_Compiler.clear();
-        mErros_PosProcessamento.clear();
-        mErros_Execucao.clear();
-        mErros_PreProcessamento.clear();
-
-        mASTS.clear();
-
-
-        mRequisitados.clear();
-
-        mErros_PreProcessamento.clear();
-        mErros_Lexer.clear();
-        mErros_Compiler.clear();
-
-        mComentarios.clear();
-
-        mIChars = 0;
-        mITokens = 0;
-        mPreProcessamento = "";
-        mLexer_Processamento = "";
-    }
-
-
-    public String getPreprocessando() {
-        return mPreProcessando;
-    }
-
-    public String getPreProcessamento() {
-        return mETAPA_PRE_PROCESSAMENTO;
-    }
-
-    public String getLexer() {
-        return mETAPA_LEXER;
-    }
-
-    public String getCompiler() {
-        return mETAPA_PARSER;
-    }
-
-
-    public String getPosProcessamento() {
-        return mETAPA_POS_PROCESSAMENTO;
-    }
-
-    public String getMontagem() {
-        return mETAPA_MONTAGEM;
-    }
-
-    public void mostrarDebug(boolean eDebug) {
-        mDebug = eDebug;
-    }
-
-    public void setCabecalho(Cabecalho eCabecalho) {
-        mCabecalho = eCabecalho;
-    }
-
 
     public void init(String eArquivo, String eSaida, int eOpcao) {
 
-        mEstaPreProcessando = false;
-        mPreProcessando = "";
+        limpar();
+
 
         mSaida = eSaida;
         mArquivo = eArquivo;
@@ -270,11 +194,9 @@ public class Sigmaz_Etapas {
         mETAPA_POS_PROCESSAMENTO = mSTATUS_NAO;
         mETAPA_MONTAGEM = mSTATUS_NAO;
 
-        mDebugMensagens.clear();
-        mDebugMensagens.clear();
 
         System.out.println("");
-        System.out.println("################ SIGMAZ FASES ################");
+        System.out.println("################ SIGMAZ ETAPAS ################");
         System.out.println("");
 
         System.out.println("\t - Source : " + eArquivo);
@@ -298,107 +220,180 @@ public class Sigmaz_Etapas {
 
     }
 
-    private int mPosInt;
 
-    public void emPre() {
+    public int getPassos() {
+        return mPassos;
+    }
 
-        if (mContinuar == 0) {
+    public void continuar() {
 
+        verificarSeTemErros();
 
-            if (mPreInt == 0) {
-
-                if (mContinuar == 0) {
-
-                    mETAPA_PRE_PROCESSAMENTO = "EXECUTANDO";
-
-                    mEstaPreProcessando = true;
-
-                    executar_PreProcessamento(mArquivo, mOpcao);
-
-                }
-
-            } else if (mPreInt == 1) {
-
-                mEstaPreProcessando = true;
-
-                if (mContinuar == 0) {
+        mPassos += 1;
 
 
-                    continuar_PreProcessamento();
+        if (mContinuar == 0 && mPreInt == 0) {
+            executar_init_01();
+            return;
+
+        }
+
+        if (mContinuar == 0 && mPreInt == 1) {
+            executar_init_02();
+            return;
+
+        }
+
+        if (mContinuar == 0 && mPreInt == 2) {
+            executar_init_03();
+            return;
+
+        }
 
 
-                    if (getEstaPreProcessando()) {
+        if (mContinuar == 1) {
+            executar_Lexer();
+            System.out.println("\t - 2 : Lexer                   : " + mETAPA_LEXER);
+            return;
+        }
 
-                        mETAPA_PRE_PROCESSAMENTO = "EXECUTANDO";
-
-                        if (estaPre()) {
-
-                            mEtapa = "Pre-Processador";
-                            mSubEtapa = getPreprocessando();
-
-                            mETAPA_PRE_PROCESSAMENTO = "EXECUTANDO -->> " + getPreprocessando();
-                        }
-
-                        if (estaParseando()) {
-
-                            mEtapa = "Lexer";
-                            mSubEtapa = getPreprocessando();
-
-                            mETAPA_PARSER = "PRONTO";
-                            mETAPA_LEXER = "EXECUTANDO -->> " + getPreprocessando();
-                        }
-
-                        if (estaCompilando()) {
-
-                            mEtapa = "Parser";
-                            mSubEtapa = getPreprocessando();
-
-                            mETAPA_LEXER = "PRONTO";
-                            mETAPA_PARSER = "EXECUTANDO -->> " + getPreprocessando();
-                        }
-
-                    }
+        if (mContinuar == 2) {
+            executar_Parser();
+            System.out.println("\t - 3 : Parser                  : " + mETAPA_PARSER);
+            return;
+        }
 
 
-                }
+        if (mContinuar == 3 && mPosInt == 0) {
+            iniciar_PosProcessamento(mLocal);
+            return;
+        }
 
-            } else if (mPreInt == 2) {
+        if (mContinuar == 3 && mPosInt == 1) {
+            continuar_PosProcessamento();
+            return;
+        }
 
-                mEstaPreProcessando = true;
-                mETAPA_PRE_PROCESSAMENTO = "CONCLUIDO";
-                mSubEtapa = "Parser";
-
-                mEtapa = "Pre-Processamento";
-                mSubEtapa = "Finalize";
-
-                if (mContinuar == 0) {
-                    finalizar_PreProcessamento();
-                    mContinuar = 1;
-
-                }
-
-                mEstaPreProcessando = false;
+        if (mContinuar == 3 && mPosInt == 2) {
+            terminar_PosProcessamento();
+            return;
+        }
 
 
+        if (mContinuar == 4) {
+            organizar();
+            return;
+        }
+
+        if (mContinuar == 5) {
+            montagem_iniciar(mSaida);
+            return;
+        }
+
+        if (mContinuar == 6) {
+            montagem_continuar();
+            return;
+        }
+
+        if (mContinuar == 7) {
+            montagem_terminar();
+            return;
+        }
+
+        if (mContinuar == 8) {
+            terminar();
+            return;
+        }
+
+        if (mContinuar == 9) {
+            mEtapa = "";
+            mSubEtapa = "";
+        }
+
+
+    }
+
+    public void verificarSeTemErros() {
+
+        if (mErros_Mensagens.size()>0){
+            mTemErros=true;
+        }
+
+        if (mTemErros) {
+            mContinuar = 8;
+        }
+    }
+
+    public void executar_init_01() {
+        mETAPA_PRE_PROCESSAMENTO = "EXECUTANDO";
+
+        mEstaPreProcessando = true;
+
+        executar_PreProcessamento(mArquivo, mOpcao);
+
+    }
+
+    public void executar_init_02() {
+
+        mEstaPreProcessando = true;
+
+
+        continuar_PreProcessamento();
+
+
+        if (getEstaPreProcessando()) {
+
+            mETAPA_PRE_PROCESSAMENTO = "EXECUTANDO";
+
+            if (estaPre()) {
+
+                mEtapa = "Pre-Processador";
+                mSubEtapa = getPreprocessando();
+
+                mETAPA_PRE_PROCESSAMENTO = "EXECUTANDO -->> " + getPreprocessando();
+            }
+
+            if (estaParseando()) {
+
+                mEtapa = "Lexer";
+                mSubEtapa = getPreprocessando();
+
+                mETAPA_PARSER = "PRONTO";
+                mETAPA_LEXER = "EXECUTANDO -->> " + getPreprocessando();
+            }
+
+            if (estaCompilando()) {
+
+                mEtapa = "Parser";
+                mSubEtapa = getPreprocessando();
+
+                mETAPA_LEXER = "PRONTO";
+                mETAPA_PARSER = "EXECUTANDO -->> " + getPreprocessando();
             }
 
         }
     }
 
-    public void emPos() {
+    public void executar_init_03() {
 
-        mEtapa = "Pos-Processamento";
+        mEstaPreProcessando = true;
+        mETAPA_PRE_PROCESSAMENTO = "CONCLUIDO";
+        mSubEtapa = "Parser";
 
-        if (mPosInt == 0) {
-            mFase = Fases.POS_PROCESSAMENTO;
-            iniciar_PosProcessamento(mLocal);
-        } else if (mPosInt == 1) {
-            continuar_PosProcessamento();
-        } else if (mPosInt == 2) {
-            terminar_PosProcessamento();
+        mEtapa = "Pre-Processamento";
+        mSubEtapa = "Finalize";
+
+        if (mContinuar == 0) {
+            finalizar_PreProcessamento();
+            mContinuar = 1;
+
         }
 
+        mEstaPreProcessando = false;
+
     }
+
+
 
     private void continuar_PosProcessamento() {
 
@@ -431,8 +426,6 @@ public class Sigmaz_Etapas {
 
         if (mPosInt == 2) {
 
-            System.out.println("Terminar POS");
-
             for (String eMensagem : PosProcessadorC.getMensagens()) {
                 mDebugMensagens.add(eMensagem);
             }
@@ -456,130 +449,80 @@ public class Sigmaz_Etapas {
 
             }
 
-            System.out.println("\t - 5 : Pos Processamento       : " + mETAPA_POS_PROCESSAMENTO);
+            System.out.println("\t - 4 : Pos Processamento       : " + mETAPA_POS_PROCESSAMENTO);
 
 
         }
 
     }
 
-    public void continuar() {
 
-        if (mContinuar == 0) {
+    public void organizar() {
 
-            emPre();
-            return;
+        mEtapa = "Organizando";
+        mSubEtapa = "";
+        mContinuar = 5;
+        mFase = Fases.MONTAGEM;
+        mETAPA_MONTAGEM = "MONTANDO -->> " + mSaida;
+
+        try {
+
+            Thread.sleep(500);
+
+        } catch (Exception e) {
+
         }
 
 
-        if (mContinuar == 1) {
+    }
 
-            executar_Lexer();
-            return;
-        }
+    public void terminar() {
 
-        if (mContinuar == 2) {
+        mContinuar = 9;
 
-            executar_Compilador();
-            return;
-        }
+        if (mDebug) {
 
+            System.out.println("");
+            System.out.println("################ DEBUG ################");
+            System.out.println("");
 
-        if (mContinuar == 3) {
+            for (String eMensagem : mDebugMensagens) {
 
-            emPos();
-            return;
-        }
-
-        if (mContinuar == 4) {
-
-            mEtapa = "Organizando";
-            mSubEtapa = "";
-            mContinuar = 5;
-            mFase = Fases.MONTAGEM;
-            mETAPA_MONTAGEM = "MONTANDO -->> " + mSaida;
-
-            System.out.println("MONTANDO -->> " + mSaida);
-
-            try {
-
-                Thread.sleep(500);
-
-            } catch (Exception e) {
-
+                System.out.println(eMensagem);
             }
 
-            return;
         }
 
-        if (mContinuar == 5) {
-
-            mEtapa = "Montagem";
-
-            executar_Montagem(mSaida);
-            return;
-        }
+        if (mFase == Fases.PRONTO) {
 
 
-        if (mContinuar == 6) {
+            System.out.println("----------------------------------------------");
+            System.out.println("");
+            System.out.println("\t - COMPILADO COM SUCESSO");
+            System.out.println("");
+            System.out.println("----------------------------------------------");
 
-            mContinuar = 7;
-
-            if (mDebug) {
-
-                System.out.println("");
-                System.out.println("################ DEBUG ################");
-                System.out.println("");
-
-                for (String eMensagem : mDebugMensagens) {
-
-                    System.out.println(eMensagem);
-                }
-
-            }
-
-            if (mFase == Fases.PRONTO) {
-
-
-                System.out.println("----------------------------------------------");
-                System.out.println("");
-                System.out.println("\t - COMPILADO COM SUCESSO");
-                System.out.println("");
-                System.out.println("----------------------------------------------");
-
-
-
-            } else {
-
-
-                System.out.println("----------------------------------------------");
-                System.out.println("");
-
-                for (String eMensagem : mErros_Mensagens) {
-                    System.out.println(eMensagem);
-                }
-
-                System.out.println("");
-                System.out.println("----------------------------------------------");
-
-
-            }
-        } else if (mContinuar == 7) {
-
-            mEtapa = "";
-            mSubEtapa = "";
 
         } else {
 
 
-        }
+            System.out.println("----------------------------------------------");
+            System.out.println("");
 
+            for (String eMensagem : mErros_Mensagens) {
+                System.out.println(eMensagem);
+            }
+
+            System.out.println("");
+            System.out.println("----------------------------------------------");
+
+
+        }
 
     }
 
-
     public boolean getTerminou() {
-        return mContinuar > 6;
+        return mContinuar > 7;
     }
 
     public int getContinuar() {
@@ -700,12 +643,10 @@ public class Sigmaz_Etapas {
 
         }
 
-        System.out.println("\t - 2 : Lexer                   : " + mETAPA_LEXER);
-
 
     }
 
-    private void executar_Compilador() {
+    private void executar_Parser() {
 
         if (mFase == Fases.PARSER) {
 
@@ -726,6 +667,7 @@ public class Sigmaz_Etapas {
                     mErros_Mensagens.add("\t\t" + eGE.getArquivo());
                     for (Erro eErro : eGE.getErros()) {
                         mErros_Mensagens.add("\t\t    ->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem());
+
                     }
                 }
 
@@ -733,13 +675,14 @@ public class Sigmaz_Etapas {
 
         }
 
-        System.out.println("\t - 3 : Parser              : " + mETAPA_PARSER);
-
 
     }
 
 
     private void iniciar_PosProcessamento(String mLocal) {
+
+        mEtapa = "Pos-Processamento";
+        mFase = Fases.POS_PROCESSAMENTO;
 
         if (mFase == Fases.POS_PROCESSAMENTO) {
 
@@ -754,9 +697,7 @@ public class Sigmaz_Etapas {
     }
 
 
-
-
-    public void executar_Montagem(String mSaida) {
+    public void montagem_iniciar(String mSaida) {
 
 
         if (mFase == Fases.MONTAGEM) {
@@ -770,39 +711,55 @@ public class Sigmaz_Etapas {
 
             mSigmazCab.gravarCabecalho(mCabecalho, mASTCabecalhos);
 
-
-            Montador MontadorC = new Montador();
-
-            MontadorC.compilar(mASTCabecalhos, getASTS(), mSaida);
-
             mASTS = getASTS();
 
 
-            mFase = Sigmaz_Etapas.Fases.PRONTO;
+            MontadorC = new Montador();
+
+            MontadorC.compilar_iniciar(mASTCabecalhos, getASTS(), mSaida);
+
+            mETAPA_MONTAGEM = "EXECUTANDO -->> " + MontadorC.getFase();
+
             mContinuar = 6;
+
+        }
+
+    }
+
+    public void montagem_continuar() {
+
+        if (mFase == Fases.MONTAGEM) {
+
+            MontadorC.continuar();
+
+            mETAPA_MONTAGEM = "EXECUTANDO -->> " + MontadorC.getFase();
+
+            if (MontadorC.getTerminou()) {
+                mContinuar = 7;
+            }
+
+        }
+
+    }
+
+    public void montagem_terminar() {
+
+        if (mFase == Fases.MONTAGEM) {
+
+            mFase = Sigmaz_Etapas.Fases.PRONTO;
 
             mETAPA_MONTAGEM = mSTATUS_SUCESSO;
 
             for (String eMensagem : MontadorC.getMensagens()) {
                 mDebugMensagens.add(eMensagem);
             }
+            mContinuar = 8;
 
+            System.out.println("\t - 5 : Montagem                : " + mETAPA_MONTAGEM);
 
         }
-
-        System.out.println("\t - 6 : Montagem                : " + mETAPA_MONTAGEM);
-
-
     }
 
-
-    public boolean getEstaPreProcessando() {
-        return mEstaPreProcessando;
-    }
-
-    public int getPreInt() {
-        return mPreInt;
-    }
 
     public void initprevarios(ArrayList<String> eArquivos, int mOpcao) {
 
@@ -900,6 +857,99 @@ public class Sigmaz_Etapas {
         }
 
 
+    }
+
+    public void limpar() {
+
+        mFase = Sigmaz_Etapas.Fases.PRE_PROCESSAMENTO;
+
+        mETAPA_PRE_PROCESSAMENTO = mSTATUS_NAO;
+        mETAPA_LEXER = mSTATUS_NAO;
+        mETAPA_PARSER = mSTATUS_NAO;
+        mETAPA_POS_PROCESSAMENTO = mSTATUS_NAO;
+        mETAPA_MONTAGEM = mSTATUS_NAO;
+
+        mDebugMensagens.clear();
+
+        mTemErros = false;
+
+        mErros_Lexer.clear();
+        mErros_Compiler.clear();
+        mErros_PosProcessamento.clear();
+        mErros_Execucao.clear();
+        mErros_PreProcessamento.clear();
+
+        mASTS.clear();
+
+        mEstaPreProcessando = false;
+        mPreProcessando = "";
+
+        mRequisitados.clear();
+
+        mErros_PreProcessamento.clear();
+        mErros_Lexer.clear();
+        mErros_Compiler.clear();
+
+        mComentarios.clear();
+
+        mIChars = 0;
+        mITokens = 0;
+        mPreProcessamento = "";
+        mLexer_Processamento = "";
+
+        mPassos = 0;
+
+    }
+
+
+    public String getEtapa() {
+        return mEtapa;
+    }
+
+    public String getSubEtapa() {
+        return mSubEtapa;
+    }
+
+    public boolean getEstaPreProcessando() {
+        return mEstaPreProcessando;
+    }
+
+    public int getPreInt() {
+        return mPreInt;
+    }
+
+
+    public String getPreprocessando() {
+        return mPreProcessando;
+    }
+
+    public String getPreProcessamento() {
+        return mETAPA_PRE_PROCESSAMENTO;
+    }
+
+    public String getLexer() {
+        return mETAPA_LEXER;
+    }
+
+    public String getCompiler() {
+        return mETAPA_PARSER;
+    }
+
+
+    public String getPosProcessamento() {
+        return mETAPA_POS_PROCESSAMENTO;
+    }
+
+    public String getMontagem() {
+        return mETAPA_MONTAGEM;
+    }
+
+    public void mostrarDebug(boolean eDebug) {
+        mDebug = eDebug;
+    }
+
+    public void setCabecalho(Cabecalho eCabecalho) {
+        mCabecalho = eCabecalho;
     }
 
 

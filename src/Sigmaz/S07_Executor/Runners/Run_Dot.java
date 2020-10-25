@@ -40,27 +40,26 @@ public class Run_Dot {
 
         String eQualificador = mRun_Context.getQualificador(mItem.getTipo(), mEscopo);
 
-        //  System.out.println("Qualificar " +mItem.getNome() + " : " + mItem.getTipo() + " -->> " +  eQualificador);
+        //  System.out.println("Qualificar " +mItem.getNome() + " : " + mItem.getTipo() + " -->> " +  eQualificador + " esperando RETORNO : " + eRetorno);
 
+        Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
         if (eQualificador.contentEquals("STRUCT")) {
 
 
             if (ASTCorrente.existeBranch("INTERNAL")) {
-                Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
                 mItem = mRun_Internal.Struct_DentroStruct(mItem.getValor(mRunTime, mEscopo), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
 
             } else if (ASTCorrente.existeBranch("INTERNAL_THIS")) {
-                Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
                 mItem = mRun_Internal.Struct_DentroDiretoStruct(mItem.getValor(mRunTime, mEscopo), ASTCorrente.getBranch("INTERNAL_THIS"), mEscopo, eRetorno);
 
             }
 
+            //   System.out.println(" Qual : " + mItem.getNome() + ":" + mItem.getTipo() + " -> " + eQualificador);
 
         } else if (eQualificador.contentEquals("TYPE")) {
-            Run_Internal mRun_Internal = new Run_Internal(mRunTime);
 
             mItem = mRun_Internal.Struct_DentroType(mItem.getTipo(), mItem.getValor(mRunTime, mEscopo), ASTCorrente.getBranch("INTERNAL"), mEscopo, eRetorno);
 
@@ -178,7 +177,7 @@ public class Run_Dot {
 
             Run_Struct rs = mRunTime.getHeap().getRun_Struct(mItem.getValor(mRunTime, mEscopo));
 
-            mItem = rs.init_ColGet(ASTCorrente.getNome(), ASTCorrente, mEscopo, eRetorno);
+            mItem = rs.init_Getter(ASTCorrente.getNome(), ASTCorrente, mEscopo, eRetorno);
 
             if (ASTCorrente.existeBranch("INTERNAL")) {
                 Run_Internal mRun_Internal = new Run_Internal(mRunTime);
@@ -205,7 +204,7 @@ public class Run_Dot {
 
         Run_Struct rs = mRunTime.getHeap().getRun_Struct(eNomeLocal);
 
-        mItem = rs.init_ColGet(ASTCorrente.getNome(), ASTCorrente, mEscopo, eRetorno);
+        mItem = rs.init_Getter(ASTCorrente.getNome(), ASTCorrente, mEscopo, eRetorno);
 
         if (ASTCorrente.existeBranch("INTERNAL")) {
             Run_Internal mRun_Internal = new Run_Internal(mRunTime);

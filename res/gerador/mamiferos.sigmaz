@@ -1,56 +1,69 @@
 import "organismos.sigmaz";
+
 package Mamiferos {
+
 	refer Vida;
+
 	struct Mamifero with Organismo {
-		init Mamifero (eNome:string,eIdade:int) -> Organismo (eNome,eIdade) {} 
+
+		init Mamifero (eEspecie:string,eNome:string,eIdade:int) -> Organismo (eEspecie,eNome,eIdade) {} 
+
 	}
 
 
 	struct Gato with Mamifero {
-		init Gato (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
-			especie = "Gato";
+
+		init Gato (eNome:string,eIdade:int) -> Mamifero ("Gato",eNome,eIdade) { 
+
 		} 
 	}
 
 	struct Cachorro with Mamifero {
-		init Cachorro (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
-			especie = "Cachorro";
+
+		init Cachorro (eNome:string,eIdade:int) -> Mamifero ("Cachorro",eNome,eIdade) { 
+
 		} 
 	}
 
 	struct Lobo with Mamifero {
-		init Lobo (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
-			especie = "Lobo";
+
+		init Lobo (eNome:string,eIdade:int) -> Mamifero ("Lobo",eNome,eIdade) { 
+
 		} 
 	}
 
 	struct Rato with Mamifero {
-		init Rato (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
-			especie = "Rato";
+
+		init Rato (eNome:string,eIdade:int) -> Mamifero ("Rato",eNome,eIdade) { 
+
 		} 
 	}
 
 	struct Rinoceronte with Mamifero {
-		init Rinoceronte (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
-			especie = "Rinoceronte";
+
+		init Rinoceronte (eNome:string,eIdade:int) -> Mamifero ("Rinoceronte",eNome,eIdade) { 
+
 		} 
 	}
 
 	struct Golfinho with Mamifero {
-		init Golfinho (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
-			especie = "Golfinho";
+
+		init Golfinho (eNome:string,eIdade:int) -> Mamifero ("Golfinho",eNome,eIdade) { 
+
 		} 
 	}
 
 	struct Baleia with Mamifero {
-		init Baleia (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
-			especie = "Baleia";
+
+		init Baleia (eNome:string,eIdade:int) -> Mamifero ("Baleia",eNome,eIdade) { 
+
 		} 
 	}
 
 	struct Ramster with Mamifero {
-		init Ramster (eNome:string,eIdade:int) -> Mamifero (eNome,eIdade) { 
-			especie = "Ramster";
+
+		init Ramster (eNome:string,eIdade:int) -> Mamifero ("Ramster",eNome,eIdade) { 
+
 		} 
 	}
 }
