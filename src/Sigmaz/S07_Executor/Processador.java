@@ -91,6 +91,10 @@ public class Processador {
 
     }
 
+    public void limpar()
+    {
+        zerar();
+    }
 
     public void zerar() {
 

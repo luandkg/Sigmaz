@@ -1,8 +1,8 @@
 package Sigmaz.S05_PosProcessamento;
 
-import Sigmaz.S00_Utilitarios.SigmazPackage;
-import Sigmaz.S00_Utilitarios.SigmazRaiz;
-import Sigmaz.S00_Utilitarios.SigmazStruct;
+import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
+import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
+import Sigmaz.S00_Utilitarios.Alterador.SigmazStruct;
 import Sigmaz.S05_PosProcessamento.Processadores.Heranca;
 
 import java.util.ArrayList;

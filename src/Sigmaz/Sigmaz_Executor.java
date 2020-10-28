@@ -75,6 +75,9 @@ public class Sigmaz_Executor {
             System.out.println("\t - Tempo de Leitura : " + RunTimeC.getTempo_Leitura());
             System.out.println("\t - Tempo de Processamento : " + RunTimeC.getTempo_Processamento());
             System.out.println("\t - Tempo de Organizacao : " + RunTimeC.getTempo_Organizacao());
+            System.out.println("\t - Tempo de Inicializacao : " + RunTimeC.getTempo_Inicializacao());
+
+
             System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
 
             for(String e : RunTimeC.getMensagens()){

@@ -137,7 +137,7 @@ public class AST_Package {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("model")) {
 
                 AST_Model mAST = new AST_Model(mCompiler);
-                mAST.init(AST_Raiz);
+                mAST.init(AST_Raiz.getNome(),AST_Raiz);
 
             } else {
 

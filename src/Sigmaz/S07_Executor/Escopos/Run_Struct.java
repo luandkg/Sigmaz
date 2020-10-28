@@ -1,10 +1,7 @@
 package Sigmaz.S07_Executor.Escopos;
 
 import Sigmaz.S00_Utilitarios.Utilitario;
-import Sigmaz.S07_Executor.Alterador;
-import Sigmaz.S07_Executor.Escopo;
-import Sigmaz.S07_Executor.Item;
-import Sigmaz.S07_Executor.RunTime;
+import Sigmaz.S07_Executor.*;
 
 import java.util.ArrayList;
 
@@ -160,7 +157,7 @@ public class Run_Struct {
 
 
         // EXTERNALIZAR
-        for (Run_Explicit ASTC : BuscadorDeArgumentos.getExtern()) {
+        for (Run_External ASTC : BuscadorDeArgumentos.getExtern()) {
             mEscopo.externalizarDireto(ASTC);
         }
 
@@ -177,7 +174,9 @@ public class Run_Struct {
         }
 
 
-        referenciar();
+        Run_Refer mRun_Refer = new Run_Refer(mRunTime,mEscopo);
+        mRun_Refer.init(mAST_Struct.getBranch("REFERS"));
+
 
         AST init_Generic = ASTCorrente.getBranch("GENERIC");
 
@@ -232,7 +231,7 @@ public class Run_Struct {
         for (AST ASTC : mStructInits.getASTS()) {
             mEscopo.guardarStruct(ASTC);
             mEscopo.guardar(ASTC);
-         //   System.out.println("Passando Init : " + ASTC.getNome());
+            //   System.out.println("Passando Init : " + ASTC.getNome());
         }
 
 
@@ -365,36 +364,7 @@ public class Run_Struct {
 
     }
 
-    public void referenciar() {
 
-        AST mRefers = mAST_Struct.getBranch("REFERS");
-        ArrayList<String> dRefers = new ArrayList<String>();
-
-        ArrayList<AST> eReferenciados = new ArrayList<AST>();
-
-        for (AST ASTC : mRefers.getASTS()) {
-
-            String eRefer = ASTC.getNome();
-
-            eReferenciados.add(mRunTime.getPacote(eRefer));
-
-
-            dRefers.add(eRefer);
-            mEscopo.adicionarRefer(eRefer);
-
-        }
-        for (AST ASTC : eReferenciados) {
-
-            for (AST mDentro : ASTC.getASTS()) {
-
-                //    System.out.println("\t\t\t -> Recebendo " + mDentro.getNome());
-                mEscopo.guardar(mDentro);
-
-            }
-
-        }
-
-    }
 
     public boolean procurarStruct(Escopo BuscadorDeArgumentos) {
 

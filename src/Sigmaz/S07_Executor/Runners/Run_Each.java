@@ -50,6 +50,22 @@ public class Run_Each {
         return mEscopo.getRetorno();
     }
 
+    public String getTipagem(AST eAST) {
+
+        String mTipagem = eAST.getNome();
+
+        if (eAST.mesmoValor("GENERIC")) {
+
+            for (AST eTipando : eAST.getASTS()) {
+                mTipagem += "<" + getTipagem(eTipando) + ">";
+            }
+
+        }
+
+
+        return mTipagem;
+
+    }
 
     public void init(AST ASTCorrente) {
 
@@ -61,7 +77,7 @@ public class Run_Each {
         AST mList = ASTCorrente.getBranch("LIST");
         AST mBody = ASTCorrente.getBranch("BODY");
 
-        String mTipagem = mRunTime.getTipagem(mType);
+        String mTipagem = getTipagem(mType);
         Run_GetType mRun_GetType = new Run_GetType(mRunTime, mEscopo);
 
         mTipagem = mRun_GetType.getTipagemSimples(mTipagem);

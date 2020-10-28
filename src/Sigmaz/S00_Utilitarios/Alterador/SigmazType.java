@@ -1,4 +1,6 @@
-package Sigmaz.S00_Utilitarios;
+package Sigmaz.S00_Utilitarios.Alterador;
+
+import Sigmaz.S00_Utilitarios.AST;
 
 public class SigmazType {
 

@@ -1,5 +1,6 @@
 package Sigmaz.Intellisenses;
 
+import Sigmaz.S00_Utilitarios.Visualizador.*;
 import Sigmaz.S07_Executor.Debuggers.Simplificador;
 import Sigmaz.S07_Executor.Utils;
 
@@ -22,11 +23,11 @@ public class IS_Sigmaz {
 
     }
 
-    public void sigmaz_raiz(String eLocal, String eTitulo, AST eTudo, int eLargura) {
+    public void sigmaz_raiz(String eLocal, String eTitulo, SigmazRaiz mSigmazRaiz, int eLargura) {
 
 
         int w = eLargura;
-        int h = 100 + (mIntellisense.getContagem(eTudo) * 40);
+        int h = 100 + (mSigmazRaiz.getContagem() * 40);
 
 
         BufferedImage img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
@@ -41,148 +42,91 @@ public class IS_Sigmaz {
 
 
         g.setColor(Color.BLACK);
-        mIntellisense.centerString(g, new Rectangle(0, 0, w, 100), eTitulo, new Font("TimesRoman", Font.BOLD, 50));
-
-
-        Utils mUtils = new Utils();
-
-        int p = 0;
+        mIntellisense.titulo(g, 0, 0, w, eTitulo);
 
         int mais = 110;
 
 
-        for (AST Sub2 : eTudo.getASTS()) {
+        boolean tem_definemockiz = mSigmazRaiz.tem_DefineMockiz();
+        boolean tem_actionfunction = mSigmazRaiz.tem_ActionFunction();
+        boolean tem_directoroperator = mSigmazRaiz.tem_DirectorOperator();
+        boolean tem_autofunctor = mSigmazRaiz.tem_AutoFunctor();
+        boolean tem_mark = mSigmazRaiz.tem_Marker();
 
-            if (Sub2.mesmoTipo("DEFINE")) {
-                String eConteudo = mUtils.getDefine(Sub2);
-                mais = mIntellisense.algum(Sub2, g, mais, eConteudo, mIntellisense.IMG_DEFINE_ALL);
-                p += 1;
-            }
+        for (SigmazDefine Sub2 : mSigmazRaiz.getDefines()) {
+            mais = mIntellisense.algum(g, mais, Sub2.getDefinicao(), mIntellisense.IMG_DEFINE_ALL);
+        }
+
+
+        for (SigmazMockiz Sub2 : mSigmazRaiz.getMockizes()) {
+            mais = mIntellisense.algum(g, mais, Sub2.getDefinicao(), mIntellisense.IMG_MOCKIZ_ALL);
+        }
+
+
+        if (mIntellisense.deveSeparar(tem_definemockiz, tem_actionfunction)) {
+            mais = mIntellisense.criarBox_vertical(g, mais);
+        }
+
+
+        for (SigmazAction Sub2 : mSigmazRaiz.getActions()) {
+            mais = mIntellisense.algum(g, mais, Sub2.getDefinicao(), mIntellisense.IMG_ACTION_ALL);
+        }
+
+
+        for (SigmazFunction Sub2 : mSigmazRaiz.getFunctions()) {
+            mais = mIntellisense.algum(g, mais, Sub2.getDefinicao(), mIntellisense.IMG_FUNCTION_ALL);
+        }
+
+
+        if (mIntellisense.deveSeparar(tem_actionfunction, tem_actionfunction)) {
+            mais = mIntellisense.criarBox_vertical(g, mais);
 
         }
 
 
-        for (AST Sub2 : eTudo.getASTS()) {
-
-            if (Sub2.mesmoTipo("MOCKIZ")) {
-                String eConteudo = mUtils.getMockiz(Sub2);
-                mais = mIntellisense.algum(Sub2, g, mais, eConteudo, mIntellisense.IMG_MOCKIZ_ALL);
-                p += 1;
-            }
-
+        for (SigmazAuto Sub2 : mSigmazRaiz.getAutos()) {
+            mais = mIntellisense.algum(g, mais, Sub2.getDefinicao(), mIntellisense.IMG_ACTION_ALL);
         }
 
 
-        int ne = 0;
-
-        for (AST Sub2 : eTudo.getASTS()) {
-            if (Sub2.mesmoTipo("ACTION")) {
-                ne += 1;
-            } else if (Sub2.mesmoTipo("FUNCTION")) {
-                ne += 1;
-            }
-
+        for (SigmazFunctor Sub2 : mSigmazRaiz.getFunctores()) {
+            mais = mIntellisense.algum(g, mais, Sub2.getDefinicao(), mIntellisense.IMG_FUNCTION_ALL);
         }
 
 
-        if (p > 0 && ne > 0) {
-            mais += 70;
-
-            g.setColor(Color.BLACK);
-            g.fillRect(eLargura / 4, mais, eLargura / 2, 15);
-
-
-        }
-
-        int p2 = 0;
-
-
-        for (AST Sub2 : eTudo.getASTS()) {
-
-            if (Sub2.mesmoTipo("ACTION")) {
-                String eConteudo = mUtils.getAction(Sub2);
-                mais = mIntellisense.algum(Sub2, g, mais, eConteudo, mIntellisense.IMG_ACTION_ALL);
-                p2 += 1;
-            }
-
+        if (mIntellisense.deveSeparar(tem_autofunctor, tem_directoroperator)) {
+            mais = mIntellisense.criarBox_vertical(g, mais);
         }
 
 
-        for (AST Sub2 : eTudo.getASTS()) {
-
-            if (Sub2.mesmoTipo("FUNCTION")) {
-                String eConteudo = mUtils.getFuction(Sub2);
-                mais = mIntellisense.algum(Sub2, g, mais, eConteudo, mIntellisense.IMG_FUNCTION_ALL);
-                p2 += 1;
-            }
+        for (SigmazDirector Sub2 : mSigmazRaiz.getDirectors()) {
+            mais = mIntellisense.leftString_Normal(g, 30, mais, eLargura, Sub2.getDefinicao(), mIntellisense.IMG_DIRECTOR);
 
         }
 
-
-        int e = 0;
-
-        for (AST Sub2 : eTudo.getASTS()) {
-            if (Sub2.mesmoTipo("DEFINE")) {
-                e += 1;
-            } else if (Sub2.mesmoTipo("MOCKIZ")) {
-                e += 1;
-            } else if (Sub2.mesmoTipo("ACTION")) {
-                e += 1;
-            } else if (Sub2.mesmoTipo("FUNCTION")) {
-                e += 1;
-            }
-
-        }
-
-        if (p2 > 0 && e > 0) {
-
-            mais += 70;
-
-            g.setColor(Color.BLACK);
-            g.fillRect(eLargura / 4, mais, eLargura / 2, 15);
-
+        for (SigmazOperator Sub2 : mSigmazRaiz.getOperators()) {
+            mais = mIntellisense.leftString_Normal(g, 30, mais, eLargura, Sub2.getDefinicao(), mIntellisense.IMG_OPERATOR);
         }
 
 
-        for (AST Sub2 : eTudo.getASTS()) {
-
-            if (Sub2.mesmoTipo("DIRECTOR")) {
-
-                String eConteudo = mUtils.getFuction(Sub2);
-
-                g.setColor(Color.BLACK);
-                mIntellisense.leftString(g, new Rectangle(30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_DIRECTOR_ALL);
-
-                mais += 30;
-
-            }
+        if (mIntellisense.deveSeparar(tem_directoroperator, tem_mark)) {
+            mais = mIntellisense.criarBox_vertical(g, mais);
         }
 
-        for (AST Sub2 : eTudo.getASTS()) {
-
-            if (Sub2.mesmoTipo("OPERATOR")) {
-
-                String eConteudo = mUtils.getFuction(Sub2);
-
-                g.setColor(Color.BLACK);
-                mIntellisense.leftString(g, new Rectangle(30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_OPERATOR_ALL);
-
-                mais += 30;
-
-            }
+        for (SigmazMark Sub2 : mSigmazRaiz.getMarks()) {
+            mais = mIntellisense.leftString_Normal(g, 30, mais, eLargura, Sub2.getDefinicao(), mIntellisense.IMG_MARK);
         }
 
 
         try {
-            File outputfile = new File(eLocal + eTitulo + ".png");
-            ImageIO.write(img, "png", outputfile);
+            ImageIO.write(img, "png", new File(eLocal + eTitulo + ".png"));
         } catch (IOException o) {
 
         }
 
     }
 
-    public void sigmaz_raiz_horizontal(String eLocal, String eTitulo, AST eTudo, int eLargura) {
+    public void sigmaz_raiz_horizontal(String eLocal, String eTitulo, SigmazRaiz mSigmazRaiz, int eLargura) {
 
         Color eBarraSigmaz = mIntellisenseTheme.getSigmaz();
         Color eTexto = mIntellisenseTheme.getTexto();
@@ -191,9 +135,10 @@ public class IS_Sigmaz {
 
 
         int w = eLargura;
-        int c = mIntellisense.getContagem(eTudo);
+        int c = mSigmazRaiz.getContagem();
 
         int faixador = 50;
+
 
         int ci = c;
         int colunas = 1;
@@ -211,6 +156,7 @@ public class IS_Sigmaz {
         int indexador = 0;
         int colunador = 0;
 
+        int mais = 0;
 
         BufferedImage img = new BufferedImage(w * colunas, h, BufferedImage.TYPE_INT_ARGB);
         Graphics g = img.getGraphics();
@@ -224,287 +170,190 @@ public class IS_Sigmaz {
 
 
         g.setColor(eTexto);
-        mIntellisense.centerString(g, new Rectangle(0, 0, w * colunas, 100), eTitulo, new Font("TimesRoman", Font.BOLD, 50));
+        mais = mIntellisense.titulo(g, 0, 0, w * colunas, eTitulo);
 
 
+        mais = 110;
 
 
-        int mais = 110;
-        int anterior = 0;
+        boolean tem_definemockiz = mSigmazRaiz.tem_DefineMockiz();
+        boolean tem_actionfunction = mSigmazRaiz.tem_ActionFunction();
+        boolean tem_directoroperator = mSigmazRaiz.tem_DirectorOperator();
+        boolean tem_autofunctor = mSigmazRaiz.tem_AutoFunctor();
+        boolean tem_mark = mSigmazRaiz.tem_Marker();
 
-        Simplificador mSimplificador = new Simplificador();
 
-        boolean tem_definemockiz = false;
-        boolean tem_actionfunction = false;
-        boolean tem_directoroperator = false;
-        boolean tem_autofunctor = false;
-        boolean tem_mark = false;
+        for (SigmazDefine Sub2 : mSigmazRaiz.getDefines()) {
 
-        for (AST Sub2 : eTudo.getASTS()) {
-            if (Sub2.mesmoTipo("DEFINE")) {
-                tem_definemockiz=true;
-            } else if (Sub2.mesmoTipo("MOCKIZ")) {
-                tem_definemockiz=true;
-            } else if (Sub2.mesmoTipo("ACTION")) {
-                tem_actionfunction=true;
-            } else if (Sub2.mesmoTipo("FUNCTION")) {
-                tem_actionfunction=true;
-            } else if (Sub2.mesmoTipo("DIRECTOR")) {
-                tem_directoroperator = true;
-            } else if (Sub2.mesmoTipo("OPERATOR")) {
-                tem_directoroperator = true;
-            } else if (Sub2.mesmoTipo("PROTOTYPE_AUTO")) {
-                tem_autofunctor = true;
-            } else if (Sub2.mesmoTipo("PROTOTYPE_FUNCTOR")) {
-                tem_autofunctor = true;
-            } else if (Sub2.mesmoTipo("MARK")) {
-                tem_mark = true;
+            if (indexador >= faixador) {
+                indexador = 0;
+                colunador += 1;
+                mais = 110;
             }
 
-        }
+            mais = mIntellisense.algum(g, (colunador * eLargura) + 30, mais, Sub2.getDefinicao(), mIntellisense.IMG_DEFINE_ALL);
 
-        for (AST Sub2 : eTudo.getASTS()) {
+            indexador += 1;
 
-            if (Sub2.mesmoTipo("DEFINE")) {
-                String eConteudo = mSimplificador.getDefine(Sub2);
-
-                if (indexador >= faixador) {
-                    indexador = 0;
-                    colunador += 1;
-                    mais = 110;
-                }
-
-                mais = mIntellisense.algum(Sub2, g, (colunador * eLargura) + 30, mais, eConteudo, mIntellisense.IMG_DEFINE_ALL);
-
-                indexador += 1;
-                anterior+=1;
-
-            }
 
         }
 
 
-        for (AST Sub2 : eTudo.getASTS()) {
+        for (SigmazMockiz Sub2 : mSigmazRaiz.getMockizes()) {
 
-            if (Sub2.mesmoTipo("MOCKIZ")) {
-                String eConteudo = mSimplificador.getMockiz(Sub2);
-
-                if (indexador >= faixador) {
-                    indexador = 0;
-                    colunador += 1;
-                    mais = 110;
-                }
-
-
-                mais = mIntellisense.algum(Sub2, g, (colunador * eLargura) + 30, mais, eConteudo, mIntellisense.IMG_MOCKIZ_ALL);
-                indexador += 1;
-                anterior+=1;
-
-            }
-
-        }
-
-
-        if (deveSeparar(anterior,tem_actionfunction)){
-            mais += 70;
-            g.setColor(eBox);
-            g.fillRect((colunador * eLargura) + (eLargura / 4), mais, eLargura / 2, 15);
-        }
-
-
-
-        anterior=0;
-
-
-        for (AST Sub2 : eTudo.getASTS()) {
-
-            if (Sub2.mesmoTipo("ACTION")) {
-                String eConteudo = mSimplificador.getAction(Sub2);
-
-                if (indexador >= faixador) {
-                    indexador = 0;
-                    colunador += 1;
-                    mais = 110;
-                }
-
-                g.setColor(eTexto);
-
-                mais = mIntellisense.algum(Sub2, g, (colunador * eLargura) + 30, mais, eConteudo, mIntellisense.IMG_ACTION_ALL);
-                indexador += 1;
-                anterior += 1;
-
-            }
-
-        }
-
-
-        for (AST Sub2 : eTudo.getASTS()) {
-
-            if (Sub2.mesmoTipo("FUNCTION")) {
-                String eConteudo = mSimplificador.getFuction(Sub2);
-
-                if (indexador >= faixador) {
-                    indexador = 0;
-                    colunador += 1;
-                    mais = 110;
-                }
-                g.setColor(eTexto);
-
-                mais = mIntellisense.algum(Sub2, g, (colunador * eLargura) + 30, mais, eConteudo, mIntellisense.IMG_FUNCTION_ALL);
-                indexador += 1;
-                anterior += 1;
-
-            }
-
-        }
-
-
-
-        if (deveSeparar(anterior,tem_autofunctor)){
-            mais += 70;
-            g.setColor(eBox);
-            g.fillRect((colunador * eLargura) + (eLargura / 4), mais, eLargura / 2, 15);
-        }
-
-
-        anterior = 0;
-
-
-        for (AST Sub2 : eTudo.getASTS()) {
-
-            if (Sub2.mesmoTipo("PROTOTYPE_AUTO")) {
-
-                String eConteudo =  mSimplificador.getAuto(Sub2) ;
-
-                if (indexador >= faixador) {
-                    indexador = 0;
-                    colunador += 1;
-                    mais = 110;
-                }
-
-                g.setColor(eTexto);
-                mIntellisense.leftString(g, new Rectangle((colunador * eLargura) + 30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_AUTO_ALL);
-
-                mais += 30;
-                indexador += 1;
-                anterior+=1;
-
-            }
-        }
-
-        for (AST Sub2 : eTudo.getASTS()) {
-
-            if (Sub2.mesmoTipo("PROTOTYPE_FUNCTOR")) {
-
-                String eConteudo =  mSimplificador.getFunctor(Sub2) ;
-
-                if (indexador >= faixador) {
-                    indexador = 0;
-                    colunador += 1;
-                    mais = 110;
-                }
-
-                g.setColor(eTexto);
-                mIntellisense.leftString(g, new Rectangle((colunador * eLargura) + 30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_FUNCTOR_ALL);
-
-                mais += 30;
-                indexador += 1;
-                anterior+=1;
-
-            }
-        }
-
-
-        if (anterior > 0) {
-
-            if (tem_directoroperator) {
-
-                mais += 70;
-
-                g.setColor(eBox);
-                g.fillRect((colunador * eLargura) + (eLargura / 4), mais, eLargura / 2, 15);
-
+            if (indexador >= faixador) {
+                indexador = 0;
+                colunador += 1;
+                mais = 110;
             }
 
 
+            mais = mIntellisense.algum(g, (colunador * eLargura) + 30, mais, Sub2.getDefinicao(), mIntellisense.IMG_MOCKIZ_ALL);
+            indexador += 1;
+
+
         }
 
 
-        anterior = 0;
+        if (mIntellisense.deveSeparar(tem_definemockiz, tem_actionfunction)) {
+            mais = mIntellisense.criarBox_horizontal(g, mais, colunador);
+        }
 
-        for (AST Sub2 : eTudo.getASTS()) {
 
-            if (Sub2.mesmoTipo("DIRECTOR")) {
+        for (SigmazAction Sub2 : mSigmazRaiz.getActions()) {
 
-                String eConteudo = mSimplificador.getDirector(Sub2);
-
-                if (indexador >= faixador) {
-                    indexador = 0;
-                    colunador += 1;
-                    mais = 110;
-                }
-
-                g.setColor(eTexto);
-                mIntellisense.leftString(g, new Rectangle((colunador * eLargura) + 30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_DIRECTOR_ALL);
-
-                mais += 30;
-                indexador += 1;
-                anterior += 1;
-
+            if (indexador >= faixador) {
+                indexador = 0;
+                colunador += 1;
+                mais = 110;
             }
+
+            g.setColor(eTexto);
+
+            mais = mIntellisense.algum(g, (colunador * eLargura) + 30, mais, Sub2.getDefinicao(), mIntellisense.IMG_ACTION_ALL);
+            indexador += 1;
+
+
         }
 
-        for (AST Sub2 : eTudo.getASTS()) {
 
-            if (Sub2.mesmoTipo("OPERATOR")) {
+        for (SigmazFunction Sub2 : mSigmazRaiz.getFunctions()) {
 
-                String eConteudo = mSimplificador.getOperator(Sub2);
-
-                if (indexador >= faixador) {
-                    indexador = 0;
-                    colunador += 1;
-                    mais = 110;
-                }
-
-                g.setColor(eTexto);
-                mIntellisense.leftString(g, new Rectangle((colunador * eLargura) + 30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_OPERATOR_ALL);
-
-                mais += 30;
-                indexador += 1;
-                anterior += 1;
-
+            if (indexador >= faixador) {
+                indexador = 0;
+                colunador += 1;
+                mais = 110;
             }
+            g.setColor(eTexto);
+
+            mais = mIntellisense.algum(g, (colunador * eLargura) + 30, mais, Sub2.getDefinicao(), mIntellisense.IMG_FUNCTION_ALL);
+            indexador += 1;
+
+
         }
 
-        if (deveSeparar(anterior,tem_mark)){
-            mais += 70;
-            g.setColor(eBox);
-            g.fillRect((colunador * eLargura) + (eLargura / 4), mais, eLargura / 2, 15);
+
+        if (mIntellisense.deveSeparar(tem_autofunctor, tem_autofunctor)) {
+            mais = mIntellisense.criarBox_horizontal(g, mais, colunador);
         }
 
 
-        anterior = 0;
+        for (SigmazAuto Sub2 : mSigmazRaiz.getAutos()) {
 
-        for (AST Sub2 : eTudo.getASTS()) {
-
-            if (Sub2.mesmoTipo("MARK")) {
-
-                String eConteudo =  mSimplificador.getMark(Sub2) ;
-
-                if (indexador >= faixador) {
-                    indexador = 0;
-                    colunador += 1;
-                    mais = 110;
-                }
-
-                g.setColor(eTexto);
-                mIntellisense.leftString(g, new Rectangle((colunador * eLargura) + 30, mais, eLargura, 100), eConteudo, new Font("TimesRoman", Font.BOLD, 20), mIntellisense.IMG_MARK);
-
-                mais += 30;
-                indexador += 1;
-                anterior+=1;
-
+            if (indexador >= faixador) {
+                indexador = 0;
+                colunador += 1;
+                mais = 110;
             }
+
+            g.setColor(eTexto);
+            mIntellisense.leftString_Normal(g, (colunador * eLargura) + 30, mais, eLargura, Sub2.getDefinicao(), mIntellisense.IMG_AUTO_ALL);
+
+            mais += 30;
+            indexador += 1;
+
+
+        }
+
+        for (SigmazFunctor Sub2 : mSigmazRaiz.getFunctores()) {
+
+            if (indexador >= faixador) {
+                indexador = 0;
+                colunador += 1;
+                mais = 110;
+            }
+
+            g.setColor(eTexto);
+            mIntellisense.leftString_Normal(g, (colunador * eLargura) + 30, mais, eLargura, Sub2.getDefinicao(), mIntellisense.IMG_FUNCTOR_ALL);
+
+            mais += 30;
+            indexador += 1;
+
+
+        }
+
+
+        if (mIntellisense.deveSeparar(tem_autofunctor, tem_directoroperator)) {
+            mais = mIntellisense.criarBox_horizontal(g, mais, colunador);
+        }
+
+
+        for (SigmazDirector Sub2 : mSigmazRaiz.getDirectors()) {
+
+
+            if (indexador >= faixador) {
+                indexador = 0;
+                colunador += 1;
+                mais = 110;
+            }
+
+            g.setColor(eTexto);
+            mIntellisense.leftString_Normal(g, (colunador * eLargura) + 30, mais, eLargura, Sub2.getDefinicao(), mIntellisense.IMG_DIRECTOR);
+
+            mais += 30;
+            indexador += 1;
+
+
+        }
+
+        for (SigmazOperator Sub2 : mSigmazRaiz.getOperators()) {
+
+
+            if (indexador >= faixador) {
+                indexador = 0;
+                colunador += 1;
+                mais = 110;
+            }
+
+            g.setColor(eTexto);
+            mIntellisense.leftString_Normal(g, (colunador * eLargura) + 30, mais, eLargura, Sub2.getDefinicao(), mIntellisense.IMG_OPERATOR);
+
+            mais += 30;
+            indexador += 1;
+
+
+        }
+
+        if (mIntellisense.deveSeparar(tem_directoroperator, tem_mark)) {
+            mais = mIntellisense.criarBox_horizontal(g, mais, colunador);
+        }
+
+
+        for (SigmazMark Sub2 : mSigmazRaiz.getMarks()) {
+
+            if (indexador >= faixador) {
+                indexador = 0;
+                colunador += 1;
+                mais = 110;
+            }
+
+            g.setColor(eTexto);
+            mIntellisense.leftString_Normal(g, (colunador * eLargura) + 30, mais, eLargura, Sub2.getDefinicao(), mIntellisense.IMG_MARK);
+
+            mais += 30;
+            indexador += 1;
+
+
         }
 
 
@@ -516,21 +365,5 @@ public class IS_Sigmaz {
 
     }
 
-
-    public boolean deveSeparar(int anterior,boolean tem){
-
-        boolean ret = false;
-
-        if (anterior > 0) {
-
-            if (tem) {
-
-                ret=true;
-
-            }
-        }
-
-        return ret;
-    }
 
 }

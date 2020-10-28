@@ -139,4 +139,9 @@ public class Utilitario {
 
         return mTipagem;
     }
+
+
+    public String getModo(AST eAST) {
+        return eAST.getBranch("VISIBILITY").getNome();
+    }
 }

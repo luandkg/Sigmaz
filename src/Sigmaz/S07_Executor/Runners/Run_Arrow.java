@@ -1,7 +1,7 @@
 package Sigmaz.S07_Executor.Runners;
 
 import Sigmaz.S07_Executor.Escopo;
-import Sigmaz.S07_Executor.Escopos.Run_Explicit;
+import Sigmaz.S07_Executor.Escopos.Run_External;
 import Sigmaz.S07_Executor.Item;
 import Sigmaz.S07_Executor.RunTime;
 import Sigmaz.S00_Utilitarios.AST;
@@ -23,8 +23,8 @@ public class Run_Arrow {
 
         Run_Context mRun_Context = new Run_Context(mRunTime);
 
-        Run_Explicit mEscopoExtern = null;
-        for (Run_Explicit mRun_Struct : mRun_Context.getRunExternContexto(mEscopo.getRefers())) {
+        Run_External mEscopoExtern = null;
+        for (Run_External mRun_Struct : mRun_Context.getRunExternContexto(mEscopo.getRefers())) {
             if (mRun_Struct.getNome().contentEquals(ASTCorrente.getNome())) {
                 mEscopoExtern = mRun_Struct;
                 break;

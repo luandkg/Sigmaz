@@ -1,6 +1,7 @@
 mockiz SIGMAZ : string = "SIGMAZ 1.0";
 mockiz VERSAO : num = 1.0;
 define ALTERAVAL : int = 0;
+
 import "constant.sigmaz";
 import "functions.sigmaz";
 import "comparators.sigmaz";

@@ -26,14 +26,11 @@ package Estruturas {
 		ALFA , BETA , GAMA 
 	}
 	model Simplezinho {
-		
-		#all:
+
 		define mNome : int;
 		mockiz mValor : int;
-		
-		#restrict:
-		define mOculto : int;
-		mockiz mReferencia : int;
+
+
 	}
 
 	struct Simples {

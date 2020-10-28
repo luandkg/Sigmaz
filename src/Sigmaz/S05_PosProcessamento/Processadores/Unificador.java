@@ -1,7 +1,9 @@
 package Sigmaz.S05_PosProcessamento.Processadores;
 
 import Sigmaz.S00_Utilitarios.*;
-import Sigmaz.S05_PosProcessamento.ProcurandoStruct;
+import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
+import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
+import Sigmaz.S00_Utilitarios.Alterador.SigmazType;
 import Sigmaz.S05_PosProcessamento.ProcurandoType;
 import Sigmaz.S07_Executor.Alterador;
 import Sigmaz.S05_PosProcessamento.PosProcessador;

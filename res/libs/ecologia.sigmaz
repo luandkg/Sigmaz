@@ -1,7 +1,32 @@
 package Ecologia {
+
 	struct Especie {
+
+        init Especie () {
+            mRegistro = Especie ->  Registrar();
+        }
+
+        implicit:
+	        define mRegistroGeral : int = -1;
+
+	    explicit :
+	        func Registrar () : int {
+	            mRegistroGeral = mRegistroGeral ++ 1;
+	            return mRegistroGeral;
+	        }
+
+	    restrict:
+	        define mRegistro : int;
+		    define mEspecie : string;
+
 	    all:
-		define especie : string;
+
+            func getEspecie() : string { return mEspecie;}
+
+		extra:
+		    operator == (E1 : Especie , E2 : Especie) : bool {
+		        return E1.getEspecie() == E2.getEspecie();
+		    }
 	}
 
 	struct Organismo with Especie {
@@ -42,7 +67,7 @@ package Ecologia {
 	struct Gato with Organismo {
 
 			init Gato ( eNome : string , eIdade : int ) -> Organismo ( ) {
-    			especie = "GATO";
+    			mEspecie = "GATO";
     			nome = eNome;
     			idade = eIdade;
     		}
@@ -78,7 +103,7 @@ package Ecologia {
 	struct SuperGato with Gato {
 
 			init SuperGato ( eNome : string , eIdade : int ) -> Gato ( eNome , eIdade ) {
-    			especie = "SUPERGATO";
+    			mEspecie = "SUPERGATO";
     		}
     		all:
 		define velocidadeSuper : num;
@@ -91,6 +116,41 @@ package Ecologia {
 			return velocidadeSuper;
 		}
 		
+	}
+
+	external Ecossistema {
+
+	    implicit:
+	        define mEnergia : int = 0;
+            mockiz mQuantum : int = 20;
+
+            func getE1() : int {return 10;}
+            func getE2() : int {return 20;}
+            func getE3() : int {return 30;}
+
+            act aumentarQuantum(){
+                mQuantum =mQuantum ++ 10;
+            }
+            act diminuirQuantum(){
+                mQuantum =mQuantum -- 10;
+            }
+
+	    explicit:
+
+	        define Transferencia : int = 0;
+	        mockiz TransferenciaQuantum : int = 10;
+
+            act aumentarEnergia(){
+                mEnergia = mEnergia ++ mQuantum;
+            }
+
+            act reduzirEnergia(){
+                mEnergia = mEnergia -- mQuantum;
+            }
+
+	        func getEnergia () : int { return mEnergia; }
+	        func getQuantum () : int { return mQuantum; }
+
 	}
 	
 }

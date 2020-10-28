@@ -106,3 +106,6 @@ Linguagem de Programação Estruturada - Alterações
 
 		2020 10 20 -->> Run_Any - Inicializador de Struct
 
+
+		2020 10 26 -->> Separação do Return do Run_Body
+

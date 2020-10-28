@@ -418,3 +418,29 @@
 2020 10 24  -->>  Pos-Processador : Estruturador
 2020 10 25  -->>  Pos-Processador Unificador Versao 2
 2020 10 25  -->>  Checagem de Tipo RunTime
+2020 10 26  -->>  Implementação do Run_Return separado do Run_Body
+2020 10 26  -->>  Formatador Struct
+2020 10 26  -->>  Sigmaz Visualizadores
+2020 10 26  -->>  Sigmaz Alteradores
+2020 10 26  -->>  Visualizador SigmazRaiz
+2020 10 26  -->>  Visualizador SigmazPackage
+2020 10 26  -->>  Visualizador SigmazDefine
+2020 10 26  -->>  Visualizador SigmazMockiz
+2020 10 26  -->>  Visualizador SigmazAction
+2020 10 26  -->>  Visualizador SigmazFunction
+2020 10 26  -->>  Visualizador SigmazDirector
+2020 10 26  -->>  Visualizador SigmazOperator
+2020 10 26  -->>  Visualizador SigmazAuto
+2020 10 26  -->>  Visualizador SigmazFunctor
+2020 10 26  -->>  Visualizador SigmazMark
+2020 10 26  -->>  Visualizador SigmazType
+2020 10 26  -->>  Visualizador SigmazStruct
+2020 10 26  -->>  Visualizador SigmazModel
+2020 10 26  -->>  Visualizador SigmazCast
+2020 10 26  -->>  Visualizador SigmazExternal
+2020 10 26  -->>  Visualizador SigmazGetter
+2020 10 26  -->>  Visualizador SigmazSetter
+2020 10 28  -->>  Simplificação do Intellisense
+2020 10 28  -->>  Intellisense com Fonte Escalável
+2020 10 28  -->>  Run_Refer
+2020 10 28  -->>  Run_Required

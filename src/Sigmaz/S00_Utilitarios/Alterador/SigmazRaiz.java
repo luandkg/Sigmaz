@@ -1,4 +1,6 @@
-package Sigmaz.S00_Utilitarios;
+package Sigmaz.S00_Utilitarios.Alterador;
+
+import Sigmaz.S00_Utilitarios.AST;
 
 import java.util.ArrayList;
 
@@ -8,6 +10,7 @@ public class SigmazRaiz {
 
     private ArrayList<SigmazStruct> mStructs;
     private ArrayList<SigmazType> mTypes;
+    private ArrayList<SigmazModel> mModelos;
 
 
     public SigmazRaiz(AST eSigmazRaiz) {
@@ -15,6 +18,7 @@ public class SigmazRaiz {
 
         mStructs = new ArrayList<SigmazStruct>();
         mTypes = new ArrayList<SigmazType>();
+        mModelos = new ArrayList<SigmazModel>();
 
         for (AST mStruct : mSigmazRaiz.getASTS()) {
             if (mStruct.mesmoTipo("STRUCT")) {
@@ -25,6 +29,8 @@ public class SigmazRaiz {
                     mTypes.add(new SigmazType(mStruct));
                 } else if (mStruct.getBranch("EXTENDED").mesmoNome("TYPE_UNION")) {
                     mTypes.add(new SigmazType(mStruct));
+                } else if (mStruct.getBranch("EXTENDED").mesmoNome("MODEL")) {
+                    mModelos.add(new SigmazModel(mStruct));
                 }
 
             }
@@ -54,6 +60,10 @@ public class SigmazRaiz {
 
     public ArrayList<SigmazType> getTypes() {
         return mTypes;
+    }
+
+    public ArrayList<SigmazModel> getModelos() {
+        return mModelos;
     }
 
 

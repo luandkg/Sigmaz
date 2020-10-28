@@ -285,7 +285,7 @@ public class Parser {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("model")) {
 
                 AST_Model mAST = new AST_Model(this);
-                mAST.init(AST_Raiz);
+                mAST.init("",AST_Raiz);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("auto")) {
 

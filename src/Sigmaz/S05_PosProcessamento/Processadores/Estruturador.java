@@ -3,10 +3,11 @@ package Sigmaz.S05_PosProcessamento.Processadores;
 import java.util.ArrayList;
 
 import Sigmaz.S00_Utilitarios.*;
+import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
+import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
+import Sigmaz.S00_Utilitarios.Alterador.SigmazStruct;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
-import Sigmaz.S05_PosProcessamento.ProcurandoStruct;
 import Sigmaz.S05_PosProcessamento.Pronoco.Pronoco_Function;
-import Sigmaz.S07_Executor.Alterador;
 
 public class Estruturador {
 

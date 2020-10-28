@@ -5,54 +5,77 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S00_Utilitarios.Visualizador.*;
 
 public class IS_Package {
 
     private Intellisense mIntellisense;
     private IntellisenseTheme mIntellisenseTheme;
 
-    public IS_Package(Intellisense eIntellisense,IntellisenseTheme eIntellisenseTheme) {
+    public IS_Package(Intellisense eIntellisense, IntellisenseTheme eIntellisenseTheme) {
 
         mIntellisense = eIntellisense;
-        mIntellisenseTheme=eIntellisenseTheme;
+        mIntellisenseTheme = eIntellisenseTheme;
 
     }
 
-    public void sigmaz_package(String eLocal, String eTitulo, AST eTudo, int eLargura) {
+
+    public void sigmaz_vertical(String eLocal, String eNomeArquivo, SigmazRaiz eSigmazRaiz, int eLargura) {
+
+        vertical(eLocal, eNomeArquivo,"SIGMAZ", eSigmazRaiz.getCasts(), eSigmazRaiz.getTypes(), eSigmazRaiz.getModelos(), eSigmazRaiz.getStages(), eSigmazRaiz.getStructs(), eSigmazRaiz.getExternals(), eLargura);
+
+    }
+
+
+    public void sigmaz_package_vertical(String eLocal,String eNomeArquivo, SigmazPackage eSigmazPacote, int eLargura) {
+
+        vertical(eLocal, eNomeArquivo,eSigmazPacote.getNome(), eSigmazPacote.getCasts(), eSigmazPacote.getTypes(), eSigmazPacote.getModels(), eSigmazPacote.getStages(), eSigmazPacote.getStructs(), eSigmazPacote.getExternals(), eLargura);
+
+
+    }
+
+    public void vertical(String eLocal, String eNomeArquivo,String eNome,
+                         ArrayList<SigmazCast> mCasts,
+                         ArrayList<SigmazType> mTypes,
+                         ArrayList<SigmazModel> mModels,
+                         ArrayList<SigmazStages> mStages,
+                         ArrayList<SigmazStruct> mStructs,
+                         ArrayList<SigmazExternal> mExternals,
+                         int eLargura) {
 
 
         Color eBarraPackage = mIntellisenseTheme.getPackage();
-        Color eTexto=mIntellisenseTheme.getTexto();
-        Color eBox=mIntellisenseTheme.getBox();
+        Color eTexto = mIntellisenseTheme.getTexto();
 
 
         int h = 0;
 
-        IS_Struct mIS = new IS_Struct(mIntellisense,mIntellisenseTheme);
 
-        for (AST Sub3 : eTudo.getASTS()) {
+        for (SigmazCast ss : mCasts) {
+            h += (ss.getContagem() * mIntellisense.getTamanhoItem());
+        }
 
+        for (SigmazStages ss : mStages) {
+            h += (ss.getContagem() * mIntellisense.getTamanhoItem());
+        }
 
-            if (Sub3.mesmoTipo("STRUCT")) {
-                h += ((mIS.getContagem(Sub3)) * 80);
+        for (SigmazStruct ss : mStructs) {
+            h += (ss.getContagem() * mIntellisense.getTamanhoItem());
+        }
 
-                if (Sub3.getBranch("EXTENDED").mesmoNome("STAGES")) {
+        for (SigmazType ss : mTypes) {
+            h += (ss.getContagem() * mIntellisense.getTamanhoItem());
+        }
 
-                    h += 100;
+        for (SigmazModel ss : mModels) {
+            h += (ss.getContagem() * mIntellisense.getTamanhoItem());
+        }
 
-                }
-            } else if (Sub3.mesmoTipo("TYPE")) {
-                h += ((mIntellisense.getContagem(Sub3)) * 80);
-            } else if (Sub3.mesmoTipo("CAST")) {
-                h += ((mIntellisense.getContagem(Sub3)) * 80);
-            } else if (Sub3.mesmoTipo("TYPE")) {
-                h += ((mIntellisense.getContagem(Sub3)) * 80);
-
-            } else {
-            }
-
+        for (SigmazExternal ss :mExternals) {
+            h += (ss.getContagem() * mIntellisense.getTamanhoItem());
         }
 
 
@@ -68,7 +91,7 @@ public class IS_Package {
 
 
         g.setColor(eTexto);
-        mIntellisense.centerString(g, new Rectangle(0, 0, eLargura, 100), eTitulo, new Font("TimesRoman", Font.BOLD, 50));
+        mIntellisense.titulo(g, 0, 0, eLargura,  eNome);
 
 
         int mais = 110;
@@ -76,110 +99,142 @@ public class IS_Package {
 
         g.setColor(Color.BLACK);
 
+        IntellisensePartes mIP = new IntellisensePartes(mIntellisense, mIntellisenseTheme);
 
+        for (SigmazCast ss : mCasts) {
+            mais = mIP.cast_continuar(g, ss, 0, mais, eLargura, h);
+        }
 
-        for (AST Sub3 : eTudo.getASTS()) {
+        for (SigmazType ss : mTypes) {
+            mais = mIP.type_continuar(g, ss, 0, mais, eLargura, h);
+        }
 
-            if (Sub3.mesmoTipo("TYPE")) {
+        for (SigmazStages ss : mStages) {
+            mais = mIP.stages_continuar(g, ss, 0, mais, eLargura, h);
+        }
 
-                //  IS_Type mIT = new IS_Type(mIntellisense);
+        for (SigmazModel ss : mModels) {
+            mais = mIP.model_continuar(g, ss, 0, mais, eLargura, h);
+        }
 
-                mais = mIS.continuar(g, Sub3, Sub3.getNome(), 0, mais, eLargura, h);
+        for (SigmazStruct ss : mStructs) {
+            mais = mIP.struct_continuar(g, ss, 0, mais, eLargura, h);
+        }
 
-            } else if (Sub3.mesmoTipo("STRUCT")) {
-
-
-                mais = mIS.continuar(g, Sub3, Sub3.getNome(), 0, mais, eLargura, h);
-
-
-            } else if (Sub3.mesmoTipo("CAST")) {
-
-                IS_Cast mIC = new IS_Cast(mIntellisense,mIntellisenseTheme);
-
-
-                mais = mIC.continuar(g, Sub3, Sub3.getNome(), 0, mais, eLargura, h);
-
-            } else if (Sub3.mesmoTipo("MODEL")) {
-
-                IS_Model mIC = new IS_Model(mIntellisense,mIntellisenseTheme);
-
-                mais = mIC.continuar(g, Sub3, Sub3.getNome(), 50, mais, eLargura, h);
-
-
-            } else {
-
-
-            }
-
-
+        for (SigmazExternal ss : mExternals) {
+            mais = mIP.external_continuar(g, ss, 0, mais, eLargura, h);
         }
 
 
         try {
-            File outputfile = new File(eLocal + eTitulo + ".png");
-            ImageIO.write(img, "png", outputfile);
+            ImageIO.write(img, "png", new File(eLocal + eNomeArquivo + ".png"));
         } catch (IOException e) {
 
         }
 
     }
 
-    public void sigmaz_package_horizontal(String eLocal, String eTitulo, AST eTudo, int eLargura) {
+
+
+
+
+
+
+    public void sigmaz_horizontal(String eLocal, String eNome, SigmazRaiz eSigmazRaiz, int eLargura) {
+
+        horizontal(eLocal, eNome, eSigmazRaiz.getCasts(), eSigmazRaiz.getTypes(), eSigmazRaiz.getModelos(), eSigmazRaiz.getStages(), eSigmazRaiz.getStructs(), eSigmazRaiz.getExternals(), eLargura);
+
+    }
+
+    public void sigmaz_package_horizontal(String eLocal,String eNome, SigmazPackage eSigmazPacote, int eLargura) {
+
+        horizontal(eLocal, eNome, eSigmazPacote.getCasts(), eSigmazPacote.getTypes(), eSigmazPacote.getModels(), eSigmazPacote.getStages(), eSigmazPacote.getStructs(), eSigmazPacote.getExternals(), eLargura);
+
+
+    }
+
+    public void horizontal(String eLocal, String eNome,
+                                            ArrayList<SigmazCast> mCasts,
+                                            ArrayList<SigmazType> mTypes,
+                                            ArrayList<SigmazModel> mModels,
+                                            ArrayList<SigmazStages> mStages,
+                                            ArrayList<SigmazStruct> mStructs,
+                                            ArrayList<SigmazExternal> mExternals,
+                                            int eLargura) {
 
 
         eLargura += 30;
 
 
         Color eBarraPackage = mIntellisenseTheme.getPackage();
-        Color eTexto=mIntellisenseTheme.getTexto();
-        Color eBox=mIntellisenseTheme.getBox();
-        Color eFundo=mIntellisenseTheme.getFundo();
+        Color eFundo = mIntellisenseTheme.getFundo();
 
-
-        IS_Struct mIS = new IS_Struct(mIntellisense,mIntellisenseTheme);
 
         int colunas = 0;
         int altura = 200;
 
         int alturaMinima = 200;
 
-        for (AST Sub3 : eTudo.getASTS()) {
+        for (SigmazStages ss : mStages) {
 
+            int h = alturaMinima + (ss.getContagem() * mIntellisense.getTamanhoItem())  + (ss.getSeparadores() * mIntellisense.getTamanhoCaixa());
+            colunas += 1;
 
-            if (Sub3.mesmoTipo("STRUCT")) {
-                int h = alturaMinima + ((mIS.getContagem(Sub3)) * 80);
-
-                if (Sub3.getBranch("EXTENDED").mesmoNome("STAGES")) {
-
-                    h += 100;
-
-                }
-
-                colunas += 1;
-
-                if (h > altura) {
-                    altura = h;
-                }
-
-            } else if (Sub3.mesmoTipo("CAST")) {
-                int h = alturaMinima + ((mIntellisense.getContagem(Sub3)) * 80);
-
-                colunas += 1;
-                if (h > altura) {
-                    altura = h;
-                }
-            } else if (Sub3.mesmoTipo("MODEL")) {
-                int h = alturaMinima + ((mIntellisense.getContagem(Sub3)) * 80);
-
-                colunas += 1;
-                if (h > altura) {
-                    altura = h;
-                }
-
-            } else {
+            if (h > altura) {
+                altura = h;
             }
-
         }
+
+        for (SigmazCast ss : mCasts) {
+
+            int h = alturaMinima + (ss.getContagem() * mIntellisense.getTamanhoItem());
+            colunas += 1;
+
+            if (h > altura) {
+                altura = h;
+            }
+        }
+
+        for (SigmazModel ss : mModels) {
+
+            int h = alturaMinima + (ss.getContagem() * mIntellisense.getTamanhoItem());
+            colunas += 1;
+
+            if (h > altura) {
+                altura = h;
+            }
+        }
+
+        for (SigmazStruct ss : mStructs) {
+
+            int h = alturaMinima + (ss.getContagem() * mIntellisense.getTamanhoItem())  + (ss.getSeparadores() * mIntellisense.getTamanhoCaixa());
+            colunas += 1;
+
+            if (h > altura) {
+                altura = h;
+            }
+        }
+
+        for (SigmazType ss : mTypes) {
+
+            int h = alturaMinima + (ss.getContagem() * mIntellisense.getTamanhoItem());
+            colunas += 1;
+
+            if (h > altura) {
+                altura = h;
+            }
+        }
+
+        for (SigmazExternal ss : mExternals) {
+
+            int h = alturaMinima + (ss.getContagem() * mIntellisense.getTamanhoItem());
+            colunas += 1;
+
+            if (h > altura) {
+                altura = h;
+            }
+        }
+
 
         if (colunas == 0) {
             colunas += 1;
@@ -197,61 +252,64 @@ public class IS_Package {
         g.fillRect(0, 0, eLargura * colunas, altura);
 
 
-        g.setColor(eBarraPackage);
-        g.fillRect(0, 0, eLargura * colunas, 100);
+        mIntellisense.criarCaixaTituloGrande(g,0,0,eLargura * colunas,eBarraPackage);
+        mIntellisense.tituloGrande(g,0, 0, eLargura * colunas,  eNome);
 
-
-        g.setColor(eTexto);
-        mIntellisense.centerString(g, new Rectangle(0, 0, eLargura * colunas, 100), eTitulo, new Font("TimesRoman", Font.BOLD, 50));
-
-
-
-
-
-
-
+        IntellisensePartes mIP = new IntellisensePartes(mIntellisense, mIntellisenseTheme);
 
         int colunando = 0;
 
-        for (AST Sub3 : eTudo.getASTS()) {
+        for (SigmazCast eSigmazCast : mCasts) {
 
-            //   System.out.println("\t INTELLISENSE " + eTitulo + " -> " + Sub3.getNome() + " :: " + colunando);
+            mIP.cast_continuar(g, eSigmazCast, colunando * eLargura, 110, eLargura, altura);
+            colunando += 1;
 
-            if (Sub3.mesmoTipo("STRUCT")) {
+        }
 
+        for (SigmazModel ss : mModels) {
 
-                 mIS.continuar(g, Sub3, Sub3.getNome(), colunando * eLargura, 110, eLargura, altura);
+            mIP.model_continuar(g, ss, (colunando * eLargura) , 110, eLargura, altura);
+            colunando += 1;
 
-                colunando += 1;
-            } else if (Sub3.mesmoTipo("CAST")) {
+        }
 
-                IS_Cast mIC = new IS_Cast(mIntellisense,mIntellisenseTheme);
+        for (SigmazStages ss : mStages) {
 
+            mIP.stages_continuar(g, ss, colunando * eLargura, 110, eLargura, altura);
+            colunando += 1;
 
-                mIC.continuar(g, Sub3, Sub3.getNome(), colunando * eLargura, 110, eLargura, altura);
-                colunando += 1;
-            } else if (Sub3.mesmoTipo("MODEL")) {
+        }
 
-                IS_Model mIC = new IS_Model(mIntellisense,mIntellisenseTheme);
+        for (SigmazType ss : mTypes) {
 
-               mIC.continuar(g, Sub3, Sub3.getNome(), (colunando * eLargura) + 20, 110, eLargura, altura);
+            mIP.type_continuar(g, ss, colunando * eLargura, 110, eLargura, altura);
+            colunando += 1;
 
-                colunando += 1;
+        }
 
-            } else {
+        for (SigmazStruct ss : mStructs) {
 
+            mIP.struct_continuar(g, ss, colunando * eLargura, 110, eLargura, altura);
 
-            }
+            colunando += 1;
 
+        }
+
+        for (SigmazExternal ss : mExternals) {
+
+            mIP.external_continuar(g, ss, colunando * eLargura, 110, eLargura, altura);
+            colunando += 1;
 
         }
 
 
         try {
-            ImageIO.write(img, "png", new File(eLocal + eTitulo + ".png"));
+            ImageIO.write(img, "png", new File(eLocal + eNome + ".png"));
         } catch (IOException e) {
 
         }
 
+
     }
+
 }

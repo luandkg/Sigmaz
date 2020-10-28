@@ -1,5 +1,10 @@
 package Sigmaz.S05_PosProcessamento.Processadores;
 
+import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
+import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
+import Sigmaz.S00_Utilitarios.Alterador.SigmazStruct;
+import Sigmaz.S05_PosProcessamento.Procurador;
+import Sigmaz.S05_PosProcessamento.ProcurandoModelo;
 import Sigmaz.S07_Executor.Alterador;
 
 import java.util.ArrayList;
@@ -11,12 +16,14 @@ public class Modelador {
 
     private PosProcessador mAnalisador;
 
-    private boolean mExterno;
+
+    private String CRIADO = "2020 09 10";
+    private String ATUALIZADO = "2020 10 28";
+    private String VERSAO = "2.0";
 
     public Modelador(PosProcessador eAnalisador) {
 
         mAnalisador = eAnalisador;
-        mExterno = true;
 
     }
 
@@ -35,11 +42,15 @@ public class Modelador {
 
     public void mensagem(String e) {
 
-        if (mAnalisador.getDebug_Alocador()) {
+        if (mAnalisador.getDebug_Modelador()) {
 
             mAnalisador.mensagem(e);
 
         }
+    }
+
+    public void errar(String e) {
+        mAnalisador.errar(e);
     }
 
     public void init(ArrayList<AST> mTodos) {
@@ -48,165 +59,67 @@ public class Modelador {
         mensagem(" ------------------ FASE MODELAGEM ----------------------- ");
         mensagem("");
 
-        ArrayList<AST> mPacotes = new ArrayList<AST>();
+        ArrayList<SigmazPackage> mPacotes = new ArrayList<SigmazPackage>();
 
         ArrayList<AST> mPacotesRequisitados = new ArrayList<AST>();
         ArrayList<AST> mModelosRequisitados = new ArrayList<AST>();
-
-        for (AST mRequisicao : mAnalisador.getRequisicoes()) {
-            for (AST mAST : mRequisicao.getASTS()) {
-
-                if (mAST.mesmoTipo("PACKAGE")) {
-
-                    mPacotesRequisitados.add(mAST);
-
-                    mensagem(" Pacote Externo :: " + mAST.getNome());
-
-                } else if (mAST.mesmoTipo("MODEL")) {
-
-                    mensagem(" Modelo Externo :: " + mAST.getNome());
-
-                    mModelosRequisitados.add(mAST);
-
-                }
-            }
-
-        }
 
 
         for (AST mAST : mTodos) {
 
             if (mAST.mesmoTipo("SIGMAZ")) {
 
-                ArrayList<AST> mPacotes_Completo = new ArrayList<AST>();
-                ArrayList<AST> mModelos_Completo = new ArrayList<AST>();
-
-                ArrayList<AST> mModelosRaiz = new ArrayList<AST>();
-
-                for (AST Struct_AST : mPacotesRequisitados) {
-                    mPacotes_Completo.add(Struct_AST);
-                }
-
-                for (AST Struct_AST : mModelosRequisitados) {
-                    mModelos_Completo.add(Struct_AST);
-                }
+                SigmazRaiz mSigmazRaiz = new SigmazRaiz(mAST);
 
                 for (AST Struct_AST : mAST.getASTS()) {
-
                     if (Struct_AST.mesmoTipo("PACKAGE")) {
-
-                        mPacotes.add(Struct_AST.copiar());
-                        mPacotes_Completo.add(Struct_AST.copiar());
-
-                    } else if (Struct_AST.mesmoTipo("MODEL")) {
-
-                        mModelosRaiz.add(Struct_AST);
-                        mModelos_Completo.add(Struct_AST);
-
+                        mPacotes.add(new SigmazPackage(Struct_AST));
                     }
-
-                }
-
-                ArrayList<String> mRefers = getRefers(mAST);
-
-                ArrayList<AST> mModelosSigmaz = new ArrayList<AST>();
-
-                for (AST Struct_AST : mModelosRequisitados) {
-                    mModelosSigmaz.add(Struct_AST);
-                }
-
-                for (AST eModelo : mModelosRaiz) {
-                    mModelosSigmaz.add(eModelo);
-                }
-                for (AST eModelo : getModelos(mRefers, mPacotes_Completo)) {
-                    mModelosSigmaz.add(eModelo);
                 }
 
 
-                modelador(true, "SIGMAZ", mAST, mModelosSigmaz);
+                processarSigmaz(mSigmazRaiz, mPacotes);
 
-
-                for (AST ePacote : mPacotes) {
-
-                    pacote_modelador(ePacote, mModelos_Completo, mPacotes_Completo);
-
+                for (SigmazPackage ePacote : mPacotes) {
+                    processarPacote(mSigmazRaiz, ePacote, mPacotes);
                 }
-
 
             }
+
         }
 
 
     }
 
 
-    public void modelador(boolean eRaiz, String eNome, AST ASTPai, ArrayList<AST> modelos) {
+    public void processarSigmaz(SigmazRaiz mSigmazRaiz, ArrayList<SigmazPackage> mPacotes) {
 
 
-        ArrayList<String> mNomes = new ArrayList<String>();
+        mensagem("");
 
-        ArrayList<AST> mEstruturasComModelos = new ArrayList<AST>();
+        for (SigmazStruct mStruct : mSigmazRaiz.getStructs()) {
 
-        for (AST Struct_AST : ASTPai.getASTS()) {
+            mensagem("STRUCT : " + mStruct.getNome());
 
-            if (Struct_AST.mesmoTipo("STRUCT")) {
+            if (mStruct.isModelada()) {
 
-                AST AST_Model = Struct_AST.getBranch("MODEL");
-                if (AST_Model.mesmoValor("TRUE")) {
-                    mEstruturasComModelos.add(Struct_AST);
-                }
-            }
+                mensagem("\t - MODELO : " + mStruct.getModelo());
 
+                Procurador mProcurador = new Procurador();
+                ProcurandoModelo mProcurandoModelo = mProcurador.procurarModelo_Sigmaz(mSigmazRaiz, mPacotes, mStruct.getModelo());
 
-        }
-        for (AST Struct_AST : modelos) {
-            mNomes.add(Struct_AST.getNome());
-        }
+                if (mProcurandoModelo.getEncontrado()) {
 
+                    mensagem("\t - ORIGEM : " + mProcurandoModelo.getOrigem());
 
-        if (modelos.size() == 0 && mEstruturasComModelos.size() == 0) {
-
-
-        } else {
-
-            if (eRaiz) {
-                mensagem("------------------------- MODEL " + eNome + " --------------------------");
-            } else {
-                mensagem("------------------------- MODEL - PACKAGE : " + eNome + " --------------------------");
-            }
-
-            mensagem(" MODELS : " + modelos.size());
-
-            for (AST Struct_AST : modelos) {
-                mensagem("\t - " + Struct_AST.getNome());
-            }
-
-            mensagem(" STRUCTS : " + mEstruturasComModelos.size());
-            for (AST Struct_AST : mEstruturasComModelos) {
-                mensagem("\t - " + Struct_AST.getNome() + " -> " + Struct_AST.getBranch("MODEL").getNome());
-            }
-
-            mensagem("");
-
-            for (AST Struct_AST : mEstruturasComModelos) {
-
-                String eModel_Nome = Struct_AST.getBranch("MODEL").getNome();
-
-                mensagem(" MODELANDO : " + Struct_AST.getNome());
-                mensagem("\t - " + Struct_AST.getNome());
-
-                if (mNomes.contains(eModel_Nome)) {
-
-                    modelar(Struct_AST, eModel_Nome, modelos);
+                    modelar(mStruct.getLeitura(), mProcurandoModelo.getModelo().getLeitura());
 
                 } else {
-                    mAnalisador.getErros().add("  - Model " + eModel_Nome + " : Nao encontrado ");
+                    errar("Modelo nao encontrado : " + mStruct.getModelo());
                 }
 
 
             }
-
-            mensagem("---------------------------------------------------------------------------");
 
 
         }
@@ -214,74 +127,42 @@ public class Modelador {
 
     }
 
+    public void processarPacote(SigmazRaiz mSigmazRaiz, SigmazPackage mSigmazPackage, ArrayList<SigmazPackage> mPacotes) {
 
-    public void pacote_modelador(AST ePacote, ArrayList<AST> mModelosRaiz, ArrayList<AST> mPacotes) {
+
+        mensagem("Pacote : " + mSigmazPackage.getNome());
+
+        for (SigmazStruct mStruct : mSigmazPackage.getStructs()) {
+
+            mensagem("\tSTRUCT : " + mStruct.getNome());
+
+            if (mStruct.isModelada()) {
+
+                mensagem("\t\t - MODELO : " + mStruct.getModelo());
+
+                Procurador mProcurador = new Procurador();
+                ProcurandoModelo mProcurandoModelo = mProcurador.procurarModelo_Package(mStruct.getModelo(), mSigmazRaiz, mSigmazPackage, mPacotes);
+
+                if (mProcurandoModelo.getEncontrado()) {
+
+                    mensagem("\t\t - ORIGEM : " + mProcurandoModelo.getOrigem());
+
+                    modelar(mStruct.getLeitura(), mProcurandoModelo.getModelo().getLeitura());
+
+                } else {
+                    errar("Modelo nao encontrado : " + mStruct.getModelo());
+                }
 
 
-        ArrayList<AST> mModelosPacote = new ArrayList<AST>();
-
-        for (AST Struct_AST : ePacote.getASTS()) {
-
-            if (Struct_AST.mesmoTipo("MODEL")) {
-                mModelosPacote.add(Struct_AST);
             }
-        }
-        for (AST eModelo : getModelos(getRefers(ePacote), mPacotes)) {
-            mModelosPacote.add(eModelo);
-        }
 
-        for (AST eModelo : mModelosRaiz) {
-            mModelosPacote.add(eModelo);
+
         }
-
-        modelador(false, ePacote.getNome(), ePacote, mModelosPacote);
-
 
     }
 
-    public ArrayList<AST> getModelos(ArrayList<String> mRefers, ArrayList<AST> mPacotes) {
 
-        ArrayList<AST> modelos = new ArrayList<AST>();
-
-        for (String eRefer : mRefers) {
-
-            AST mPacote = null;
-            boolean PacoteEnc = false;
-
-            for (AST ePacote : mPacotes) {
-                if (ePacote.mesmoNome(eRefer)) {
-                    mPacote = ePacote;
-                    PacoteEnc = true;
-                    break;
-                }
-            }
-
-            if (PacoteEnc) {
-
-                for (AST eAST : mPacote.getASTS()) {
-                    if (eAST.mesmoTipo("MODEL")) {
-                        modelos.add(eAST);
-                    }
-
-                }
-
-            } else {
-
-
-                mAnalisador.getErros().add("Pacote " + eRefer + " : Nao encontrado !");
-                break;
-            }
-
-        }
-
-        return modelos;
-    }
-
-
-    public void modelar(AST Struct, String eModelo, ArrayList<AST> mModelos) {
-
-
-        AST Modelo = ProcurarModelo(eModelo, mModelos).copiar();
+    public void modelar(AST Struct, AST Modelo) {
 
 
         AST mStruct_Generic = Struct.getBranch("MODEL").getBranch("GENERIC");
@@ -361,7 +242,8 @@ public class Modelador {
             return;
         }
 
-        for (AST Parte : Modelo.getASTS()) {
+
+        for (AST Parte : Modelo.getBranch("BODY").getASTS()) {
 
 
             if (Parte.mesmoTipo("DEFINE")) {
@@ -396,11 +278,22 @@ public class Modelador {
 
                     String eModelo_Tipo = getTipagem(Modelo);
                     String eStruct_Tipo = getTipagem(DentroStruct);
+                    String eVisibilidade = getVisibilidade(DentroStruct);
 
-                    if (eModelo_Tipo.contentEquals(eStruct_Tipo)) {
+                    if (eVisibilidade.contentEquals("ALL")) {
 
-                    } else {
-                        mAnalisador.getErros().add(" Struct " + Struct.getNome() + " Precisa ter um DEFINE : " + DentroStruct.getNome() + " : " + eModelo_Tipo);
+                        if (eModelo_Tipo.contentEquals(eStruct_Tipo)) {
+
+                        } else {
+                            mAnalisador.getErros().add(" Struct " + Struct.getNome() + " Precisa ter um DEFINE : " + DentroStruct.getNome() + " : " + eModelo_Tipo);
+                        }
+
+                    } else if (eVisibilidade.contentEquals("RESTRICT")) {
+                        mAnalisador.getErros().add(" Struct " + Struct.getNome() + " Precisa alterar a visibilidade da DEFINE : " + DentroStruct.getNome() + " : " + eModelo_Tipo);
+                    } else if (eVisibilidade.contentEquals("IMPLICIT")) {
+                        mAnalisador.getErros().add(" Struct " + Struct.getNome() + " Precisa alterar a visibilidade da DEFINE : " + DentroStruct.getNome() + " : " + eModelo_Tipo);
+                    } else if (eVisibilidade.contentEquals("EXPLICIT")) {
+                        mAnalisador.getErros().add(" Struct " + Struct.getNome() + " Precisa alterar a visibilidade da DEFINE : " + DentroStruct.getNome() + " : " + eModelo_Tipo);
                     }
 
 
@@ -416,6 +309,10 @@ public class Modelador {
         }
 
 
+    }
+
+    public String getVisibilidade(AST Struct) {
+        return Struct.getBranch("VISIBILITY").getNome();
     }
 
     public void Verificar_Mockiz(AST Struct, AST Modelo) {

@@ -10,7 +10,12 @@ public class Insignia {
     private Color mAzul = getColorHex2Rgb("#1290C3");
     private Color mAzul2 = getColorHex2Rgb("#79ABFF");
     private Color mAmarelo = getColorHex2Rgb("#FFC600");
+
     private Color mLaranja = getColorHex2Rgb("#DE6546");
+    private Color mLaranjaEscuro = getColorHex2Rgb("#B26500");
+    private Color mVerdeMarinho = getColorHex2Rgb("#00695f");
+
+
     private Color mPreto = getColorHex2Rgb("#2A2A2A");
     private Color mRoxo = getColorHex2Rgb("#FF00FF");
 
@@ -31,6 +36,10 @@ public class Insignia {
         return getDefine(mAmarelo);
     }
 
+    public BufferedImage getDefine_Implicit() {
+        return getDefine(mLaranjaEscuro);
+    }
+
     public BufferedImage getDefine_Type() {
         return getDefine(mAzul2);
     }
@@ -43,9 +52,14 @@ public class Insignia {
         return getMockiz(mVermelho);
     }
 
-    public BufferedImage getMockiz_Extern() {
+    public BufferedImage getMockiz_Explicit() {
         return getMockiz(mAmarelo);
     }
+
+    public BufferedImage getMockiz_Implicit() {
+        return getMockiz(mLaranjaEscuro);
+    }
+
 
     public BufferedImage getMockiz_Type() {
         return getMockiz(mAzul2);
@@ -59,8 +73,12 @@ public class Insignia {
         return getAction(mVermelho);
     }
 
-    public BufferedImage getAction_Extern() {
+    public BufferedImage getAction_Explicit() {
         return getAction(mAmarelo);
+    }
+
+    public BufferedImage getAction_Implicit() {
+        return getAction(mLaranjaEscuro);
     }
 
     public BufferedImage getFunction_All() {
@@ -71,8 +89,12 @@ public class Insignia {
         return getFunction(mVermelho);
     }
 
-    public BufferedImage getFunction_Extern() {
+    public BufferedImage getFunction_Explicit() {
         return getFunction(mAmarelo);
+    }
+
+    public BufferedImage getFunction_Implicit() {
+        return getFunction(mLaranjaEscuro);
     }
 
     public BufferedImage getAuto_All() {
@@ -255,7 +277,7 @@ public class Insignia {
     }
 
 
-    public BufferedImage getOperator() {
+    public BufferedImage getOperatoru() {
 
         BufferedImage img = new BufferedImage(30, 30, BufferedImage.TYPE_INT_ARGB);
         Graphics g = img.getGraphics();
@@ -277,7 +299,33 @@ public class Insignia {
         return img;
     }
 
+
     public BufferedImage getDirector() {
+
+        BufferedImage img = new BufferedImage(30, 30, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = img.getGraphics();
+
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, 30, 30);
+
+        int margem_x = 2;
+        int margem_y = 8;
+
+        int largura = 30 - (2 * margem_x);
+        int altura = 30 - (2 * margem_y);
+
+        g.setColor(mAzul);
+
+        g.fillRect(margem_x, margem_y + 5, largura, 5);
+
+        g.fillRect(margem_x, margem_y , 5, altura);
+
+
+        return img;
+    }
+
+
+    public BufferedImage getOperator() {
 
         BufferedImage img = new BufferedImage(30, 30, BufferedImage.TYPE_INT_ARGB);
         Graphics g = img.getGraphics();
@@ -303,6 +351,31 @@ public class Insignia {
 
         return img;
     }
+
+
+    public BufferedImage getBlocoSetter() {
+
+        BufferedImage img = new BufferedImage(30, 30, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = img.getGraphics();
+
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, 30, 30);
+
+        int margem_x = 2;
+        int margem_y = 8;
+
+        int largura = 30 - (2 * margem_x);
+
+        g.setColor(mVerdeMarinho);
+        g.fillRect(margem_x, margem_y, largura, 5);
+
+        g.fillRect(margem_x, margem_y + 10, largura, 5);
+
+
+        return img;
+    }
+
+
 
     public BufferedImage getMark() {
 
@@ -370,12 +443,6 @@ public class Insignia {
         int largura = 30 - (2 * margem_x);
 
         g.setColor(mLaranja);
-
-        int a = 6;
-        int px = (largura / 2) - (a / 2);
-
-        //   g.fillRect(margem_x + px, margem_y, a, 10);
-
 
         g.fillRect(margem_x, margem_y + 5, largura, 5);
 

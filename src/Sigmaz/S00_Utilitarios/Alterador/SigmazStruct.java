@@ -1,5 +1,6 @@
-package Sigmaz.S00_Utilitarios;
+package Sigmaz.S00_Utilitarios.Alterador;
 
+import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S05_PosProcessamento.Pronoco.Pronoco_Function;
 import Sigmaz.S07_Executor.Indexador.Index_Function;
 
@@ -44,6 +45,20 @@ public class SigmazStruct {
         }
 
         return ret;
+    }
+
+    public boolean isModelada() {
+        boolean ret = false;
+
+        if (mSigmazStruct_Leitura.getBranch("MODEL").mesmoValor("TRUE")) {
+            ret = true;
+        }
+
+        return ret;
+    }
+
+    public String getModelo() {
+        return mSigmazStruct_Leitura.getBranch("MODEL").getNome();
     }
 
     public String getCompletude() {

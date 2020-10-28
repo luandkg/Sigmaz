@@ -2,9 +2,9 @@ package Sigmaz.S05_PosProcessamento.Processadores;
 
 import java.util.ArrayList;
 
-import Sigmaz.S00_Utilitarios.SigmazPackage;
-import Sigmaz.S00_Utilitarios.SigmazRaiz;
-import Sigmaz.S00_Utilitarios.SigmazStruct;
+import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
+import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
+import Sigmaz.S00_Utilitarios.Alterador.SigmazStruct;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S05_PosProcessamento.ProcurandoStruct;

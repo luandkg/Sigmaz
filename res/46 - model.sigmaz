@@ -4,7 +4,8 @@ act inicio ( ) {
 	DEBUG -> REGRESSIVE :: STACK;
 }
 
-#struct Relator at Relax {}
+struct Bloco {}
+
 struct Contador at M_Contagem {
 all:
 	define Base : num = 10.0;
@@ -24,4 +25,41 @@ model M_Contagem {
 	define val : vax >> ( num );
 	act contar ( num );
 	func retornar ( num ) : num;
+}
+
+model Bioma {
+
+    define mNome : string;
+
+}
+
+package Biomas{
+
+    struct Cerrado at Bioma {
+            all:
+            define mNome : string;
+
+    }
+    struct Pantanal at Bioma {
+                all:
+                define mNome : string;
+    }
+
+
+    model SuperBioma {
+        define mNome : string;
+    }
+
+
+}
+
+package SuperBiomas{
+
+    refer Biomas;
+
+    struct SuperPantanal at SuperBioma {
+                all:
+                define mNome : string;
+    }
+
 }

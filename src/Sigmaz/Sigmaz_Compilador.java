@@ -1,5 +1,7 @@
 package Sigmaz;
 
+import Sigmaz.Intellisenses.Intellisense;
+import Sigmaz.Intellisenses.IntellisenseTheme;
 import Sigmaz.S00_Utilitarios.*;
 import Sigmaz.S01_PreProcessamento.Etapa;
 import Sigmaz.S01_PreProcessamento.Planejador;
@@ -515,7 +517,7 @@ public class Sigmaz_Compilador {
 
         if (mMostrar_Fases) {
             System.out.println("");
-            System.out.println("\t - Tempo   : " + mIntervalo.getIntervalo() + " segundos");
+            System.out.println("\t - Tempo    : " + mIntervalo.getIntervalo() + " segundos");
         }
 
         listar_mensagens();
@@ -1104,6 +1106,94 @@ public class Sigmaz_Compilador {
     public ArrayList<GrupoDeComentario> getComentarios() {
         return mComentarios;
     }
+
+
+
+
+
+    public void initIntellisenses(String eArquivo, String mSaida, String eLocalLibs, int mOpcao,String eLocalIntellisenses) {
+        ArrayList<String> aa = new ArrayList<String>();
+        aa.add(eArquivo);
+        initIntellisenses(aa, mSaida, eLocalLibs, mOpcao,eLocalIntellisenses);
+    }
+
+    public void initIntellisenses(ArrayList<String> eArquivos, String mSaida, String eLocalLibs, int mOpcao,String eLocalIntellisenses) {
+
+        limpar();
+
+
+        mFase = Fases.PRE_PROCESSAMENTO;
+
+
+        if (mMostrar_Fases) {
+
+            System.out.println("");
+            System.out.println("################ SIGMAZ FASES ################");
+            System.out.println("");
+
+            for (String a : eArquivos) {
+                System.out.println("\t - Source : " + a);
+            }
+            System.out.println("\t - Local  : " + eLocalLibs);
+            System.out.println("\t - Build  : " + mSaida);
+            System.out.println("\t - Modo   : " + getModo(mOpcao));
+
+            System.out.println("");
+
+        }
+
+        Chronos_Intervalo mIntervalo = new Chronos_Intervalo();
+
+        mIntervalo.marqueInicio();
+
+        executar_Compilador(eArquivos, mOpcao);
+
+        fase_Lexer();
+
+        fase_Parser();
+
+        executar_PosProcessamento(eLocalLibs);
+
+        executar_Montagem(mSaida);
+
+
+        if (!temErros()) {
+
+            Intellisense IntellisenseC = new Intellisense();
+            IntellisenseC.run(getASTS(), new IntellisenseTheme(), eLocalIntellisenses);
+
+
+            System.out.println("\t - 7 : Intellisense\t\t\t   : SUCESSO");
+
+
+        }else{
+
+
+            System.out.println("\t - 7 : Intellisense\t\t\t   : FALHOU");
+
+
+        }
+
+        mIntervalo.marqueFim();
+
+        if (mMostrar_Fases) {
+            System.out.println("");
+            System.out.println("\t - Tempo    : " + mIntervalo.getIntervalo() + " segundos");
+        }
+
+        listar_mensagens();
+
+        if (mFase == Fases.PRONTO) {
+
+        } else {
+
+            falhou();
+
+        }
+
+    }
+
+
 
 
 }

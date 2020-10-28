@@ -4,6 +4,7 @@ import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
+
 import Sigmaz.S00_Utilitarios.Texto;
 
 public class OARoad {
@@ -164,7 +165,6 @@ public class OARoad {
         }
 
 
-
         Agrupador<String> mAgrupador = new Agrupador<String>();
 
 
@@ -188,28 +188,25 @@ public class OARoad {
         return mAgrupador.getGrupos();
     }
 
-    public void exportarImagem(String eArquivo,Color eBarra,Color eFonteCor) {
+    public void exportarImagem(String eArquivo, Color eBarra, Color eFonteCor) {
 
 
         OATrilha mRotas = new OATrilha();
 
-        mRotas.gerarRotasH(eArquivo,this.getRoads(), eBarra,eFonteCor);
-
+        mRotas.gerarRotasH(eArquivo, this.getRoads(), eBarra, eFonteCor);
 
 
     }
 
-    public void exportarImagemHV(String eArquivo,Color eBarra,Color eFonteCor) {
+    public void exportarImagemHV(String eArquivo, Color eBarra, Color eFonteCor) {
 
 
         OATrilha mRotas = new OATrilha();
 
-        mRotas.gerarRotasHV(eArquivo,this.getRoads(), eBarra,eFonteCor);
-
+        mRotas.gerarRotasHV(eArquivo, this.getRoads(), eBarra, eFonteCor);
 
 
     }
-
 
 
     public void exportarMarkDown(String eArquivo, String eTitulo, String eLinkImagem, String eDesImagem) {
@@ -219,27 +216,100 @@ public class OARoad {
 
         String eConteudo = "";
 
-        eConteudo +="![" + eDesImagem+ "](" + eLinkImagem + ")";
-        eConteudo+="\n\n";
+        eConteudo += "![" + eDesImagem + "](" + eLinkImagem + ")";
+        eConteudo += "\n\n";
 
-        eConteudo+="\n" + eTitulo;
-        eConteudo+="\n\n";
+        eConteudo += "\n" + eTitulo;
+        eConteudo += "\n\n";
 
         for (OA.Grupo<String> Grupo : mGrupos) {
 
 
+            for (String eLinha : Grupo.getObjetos()) {
 
-            for(String eLinha : Grupo.getObjetos()){
-
-                eConteudo+="\n\t\t" + Grupo.getNome() + " -->> " + eLinha;
+                eConteudo += "\n\t\t" + Grupo.getNome() + " -->> " + eLinha;
 
             }
 
-            eConteudo+="\n\n";
+            eConteudo += "\n\n";
         }
 
         Texto.Escrever(eArquivo, eConteudo);
 
     }
+
+    public void exportarSetoresMarkDown(String eArquivo, int eQuantidade, String eTitulo, String eLinkImagem, String eDesImagem) {
+
+        ArrayList<Grupo<String>> mGrupos = getRoads();
+
+        String eConteudo = "";
+
+        eConteudo += "![" + eDesImagem + "](" + eLinkImagem + ")";
+        eConteudo += "\n\n";
+
+        eConteudo += "\n" + eTitulo;
+        eConteudo += "\n\n";
+
+        int eContador = 0;
+        int eMaximo = eQuantidade;
+
+        String eBloco = "";
+        int eBlocoID = 1;
+
+        String eBloco_inicio = "";
+        String eBloco_fim = "";
+
+        int eImplementacoes = 0;
+
+        for (OA.Grupo<String> Grupo : mGrupos) {
+
+            if (eContador == 0) {
+                eBloco_inicio = Grupo.getNome();
+            }
+
+            eBloco_fim = Grupo.getNome();
+            eImplementacoes+=Grupo.getObjetos().size();
+
+            for (String eLinha : Grupo.getObjetos()) {
+
+                eBloco += "\n\t\t" + Grupo.getNome() + " -->> " + eLinha;
+
+            }
+
+            eBloco += "\n\n";
+
+            eContador += 1;
+
+            if (eContador == eMaximo) {
+
+                eConteudo += "\n  ## Bloco : " + eBlocoID;
+                eConteudo += "\n\t\t Iniciado : " + eBloco_inicio;
+                eConteudo += "\n\t\t Concluido : " + eBloco_fim;
+                eConteudo += "\n\t\t Implementações : " + eImplementacoes;
+
+                // eConteudo += eBloco;
+
+                eContador = 0;
+                eImplementacoes=0;
+                eBlocoID += 1;
+            }
+        }
+
+        if (eContador > 0) {
+
+
+            eConteudo += "\n##  Bloco : " + eBlocoID;
+
+            eConteudo += "\n\t\t Iniciado : " + eBloco_inicio;
+            eConteudo += "\n\t\t Atualização : " + eBloco_fim;
+            eConteudo += "\n\t\t Implementações : " + eImplementacoes;
+
+
+        }
+
+        Texto.Escrever(eArquivo, eConteudo);
+
+    }
+
 
 }

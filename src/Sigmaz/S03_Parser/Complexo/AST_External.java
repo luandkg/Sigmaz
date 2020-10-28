@@ -112,6 +112,27 @@ public class AST_External {
 
                 VISIBILIDADE = mudarEscopo("IMPLICIT");
 
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("all")) {
+
+                mCompiler.errarCompilacao("Externals nao possuem escopo : ALL", TokenC);
+
+                VISIBILIDADE = mudarEscopo("ALL");
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("restrict")) {
+
+                mCompiler.errarCompilacao("Externals nao possuem escopo : RESTRICT", TokenC);
+
+                VISIBILIDADE = mudarEscopo("RESTRICT");
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("extra")) {
+
+                mCompiler.errarCompilacao("Externals nao possuem escopo : EXTRA", TokenC);
+
+                VISIBILIDADE = mudarEscopo("EXTRA");
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("BLOCK")) {
+
+                mCompiler.errarCompilacao("Externals nao possuem escopo : BLOCK", TokenC);
+
+                VISIBILIDADE = mudarEscopo("EXTRA");
+
             } else {
 
 

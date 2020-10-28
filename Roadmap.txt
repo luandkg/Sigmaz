@@ -1,1 +1,1 @@
-Implementação do Run_Return separado do Run_Body
+Simplificação do Run_External

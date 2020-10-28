@@ -4,7 +4,7 @@ import Sigmaz.S07_Executor.Escopo;
 import Sigmaz.S07_Executor.Indexador.Index_Function;
 import Sigmaz.S07_Executor.Item;
 import Sigmaz.S07_Executor.Runners.Run_Context;
-import Sigmaz.S07_Executor.Escopos.Run_Explicit;
+import Sigmaz.S07_Executor.Escopos.Run_External;
 import Sigmaz.S00_Utilitarios.AST;
 
 import java.util.ArrayList;
@@ -477,7 +477,7 @@ public class Local {
     }
 
     public void listar_Externs() {
-        for (Run_Explicit mAST : mEscopo.getExtern()) {
+        for (Run_External mAST : mEscopo.getExtern()) {
             System.out.println("\t - " + mAST.getNomeCompleto());
         }
     }

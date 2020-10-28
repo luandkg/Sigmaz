@@ -1,48 +1,55 @@
+
 call StructsWithGeneric -> {
-
-
-    def a1 : ATG >> (int,int) = init ATG () >> (int,int);
-
-    def b : MMU >> (int,bool) = init MMU () >> (int,bool);
-
-    def c : RRA >> (bool) = init RRA () >> (bool);
-
-    def d : Complexo = init Complexo() ;
-
-    def d1 : int = d.getTGU();
-
-	DEBUG -> REGRESSIVE :: STACK;
-
+	 def a1 : ChaveValor >> ( int , int ) = init ChaveValor ( ) >> ( int , int );
+	 def b : Par >> ( int , bool ) = init Par ( ) >> ( int , bool );
+	 def c : Associado >> ( bool ) = init Associado ( ) >> ( bool );
+	 def d : IntPar = init IntPar ( );
+	 def d1 : int = d.getValor ( );
+	 DEBUG -> REGRESSIVE :: STACK;
 }
 
-
-struct ATG in (A,B) {
-
-restrict:
-    define TGU : A;
-    define RCA : B;
-
-all:
-    func getTGU () : A {return TGU;}
-    func getRCA () : B {return RCA;}
-
-
+act colocar_valor ( cv : ChaveValor >> ( string , string ) , chave : string , valor : string ) {
+	 cv.setChave ( chave );
+	 cv.setValor ( valor );
 }
 
-struct MMU in (S,R) with ATG >> (S,R) {
+struct ChaveValor in ( A , B ) {
+	
+	restrict :
+		define Chave : A ;
+		define Valor : B ;
+	all :
+		func getChave ( ) : A {
+			 return Chave;
+		}
 
-    init MMU() -> ATG() {}
+		func getValor ( ) : B {
+			 return Valor;
+		}
 
+		act setChave ( eChave : A ) {
+			 Chave = eChave;
+		}
+
+		act setValor ( eValor : B ) {
+			 Valor = eValor;
+		}
 }
 
-struct RRA in (S) with ATG >> (S,int) {
-
-    init RRA() -> ATG() {}
-
+struct Par in ( S , R ) with ChaveValor >> ( S , R ) {
+	
+	init Par ( ) -> ChaveValor ( ) {
+	}
 }
 
-struct Complexo with ATG >> (int,int) {
+struct Associado in ( S ) with ChaveValor >> ( S , int ) {
+	
+	init Associado ( ) -> ChaveValor ( ) {
+	}
+}
 
-    init Complexo() -> ATG() {}
-
+struct IntPar with ChaveValor >> ( int , int ) {
+	
+	init IntPar ( ) -> ChaveValor ( ) {
+	}
 }

@@ -5,7 +5,7 @@ import Sigmaz.S07_Executor.Debuggers.Local;
 import Sigmaz.S07_Executor.Debuggers.Regressive;
 import Sigmaz.S07_Executor.Indexador.Index_Action;
 import Sigmaz.S07_Executor.Indexador.Index_Function;
-import Sigmaz.S07_Executor.Escopos.Run_Explicit;
+import Sigmaz.S07_Executor.Escopos.Run_External;
 
 import java.util.ArrayList;
 
@@ -17,6 +17,8 @@ public class Escopo {
 
 
     private RunTime mRunTime;
+
+    private boolean mTemAnterior;
     private Escopo mEscopoAnterior;
 
     private EscopoStack mEscopoStack;
@@ -37,7 +39,7 @@ public class Escopo {
     private OO mOO;
     private OO mAO;
 
-    private ArrayList<Run_Explicit> mExternos;
+    private ArrayList<Run_External> mExternos;
     private ArrayList<String> mRefers;
     private ArrayList<String> mRefersOcultas;
 
@@ -67,21 +69,26 @@ public class Escopo {
         return mRunTime;
     }
 
+    public Escopo(String eNome, RunTime eRunTime) {
 
-    public Escopo(RunTime eRunTime, Escopo eEscopoAnterior) {
+
+        mNome = eNome;
+        mTemAnterior = false;
+        mEscopoAnterior = null;
+
+        mRunTime = eRunTime;
 
 
         mStacks = new ArrayList<>();
 
-        mRunTime = eRunTime;
-        mEscopoAnterior = eEscopoAnterior;
+
+
         mCancelar = false;
         mContinuar = false;
         mRetornado = false;
 
 
         mAO = new OO(this, mRunTime);
-
         mOO = new OO(this, mRunTime);
 
         mEstrutura = false;
@@ -91,7 +98,41 @@ public class Escopo {
         mRefers = new ArrayList<String>();
         mRefersOcultas = new ArrayList<String>();
 
-        mExternos = new ArrayList<Run_Explicit>();
+        mExternos = new ArrayList<Run_External>();
+
+
+        mDebug = new EscopoDebug(this);
+        mRegressive = new Regressive(this);
+        mLocalDebug = new Local(this);
+
+    }
+
+
+    public Escopo(RunTime eRunTime, Escopo eEscopoAnterior) {
+
+
+        mStacks = new ArrayList<>();
+
+        mRunTime = eRunTime;
+        mEscopoAnterior = eEscopoAnterior;
+        mTemAnterior = true;
+
+        mCancelar = false;
+        mContinuar = false;
+        mRetornado = false;
+
+
+        mAO = new OO(this, mRunTime);
+        mOO = new OO(this, mRunTime);
+
+        mEstrutura = false;
+
+        mRunTime = eRunTime;
+        mEscopoStack = new EscopoStack(mRunTime, this);
+        mRefers = new ArrayList<String>();
+        mRefersOcultas = new ArrayList<String>();
+
+        mExternos = new ArrayList<Run_External>();
 
 
         mDebug = new EscopoDebug(this);
@@ -132,10 +173,6 @@ public class Escopo {
 
     public void adicionarRefer(String eRefer) {
         mRefers.add(eRefer);
-
-
-
-
 
 
     }
@@ -200,7 +237,7 @@ public class Escopo {
 
     public void externalizar(String eNomeCompleto) {
 
-        for (Run_Explicit eAST : mRunTime.getExternals().getExterns()) {
+        for (Run_External eAST : mRunTime.getExternals().getExterns()) {
 
             if (eAST.getNomeCompleto().contentEquals(eNomeCompleto)) {
                 //   System.out.println("\t - Receber Externo Geral : " + eAST.getNomeCompleto());
@@ -211,19 +248,19 @@ public class Escopo {
 
     }
 
-    public void externalizarDireto(Run_Explicit eAST) {
+    public void externalizarDireto(Run_External eAST) {
         mExternos.add(eAST);
     }
 
 
-    public ArrayList<Run_Explicit> getExtern() {
-        ArrayList<Run_Explicit> mRet = new ArrayList<Run_Explicit>();
-        for (Run_Explicit mRE : mExternos) {
+    public ArrayList<Run_External> getExtern() {
+        ArrayList<Run_External> mRet = new ArrayList<Run_External>();
+        for (Run_External mRE : mExternos) {
             mRet.add(mRE);
         }
 
         if (mEscopoAnterior != null) {
-            for (Run_Explicit mRE : mEscopoAnterior.getExtern()) {
+            for (Run_External mRE : mEscopoAnterior.getExtern()) {
                 mRet.add(mRE);
             }
         }
@@ -244,61 +281,6 @@ public class Escopo {
 
     }
 
-    public void indexar(AST ASTCGlobal) {
-
-
-        for (AST ASTC : ASTCGlobal.getASTS()) {
-
-
-            if (ASTC.mesmoTipo("FUNCTION")) {
-                this.guardar(ASTC);
-
-            } else if (ASTC.mesmoTipo("ACTION")) {
-                this.guardar(ASTC);
-
-            } else if (ASTC.mesmoTipo("OPERATOR")) {
-                this.guardar(ASTC);
-
-            } else if (ASTC.mesmoTipo("DIRECTOR")) {
-                this.guardar(ASTC);
-
-            } else if (ASTC.mesmoTipo("CAST")) {
-                this.guardar(ASTC);
-
-            } else if (ASTC.mesmoTipo("STAGES")) {
-
-                this.guardar(ASTC);
-
-
-            } else if (ASTC.mesmoTipo("STRUCT")) {
-
-                this.guardar(ASTC);
-
-
-            } else if (ASTC.mesmoTipo("TYPE")) {
-
-                this.guardar(ASTC);
-
-
-            } else if (ASTC.mesmoTipo("PROTOTYPE_AUTO")) {
-
-                this.guardar(ASTC);
-            } else if (ASTC.mesmoTipo("PROTOTYPE_FUNCTOR")) {
-
-                this.guardar(ASTC);
-
-            } else if (ASTC.mesmoTipo("DEFAULT")) {
-
-                this.guardar(ASTC);
-            } else if (ASTC.mesmoTipo("MARK")) {
-
-                this.guardar(ASTC);
-
-            }
-
-        }
-
-    }
 
 
     public ArrayList<Index_Function> getFunctionsCompleto() {

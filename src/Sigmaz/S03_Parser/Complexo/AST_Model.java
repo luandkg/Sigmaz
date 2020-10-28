@@ -17,20 +17,56 @@ public class AST_Model {
         mCompiler = eCompiler;
     }
 
-    public void init(AST ASTPai) {
+    public void init(String eNomePacote,AST ASTPai) {
 
         Token TokenC = mCompiler.getTokenAvante();
 
         if (TokenC.getTipo() == TokenTipo.ID) {
 
-            AST AST_Corrente = new AST("MODEL");
+            AST AST_Corrente = new AST("STRUCT");
             AST_Corrente.setNome(TokenC.getConteudo());
+            AST_Corrente.setValor("");
+
+            if (eNomePacote.length() == 0) {
+                AST_Corrente.setValor(TokenC.getConteudo());
+            } else {
+                AST_Corrente.setValor(eNomePacote + "<>" + TokenC.getConteudo());
+            }
+
             ASTPai.getASTS().add(AST_Corrente);
-
-
 
             AST AST_Generico = AST_Corrente.criarBranch("GENERIC");
             AST_Generico.setNome("FALSE");
+
+            AST AST_With = AST_Corrente.criarBranch("WITH");
+            AST_With.setValor("FALSE");
+
+            AST AST_WithGeneric = AST_With.criarBranch("GENERIC");
+            AST_WithGeneric.setValor("FALSE");
+
+
+            AST AST_Model = AST_Corrente.criarBranch("MODEL");
+            AST_Model.setValor("FALSE");
+
+            AST AST_Stages = AST_Corrente.criarBranch("STAGES");
+            AST_Stages.setValor("FALSE");
+
+            AST mExtended = AST_Corrente.criarBranch("EXTENDED");
+            mExtended.setNome("MODEL");
+
+            AST mBases = AST_Corrente.criarBranch("BASES");
+
+            AST mRefers = AST_Corrente.criarBranch("REFERS");
+
+
+            AST AST_Inits = AST_Corrente.criarBranch("INITS");
+
+            AST AST_Corpo = AST_Corrente.criarBranch("BODY");
+
+            AST AST_Destruct = AST_Corrente.criarBranch("DESTRUCT");
+
+
+
 
 
             Token TokenFuturo = mCompiler.getTokenFuturo();
@@ -46,7 +82,7 @@ public class AST_Model {
             }
 
 
-            corpo(AST_Corrente);
+            corpo(AST_Corpo);
 
 
         } else {

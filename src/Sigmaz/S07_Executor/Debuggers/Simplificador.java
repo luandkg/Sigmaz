@@ -117,6 +117,10 @@ public class Simplificador {
         return eAST.getNome() + " (" + getParametros(eAST) + ")";
     }
 
+    public String getInit(AST eAST) {
+        return eAST.getNome() + " (" + getParametros(eAST) + ")";
+    }
+
     public String getCall(AST eAST) {
         return eAST.getNome() + " (" + getParametros(eAST.getBranch("SENDING")) + ")";
     }
@@ -126,6 +130,14 @@ public class Simplificador {
         return eAST.getNome() + " (" + getParametros(eAST) + ") : " + getTipagem(eAST.getBranch("TYPE"));
     }
 
+
+    public String getBlocoGetter(String eStructNome,AST eAST) {
+        return eStructNome + " [" + getParametros(eAST) + "] : " + getTipagem(eAST.getBranch("TYPE"));
+    }
+
+    public String getBlocoSetter(String eStructNome,AST eAST) {
+        return eStructNome + " [" + getParametros(eAST) + "] ";
+    }
 
     public String getMark(AST eAST) {
         return eAST.getNome() + " (" + getParametros(eAST) + ") : " + getTipagem(eAST.getBranch("TYPE"));

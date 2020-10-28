@@ -42,7 +42,7 @@ public class AppSigmaz {
 
         String mLocalGerador = "res/gerador/";
 
-        int ARQUIVO = 92;
+        int ARQUIVO = 46;
 
         switch (Fases.TESTES) {
 
@@ -127,7 +127,7 @@ public class AppSigmaz {
         mOARoadmap.receber("Roadmap.txt");
         mOARoadmap.exportarImagemHV("roadmap.png", new Color(52, 73, 94), eCorFonte);
         mOARoadmap.exportarMarkDown("ROADMAP.md", "Linguagem de Programação Estruturada - Implementações", IMG_ROAD, "RoadMap - Sigmaz");
-
+        mOARoadmap.exportarSetoresMarkDown("ROADMAP_V2.md", 12,"Linguagem de Programação Estruturada - Implementações", IMG_ROAD, "RoadMap - Sigmaz");
 
         OARoad mChangeList = new OARoad("res/oa/ChangeList.trilha");
         mChangeList.receber("ChangeList.txt");
@@ -147,38 +147,4 @@ public class AppSigmaz {
 
     }
 
-    public void ale() {
-
-        for (int i = 1; i <= 4; i++) {
-
-            Random rd = new Random();
-            int v = rd.nextInt(100) + 10;
-
-            int sh = rd.nextInt(10) + 7;
-            int sm = rd.nextInt(48) + 1;
-            int ss = rd.nextInt(48) + 1;
-
-            int fh = sh + rd.nextInt(5) + 1;
-            int fm = rd.nextInt(48) + 1;
-            int fs = rd.nextInt(48) + 1;
-
-            int uh = fh + rd.nextInt(2) + 1;
-            int um = rd.nextInt(48) + 1;
-            int us = rd.nextInt(48) + 1;
-
-            System.out.println(" PACOTE Branch");
-            System.out.println("   {");
-            System.out.println("      ID Date = \"" + i + "/7/2020\"");
-            System.out.println("      ID Start = \"" + i + "/7/2020 " + sh + ":" + sm + ":" + ss + "\"");
-            System.out.println("    ID Update = \"" + i + "/7/2020 " + fh + ":" + fm + ":" + fs + "\"");
-            System.out.println("    ID End = \"" + i + "/7/2020 " + uh + ":" + um + ":" + us + "\"");
-            System.out.println("     ID Status = \"RED\"");
-            System.out.println("     ID Count = \"" + v + "\"");
-            System.out.println(" }");
-
-
-        }
-
-
-    }
 }

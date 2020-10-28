@@ -1,6 +1,6 @@
 package Sigmaz.S07_Executor;
 
-import Sigmaz.S07_Executor.Escopos.Run_Explicit;
+import Sigmaz.S07_Executor.Escopos.Run_External;
 import Sigmaz.S00_Utilitarios.AST;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ public class Externals {
     private RunTime mRunTime;
     private String mLocal;
 
-    private ArrayList<Run_Explicit> mExtern;
+    private ArrayList<Run_External> mExtern;
 
     private long mExternID;
 
@@ -19,18 +19,18 @@ public class Externals {
         mLocal = "Externals";
         mRunTime = eRunTime;
 
-        mExtern = new ArrayList<Run_Explicit>();
+        mExtern = new ArrayList<Run_External>();
         mExternID = 0;
 
     }
 
-    public ArrayList<Run_Explicit> getExterns() {
+    public ArrayList<Run_External> getExterns() {
         return mExtern;
     }
 
-    public Run_Explicit adicionar(String ePacote, AST eExtern, AST ASTCGlobal) {
+    public Run_External adicionar(String ePacote, AST eExtern, AST ASTCGlobal) {
 
-        Run_Explicit mRE = new Run_Explicit(mRunTime);
+        Run_External mRE = new Run_External(mRunTime);
         mRE.init(ePacote, eExtern.getNome(), eExtern, ASTCGlobal);
 
 

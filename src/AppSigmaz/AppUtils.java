@@ -1,6 +1,7 @@
 package AppSigmaz;
 
 import Gerador.BioGerador;
+import Sigmaz.S00_Utilitarios.Tempo;
 import Sigmaz.S07_Executor.RunTime;
 import Sigmaz.S07_Executor.UML;
 import Sigmaz.S08_Ferramentas.Dependenciador;
@@ -175,7 +176,7 @@ public class AppUtils {
             SigmazC.setDebug_PosProcessador_Cast(false);
             SigmazC.setDebug_PosProcessador_Unificador(false);
             SigmazC.setDebug_PosProcessador_Heranca(false);
-            SigmazC.setDebug_PosProcessador_Modelador(false);
+            SigmazC.setDebug_PosProcessador_Modelador(true);
             SigmazC.setDebug_PosProcessador_Estagiador(false);
 
             SigmazC.setDebug_PosProcessador_Referenciador(false);
@@ -303,25 +304,14 @@ public class AppUtils {
     }
 
 
-    public static void INTELISENSE(int eIndice, ArrayList<String> mArquivos, String eSaida, String eLocalLibs, String eGrafico) {
+    public static void INTELISENSE(int eIndice, ArrayList<String> mArquivos, String eSaida, String eLocalLibs, String eLocalIntellisenses) {
 
         Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
 
         if (mOpcional.estaValido()) {
 
             Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
-            SigmazC.initSemExecucao(mOpcional.getConteudo(), eSaida, eLocalLibs, 1);
-
-            if (!SigmazC.temErros()) {
-
-                Intellisense IntellisenseC = new Intellisense();
-                IntellisenseC.run(SigmazC.getASTS(), new IntellisenseTheme(), eGrafico);
-
-
-                System.out.println("\t - 7 : Intellisense\t\t\t: SUCESSO");
-
-
-            }
+            SigmazC.initIntellisenses(mOpcional.getConteudo(), eSaida, eLocalLibs, 1,eLocalIntellisenses);
 
 
         } else {
@@ -331,22 +321,11 @@ public class AppUtils {
 
     }
 
-    public static void INTELISENSE_BIBLIOTECA(String eFonte, String eSaida, String eLocalLibs, String eGrafico) {
+    public static void INTELISENSE_BIBLIOTECA(String eFonte, String eSaida, String eLocalLibs, String eLocalIntellisenses) {
 
 
         Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
-        SigmazC.initSemExecucao(eFonte, eSaida, eLocalLibs, 1);
-
-        if (!SigmazC.temErros()) {
-
-            Intellisense IntellisenseC = new Intellisense();
-            IntellisenseC.run(SigmazC.getASTS(), new IntellisenseTheme(), eGrafico);
-
-
-            System.out.println("\t - 7 : Intellisense\t\t\t: SUCESSO");
-
-
-        }
+        SigmazC.initIntellisenses(eFonte, eSaida, eLocalLibs, 1,eLocalIntellisenses);
 
 
     }
@@ -458,7 +437,7 @@ public class AppUtils {
         long start = System.currentTimeMillis();
 
         Identador mIdentador = new Identador();
-        String DDI = mIdentador.getData();
+        String DDI = Tempo.getData();
 
         System.out.println("");
         System.out.println(" - AUTOR	: LUAN FREITAS");

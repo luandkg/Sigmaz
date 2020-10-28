@@ -1,7 +1,7 @@
 package Sigmaz.S07_Executor.Runners;
 
 import Sigmaz.S07_Executor.Escopo;
-import Sigmaz.S07_Executor.Escopos.Run_Explicit;
+import Sigmaz.S07_Executor.Escopos.Run_External;
 import Sigmaz.S07_Executor.Indexador.Index_Function;
 import Sigmaz.S07_Executor.Item;
 import Sigmaz.S07_Executor.RunTime;
@@ -23,6 +23,26 @@ public class Run_Context {
     }
 
 
+
+    public AST getPacote(String eNome) {
+        AST ret = null;
+
+        boolean mEnc = false;
+
+        for (AST ASTC : mRunTime.getGlobalPackages()) {
+            if (ASTC.mesmoNome(eNome)) {
+                ret = ASTC;
+                mEnc = true;
+                break;
+            }
+        }
+
+        if (!mEnc) {
+            mRunTime.errar(mLocal, "Pacote nao encontrado : " + eNome);
+        }
+        return ret;
+    }
+
     public ArrayList<AST> getStructsContexto(Escopo mEscopo) {
         ArrayList<AST> ret = new ArrayList<AST>();
 
@@ -38,7 +58,7 @@ public class Run_Context {
 
             if (mRunTime.existePacote(Referencia)) {
 
-                for (AST eAST : mRunTime.getPacote(Referencia).getASTS()) {
+                for (AST eAST : getPacote(Referencia).getASTS()) {
                     if (eAST.mesmoTipo("STRUCT")) {
 
                         if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
@@ -78,7 +98,7 @@ public class Run_Context {
 
             if (mRunTime.existePacote(Referencia)) {
 
-                for (AST eAST : mRunTime.getPacote(Referencia).getASTS()) {
+                for (AST eAST : getPacote(Referencia).getASTS()) {
                     if (eAST.mesmoTipo("STRUCT")) {
 
                         if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
@@ -119,7 +139,7 @@ public class Run_Context {
 
             if (mRunTime.existePacote(Referencia)) {
 
-                for (AST eAST : mRunTime.getPacote(Referencia).getASTS()) {
+                for (AST eAST : getPacote(Referencia).getASTS()) {
                     if (eAST.mesmoTipo("STRUCT")) {
 
                         if (eAST.getBranch("EXTENDED").mesmoNome("TYPE")) {
@@ -159,7 +179,7 @@ public class Run_Context {
 
             if (mRunTime.existePacote(Referencia)) {
 
-                for (AST eAST : mRunTime.getPacote(Referencia).getASTS()) {
+                for (AST eAST : getPacote(Referencia).getASTS()) {
                     if (eAST.mesmoTipo("STRUCT")) {
 
                         if (eAST.getBranch("EXTENDED").mesmoNome("STAGES")) {
@@ -197,7 +217,7 @@ public class Run_Context {
 
             if (mRunTime.existePacote(Referencia)) {
 
-                for (AST eAST : mRunTime.getPacote(Referencia).getASTS()) {
+                for (AST eAST : getPacote(Referencia).getASTS()) {
                     if (eAST.mesmoTipo("STRUCT")) {
 
                         if (eAST.getBranch("EXTENDED").mesmoNome("EXTERNAL")) {
@@ -240,7 +260,7 @@ public class Run_Context {
 
             if (mRunTime.existePacote(Referencia)) {
 
-                for (AST eAST : mRunTime.getPacote(Referencia).getASTS()) {
+                for (AST eAST : getPacote(Referencia).getASTS()) {
                     if (eAST.mesmoTipo("CAST")) {
 
                         ret.add(eAST);
@@ -290,7 +310,7 @@ public class Run_Context {
 
             if (mRunTime.existePacote(Referencia)) {
 
-                for (AST eAST : mRunTime.getPacote(Referencia).getASTS()) {
+                for (AST eAST : getPacote(Referencia).getASTS()) {
                     if (eAST.mesmoTipo("STRUCT")) {
 
 
@@ -347,7 +367,7 @@ public class Run_Context {
 
             if (mRunTime.existePacote(Referencia)) {
 
-                for (AST eAST : mRunTime.getPacote(Referencia).getASTS()) {
+                for (AST eAST : getPacote(Referencia).getASTS()) {
                     if (eAST.mesmoTipo("STRUCT")) {
 
 
@@ -375,10 +395,10 @@ public class Run_Context {
     }
 
 
-    public ArrayList<Run_Explicit> getRunExternContexto(ArrayList<String> mPacotes) {
-        ArrayList<Run_Explicit> ret = new ArrayList<Run_Explicit>();
+    public ArrayList<Run_External> getRunExternContexto(ArrayList<String> mPacotes) {
+        ArrayList<Run_External> ret = new ArrayList<Run_External>();
 
-        for (Run_Explicit eAST : mRunTime.getExternals().getExterns()) {
+        for (Run_External eAST : mRunTime.getExternals().getExterns()) {
             if (eAST.getPacote().contentEquals("")) {
                 ret.add(eAST);
             }
@@ -388,7 +408,7 @@ public class Run_Context {
 
             if (mRunTime.existePacote(Referencia)) {
 
-                for (Run_Explicit rAST : mRunTime.getExternals().getExterns()) {
+                for (Run_External rAST : mRunTime.getExternals().getExterns()) {
                     if (rAST.getPacote().contentEquals(Referencia)) {
                         ret.add(rAST);
                     }
@@ -658,7 +678,7 @@ public class Run_Context {
 
         if (mRunTime.existePacote(eRefer)) {
 
-            for (AST eAST : mRunTime.getPacote(eRefer).getASTS()) {
+            for (AST eAST : getPacote(eRefer).getASTS()) {
                 if (eAST.mesmoTipo("STRUCT")) {
 
                     if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
@@ -727,7 +747,7 @@ public class Run_Context {
 
             if (mRunTime.existePacote(Referencia)) {
 
-                for (AST eAST : mRunTime.getPacote(Referencia).getASTS()) {
+                for (AST eAST : getPacote(Referencia).getASTS()) {
                     if (eAST.mesmoTipo("STRUCT")) {
 
                         if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
