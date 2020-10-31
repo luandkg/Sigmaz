@@ -195,7 +195,7 @@ public class Run_Any {
         Item ve = new Item("VALUE");
 
 
-        ve.setNulo(mRValue.getIsNulo());
+        ve.setNulo(mRValue.getIsNulo(),mRunTime);
         ve.setPrimitivo(mRValue.getIsPrimitivo());
         ve.setIsEstrutura(mRValue.getIsStruct());
         ve.setValor(mRValue.getConteudo(), mRunTime, mEscopo);
@@ -211,7 +211,7 @@ public class Run_Any {
         Item ve = new Item("VALUE");
 
 
-        ve.setNulo(mRValue.getIsNulo());
+        ve.setNulo(mRValue.getIsNulo(),mRunTime);
         ve.setPrimitivo(mRValue.getIsPrimitivo());
         ve.setIsEstrutura(mRValue.getIsStruct());
         ve.setValor(mRValue.getConteudo(), mRunTime, mEscopo);
@@ -345,7 +345,7 @@ public class Run_Any {
                 for (AST eArg : mexecutarAST.mIndexado.getPonteiro().getBranch("VALUES").getASTS()) {
 
                     Item eItem = new Item(eArg.getNome());
-                    eItem.setNulo(eRun_Value.getIsNulo());
+                    eItem.setNulo(eRun_Value.getIsNulo(),mRunTime);
                     eItem.setTipo(eRun_Value.getRetornoTipo());
                     eItem.setValor(eRun_Value.getConteudo(), mRunTime, mEscopo);
                     eItem.setPrimitivo(eRun_Value.getIsPrimitivo());

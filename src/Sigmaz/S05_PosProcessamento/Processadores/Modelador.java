@@ -28,24 +28,11 @@ public class Modelador {
     }
 
 
-    public ArrayList<String> getRefers(AST eAST) {
-
-        ArrayList<String> mRefers = new ArrayList<String>();
-
-        for (AST PackageStruct : eAST.getASTS()) {
-            if (PackageStruct.mesmoTipo("REFER")) {
-                mRefers.add(PackageStruct.getNome());
-            }
-        }
-        return mRefers;
-    }
 
     public void mensagem(String e) {
 
         if (mAnalisador.getDebug_Modelador()) {
-
             mAnalisador.mensagem(e);
-
         }
     }
 

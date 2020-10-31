@@ -29,6 +29,7 @@ public class PosProcessador {
     private boolean mDebug_Argumentador;
     private boolean mDebug_Opcionador;
     private boolean mDebug_Estruturador;
+    private boolean mDebug_Unicidade;
 
     private String mFase;
     private String mLocalLibs;
@@ -36,7 +37,6 @@ public class PosProcessador {
     private int mPosInt;
     private int mPosMax;
     private boolean mTerminou;
-
 
 
     public PosProcessador() {
@@ -60,7 +60,8 @@ public class PosProcessador {
         mDebug_Referenciador = true;
         mDebug_Argumentador = true;
         mDebug_Opcionador = true;
-        mDebug_Estruturador=true;
+        mDebug_Estruturador = true;
+        mDebug_Unicidade = true;
 
         mFase = "";
 
@@ -116,12 +117,14 @@ public class PosProcessador {
     public void setDebug_Opcionador(boolean e) {
         mDebug_Opcionador = e;
     }
+
     public void setDebug_Estruturador(boolean e) {
         mDebug_Estruturador = e;
     }
 
-
-
+    public void setDebug_Unicidade(boolean e) {
+        mDebug_Unicidade = e;
+    }
 
 
     public boolean getDebug_Requeridor() {
@@ -177,6 +180,11 @@ public class PosProcessador {
         return mDebug_Estruturador;
     }
 
+    public boolean getDebug_Unicidade() {
+        return mDebug_Unicidade;
+    }
+
+
     public ArrayList<AST> getRequisicoes() {
         return mRequisicoes;
     }
@@ -199,7 +207,7 @@ public class PosProcessador {
 
         mFase = "";
         mPosInt = 0;
-        mPosMax = 12;
+        mPosMax = 13;
         mTerminou = false;
 
 
@@ -327,6 +335,16 @@ public class PosProcessador {
                     Estruturador mEstruturador = new Estruturador(this);
                     mEstruturador.init(mASTS);
                 }
+
+            } else if (mPosInt == 13) {
+
+                mFase = "Uniciade";
+
+                if (tudoOK()) {
+                    Unicidade mUnicidade = new Unicidade(this);
+                    mUnicidade.init(mASTS);
+                }
+
 
             }
 

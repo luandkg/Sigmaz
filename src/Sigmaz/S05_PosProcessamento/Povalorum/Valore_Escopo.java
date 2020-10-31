@@ -135,7 +135,10 @@ public class Valore_Escopo {
             } else if (mAST.mesmoTipo("THIS")) {
 
                 if (mAST.existeBranch("INTERNAL")) {
-                    getValore_Hiper().emInternal(ePrefixo + "\t", mAST.getBranch("INTERNAL"), mAtribuindo);
+
+                    Valore_StructThis mValore_StructThis = new Valore_StructThis(mValorador,mValoramento);
+
+                    mValore_StructThis.emInternal(ePrefixo + "\t", mAST.getBranch("INTERNAL"), mAtribuindo);
 
                 }
 
@@ -149,7 +152,9 @@ public class Valore_Escopo {
 
             } else if (mAST.mesmoTipo("INTERNAL")) {
 
-                getValore_Hiper().emInternal(ePrefixo, mAST, mAtribuindo);
+                Valore_Struct mValore_Struct = new Valore_Struct(mValorador,mValoramento);
+
+                mValore_Struct.emInternal(ePrefixo, mAST, mAtribuindo);
 
             } else if (mAST.mesmoTipo("GENERIC")) {
             } else if (mAST.mesmoTipo("STARTED")) {

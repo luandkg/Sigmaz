@@ -19,6 +19,11 @@ public class SigmazCast {
         return mAST.getNome();
     }
 
+
+    public boolean mesmoNome(String eNome) {
+        return getNome().contentEquals(eNome);
+    }
+
     public String getDefinicao() {
         return mAST.getNome();
     }

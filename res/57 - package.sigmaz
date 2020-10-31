@@ -1,91 +1,67 @@
-package Terminal {
-	struct Terminal {
-		explicit : act println ( a : string , b : int ) {
-			PROC -> {
-				PROC CHANGE_LINE;
-			}
-			reg @ R13 -> a;
-			PROC -> {
-				PRINT R13;
-			}
-			reg @ R5 -> b;
-			PROC -> {
-				SET R13;
-				MOV "";
-				INT_STRING R5;
-				PRINT R13;
-			}
-			
-		}
-		
-	}
+ package Terminal {
+struct Terminal {
 	
+	explicit :
+		act println ( a : string , b : int ) {
+			 PROC -> {
+				 PROC CHANGE_LINE;
+			}
+ reg @ R13 -> a;
+			 PROC -> {
+				 PRINT R13;
+			}
+ reg @ R5 -> b;
+			 PROC -> {
+				 SET R13;
+				 MOV"";
+				 INT_STRING R5;
+				 PRINT R13;
+			}
 }
-package Blocos {
-	refer Terminal;
-	stages MODOS -> {
-		CLARO , DOIS , TRES , QUATRO 
+}
+ } package Blocos { refer Terminal ; stages MODOS -> { CLARO , DOIS , TRES , QUATRO }
+struct XACC {
+	
+	all :
+		mockiz XAT : int = 12 ;}
+
+struct BGeral with XACC {
+	
+	init BGeral ( a : int ) -> XACC ( ) {
+		 _a = a;
 	}
 
-	struct XACC {
-		all : 
-		mockiz XAT : int = 12;
-	}
-
-	struct BGeral with XACC {
-		init BGeral ( a : int ) -> XACC ( ) {
-			_a = a;
-		}
-		restrict : 
-		define _a : int = 0;
-		all : 
+	restrict :
+		define _a : int = 0 ;
+	all :
 		func getA ( ) : int {
-			return _a;
+			 return _a;
 		}
-		
-	}
-
-	struct Blocos {
-		explicit : act Blocar ( a : int , b : int ) {
-	DEBUG -> REGRESSIVE :: ALL;
-			Terminal -> println ( " -->> Valor A : ", a );
-		}
-		
-	}
-	external BRUTAL {
-		act FORCAR ( ) {
-			
-		}
-		
-	}
-	
 }
 
+struct Blocos {
+	
+	explicit :
+		act Blocar ( a : int , b : int ) {
+			 DEBUG -> REGRESSIVE :: ALL;
+			 Terminal -> println (" -->> Valor A : " , a );
+		}
+}
+ external BRUTAL {
+act FORCAR ( ) {
+}
+ } }
 struct Crivar {
-	
-}
-refer Blocos;
-refer Terminal;
+	}
+ refer Blocos ; refer Terminal ;
 call iniciar -> {
-	
-	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: PACKAGES;
-	
-	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS;
-	
-	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
-	
-	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: EXTERNS;
-	
-	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
-	Terminal -> println ( " -->> Valorando : ", 12 );
-	def m : MODOS = MODOS :: QUATRO;
-	Terminal -> println ( " -->> Valorando : ", 30 );
-	
-	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-	Blocos -> Blocar ( 3 , 2 );
-	Blocos -> Blocar ( 5 , 1 );
-	def bg : BGeral = init BGeral ( 15 );
-	Blocos -> Blocar ( 7 , 1 );
-	def bga : int = bg.getA ( );
-	DEBUG -> REGRESSIVE :: ALL;
+	 #invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: PACKAGES; #invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STRUCTS; #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL; #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: EXTERNS; #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL; Terminal -> println (" -->> Valorando : " , 12 );
+	 def m : MODOS = MODOS :: QUATRO;
+	 Terminal -> println (" -->> Valorando : " , 30 );
+	 #invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK; Blocos -> Blocar ( 3 , 2 );
+	 Blocos -> Blocar ( 5 , 1 );
+	 def bg : BGeral = init BGeral ( 15 );
+	 Blocos -> Blocar ( 7 , 1 );
+	 def bga : int = bg.getA ( );
+	 DEBUG -> REGRESSIVE :: ALL;
 }

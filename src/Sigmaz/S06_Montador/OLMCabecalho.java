@@ -8,6 +8,7 @@ public class OLMCabecalho {
 
     private String mTitulo;
     private int mVersao;
+    private long mTamanho;
 
     private long mSetorSigmaz;
     private long mSetorCodigo;
@@ -22,6 +23,7 @@ public class OLMCabecalho {
 
         mTitulo = "";
         mVersao = 0;
+        mTamanho = 0;
 
         mSetorSigmaz = 0;
         mSetorCodigo = 0;
@@ -45,6 +47,10 @@ public class OLMCabecalho {
         return mSetorSigmaz;
     }
 
+    public long getSigmaz_Fim(){
+        return mSetorSigmaz + mSetorSigmaz_Tamanho;
+    }
+
     public long getSetorCodigo() {
         return mSetorCodigo;
     }
@@ -66,7 +72,6 @@ public class OLMCabecalho {
     }
 
 
-
     public void ler(String eArquivo) {
 
 
@@ -75,6 +80,7 @@ public class OLMCabecalho {
 
         mTitulo = ma.readStringPrefix(3);
         mVersao = ma.readInt();
+        mTamanho = ma.getLength();
 
         mSetorSigmaz = ma.readLong();
         mSetorSigmaz_Tamanho = ma.readLong();
@@ -106,5 +112,9 @@ public class OLMCabecalho {
         mAssinatura_Inicio = eSetorAssinatura;
         mAssinatura_Tamanho = eAssinatura_Tamanho;
 
+    }
+
+    public long getTamanho() {
+        return mTamanho;
     }
 }

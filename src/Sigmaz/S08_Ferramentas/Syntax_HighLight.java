@@ -241,8 +241,6 @@ public class Syntax_HighLight {
         mSintaxando.eFonte = new Font("TimesRoman", Font.BOLD, mSintaxando.eFonte_Tamanho);
 
 
-
-
         int IMAGEM_LARGURA = 100;
         int IMAGEM_ALTURA = 300;
 
@@ -296,7 +294,7 @@ public class Syntax_HighLight {
         emPassadoDoisPontos.add("extern");
         emPassadoDoisPontos.add("implicit");
 
-        Color mInocandoCorrente =mSyntaxTheme.getSyntax_Invocadores();
+        Color mInocandoCorrente = mSyntaxTheme.getSyntax_Invocadores();
 
         for (Token TokenC : LexerC.getTokens()) {
 
@@ -332,7 +330,14 @@ public class Syntax_HighLight {
                 emPontoEVirgula(LexerC, mSintaxando, TokenC, emFuturoProximo, g, eSyntax_Corrente);
 
 
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO) {
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                mSintaxando.ePos += g.getFontMetrics().stringWidth(" ");
+
+                leftString(g, new Rectangle(mSintaxando.ePos, mSintaxando.eLinha * mSintaxando.eFonte_EntreLinhas, TokenC.getConteudo().length() * mSintaxando.eFonte_Tamanho, mSintaxando.eFonte_EntreLinhas), TokenC.getConteudo(), mSintaxando.eFonte, mSyntaxTheme.getSyntax_Comentario());
+
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
 
                 mSintaxando.eLinha += 1;
                 mSintaxando.ePos = g.getFontMetrics().stringWidth(getTabulacao(mSintaxando.mTab));

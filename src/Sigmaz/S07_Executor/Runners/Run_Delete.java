@@ -61,7 +61,7 @@ public class Run_Delete {
 
                 if (mRun_Value.getIsReferenciavel()){
                 //    System.out.println("Delete Ref :: " + mRun_Value.getReferencia().getNome());
-                    mRun_Value.getReferencia().setNulo(true);
+                    mRun_Value.getReferencia().setNulo(true,mRunTime);
                 }
 
 
@@ -73,14 +73,14 @@ public class Run_Delete {
 
                 if (mRun_Value.getIsReferenciavel()){
               //      System.out.println("Delete Ref :: " + mRun_Value.getReferencia().getNome());
-                    mRun_Value.getReferencia().setNulo(true);
+                    mRun_Value.getReferencia().setNulo(true,mRunTime);
                 }
 
 
             } else {
 
                 if (mRun_Value.getIsReferenciavel()) {
-                    mRun_Value.getReferencia().setNulo(true);
+                    mRun_Value.getReferencia().setNulo(true,mRunTime);
                 }
 
                    // mRunTime.errar(mLocal, "DELETE :  " + eQualificador + " :: " + mRun_Value.getRetornoTipo());

@@ -22,6 +22,8 @@ public class Escopo {
     private Escopo mEscopoAnterior;
 
     private EscopoStack mEscopoStack;
+    private Refers mRefers;
+
     private EscopoDebug mDebug;
     private Regressive mRegressive;
     private Local mLocalDebug;
@@ -33,41 +35,18 @@ public class Escopo {
     private Item mItem;
 
     private String mNome;
-    private boolean mEstrutura;
 
 
     private OO mOO;
     private OO mAO;
 
     private ArrayList<Run_External> mExternos;
-    private ArrayList<String> mRefers;
-    private ArrayList<String> mRefersOcultas;
+
 
     // FUNCAO LOCAL
     private boolean mTemLocal = false;
     private AST mLocal;
 
-
-    public void setNome(String eNome) {
-        mNome = eNome;
-    }
-
-    public String getNome() {
-        return mNome;
-    }
-
-    public void setEstrutura(boolean eEstrutura) {
-        mEstrutura = eEstrutura;
-    }
-
-    public boolean getEstrutura() {
-        return mEstrutura;
-    }
-
-
-    public RunTime getRunTime() {
-        return mRunTime;
-    }
 
     public Escopo(String eNome, RunTime eRunTime) {
 
@@ -82,21 +61,17 @@ public class Escopo {
         mStacks = new ArrayList<>();
 
 
-
         mCancelar = false;
         mContinuar = false;
         mRetornado = false;
 
+        mRefers = new Refers(this);
 
         mAO = new OO(this, mRunTime);
         mOO = new OO(this, mRunTime);
 
-        mEstrutura = false;
-
         mRunTime = eRunTime;
         mEscopoStack = new EscopoStack(mRunTime, this);
-        mRefers = new ArrayList<String>();
-        mRefersOcultas = new ArrayList<String>();
 
         mExternos = new ArrayList<Run_External>();
 
@@ -125,12 +100,12 @@ public class Escopo {
         mAO = new OO(this, mRunTime);
         mOO = new OO(this, mRunTime);
 
-        mEstrutura = false;
 
         mRunTime = eRunTime;
         mEscopoStack = new EscopoStack(mRunTime, this);
-        mRefers = new ArrayList<String>();
-        mRefersOcultas = new ArrayList<String>();
+
+        mRefers = new Refers(this);
+
 
         mExternos = new ArrayList<Run_External>();
 
@@ -141,6 +116,21 @@ public class Escopo {
 
     }
 
+
+
+    public void setNome(String eNome) {
+        mNome = eNome;
+    }
+
+    public String getNome() {
+        return mNome;
+    }
+
+
+
+    public RunTime getRunTime() {
+        return mRunTime;
+    }
 
     public void setAnterior(Escopo aEscopo) {
         mEscopoAnterior = aEscopo;
@@ -171,62 +161,6 @@ public class Escopo {
         return mAO;
     }
 
-    public void adicionarRefer(String eRefer) {
-        mRefers.add(eRefer);
-
-
-    }
-
-    public ArrayList<String> getRefers() {
-
-        ArrayList<String> mRet = new ArrayList<String>();
-        mRet.addAll(mRefers);
-
-        if (this.mEscopoAnterior != null) {
-            for (String r : mEscopoAnterior.getRefers()) {
-                if (!mRet.contains(r)) {
-                    mRet.add(r);
-                }
-            }
-        }
-
-
-        return mRet;
-    }
-
-    public void adicionarReferDe(Escopo outroEscopo) {
-
-        for (String eref : outroEscopo.getRefers()) {
-            adicionarReferOculto(eref);
-        }
-        for (String eref : outroEscopo.getRefersOcultas()) {
-            adicionarReferOculto(eref);
-        }
-
-    }
-
-    public void adicionarReferOculto(String eRefer) {
-        mRefersOcultas.add(eRefer);
-    }
-
-    public ArrayList<String> getRefersOcultas() {
-
-        ArrayList<String> mRet = new ArrayList<String>();
-        mRet.addAll(mRefers);
-        mRet.addAll(mRefersOcultas);
-
-        if (this.mEscopoAnterior != null) {
-            for (String r : mEscopoAnterior.getRefersOcultas()) {
-                if (!mRet.contains(r)) {
-                    mRet.add(r);
-                }
-            }
-        }
-
-
-        return mRet;
-    }
-
 
     public void limpar() {
 
@@ -234,6 +168,21 @@ public class Escopo {
 
     }
 
+    public void adicionarRefer(String eRefer) {
+        mRefers.adicionarRefer(eRefer);
+    }
+
+    public void adicionarReferDe(Escopo eRefer) {
+        mRefers.adicionarReferDe(eRefer);
+    }
+
+    public ArrayList<String> getRefers() {
+        return mRefers.getRefers();
+    }
+
+    public ArrayList<String> getRefersOcultas() {
+        return mRefers.getRefersOcultas();
+    }
 
     public void externalizar(String eNomeCompleto) {
 
@@ -282,7 +231,6 @@ public class Escopo {
     }
 
 
-
     public ArrayList<Index_Function> getFunctionsCompleto() {
         return mAO.getFunctionsCompleto();
     }
@@ -317,228 +265,18 @@ public class Escopo {
     }
 
 
-    public void passarParametroByValue(String eNome, Item eItem) {
-
-        if (eItem.getIsEstrutura()) {
-
-            if (eItem.getNulo()) {
-                this.criarParametroStructNula(eNome, eItem.getTipo());
-            } else {
-                this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
-            }
-
-
-        } else {
-
-            if (eItem.getNulo()) {
-                this.criarParametroNulo(eNome, eItem.getTipo());
-            } else {
-                this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
-            }
-
-
-        }
-
-    }
-
-    public void passarParametroByRef(String eNome, Item eItem) {
-
-//        System.out.println("Ref :: " + eNome + " de " + eItem.getReferencia().getNome());
-        if (!eItem.getIsReferenciavel()) {
-            mRunTime.getErros().add("Nao foi possivel referenciar : " + eNome);
-            return;
-        }
-
-        if (eItem.getIsEstrutura()) {
-
-            if (eItem.getNulo()) {
-                if (eItem.getIsReferenciavel()) {
-                    this.criarParametroStructNula(eNome, eItem.getTipo());
-                } else {
-                    this.criarParametroStructNula(eNome, eItem.getTipo());
-                }
-            } else {
-                if (eItem.getIsReferenciavel()) {
-                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
-                } else {
-                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
-                }
-            }
-
-        } else {
-
-            if (eItem.getNulo()) {
-                if (eItem.getIsReferenciavel()) {
-                    this.criarParametroNulo(eNome, eItem.getTipo());
-                } else {
-                    this.criarParametroNulo(eNome, eItem.getTipo());
-                }
-            } else {
-                if (eItem.getIsReferenciavel()) {
-                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
-                } else {
-                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
-                }
-            }
-
-
-        }
-
-        this.referenciar(eNome, eItem.getReferencia());
-
-    }
-
-    public void referenciar(String eNome, Item eItem) {
-
-        boolean enc = false;
-
-        for (Item i : getStacks()) {
-            if (i.getNome().contentEquals(eNome)) {
-                enc = true;
-
-                i.setReferencia(eItem);
-                i.setIsReferenciavel(true);
-
-                break;
-            }
-        }
-
-        if (!enc) {
-            mRunTime.getErros().add("Nao foi possivel referenciar : " + eNome);
-        }
-    }
-
-    public void passarParametroByRefObrigatorio(String eNome, Item eItem) {
-
-//        System.out.println("Ref :: " + eNome + " de " + eItem.getReferencia().getNome());
-
-        if (eItem.getIsEstrutura()) {
-
-            if (eItem.getNulo()) {
-                if (eItem.getIsReferenciavel()) {
-                    this.criarParametroStructNula(eNome, eItem.getTipo());
-                } else {
-                    this.criarParametroStructNula(eNome, eItem.getTipo());
-                }
-            } else {
-                if (eItem.getIsReferenciavel()) {
-                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
-                } else {
-                    this.criarParametroStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
-                }
-            }
-
-        } else {
-
-            if (eItem.getNulo()) {
-                if (eItem.getIsReferenciavel()) {
-                    this.criarParametroNulo(eNome, eItem.getTipo());
-                } else {
-                    this.criarParametroNulo(eNome, eItem.getTipo());
-                }
-            } else {
-                if (eItem.getIsReferenciavel()) {
-                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
-                } else {
-                    this.criarParametro(eNome, eItem.getTipo(), eItem.getValor(mRunTime, this));
-                }
-            }
-
-
-        }
-
-        this.referenciar(eNome, eItem.getReferencia());
-
-    }
-
-
     public void criarItem(String eNome, Item eItem) {
-
-        Item Novo = new Item(eNome);
-        Novo.setModo(eItem.getModo());
-        Novo.setTipo(eItem.getTipo());
-        Novo.setNulo(eItem.getNulo());
-        Novo.setPrimitivo(eItem.getPrimitivo());
-        Novo.setIsEstrutura(eItem.getIsEstrutura());
-        Novo.setValor(eItem.getValor(mRunTime, this), mRunTime, this);
-        mStacks.add(Novo);
-
-
+        mEscopoStack.criarItem(eNome, eItem);
     }
 
 
     public void criarExternRefered(String eNome, String mTipagem, String eStruct, String eCampo) {
-
-        if (mEscopoStack.existeAqui(eNome, mStacks)) {
-            mRunTime.getErros().add("Definicao Duplicada : " + eNome);
-        }
-
-        Item Novo = new Item(eNome);
-        Novo.setModo(0);
-        Novo.setTipo(mTipagem);
-        Novo.setNulo(false);
-        Novo.setPrimitivo(false);
-        Novo.setIsEstrutura(false);
-
-        Novo.setRefer(eStruct, eCampo);
-
-        mStacks.add(Novo);
-
-
+        mEscopoStack.criarExternRefered(eNome, mTipagem, eStruct, eCampo);
     }
 
 
     public void criarExternRefered_Const(String eNome, String mTipagem, String eStruct, String eCampo) {
-
-        if (mEscopoStack.existeAqui(eNome, mStacks)) {
-            mRunTime.getErros().add("Definicao Duplicada : " + eNome);
-        }
-
-        Item Novo = new Item(eNome);
-        Novo.setModo(0);
-        Novo.setTipo(mTipagem);
-        Novo.setNulo(false);
-        Novo.setPrimitivo(false);
-        Novo.setIsEstrutura(false);
-
-        Novo.setReferConst(eStruct, eCampo);
-
-        mStacks.add(Novo);
-
-
-    }
-
-
-    public void criarImplicitRefered(String eNome, String mTipagem, String eStruct, String eCampo) {
-
-        Item Novo = new Item(eNome);
-        Novo.setModo(0);
-        Novo.setTipo(mTipagem);
-        Novo.setNulo(false);
-        Novo.setPrimitivo(false);
-        Novo.setIsEstrutura(false);
-
-        Novo.setImplicit(eStruct, eCampo);
-
-        mStacks.add(Novo);
-
-
-    }
-
-    public void criarImplicitRefered_Const(String eNome, String mTipagem, String eStruct, String eCampo) {
-
-        Item Novo = new Item(eNome);
-        Novo.setModo(0);
-        Novo.setTipo(mTipagem);
-        Novo.setNulo(false);
-        Novo.setPrimitivo(false);
-        Novo.setIsEstrutura(false);
-
-        Novo.setImplicitConst(eStruct, eCampo);
-
-        mStacks.add(Novo);
-
-
+        mEscopoStack.criarExternRefered_Const(eNome, mTipagem, eStruct, eCampo);
     }
 
 
@@ -558,31 +296,6 @@ public class Escopo {
         }
 
         return gc;
-    }
-
-
-    public int getContagem() {
-        int i = 0;
-
-        if (this.mEscopoAnterior != null) {
-            i += this.mEscopoAnterior.getContagem();
-        } else {
-            i = 1;
-        }
-
-        return i;
-    }
-
-    public String getCaminho() {
-        String i = "";
-
-        if (this.mEscopoAnterior != null) {
-            i = this.mEscopoAnterior.getCaminho() + "." + i;
-        } else {
-            i = this.getNome();
-        }
-
-        return i;
     }
 
 
@@ -664,75 +377,72 @@ public class Escopo {
 
     // MUTAVEL
 
-
     public void criarMutavelNula(String eNome, String eTipo) {
-        mEscopoStack.alocarMutavelPrimitivo(eNome, eTipo, false, "");
+        mEscopoStack.alocar(eNome, eTipo, TipoStack.Mutable, true, "", false);
     }
 
     public void criarMutavelPrimitivo(String eNome, String eTipo, String eValor) {
-        mEscopoStack.alocarMutavelPrimitivo(eNome, eTipo, true, eValor);
+        mEscopoStack.alocar(eNome, eTipo, TipoStack.Mutable, false, eValor, false);
     }
 
     public void criarMutavelStruct(String eNome, String eTipo, String eValor) {
-        mEscopoStack.alocarMutavelStruct(eNome, eTipo, true, eValor);
+        mEscopoStack.alocar(eNome, eTipo, TipoStack.Mutable, false, eValor, true);
     }
 
     // PRIMITIVO
 
     public void criarDefinicaoNula(String eNome, String eTipo) {
-        mEscopoStack.alocarPrimitivo(eNome, eTipo, false, false, "");
+        mEscopoStack.alocar(eNome, eTipo, TipoStack.Define, true, "", false);
     }
 
     public void criarConstanteNula(String eNome, String eTipo) {
-        mEscopoStack.alocarPrimitivo(eNome, eTipo, true, false, "");
-
+        mEscopoStack.alocar(eNome, eTipo, TipoStack.Mockiz, true, "", false);
     }
 
     public Item criarDefinicao(String eNome, String eTipo, String eValor) {
-        return mEscopoStack.alocarPrimitivo(eNome, eTipo, false, true, eValor);
+        return mEscopoStack.alocar(eNome, eTipo, TipoStack.Define, false, eValor, false);
     }
 
     public void criarConstante(String eNome, String eTipo, String eValor) {
-        mEscopoStack.alocarPrimitivo(eNome, eTipo, true, true, eValor);
-
+        mEscopoStack.alocar(eNome, eTipo, TipoStack.Mockiz, false, eValor, false);
     }
 
 
     // STRUCT
 
     public void criarDefinicaoStructNula(String eNome, String eTipo) {
-        mEscopoStack.criarDefinicaoStructNula(eNome, eTipo);
+        mEscopoStack.alocar(eNome, eTipo, TipoStack.Define, true, "", true);
     }
 
     public void criarDefinicaoStruct(String eNome, String eTipo, String eRef) {
-        mEscopoStack.criarDefinicaoStruct(eNome, eTipo, eRef);
+        mEscopoStack.alocar(eNome, eTipo, TipoStack.Define, false, eRef, true);
     }
 
     public void criarConstanteStruct(String eNome, String eTipo, String eRef) {
-        mEscopoStack.criarConstanteStruct(eNome, eTipo, eRef);
+        mEscopoStack.alocar(eNome, eTipo, TipoStack.Mockiz, false, eRef, true);
     }
 
     public void criarConstanteStructNula(String eNome, String eTipo) {
-        mEscopoStack.criarConstanteStructNula(eNome, eTipo);
+        mEscopoStack.alocar(eNome, eTipo, TipoStack.Mockiz, true, "", true);
     }
 
 
     // PARAMETRO
 
     public void criarParametro(String eNome, String eTipo, String eValor) {
-        mEscopoStack.alocarPrimitivo(eNome, eTipo, false, true, eValor);
+        mEscopoStack.alocar(eNome, eTipo, TipoStack.Define, false, eValor, false);
     }
 
     public void criarParametroNulo(String eNome, String eTipo) {
-        mEscopoStack.alocarPrimitivo(eNome, eTipo, false, false, "");
+        mEscopoStack.alocar(eNome, eTipo, TipoStack.Define, true, "", false);
     }
 
     public void criarParametroStructNula(String eNome, String eTipo) {
-        mEscopoStack.criarDefinicaoStructNula(eNome, eTipo);
+        mEscopoStack.alocar(eNome, eTipo, TipoStack.Define, true, "", true);
     }
 
     public void criarParametroStruct(String eNome, String eTipo, String eRef) {
-        mEscopoStack.criarDefinicaoStruct(eNome, eTipo, eRef);
+        mEscopoStack.alocar(eNome, eTipo, TipoStack.Define, false, eRef, true);
     }
 
 
@@ -741,27 +451,6 @@ public class Escopo {
     }
 
 
-    public String getDefinidoTipo(String eNome) {
-        return mEscopoStack.getDefinidoTipo(eNome);
-    }
-
-    public boolean getDefinidoPrimitivo(String eNome) {
-        return mEscopoStack.getDefinidoPrimitivo(eNome);
-    }
-
-
-    public String getDefinido(String eNome) {
-        return mEscopoStack.getDefinido(eNome);
-    }
-
-
-    public String getDefinidoConteudo(String eNome) {
-        return mEscopoStack.getDefinidoConteudo(eNome);
-    }
-
-    public boolean getDefinidoNulo(String eNome) {
-        return mEscopoStack.getDefinidoNulo(eNome);
-    }
 
     public Item getItem(String eNome) {
         return mEscopoStack.getItem(eNome);

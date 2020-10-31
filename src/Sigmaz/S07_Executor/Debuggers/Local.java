@@ -1,6 +1,8 @@
 package Sigmaz.S07_Executor.Debuggers;
 
 import Sigmaz.S07_Executor.Escopo;
+import Sigmaz.S07_Executor.Escopos.Run_Struct;
+import Sigmaz.S07_Executor.Escopos.Run_Type;
 import Sigmaz.S07_Executor.Indexador.Index_Function;
 import Sigmaz.S07_Executor.Item;
 import Sigmaz.S07_Executor.Runners.Run_Context;
@@ -17,15 +19,13 @@ public class Local {
     public Local(Escopo eEscopo) {
 
         mEscopo = eEscopo;
-        mSimplificador=new Simplificador();
+        mSimplificador = new Simplificador();
 
     }
 
     public Escopo getEscopo() {
         return mEscopo;
     }
-
-
 
 
     public void ListarStack() {
@@ -63,7 +63,6 @@ public class Local {
     }
 
     public void mapear_stack() {
-
 
 
         ArrayList<Item> ls_Defines = new ArrayList<>();
@@ -129,15 +128,13 @@ public class Local {
     public void mapear_stack_def() {
 
 
-
-
         ArrayList<Item> ls_Defines = new ArrayList<>();
 
         for (Item i : mEscopo.getStacks()) {
             if (i.getModo() == 0) {
                 ls_Defines.add(i);
 
-         }
+            }
 
             // System.out.println("DEFINICAO :: " + i.getNome());
         }
@@ -167,8 +164,6 @@ public class Local {
     }
 
     public void mapear_stack_moc() {
-
-
 
 
         ArrayList<Item> ls_Constants = new ArrayList<>();
@@ -220,18 +215,17 @@ public class Local {
             if (eItem.getIsEstrutura()) {
 
 
-                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " -> " + eItem.getValor(mEscopo.getRunTime(),mEscopo));
+                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " -> " + eItem.getValor(mEscopo.getRunTime(), mEscopo));
 
 
             } else {
-                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " = " + eItem.getValor(mEscopo.getRunTime(),mEscopo));
+                System.out.println("\t\t - " + eItem.getNome() + " : " + eItem.getTipo() + " = " + eItem.getValor(mEscopo.getRunTime(), mEscopo));
             }
 
         }
 
 
     }
-
 
 
     public void ListarFunctions() {
@@ -284,11 +278,7 @@ public class Local {
             }
 
 
-
-
         }
-
-
 
 
         System.out.println(" ######################### ##### ############################ ");
@@ -359,7 +349,7 @@ public class Local {
     public void listar_Functions() {
         for (AST mAST : getEscopo().getGuardadosCompleto()) {
             if (mAST.mesmoTipo("FUNCTION")) {
-                System.out.println("\t - " + mAST.getNome() + " ( " +  mSimplificador.getParametros(mAST) + " ) -> " + mSimplificador.getTipagem(mAST.getBranch("TYPE")));
+                System.out.println("\t - " + mAST.getNome() + " ( " + mSimplificador.getParametros(mAST) + " ) -> " + mSimplificador.getTipagem(mAST.getBranch("TYPE")));
             }
         }
     }
@@ -379,7 +369,7 @@ public class Local {
     public void listar_Auto() {
         for (AST mAST : getEscopo().getGuardadosCompleto()) {
             if (mAST.mesmoTipo("PROTOTYPE_AUTO")) {
-                System.out.println("\t - " + "< " + mSimplificador.getGenericos(mAST) + " >" + " "  + mAST.getNome() + " ( " + mSimplificador.getParametros(mAST) + " ) ");
+                System.out.println("\t - " + "< " + mSimplificador.getGenericos(mAST) + " >" + " " + mAST.getNome() + " ( " + mSimplificador.getParametros(mAST) + " ) ");
             }
         }
     }
@@ -387,7 +377,7 @@ public class Local {
     public void listar_Functor() {
         for (AST mAST : getEscopo().getGuardadosCompleto()) {
             if (mAST.mesmoTipo("PROTOTYPE_FUNCTOR")) {
-                System.out.println("\t - " + "< " + mSimplificador.getGenericos(mAST) + " >" + " "  +  mAST.getNome() + " ( " + mSimplificador.getParametros(mAST) + " ) -> " + mSimplificador.getTipagem(mAST.getBranch("TYPE")));
+                System.out.println("\t - " + "< " + mSimplificador.getGenericos(mAST) + " >" + " " + mAST.getNome() + " ( " + mSimplificador.getParametros(mAST) + " ) -> " + mSimplificador.getTipagem(mAST.getBranch("TYPE")));
             }
         }
     }
@@ -444,7 +434,7 @@ public class Local {
 
         for (AST mAST : mRun_Context.getStagesContexto(mEscopo)) {
             if (mAST.getBranch("EXTENDED").mesmoNome("STAGES")) {
-                System.out.println("\t - " + mAST.getNome() + mSimplificador. getStages(mAST.getBranch("STAGES")));
+                System.out.println("\t - " + mAST.getNome() + mSimplificador.getStages(mAST.getBranch("STAGES")));
             }
         }
 
@@ -547,17 +537,55 @@ public class Local {
 
 
         System.out.println(" - STAGES : ");
-       listar_Stages();
+        listar_Stages();
 
 
         System.out.println(" - STRUCTS : ");
         listar_Structs();
 
         System.out.println(" - EXTERNALS : ");
-       listar_Externals();
+        listar_Externals();
 
 
         System.out.println(" ######################### ##### ############################ ");
+
+    }
+
+
+    public void listarInstances() {
+
+        ArrayList<String> mQuais = new ArrayList<String>();
+
+        for (Item eItem : mEscopo.getStacks()) {
+
+            if (!eItem.getNulo()) {
+                if (eItem.getIsEstrutura()) {
+                    mQuais.add(eItem.getValor(mEscopo.getRunTime(), mEscopo));
+                }
+            }
+
+
+        }
+
+        System.out.println(" ######################### LOCAL : INSTANCES - " + mEscopo.getNome() + " ############################ ");
+
+        for (Run_Type rt : mEscopo.getRunTime().getHeap().getTypes_Instances()) {
+
+            if (mQuais.contains(rt.getNome())){
+                System.out.println("\t - TYPE :: " + rt.getNome() + " -->> " + rt.getRefs());
+            }
+
+        }
+
+        for (Run_Struct rs :  mEscopo.getRunTime().getHeap().getStructs_Instances()) {
+            if (mQuais.contains(rs.getNome())) {
+                System.out.println("\t - STRUCT :: " + rs.getNome() + " -->> " + rs.getRefs());
+            }
+        }
+
+
+        System.out.println(" ######################### ##### ############################ ");
+
 
     }
 

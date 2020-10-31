@@ -1,244 +1,119 @@
+
 call Container -> {
-
-
-    def mRestrito : Bloco = init Bloco();
-
-
-	DEBUG -> LOCAL :: STACK;
-
-    def mBloco : Bloco = init Bloco();
-
-    def a : int = mBloco.getA();
-    def b : int = mBloco.getB();
-    def c : int = mBloco.getC();
-
-    def d1 : int = mBloco[0];
-    def d2 : int = mBloco[1];
-    def d3 : int = mBloco[2];
-
-    mBloco[0] = 50;
-    mBloco[1] = 60;
-    mBloco[2] = 70;
-
-    def e1 : int = mBloco[0];
-    def e2 : int = mBloco[1];
-    def e3 : int = mBloco[2];
-
-    mBloco[0] = 10 ++ mBloco[0];
-    mBloco[1] = 10 ++ mBloco[1];
-    mBloco[2] = 10 ++ mBloco[2];
-
-    def f1 : int = mBloco[0];
-    def f2 : int = mBloco[1];
-    def f3 : int = mBloco[2];
-
-    def ca : Achar = init Achar();
-    ca.multiplicar(5);
-
-    ca.getBloco(1).multiplicar(2);
-    ca.getBloco(2).multiplicar(3);
-
-    def ca_a : Bloco = ca[0];
-    def ca_a_0 : int = ca_a[0];
-    def ca_a_1 : int = ca_a[1];
-    def ca_a_2 : int = ca_a[2];
-
-    def ca_a_0_DIRETO :int = ca[0].[0];
-    def ca_a_1_DIRETO :int = ca[0].[1];
-    def ca_a_2_DIRETO :int = ca[0].[2];
-
-    def ca_b_0_DIRETO :int = ca[1].[0];
-    def ca_b_1_DIRETO :int = ca[1].[1];
-    def ca_b_2_DIRETO :int = ca[1].[2];
-
-    def ca_c_0_DIRETO :int = ca[2].[0];
-    def ca_c_1_DIRETO :int = ca[2].[1];
-    def ca_c_2_DIRETO :int = ca[2].[2];
-
-	DEBUG -> LOCAL :: STACK;
-
+	 def mRestrito : Bloco = init Bloco ( );
+	 DEBUG -> LOCAL :: STACK;
+	 def mBloco : Bloco = init Bloco ( );
+	 def a : int = mBloco.getA ( );
+	 def b : int = mBloco.getB ( );
+	 def c : int = mBloco.getC ( );
+	 def d1 : int = mBloco [ 0 ];
+	 def d2 : int = mBloco [ 1 ];
+	 def d3 : int = mBloco [ 2 ];
+	 mBloco [ 0 ] = 50;
+	 mBloco [ 1 ] = 60;
+	 mBloco [ 2 ] = 70;
+	 def e1 : int = mBloco [ 0 ];
+	 def e2 : int = mBloco [ 1 ];
+	 def e3 : int = mBloco [ 2 ];
+	 mBloco [ 0 ] = 10 ++ mBloco [ 0 ];
+	 mBloco [ 1 ] = 10 ++ mBloco [ 1 ];
+	 mBloco [ 2 ] = 10 ++ mBloco [ 2 ];
+	 def f1 : int = mBloco [ 0 ];
+	 def f2 : int = mBloco [ 1 ];
+	 def f3 : int = mBloco [ 2 ];
+	 def ca : Achar = init Achar ( );
+	 ca.multiplicar ( 5 );
+	 ca.getBloco ( 1 ).multiplicar ( 2 );
+	 ca.getBloco ( 2 ).multiplicar ( 3 );
+	 def ca_a : Bloco = ca [ 0 ];
+	 def ca_a_0 : int = ca_a [ 0 ];
+	 def ca_a_1 : int = ca_a [ 1 ];
+	 def ca_a_2 : int = ca_a [ 2 ];
+	 def ca_a_0_DIRETO : int = ca [ 0 ].[ 0 ];
+	 def ca_a_1_DIRETO : int = ca [ 0 ].[ 1 ];
+	 def ca_a_2_DIRETO : int = ca [ 0 ].[ 2 ];
+	 def ca_b_0_DIRETO : int = ca [ 1 ].[ 0 ];
+	 def ca_b_1_DIRETO : int = ca [ 1 ].[ 1 ];
+	 def ca_b_2_DIRETO : int = ca [ 1 ].[ 2 ];
+	 def ca_c_0_DIRETO : int = ca [ 2 ].[ 0 ];
+	 def ca_c_1_DIRETO : int = ca [ 2 ].[ 1 ];
+	 def ca_c_2_DIRETO : int = ca [ 2 ].[ 2 ];
+	 DEBUG -> LOCAL :: STACK;
 }
 
-struct Bloco{
-
-    init Bloco(){
-
-        this[0] = 50;
-
-        def dentro : int = this[0];
-
-
-	    DEBUG -> LOCAL :: STACK;
-
-    }
-
-    restrict:
-        define A : int = 10;
-        define B : int = 20;
-        define C : int = 30;
-
-    all:
-
-        func getA() : int {return A;}
-        func getB() : int {return B;}
-        func getC() : int {return C;}
-
-        act multiplicar(v:int){
-
-            A = A ** v;
-            B = B ** v;
-            C = C ** v;
-
-        }
-
-    all:
-        block -> get[ v : int ] : int {
-
-            if ( v == 0 ) -> { return A; }
-            other ( v == 1 ) -> { return B; }
-            other ( v == 2 ) -> { return C; }
-            others  {
-                exception "Indice desconhecido dentro de Bloco GET";
-            }
-
-        }
-
-       block -> set[ v : int ] -> ( v1 : int )  {
-
-                    if ( v == 0 ) -> {  A = v1; }
-                    other ( v == 1 ) -> {  B = v1; }
-                    other ( v == 2 ) -> {  C = v1; }
-                    others  {
-                        exception "Indice desconhecido dentro de Bloco SET" ;
-                    }
-
-       }
-
-}
-
-struct Achar{
-
-    init Achar(){
-
-        A = init Bloco();
-        B = init Bloco();
-        C = init Bloco();
-
-    }
-
-    restrict:
-        define A : Bloco ;
-        define B : Bloco ;
-        define C : Bloco ;
-
-    all:
-
-        act multiplicar(v:int){
-
-            A[0] = A[0] ** v;
-            A[1] = A[1] ** v;
-            A[2] = A[2] ** v;
-
-            B[0] = B[0] ** v;
-            B[1] = B[1] ** v;
-            B[2] = B[2] ** v;
-
-            C[0] = C[0] ** v;
-            C[1] = C[1] ** v;
-            C[2] = C[2] ** v;
-
-        }
-
-        func getBloco(b:int) : Bloco {
-
-            if ( b == 0 ) -> { return A; }
-                    other ( b == 1 ) -> { return B; }
-                    other ( b == 2 ) -> { return C; }
-                    others  {
-                        exception "Indice desconhecido dentro de ACHAR GET";
-                    }
-
-        }
-
-
-        block -> get[ v : int ] : Bloco {
-
-            if ( v == 0 ) -> { return A; }
-            other ( v == 1 ) -> { return B; }
-            other ( v == 2 ) -> { return C; }
-            others  {
-                exception "Indice desconhecido dentro de ACHAR GET";
-            }
-
-        }
-
-               block -> set[ v : int ] -> ( v1 : Bloco )  {
-
-                            if ( v == 0 ) -> {  A = v1; }
-                            other ( v == 1 ) -> {  B = v1; }
-                            other ( v == 2 ) -> {  C = v1; }
-                            others  {
-                                exception "Indice desconhecido dentro de ACHAR SET";
-                            }
-
-               }
-
-}
-
-
-
-
-
-operator ++ ( a : int , b : int ) : int {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R7;
-		MOV 0;
-		OPE R5 ADD R6;
+struct Bloco {
+	
+	init Bloco ( ) {
+		 this [ 0 ] = 50;
+		 def dentro : int = this [ 0 ];
+		 DEBUG -> LOCAL :: STACK;
 	}
-	return reg @ R7;
-}
 
-operator -- ( a : int , b : int ) : int {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R7;
-		MOV 0;
-		OPE R5 SUB R6;
-	}
-	return reg @ R7;
-}
+	restrict :
+		define A : int = 10 ;
+		define B : int = 20 ;
+		define C : int = 30 ;
+	all :
+		func getA ( ) : int {
+			 return A;
+		}
 
-operator ** ( a : int , b : int ) : int {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R7;
-		MOV 0;
-		OPE R5 MUX R6;
-	}
-	return reg @ R7;
-}
-operator // ( a : int , b : int ) : int {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R7;
-		MOV 0;
-		OPE R5 DIV R6;
-	}
-	return reg @ R7;
-}
+		func getB ( ) : int {
+			 return B;
+		}
 
-operator == ( a : int , b : int ) : bool {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R1;
-		MOV FALSE;
-		OPE R5 EQUAL R6;
-	}
-	return reg @ R1;
+		func getC ( ) : int {
+			 return C;
+		}
+
+		act multiplicar ( v : int ) {
+			 A = A ** v;
+			 B = B ** v;
+			 C = C ** v;
+		}
+
+	all : block -> get [ v : int ] : int { if ( v == 0 ) -> { return A;
 }
+ other ( v == 1 ) -> { return B ; } other ( v == 2 ) -> { return C ; } others { exception"Indice desconhecido dentro de Bloco GET" ; } } block -> set [ v : int ] -> ( v1 : int ) { if ( v == 0 ) -> { A = v1 ; } other ( v == 1 ) -> { B = v1 ; } other ( v == 2 ) -> { C = v1 ; } others { exception"Indice desconhecido dentro de Bloco SET" ; } } }
+struct Achar {
+	
+	init Achar ( ) {
+		 A = init Bloco ( );
+		 B = init Bloco ( );
+		 C = init Bloco ( );
+	}
+
+	restrict :
+		define A : Bloco ;
+		define B : Bloco ;
+		define C : Bloco ;
+	all :
+		act multiplicar ( v : int ) {
+			 A [ 0 ] = A [ 0 ] ** v;
+			 A [ 1 ] = A [ 1 ] ** v;
+			 A [ 2 ] = A [ 2 ] ** v;
+			 B [ 0 ] = B [ 0 ] ** v;
+			 B [ 1 ] = B [ 1 ] ** v;
+			 B [ 2 ] = B [ 2 ] ** v;
+			 C [ 0 ] = C [ 0 ] ** v;
+			 C [ 1 ] = C [ 1 ] ** v;
+			 C [ 2 ] = C [ 2 ] ** v;
+		}
+
+		func getBloco ( b : int ) : Bloco {
+			 if ( b == 0 ) -> {
+				 return A;
+			}
+ other ( b == 1 ) -> {
+				 return B;
+			}
+ other ( b == 2 ) -> {
+				 return C;
+			}
+ others {
+				 exception"Indice desconhecido dentro de ACHAR GET";
+			}
+}
+ block -> get [ v : int ] : Bloco { if ( v == 0 ) -> { return A;
+}
+ other ( v == 1 ) -> { return B ; } other ( v == 2 ) -> { return C ; } others { exception"Indice desconhecido dentro de ACHAR GET" ; } } block -> set [ v : int ] -> ( v1 : Bloco ) { if ( v == 0 ) -> { A = v1 ; } other ( v == 1 ) -> { B = v1 ; } other ( v == 2 ) -> { C = v1 ; } others { exception"Indice desconhecido dentro de ACHAR SET" ; } } } operator ++ ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ; } operator -- ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 SUB R6 ; } return reg @ R7 ; } operator ** ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 MUX R6 ; } return reg @ R7 ; } operator // ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 DIV R6 ; } return reg @ R7 ; } operator == ( a : int , b : int ) : bool { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 EQUAL R6 ; } return reg @ R1 ; }

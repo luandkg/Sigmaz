@@ -38,7 +38,7 @@ public class Run_Stages {
             return;
         }
 
-        mBeta.setNulo(mAlpha.getNulo());
+        mBeta.setNulo(mAlpha.getNulo(),mRunTime);
 
         if (!mAlpha.getNulo()) {
             mBeta.setValor(mAlpha.getValor(mRunTime, mEscopo),mRunTime, mEscopo);

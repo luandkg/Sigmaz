@@ -89,10 +89,19 @@ public class Compiler {
         mTokens = new ArrayList<Token>();
 
         for (Token TokenC : LexerC.getTokens()) {
-            if (TokenC.getTipo() != TokenTipo.COMENTARIO) {
-                mTokens.add(TokenC);
-            } else {
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
                 GrupoDeComentarioC.adicionarComentario(TokenC);
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                GrupoDeComentarioC.adicionarComentario(TokenC);
+
+            } else {
+
+                mTokens.add(TokenC);
+
             }
         }
 
@@ -148,7 +157,6 @@ public class Compiler {
 
                 AST_Ident ePeca = new AST_Ident(this);
                 ePeca.init(mAST);
-
 
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("make")) {

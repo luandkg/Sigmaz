@@ -49,8 +49,12 @@ public class Item {
         return !mNulo;
     }
 
-    public void setNulo(boolean eNulo) {
-        mNulo = eNulo;
+    public void setNulo(boolean eNulo, RunTime eRunTime) {
+        if (getModo() == 1) {
+            eRunTime.getErros().add("O valor de uma CONSTANTE nao pode ser alterado : " + this.getNome());
+        } else {
+            mNulo = eNulo;
+        }
     }
 
     public void setModo(int eModo) {

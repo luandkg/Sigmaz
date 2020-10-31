@@ -1,22 +1,13 @@
-call iniciar -> inicio ( );
-define A : int = 10;
-act inicio ( ) {
-	def valor : int = 1;
-	DEBUG -> REGRESSIVE :: ALL;
-	def T : int = COISAS -> CG ( 5 );
-	DEBUG -> REGRESSIVE :: ALL;
+
+call iniciar -> inicio ( ) ;
+define A : int = 10 ; act inicio ( ) {
+	 def valor : int = 1;
+	 DEBUG -> REGRESSIVE :: ALL;
+	 def T : int = COISAS -> CG ( 5 );
+	 DEBUG -> REGRESSIVE :: ALL;
 }
-stages DIAS -> {
-	SEGUNDA , TERCA 
+ stages DIAS -> { SEGUNDA , TERCA } stages JOGOS -> not { PRIMEIRA , SEGUNDA } external COISAS {
+define CAZ : int = 10 ; mockiz TREZ : int = 3 ; func CG ( a : int ) : int {
+	 return a;
 }
-stages JOGOS -> not {
-	PRIMEIRA , SEGUNDA 
-}
-external COISAS {
-	define CAZ : int = 10;
-	mockiz TREZ : int = 3;
-	func CG ( a : int ) : int {
-		return a;
-	}
-	
-}
+ }

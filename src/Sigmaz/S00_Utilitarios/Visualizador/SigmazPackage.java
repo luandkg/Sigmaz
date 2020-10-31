@@ -69,6 +69,21 @@ public class SigmazPackage {
         return mLista;
     }
 
+    public ArrayList<SigmazModel> getModelos() {
+        ArrayList<SigmazModel> mLista = new ArrayList<SigmazModel>();
+
+        for (AST mStruct : mSigmazPackage.getASTS()) {
+            if (mStruct.mesmoTipo("STRUCT")) {
+
+                if (mStruct.getBranch("EXTENDED").mesmoNome("MODEL")) {
+                    mLista.add(new SigmazModel(mStruct));
+                }
+
+            }
+        }
+        return mLista;
+    }
+
     public ArrayList<SigmazStages> getStages() {
         ArrayList<SigmazStages> mLista = new ArrayList<SigmazStages>();
 

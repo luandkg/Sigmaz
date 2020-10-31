@@ -471,7 +471,7 @@ public class Run_Context {
     public Item obterStage(String eStage, Escopo mEscopo) {
         Item retStage = new Item("ret");
 
-        retStage.setNulo(true);
+        retStage.setNulo(true,mRunTime);
 
         //  System.out.println(this.getNome() + " -> Stages : " + mRunTime.getStructsContexto(this.getRefers()).size());
 
@@ -486,7 +486,7 @@ public class Run_Context {
                     String tmp = mAST.getNome() + "::" + sAST.getNome();
                     if (tmp.contentEquals(eStage)) {
 
-                        retStage.setNulo(false);
+                        retStage.setNulo(false,mRunTime);
                         retStage.setValor(sAST.getValor(), mRunTime, null);
                         retStage.setTipo(mAST.getValor());
                         break;

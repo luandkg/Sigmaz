@@ -33,8 +33,8 @@ public class Montador {
     private String CCabecalho;
     private String CDocumento;
 
-    private  R5Resposta mCabecalho;
-    private  R5Resposta mCodigo;
+    private R5Resposta mCabecalho;
+    private R5Resposta mCodigo;
 
     private String mFase;
 
@@ -46,24 +46,11 @@ public class Montador {
         mTempo_Processamento = 0.0F;
         mTempo_Organizacao = 0.0F;
 
-        mChave_Cabecalho = new Chaveador(6);
-        mChave_Cogido = new Chaveador(6);
+        Chaves mChaves = new Chaves();
 
+        mChave_Cabecalho = mChaves.getChave_Cabecalho();
+        mChave_Cogido = mChaves.getChave_Codigo();
 
-        mChave_Cabecalho.set(0, 10);
-        mChave_Cabecalho.set(1, 56);
-        mChave_Cabecalho.set(2, 130);
-        mChave_Cabecalho.set(3, 22);
-        mChave_Cabecalho.set(4, 12);
-        mChave_Cabecalho.set(5, 80);
-
-
-        mChave_Cogido.set(0, 40);
-        mChave_Cogido.set(1, 12);
-        mChave_Cogido.set(2, 5);
-        mChave_Cogido.set(3, 130);
-        mChave_Cogido.set(4, 54);
-        mChave_Cogido.set(5, 38);
 
     }
 
@@ -77,10 +64,10 @@ public class Montador {
 
         mTerminou = false;
         mEtapa = 1;
-        CCabecalho="";
-        CDocumento="";
-        mCabecalho=null;
-        mCodigo=null;
+        CCabecalho = "";
+        CDocumento = "";
+        mCabecalho = null;
+        mCodigo = null;
 
     }
 
@@ -108,8 +95,7 @@ public class Montador {
     public void compilar(ArrayList<AST> ASTCabecalho, ArrayList<AST> ASTCodigo, String eArquivo) {
 
 
-
-        compilar_iniciar(ASTCabecalho,ASTCodigo,eArquivo);
+        compilar_iniciar(ASTCabecalho, ASTCodigo, eArquivo);
 
         while (!getTerminou()) {
             continuar();
@@ -119,20 +105,19 @@ public class Montador {
     }
 
 
-
     public void compilar_iniciar(ArrayList<AST> ASTCabecalho, ArrayList<AST> ASTCodigo, String eArquivo) {
 
         limpar();
-        mFase="";
+        mFase = "";
 
         CASTCabecalho = ASTCabecalho;
         CASTCodigo = ASTCodigo;
-        mArquivo=eArquivo;
+        mArquivo = eArquivo;
 
-        mFase="Codificando";
+        mFase = "Codificando";
     }
 
-    public String getFase(){
+    public String getFase() {
         return mFase;
     }
 
@@ -141,8 +126,8 @@ public class Montador {
         if (mEtapa == 1) {
 
 
-            P2 mCPacotador_Cabecalho = new P2();
-            P2 mCPacotador_Codigo = new P2();
+            Empacotador mCPacotador_Cabecalho = new Empacotador();
+            Empacotador mCPacotador_Codigo = new Empacotador();
 
 
             mMensageiro.mensagem("");
@@ -171,28 +156,31 @@ public class Montador {
             mMensageiro.mensagem("\tTamanho : " + mCPacotador_Codigo.getTamanho());
             mMensageiro.mensagem("\tTempo de Empacotamento : " + mTempo_01.getIntervalo());
 
-            mEtapa=2;
+            mEtapa = 2;
 
-            if (mMensageiro.temErros()){
-                mTerminou=true;
+            if (mMensageiro.temErros()) {
+                mTerminou = true;
             }
 
-            mFase="Criptografando";
+            mFase = "Criptografando";
 
 
         } else if (mEtapa == 2) {
 
 
-            R5 mCSegurador_Cabecalho = new R5(mChave_Cabecalho);
-            R5 mCSegurador_Codigo = new R5(mChave_Cogido);
+            Protetor mCSegurador_Cabecalho = new Protetor(mChave_Cabecalho);
+            Protetor mCSegurador_Codigo = new Protetor(mChave_Cogido);
 
 
             Chronos_Intervalo mTempo_02 = new Chronos_Intervalo();
 
             mTempo_02.marqueInicio();
 
-             mCabecalho = mCSegurador_Cabecalho.guardar(CCabecalho);
-             mCodigo = mCSegurador_Codigo.guardar(CDocumento);
+            mCabecalho = mCSegurador_Cabecalho.guardar(CCabecalho);
+            mCodigo = mCSegurador_Codigo.guardar(CDocumento);
+
+           // System.out.println("-->> CODIFICAR");
+            //System.out.println(CDocumento);
 
             mTempo_02.marqueFim();
 
@@ -204,13 +192,13 @@ public class Montador {
                 mMensageiro.errar("Houve um problema na montagem !");
             }
 
-            mEtapa=3;
+            mEtapa = 3;
 
-            if (mMensageiro.temErros()){
-                mTerminou=true;
+            if (mMensageiro.temErros()) {
+                mTerminou = true;
             }
 
-            mFase="Arquivando";
+            mFase = "Arquivando";
 
 
         } else if (mEtapa == 3) {
@@ -250,8 +238,8 @@ public class Montador {
             mMensageiro.mensagem("\tTempo de Escrita : " + mTempo_03.getIntervalo());
 
 
-            mTerminou=true;
-            mFase="Concluido";
+            mTerminou = true;
+            mFase = "Concluido";
 
         }
 
@@ -266,13 +254,11 @@ public class Montador {
 
         OMLRun mOMLRun = new OMLRun();
 
-        R5 mDesSegurador_Cabecalho = new R5(mChave_Cabecalho);
-        R5 mDesSegurador_Codigo = new R5(mChave_Cogido);
+        Protetor mDesSegurador_Sigmaz = new Protetor(mChave_Cabecalho);
+        Protetor mDesSegurador_Codigo = new Protetor(mChave_Cogido);
 
-        P2 mDesemPacotador_Cabecalho = new P2();
+        Empacotador mDesempacotador = new Empacotador();
 
-
-        ArrayList<AST> ASTSaida = new ArrayList<AST>();
 
         Arquivador mArquivador = new Arquivador();
 
@@ -321,28 +307,28 @@ public class Montador {
             if (String.valueOf(mOLMCabecalho.getVersao()).contentEquals("1")) {
 
 
-                boolean mProblemaCabecalho = false;
+                boolean mProblemaSigmaz = false;
 
                 byte[] mCabecalho = mArquivador.lerBloco(mOLMCabecalho.getSetorSigmaz(), mOLMCabecalho.getSigmaz_Tamanho(), eArquivo);
 
 
-                R5Resposta mASTCabecalho = mDesSegurador_Cabecalho.revelar(mCabecalho);
+                R5Resposta mSetorSigmaz = mDesSegurador_Sigmaz.revelar(mCabecalho);
 
-                if (mASTCabecalho.getOk()) {
-
-
-                    mDesemPacotador_Cabecalho.desempacotar(mASTCabecalho.getConteudo());
-
-                    if (mDesemPacotador_Cabecalho.getOK()) {
+                if (mSetorSigmaz.getOk()) {
 
 
-                        if (mDesemPacotador_Cabecalho.getDesempacotado().size() == 0) {
-                            mProblemaCabecalho = true;
+                    mDesempacotador.desempacotar(mSetorSigmaz.getConteudo());
+
+                    if (mDesempacotador.getOK()) {
+
+
+                        if (mDesempacotador.getDesempacotado().size() == 0) {
+                            mProblemaSigmaz = true;
                         } else {
 
                             int v = 0;
 
-                            for (AST eC : mDesemPacotador_Cabecalho.getDesempacotado()) {
+                            for (AST eC : mDesempacotador.getDesempacotado()) {
 
                                 if (eC.mesmoTipo("PRIVATE")) {
                                     mMensageiro.mensagem("Chave Privada : " + eC.getValor());
@@ -362,7 +348,7 @@ public class Montador {
                             }
 
                             if (v < 3) {
-                                mProblemaCabecalho = true;
+                                mProblemaSigmaz = true;
                             }
 
 
@@ -370,15 +356,15 @@ public class Montador {
 
 
                     } else {
-                        mProblemaCabecalho = true;
+                        mProblemaSigmaz = true;
                     }
 
                 } else {
-                    mProblemaCabecalho = true;
+                    mProblemaSigmaz = true;
                 }
 
-                if (mProblemaCabecalho) {
-                    mMensageiro.errar("Objeto corrompido - Setor Cabecalho !");
+                if (mProblemaSigmaz) {
+                    mMensageiro.errar("Objeto corrompido - Setor Sigmaz !");
                 }
 
                 byte[] mDados = mArquivador.lerBloco(mOLMCabecalho.getSetorCodigo(), mOLMCabecalho.getCodigo_Tamanho(), eArquivo);
@@ -394,12 +380,15 @@ public class Montador {
 
                 if (mResposta.getOk()) {
 
+                   // System.out.println("-->> ABRINDO");
+
+                 //   System.out.println(mResposta.getConteudo());
 
                     Chronos_Intervalo mTempo_02 = new Chronos_Intervalo();
 
                     mTempo_02.marqueInicio();
 
-                    P2 mDesemPacotador_Codigo = new P2();
+                    Empacotador mDesemPacotador_Codigo = new Empacotador();
 
                     mDesemPacotador_Codigo.desempacotar(mResposta.getConteudo());
 
@@ -409,9 +398,8 @@ public class Montador {
 
 
                     if (mDesemPacotador_Codigo.getOK()) {
-                        ASTSaida = mDesemPacotador_Codigo.getDesempacotado();
 
-                        mOMLRun.carregar(mDesemPacotador_Cabecalho.getDesempacotado(), mDesemPacotador_Codigo.getDesempacotado());
+                        mOMLRun.carregar(mDesempacotador.getDesempacotado(), mDesemPacotador_Codigo.getDesempacotado());
 
                     } else {
                         mProblemaCodigo = true;
@@ -422,10 +410,10 @@ public class Montador {
                 }
 
 
-                if (ASTSaida.size() == 0) {
+                if (mOMLRun.getCodigo().size() == 0) {
                     mProblemaCodigo = true;
                 } else {
-                    for (AST eAST : ASTSaida) {
+                    for (AST eAST : mOMLRun.getCodigo()) {
                         if (eAST.mesmoTipo("SIGMAZ")) {
 
                         } else {

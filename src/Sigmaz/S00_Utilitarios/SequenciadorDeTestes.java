@@ -4,25 +4,74 @@ import java.util.ArrayList;
 
 public class SequenciadorDeTestes {
 
-    private ArrayList<ArquivoProblema> mArquivos_Problematicos;
+    private ArrayList<ArquivoTeste> mTestes;
 
     public SequenciadorDeTestes() {
-        mArquivos_Problematicos = new ArrayList<ArquivoProblema>();
+
+        mTestes = new ArrayList<ArquivoTeste>();
+
     }
 
-    public void adicionarProblema(String eArquivo, String eProblema) {
-        mArquivos_Problematicos.add(new ArquivoProblema(eArquivo, eProblema));
+    public ArquivoTeste adicionarTeste(String eArquivo) {
+
+        ArquivoTeste mTeste = new ArquivoTeste(eArquivo);
+
+        mTestes.add(mTeste);
+
+        return mTeste;
     }
+
 
     public boolean temProblemas() {
-        if (mArquivos_Problematicos.size() == 0) {
-            return false;
-        } else {
-            return true;
+        boolean ret = false;
+
+        for (ArquivoTeste mTeste : mTestes) {
+            if (mTeste.temProblema()) {
+                ret = true;
+                break;
+            }
         }
+        return ret;
     }
 
+    public boolean tudoOk() {
+        boolean ret = true;
 
-    public ArrayList<ArquivoProblema> getProblemas(){return mArquivos_Problematicos;}
+        for (ArquivoTeste mTeste : mTestes) {
+            if (mTeste.temProblema()) {
+                ret = false;
+                break;
+            }
+        }
+        return ret;
+    }
+
+    public ArrayList<ArquivoTeste> getCorretos() {
+
+        ArrayList<ArquivoTeste> mLista = new ArrayList<ArquivoTeste>();
+
+        for (ArquivoTeste mTeste : mTestes) {
+            if (mTeste.tudoOk()) {
+                mLista.add(mTeste);
+            }
+        }
+        return mLista;
+    }
+
+    public ArrayList<ArquivoTeste> getProblemas() {
+
+        ArrayList<ArquivoTeste> mLista = new ArrayList<ArquivoTeste>();
+
+        for (ArquivoTeste mTeste : mTestes) {
+            if (mTeste.temProblema()) {
+                mLista.add(mTeste);
+            }
+        }
+        return mLista;
+    }
+
+    public int getTotal() {
+        return mTestes.size();
+    }
 
 }

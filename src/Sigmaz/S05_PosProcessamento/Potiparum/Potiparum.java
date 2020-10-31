@@ -32,7 +32,6 @@ public class Potiparum {
     }
 
 
-
     public void index() {
 
         mPotiparum_Sigmaz.index();
@@ -90,7 +89,7 @@ public class Potiparum {
 
                 ePronoco.adicionarCast(mAST.getNome());
 
-              mensagem(ePrefixo + "- Tipo CAST : " + mAST.getNome());
+                mensagem(ePrefixo + "- Tipo CAST : " + mAST.getNome());
 
             } else if (mAST.mesmoTipo("STRUCT")) {
 
@@ -98,17 +97,27 @@ public class Potiparum {
                 AST mExtended = mAST.getBranch("EXTENDED");
 
                 if (mExtended.mesmoNome("STRUCT")) {
+
                     mensagem(ePrefixo + "- Tipo STRUCT : " + mAST.getNome());
 
                     ePronoco.adicionarStruct(mAST.getNome());
 
-                } else if (mExtended.mesmoNome("STAGES")) { mensagem(ePrefixo + "- Tipo STAGE : " + mAST.getNome());
+                } else if (mExtended.mesmoNome("STAGES")) {
+                    mensagem(ePrefixo + "- Tipo STAGE : " + mAST.getNome());
 
                     ePronoco.adicionarStage(mAST.getNome());
+
                 } else if (mExtended.mesmoNome("TYPE")) {
-                  mensagem(ePrefixo + "- Tipo TYPE : " + mAST.getNome());
+
+                    mensagem(ePrefixo + "- Tipo TYPE : " + mAST.getNome());
 
                     ePronoco.adicionarType(mAST.getNome());
+                } else if (mExtended.mesmoNome("MODEL")) {
+
+                    mensagem(ePrefixo + "- Tipo MODEL : " + mAST.getNome());
+
+                    ePronoco.adicionarModel(mAST.getNome());
+
 
                 }
 
@@ -173,11 +182,11 @@ public class Potiparum {
                         ArrayList<String> genericos_ok = getPotiparum_Tipificador().conferirGenericos(mAST.getBranch("GENERIC"), mStructPronoco);
 
                         if (genericos_ok.size() > 0) {
-                     mensagem(ePrefixo + mAST.getNome() + " -->> TIPAGEM DE GENERICOS INVALIDA ");
-                           errar(mAST.getNome() + " -->> TIPAGEM DE GENERICOS INVALIDA ");
+                            mensagem(ePrefixo + mAST.getNome() + " -->> TIPAGEM DE GENERICOS INVALIDA ");
+                            errar(mAST.getNome() + " -->> TIPAGEM DE GENERICOS INVALIDA ");
                             for (String e : genericos_ok) {
                                 mensagem(ePrefixo + "\t" + e);
-                              errar(mAST.getNome() + " -->> " + e);
+                                errar(mAST.getNome() + " -->> " + e);
                             }
                         }
 

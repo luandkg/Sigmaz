@@ -1,61 +1,58 @@
+
 call iniciar -> {
-	algo ( );
-	algo ( -119.0 );
-	def s : num = som ( 4.0 );
-	duplo ( 3.0 );
-	quazar ( );
-	quazar ( 9.0 );
-	def w : num = 12.0;
-	fofocar ( w );
-	fofocar ( );
-	def ga : num = gral ( 5.0 );
-	DEBUG -> REGRESSIVE :: STACK;
-	DEBUG -> REGRESSIVE :: STACK;
+	 algo ( );
+	 algo ( -119.0 );
+	 def s : num = som ( 4.0 );
+	 duplo ( 3.0 );
+	 quazar ( );
+	 quazar ( 9.0 );
+	 def w : num = 12.0;
+	 fofocar ( w );
+	 fofocar ( );
+	 def ga : num = gral ( 5.0 );
+	 DEBUG -> REGRESSIVE :: STACK;
+	 DEBUG -> REGRESSIVE :: STACK;
 }
 
 act fofocar ( opt ref r : num = 50.0 , opt a : num = 5.0 ) {
-	DEBUG -> REGRESSIVE :: STACK;
+	 DEBUG -> REGRESSIVE :: STACK;
 }
-
-#act fofocando ( opt ref r : num = 50.0 ,  a : num ) {invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;}
-
-#operator ** (a :int,opt b:int = 12) : int {}
-
-#operator ** (a :int, b:int,c:int) : int {}
+ #act fofocando ( opt ref r : num = 50.0 ,  a : num ) {invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;} #operator ** (a :int,opt b:int = 12) : int {} #operator ** (a :int, b:int,c:int) : int {}
 func bla ( ) : num {
-	return som ( 2.0 , false );
+	 return som ( 2.0 , false );
 }
+
 func som ( g : num , opt v : bool = false ) : num {
-	return g;
+	 return g;
 }
 
 act algo ( opt a : num = 5.0 ) {
-	DEBUG -> REGRESSIVE :: ACTIONS;
+	 DEBUG -> REGRESSIVE :: ACTIONS;
 }
 
 act duplo ( opt a : num = 5.0 , opt b : num = 2.0 ) {
-	DEBUG -> REGRESSIVE :: ACTIONS;
+	 DEBUG -> REGRESSIVE :: ACTIONS;
 }
 
 act quazar ( opt a : num = 5.0 , opt b : num = 12.0 ) {
-	DEBUG -> REGRESSIVE :: ACTIONS;
+	 DEBUG -> REGRESSIVE :: ACTIONS;
 }
 
 act normal ( a : num , b : num ) {
-	DEBUG -> REGRESSIVE :: ACTIONS;
+	 DEBUG -> REGRESSIVE :: ACTIONS;
 }
+
 func gral ( g : num , opt ref v : bool = false ) : num {
-	DEBUG -> REGRESSIVE :: STACK;
-	return g;
+	 DEBUG -> REGRESSIVE :: STACK;
+	 return g;
 }
-package COX {
-	struct Coxa {
-	    all:
-		act encoxar ( a : num , opt b : bool = false , opt c : num = 12.0 ) {
-	        DEBUG -> REGRESSIVE :: STACK;
-	        DEBUG -> REGRESSIVE :: ACTIONS;
-		}
-		
-	}
+ package COX {
+struct Coxa {
 	
+	all :
+		act encoxar ( a : num , opt b : bool = false , opt c : num = 12.0 ) {
+			 DEBUG -> REGRESSIVE :: STACK;
+			 DEBUG -> REGRESSIVE :: ACTIONS;
+		}
 }
+ }

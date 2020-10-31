@@ -59,7 +59,7 @@ public class AST_Struct {
             mExtended.setNome("STRUCT");
 
             AST mBases = AST_Corrente.criarBranch("BASES");
-
+            AST mModels = AST_Corrente.criarBranch("MODELS");
             AST mRefers = AST_Corrente.criarBranch("REFERS");
 
 
@@ -123,6 +123,12 @@ public class AST_Struct {
 
                     AST_Model.setNome(TokenP.getConteudo());
                     AST_Model.setValor("TRUE");
+
+
+                    AST eModelo = mModels.criarBranch("MODEL");
+                    eModelo.setNome(TokenP.getConteudo());
+
+
 
                     AST AST_Gen = AST_Model.criarBranch("GENERIC");
                     AST_Gen.setNome("FALSE");
@@ -402,7 +408,7 @@ public class AST_Struct {
 
     }
 
-    public void inicializador(AST ASTPai, String NomeStruct,String Visibilidade) {
+    public void inicializador(AST ASTPai, String NomeStruct, String Visibilidade) {
 
         Token TokenC = mCompiler.getTokenAvante();
 
@@ -450,8 +456,8 @@ public class AST_Struct {
                 if (TokenI.getTipo() == TokenTipo.PARENTESES_ABRE) {
 
 
-                }else{
-                    mCompiler.errarCompilacao("Era esperado abrir parenteses",   TokenI);
+                } else {
+                    mCompiler.errarCompilacao("Era esperado abrir parenteses", TokenI);
                 }
 
                 AST_Recebimentos mRA = new AST_Recebimentos(mCompiler);
@@ -463,7 +469,6 @@ public class AST_Struct {
 
             AST_Corpo mCorpo = new AST_Corpo(mCompiler);
             mCorpo.init(AST_BODY);
-
 
 
         } else {

@@ -1,164 +1,151 @@
-call iniciar -> vamos_herdar ( );
 
+call iniciar -> vamos_herdar ( ) ;
 act vamos_herdar ( ) {
-	escrever ( "Executando 1");
-	def a1 : Animal = init Animal ( );
-	escrever ( "Executando 2");
-	a1.setIdade ( 12 );
-	a1.setQualidade ( "Lindo");
-	a1.mostrar ( );
-	def f : Fungo = init Fungo ( 12 );
-	def g : int = f.Quantidade;
-	DEBUG -> REGRESSIVE :: ALL;
+	 escrever ("Executando 1" );
+	 def a1 : Animal = init Animal ( );
+	 escrever ("Executando 2" );
+	 a1.setIdade ( 12 );
+	 a1.setQualidade ("Lindo" );
+	 a1.mostrar ( );
+	 def f : Fungo = init Fungo ( 12 );
+	 def g : int = f.Quantidade;
+	 DEBUG -> REGRESSIVE :: ALL;
 }
 
 struct Qualidade {
-    all:
-	define qualidade : string = "";
-	act setQualidade ( a : string ) {
-		qualidade = a;
-	}
-	func getQualidade ( ) : string {
-		return qualidade;
-	}
 	
+	all :
+		define qualidade : string ="" ;
+		act setQualidade ( a : string ) {
+			 qualidade = a;
+		}
+
+		func getQualidade ( ) : string {
+			 return qualidade;
+		}
 }
 
 struct Celula {
-	
-}
+	}
 
 struct Celulas {
+	
 	init Celulas ( q : int ) {
-		Quantidade = q;
+		 Quantidade = q;
 	}
-	all : 
-	define Quantidade : int = 0;
-}
+
+	all :
+		define Quantidade : int = 0 ;}
 
 struct Multicelular with Celulas {
-	init Multicelular ( q : int ) -> Celulas ( q ) {
-		
-	}
 	
+	init Multicelular ( q : int ) -> Celulas ( q ) {
+	}
 }
 
 struct Bacteria with Celula {
-	init Bacteria ( q : int ) -> Celula ( ) {
-		
-	}
 	
+	init Bacteria ( q : int ) -> Celula ( ) {
+	}
 }
 
 struct Fungo with Multicelular {
-	init Fungo ( fungo_quantidade : int ) -> Multicelular ( fungo_quantidade ) {
-		
-	}
 	
+	init Fungo ( fungo_quantidade : int ) -> Multicelular ( fungo_quantidade ) {
+	}
 }
 
 struct Cocos with Bacteria {
-	init Cocos ( q : int ) -> Bacteria ( q ) {
-		
-	}
 	
+	init Cocos ( q : int ) -> Bacteria ( q ) {
+	}
 }
 
 struct EstreptoCocos with Bacteria {
-	init EstreptoCocos ( a : int ) -> Bacteria ( q ) {
-		
-	}
 	
+	init EstreptoCocos ( a : int ) -> Bacteria ( q ) {
+	}
 }
 
 struct Animal with Qualidade {
-
-	init Animal ( ) -> Qualidade ( ) {
-
-	}
-	all:
-	define idade : int = 0;
-
-
-	act setIdade ( a : int ) {
-		idade = a;
-	}
-
-	act mostrar ( ) {
-		println (" --- ANIMAL --- ");
-		println ("");
-		println ("     - IDADE : ", idade );
-		println ("     - QUALIDADE : ", qualidade );
-		println ("");
-
-	}
-
-	act println ( a : string , b : int ) {
-		PROC -> {
-			PROC CHANGE_LINE;
-		}
-		reg @ R13 -> a;
-		PROC -> {
-			PRINT R13;
-		}
-		reg @ R5 -> b;
-		PROC -> {
-			SET R13;
-			MOV "";
-			INT_STRING R5;
-			PRINT R13;
-		}
-		
-	}
-
-	act println ( a : string , b : string ) {
-		PROC -> {
-			PROC CHANGE_LINE;
-		}
-		reg @ R13 -> a;
-		PROC -> {
-			PRINT R13;
-		}
-		reg @ R13 -> b;
-		PROC -> {
-			PRINT R13;
-		}
-		
-	}
-
-	act println ( a : string ) {
-		reg @ R13 -> a;
-		PROC -> {
-			PROC CHANGE_LINE;
-			PRINT R13;
-		}
-		
-	}
 	
+	init Animal ( ) -> Qualidade ( ) {
+	}
+
+	all :
+		define idade : int = 0 ;
+		act setIdade ( a : int ) {
+			 idade = a;
+		}
+
+		act mostrar ( ) {
+			 println (" --- ANIMAL --- " );
+			 println ("" );
+			 println ("     - IDADE : " , idade );
+			 println ("     - QUALIDADE : " , qualidade );
+			 println ("" );
+		}
+
+		act println ( a : string , b : int ) {
+			 PROC -> {
+				 PROC CHANGE_LINE;
+			}
+ reg @ R13 -> a;
+			 PROC -> {
+				 PRINT R13;
+			}
+ reg @ R5 -> b;
+			 PROC -> {
+				 SET R13;
+				 MOV"";
+				 INT_STRING R5;
+				 PRINT R13;
+			}
+}
+
+		act println ( a : string , b : string ) {
+			 PROC -> {
+				 PROC CHANGE_LINE;
+			}
+ reg @ R13 -> a;
+			 PROC -> {
+				 PRINT R13;
+			}
+ reg @ R13 -> b;
+			 PROC -> {
+				 PRINT R13;
+			}
+}
+
+		act println ( a : string ) {
+			 reg @ R13 -> a;
+			 PROC -> {
+				 PROC CHANGE_LINE;
+				 PRINT R13;
+			}
+}
 }
 
 struct Base {
+	
 	init Base ( a : int ) {
-		
 	}
-	all : 
-	    define SAL : int = 0;
-	    define BOC : int = 12;
-	    mockiz VEZ : int = 15;
-}
+
+	all :
+		define SAL : int = 0 ;
+		define BOC : int = 12 ;
+		mockiz VEZ : int = 15 ;}
 
 struct ItemBase with Base {
-	init ItemBase ( ) -> Base ( a ) {
-		
-	}
 	
+	init ItemBase ( ) -> Base ( a ) {
+	}
 }
 
 act escrever ( a : string ) {
-	reg @ R13 -> a;
-	PROC -> {
-		PROC CHANGE_LINE;
-		PRINT R13;
+	 reg @ R13 -> a;
+	 PROC -> {
+		 PROC CHANGE_LINE;
+		 PRINT R13;
 	}
-	
 }

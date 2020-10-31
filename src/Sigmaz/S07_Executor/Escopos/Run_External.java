@@ -87,10 +87,8 @@ public class Run_External {
 
         //  System.out.println("INICIANDO EXTERN :: " + ePacote + "<>" + eNome);
 
-
         mEscopo = new Escopo(mRunTime, mRunTime.getEscopoGlobal());
         mEscopo.setNome(mNome);
-        mEscopo.setEstrutura(true);
 
 
         mStructCorpo = ASTPai.getBranch("BODY");

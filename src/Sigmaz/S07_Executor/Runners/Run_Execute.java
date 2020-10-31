@@ -45,7 +45,7 @@ public class Run_Execute {
             if (mRun_Context.getQualificadorIsStruct(mItem.getTipo(), mEscopo)) {
                 executeStruct(ASTCorrente, mItem);
             } else {
-                mRunTime.errar(mLocal, "O tipo " + mItem.getTipo() + " nao possui ESCOPO !");
+                mRunTime.errar(mLocal, "O tipo " + mItem.getTipo() + " nao e STRUCT !");
                 return;
             }
 
@@ -174,105 +174,112 @@ public class Run_Execute {
 
     public void executeExtern(AST ASTCorrente, Escopo gEscopo) {
 
-        //  System.out.println("GET EXTERN  CALL -> " + gEscopo.getNome() + " : " + ASTCorrente.getNome());
 
-        //  for (String r : gEscopo.getRefers()) {
-        //     System.out.println("\t -  REFER : " + r);
-        //  }
         Run_Context mRun_Context = new Run_Context(mRunTime);
-        Run_External mEscopoExtern = null;
 
-        for (Run_External mRun_Struct : mRun_Context.getRunExternContexto(gEscopo.getRefers())) {
+        boolean enc = false;
+
+        for (Run_External mEscopoExtern : mRun_Context.getRunExternContexto(gEscopo.getRefers())) {
 
             //    System.out.println("\t - PASS EXTERN : " + mRun_Struct.getNome());
 
-            if (mRun_Struct.getNome().contentEquals(ASTCorrente.getNome())) {
-                mEscopoExtern = mRun_Struct;
+            if (mEscopoExtern.getNome().contentEquals(ASTCorrente.getNome())) {
+
+
+
+                if (mRunTime.getErros().size() > 0) {
+                    return;
+                }
+
+                AST eInternal = ASTCorrente.getBranch("INTERNAL");
+
+
+                if (eInternal.mesmoValor("STRUCT_FUNCT")) {
+
+
+                    if (mRunTime.getErros().size() > 0) {
+                        return;
+                    }
+
+                    //  System.out.println("Mudando Para EXTERN - STRUCT_FUNCT " + eInternal.getNome());
+
+
+                    mEscopoExtern.init_ActionFunction_Extern(eInternal, gEscopo);
+
+                    if (mRunTime.getErros().size() > 0) {
+                        return;
+                    }
+
+
+                } else if (eInternal.mesmoValor("STRUCT_OBJECT")) {
+
+                    //      System.out.println("STRUCT_OBJECT : " + mEscopoStruct.getNome());
+
+                    Item eItem = mEscopoExtern.init_ObjectExtern(eInternal, gEscopo, "<<ANY>>");
+
+                    while (eInternal.existeBranch("INTERNAL")) {
+
+                        AST sInternal = eInternal.getBranch("INTERNAL");
+
+                        if (sInternal.mesmoValor("STRUCT_ACT")) {
+
+                        } else if (sInternal.mesmoValor("STRUCT_FUNCT")) {
+
+                            //System.out.println("STRUCT OBJECT : " + eItem.getValor());
+
+                            if (mRunTime.getErros().size() > 0) {
+                                return;
+                            }
+
+                            if (!eItem.getTipo().contentEquals("<<ANY>>")) {
+                                //   mEscopoExtern = mRunTime.getRun_Struct(eItem.getValor());
+
+                                if (mRunTime.getErros().size() > 0) {
+                                    return;
+                                }
+
+
+                                mEscopoExtern.init_ActionFunction_Extern(sInternal, gEscopo);
+
+                                if (mRunTime.getErros().size() > 0) {
+                                    return;
+                                }
+                            } else {
+
+                                break;
+                            }
+
+
+                        } else if (sInternal.mesmoValor("STRUCT_OBJECT")) {
+
+                        }
+                    }
+
+
+                    if (mRunTime.getErros().size() > 0) {
+                        return;
+                    }
+
+
+                } else {
+
+                    mRunTime.errar(mLocal, "AST_Value --> STRUCTURED VALUE !");
+
+                }
+
+
+                enc = true;
                 break;
             }
         }
 
         //  System.out.println("ENC EXTERN : " + ASTCorrente.getNome());
 
-        if (mRunTime.getErros().size() > 0) {
-            return;
+        if (!enc) {
+            mRunTime.errar(mLocal, "External nao encontrado : " + ASTCorrente.getNome());
         }
 
-        AST eInternal = ASTCorrente.getBranch("INTERNAL");
 
-
-        if (eInternal.mesmoValor("STRUCT_FUNCT")) {
-
-
-            if (mRunTime.getErros().size() > 0) {
-                return;
-            }
-
-            //  System.out.println("Mudando Para EXTERN - STRUCT_FUNCT " + eInternal.getNome());
-
-
-            mEscopoExtern.init_ActionFunction_Extern(eInternal, gEscopo);
-
-            if (mRunTime.getErros().size() > 0) {
-                return;
-            }
-
-
-        } else if (eInternal.mesmoValor("STRUCT_OBJECT")) {
-
-            //      System.out.println("STRUCT_OBJECT : " + mEscopoStruct.getNome());
-
-            Item eItem = mEscopoExtern.init_ObjectExtern(eInternal, gEscopo, "<<ANY>>");
-
-            while (eInternal.existeBranch("INTERNAL")) {
-
-                AST sInternal = eInternal.getBranch("INTERNAL");
-
-                if (sInternal.mesmoValor("STRUCT_ACT")) {
-
-                } else if (sInternal.mesmoValor("STRUCT_FUNCT")) {
-
-                    //System.out.println("STRUCT OBJECT : " + eItem.getValor());
-
-                    if (mRunTime.getErros().size() > 0) {
-                        return;
-                    }
-
-                    if (!eItem.getTipo().contentEquals("<<ANY>>")) {
-                        //   mEscopoExtern = mRunTime.getRun_Struct(eItem.getValor());
-
-                        if (mRunTime.getErros().size() > 0) {
-                            return;
-                        }
-
-
-                        mEscopoExtern.init_ActionFunction_Extern(sInternal, gEscopo);
-
-                        if (mRunTime.getErros().size() > 0) {
-                            return;
-                        }
-                    } else {
-
-                        break;
-                    }
-
-
-                } else if (sInternal.mesmoValor("STRUCT_OBJECT")) {
-
-                }
-            }
-
-
-            if (mRunTime.getErros().size() > 0) {
-                return;
-            }
-
-
-        } else {
-
-            mRunTime.errar(mLocal, "AST_Value --> STRUCTURED VALUE !");
-
-        }
 
 
     }

@@ -1,38 +1,28 @@
-call iniciar -> mudar ( );
+
+call iniciar -> mudar ( ) ;
 act mudar ( ) {
-	def hh : int = 5;
-	def duplo_X5 : Duplo = start Duplo {
-		a = 10;
-		b = hh;
-	};
-	def hh_dentro : int = duplo_X5.b;
-	def antes_a_duploX5 : int = duplo_X5.a;
-	def antes_b_duploX5 : int = duplo_X5.b;
-	change ( duplo_X5 ) -> {
-		a = 30 ++ hh;
+	 def hh : int = 5;
+	 def duplo_X5 : Duplo = start Duplo {
+		 a = 10;
+		 b = hh;
 	}
-	def depois_a_duploX5 : int = duplo_X5.a;
-	def depois_b_duploX5 : int = duplo_X5.b;
-	DEBUG -> REGRESSIVE :: STACK;
-}
-type Duplo {
-	define a : int = 0;
-	define b : int = 0;
-}
-operator ++ ( d1 : Duplo , d2 : Duplo ) : Duplo {
-	return start Duplo {
-		a = d1.a ++ d2.a;
-		b = d1.b ++ d2.b;
-	};
-	
-}
-operator ++ ( a : int , b : int ) : int {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R7;
-		MOV 0;
-		OPE R5 ADD R6;
+;
+	 def hh_dentro : int = duplo_X5.b;
+	 def antes_a_duploX5 : int = duplo_X5.a;
+	 def antes_b_duploX5 : int = duplo_X5.b;
+	 change ( duplo_X5 ) -> {
+		 a = 30 ++ hh;
 	}
-	return reg @ R7;
+ def depois_a_duploX5 : int = duplo_X5.a;
+	 def depois_b_duploX5 : int = duplo_X5.b;
+	 DEBUG -> REGRESSIVE :: STACK;
 }
+ type Duplo {
+define a : int = 0 ; define b : int = 0 ; } operator ++ ( d1 : Duplo , d2 : Duplo ) : Duplo {
+	 return start Duplo {
+		 a = d1.a ++ d2.a;
+		 b = d1.b ++ d2.b;
+	}
+;
+}
+ operator ++ ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ; }

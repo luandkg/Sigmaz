@@ -41,9 +41,13 @@ public class Formatador {
 
                 idente_PontoEVirgula(TokenC);
 
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO) {
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
 
                 eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA){
+
+                eDocumento += " " + TokenC.getConteudo() ;
 
             } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
 

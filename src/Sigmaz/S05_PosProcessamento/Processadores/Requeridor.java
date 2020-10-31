@@ -114,6 +114,10 @@ public class Requeridor {
                                     }
 
                                     mPosProcessador.errar("Biblioteca " + mReq + " : Problema ao carregar !");
+
+                                    for(String mLibErro : RunTimeC.getErros()){
+                                        mPosProcessador.errar("Biblioteca " + ASTC.getNome() + " : " + mLibErro);
+                                    }
                                 }
 
                             } else {

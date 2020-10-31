@@ -30,7 +30,7 @@ public class Run_Arguments {
 
                     Item v = new Item("");
                     v.setModo(0);
-                    v.setNulo(mAST.getIsNulo());
+                    v.setNulo(mAST.getIsNulo(),mRunTime);
                     v.setPrimitivo(mAST.getIsPrimitivo());
                     v.setIsEstrutura(mAST.getIsStruct());
                     v.setTipo(mAST.getRetornoTipo());
@@ -65,6 +65,8 @@ public class Run_Arguments {
 
     public void passarParametros(Escopo mEscopoInterno, ArrayList<Index_Argument> eParametros, ArrayList<Item> mArgumentos) {
 
+        Run_Pass  mRun_Pass = new Run_Pass(mEscopoInterno.getRunTime(), mEscopoInterno);
+
         if (eParametros.size() == mArgumentos.size()) {
 
 
@@ -77,9 +79,9 @@ public class Run_Arguments {
 
 
                     if (eParametros.get(argC).getModo().contentEquals("VALUE")) {
-                        mEscopoInterno.passarParametroByValue(eParametros.get(argC).getNome(), mArgumentos.get(argC));
+                        mRun_Pass.passarParametroByValue(eParametros.get(argC).getNome(), mArgumentos.get(argC));
                     } else if (eParametros.get(argC).getModo().contentEquals("REF")) {
-                        mEscopoInterno.passarParametroByRef(eParametros.get(argC).getNome(), mArgumentos.get(argC));
+                        mRun_Pass.passarParametroByRef(eParametros.get(argC).getNome(), mArgumentos.get(argC));
                     } else {
                         mEscopoInterno.getRunTime().getErros().add("Passagem de parametro desconhecida : " + eParametros.get(argC).getModo());
                         return;

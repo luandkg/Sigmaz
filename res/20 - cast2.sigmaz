@@ -1,113 +1,57 @@
-call iniciar -> pular ( );
-cast pos {
-	getter a2 : int -> {
-		if ( menor ( a2 , 0 ) ) -> {
-			exception "Nao e possivel obter valores negativos !";
-		}
-		
-	}
-	setter b : int -> {
-		if ( menor ( b , 0 ) ) -> {
-			exception "Nao e possivel obter valores negativos !";
-		}
-		
-	}
-	
-}
-cast neg {
-	getter a2 : int -> {
-		if ( maior ( a2 , 0 ) ) -> {
-			exception "Nao e possivel obter valores positivos !";
-		}
-		
-	}
-	setter b : int -> {
-		if ( maior ( b , 0 ) ) -> {
-			exception "Nao e possivel obter valores positivos !";
-		}
-		
-	}
-	
-}
+
+call iniciar -> pular ( ) ; cast pos { getter a2 : int -> { if ( menor ( a2 , 0 ) ) -> { exception"Nao e possivel obter valores negativos !" ; } } setter b : int -> { if ( menor ( b , 0 ) ) -> { exception"Nao e possivel obter valores negativos !" ; } } } cast neg { getter a2 : int -> { if ( maior ( a2 , 0 ) ) -> { exception"Nao e possivel obter valores positivos !" ; } } setter b : int -> { if ( maior ( b , 0 ) ) -> { exception"Nao e possivel obter valores positivos !" ; } } }
 func menor ( a : int , b : int ) : bool {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R1;
-		MOV FALSE;
-		OPE R5 LESS R6;
+	 reg @ R5 -> a;
+	 reg @ R6 -> b;
+	 PROC -> {
+		 SET R1;
+		 MOV FALSE;
+		 OPE R5 LESS R6;
 	}
-	return reg @ R1;
+ return reg @ R1;
 }
+
 func maior ( a : int , b : int ) : bool {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R1;
-		MOV FALSE;
-		OPE R5 GREAT R6;
+	 reg @ R5 -> a;
+	 reg @ R6 -> b;
+	 PROC -> {
+		 SET R1;
+		 MOV FALSE;
+		 OPE R5 GREAT R6;
 	}
-	return reg @ R1;
+ return reg @ R1;
 }
 
 act pular ( ) {
-	def P1 : pos = 13;
-	def v : int = P1;
-	def P2 : pos = 40;
-	def igual : bool = P1 == P2;
-	def diferente : bool = P1 !! P2;
-	def N1 : neg = -13;
-	def v2 : int = N1;
-	def P3 : pos = positivar ( P1 , pos ( 5 ) );
-	def v3 : int = int ( P3 );
-	def ii : bool = int ( pos ( 0 ) ) == int ( neg ( 0 ) );
-	def iMais5 : int = 5;
-	def iMenos : int = -5;
-	def pos_int : pos = iMais5;
-	def neg_int : neg = iMenos;
-	def int_pos : int = pos_int;
-	def ipos : pos = int ( 5 );
-	def ineg : neg = int ( -5 );
-	def pint : int = pos ( 2 );
-	def nint : int = neg ( -2 );
-	def nn : neg = neg ( -2 );
-	DEBUG -> REGRESSIVE :: ALL;
+	 def P1 : pos = 13;
+	 def v : int = P1;
+	 def P2 : pos = 40;
+	 def igual : bool = P1 == P2;
+	 def diferente : bool = P1 !! P2;
+	 def N1 : neg = -13;
+	 def v2 : int = N1;
+	 def P3 : pos = positivar ( P1 , pos ( 5 ) );
+	 def v3 : int = int ( P3 );
+	 def ii : bool = int ( pos ( 0 ) ) == int ( neg ( 0 ) );
+	 def iMais5 : int = 5;
+	 def iMenos : int = -5;
+	 def pos_int : pos = iMais5;
+	 def neg_int : neg = iMenos;
+	 def int_pos : int = pos_int;
+	 def ipos : pos = int ( 5 );
+	 def ineg : neg = int ( -5 );
+	 def pint : int = pos ( 2 );
+	 def nint : int = neg ( -2 );
+	 def nn : neg = neg ( -2 );
+	 DEBUG -> REGRESSIVE :: ALL;
 }
+
 func positivar ( p1 : pos , p2 : pos ) : pos {
-	p1 = p2;
-	p1 = 5;
-	return p1;
+	 p1 = p2;
+	 p1 = 5;
+	 return p1;
 }
-operator == ( a : pos , b : pos ) : bool {
-	def a1 : int = a;
-	def b1 : int = b;
-	return a1 == b1;
-}
-operator !! ( a : pos , b : pos ) : bool {
-	def a1 : int = a;
-	def b1 : int = b;
-	return a1 !! b1;
-}
-operator == ( a : int , b : int ) : bool {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R1;
-		MOV FALSE;
-		OPE R5 EQUAL R6;
-	}
-	return reg @ R1;
-}
-operator !! ( a : int , b : int ) : bool {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R1;
-		MOV FALSE;
-		OPE R5 DIFF R6;
-	}
-	return reg @ R1;
-}
+ operator == ( a : pos , b : pos ) : bool { def a1 : int = a ; def b1 : int = b ; return a1 == b1 ; } operator !! ( a : pos , b : pos ) : bool { def a1 : int = a ; def b1 : int = b ; return a1 !! b1 ; } operator == ( a : int , b : int ) : bool { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 EQUAL R6 ; } return reg @ R1 ; } operator !! ( a : int , b : int ) : bool { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 DIFF R6 ; } return reg @ R1 ; }
 func int ( a : int ) : int {
-	return a;
+	 return a;
 }

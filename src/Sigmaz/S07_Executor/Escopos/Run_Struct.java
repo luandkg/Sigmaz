@@ -27,6 +27,8 @@ public class Run_Struct {
     private AST mDestruct;
 
     private AST mBases;
+    private AST mModelos;
+
     private String mBaseado;
 
     private ArrayList<String> mStack_All;
@@ -48,6 +50,7 @@ public class Run_Struct {
         mStructGeneric = null;
         mStructCorpo = null;
         mBases = null;
+        mModelos = null;
         mBaseado = "";
         mHerdadeDe = "";
 
@@ -128,19 +131,28 @@ public class Run_Struct {
         return mB;
     }
 
+    public ArrayList<String> getModelos() {
+        ArrayList<String> mB = new ArrayList<String>();
+
+        for (AST eAST : mModelos.getASTS()) {
+            mB.add(eAST.getNome());
+        }
+
+        return mB;
+    }
+
     public String getBaseado() {
         return mBaseado;
     }
 
-    public void init(AST ASTCorrente, Escopo BuscadorDeArgumentos) {
+    public void init(AST mIniter, Escopo BuscadorDeArgumentos) {
 
         mEscopo = new Escopo(mRunTime, mRunTime.getEscopoGlobal());
-        mEscopo.setEstrutura(true);
 
         mStructCorpo = null;
         mStructInits = null;
 
-        mStructNome = ASTCorrente.getNome();
+        mStructNome = mIniter.getNome();
 
         long HEAPID = mRunTime.getHeap().getHEAPID();
         mNome = "<Struct::" + mStructNome + ":" + HEAPID + ">";
@@ -174,11 +186,11 @@ public class Run_Struct {
         }
 
 
-        Run_Refer mRun_Refer = new Run_Refer(mRunTime,mEscopo);
+        Run_Refer mRun_Refer = new Run_Refer(mRunTime, mEscopo);
         mRun_Refer.init(mAST_Struct.getBranch("REFERS"));
 
 
-        AST init_Generic = ASTCorrente.getBranch("GENERIC");
+        AST init_Generic = mIniter.getBranch("GENERIC");
 
         Run_GetType mRun_GetType = new Run_GetType(mRunTime, BuscadorDeArgumentos);
 
@@ -350,12 +362,12 @@ public class Run_Struct {
 
             Run_Any mRA = new Run_Any(mRunTime);
 
-            mRA.Inicializador(mStructNome, ASTCorrente, BuscadorDeArgumentos, mEscopo, mLocal);
+            mRA.Inicializador(mStructNome, mIniter, BuscadorDeArgumentos, mEscopo, mLocal);
 
 
         } else {
 
-            if (ASTCorrente.getBranch("ARGUMENTS").getASTS().size() > 0) {
+            if (mIniter.getBranch("ARGUMENTS").getASTS().size() > 0) {
                 mRunTime.errar(mLocal, "Struct " + mStructNome + " nao possui Init com argumentos !");
             }
 
@@ -363,7 +375,6 @@ public class Run_Struct {
 
 
     }
-
 
 
     public boolean procurarStruct(Escopo BuscadorDeArgumentos) {
@@ -383,6 +394,7 @@ public class Run_Struct {
                     mStructGeneric = ASTC.getBranch("GENERIC");
 
                     mBases = ASTC.getBranch("BASES");
+                    mModelos = ASTC.getBranch("MODELS");
 
                     mDestruct = ASTC.getBranch("DESTRUCT");
 
@@ -778,5 +790,60 @@ public class Run_Struct {
 
 
     }
+
+
+    public boolean temEssaBase(String eQualBase) {
+
+        boolean temHeranca = false;
+
+       // System.out.println("\t " + this.getNome() + " : " + this.getStructNome() + " :: Procurando Base --> " + eQualBase);
+
+        if (getStructNome().contentEquals(eQualBase)) {
+            temHeranca=true;
+        }else{
+            for (String eBase : getBases()) {
+
+             //   System.out.println("\t " + this.getNome() + " :: BASE ->> " + eBase);
+
+                if (eBase.contentEquals(eQualBase)) {
+                    temHeranca = true;
+                    break;
+                }
+            }
+
+        }
+
+        return temHeranca;
+
+    }
+
+    public boolean temEsseModelo(String eQualModelo) {
+
+
+        boolean temModelo = false;
+
+        // System.out.println("\t " + this.getNome() + " :: Procurando Modelos");
+        //  System.out.println(mModelos.getImpressao());
+
+        if (getStructNome().contentEquals(eQualModelo)) {
+            temModelo=true;
+        }else{
+            for (String eBase : getModelos()) {
+
+                //   System.out.println("\t " + this.getNome() + " :: BASE ->> " + eBase);
+
+                if (eBase.contentEquals(eQualModelo)) {
+                    temModelo = true;
+                    break;
+                }
+            }
+
+        }
+
+
+        return temModelo;
+
+    }
+
 
 }

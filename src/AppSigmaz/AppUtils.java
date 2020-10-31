@@ -1,10 +1,10 @@
 package AppSigmaz;
 
-import Gerador.BioGerador;
+import BioGerador.BioGerador;
 import Sigmaz.S00_Utilitarios.Tempo;
 import Sigmaz.S07_Executor.RunTime;
 import Sigmaz.S07_Executor.UML;
-import Sigmaz.S08_Ferramentas.Dependenciador;
+import Sigmaz.S08_Ferramentas.*;
 import Sigmaz.Intellisenses.Intellisense;
 import Sigmaz.Intellisenses.IntellisenseTheme;
 import Sigmaz.S02_Lexer.Lexer;
@@ -12,18 +12,12 @@ import Sigmaz.S02_Lexer.Token;
 import Sigmaz.Sigmaz_Executor;
 import Sigmaz.Sigmaz_Compilador;
 
-import Sigmaz.S08_Ferramentas.Comentarios;
-import Sigmaz.S08_Ferramentas.Todos;
-
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
 import Sigmaz.S00_Utilitarios.Erro;
-import Sigmaz.S08_Ferramentas.Identador;
-import Sigmaz.S08_Ferramentas.Internal;
-import Sigmaz.S08_Ferramentas.Syntax_HighLight;
 
 public class AppUtils {
 
@@ -187,6 +181,7 @@ public class AppUtils {
             SigmazC.setDebug_PosProcessador_Tipador(false);
             SigmazC.setDebug_PosProcessador_Valorador(false);
             SigmazC.setDebug_PosProcessador_Estruturador(false);
+            SigmazC.setDebug_PosProcessador_Unicidade(true);
 
             SigmazC.init(mOpcional.getConteudo(), eCompilado, eLocalLibs, 1);
 
@@ -386,7 +381,7 @@ public class AppUtils {
         }
 
 
-        mSigmazTestes.init(mLocal, mLocalLibs, "SIGMAZ - TESTES UNITARIOS");
+        mSigmazTestes.init(mLocalLibs, "SIGMAZ - TESTES UNITARIOS");
 
     }
 
@@ -622,5 +617,11 @@ public class AppUtils {
 
     }
 
+    public static void DUMP(String eCompilado ) {
+
+        OLMDump mOMLDump = new OLMDump();
+        mOMLDump.dump(eCompilado);
+
+    }
 
 }

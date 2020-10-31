@@ -229,7 +229,7 @@ public class Run_Body {
 
                 mItem = mRun_Return.init(fAST,mEsperaRetornar);
 
-                mEscopo.setRetornado(true);
+                Retornar();
 
                 break;
 
@@ -347,6 +347,7 @@ public class Run_Body {
 
                 Run_Reg mRun_Reg = new Run_Reg(mRunTime, mEscopo);
                 mRun_Reg.init(fAST);
+
             } else if (fAST.mesmoTipo("PROC")) {
 
 

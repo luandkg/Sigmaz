@@ -1,206 +1,187 @@
-call iniciar -> operando ( );
+
+call iniciar -> operando ( ) ;
 act operando ( ) {
-	def a1 : num = 10.0;
-	def a2 : num = 5.0;
-	def t : bool = a1 == a2;
-	println ( "A1 : : ", a1 );
-	println ( "A2 : : ", a2 );
-	println ( "");
-	if ( t ) -> {
-		println ( "Parte : ", "Igual");
-	}others {
-		println ( "Parte : ", "Diferente");
+	 def a1 : num = 10.0;
+	 def a2 : num = 5.0;
+	 def t : bool = a1 == a2;
+	 println ("A1 : : " , a1 );
+	 println ("A2 : : " , a2 );
+	 println ("" );
+	 if ( t ) -> {
+		 println ("Parte : " ,"Igual" );
 	}
-	def modo : string = "";
-	if ( menor ( a1 , a2 ) ) -> {
-		modo = "Menor";
-	}other ( igual ( a1 , a2 ) ) -> {
-		modo = "Igual";
-	}others {
-		modo = "Maior";
+ others {
+		 println ("Parte : " ,"Diferente" );
 	}
-	println ( "Comparacao : ", modo );
-	println ( "");
-	def cai1 : bool = maior_igual ( 4.0 , 6.0 );
-	def cai2 : bool = maior_igual ( 4.0 , 2.0 );
-	def cai3 : bool = maior_igual ( 4.0 , 4.0 );
-	def cei1 : bool = menor_igual ( 4.0 , 2.0 );
-	def cei2 : bool = menor_igual ( 4.0 , 4.0 );
-	def cei3 : bool = menor_igual ( 4.0 , 6.0 );
-	println ( "Operador Maior Igual");
-	println ( "4 >= 6 : ", cai1 );
-	println ( "4 >= 2 : ", cai2 );
-	println ( "4 >= 4 : ", cai3 );
-	println ( "");
-	println ( "Operador Menor Igual");
-	println ( "4 <= 2 : ", cei1 );
-	println ( "4 <= 4 : ", cei2 );
-	println ( "4 <= 6 : ", cei3 );
-	def CC : bool = ( 10.0 == 12.0 ) == false;
-	def w : string = ( "Luan");
-	DEBUG -> REGRESSIVE :: ALL;
-}
-func maior_igual ( a : num , b : num ) : bool {
-	reg @ R9 -> a;
-	reg @ R10 -> b;
-	PROC -> {
-		SET R1;
-		MOV FALSE;
-		OPE R9 DROEN R10;
+ def modo : string ="";
+	 if ( menor ( a1 , a2 ) ) -> {
+		 modo ="Menor";
 	}
-	def c1 : bool = reg @ R1;
-	reg @ R9 -> a;
-	reg @ R10 -> b;
-	PROC -> {
-		SET R1;
-		MOV FALSE;
-		OPE R9 OPUAL R10;
+ other ( igual ( a1 , a2 ) ) -> {
+		 modo ="Igual";
 	}
-	def c2 : bool = reg @ R1;
-	def c3 : bool = false;
-	if ( c1 ) -> {
-		c3 = true;
+ others {
+		 modo ="Maior";
 	}
-	if ( c2 ) -> {
-		c3 = true;
-	}
-	return c3;
-}
-func menor ( a : num , b : num ) : bool {
-	reg @ R9 -> a;
-	reg @ R10 -> b;
-	PROC -> {
-		SET R1;
-		MOV FALSE;
-		OPE R9 MOZZ R10;
-	}
-	return reg @ R1;
-}
-func menor_igual ( a : num , b : num ) : bool {
-	reg @ R9 -> a;
-	reg @ R10 -> b;
-	PROC -> {
-		SET R1;
-		MOV FALSE;
-		OPE R9 MOZZ R10;
-	}
-	def c1 : bool = reg @ R1;
-	reg @ R9 -> a;
-	reg @ R10 -> b;
-	PROC -> {
-		SET R1;
-		MOV FALSE;
-		OPE R9 OPUAL R10;
-	}
-	def c2 : bool = reg @ R1;
-	def c3 : bool = false;
-	if ( c1 ) -> {
-		c3 = true;
-	}
-	if ( c2 ) -> {
-		c3 = true;
-	}
-	return c3;
-}
-func igual ( a : num , b : num ) : bool {
-	def c1 : bool = reg @ R1;
-	reg @ R9 -> a;
-	reg @ R10 -> b;
-	PROC -> {
-		SET R1;
-		MOV FALSE;
-		OPE R9 OPUAL R10;
-	}
-	return reg @ R1;
-}
-operator == ( a : num , b : num ) : bool {
-	def c1 : bool = reg @ R1;
-	reg @ R9 -> a;
-	reg @ R10 -> b;
-	PROC -> {
-		SET R1;
-		MOV FALSE;
-		OPE R9 OPUAL R10;
-	}
-	return reg @ R1;
-}
-operator == ( a : bool , b : bool ) : bool {
-	reg @ R1 -> a;
-	reg @ R2 -> b;
-	PROC -> {
-		SET R3;
-		MOV FALSE;
-		OPE R1 MATCH R2;
-	}
-	return reg @ R3;
+ println ("Comparacao : " , modo );
+	 println ("" );
+	 def cai1 : bool = maior_igual ( 4.0 , 6.0 );
+	 def cai2 : bool = maior_igual ( 4.0 , 2.0 );
+	 def cai3 : bool = maior_igual ( 4.0 , 4.0 );
+	 def cei1 : bool = menor_igual ( 4.0 , 2.0 );
+	 def cei2 : bool = menor_igual ( 4.0 , 4.0 );
+	 def cei3 : bool = menor_igual ( 4.0 , 6.0 );
+	 println ("Operador Maior Igual" );
+	 println ("4 >= 6 : " , cai1 );
+	 println ("4 >= 2 : " , cai2 );
+	 println ("4 >= 4 : " , cai3 );
+	 println ("" );
+	 println ("Operador Menor Igual" );
+	 println ("4 <= 2 : " , cei1 );
+	 println ("4 <= 4 : " , cei2 );
+	 println ("4 <= 6 : " , cei3 );
+	 def CC : bool = ( 10.0 == 12.0 ) == false;
+	 def w : string = ("Luan" );
+	 DEBUG -> REGRESSIVE :: ALL;
 }
 
-act print ( a : string ) {
-	reg @ R13 -> a;
-	PROC -> {
-		PRINT R13;
+func maior_igual ( a : num , b : num ) : bool {
+	 reg @ R9 -> a;
+	 reg @ R10 -> b;
+	 PROC -> {
+		 SET R1;
+		 MOV FALSE;
+		 OPE R9 DROEN R10;
 	}
-	
+ def c1 : bool = reg @ R1;
+	 reg @ R9 -> a;
+	 reg @ R10 -> b;
+	 PROC -> {
+		 SET R1;
+		 MOV FALSE;
+		 OPE R9 OPUAL R10;
+	}
+ def c2 : bool = reg @ R1;
+	 def c3 : bool = false;
+	 if ( c1 ) -> {
+		 c3 = true;
+	}
+ if ( c2 ) -> {
+		 c3 = true;
+	}
+ return c3;
+}
+
+func menor ( a : num , b : num ) : bool {
+	 reg @ R9 -> a;
+	 reg @ R10 -> b;
+	 PROC -> {
+		 SET R1;
+		 MOV FALSE;
+		 OPE R9 MOZZ R10;
+	}
+ return reg @ R1;
+}
+
+func menor_igual ( a : num , b : num ) : bool {
+	 reg @ R9 -> a;
+	 reg @ R10 -> b;
+	 PROC -> {
+		 SET R1;
+		 MOV FALSE;
+		 OPE R9 MOZZ R10;
+	}
+ def c1 : bool = reg @ R1;
+	 reg @ R9 -> a;
+	 reg @ R10 -> b;
+	 PROC -> {
+		 SET R1;
+		 MOV FALSE;
+		 OPE R9 OPUAL R10;
+	}
+ def c2 : bool = reg @ R1;
+	 def c3 : bool = false;
+	 if ( c1 ) -> {
+		 c3 = true;
+	}
+ if ( c2 ) -> {
+		 c3 = true;
+	}
+ return c3;
+}
+
+func igual ( a : num , b : num ) : bool {
+	 def c1 : bool = reg @ R1;
+	 reg @ R9 -> a;
+	 reg @ R10 -> b;
+	 PROC -> {
+		 SET R1;
+		 MOV FALSE;
+		 OPE R9 OPUAL R10;
+	}
+ return reg @ R1;
+}
+ operator == ( a : num , b : num ) : bool { def c1 : bool = reg @ R1 ; reg @ R9 -> a ; reg @ R10 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R9 OPUAL R10 ; } return reg @ R1 ; } operator == ( a : bool , b : bool ) : bool { reg @ R1 -> a ; reg @ R2 -> b ; PROC -> { SET R3 ; MOV FALSE ; OPE R1 MATCH R2 ; } return reg @ R3 ; }
+act print ( a : string ) {
+	 reg @ R13 -> a;
+	 PROC -> {
+		 PRINT R13;
+	}
 }
 
 act println ( a : string ) {
-	reg @ R13 -> a;
-	PROC -> {
-		PROC CHANGE_LINE;
-		PRINT R13;
+	 reg @ R13 -> a;
+	 PROC -> {
+		 PROC CHANGE_LINE;
+		 PRINT R13;
 	}
-	
 }
 
 act println ( a : string , b : string ) {
-	reg @ R13 -> a;
-	reg @ R14 -> b;
-	PROC -> {
-		PROC CHANGE_LINE;
-		PRINT R13;
-		PRINT R14;
+	 reg @ R13 -> a;
+	 reg @ R14 -> b;
+	 PROC -> {
+		 PROC CHANGE_LINE;
+		 PRINT R13;
+		 PRINT R14;
 	}
-	
 }
 
 act println ( a : string , b : num ) {
-	reg @ R13 -> a;
-	reg @ R9 -> b;
-	PROC -> {
-		PROC CHANGE_LINE;
-		PRINT R13;
-		SET R13;
-		MOV "";
-		NUM_STRING R9;
-		PRINT R13;
+	 reg @ R13 -> a;
+	 reg @ R9 -> b;
+	 PROC -> {
+		 PROC CHANGE_LINE;
+		 PRINT R13;
+		 SET R13;
+		 MOV"";
+		 NUM_STRING R9;
+		 PRINT R13;
 	}
-	
 }
 
 act println ( a : string , b : int ) {
-	reg @ R13 -> a;
-	reg @ R5 -> b;
-	PROC -> {
-		PROC CHANGE_LINE;
-		PRINT R13;
-		SET R13;
-		MOV "";
-		INT_STRING R5;
-		PRINT R13;
+	 reg @ R13 -> a;
+	 reg @ R5 -> b;
+	 PROC -> {
+		 PROC CHANGE_LINE;
+		 PRINT R13;
+		 SET R13;
+		 MOV"";
+		 INT_STRING R5;
+		 PRINT R13;
 	}
-	
 }
 
 act println ( a : string , b : bool ) {
-	reg @ R13 -> a;
-	reg @ R1 -> b;
-	PROC -> {
-		PROC CHANGE_LINE;
-		PRINT R13;
-		SET R13;
-		MOV "";
-		BOOL_STRING R1;
-		PRINT R13;
+	 reg @ R13 -> a;
+	 reg @ R1 -> b;
+	 PROC -> {
+		 PROC CHANGE_LINE;
+		 PRINT R13;
+		 SET R13;
+		 MOV"";
+		 BOOL_STRING R1;
+		 PRINT R13;
 	}
-	
 }

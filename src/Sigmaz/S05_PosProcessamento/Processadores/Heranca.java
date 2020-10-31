@@ -489,6 +489,11 @@ public class Heranca {
             Super.getBranch("BASES").getASTS().add(migrando);
         }
 
+        for (AST migrando : Base.getBranch("MODELS").getASTS()) {
+            Super.getBranch("MODELS").getASTS().add(migrando);
+        }
+
+
         if (ePacote.length() == 0) {
             Super.getBranch("BASES").criarBranch("BASE").setNome(eBaseNome);
         } else {

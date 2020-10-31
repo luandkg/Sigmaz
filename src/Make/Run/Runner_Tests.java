@@ -29,7 +29,7 @@ public class Runner_Tests {
 
         System.out.println("");
 
-        mSigmazTestes.init(mRunMake.getLocal(),mRunMake.getLocal(),ASTCGlobal.getNome());
+        mSigmazTestes.init(mRunMake.getLocal(),ASTCGlobal.getNome());
 
 
     }

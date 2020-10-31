@@ -32,7 +32,7 @@ public class Run_Return {
         }
 
 
-        mItem.setNulo(mAST.getIsNulo());
+        mItem.setNulo(mAST.getIsNulo(),mRunTime);
         mItem.setPrimitivo(mAST.getIsPrimitivo());
         mItem.setIsEstrutura(mAST.getIsStruct());
         mItem.setValor(mAST.getConteudo(), mRunTime, mEscopo);

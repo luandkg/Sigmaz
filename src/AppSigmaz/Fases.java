@@ -25,5 +25,6 @@ public enum Fases {
     MONTAR_PLANO_COMPILACAO,
     GERADOR_DETALHADO,
     GERADOR_INTELLISENSE,
-    APP
+    APP,
+    DUMP
 }

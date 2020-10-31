@@ -26,11 +26,7 @@ act pular ( ) {
 
 act alterador_Pessoa ( az : Pessoa ) {
 	 def t : Pessoa = az;
-	
-	#def n : string = t.getNome("A").mostrar();
-	
-	#def b : string = t.nome.pular().criar(12==13);
-	 def nome1 : string = az.getNome ( );
+	 #def n : string = t.getNome("A").mostrar(); #def b : string = t.nome.pular().criar(12==13); def nome1 : string = az.getNome ( );
 	 def nome2 : string = az.nome;
 	 DEBUG -> REGRESSIVE :: ALL;
 }
@@ -43,5 +39,5 @@ func somar ( a : int , b : int ) : int {
 		 MOV 0;
 		 OPE R5 ADD R6;
 	}
-    return reg @ R7;
+ return reg @ R7;
 }

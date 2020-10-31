@@ -379,7 +379,7 @@ Linguagem de Programação Estruturada - Implementações
 		2020 09 29 -->> Hierarquização de Funções Locais
 
 
-		2020 09 30 -->> Gerador de Insignias
+		2020 09 30 -->> BioGerador de Insignias
 		2020 09 30 -->> Implementação Run_Call
 		2020 09 30 -->> Re-Organização RunTime
 		2020 09 30 -->> Re-Organização RunContext
@@ -524,4 +524,28 @@ Linguagem de Programação Estruturada - Implementações
 		2020 10 28 -->> Intellisense com Fonte Escalável
 		2020 10 28 -->> Run_Refer
 		2020 10 28 -->> Run_Required
+		2020 10 28 -->> Simplificação do Run_External
+
+
+		2020 10 29 -->> Refatoramento do Escopo
+		2020 10 29 -->> Escopo -> Refers
+		2020 10 29 -->> Escopo -> Stacks Refered
+		2020 10 29 -->> Escopo -> Passagem de Argumentos
+		2020 10 29 -->> Debug Local Instances
+		2020 10 29 -->> Run_Pass
+		2020 10 29 -->> Transição de Modelos Durante Herança
+
+
+		2020 10 30 -->> Organização Run_Struct
+		2020 10 30 -->> Organização Run_Type
+		2020 10 30 -->> Simplificação Run_Valoramento
+		2020 10 30 -->> Divisao do Token Comentario
+		2020 10 30 -->> Comentario_Linha
+		2020 10 30 -->> Comentario_Bloco
+		2020 10 30 -->> Refatorando Formatador
+		2020 10 30 -->> Chaves de Montagem
+		2020 10 30 -->> Protetor
+		2020 10 30 -->> Chaveador
+		2020 10 30 -->> Chaves de 64 Bytes
+		2020 10 30 -->> Dump OLM
 

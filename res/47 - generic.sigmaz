@@ -1,49 +1,51 @@
-call iniciar -> inicio ( );
+
+call iniciar -> inicio ( ) ;
 act inicio ( ) {
-	def a : Valoramento >> ( num ) = gerar ( 15.0 );
-	def b : num = a.getX ( );
-	def c : Valoramento >> ( num ) = init Valoramento ( 10.0 ) >> ( num );
-	passar ( c );
-	def d : num = c.getX ( );
-	def r : Ref = init Ref ( );
-	r.VA = c;
-	
-	#trash(c);
-	r.VA.setX ( 50.0 );
-	def duplo : num = r.VA.getX ( );
-	DEBUG -> REGRESSIVE :: ALL;
+	 def a : Valoramento >> ( num ) = gerar ( 15.0 );
+	 def b : num = a.getX ( );
+	 def c : Valoramento >> ( num ) = init Valoramento ( 10.0 ) >> ( num );
+	 passar ( c );
+	 def d : num = c.getX ( );
+	 def r : Ref = init Ref ( );
+	 r.VA = c;
+	 #trash(c); r.VA.setX ( 50.0 );
+	 def duplo : num = r.VA.getX ( );
+	 DEBUG -> REGRESSIVE :: ALL;
 }
 
 act trash ( a : any ) {
-	invoke __COMPILER__ -> STRUCT ( a ) :: REMOVE;
+	 invoke __COMPILER__ -> STRUCT ( a ) :: REMOVE;
 }
+
 func passar ( g : Valoramento >> ( num ) ) : num {
-	g.setX ( 20.0 );
-	return 1.0;
+	 g.setX ( 20.0 );
+	 return 1.0;
 }
+
 func gerar ( a : num ) : Valoramento >> ( num ) {
-	def tmp : Valoramento >> ( num ) = init Valoramento ( a ) >> ( num );
-	return tmp;
+	 def tmp : Valoramento >> ( num ) = init Valoramento ( a ) >> ( num );
+	 return tmp;
 }
 
 struct Ref {
-	all : 
-	define VA : Valoramento >> ( num );
-}
+	
+	all :
+		define VA : Valoramento >> ( num ) ;}
 
 struct Valoramento in ( T ) {
+	
 	init Valoramento ( a : num ) {
-		guardado = a;
-	}
-	restrict : 
-	define guardado : T = null;
-	all : 
-	func getX ( ) : T {
-		return guardado;
+		 guardado = a;
 	}
 
-	act setX ( a : num ) {
-		guardado = a;
-	}
-	
+	restrict :
+		define guardado : T = null ;
+	all :
+		func getX ( ) : T {
+			 return guardado;
+		}
+
+		act setX ( a : num ) {
+			 guardado = a;
+		}
 }

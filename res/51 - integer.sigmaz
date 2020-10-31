@@ -1,10 +1,10 @@
-import "libs/lib.sigmaz";
-call iniciar -> inicio ( );
+ import"libs/lib.sigmaz" ;
+call iniciar -> inicio ( ) ;
 act inicio ( ) {
-	def a : int = 12;
-	def b : int = 3;
-	def c : int = dividir ( a , b );
-	def d : int = 12 ++ 8;
-	def g : int = ! d;
-	DEBUG -> REGRESSIVE :: ALL;
+	 def a : int = 12;
+	 def b : int = 3;
+	 def c : int = dividir ( a , b );
+	 def d : int = 12 ++ 8;
+	 def g : int = ! d;
+	 DEBUG -> REGRESSIVE :: ALL;
 }

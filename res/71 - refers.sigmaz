@@ -1,112 +1,65 @@
-package Blocos {
-
-    struct ACA {}
-
-	struct VALORADO in ( T ) {
-
-			init VALORADO ( a : T ) {
-    			mValor = a;
-    		}
-
-		restrict : 
-		define mValor : T = null;
-		all : 
-
-		
+ package Blocos {
+struct ACA {
 	}
 
-	struct CX in ( T ) with VALORADO >> (T) {
-
-		init CX ( a : T ) -> VALORADO ( a ) {
-			
-		}
-		
+struct VALORADO in ( T ) {
+	
+	init VALORADO ( a : T ) {
+		 mValor = a;
 	}
 
-	struct CXA in ( T ) with CX >> (T) {
-		init CXA ( eValor : T ) -> CX ( eValor ) {
-			
-		}
-		all : 
+	restrict :
+		define mValor : T = null ;
+	all :}
+
+struct CX in ( T ) with VALORADO >> ( T ) {
+	
+	init CX ( a : T ) -> VALORADO ( a ) {
+	}
+}
+
+struct CXA in ( T ) with CX >> ( T ) {
+	
+	init CXA ( eValor : T ) -> CX ( eValor ) {
+	}
+
+	all :
 		func getValor ( ) : T {
-			return this.mValor;
+			 return this.mValor;
 		}
 
 		act aumentar ( eValor : T ) {
-			this.mValor = mValor ++ eValor;
+			 this.mValor = mValor ++ eValor;
 		}
 
 		act diminuir ( eValor : T ) {
-			this.mValor = mValor -- eValor;
+			 this.mValor = mValor -- eValor;
 		}
-
-		
-	}
-	
 }
+ }
 func azucrinar ( a : bool ) : num {
-	return -1.0;
+	 return -1.0;
 }
+
 func azucrinar ( a : num , b : num ) : num {
-	return -1.0;
+	 return -1.0;
 }
-operator ++ ( a : num , b : num ) : num {
-	reg @ R9 -> a;
-	reg @ R10 -> b;
-	PROC -> {
-		SET R11;
-		MOV 0.0;
-		OPE R9 SAX R10;
-	}
-	return reg @ R11;
-}
-operator -- ( a : num , b : num ) : num {
-	reg @ R9 -> a;
-	reg @ R10 -> b;
-	PROC -> {
-		SET R11;
-		MOV 0.0;
-		OPE R9 VEZ R10;
-	}
-	return reg @ R11;
-}
-operator ** ( a : num , b : num ) : num {
-	reg @ R9 -> a;
-	reg @ R10 -> b;
-	PROC -> {
-		SET R11;
-		MOV 0.0;
-		OPE R9 PUC R10;
-	}
-	return reg @ R11;
-}
-refer Blocos;
+ operator ++ ( a : num , b : num ) : num { reg @ R9 -> a ; reg @ R10 -> b ; PROC -> { SET R11 ; MOV 0.0 ; OPE R9 SAX R10 ; } return reg @ R11 ; } operator -- ( a : num , b : num ) : num { reg @ R9 -> a ; reg @ R10 -> b ; PROC -> { SET R11 ; MOV 0.0 ; OPE R9 VEZ R10 ; } return reg @ R11 ; } operator ** ( a : num , b : num ) : num { reg @ R9 -> a ; reg @ R10 -> b ; PROC -> { SET R11 ; MOV 0.0 ; OPE R9 PUC R10 ; } return reg @ R11 ; } refer Blocos ;
 call iniciar -> {
-	def a1 : CXA >> ( num ) = init CXA ( 12.0 ) >> ( num );
-	def a2 : CXA >> ( num ) = init CXA ( 18.0 ) >> ( num );
-	def a1_valor : num = a1.getValor ( );
-	def a2_valor : num = a2.getValor ( );
-	def tt : bool = true;
-	DEBUG -> REGRESSIVE :: STACK;
-	def a3 : CXA >> ( num ) = a1 ++ a2;
-	DEBUG -> REGRESSIVE :: STACK;
-	def a3_valor : num = a3.getValor ( );
-	def a4 : CXA >> ( num ) = ! a3;
-	def a4_valor : num = a4.getValor ( );
-	a4.aumentar ( 10.0 );
-	def a4_valor2 : num = a4.getValor ( );
-	
-	#  def a : string = a4;
-	def r : num = azucrinar ( 1.0 , 2.0 );
-	DEBUG -> REGRESSIVE :: STACK;
+	 def a1 : CXA >> ( num ) = init CXA ( 12.0 ) >> ( num );
+	 def a2 : CXA >> ( num ) = init CXA ( 18.0 ) >> ( num );
+	 def a1_valor : num = a1.getValor ( );
+	 def a2_valor : num = a2.getValor ( );
+	 def tt : bool = true;
+	 DEBUG -> REGRESSIVE :: STACK;
+	 def a3 : CXA >> ( num ) = a1 ++ a2;
+	 DEBUG -> REGRESSIVE :: STACK;
+	 def a3_valor : num = a3.getValor ( );
+	 def a4 : CXA >> ( num ) = ! a3;
+	 def a4_valor : num = a4.getValor ( );
+	 a4.aumentar ( 10.0 );
+	 def a4_valor2 : num = a4.getValor ( );
+	 #  def a : string = a4; def r : num = azucrinar ( 1.0 , 2.0 );
+	 DEBUG -> REGRESSIVE :: STACK;
 }
-
-operator ++ ( a : CXA >> ( num ) , b : CXA >> ( num ) ) : CXA >> ( num ) {
-			def tt : num = a.getValor ( ) ++ b.getValor ( );
-	        DEBUG -> REGRESSIVE :: STACK;
-			return init CXA ( tt ) >> ( num );
-}
-
-director ! ( a : CXA >> ( num ) ) : CXA >> ( num ) {
-			return init CXA ( a.getValor ( ) ** ( -1.0 ) ) >> ( num );
-}
+ operator ++ ( a : CXA >> ( num ) , b : CXA >> ( num ) ) : CXA >> ( num ) { def tt : num = a . getValor ( ) ++ b . getValor ( ) ; DEBUG -> REGRESSIVE :: STACK ; return init CXA ( tt ) >> ( num ) ; } director ! ( a : CXA >> ( num ) ) : CXA >> ( num ) { return init CXA ( a . getValor ( ) ** ( -1.0 ) ) >> ( num ) ; }

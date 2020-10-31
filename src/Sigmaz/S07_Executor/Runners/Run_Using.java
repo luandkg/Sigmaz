@@ -5,6 +5,7 @@ import Sigmaz.S07_Executor.Escopos.Run_Struct;
 import Sigmaz.S07_Executor.Item;
 import Sigmaz.S07_Executor.RunTime;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S07_Executor.Run_Pass;
 
 import java.util.ArrayList;
 
@@ -63,7 +64,9 @@ public class Run_Using {
                     if (mRun_GetType.getStack_All().contains(gItem.getNome())) {
                         //   System.out.println("Alocado na Struct :: " + gItem.getNome());
 
-                        novoEscopo.passarParametroByRefObrigatorio(gItem.getNome(), gItem);
+                        Run_Pass  mRun_Pass = new Run_Pass(mRunTime, novoEscopo);
+                        mRun_Pass.passarParametroByRefObrigatorio(gItem.getNome(), gItem);
+
                     }
 
                 }

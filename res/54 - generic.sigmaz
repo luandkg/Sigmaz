@@ -1,47 +1,48 @@
+
 struct Item in ( T ) {
-	restrict : 
-	define mGuardar : T = null;
-	define mNivel : T;
-	all : 
-	act guardar ( eGuardar : T ) {
-		mGuardar = eGuardar;
-	}
-
-	act nivelar ( eNivel : T ) {
-		mNivel = eNivel;
-	}
-	func passar ( ) : T {
-		return mGuardar;
-	}
-
-	act cortar ( a : int ) {
-		reg @ R5 -> a;
-		PROC -> {
-			SET R13;
-			MOV "";
-			INT_STRING R5;
-			PRINT R13;
-		}
-		
-	}
 	
+	restrict :
+		define mGuardar : T = null ;
+		define mNivel : T ;
+	all :
+		act guardar ( eGuardar : T ) {
+			 mGuardar = eGuardar;
+		}
+
+		act nivelar ( eNivel : T ) {
+			 mNivel = eNivel;
+		}
+
+		func passar ( ) : T {
+			 return mGuardar;
+		}
+
+		act cortar ( a : int ) {
+			 reg @ R5 -> a;
+			 PROC -> {
+				 SET R13;
+				 MOV"";
+				 INT_STRING R5;
+				 PRINT R13;
+			}
+}
 }
 
 struct Padrao {
-	
-}
-call iniciar -> inicio ( );
+	}
+
+call iniciar -> inicio ( ) ;
 act inicio ( ) {
-	def P1 : Padrao = init Padrao ( );
-	def P2 : Padrao >> ( ) = init Padrao ( );
-	def P3 : Padrao >> ( ) = init Padrao ( ) >> ( );
-	def P4 : Padrao = init Padrao ( ) >> ( );
-	def N1 : Item >> ( int ) = init Item ( ) >> ( int );
-	def N2 : Item >> ( int ) = init Item ( ) >> ( int );
-	def G : Item >> ( Item >> ( int ) ) = init Item ( ) >> ( Item >> ( int ) );
-	def sa : Item >> ( int ) = init Item ( ) >> ( int );
-	sa.nivelar ( 2 );
-	G.guardar ( sa );
-	G.passar ( ).cortar ( 5 );
-	DEBUG -> REGRESSIVE :: ALL;
+	 def P1 : Padrao = init Padrao ( );
+	 def P2 : Padrao >> ( ) = init Padrao ( );
+	 def P3 : Padrao >> ( ) = init Padrao ( ) >> ( );
+	 def P4 : Padrao = init Padrao ( ) >> ( );
+	 def N1 : Item >> ( int ) = init Item ( ) >> ( int );
+	 def N2 : Item >> ( int ) = init Item ( ) >> ( int );
+	 def G : Item >> ( Item >> ( int ) ) = init Item ( ) >> ( Item >> ( int ) );
+	 def sa : Item >> ( int ) = init Item ( ) >> ( int );
+	 sa.nivelar ( 2 );
+	 G.guardar ( sa );
+	 G.passar ( ).cortar ( 5 );
+	 DEBUG -> REGRESSIVE :: ALL;
 }

@@ -1,68 +1,66 @@
-call iniciar -> mudar ( );
+
+call iniciar -> mudar ( ) ;
 act mudar ( ) {
-	def caixa_Z : Caixa = init Caixa ( 13 );
-	caixa_Z.INDICE = 5;
-	def antes_z_valor : int = caixa_Z.getValor ( );
-	def antes_z_indice : int = caixa_Z.INDICE;
-	using ( caixa_Z ) -> {
-		setValor ( 30 );
-		
-		#caixa_Z.setValor(30);
-		INDICE = 1 ++ INDICE;
-		
-		# caixa_Z.INDICE = 8;
-		
-	}
-	def depois_z_valor : int = caixa_Z.getValor ( );
-	def depois_z_indice : int = caixa_Z.INDICE;
-	def v1 : Caixa = init Caixa ( 13 );
-	def v2 : Caixa = null;
-	v2 = v1;
-	def g1 : Caixa = init Caixa ( 13 );
-	def g1_valor : int = g1.getValor ( );
-	def g1_valor3 : int = g1.get3 ( );
-	DEBUG -> REGRESSIVE :: STACK;
+	 def caixa_Z : Caixa = init Caixa ( 13 );
+	 caixa_Z.INDICE = 5;
+	 def antes_z_valor : int = caixa_Z.getValor ( );
+	 def antes_z_indice : int = caixa_Z.INDICE;
+	 using ( caixa_Z ) -> {
+		 setValor ( 30 );
+		 #caixa_Z.setValor(30);
+		 INDICE = 1 ++ INDICE;
+		 # caixa_Z.INDICE = 8;
+		 }
+ def depois_z_valor : int = caixa_Z.getValor ( );
+	 def depois_z_indice : int = caixa_Z.INDICE;
+	 def v1 : Caixa = init Caixa ( 13 );
+	 def v2 : Caixa = null;
+	 v2 = v1;
+	 def g1 : Caixa = init Caixa ( 13 );
+	 def g1_valor : int = g1.getValor ( );
+	 def g1_valor3 : int = g1.get3 ( );
+	 DEBUG -> REGRESSIVE :: STACK;
 }
 
 struct Caixa {
-	init Caixa ( IniciarCom : int ) {
-		mValor = IniciarCom;
-	}
-	restrict : 
-	define mValor : int = 0;
-	all : 
-	define INDICE : int = 0;
-	func getValor ( ) : int {
-		return mValor;
-	}
-	func get3 ( ) : int {
-		return mValor ++ 3;
-	}
-
-	act setValor ( a : int ) {
-		mValor = a;
-	}
-
-	explicit : func CAIXADOR ( ) : int {
-		return 12;
-	}
-	func ENCAIXADOR ( a : int ) : int {
-		return a ++ 12;
-	}
-
-	extra:
-		operator ++ ( a : Caixa , b : Caixa ) : Caixa {
-    		return init Caixa ( a.getValor ( ) ++ b.getValor ( ) );
-    	}
 	
-}
-operator ++ ( a : int , b : int ) : int {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R7;
-		MOV 0;
-		OPE R5 ADD R6;
+	init Caixa ( IniciarCom : int ) {
+		 mValor = IniciarCom;
 	}
-	return reg @ R7;
-}
+
+	restrict :
+		define mValor : int = 0 ;
+	all :
+		define INDICE : int = 0 ;
+		func getValor ( ) : int {
+			 return mValor;
+		}
+
+		func get3 ( ) : int {
+			 return mValor ++ 3;
+		}
+
+		act setValor ( a : int ) {
+			 mValor = a;
+		}
+
+	explicit :
+		func CAIXADOR ( ) : int {
+			 return 12;
+		}
+
+		func ENCAIXADOR ( a : int ) : int {
+			 return a ++ 12;
+		}
+ extra : operator ++ ( a : Caixa , b : Caixa ) : Caixa { return
+	init Caixa ( a . getValor ( ) ++ b . getValor ( ) ) ; } }
+	 operator ++ ( a : int , b : int ) : int {
+		 reg @ R5 -> a;
+		 reg @ R6 -> b;
+		 PROC -> {
+			 SET R7;
+			 MOV 0;
+			 OPE R5 ADD R6;
+		}
+ return reg @ R7;
+	}

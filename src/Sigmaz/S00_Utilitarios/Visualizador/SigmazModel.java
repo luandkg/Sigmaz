@@ -31,7 +31,7 @@ public class SigmazModel {
 
         boolean tem = false;
 
-        for (AST Sub2 : mAST.getASTS()) {
+        for (AST Sub2 : mAST.getBranch("BODY").getASTS()) {
             if (Sub2.mesmoTipo("DEFINE")) {
                 tem = true;
             }
@@ -45,7 +45,7 @@ public class SigmazModel {
 
         boolean tem = false;
 
-        for (AST Sub2 : mAST.getASTS()) {
+        for (AST Sub2 : mAST.getBranch("BODY").getASTS()) {
             if (Sub2.mesmoTipo("MOCKIZ")) {
                 tem = true;
             }
@@ -60,7 +60,7 @@ public class SigmazModel {
 
         boolean tem = false;
 
-        for (AST Sub2 : mAST.getASTS()) {
+        for (AST Sub2 : mAST.getBranch("BODY").getASTS()) {
             if (Sub2.mesmoTipo("DEFINE")) {
                 tem = true;
             } else if (Sub2.mesmoTipo("MOCKIZ")) {
@@ -77,7 +77,7 @@ public class SigmazModel {
 
         ArrayList<SigmazDefine> mLista = new ArrayList<SigmazDefine>();
 
-        for (AST Sub2 : mAST.getASTS()) {
+        for (AST Sub2 : mAST.getBranch("BODY").getASTS()) {
             if (Sub2.mesmoTipo("DEFINE")) {
                 mLista.add(new SigmazDefine(Sub2));
             }
@@ -90,7 +90,7 @@ public class SigmazModel {
 
         ArrayList<SigmazMockiz> mLista = new ArrayList<SigmazMockiz>();
 
-        for (AST Sub2 : mAST.getASTS()) {
+        for (AST Sub2 : mAST.getBranch("BODY").getASTS()) {
             if (Sub2.mesmoTipo("MOCKIZ")) {
                 mLista.add(new SigmazMockiz(Sub2));
             }
@@ -106,7 +106,7 @@ public class SigmazModel {
 
         boolean tem = false;
 
-        for (AST Sub2 : mAST.getASTS()) {
+        for (AST Sub2 : mAST.getBranch("BODY").getASTS()) {
             if (Sub2.mesmoTipo("ACTION")) {
                 tem = true;
             } else if (Sub2.mesmoTipo("FUNCTION")) {
@@ -123,7 +123,7 @@ public class SigmazModel {
 
         boolean tem = false;
 
-        for (AST Sub2 : mAST.getASTS()) {
+        for (AST Sub2 : mAST.getBranch("BODY").getASTS()) {
             if (Sub2.mesmoTipo("ACTION")) {
                 tem = true;
             }
@@ -137,7 +137,7 @@ public class SigmazModel {
 
         boolean tem = false;
 
-        for (AST Sub2 : mAST.getASTS()) {
+        for (AST Sub2 : mAST.getBranch("BODY").getASTS()) {
             if (Sub2.mesmoTipo("FUNCTION")) {
                 tem = true;
             }
@@ -153,7 +153,7 @@ public class SigmazModel {
 
         ArrayList<SigmazAction> mLista = new ArrayList<SigmazAction>();
 
-        for (AST Sub2 : mAST.getASTS()) {
+        for (AST Sub2 : mAST.getBranch("BODY").getASTS()) {
             if (Sub2.mesmoTipo("ACTION")) {
                 mLista.add(new SigmazAction(Sub2));
             }
@@ -167,7 +167,7 @@ public class SigmazModel {
 
         ArrayList<SigmazFunction> mLista = new ArrayList<SigmazFunction>();
 
-        for (AST Sub2 : mAST.getASTS()) {
+        for (AST Sub2 : mAST.getBranch("BODY").getASTS()) {
             if (Sub2.mesmoTipo("FUNCTION")) {
                 mLista.add(new SigmazFunction(Sub2));
             }
@@ -214,7 +214,7 @@ public class SigmazModel {
     public int getContagemCorpo() {
         int contador = 0;
 
-        for (AST Sub2 : mAST.getASTS()) {
+        for (AST Sub2 : mAST.getBranch("BODY").getASTS()) {
             if (Sub2.mesmoTipo("ACTION")) {
                 contador += 1;
             } else if (Sub2.mesmoTipo("FUNCTION")) {
@@ -240,7 +240,7 @@ public class SigmazModel {
         }
 
 
-        for (AST Sub2 : mAST.getASTS()) {
+        for (AST Sub2 : mAST.getBranch("BODY").getASTS()) {
             if (Sub2.mesmoTipo("ACTION")) {
                 contador += 1;
             } else if (Sub2.mesmoTipo("FUNCTION")) {

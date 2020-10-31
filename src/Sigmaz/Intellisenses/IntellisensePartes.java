@@ -242,7 +242,7 @@ public class IntellisensePartes {
         if (eSigmazModel.temGenericos()) {
 
             for (String eGenerico : eSigmazModel.getGenericos()) {
-                mIntellisense.leftString_Normal(g, x+30, mais, eLargura, eGenerico, mIntellisense.IMG_GENERIC_TYPE);
+                mIntellisense.leftString_Normal(g, x + 30, mais, eLargura, eGenerico, mIntellisense.IMG_GENERIC_TYPE);
             }
 
             if (eSigmazModel.temDefinesMockizes()) {
@@ -267,7 +267,7 @@ public class IntellisensePartes {
         }
 
 
-        if (eSigmazModel.temActionsFunctions()) {
+        if (mIntellisense.deveSeparar(eSigmazModel.temDefinesMockizes(), eSigmazModel.temActionsFunctions())) {
             mais = mIntellisense.criarBox(g, mais, x);
         }
 
@@ -299,7 +299,10 @@ public class IntellisensePartes {
 
         if (eSigmazStruct.temModelo()) {
 
-            mais = mIntellisense.leftString_Normal(g, x + 30, mais, eLargura, eSigmazStruct.getModelo(), mIntellisense.IMG_MODEL);
+            for (String eBase : eSigmazStruct.getModelos()) {
+                mais = mIntellisense.leftString_Normal(g, x + 30, mais, eLargura, eBase, mIntellisense.IMG_MODEL);
+            }
+
             mais = mIntellisense.criarBox(g, mais, x);
 
         }

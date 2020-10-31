@@ -480,10 +480,18 @@ public class Compilador {
         ArrayList<Token> mTokens_Saida = new ArrayList<Token>();
 
         for (Token TokenC : mTokens_Entrada) {
-            if (TokenC.getTipo() != TokenTipo.COMENTARIO) {
-                mTokens_Saida.add(TokenC);
-            } else {
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
                 GrupoDeComentarioC.adicionarComentario(TokenC);
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                GrupoDeComentarioC.adicionarComentario(TokenC);
+
+            } else {
+
+                mTokens_Saida.add(TokenC);
+
                 ic += 1;
             }
         }

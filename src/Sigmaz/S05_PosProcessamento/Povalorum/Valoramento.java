@@ -27,6 +27,7 @@ public class Valoramento {
     public Valoramento(Valorador eValorador) {
 
         mValorador = eValorador;
+
         mSimplificador = new Simplificador();
         mAgrupadorAST = new AgrupadorAST();
 
@@ -255,7 +256,8 @@ public class Valoramento {
 
         } else if (mValue.mesmoValor("STRUCT")) {
 
-            mValore_ValueComplex.emStruct(ePrefixo, mValue, mAtribuindo);
+            Valore_Struct mValore_Struct = new Valore_Struct(mValorador,this);
+            mValore_Struct.emStruct(ePrefixo, mValue, mAtribuindo);
 
         } else if (mValue.mesmoValor("START")) {
 
@@ -269,7 +271,8 @@ public class Valoramento {
 
         } else if (mValue.mesmoValor("STRUCT_EXTERN")) {
 
-            mValore_ValueComplex.emExtern(ePrefixo, mValue, mAtribuindo);
+            Valore_External mValore_External = new Valore_External(mValorador,this);
+            mValore_External.emExtern(ePrefixo, mValue, mAtribuindo);
 
         } else if (mValue.mesmoValor("REG")) {
 
@@ -356,7 +359,8 @@ public class Valoramento {
 
         } else if (mValue.mesmoValor("STRUCT")) {
 
-            mValore_ValueComplex.emStruct(ePrefixo, mValue, mAtribuindo);
+            Valore_Struct mValore_Struct = new Valore_Struct(mValorador,this);
+            mValore_Struct.emStruct(ePrefixo, mValue, mAtribuindo);
 
 
         } else if (mValue.mesmoValor("THIS")) {
@@ -365,7 +369,8 @@ public class Valoramento {
 
         } else if (mValue.mesmoValor("STRUCT_EXTERN")) {
 
-            mValore_ValueComplex.emExternSemRetorno(ePrefixo, mValue, mAtribuindo);
+            Valore_External mValore_External = new Valore_External(mValorador,this);
+            mValore_External.emExternSemRetorno(ePrefixo, mValue, mAtribuindo);
 
 
 

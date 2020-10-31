@@ -56,7 +56,6 @@ public class Referenciador {
 
         }
 
-      //  mAnalisador.getErros().add("Referenciador");
 
         for (AST mPacote : mPacotes) {
 

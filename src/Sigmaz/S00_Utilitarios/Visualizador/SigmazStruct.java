@@ -105,6 +105,14 @@ public class SigmazStruct {
             }
         }
 
+        for (AST Sub2 : mAST.getBranch("MODELS").getASTS()) {
+                r += 1;
+        }
+
+        for (AST Sub2 : mAST.getBranch("BASES").getASTS()) {
+            r += 1;
+        }
+
         for (AST Sub2 : mAST.getBranch("BODY").getASTS()) {
             if (Sub2.mesmoTipo("ACTION")) {
                 r += 1;
@@ -172,7 +180,7 @@ public class SigmazStruct {
 
 
     public boolean temModelo() {
-        return mAST.getBranch("MODEL").mesmoValor("TRUE");
+        return mAST.getBranch("MODELS").getASTS().size()>0;
     }
 
     public String getModelo() {
@@ -188,6 +196,16 @@ public class SigmazStruct {
         ArrayList<String> mLista = new ArrayList<String>();
 
         for (AST Sub2 : mAST.getBranch("BASES").getASTS()) {
+            mLista.add(Sub2.getNome());
+        }
+        return mLista;
+    }
+
+    public ArrayList<String> getModelos() {
+
+        ArrayList<String> mLista = new ArrayList<String>();
+
+        for (AST Sub2 : mAST.getBranch("MODELS").getASTS()) {
             mLista.add(Sub2.getNome());
         }
         return mLista;

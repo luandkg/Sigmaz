@@ -506,7 +506,7 @@ public class Tokenizador {
 
             mLexer.avancar();
 
-            mTokenRetorno = new Token(TokenTipo.COMENTARIO, mComentario, eInicio, eFim, mLexer.getLinha());
+            mTokenRetorno = new Token(TokenTipo.COMENTARIO_BLOCO, mComentario, eInicio, eFim, mLexer.getLinha());
 
 
         } else {
@@ -530,7 +530,7 @@ public class Tokenizador {
 
             int eFim = mLexer.getPosicao();
 
-            mTokenRetorno = new  Token(TokenTipo.COMENTARIO, mComentario, eInicio, eFim, mLexer.getLinha());
+            mTokenRetorno = new  Token(TokenTipo.COMENTARIO_LINHA, mComentario, eInicio, eFim, mLexer.getLinha());
 
 
         }

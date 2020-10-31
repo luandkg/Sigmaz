@@ -42,7 +42,7 @@ public class Run_MoveData {
             return;
         }
 
-        mAlpha.setNulo(mBeta.getNulo());
+        mAlpha.setNulo(mBeta.getNulo(),mRunTime);
 
         if (!mBeta.getNulo()) {
             mAlpha.setValor(mBeta.getValor(mRunTime, mEscopo),mRunTime, mEscopo);

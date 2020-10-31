@@ -48,6 +48,7 @@ public class Sigmaz_Compilador {
     private boolean mDebug_Heranca;
     private boolean mDebug_Opcionador;
     private boolean mDebug_Estruturador;
+    private boolean mDebug_Unicidade;
 
     private boolean mDebug_Referenciador;
     private boolean mDebug_Argumentador;
@@ -127,6 +128,7 @@ public class Sigmaz_Compilador {
         mDebug_Argumentador = true;
         mDebug_Opcionador = true;
         mDebug_Estruturador = true;
+        mDebug_Unicidade = true;
 
         mOrganizadorDeErros = new OrganizadorDeErros();
 
@@ -253,6 +255,10 @@ public class Sigmaz_Compilador {
 
     public void setDebug_PosProcessador_Estruturador(boolean e) {
         mDebug_Estruturador = e;
+    }
+
+    public void setDebug_PosProcessador_Unicidade(boolean e) {
+        mDebug_Unicidade = e;
     }
 
 
@@ -982,6 +988,7 @@ public class Sigmaz_Compilador {
             PosProcessadorC.setDebug_Argumentador(mDebug_Argumentador);
             PosProcessadorC.setDebug_Opcionador(mDebug_Opcionador);
             PosProcessadorC.setDebug_Estruturador(mDebug_Estruturador);
+            PosProcessadorC.setDebug_Unicidade(mDebug_Unicidade);
 
 
             PosProcessadorC.init(getASTS(), mLocalLibs);
@@ -1108,16 +1115,13 @@ public class Sigmaz_Compilador {
     }
 
 
-
-
-
-    public void initIntellisenses(String eArquivo, String mSaida, String eLocalLibs, int mOpcao,String eLocalIntellisenses) {
+    public void initIntellisenses(String eArquivo, String mSaida, String eLocalLibs, int mOpcao, String eLocalIntellisenses) {
         ArrayList<String> aa = new ArrayList<String>();
         aa.add(eArquivo);
-        initIntellisenses(aa, mSaida, eLocalLibs, mOpcao,eLocalIntellisenses);
+        initIntellisenses(aa, mSaida, eLocalLibs, mOpcao, eLocalIntellisenses);
     }
 
-    public void initIntellisenses(ArrayList<String> eArquivos, String mSaida, String eLocalLibs, int mOpcao,String eLocalIntellisenses) {
+    public void initIntellisenses(ArrayList<String> eArquivos, String mSaida, String eLocalLibs, int mOpcao, String eLocalIntellisenses) {
 
         limpar();
 
@@ -1166,7 +1170,7 @@ public class Sigmaz_Compilador {
             System.out.println("\t - 7 : Intellisense\t\t\t   : SUCESSO");
 
 
-        }else{
+        } else {
 
 
             System.out.println("\t - 7 : Intellisense\t\t\t   : FALHOU");
@@ -1192,8 +1196,6 @@ public class Sigmaz_Compilador {
         }
 
     }
-
-
 
 
 }

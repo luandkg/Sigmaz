@@ -1,145 +1,108 @@
-refer Pacote_C;
-stages Moradias -> {
-	CASA , APARTAMENTO 
-}
-
-struct G11{
-
-}
-
+ refer Pacote_C ; stages Moradias -> { CASA , APARTAMENTO }
+struct G11 {
+	}
 
 struct G12 at Modelo {
-all:
-	act somar ( ) {
-		
-	}
-
-	act contar ( a : int ) {
-		
-	}
-	func retornar ( a : int ) : int {
-		
-	}
 	
+	all :
+		act somar ( ) {
+		}
+
+		act contar ( a : int ) {
+		}
+
+		func retornar ( a : int ) : int {
+		}
 }
 
 struct G13 with Complexo {
+	
 	init G13 ( ) -> Complexo ( ) {
-
 	}
 }
 
 struct G14 with G13 {
+	
 	init G14 ( ) -> G13 ( ) {
-
 	}
 }
-
 
 func typeof ( a : any ) : string {
-	reg @ R17 -> a;
-	return reg @ R17;
+	 reg @ R17 -> a;
+	 return reg @ R17;
 }
-type Par {
-	define P1 : int = 0;
-	define P2 : int = 0;
+ type Par {
+define P1 : int = 0 ; define P2 : int = 0 ; } call iniciar -> {
+	 def complexo_1 : Complexo = init Complexo ( );
+	 complexo_1.chamar ( 5 );
+	 def tipo : string = typeof ( complexo_1 );
+	 def G12C : G12 = init G12 ( );
+	 def m1 : Moradias = Moradias :: CASA;
+	 def e1 : Estados = Estados :: DF;
+	 def t1 : Par = start Par {
+	}
+;
+	 def tc1 : CPar = start CPar {
+	}
+;
+	 DEBUG -> REGRESSIVE :: ALL;
 }
-call iniciar -> {
-	def complexo_1 : Complexo = init Complexo ( );
-	complexo_1.chamar ( 5 );
-	def tipo : string = typeof ( complexo_1 );
-	def G12C : G12 = init G12 ( );
-	def m1 : Moradias = Moradias :: CASA;
-	def e1 : Estados = Estados :: DF;
-	def t1 : Par = start Par {
-		
-	};
-	def tc1 : CPar = start CPar {
-		
-	};
-	DEBUG -> REGRESSIVE :: ALL;
-}
-package Pacote_A {
-	refer Pacote_B;
-	struct Basico at ModeloTipo {
-		all : 
-		mockiz tipo : int = -5;
-	}
-
-	struct Medio with Basico {
-		init Medio ( ) -> Basico ( ) {
-			
-		}
-		
-	}
-
-	struct Avancado {
-		
-	}
+ package Pacote_A { refer Pacote_B ;
+struct Basico at ModeloTipo {
 	
-}
-package Pacote_B {
-	refer Pacote_A;
-	model ModeloTipo {
-		mockiz tipo : int;
-	}
+	all :
+		mockiz tipo : int = -5 ;}
 
-	struct Simples with Basico {
-		init Simples ( ) -> Basico ( ) {
-			
-		}
-		all : 
-		define simplicidade : int = 12;
-	}
-
-	struct Simples_T2 {
-		
-	}
-
-	struct Simples_T3 with Medio {
-		init Simples_T3 ( ) -> Medio ( ) {
-			
-		}
-		
-	}
-
-	struct Simples_T4 with Simples_T3 {
-		init Simples_T4 ( ) -> Simples_T3 ( ) {
-			
-		}
-		
-	}
+struct Medio with Basico {
 	
+	init Medio ( ) -> Basico ( ) {
+	}
 }
-package Pacote_C {
-	refer Pacote_B;
-	struct Complexo with Simples {
-		init Complexo ( ) -> Simples ( ) {
-			
-		}
-		all : 
-		define complexidade : int = 15;
+
+struct Avancado {
+	}
+ } package Pacote_B { refer Pacote_A ; model ModeloTipo {
+mockiz tipo : int ; } struct Simples with Basico {
+	 init Simples ( ) -> Basico ( ) {
+	}
+ all : define simplicidade : int = 12;
+}
+
+struct Simples_T2 {
+	}
+
+struct Simples_T3 with Medio {
+	
+	init Simples_T3 ( ) -> Medio ( ) {
+	}
+}
+
+struct Simples_T4 with Simples_T3 {
+	
+	init Simples_T4 ( ) -> Simples_T3 ( ) {
+	}
+}
+ } package Pacote_C { refer Pacote_B ;
+struct Complexo with Simples {
+	
+	init Complexo ( ) -> Simples ( ) {
+	}
+
+	all :
+		define complexidade : int = 15 ;
 		act chamar ( a : int ) {
-			def b : int = a;
-			this.passar ( b );
+			 def b : int = a;
+			 this.passar ( b );
 		}
-		restrict : 
+
+	restrict :
 		act passar ( a : int ) {
-			def b : int = a;
-	DEBUG -> REGRESSIVE :: ALL;
+			 def b : int = a;
+			 DEBUG -> REGRESSIVE :: ALL;
 		}
-		
-	}
-	model Modelo {
-		act contar ( int );
-		func retornar ( int ) : int;
-	}
-	stages Estados -> {
-		DF , MG 
-	}
-	type CPar {
-		define P1 : int = 0;
-		define P2 : int = 0;
-	}
-	
 }
+ model Modelo {
+act contar ( int ) ; func retornar ( int ) : int ; } stages Estados -> {
+	 DF , MG}
+ type CPar {
+define P1 : int = 0 ; define P2 : int = 0 ; } }

@@ -1,39 +1,37 @@
-
-#import "libs/lib.sigmaz";
-call iniciar -> operando ( );
+ #import "libs/lib.sigmaz";
+call iniciar -> operando ( ) ;
 act operando ( ) {
-	def x : int = 10;
-	def resposta : string = "";
-	daz ( x ) -> {
-		inside ( 0 , 10 ) -> {
-			resposta = "Entre 0 e 10";
+	 def x : int = 10;
+	 def resposta : string ="";
+	 daz ( x ) -> {
+		 inside ( 0 , 10 ) -> {
+			 resposta ="Entre 0 e 10";
 		}
-		start ( 0 , 10 ) -> {
-			resposta = "Igual a 0 ate menor que 10";
+ start ( 0 , 10 ) -> {
+			 resposta ="Igual a 0 ate menor que 10";
 		}
-		end ( 0 , 10 ) -> {
-			resposta = "Maior que 0 ate igual a 10";
+ end ( 0 , 10 ) -> {
+			 resposta ="Maior que 0 ate igual a 10";
 		}
-		extrem ( 0 , 10 ) -> {
-			resposta = "Igual a 0 ou 10";
+ extrem ( 0 , 10 ) -> {
+			 resposta ="Igual a 0 ou 10";
 		}
-		outside ( 0 , 10 ) -> {
-			resposta = "Fora de 0 e 10";
-		}others {
-			resposta = "Desconhecido";
+ outside ( 0 , 10 ) -> {
+			 resposta ="Fora de 0 e 10";
 		}
-		
-	}
-	println ( "Escolheu : = ", resposta );
+ others {
+			 resposta ="Desconhecido";
+		}
+}
+ println ("Escolheu : = " , resposta );
 }
 
 act println ( a : string , b : string ) {
-	reg @ R13 -> a;
-	reg @ R14 -> b;
-	PROC -> {
-		PROC CHANGE_LINE;
-		PRINT R13;
-		PRINT R14;
+	 reg @ R13 -> a;
+	 reg @ R14 -> b;
+	 PROC -> {
+		 PROC CHANGE_LINE;
+		 PRINT R13;
+		 PRINT R14;
 	}
-	
 }

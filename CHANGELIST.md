@@ -75,7 +75,7 @@ Linguagem de Programação Estruturada - Alterações
 		2020 09 26 -->> Alteração do Sistema de CAST : Setter
 
 
-		2020 09 30 -->> Imagens Fixas para Gerador de Insignias
+		2020 09 30 -->> Imagens Fixas para BioGerador de Insignias
 
 
 		2020 10 01 -->> Alteração : Extern -> Explicit
@@ -108,4 +108,8 @@ Linguagem de Programação Estruturada - Alterações
 
 
 		2020 10 26 -->> Separação do Return do Run_Body
+
+
+		2020 10 28 -->> Run_Execute
+		2020 10 28 -->> Run_External
 

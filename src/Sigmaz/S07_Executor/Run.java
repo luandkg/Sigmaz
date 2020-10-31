@@ -10,13 +10,13 @@ public class Run {
     private RunTime mRunTime;
     private Escopo mGlobal;
 
-    public Run(RunTime eRunTime,Escopo eGlobal) {
+    public Run(RunTime eRunTime, Escopo eGlobal) {
         mRunTime = eRunTime;
-        mGlobal=eGlobal;
+        mGlobal = eGlobal;
     }
 
 
-    public void runSigmaz(AST ASTSigmaz_Call, AST ASTCGlobal ) {
+    public void runSigmaz(AST ASTSigmaz_Call, AST ASTCGlobal) {
 
 
         mapearPacotes(ASTCGlobal);
@@ -33,13 +33,21 @@ public class Run {
             return;
         }
 
+        for (AST ASTC : ASTSigmaz_Call.getASTS()) {
+            if (ASTC.mesmoTipo("DEBUG")) {
+
+                Run_Debug mRun_Debug = new Run_Debug(mRunTime, mGlobal);
+                mRun_Debug.init(ASTC);
+
+            }
+        }
+
 
         for (AST ASTC : ASTSigmaz_Call.getASTS()) {
 
             if (ASTC.mesmoTipo("CALL")) {
 
                 Run_Call mRun_Call = new Run_Call(mRunTime, mGlobal);
-
                 mRun_Call.init(ASTC);
 
             }

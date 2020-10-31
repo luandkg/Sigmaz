@@ -38,7 +38,7 @@ public class Run_Debug {
 
         } else if (ASTCorrente.mesmoNome("STRUCT")) {
 
-           // mEscopo.getRegressiveDebug().mapear_regressive_stack();
+            // mEscopo.getRegressiveDebug().mapear_regressive_stack();
 
             boolean enc = false;
 
@@ -49,7 +49,7 @@ public class Run_Debug {
 
                         if (!eItem.getNulo()) {
 
-                            Run_Struct rs = mRunTime.getHeap().getRun_Struct(eItem.getValor(mRunTime,mEscopo));
+                            Run_Struct rs = mRunTime.getHeap().getRun_Struct(eItem.getValor(mRunTime, mEscopo));
                             rs.debug();
 
 
@@ -150,7 +150,11 @@ public class Run_Debug {
             if (mRunTime.getVisibilidade()) {
                 mEscopo.getLocalDebug().ListarFunctor();
             }
+        } else if (eModalidade.contentEquals("INSTANCES")) {
 
+            if (mRunTime.getVisibilidade()) {
+                mEscopo.getLocalDebug().listarInstances();
+            }
 
         } else {
             mRunTime.getErros().add("Debug Local : " + eModalidade + " -> Desconhecido !");
@@ -213,20 +217,7 @@ public class Run_Debug {
             if (mRunTime.getVisibilidade()) {
                 //    mRunTime.getGlobalDebug().ListarGlobalRefers();
             }
-        } else if (eModalidade.contentEquals("COUNT")) {
 
-            if (mRunTime.getVisibilidade()) {
-
-                System.out.println("\n Contando Escopos : " + mEscopo.getContagem());
-
-            }
-        } else if (eModalidade.contentEquals("PATH")) {
-
-            if (mRunTime.getVisibilidade()) {
-
-                System.out.println("\n Caminho Escopos : " + mEscopo.getCaminho());
-
-            }
 
         } else if (eModalidade.contentEquals("INSTANCES")) {
 
@@ -311,20 +302,7 @@ public class Run_Debug {
                 mEscopo.getRegressiveDebug().ListarMark();
             }
 
-        } else if (eModalidade.contentEquals("COUNT")) {
 
-            if (mRunTime.getVisibilidade()) {
-
-                System.out.println("\n Contando Escopos : " + mEscopo.getContagem());
-
-            }
-        } else if (eModalidade.contentEquals("PATH")) {
-
-            if (mRunTime.getVisibilidade()) {
-
-                System.out.println("\n Caminho Escopos : " + mEscopo.getCaminho());
-
-            }
         } else {
             mRunTime.getErros().add("Debug Regressive : " + eModalidade + " -> Desconhecido !");
         }

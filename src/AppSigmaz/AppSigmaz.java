@@ -1,16 +1,25 @@
 package AppSigmaz;
 
-import AppUI.App.SigmazCompilador;
-import AppUI.Mottum.Windows;
+import Mottum.Windows;
 import OA.*;
-import Sigmaz.S08_Ferramentas.Gerador;
+import Sigmaz.S06_Montador.Chaves;
+import Sigmaz.S06_Montador.Protetor;
 
 import java.awt.*;
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class AppSigmaz {
+
+
+    public static int organizarByteInt(byte b) {
+
+        if (b >= 0) {
+            return (int) b;
+        } else {
+            return 256 + (int) b;
+        }
+
+    }
 
     public static void main(String[] args) {
 
@@ -42,9 +51,9 @@ public class AppSigmaz {
 
         String mLocalGerador = "res/gerador/";
 
-        int ARQUIVO = 46;
+        int ARQUIVO = 92;
 
-        switch (Fases.TESTES) {
+        switch (Fases.DUMP) {
 
             case MONTAR_PLANO_COMPILACAO -> AppUtils.PLANO_COMPILACAO(ARQUIVO, mArquivos, mLOCAL_PLANOS, mLocalLibs);
 
@@ -63,9 +72,9 @@ public class AppSigmaz {
 
             case TESTES -> AppUtils.TESTE_GERAL(mArquivos, mCompilado, mLocal, mLocalLibs);
 
-            case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);
             case SYNTAX_HIGHLIGHT -> AppUtils.SYNTAX_HIGHLIGHT(ARQUIVO, mArquivos, mSyntax_HighLights);
 
+            case IDENTAR -> AppUtils.IDENTAR(ARQUIVO, mArquivos);
             case IDENTAR_TUDO -> AppUtils.IDENTAR_LOTE("ARQUIVOS", mArquivos);
             case IDENTAR_BIBLIOTECAS -> AppUtils.IDENTAR_LOTE("BIBLIOTECAS", mBibliotecas);
 
@@ -85,6 +94,8 @@ public class AppSigmaz {
             case GERADOR_INTELLISENSE -> AppUtils.GERADOR_INTELISENSE(mLocalGerador, mCompilado, mLocalLibs, mIntellisense);
 
             case APP -> APP();
+
+            case DUMP -> AppUtils.DUMP(mCompilado);
 
             default -> System.out.println("\t - Fases : Desconhecida !");
         }

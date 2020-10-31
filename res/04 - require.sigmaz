@@ -1,2 +1,2 @@
-import "anexo.sigmaz";
-call iniciar -> amontoar ( );
+ import"anexo.sigmaz" ;
+call iniciar -> amontoar ( ) ;

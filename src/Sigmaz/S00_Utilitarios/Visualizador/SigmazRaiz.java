@@ -93,9 +93,11 @@ public class SigmazRaiz {
         ArrayList<SigmazModel> mLista = new ArrayList<SigmazModel>();
 
         for (AST mStruct : mSigmazRaiz.getASTS()) {
-            if (mStruct.mesmoTipo("MODEL")) {
+            if (mStruct.mesmoTipo("STRUCT")) {
 
-                mLista.add(new SigmazModel(mStruct));
+                if (mStruct.getBranch("EXTENDED").mesmoNome("MODEL")) {
+                    mLista.add(new SigmazModel(mStruct));
+                }
 
             }
         }

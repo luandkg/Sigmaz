@@ -38,6 +38,17 @@ public class Pronoco_Extern {
                     mActionsFunctions.add(mCorrente.getNome());
                 }
 
+            } else if (mCorrente.mesmoTipo("DEFINE")) {
+
+                if (mCorrente.getBranch("VISIBILITY").mesmoNome("EXPLICIT")) {
+                    mCampos.add(mCorrente.getNome());
+                }
+
+            } else if (mCorrente.mesmoTipo("MOCKIZ")) {
+
+                if (mCorrente.getBranch("VISIBILITY").mesmoNome("EXPLICIT")) {
+                    mCampos.add(mCorrente.getNome());
+                }
             }
 
         }

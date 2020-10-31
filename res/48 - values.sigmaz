@@ -1,93 +1,18 @@
-operator ++ ( a : int , b : int ) : int {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R7;
-		MOV 0;
-		OPE R5 ADD R6;
-	}
-	return reg @ R7;
-}
-operator -- ( a : int , b : int ) : int {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R7;
-		MOV 0;
-		OPE R5 SUB R6;
-	}
-	return reg @ R7;
-}
-operator ** ( a : int , b : int ) : int {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R7;
-		MOV 0;
-		OPE R5 MUX R6;
-	}
-	return reg @ R7;
-}
-operator // ( a : int , b : int ) : int {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R7;
-		MOV 0;
-		OPE R5 DIV R6;
-	}
-	return reg @ R7;
-}
-operator == ( a : int , b : int ) : bool {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R1;
-		MOV FALSE;
-		OPE R5 EQUAL R6;
-	}
-	return reg @ R1;
-}
-operator == ( a : bool , b : bool ) : bool {
-	reg @ R1 -> a;
-	reg @ R2 -> b;
-	PROC -> {
-		SET R3;
-		MOV FALSE;
-		OPE R1 MATCH R2;
-	}
-	return reg @ R3;
-}
-call iniciar -> inicio ( );
+ operator ++ ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ; } operator -- ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 SUB R6 ; } return reg @ R7 ; } operator ** ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 MUX R6 ; } return reg @ R7 ; } operator // ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 DIV R6 ; } return reg @ R7 ; } operator == ( a : int , b : int ) : bool { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 EQUAL R6 ; } return reg @ R1 ; } operator == ( a : bool , b : bool ) : bool { reg @ R1 -> a ; reg @ R2 -> b ; PROC -> { SET R3 ; MOV FALSE ; OPE R1 MATCH R2 ; } return reg @ R3 ; }
+call iniciar -> inicio ( ) ;
 act inicio ( ) {
-	def a : int = 10 ++ 20;
-	def b : int = ( 10 ++ 20 ) ++ 10;
-	def c : int = 50 -- ( ( 30 ++ 20 ) -- 10 );
-	def d : int = acionar ( 10 ++ 10 , 20 ++ 20 );
-	def e : int = acionar ( 10 ++ ( 10 ++ 30 ) , 20 ++ 20 );
-	def f : bool = ! true;
-	def g : bool = ! 10 == 10;
-	def h : bool = ! false == ( 10 == 20 );
-	DEBUG -> REGRESSIVE :: ALL;
+	 def a : int = 10 ++ 20;
+	 def b : int = ( 10 ++ 20 ) ++ 10;
+	 def c : int = 50 -- ( ( 30 ++ 20 ) -- 10 );
+	 def d : int = acionar ( 10 ++ 10 , 20 ++ 20 );
+	 def e : int = acionar ( 10 ++ ( 10 ++ 30 ) , 20 ++ 20 );
+	 def f : bool = ! true;
+	 def g : bool = ! 10 == 10;
+	 def h : bool = ! false == ( 10 == 20 );
+	 DEBUG -> REGRESSIVE :: ALL;
 }
+
 func acionar ( a : int , b : int ) : int {
-	return a ++ b;
+	 return a ++ b;
 }
-director ! ( a : bool ) : bool {
-	reg @ R1 -> a;
-	PROC -> {
-		SET R3;
-		MOV FALSE;
-		BOOL_INVERSE R1;
-	}
-	return reg @ R3;
-}
-director ! ( a : int ) : int {
-	reg @ R5 -> a;
-	PROC -> {
-		SET R6;
-		MOV 0;
-		OPE R5 MUX -1;
-	}
-	return reg @ R6;
-}
+ director ! ( a : bool ) : bool { reg @ R1 -> a ; PROC -> { SET R3 ; MOV FALSE ; BOOL_INVERSE R1 ; } return reg @ R3 ; } director ! ( a : int ) : int { reg @ R5 -> a ; PROC -> { SET R6 ; MOV 0 ; OPE R5 MUX -1 ; } return reg @ R6 ; }

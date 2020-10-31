@@ -1,78 +1,80 @@
+
 struct Sacola {
-
-    all:
-	define itens : int = 0;
-	act aumentar ( g : int ) {
-		itens = somar_inteiro ( itens , g );
-	}
-	func quantidade ( ) : int {
-		return itens;
-	}
-
-	act mostrar ( ) {
-	DEBUG -> REGRESSIVE :: ALL;
-	}
-
-	act mostrar_detalhes ( ) {
-		println ( "");
-		println ( " SACOLA : ");
-		println ( "    - Itens : ", itens );
-	}
-
-	act mostrar_struct ( ) {
-	DEBUG -> REGRESSIVE :: ALL;
-	}
-	func someisso ( a : int , b : int ) : int {
-		return somar_inteiro ( a , b );
-	}
 	
+	all :
+		define itens : int = 0 ;
+		act aumentar ( g : int ) {
+			 itens = somar_inteiro ( itens , g );
+		}
+
+		func quantidade ( ) : int {
+			 return itens;
+		}
+
+		act mostrar ( ) {
+			 DEBUG -> REGRESSIVE :: ALL;
+		}
+
+		act mostrar_detalhes ( ) {
+			 println ("" );
+			 println (" SACOLA : " );
+			 println ("    - Itens : " , itens );
+		}
+
+		act mostrar_struct ( ) {
+			 DEBUG -> REGRESSIVE :: ALL;
+		}
+
+		func someisso ( a : int , b : int ) : int {
+			 return somar_inteiro ( a , b );
+		}
 }
+
 func somar_inteiro ( a : int , b : int ) : int {
-	reg @ R5 -> a;
-	reg @ R6 -> b;
-	PROC -> {
-		SET R7;
-		MOV 0;
-		OPE R5 ADD R6;
+	 reg @ R5 -> a;
+	 reg @ R6 -> b;
+	 PROC -> {
+		 SET R7;
+		 MOV 0;
+		 OPE R5 ADD R6;
 	}
-	return reg @ R7;
+ return reg @ R7;
 }
 
 act println ( a : string , b : int ) {
-	PROC -> {
-		PROC CHANGE_LINE;
+	 PROC -> {
+		 PROC CHANGE_LINE;
 	}
-	reg @ R13 -> a;
-	PROC -> {
-		PRINT R13;
+ reg @ R13 -> a;
+	 PROC -> {
+		 PRINT R13;
 	}
-	reg @ R5 -> b;
-	PROC -> {
-		SET R13;
-		MOV "";
-		INT_STRING R5;
-		PRINT R13;
+ reg @ R5 -> b;
+	 PROC -> {
+		 SET R13;
+		 MOV"";
+		 INT_STRING R5;
+		 PRINT R13;
 	}
-	
 }
 
 act println ( a : string ) {
-	reg @ R13 -> a;
-	PROC -> {
-		PROC CHANGE_LINE;
-		PRINT R13;
+	 reg @ R13 -> a;
+	 PROC -> {
+		 PROC CHANGE_LINE;
+		 PRINT R13;
 	}
-	
 }
-call iniciar -> pular ( );
+
+call iniciar -> pular ( ) ;
 act pular ( ) {
-	def sacola1 : Sacola = init Sacola ( );
-	sacola1.mostrar_struct ( );
-	sacola1.aumentar ( 2 );
-	sacola_aumentar ( sacola1 );
-	sacola1.mostrar_detalhes ( );
+	 def sacola1 : Sacola = init Sacola ( );
+	 sacola1.mostrar_struct ( );
+	 sacola1.aumentar ( 2 );
+	 sacola_aumentar ( sacola1 );
+	 sacola1.mostrar_detalhes ( );
 }
 
 act sacola_aumentar ( s : Sacola ) {
-	s.aumentar ( 2 );
+	 s.aumentar ( 2 );
 }
