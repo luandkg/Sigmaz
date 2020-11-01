@@ -2,8 +2,6 @@ package AppSigmaz;
 
 import Mottum.Windows;
 import OA.*;
-import Sigmaz.S06_Montador.Chaves;
-import Sigmaz.S06_Montador.Protetor;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,15 +9,6 @@ import java.util.ArrayList;
 public class AppSigmaz {
 
 
-    public static int organizarByteInt(byte b) {
-
-        if (b >= 0) {
-            return (int) b;
-        } else {
-            return 256 + (int) b;
-        }
-
-    }
 
     public static void main(String[] args) {
 
@@ -51,9 +40,9 @@ public class AppSigmaz {
 
         String mLocalGerador = "res/gerador/";
 
-        int ARQUIVO = 92;
+        int ARQUIVO = 44;
 
-        switch (Fases.DUMP) {
+        switch (Fases.TESTES) {
 
             case MONTAR_PLANO_COMPILACAO -> AppUtils.PLANO_COMPILACAO(ARQUIVO, mArquivos, mLOCAL_PLANOS, mLocalLibs);
 

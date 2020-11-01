@@ -1,95 +1,64 @@
 
 call iniciar -> vamos_herdar_com_init ( ) ;
-act vamos_herdar_com_init ( ) {
-	 def a1 : Animal = init Animal ("Muito Fofo" , 40 );
+act vamos_herdar_com_init ( ) { 
+def a1 : Animal = init Animal ( "Muito Fofo" , 40 ) ;
 	 #a1.setIdade(12); #a1.setQualidade("Lindo"); a1.mostrar ( );
-}
+	}
 
 struct Qualidade {
 	
-	init Qualidade ( a : string , b2 : int ) {
-		 qualidade = a;
-		 idade = b2;
-	}
+	init Qualidade ( a : string , b2 : int ) { 
+qualidade = a ;
+		idade = b2 ;
+			}
+	
 
 	all :
-		define qualidade : string ="" ;
+		define qualidade : string = "" ;
+		
 		define idade : int = 0 ;
-		act setQualidade ( a : string ) {
-			 qualidade = a;
+		
+		act setQualidade ( a : string ) { 
+qualidade = a ;
+					}
+		
+		act setIdade ( a : int ) { 
+idade = a ;
+					}
+		
+		func getQualidade ( ) : string { 
+return qualidade ;
+					}
 		}
-
-		act setIdade ( a : int ) {
-			 idade = a;
-		}
-
-		func getQualidade ( ) : string {
-			 return qualidade;
-		}
-}
 
 struct Animal with Qualidade {
 	
-	init Animal ( v2 : string , i : int ) -> Qualidade ( v2 , i ) {
+	init Animal ( v2 : string , i : int ) -> Qualidade ( v2 , i ) { 
 	}
+	
 
 	all :
-		act mostrar ( ) {
-			 println (" --- ANIMAL --- " );
-			 println ("" );
-			 println ("     - IDADE : " , idade );
-			 println ("     - QUALIDADE : " , qualidade );
-		}
-
-		func somar_inteiro ( a : int , b : int ) : int {
-			 def c : num;
-			 invoke math -> operator_sum_int ( a , b ) :: c;
-			 invoke casting -> cast_integer_int ( c ) :: c;
-			 return c;
-		}
-
-		func menor ( a : int , b : int ) : bool {
-			 def c : bool;
-			 invoke math -> operator_less_int ( a , b ) :: c;
-			 return c;
-		}
-
-		act println ( a : string , b : int ) {
-			 PROC -> {
-				 PROC CHANGE_LINE;
-			}
- reg @ R13 -> a;
-			 PROC -> {
-				 PRINT R13;
-			}
- reg @ R5 -> b;
-			 PROC -> {
-				 SET R13;
-				 MOV"";
-				 INT_STRING R5;
-				 PRINT R13;
-			}
-}
-
-		act println ( a : string , b : string ) {
-			 PROC -> {
-				 PROC CHANGE_LINE;
-			}
- reg @ R13 -> a;
-			 PROC -> {
-				 PRINT R13;
-			}
- reg @ R13 -> b;
-			 PROC -> {
-				 PRINT R13;
-			}
-}
-
-		act println ( a : string ) {
-			 reg @ R13 -> a;
-			 PROC -> {
-				 PROC CHANGE_LINE;
-				 PRINT R13;
-			}
-}
-}
+		act mostrar ( ) { 
+println ( " --- ANIMAL --- " ) ;
+			println ( "" ) ;
+			println ( "     - IDADE : " , idade ) ;
+			println ( "     - QUALIDADE : " , qualidade ) ;
+					}
+		
+		func somar_inteiro ( a : int , b : int ) : int { 
+def c : num ;
+			invoke math -> operator_sum_int ( a , b ) :: c ;
+			invoke casting -> cast_integer_int ( c ) :: c ;
+			return c ;
+					}
+		
+		func menor ( a : int , b : int ) : bool { 
+def c : bool ;
+			invoke math -> operator_less_int ( a , b ) :: c ;
+			return c ;
+					}
+		
+		act println ( a : string , b : int ) { 
+PROC -> { PROC CHANGE_LINE ; } reg @ R13 -> a ;
+			PROC -> { PRINT R13 ; } reg @ R5 -> b ;
+			PROC -> { SET R13 ; MOV "" ; INT_STRING R5 ; PRINT R13 ; } }act println ( a : string , b : string ) { PROC -> { PROC CHANGE_LINE ; } reg @ R13 -> a ; PROC -> { PRINT R13 ; } reg @ R13 -> b ; PROC -> { PRINT R13 ; } } act println ( a : string ) { reg @ R13 -> a ; PROC -> { PROC CHANGE_LINE ; PRINT R13 ; } } }

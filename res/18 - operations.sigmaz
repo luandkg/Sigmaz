@@ -1,12 +1,71 @@
 
 call iniciar -> pular ( ) ;
-act pular ( ) {
-	 def f : num = 13.0;
-	 def a : bool = 13.0 == f;
-	 def v : bool = ( true !! false );
-	 def t : bool ="a" !!"ab";
-	 def somatorio : num = 10.0 -- 12.0;
-	 def m1 : num = 10.0 ** 2.0;
-	 DEBUG -> REGRESSIVE :: ALL;
-}
- operator == ( a : bool , b : bool ) : bool { reg @ R1 -> a ; reg @ R2 -> b ; PROC -> { SET R3 ; MOV FALSE ; OPE R1 MATCH R2 ; } return reg @ R3 ; } operator !! ( a : bool , b : bool ) : bool { reg @ R1 -> a ; reg @ R2 -> b ; PROC -> { SET R3 ; MOV FALSE ; OPE R1 UNMATCH R2 ; } return reg @ R3 ; } operator ++ ( a : num , b : num ) : num { reg @ R9 -> a ; reg @ R10 -> b ; PROC -> { SET R11 ; MOV 0.0 ; OPE R9 SAX R10 ; } return reg @ R11 ; } operator -- ( a : num , b : num ) : num { reg @ R9 -> a ; reg @ R10 -> b ; PROC -> { SET R11 ; MOV 0.0 ; OPE R9 VEZ R10 ; } return reg @ R11 ; } operator ** ( a : num , b : num ) : num { reg @ R9 -> a ; reg @ R10 -> b ; PROC -> { SET R11 ; MOV 0.0 ; OPE R9 PUC R10 ; } return reg @ R11 ; } operator // ( a : num , b : num ) : num { reg @ R9 -> a ; reg @ R10 -> b ; PROC -> { SET R11 ; MOV 0.0 ; OPE R9 INK R10 ; } return reg @ R11 ; } operator == ( a : num , b : num ) : bool { reg @ R9 -> a ; reg @ R10 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R9 OPUAL R10 ; } return reg @ R1 ; } operator !! ( a : num , b : num ) : bool { reg @ R9 -> a ; reg @ R10 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R9 TOLL R10 ; } return reg @ R1 ; } operator == ( a : string , b : string ) : bool { reg @ R13 -> a ; reg @ R14 -> b ; PROC -> { SET R3 ; MOV FALSE ; OPE R13 CONTENT R14 ; } return reg @ R3 ; } operator !! ( a : string , b : string ) : bool { reg @ R13 -> a ; reg @ R14 -> b ; PROC -> { SET R3 ; MOV FALSE ; OPE R13 UNCONTENT R14 ; } return reg @ R3 ; }
+act pular ( ) { 
+def f : num = 13.0 ;
+	def a : bool = 13.0 == f ;
+	def v : bool = ( true !! false ) ;
+	def t : bool = "a" !! "ab" ;
+	def somatorio : num = 10.0 -- 12.0 ;
+	def m1 : num = 10.0 ** 2.0 ;
+	DEBUG -> REGRESSIVE :: ALL ;
+	}
+
+operator == ( a : bool , b : bool ) : bool { 
+reg @ R1 -> a ;
+	reg @ R2 -> b ;
+	PROC -> { SET R3 ; MOV FALSE ; OPE R1 MATCH R2 ; } return reg @ R3 ;
+	}
+
+operator !! ( a : bool , b : bool ) : bool { 
+reg @ R1 -> a ;
+	reg @ R2 -> b ;
+	PROC -> { SET R3 ; MOV FALSE ; OPE R1 UNMATCH R2 ; } return reg @ R3 ;
+	}
+
+operator ++ ( a : num , b : num ) : num { 
+reg @ R9 -> a ;
+	reg @ R10 -> b ;
+	PROC -> { SET R11 ; MOV 0.0 ; OPE R9 SAX R10 ; } return reg @ R11 ;
+	}
+
+operator -- ( a : num , b : num ) : num { 
+reg @ R9 -> a ;
+	reg @ R10 -> b ;
+	PROC -> { SET R11 ; MOV 0.0 ; OPE R9 VEZ R10 ; } return reg @ R11 ;
+	}
+
+operator ** ( a : num , b : num ) : num { 
+reg @ R9 -> a ;
+	reg @ R10 -> b ;
+	PROC -> { SET R11 ; MOV 0.0 ; OPE R9 PUC R10 ; } return reg @ R11 ;
+	}
+
+operator // ( a : num , b : num ) : num { 
+reg @ R9 -> a ;
+	reg @ R10 -> b ;
+	PROC -> { SET R11 ; MOV 0.0 ; OPE R9 INK R10 ; } return reg @ R11 ;
+	}
+
+operator == ( a : num , b : num ) : bool { 
+reg @ R9 -> a ;
+	reg @ R10 -> b ;
+	PROC -> { SET R1 ; MOV FALSE ; OPE R9 OPUAL R10 ; } return reg @ R1 ;
+	}
+
+operator !! ( a : num , b : num ) : bool { 
+reg @ R9 -> a ;
+	reg @ R10 -> b ;
+	PROC -> { SET R1 ; MOV FALSE ; OPE R9 TOLL R10 ; } return reg @ R1 ;
+	}
+
+operator == ( a : string , b : string ) : bool { 
+reg @ R13 -> a ;
+	reg @ R14 -> b ;
+	PROC -> { SET R3 ; MOV FALSE ; OPE R13 CONTENT R14 ; } return reg @ R3 ;
+	}
+
+operator !! ( a : string , b : string ) : bool { 
+reg @ R13 -> a ;
+	reg @ R14 -> b ;
+	PROC -> { SET R3 ; MOV FALSE ; OPE R13 UNCONTENT R14 ; } return reg @ R3 ;
+	}

@@ -1,55 +1,60 @@
 
-call StructsWithGeneric -> {
-	 def a1 : ChaveValor >> ( int , int ) = init ChaveValor ( ) >> ( int , int );
-	 def b : Par >> ( int , bool ) = init Par ( ) >> ( int , bool );
-	 def c : Associado >> ( bool ) = init Associado ( ) >> ( bool );
-	 def d : IntPar = init IntPar ( );
-	 def d1 : int = d.getValor ( );
-	 DEBUG -> REGRESSIVE :: STACK;
-}
+call StructsWithGeneric -> { 
+def a1 : ChaveValor >> ( int , int ) = init ChaveValor ( ) >> ( int , int ) ;
+	def b : Par >> ( int , bool ) = init Par ( ) >> ( int , bool ) ;
+	def c : Associado >> ( bool ) = init Associado ( ) >> ( bool ) ;
+	def d : IntPar = init IntPar ( ) ;
+	def d1 : int = d . getValor ( ) ;
+	DEBUG -> REGRESSIVE :: STACK ;
+	}
 
-act colocar_valor ( cv : ChaveValor >> ( string , string ) , chave : string , valor : string ) {
-	 cv.setChave ( chave );
-	 cv.setValor ( valor );
-}
+act colocar_valor ( cv : ChaveValor >> ( string , string ) , chave : string , valor : string ) { 
+cv . setChave ( chave ) ;
+	cv . setValor ( valor ) ;
+	}
 
 struct ChaveValor in ( A , B ) {
 	
 	restrict :
 		define Chave : A ;
+		
 		define Valor : B ;
+		
 	all :
-		func getChave ( ) : A {
-			 return Chave;
+		func getChave ( ) : A { 
+return Chave ;
+					}
+		
+		func getValor ( ) : B { 
+return Valor ;
+					}
+		
+		act setChave ( eChave : A ) { 
+Chave = eChave ;
+					}
+		
+		act setValor ( eValor : B ) { 
+Valor = eValor ;
+					}
 		}
-
-		func getValor ( ) : B {
-			 return Valor;
-		}
-
-		act setChave ( eChave : A ) {
-			 Chave = eChave;
-		}
-
-		act setValor ( eValor : B ) {
-			 Valor = eValor;
-		}
-}
 
 struct Par in ( S , R ) with ChaveValor >> ( S , R ) {
 	
-	init Par ( ) -> ChaveValor ( ) {
+	init Par ( ) -> ChaveValor ( ) { 
 	}
+	
 }
 
 struct Associado in ( S ) with ChaveValor >> ( S , int ) {
 	
-	init Associado ( ) -> ChaveValor ( ) {
+	init Associado ( ) -> ChaveValor ( ) { 
 	}
+	
 }
 
 struct IntPar with ChaveValor >> ( int , int ) {
 	
-	init IntPar ( ) -> ChaveValor ( ) {
+	init IntPar ( ) -> ChaveValor ( ) { 
 	}
+	
 }

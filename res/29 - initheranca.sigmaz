@@ -1,82 +1,51 @@
 
 call iniciar -> vamos_herdar_com_init ( ) ;
-act vamos_herdar_com_init ( ) {
-	 def a1 : Animal = init Animal ("Muito Fofo" , 40 );
+act vamos_herdar_com_init ( ) { 
+def a1 : Animal = init Animal ( "Muito Fofo" , 40 ) ;
 	 #a1.setIdade(12); #a1.setQualidade("Lindo"); a1.mostrar ( );
-}
+	}
 
 struct Qualidade {
 	
-	init Qualidade ( a : string ) {
-		 qualidade = a;
-	}
+	init Qualidade ( a : string ) { 
+qualidade = a ;
+			}
+	
 
 	all :
-		define qualidade : string ="" ;
-		act setQualidade ( a : string ) {
-			 qualidade = a;
+		define qualidade : string = "" ;
+		
+		act setQualidade ( a : string ) { 
+qualidade = a ;
+					}
+		
+		func getQualidade ( ) : string { 
+return qualidade ;
+					}
 		}
-
-		func getQualidade ( ) : string {
-			 return qualidade;
-		}
-}
 
 struct Animal with Qualidade {
 	
-	init Animal ( v2 : string , i : int ) -> Qualidade ( v2 ) {
-		 idade = i;
-	}
+	init Animal ( v2 : string , i : int ) -> Qualidade ( v2 ) { 
+idade = i ;
+			}
+	
 
 	all :
 		define idade : int = 0 ;
-		act setIdade ( a : int ) {
-			 idade = a;
-		}
-
-		act mostrar ( ) {
-			 println (" --- ANIMAL --- " );
-			 println ("" );
-			 println ("     - IDADE : " , idade );
-			 println ("     - QUALIDADE : " , qualidade );
-		}
-
-		act println ( a : string , b : int ) {
-			 PROC -> {
-				 PROC CHANGE_LINE;
-			}
- reg @ R13 -> a;
-			 PROC -> {
-				 PRINT R13;
-			}
- reg @ R5 -> b;
-			 PROC -> {
-				 SET R13;
-				 MOV"";
-				 INT_STRING R5;
-				 PRINT R13;
-			}
-}
-
-		act println ( a : string , b : string ) {
-			 PROC -> {
-				 PROC CHANGE_LINE;
-			}
- reg @ R13 -> a;
-			 PROC -> {
-				 PRINT R13;
-			}
- reg @ R13 -> b;
-			 PROC -> {
-				 PRINT R13;
-			}
-}
-
-		act println ( a : string ) {
-			 reg @ R13 -> a;
-			 PROC -> {
-				 PROC CHANGE_LINE;
-				 PRINT R13;
-			}
-}
-}
+		
+		act setIdade ( a : int ) { 
+idade = a ;
+					}
+		
+		act mostrar ( ) { 
+println ( " --- ANIMAL --- " ) ;
+			println ( "" ) ;
+			println ( "     - IDADE : " , idade ) ;
+			println ( "     - QUALIDADE : " , qualidade ) ;
+					}
+		
+		act println ( a : string , b : int ) { 
+PROC -> { PROC CHANGE_LINE ; } reg @ R13 -> a ;
+			PROC -> { PRINT R13 ; } reg @ R5 -> b ;
+			PROC -> { SET R13 ; MOV "" ; INT_STRING R5 ; PRINT R13 ; } }act println ( a : string , b : string ) { PROC -> { PROC CHANGE_LINE ; } reg @ R13 -> a ; PROC -> { PRINT R13 ; } reg @ R13 -> b ; PROC -> { PRINT R13 ; } } act println ( a : string ) { reg @ R13 -> a ; PROC -> { PROC CHANGE_LINE ; PRINT R13 ; } } }

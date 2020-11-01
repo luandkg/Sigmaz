@@ -9,10 +9,56 @@ public class SigmazExternal {
     private AST mAST;
     private Organizador mOrganizador;
 
+    private ArrayList<String> mCampos;
+
+    private ArrayList<String> mActions;
+    private ArrayList<String> mFunctions;
+    private ArrayList<String> mActionsFunctions;
+
+
     public SigmazExternal(AST eAST) {
 
         mAST = eAST;
         mOrganizador = new Organizador();
+
+
+        mCampos = new ArrayList<String>();
+        mActions = new ArrayList<String>();
+        mFunctions = new ArrayList<String>();
+        mActionsFunctions = new ArrayList<String>();
+
+
+        for (AST mCorrente : mAST.getBranch("BODY").getASTS()) {
+
+            if (mCorrente.mesmoTipo("ACTION")) {
+
+                if (mCorrente.getBranch("VISIBILITY").mesmoNome("EXPLICIT")) {
+                    mActions.add(mCorrente.getNome());
+                    mActionsFunctions.add(mCorrente.getNome());
+                }
+
+            } else if (mCorrente.mesmoTipo("FUNCTION")) {
+
+                if (mCorrente.getBranch("VISIBILITY").mesmoNome("EXPLICIT")) {
+                    mFunctions.add(mCorrente.getNome());
+                    mActionsFunctions.add(mCorrente.getNome());
+                }
+
+            } else if (mCorrente.mesmoTipo("DEFINE")) {
+
+                if (mCorrente.getBranch("VISIBILITY").mesmoNome("EXPLICIT")) {
+                    mCampos.add(mCorrente.getNome());
+                }
+
+            } else if (mCorrente.mesmoTipo("MOCKIZ")) {
+
+                if (mCorrente.getBranch("VISIBILITY").mesmoNome("EXPLICIT")) {
+                    mCampos.add(mCorrente.getNome());
+                }
+            }
+
+        }
+
 
     }
 
@@ -116,5 +162,27 @@ public class SigmazExternal {
     public boolean temActionsOuFunctions() {
         return mOrganizador.temActionsOuFunctions(getAction(), getFunctions());
     }
+
+
+
+
+    public boolean existeCampo(String eObjeto) {
+        return mCampos.contains(eObjeto);
+    }
+
+
+    public boolean existeFunction(String eObjeto) {
+        return mFunctions.contains(eObjeto);
+    }
+
+    public boolean existeAction(String eObjeto) {
+        return mActions.contains(eObjeto);
+    }
+
+    public boolean existeActionFunction(String eObjeto) {
+        return mActionsFunctions.contains(eObjeto);
+    }
+
+
 
 }

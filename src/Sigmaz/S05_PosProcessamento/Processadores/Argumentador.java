@@ -2,7 +2,7 @@ package Sigmaz.S05_PosProcessamento.Processadores;
 
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
-import Sigmaz.S07_Executor.Debuggers.Simplificador;
+import Sigmaz.S08_Executor.Debuggers.Simplificador;
 
 import java.util.ArrayList;
 

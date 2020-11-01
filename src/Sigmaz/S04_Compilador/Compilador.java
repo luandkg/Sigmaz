@@ -24,7 +24,7 @@ public class Compilador {
 
     private ArrayList<GrupoDeErro> mErros_Processamento;
     private ArrayList<GrupoDeErro> mErros_Lexer;
-    private ArrayList<GrupoDeErro> mErros_Compiler;
+    private ArrayList<GrupoDeErro> mErros_Parser;
 
     private ArrayList<GrupoDeComentario> mComentarios;
 
@@ -77,7 +77,7 @@ public class Compilador {
 
         mErros_Processamento = new ArrayList<>();
         mErros_Lexer = new ArrayList<>();
-        mErros_Compiler = new ArrayList<>();
+        mErros_Parser = new ArrayList<>();
 
         mComentarios = new ArrayList<>();
 
@@ -169,8 +169,8 @@ public class Compilador {
         return mErros_Lexer;
     }
 
-    public ArrayList<GrupoDeErro> getErros_Compiler() {
-        return mErros_Compiler;
+    public ArrayList<GrupoDeErro> getErros_Parser() {
+        return mErros_Parser;
     }
 
     public ArrayList<GrupoDeComentario> getComentarios() {
@@ -200,7 +200,7 @@ public class Compilador {
 
         mErros_Processamento.clear();
         mErros_Lexer.clear();
-        mErros_Compiler.clear();
+        mErros_Parser.clear();
 
         mComentarios.clear();
 
@@ -466,7 +466,7 @@ public class Compilador {
         mParser_Tokens += mParser.getTokens().size();
         mParser_Objetos += mParser.getObjetos();
 
-        getErros_Compiler().addAll(mParser.getErros_Compiler());
+        mErros_Parser.addAll(mParser.getErros_Parser());
 
         return mParser;
     }

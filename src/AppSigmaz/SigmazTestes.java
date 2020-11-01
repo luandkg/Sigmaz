@@ -30,7 +30,7 @@ public class SigmazTestes {
         mArquivos.add(eArquivo);
     }
 
-    public void init( String mLocalLibs, String eTitulo) {
+    public void init(String mLocalLibs, String eTitulo) {
 
         System.out.println("");
 
@@ -51,6 +51,16 @@ public class SigmazTestes {
         System.out.println(" - INICIO  	: " + mChronos.getData());
         System.out.println("");
 
+        boolean isPrimeiro = true;
+        boolean isVelocidades = false;
+
+        float mMaisRapido = 0;
+        float mMaisDevagar = 0;
+
+        String mLocalRapido = "";
+        String mLocalDevagar = "";
+
+
         int Contador = 1;
 
         SequenciadorDeTestes mSequenciadorDeTestes = new SequenciadorDeTestes();
@@ -58,7 +68,10 @@ public class SigmazTestes {
 
         for (String Arquivo : mArquivos) {
 
-           ArquivoTeste mTeste =  mSequenciadorDeTestes.adicionarTeste(Arquivo);
+            Chronos_Intervalo mTempoCorrente = new Chronos_Intervalo();
+            mTempoCorrente.marqueInicio();
+
+            ArquivoTeste mTeste = mSequenciadorDeTestes.adicionarTeste(Arquivo);
 
 
             Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
@@ -69,6 +82,7 @@ public class SigmazTestes {
             SigmazC.setMostrar_ArvoreFalhou(false);
             SigmazC.setMostrar_Erros(false);
             SigmazC.setMostrar_Execucao(false);
+            SigmazC.setMostrar_Integracao(true);
 
             SigmazC.init(Arquivo, mSaida, mLocalLibs, 1);
 
@@ -101,7 +115,7 @@ public class SigmazTestes {
 
                     mTeste.setProblema("PARSER");
 
-                    for (GrupoDeErro eGE : SigmazC.getErros_Compiler()) {
+                    for (GrupoDeErro eGE : SigmazC.getErros_Parser()) {
                         mTeste.getComplemento().adicionarLinha(2, eGE.getArquivo());
                         for (Erro eErro : eGE.getErros()) {
                             mTeste.getComplemento().adicionarLinha(2, "->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem());
@@ -113,6 +127,14 @@ public class SigmazTestes {
                     mTeste.setProblema("POS-PROCESSAMENTO");
 
                     for (String Erro : SigmazC.getErros_PosProcessamento()) {
+                        mTeste.getComplemento().adicionarLinha(2, Erro);
+                    }
+
+                } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.INTEGRALIZADOR) {
+
+                    mTeste.setProblema("INTEGRALIZADOR");
+
+                    for (String Erro : SigmazC.getErros_Integracao()) {
                         mTeste.getComplemento().adicionarLinha(2, Erro);
                     }
 
@@ -132,6 +154,8 @@ public class SigmazTestes {
 
             }
 
+            mTempoCorrente.marqueFim();
+
 
             String sContador = String.valueOf(Contador);
 
@@ -143,9 +167,34 @@ public class SigmazTestes {
 
                 System.out.println(" Arquivo : " + sContador + " -> " + mTeste.getArquivo() + " : SUCESSO ");
 
+                if (isPrimeiro) {
+                    isPrimeiro = false;
+
+                    mMaisRapido = mTempoCorrente.getIntervalo();
+                    mMaisDevagar = mTempoCorrente.getIntervalo();
+
+                    mLocalRapido=mTeste.getArquivo();
+                    mLocalDevagar=mTeste.getArquivo();
+
+                } else {
+
+                    isVelocidades = true;
+
+                    if (mTempoCorrente.getIntervalo() > mMaisDevagar) {
+                        mMaisDevagar = mTempoCorrente.getIntervalo();
+                        mLocalDevagar=mTeste.getArquivo();
+                    }
+
+                    if (mTempoCorrente.getIntervalo() < mMaisRapido) {
+                        mMaisRapido = mTempoCorrente.getIntervalo();
+                        mLocalRapido=mTeste.getArquivo();
+                    }
+
+                }
+
             } else {
 
-                System.out.println(" Arquivo : " + sContador + " -> " + mTeste.getArquivo()  + " : FALHOU -> " + mTeste.getProblema());
+                System.out.println(" Arquivo : " + sContador + " -> " + mTeste.getArquivo() + " : FALHOU -> " + mTeste.getProblema());
                 System.out.println(mTeste.getComplemento().getConteudo());
 
             }
@@ -166,15 +215,26 @@ public class SigmazTestes {
         System.out.println("");
 
 
-
         if (mSequenciadorDeTestes.getTotal() > 0) {
 
-            String s = getPorcentagem(mSequenciadorDeTestes.getCorretos().size(),mSequenciadorDeTestes.getTotal());
-            String f = getPorcentagem(mSequenciadorDeTestes.getProblemas().size(),mSequenciadorDeTestes.getTotal());
+            if (isVelocidades){
+
+                System.out.println(" - VELOCIDADES ");
+
+                System.out.println("\t - RAPIDO  : " + mLocalRapido + " -> " + mMaisRapido);
+                System.out.println("\t - DEVAGAR  : " + mLocalDevagar + " -> " + mMaisDevagar);
+
+                System.out.println("");
+
+            }
+
+            String s = getPorcentagem(mSequenciadorDeTestes.getCorretos().size(), mSequenciadorDeTestes.getTotal());
+            String f = getPorcentagem(mSequenciadorDeTestes.getProblemas().size(), mSequenciadorDeTestes.getTotal());
 
             System.out.println(" - TESTES  	: " + mSequenciadorDeTestes.getTotal() + " -> 100.00 % ");
-            System.out.println("\t - SUCESSO  : " + mSequenciadorDeTestes.getCorretos().size() + " -> " +  s);
+            System.out.println("\t - SUCESSO  : " + mSequenciadorDeTestes.getCorretos().size() + " -> " + s);
             System.out.println("\t - FALHOU  	: " + mSequenciadorDeTestes.getProblemas().size() + " -> " + f);
+
 
 
             if (mSequenciadorDeTestes.temProblemas()) {
@@ -195,7 +255,7 @@ public class SigmazTestes {
 
     }
 
-    public String getPorcentagem(int eQuantos,int eTotal){
+    public String getPorcentagem(int eQuantos, int eTotal) {
         float s = ((float) eQuantos / (float) eTotal) * 100.0f;
 
         NumberFormat formatarFloat = new DecimalFormat("0.00");

@@ -1,16 +1,12 @@
 package Sigmaz.Intellisenses;
 
 import Sigmaz.S00_Utilitarios.Visualizador.*;
-import Sigmaz.S07_Executor.Debuggers.Simplificador;
-import Sigmaz.S07_Executor.Utils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import Sigmaz.S00_Utilitarios.AST;
 
 public class IS_Sigmaz {
 

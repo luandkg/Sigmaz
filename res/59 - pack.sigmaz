@@ -2,29 +2,36 @@
 struct Mamifero {
 	
 	all :
-		mockiz pelos : bool = true ;}
- } package Animais { refer Organismos ;
+		mockiz pelos : bool = true ;
+		}
+ } package Animais {
+refer Organismos ;
+
 struct Gato with Mamifero {
 	
-	init Gato ( idade : num ) -> Mamifero ( ) {
-		 _idade = idade;
-	}
+	init Gato ( idade : num ) -> Mamifero ( ) { 
+_idade = idade ;
+			}
+	
 
 	restrict :
 		define _idade : num = 0.0 ;
+		
 	all :
-		func getIdade ( ) : num {
-			 return _idade;
+		func getIdade ( ) : num { 
+return _idade ;
+					}
+		
+		func getTemPelos ( ) : bool { 
+return pelos ;
+					}
 		}
+ }
+refer Animais ;
 
-		func getTemPelos ( ) : bool {
-			 return pelos;
-		}
-}
- } refer Animais ;
-call iniciar -> {
-	 def G : Gato = init Gato ( 12.0 );
-	 def g_idade : num = G.getIdade ( );
-	 def g_pelos : bool = G.getTemPelos ( );
-	 DEBUG -> REGRESSIVE :: ALL;
-}
+call iniciar -> { 
+def G : Gato = init Gato ( 12.0 ) ;
+	def g_idade : num = G . getIdade ( ) ;
+	def g_pelos : bool = G . getTemPelos ( ) ;
+	DEBUG -> REGRESSIVE :: ALL ;
+	}

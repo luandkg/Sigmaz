@@ -16,11 +16,6 @@ public class AST_Change {
     public void init(AST ASTPai) {
 
 
-       // Token TokenC = mCompiler.getTokenAvante();
-       // if (TokenC.getTipo() == TokenTipo.ID) {
-      //  } else {
-      //      mCompiler.errarCompilacao("Era esperado uma variavel TYPE para uma CHANGE !", TokenC);
-      //  }
 
         Token TokenC = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import Sigmaz.S00_Utilitarios.Mensageiro;
 import Sigmaz.S05_PosProcessamento.Processadores.*;
 import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S00_Utilitarios.UUID;
+import Sigmaz.S08_Executor.Debuggers.Simplificador;
 
 public class PosProcessador {
 
@@ -38,6 +38,7 @@ public class PosProcessador {
     private int mPosMax;
     private boolean mTerminou;
 
+    private Simplificador mSimplificador;
 
     public PosProcessador() {
 
@@ -47,6 +48,8 @@ public class PosProcessador {
 
         mPacotes = new ArrayList<AST>();
         mRequisicoes = new ArrayList<AST>();
+
+        mSimplificador = new Simplificador();
 
         mDebug_Requisidor = true;
         mDebug_Alocador = true;
@@ -67,6 +70,9 @@ public class PosProcessador {
 
     }
 
+    public Simplificador getSimplificador() {
+        return mSimplificador;
+    }
 
     public void setDebug_Requisidor(boolean e) {
         mDebug_Requisidor = e;
@@ -207,7 +213,7 @@ public class PosProcessador {
 
         mFase = "";
         mPosInt = 0;
-        mPosMax = 13;
+        mPosMax = 12;
         mTerminou = false;
 
 
@@ -318,16 +324,9 @@ public class PosProcessador {
                     mOpcionador.init(mASTS);
 
                 }
+
+
             } else if (mPosInt == 11) {
-
-                mFase = "Valorador";
-
-                if (tudoOK()) {
-                    Valorador mValorador = new Valorador(this);
-                    mValorador.init(mASTS, mRequisicoes);
-                }
-
-            } else if (mPosInt == 12) {
 
                 mFase = "Estruturador";
 
@@ -336,7 +335,7 @@ public class PosProcessador {
                     mEstruturador.init(mASTS);
                 }
 
-            } else if (mPosInt == 13) {
+            } else if (mPosInt == 12) {
 
                 mFase = "Uniciade";
 

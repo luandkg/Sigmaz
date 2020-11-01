@@ -356,6 +356,10 @@ public class IntellisensePartes {
 
             mais = mIntellisense.criarBox(g, mais, x);
 
+        } else if (mIntellisense.deveSeparar(eSigmazStruct.temDefinesOuMockizes_Internos(), eSigmazStruct.temGettersOuSetters())) {
+
+            mais = mIntellisense.criarBox(g, mais, x);
+
         }
 
         mais = actionsFunctions_internos(g, x, mais, eLargura, eSigmazStruct);
@@ -373,6 +377,9 @@ public class IntellisensePartes {
 
             mais = mIntellisense.criarBox(g, mais, x);
 
+        } else if (mIntellisense.deveSeparar(eSigmazStruct.temActionsOuFunctions_Internos(), eSigmazStruct.temGettersOuSetters())) {
+
+            mais = mIntellisense.criarBox(g, mais, x);
         }
 
         mais = definesMockizes_externs(g, x, mais, eLargura, eSigmazStruct);
@@ -397,6 +404,12 @@ public class IntellisensePartes {
         }
 
         mais = extras(g, x, mais, eLargura, eSigmazStruct);
+
+        if (mIntellisense.deveSeparar(eSigmazStruct.temDirectorsOuOperators(), eSigmazStruct.temGettersOuSetters())) {
+
+            mais = mIntellisense.criarBox(g, mais, x);
+
+        }
 
         mais = blocos(g, x, mais, eLargura, eSigmazStruct);
 

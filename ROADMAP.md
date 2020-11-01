@@ -549,3 +549,7 @@ Linguagem de Programação Estruturada - Implementações
 		2020 10 30 -->> Chaves de 64 Bytes
 		2020 10 30 -->> Dump OLM
 
+
+		2020 11 01 -->> PosProcessador Tipador : Refatoramento
+		2020 11 01 -->> Integralizador
+

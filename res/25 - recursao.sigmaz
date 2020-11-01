@@ -1,48 +1,6 @@
 
 call iniciar -> recursao ( 10 ) ;
-act recursao ( a : int ) {
-	 println ("Valor A : " , a );
-	 a = somar_inteiro ( a , 1 );
-	 if ( menor ( a , 20 ) ) -> {
-		 recursao ( a );
-	}
-}
-
-func somar_inteiro ( a : int , b : int ) : int {
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R7;
-		 MOV 0;
-		 OPE R5 ADD R6;
-	}
- return reg @ R7;
-}
-
-func menor ( a : int , b : int ) : bool {
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R1;
-		 MOV FALSE;
-		 OPE R5 LESS R6;
-	}
- return reg @ R1;
-}
-
-act println ( a : string , b : int ) {
-	 PROC -> {
-		 PROC CHANGE_LINE;
-	}
- reg @ R13 -> a;
-	 PROC -> {
-		 PRINT R13;
-	}
- reg @ R5 -> b;
-	 PROC -> {
-		 SET R13;
-		 MOV"";
-		 INT_STRING R5;
-		 PRINT R13;
-	}
-}
+act recursao ( a : int ) { 
+println ( "Valor A : " , a ) ;
+	a = somar_inteiro ( a , 1 ) ;
+	if ( menor ( a , 20 ) ) -> { recursao ( a ) ; } }func somar_inteiro ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ; } func menor ( a : int , b : int ) : bool { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 LESS R6 ; } return reg @ R1 ; } act println ( a : string , b : int ) { PROC -> { PROC CHANGE_LINE ; } reg @ R13 -> a ; PROC -> { PRINT R13 ; } reg @ R5 -> b ; PROC -> { SET R13 ; MOV "" ; INT_STRING R5 ; PRINT R13 ; } }

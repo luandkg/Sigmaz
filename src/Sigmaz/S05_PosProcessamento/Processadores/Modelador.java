@@ -5,7 +5,7 @@ import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazStruct;
 import Sigmaz.S05_PosProcessamento.Procurador;
 import Sigmaz.S05_PosProcessamento.ProcurandoModelo;
-import Sigmaz.S07_Executor.Alterador;
+import Sigmaz.S08_Executor.Alterador;
 
 import java.util.ArrayList;
 

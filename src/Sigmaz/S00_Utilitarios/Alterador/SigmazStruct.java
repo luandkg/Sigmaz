@@ -1,8 +1,8 @@
 package Sigmaz.S00_Utilitarios.Alterador;
 
 import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S05_PosProcessamento.Pronoco.Pronoco_Function;
-import Sigmaz.S07_Executor.Indexador.Index_Function;
+import Sigmaz.S00_Utilitarios.Visualizador.SigmazDirector;
+import Sigmaz.S00_Utilitarios.Visualizador.SigmazOperator;
 
 import java.util.ArrayList;
 
@@ -88,13 +88,13 @@ public class SigmazStruct {
     }
 
 
-    public ArrayList<Pronoco_Function> getOperadores() {
+    public ArrayList<SigmazOperator> getOperadores() {
 
-        ArrayList<Pronoco_Function> mRet = new ArrayList<Pronoco_Function>();
+        ArrayList<SigmazOperator> mRet = new ArrayList<SigmazOperator>();
 
         for (AST eAST : mSigmazStruct_Leitura.getBranch("BODY").getASTS()) {
             if (eAST.mesmoTipo("OPERATOR")) {
-                mRet.add(new Pronoco_Function(eAST));
+                mRet.add(new SigmazOperator(eAST));
             }
 
         }
@@ -103,14 +103,14 @@ public class SigmazStruct {
         return mRet;
     }
 
-    public ArrayList<Pronoco_Function> getDiretores() {
+    public ArrayList<SigmazDirector> getDiretores() {
 
-        ArrayList<Pronoco_Function> mRet = new ArrayList<Pronoco_Function>();
+        ArrayList<SigmazDirector> mRet = new ArrayList<SigmazDirector>();
 
         for (AST eAST : mSigmazStruct_Leitura.getBranch("BODY").getASTS()) {
 
             if (eAST.mesmoTipo("DIRECTOR")) {
-                mRet.add(new Pronoco_Function(eAST));
+                mRet.add(new SigmazDirector(eAST));
             }
         }
 

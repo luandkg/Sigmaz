@@ -113,3 +113,7 @@ Linguagem de Programação Estruturada - Alterações
 		2020 10 28 -->> Run_Execute
 		2020 10 28 -->> Run_External
 
+
+		2020 11 01 -->> PosProcessador Tipador : Refatoramento
+		2020 11 01 -->> Pos Processador Valorador -> Fase Integralizador
+

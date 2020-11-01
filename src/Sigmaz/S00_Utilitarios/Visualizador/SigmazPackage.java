@@ -23,6 +23,8 @@ public class SigmazPackage {
 
     }
 
+    public AST getAST(){ return mSigmazPackage; }
+
 
     public ArrayList<String> getRefers() {
 
@@ -38,6 +40,96 @@ public class SigmazPackage {
         return mRefers;
 
     }
+
+
+
+    public ArrayList<SigmazAction> getActions() {
+        ArrayList<SigmazAction> mLista = new ArrayList<SigmazAction>();
+
+        for (AST a : mSigmazPackage.getASTS()) {
+            if (a.mesmoTipo("ACTION")) {
+                mLista.add(new SigmazAction(a));
+            }
+        }
+
+        return mLista;
+    }
+
+    public ArrayList<SigmazFunction> getFunctions() {
+        ArrayList<SigmazFunction> mLista = new ArrayList<SigmazFunction>();
+
+        for (AST a : mSigmazPackage.getASTS()) {
+            if (a.mesmoTipo("FUNCTION")) {
+                mLista.add(new SigmazFunction(a));
+            }
+        }
+
+        return mLista;
+    }
+
+
+    public ArrayList<SigmazAuto> getAutos() {
+        ArrayList<SigmazAuto> mLista = new ArrayList<SigmazAuto>();
+
+        for (AST a : mSigmazPackage.getASTS()) {
+            if (a.mesmoTipo("PROTYPE_AUTO")) {
+                mLista.add(new SigmazAuto(a));
+            }
+        }
+
+        return mLista;
+    }
+
+    public ArrayList<SigmazFunctor> getFunctors() {
+        ArrayList<SigmazFunctor> mLista = new ArrayList<SigmazFunctor>();
+
+        for (AST a : mSigmazPackage.getASTS()) {
+            if (a.mesmoTipo("PROTYPE_FUNCTOR")) {
+                mLista.add(new SigmazFunctor(a));
+            }
+        }
+
+        return mLista;
+    }
+
+
+
+    public ArrayList<SigmazDirector> getDirectors() {
+        ArrayList<SigmazDirector> mLista = new ArrayList<SigmazDirector>();
+
+        for (AST a : mSigmazPackage.getASTS()) {
+            if (a.mesmoTipo("DIRECTOR")) {
+                mLista.add(new SigmazDirector(a));
+            }
+        }
+
+        return mLista;
+    }
+
+    public ArrayList<SigmazOperator> getOperators() {
+        ArrayList<SigmazOperator> mLista = new ArrayList<SigmazOperator>();
+
+        for (AST a : mSigmazPackage.getASTS()) {
+            if (a.mesmoTipo("OPERATOR")) {
+                mLista.add(new SigmazOperator(a));
+            }
+        }
+
+        return mLista;
+    }
+
+    public ArrayList<SigmazMark> getMarks() {
+        ArrayList<SigmazMark> mLista = new ArrayList<SigmazMark>();
+
+        for (AST a : mSigmazPackage.getASTS()) {
+            if (a.mesmoTipo("MARK")) {
+                mLista.add(new SigmazMark(a));
+            }
+        }
+
+        return mLista;
+    }
+
 
     public ArrayList<SigmazStruct> getStructs() {
         ArrayList<SigmazStruct> mLista = new ArrayList<SigmazStruct>();

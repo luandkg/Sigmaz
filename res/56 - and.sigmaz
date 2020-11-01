@@ -1,70 +1,49 @@
 
-call iniciar -> {
-	 def v1 : bool = maior_igual ( 10 , 30 );
-	 def v2 : bool = maior_igual ( 10 , 10 );
-	 def v3 : bool = maior_igual ( 30 , 10 );
-	 def e_1 : bool = operador_e ( true , true );
-	 def e_2 : bool = operador_e ( true , false );
-	 def e_3 : bool = operador_e ( false , true );
-	 def e_4 : bool = operador_e ( false , false );
-	 def ou_1 : bool = operador_ou ( true , true );
-	 def ou_2 : bool = operador_ou ( true , false );
-	 def ou_3 : bool = operador_ou ( false , true );
-	 def ou_4 : bool = operador_ou ( false , false );
-	 DEBUG -> REGRESSIVE :: ALL;
-}
- operator == ( a : bool , b : bool ) : bool { reg @ R1 -> a ; reg @ R2 -> b ; PROC -> { SET R3 ; MOV FALSE ; OPE R1 MATCH R2 ; } return reg @ R3 ; }
-func operador_e ( a : bool , b : bool ) : bool {
-	 def c : bool = false;
-	 if ( a == true ) -> {
-		 if ( b == true ) -> {
-			 c = true;
-		}
-}
- return c;
-}
+call iniciar -> { 
+def v1 : bool = maior_igual ( 10 , 30 ) ;
+	def v2 : bool = maior_igual ( 10 , 10 ) ;
+	def v3 : bool = maior_igual ( 30 , 10 ) ;
+	def e_1 : bool = operador_e ( true , true ) ;
+	def e_2 : bool = operador_e ( true , false ) ;
+	def e_3 : bool = operador_e ( false , true ) ;
+	def e_4 : bool = operador_e ( false , false ) ;
+	def ou_1 : bool = operador_ou ( true , true ) ;
+	def ou_2 : bool = operador_ou ( true , false ) ;
+	def ou_3 : bool = operador_ou ( false , true ) ;
+	def ou_4 : bool = operador_ou ( false , false ) ;
+	DEBUG -> REGRESSIVE :: ALL ;
+	}
 
-func operador_ou ( a : bool , b : bool ) : bool {
-	 def c : bool = false;
-	 if ( a == true ) -> {
-		 c = true;
+operator == ( a : bool , b : bool ) : bool { 
+reg @ R1 -> a ;
+	reg @ R2 -> b ;
+	PROC -> { SET R3 ; MOV FALSE ; OPE R1 MATCH R2 ; } return reg @ R3 ;
 	}
- if ( b == true ) -> {
-		 c = true;
-	}
- return c;
-}
 
-func maior_igual ( a : int , b : int ) : bool {
-	 def ret : bool = false;
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R1;
-		 MOV FALSE;
-		 OPE R5 GREAT R6;
+func operador_e ( a : bool , b : bool ) : bool { 
+def c : bool = false ;
+	if ( a == true ) -> { if ( b == true ) -> { c = true ; } } return c ;
 	}
- def e_maior : bool = reg @ R1;
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R1;
-		 MOV FALSE;
-		 OPE R5 EQUAL R6;
-	}
- def e_igual : bool = reg @ R1;
-	 if ( e_maior ) -> {
-		 ret = true;
-	}
- if ( e_igual ) -> {
-		 ret = true;
-	}
- return ret;
-}
 
-act println ( a : string , b : bool ) {
-	 def c : num;
-	 invoke terminal -> change ( ) :: c;
-	 invoke terminal -> print ( a ) :: c;
-	 invoke terminal -> print ( b ) :: c;
-}
+func operador_ou ( a : bool , b : bool ) : bool { 
+def c : bool = false ;
+	if ( a == true ) -> { c = true ; } if ( b == true ) -> { c = true ; } return c ;
+	}
+
+func maior_igual ( a : int , b : int ) : bool { 
+def ret : bool = false ;
+	reg @ R5 -> a ;
+	reg @ R6 -> b ;
+	PROC -> { SET R1 ; MOV FALSE ; OPE R5 GREAT R6 ; } def e_maior : bool = reg @ R1 ;
+	reg @ R5 -> a ;
+	reg @ R6 -> b ;
+	PROC -> { SET R1 ; MOV FALSE ; OPE R5 EQUAL R6 ; } def e_igual : bool = reg @ R1 ;
+	if ( e_maior ) -> { ret = true ; } if ( e_igual ) -> { ret = true ; } return ret ;
+	}
+
+act println ( a : string , b : bool ) { 
+def c : num ;
+	invoke terminal -> change ( ) :: c ;
+	invoke terminal -> print ( a ) :: c ;
+	invoke terminal -> print ( b ) :: c ;
+	}

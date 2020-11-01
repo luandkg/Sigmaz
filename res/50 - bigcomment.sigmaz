@@ -1,12 +1,13 @@
 
 call iniciar -> inicio ( ) ;
-act inicio ( ) {
-	 # Comentario Pequeno
+act inicio ( ) { 
+ # Comentario Pequeno
+	
 	## comentario
             com
                 muitas
                         linhas
     ##
-	 def a : int = 10;
-	 DEBUG -> REGRESSIVE :: ALL;
-}
+	def a : int = 10 ;
+	DEBUG -> REGRESSIVE :: ALL ;
+	}

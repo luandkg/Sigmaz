@@ -1,106 +1,107 @@
  import"libs/lib.sigmaz" ;
-call iniciar_tudo -> inicio ( ) ; refer Iterador ; refer Vetor ;
-act inicio ( ) {
-	 def i : int = 12;
-	 def vGeral : Vetor >> ( int ) = init Vetor ( 5 ) >> ( int );
-	 println ("Listar VETOR" );
-	 vGeral.mudarTodos ( 2 );
-	 vGeral.listar ( );
-	 println (" Tamanho :: " , vGeral.getQuantidade ( ) );
-	 def tt : int = 50;
-	 vGeral.set ( 0 , 10 );
-	 vGeral.set ( 1 , 20 );
-	 vGeral.set ( 2 , 30 );
-	 vGeral.set ( 3 , 40 );
-	 vGeral.set ( 4 , tt );
-	 vGeral.listar ( );
-	 println ("VAMOS LISTAR vGERAL  ------" );
-	 each a : int :: ( vGeral ) -> {
-		 println (" OBJETO -> " , a );
-	}
- println ("----- ----- ------  ------" );
-	 println (" 2 ----- ----- ------  ------" );
-	 DEBUG -> REGRESSIVE :: STACK;
-	 def v2 : Vetor >> ( int ) = {
-		 10 , 20}
-;
-	 DEBUG -> REGRESSIVE :: STACK;
-	 println (" 3 ----- ----- ------  ------" );
-	 v2.listar ( );
-	 #def v1 : Vetor >> (num ) = { }; #def v3 : Vetor >> ( num ) = { 10 , 20 ,"Oie" }; #v3.listar();
-	  def v4 : Vetor >> ( string ) = {
-		"A" ,"B" ,"C"}
-;
-	 v4.listar ( );
-	 def v5 : Vetor >> ( bool ) = {
-		 true , false , false}
-;
-	 v5.listar ( );
-	 def a1 : bool = true;
-	 def a2 : bool = false;
-	 def v6 : Vetor >> ( bool ) = {
-		 a1 , a2 , a2 , a2 , a1}
-;
-	 v6.listar ( );
-	 println (" 4 ----- ----- ------  ------ " );
-	 def v7 : Vetor >> ( Bloco ) = {
-		 init Bloco ( 15 ) , init Bloco ( 16 )}
-;
-	 println (" 5 ----- ----- ------  ------ " );
-	 each a : Bloco :: ( v7 ) -> {
-		 println ("Lista Bloco -> " , a.getValor ( ) );
-	}
- let vi = {
-		 init Bloco ( 100 )}
-;
-	 each a : Bloco :: ( vi ) -> {
-		 println ("Lista Bloco -> " , a.getValor ( ) );
-	}
- let va = {
-		 init RefBloco ( 500 ) >> ( int )}
-;
+call iniciar_tudo -> inicio ( ) ;
+refer Iterador ;
+
+refer Vetor ;
+
+act inicio ( ) { 
+def i : int = 12 ;
+	def vGeral : Vetor >> ( int ) = init Vetor ( 5 ) >> ( int ) ;
+	println ( "Listar VETOR" ) ;
+	vGeral . mudarTodos ( 2 ) ;
+	vGeral . listar ( ) ;
+	println ( " Tamanho :: " , vGeral . getQuantidade ( ) ) ;
+	def tt : int = 50 ;
+	vGeral . set ( 0 , 10 ) ;
+	vGeral . set ( 1 , 20 ) ;
+	vGeral . set ( 2 , 30 ) ;
+	vGeral . set ( 3 , 40 ) ;
+	vGeral . set ( 4 , tt ) ;
+	vGeral . listar ( ) ;
+	println ( "VAMOS LISTAR vGERAL  ------" ) ;
+	
+	each a : int :: ( vGeral ) -> { 
+println ( " OBJETO -> " , a ) ;
+			}
+	println ( "----- ----- ------  ------" ) ;
+	println ( " 2 ----- ----- ------  ------" ) ;
+	DEBUG -> REGRESSIVE :: STACK ;
+	def v2 : Vetor >> ( int ) = { 10 , 20 } ;
+	DEBUG -> REGRESSIVE :: STACK ;
+	println ( " 3 ----- ----- ------  ------" ) ;
+	v2 . listar ( ) ;
+	 #def v1 : Vetor >> (num ) = { };
+	 #def v3 : Vetor >> ( num ) = { 10 , 20 ,"Oie" };
+	 #v3.listar();
+	def v4 : Vetor >> ( string ) = { "A" , "B" , "C" } ;
+	v4 . listar ( ) ;
+	def v5 : Vetor >> ( bool ) = { true , false , false } ;
+	v5 . listar ( ) ;
+	def a1 : bool = true ;
+	def a2 : bool = false ;
+	def v6 : Vetor >> ( bool ) = { a1 , a2 , a2 , a2 , a1 } ;
+	v6 . listar ( ) ;
+	println ( " 4 ----- ----- ------  ------ " ) ;
+	def v7 : Vetor >> ( Bloco ) = { init Bloco ( 15 ) , init Bloco ( 16 ) } ;
+	println ( " 5 ----- ----- ------  ------ " ) ;
+	
+	each a : Bloco :: ( v7 ) -> { 
+println ( "Lista Bloco -> " , a . getValor ( ) ) ;
+			}
+	let vi = { init Bloco ( 100 ) } ;
+	
+	each a : Bloco :: ( vi ) -> { 
+println ( "Lista Bloco -> " , a . getValor ( ) ) ;
+			}
+	let va = { init RefBloco ( 500 ) >> ( int ) } ;
 	 #trash(va);
-	  each a : RefBloco >> ( int ) :: ( va ) -> {
-		 println ("Lista RefBloco -> " , a.getValor ( ) );
+	
+	each a : RefBloco >> ( int ) :: ( va ) -> { 
+println ( "Lista RefBloco -> " , a . getValor ( ) ) ;
+			}
+	def pla : Bloco = init Bloco ( ) ;
+	DEBUG -> REGRESSIVE :: STACK ;
+	def nn : Vetor >> ( Bloco ) = { pla } ;
+	
+	each a : Bloco :: ( nn ) -> { 
+println ( "Lista Bloco -> " , a . getValor ( ) ) ;
+			}
+	 #invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK; #invoke __COMPILER__ -> HEAP ( ) :: ALL; #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
 	}
- def pla : Bloco = init Bloco ( );
-	 DEBUG -> REGRESSIVE :: STACK;
-	 def nn : Vetor >> ( Bloco ) = {
-		 pla}
-;
-	 each a : Bloco :: ( nn ) -> {
-		 println ("Lista Bloco -> " , a.getValor ( ) );
-	}
- #invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK; #invoke __COMPILER__ -> HEAP ( ) :: ALL; #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: STACK;
- }
 
 struct Bloco {
 	
-	init Bloco ( ) {
-	}
+	init Bloco ( ) { 
+valor = 0 ;
+			}
+	
 
-	init Bloco ( aValor : int ) {
-		 valor = aValor;
-	}
+	init Bloco ( aValor : int ) { 
+valor = aValor ;
+			}
+	
 
 	restrict :
 		define valor : int = 0 ;
+		
 	all :
-		func getValor ( ) : int {
-			 return valor;
+		func getValor ( ) : int { 
+return valor ;
+					}
 		}
-}
 
 struct RefBloco in ( T ) {
 	
-	init RefBloco ( aValor : T ) {
-		 valor = aValor;
-	}
+	init RefBloco ( aValor : T ) { 
+valor = aValor ;
+			}
+	
 
 	restrict :
 		define valor : T = 0 ;
+		
 	all :
-		func getValor ( ) : T {
-			 return valor;
+		func getValor ( ) : T { 
+return valor ;
+					}
 		}
-}

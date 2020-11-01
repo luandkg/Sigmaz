@@ -1,89 +1,119 @@
- refer ECOLOGIA ; model Cidadao {
-func getNome ( ) : string ; } model Pessoa_Brasil {
-	 func getCPF ( ) : string;
+
+refer ECOLOGIA ;
+
+model Cidadao {
+
+	
+	func getNome ( ) : string ;
+	
+}
+
+model Pessoa_Brasil {
+
+	
+	func getCPF ( ) : string ;
+	
 }
 
 struct Pessoa at Cidadao {
 	
 	all :
-		func getNome ( ) : string {
-			 return;
+		func getNome ( ) : string { 
+return ;
+					}
 		}
-}
 
 struct Brasileiro with Pessoa at Pessoa_Brasil {
 	
-	init Brasileiro ( ) -> Pessoa ( ) {
+	init Brasileiro ( ) -> Pessoa ( ) { 
 	}
+	
 
 	all :
-		func getNome ( ) : string {
-			 return"";
+		func getNome ( ) : string { 
+return "" ;
+					}
+		
+		func getCPF ( ) : string { 
+return "" ;
+					}
 		}
 
-		func getCPF ( ) : string {
-			 return"";
-		}
-}
+call Externals -> { 
+def mAca : Cidadao = init Brasileiro ( ) ;
+	def organismos_1 : int = ECO -> GET_ORGANISMOS ( ) ;
+	def energia_1 : int = ECO -> ENERGIA ;
+	ECO -> AUMENTAR ( 10 ) ;
+	def energia_2 : int = ECO -> ENERGIA ;
+	def energia_3 : int = ECO -> GET_ENERGIA ( ) ;
+	moc va : int = 12 ;
+	moc G1 : Gato = init Gato ( ) ;
+	def G2 : Gato = init Gato ( ) ;
+	DEBUG -> LOCAL :: INSTANCES ;
+	passarGato ( G1 ) ;
+	passarGato ( G2 ) ;
+	delete G2 ;
+	def organismos_2 : int = ECO -> GET_ORGANISMOS ( ) ;
+	DEBUG -> LOCAL :: STACK ;
+	DEBUG -> LOCAL :: INSTANCES ;
+	}
 
-call Externals -> {
-	 def mAca : Cidadao = init Brasileiro ( );
-	 def organismos_1 : int = ECO -> GET_ORGANISMOS ( );
-	 def energia_1 : int = ECO -> ENERGIA;
-	 ECO -> AUMENTAR ( 10 );
-	 def energia_2 : int = ECO -> ENERGIA;
-	 def energia_3 : int = ECO -> GET_ENERGIA ( );
-	 moc va : int = 12;
-	 moc G1 : Gato = init Gato ( );
-	 def G2 : Gato = init Gato ( );
-	 DEBUG -> LOCAL :: INSTANCES;
-	 passarGato ( G1 );
-	 passarGato ( G2 );
-	 delete G2;
-	 def organismos_2 : int = ECO -> GET_ORGANISMOS ( );
-	 DEBUG -> LOCAL :: STACK;
-	 DEBUG -> LOCAL :: INSTANCES;
-}
-
-act passarGato ( g : Gato ) {
-	 def referencia : Gato = g;
-	 DEBUG -> LOCAL :: INSTANCES;
-}
+act passarGato ( g : Gato ) { 
+def referencia : Gato = g ;
+	DEBUG -> LOCAL :: INSTANCES ;
+	}
  package ECOLOGIA {
 struct Gato {
 	
-	init Gato ( ) {
-		 ECO -> MAIS_ORGANISMO ( );
-	}
+	init Gato ( ) { 
+ECO -> MAIS_ORGANISMO ( ) ;
+			}
+	
 
-	all : destruct -> { ECO -> MENOS_ORGANISMOS ( );
-}
- }
+	all :
+		destruct -> { 
+ECO -> MENOS_ORGANISMOS ( ) ;
+					}
+		}
+
 struct ECO {
 	
 	implicit :
 		define Organismos : int = 0 ;
+		
 	explicit :
 		define ENERGIA : int = 10 ;
+		
 	explicit :
-		act AUMENTAR ( MAIS_ENERGIA : int ) {
-			 ENERGIA = ENERGIA ++ MAIS_ENERGIA;
+		act AUMENTAR ( MAIS_ENERGIA : int ) { 
+ENERGIA = ENERGIA ++ MAIS_ENERGIA ;
+					}
+		
+		func GET_ENERGIA ( ) : int { 
+return ENERGIA ;
+					}
+		
+		act MAIS_ORGANISMO ( ) { 
+Organismos = Organismos ++ 1 ;
+					}
+		
+		act MENOS_ORGANISMOS ( ) { 
+Organismos = Organismos -- 1 ;
+					}
+		
+		func GET_ORGANISMOS ( ) : int { 
+return Organismos ;
+					}
 		}
+ }
+operator ++ ( a : int , b : int ) : int { 
+reg @ R5 -> a ;
+	reg @ R6 -> b ;
+	PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ;
+	}
 
-		func GET_ENERGIA ( ) : int {
-			 return ENERGIA;
-		}
-
-		act MAIS_ORGANISMO ( ) {
-			 Organismos = Organismos ++ 1;
-		}
-
-		act MENOS_ORGANISMOS ( ) {
-			 Organismos = Organismos -- 1;
-		}
-
-		func GET_ORGANISMOS ( ) : int {
-			 return Organismos;
-		}
-}
- } operator ++ ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ; } operator -- ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 SUB R6 ; } return reg @ R7 ; }
+operator -- ( a : int , b : int ) : int { 
+reg @ R5 -> a ;
+	reg @ R6 -> b ;
+	PROC -> { SET R7 ; MOV 0 ; OPE R5 SUB R6 ; } return reg @ R7 ;
+	}

@@ -3,7 +3,7 @@ package Sigmaz;
 import Sigmaz.S00_Utilitarios.*;
 import Sigmaz.S01_PreProcessamento.Etapa;
 import Sigmaz.S04_Compilador.Compilador;
-import Sigmaz.S06_Montador.Montador;
+import Sigmaz.S07_Montador.Montador;
 import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
 
@@ -841,7 +841,7 @@ public class Sigmaz_Etapas {
             }
 
 
-            for (GrupoDeErro mGrupoDeErro : mPreProcessador.getErros_Compiler()) {
+            for (GrupoDeErro mGrupoDeErro : mPreProcessador.getErros_Parser()) {
                 mErros_Compiler.add(mGrupoDeErro);
             }
 

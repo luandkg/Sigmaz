@@ -1,6 +1,8 @@
 
 call iniciar -> operando ( ) ;
-mockiz MATEMATICA_PI : num = 3.14 ; act operando ( ) {
-	 moc ZAC : num = 10.0;
-	 DEBUG -> REGRESSIVE :: ALL;
-}
+mockiz MATEMATICA_PI : num = 3.14 ;
+
+act operando ( ) { 
+moc ZAC : num = 10.0 ;
+	DEBUG -> REGRESSIVE :: ALL ;
+	}

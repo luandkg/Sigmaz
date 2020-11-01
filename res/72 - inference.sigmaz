@@ -1,22 +1,25 @@
 
-call iniciar -> {
-	 let a = 12;
-	 let b = true;
-	 let c ="02";
-	 let d ="oie";
+call iniciar -> { 
+let a = 12 ;
+	let b = true ;
+	let c = "02" ;
+	let d = "oie" ;
 	 # let e = null; let f = init Bloco ( );
-	 voz g = 12;
+	voz g = 12 ;
 	 # voz h = null; voz i = init Bloco ( );
-	 voz j = start Pareamento {
-		 a = 6;
-		 b = 3;
+	voz j = start Pareamento { a = 6 ; b = 3 ; } ;
+	voz j_a = j . a ;
+	DEBUG -> REGRESSIVE :: STACK ;
 	}
-;
-	 voz j_a = j.a;
-	 DEBUG -> REGRESSIVE :: STACK;
-}
 
 struct Bloco {
 	}
- type Pareamento {
-define a : int = 12 ; define b : int = 30 ; }
+
+type Pareamento {
+
+	
+	define a : int = 12 ;
+	
+	define b : int = 30 ;
+	
+}

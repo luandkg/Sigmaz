@@ -1,24 +1,37 @@
- package AnimaisComplexo { refer Animais ; } package Aves { refer Animais ; refer AnimaisComplexo ; } package Organismos {
+ package AnimaisComplexo {
+refer Animais ;
+ } package Aves {
+refer Animais ;
+
+refer AnimaisComplexo ;
+ } package Organismos {
 struct Mamifero {
 	
 	all :
-		mockiz pelos : bool = true ;}
- } package Animais { refer Organismos ;
+		mockiz pelos : bool = true ;
+		}
+ } package Animais {
+refer Organismos ;
+
 struct Gato with Mamifero {
 	
-	init Gato ( a : num ) -> Mamifero ( ) {
-		 _a = a;
-	}
+	init Gato ( a : num ) -> Mamifero ( ) { 
+_a = a ;
+			}
+	
 
 	restrict :
 		define _a : num = 0.0 ;
+		
 	all :
-		func getA ( ) : num {
-			 return _a;
+		func getA ( ) : num { 
+return _a ;
+					}
 		}
-}
- } refer Animais ;
-call iniciar -> {
-	 def G : Gato = init Gato ( 12.0 );
-	 DEBUG -> REGRESSIVE :: ALL;
-}
+ }
+refer Animais ;
+
+call iniciar -> { 
+def G : Gato = init Gato ( 12.0 ) ;
+	DEBUG -> REGRESSIVE :: ALL ;
+	}

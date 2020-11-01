@@ -1,19 +1,10 @@
 
 call iniciar -> inicio ( ) ;
-act inicio ( ) {
-	 def a : bool = false;
-	 def b : string ="";
-	 try a with b -> {
-		 def g : int = 12;
+act inicio ( ) { 
+def a : bool = false ;
+	def b : string = "" ;
+	try a with b -> { def g : int = 12 ; } DEBUG -> REGRESSIVE :: ALL ;
+	def c : bool = false ;
+	try c -> { def g : num = "oi" ; } DEBUG -> REGRESSIVE :: ALL ;
+	try -> { def g : num = "oi" ; } DEBUG -> REGRESSIVE :: ALL ;
 	}
- DEBUG -> REGRESSIVE :: ALL;
-	 def c : bool = false;
-	 try c -> {
-		 def g : num ="oi";
-	}
- DEBUG -> REGRESSIVE :: ALL;
-	 try -> {
-		 def g : num ="oi";
-	}
- DEBUG -> REGRESSIVE :: ALL;
-}

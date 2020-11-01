@@ -8,7 +8,7 @@ import Sigmaz.S00_Utilitarios.Alterador.SigmazStruct;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S05_PosProcessamento.ProcurandoStruct;
-import Sigmaz.S07_Executor.Alterador;
+import Sigmaz.S08_Executor.Alterador;
 
 public class Heranca {
 

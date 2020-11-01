@@ -3,48 +3,56 @@ struct Bloco {
 	
 	all :
 		define Proximo : Caixa = null ;
+		
 		define PNumeral : Numeral = null ;
-		act setValor ( a : int ) {
-			 valor = a;
-		}
-
-		act setProximo ( c : Caixa ) {
-			 Proximo = c;
-		}
-
-		act setPNumeral ( c : Numeral ) {
-			 PNumeral = c;
-		}
-
+		
+		act setValor ( a : int ) { 
+valor = a ;
+					}
+		
+		act setProximo ( c : Caixa ) { 
+Proximo = c ;
+					}
+		
+		act setPNumeral ( c : Numeral ) { 
+PNumeral = c ;
+					}
+		
 	restrict :
-		define valor : int = 0 ;}
+		define valor : int = 0 ;
+		}
 
 struct Caixa {
 	
 	all :
-		act gravar ( a : int ) {
-			 valor = a;
+		act gravar ( a : int ) { 
+valor = a ;
+					}
+		
+	restrict :
+		define valor : int = 0 ;
 		}
 
-	restrict :
-		define valor : int = 0 ;}
- type Numeral {
-define A : int = 0 ; define B : int = 0 ; } #call iniciar -> criv ( ); #func criv() : num { return 0; }
+type Numeral {
 
-call iniciar -> {
-	 def P1 : Bloco = init Bloco ( );
-	 P1.setValor ( 2 );
-	 def P2 : Caixa = init Caixa ( );
-	 P2.gravar ( 5 );
-	 #P1.Proximo = P2; #P1.setProximo(P2);
-	 P1.setProximo ( init Caixa ( ) );
-	 P1.Proximo.gravar ( 4 );
-	 # def N : Numeral = start Numeral { A = 4; B = 5; }; # P1.setPNumeral(N);
-	  P1.setPNumeral ( start Numeral {
-		 A = 4;
-		 B = 5;
-	}
- );
-	 def na : int = P1.PNumeral.A;
-	 DEBUG -> REGRESSIVE :: ALL;
+	
+	define A : int = 0 ;
+	
+	define B : int = 0 ;
+	
 }
+ #call iniciar -> criv ( ); #func criv() : num { return 0; }
+
+call iniciar -> { 
+def P1 : Bloco = init Bloco ( ) ;
+	P1 . setValor ( 2 ) ;
+	def P2 : Caixa = init Caixa ( ) ;
+	P2 . gravar ( 5 ) ;
+	 #P1.Proximo = P2; #P1.setProximo(P2);
+	P1 . setProximo ( init Caixa ( ) ) ;
+	P1 . Proximo . gravar ( 4 ) ;
+	 # def N : Numeral = start Numeral { A = 4; B = 5; }; # P1.setPNumeral(N);
+	P1 . setPNumeral ( start Numeral { A = 4 ; B = 5 ; } ) ;
+	def na : int = P1 . PNumeral . A ;
+	DEBUG -> REGRESSIVE :: ALL ;
+	}

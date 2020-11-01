@@ -20,7 +20,7 @@ public class Parser {
     private int mTamanho;
 
 
-    private ArrayList<GrupoDeErro> mErros_Compiler;
+    private ArrayList<GrupoDeErro> mErros_Parser;
 
 
     private String mArquivo;
@@ -49,7 +49,7 @@ public class Parser {
 
         mFila = new ArrayList<Importacao>();
 
-        mErros_Compiler = new ArrayList<>();
+        mErros_Parser = new ArrayList<>();
 
 
     }
@@ -71,7 +71,7 @@ public class Parser {
         mIndex = 0;
 
         mArquivo = "";
-        mErros_Compiler.clear();
+        mErros_Parser.clear();
 
 
     }
@@ -161,8 +161,8 @@ public class Parser {
     }
 
 
-    public ArrayList<GrupoDeErro> getErros_Compiler() {
-        return mErros_Compiler;
+    public ArrayList<GrupoDeErro> getErros_Parser() {
+        return mErros_Parser;
     }
 
 
@@ -179,6 +179,8 @@ public class Parser {
 
         mInstrucoes=0;
 
+
+
         int mAntes = AST_Raiz.getObjetos();
 
         while (Continuar()) {
@@ -190,7 +192,7 @@ public class Parser {
                 mAST.init(AST_Raiz);
 
 
-                if (mErros_Compiler.size() > 0) {
+                if (mErros_Parser.size() > 0) {
                     break;
                 }
 
@@ -200,7 +202,7 @@ public class Parser {
                 mAST.init(AST_Raiz);
 
 
-                if (mErros_Compiler.size() > 0) {
+                if (mErros_Parser.size() > 0) {
                     break;
                 }
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("package")) {
@@ -318,7 +320,7 @@ public class Parser {
                 return;
             }
 
-            if (mErros_Compiler.size() > 0) {
+            if (mErros_Parser.size() > 0) {
                 return;
             }
 
@@ -388,7 +390,7 @@ public class Parser {
 
         boolean enc = false;
 
-        for (GrupoDeErro G : mErros_Compiler) {
+        for (GrupoDeErro G : mErros_Parser) {
             if (G.mesmmoArquivo(mArquivo)) {
                 G.adicionarErro(eMensagem, eToken.getLinha(), eToken.getPosicao());
                 enc = true;
@@ -399,7 +401,7 @@ public class Parser {
         if (!enc) {
             GrupoDeErro nG = new GrupoDeErro(mArquivo);
             nG.adicionarErro(eMensagem, eToken.getLinha(), eToken.getPosicao());
-            mErros_Compiler.add(nG);
+            mErros_Parser.add(nG);
         }
     }
 

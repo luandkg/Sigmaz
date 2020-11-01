@@ -1,58 +1,16 @@
 
 call iniciar -> recursao ( 10 ) ; # PROBLEMA GRAVE COM RECURSAO EM OO - Transferencia de Escopo
-act recursao ( h : int ) {
-	 def m : Matematica = init Matematica ( );
-	 m.recursor ( 12 );
-}
+
+act recursao ( h : int ) { 
+def m : Matematica = init Matematica ( ) ;
+	m . recursor ( 12 ) ;
+	}
 
 struct Matematica {
 	
 	all :
-		act recursor ( a : int ) {
-			 def b : int = somar_inteiro ( a , 1 );
-			 println ("Valor B : " , b );
-			 DEBUG -> REGRESSIVE :: ALL;
-			 if ( menor ( b , 20 ) ) -> {
-				 recursor ( b );
-			}
-}
-
-		func somar_inteiro ( a : int , b : int ) : int {
-			 reg @ R5 -> a;
-			 reg @ R6 -> b;
-			 PROC -> {
-				 SET R7;
-				 MOV 0;
-				 OPE R5 ADD R6;
-			}
- return reg @ R7;
-		}
-
-		func menor ( a : int , b : int ) : bool {
-			 reg @ R5 -> a;
-			 reg @ R6 -> b;
-			 PROC -> {
-				 SET R1;
-				 MOV FALSE;
-				 OPE R5 LESS R6;
-			}
- return reg @ R1;
-		}
-
-		act println ( a : string , b : int ) {
-			 PROC -> {
-				 PROC CHANGE_LINE;
-			}
- reg @ R13 -> a;
-			 PROC -> {
-				 PRINT R13;
-			}
- reg @ R5 -> b;
-			 PROC -> {
-				 SET R13;
-				 MOV"";
-				 INT_STRING R5;
-				 PRINT R13;
-			}
-}
-}
+		act recursor ( a : int ) { 
+def b : int = somar_inteiro ( a , 1 ) ;
+			println ( "Valor B : " , b ) ;
+			DEBUG -> REGRESSIVE :: ALL ;
+			if ( menor ( b , 20 ) ) -> { recursor ( b ) ; } }func somar_inteiro ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ; } func menor ( a : int , b : int ) : bool { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 LESS R6 ; } return reg @ R1 ; } act println ( a : string , b : int ) { PROC -> { PROC CHANGE_LINE ; } reg @ R13 -> a ; PROC -> { PRINT R13 ; } reg @ R5 -> b ; PROC -> { SET R13 ; MOV "" ; INT_STRING R5 ; PRINT R13 ; } } }

@@ -78,3 +78,5 @@
 2020 10 26  -->>  Separação do Return do Run_Body
 2020 10 28  -->>  Run_Execute
 2020 10 28  -->>  Run_External
+2020 11 01  -->>  PosProcessador Tipador : Refatoramento
+2020 11 01  -->>  Pos Processador Valorador -> Fase Integralizador

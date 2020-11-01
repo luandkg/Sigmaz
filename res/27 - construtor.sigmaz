@@ -1,88 +1,45 @@
 
 call iniciar -> inicializando ( ) ;
-act inicializando ( ) {
-	 def a1 : Animal = init Animal ( 15 );
-	 a1.mostrar ( );
-	 def a2 : Animal = init Animal ( 30 );
-	 a2.mostrar ( );
-}
+act inicializando ( ) { 
+def a1 : Animal = init Animal ( 15 ) ;
+	a1 . mostrar ( ) ;
+	def a2 : Animal = init Animal ( 30 ) ;
+	a2 . mostrar ( ) ;
+	}
 
 struct Animal {
 	
-	init Animal ( eIdade : int ) {
-		 idade = eIdade;
-	}
+	init Animal ( eIdade : int ) { 
+idade = eIdade ;
+			}
+	
 
 	all :
 		define idade : int = -1 ;
-		act setIdade ( a : int ) {
-			 idade = a;
-		}
-
-		act mostrar ( ) {
-			 println (" --- ANIMAL --- " );
-			 println ("" );
-			 println ("     - IDADE : " , idade );
-		}
-
-		func somar_inteiro ( a : int , b : int ) : int {
-			 reg @ R5 -> a;
-			 reg @ R6 -> b;
-			 PROC -> {
-				 SET R7;
-				 MOV 0;
-				 OPE R5 ADD R6;
-			}
- return reg @ R7;
-		}
-
-		func menor ( a : int , b : int ) : bool {
-			 reg @ R5 -> a;
-			 reg @ R6 -> b;
-			 PROC -> {
-				 SET R1;
-				 MOV FALSE;
-				 OPE R5 LESS R6;
-			}
- return reg @ R1;
-		}
-
-		act println ( a : string , b : int ) {
-			 PROC -> {
-				 PROC CHANGE_LINE;
-			}
- reg @ R13 -> a;
-			 PROC -> {
-				 PRINT R13;
-			}
- reg @ R5 -> b;
-			 PROC -> {
-				 SET R13;
-				 MOV"";
-				 INT_STRING R5;
-				 PRINT R13;
-			}
-}
-
-		act println ( a : string , b : string ) {
-			 PROC -> {
-				 PROC CHANGE_LINE;
-			}
- reg @ R13 -> a;
-			 PROC -> {
-				 PRINT R13;
-			}
- reg @ R13 -> b;
-			 PROC -> {
-				 PRINT R13;
-			}
-}
-
-		act println ( a : string ) {
-			 reg @ R13 -> a;
-			 PROC -> {
-				 PROC CHANGE_LINE;
-				 PRINT R13;
-			}
-}
-}
+		
+		act setIdade ( a : int ) { 
+idade = a ;
+					}
+		
+		act mostrar ( ) { 
+println ( " --- ANIMAL --- " ) ;
+			println ( "" ) ;
+			println ( "     - IDADE : " , idade ) ;
+					}
+		
+		func somar_inteiro ( a : int , b : int ) : int { 
+reg @ R5 -> a ;
+			reg @ R6 -> b ;
+			PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ;
+					}
+		
+		func menor ( a : int , b : int ) : bool { 
+reg @ R5 -> a ;
+			reg @ R6 -> b ;
+			PROC -> { SET R1 ; MOV FALSE ; OPE R5 LESS R6 ; } return reg @ R1 ;
+					}
+		
+		act println ( a : string , b : int ) { 
+PROC -> { PROC CHANGE_LINE ; } reg @ R13 -> a ;
+			PROC -> { PRINT R13 ; } reg @ R5 -> b ;
+			PROC -> { SET R13 ; MOV "" ; INT_STRING R5 ; PRINT R13 ; } }act println ( a : string , b : string ) { PROC -> { PROC CHANGE_LINE ; } reg @ R13 -> a ; PROC -> { PRINT R13 ; } reg @ R13 -> b ; PROC -> { PRINT R13 ; } } act println ( a : string ) { reg @ R13 -> a ; PROC -> { PROC CHANGE_LINE ; PRINT R13 ; } } }

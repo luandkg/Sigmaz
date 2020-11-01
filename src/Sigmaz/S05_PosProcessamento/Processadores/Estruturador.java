@@ -6,8 +6,10 @@ import Sigmaz.S00_Utilitarios.*;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazStruct;
+import Sigmaz.S00_Utilitarios.Visualizador.SigmazDirector;
+import Sigmaz.S00_Utilitarios.Visualizador.SigmazFunction;
+import Sigmaz.S00_Utilitarios.Visualizador.SigmazOperator;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
-import Sigmaz.S05_PosProcessamento.Pronoco.Pronoco_Function;
 
 public class Estruturador {
 
@@ -125,12 +127,12 @@ public class Estruturador {
         int temOperador = 0;
         int temDiretor = 0;
 
-        for (Pronoco_Function eDiretor : mStruct.getDiretores()) {
+        for (SigmazDirector eDiretor : mStruct.getDiretores()) {
             mensagem("\t\t Diretor : " + eDiretor.getDefinicao());
             temOperador += 1;
         }
 
-        for (Pronoco_Function eOperador : mStruct.getOperadores()) {
+        for (SigmazOperator eOperador : mStruct.getOperadores()) {
             mensagem("\t\t Operador : " + eOperador.getDefinicao());
             temDiretor += 1;
         }

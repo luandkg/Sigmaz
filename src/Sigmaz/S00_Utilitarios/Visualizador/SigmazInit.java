@@ -1,7 +1,7 @@
 package Sigmaz.S00_Utilitarios.Visualizador;
 
 import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S07_Executor.Debuggers.Simplificador;
+import Sigmaz.S08_Executor.Debuggers.Simplificador;
 
 public class SigmazInit {
 
@@ -11,6 +11,10 @@ public class SigmazInit {
 
         mAST = eAST;
 
+    }
+
+    public boolean mesmoNome(String eNome){
+        return this.getNome().contentEquals(eNome);
     }
 
     public String getNome() {

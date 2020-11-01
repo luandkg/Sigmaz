@@ -1,7 +1,7 @@
 package Sigmaz.S00_Utilitarios.Visualizador;
 
 import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S07_Executor.Debuggers.Simplificador;
+import Sigmaz.S08_Executor.Debuggers.Simplificador;
 
 public class SigmazAction {
     private AST mAST;
@@ -14,6 +14,11 @@ public class SigmazAction {
 
     public String getNome() {
         return mAST.getNome();
+    }
+
+
+    public boolean mesmoNome(String eNome){
+        return this.getNome().contentEquals(eNome);
     }
 
     public String getDefinicao() {

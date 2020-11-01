@@ -1,41 +1,66 @@
 
-define versao : int = 1 ; mockiz guardado : int = 6 ; func ateOnde ( a : int ) : int {
-	 if ( a == 1 ) -> {
-		 return -1;
+define versao : int = 1 ;
+
+mockiz guardado : int = 6 ;
+
+func ateOnde ( a : int ) : int { 
+if ( a == 1 ) -> { return -1 ; } DEBUG -> REGRESSIVE :: ALL ;
+	return 0 ;
 	}
- DEBUG -> REGRESSIVE :: ALL;
-	 return 0;
-}
- operator == ( a : int , b : int ) : bool { def c : bool ; def c1 : int = a ; def c2 : int = b ; invoke math -> operator_equal_int ( c1 , c2 ) :: c ; return c ; } operator ++ ( a : int , b : int ) : int { def c : int ; def c1 : int = a ; def c2 : int = b ; invoke math -> operator_sum_int ( c1 , c2 ) :: c ; return c ; } #refer Caixas; refer Linhas ;
-call Escopos -> {
-	 def A : int = 12;
-	 def B : int = Geral -> CAMPO;
+
+operator == ( a : int , b : int ) : bool { 
+def c : bool ;
+	def c1 : int = a ;
+	def c2 : int = b ;
+	invoke math -> operator_equal_int ( c1 , c2 ) :: c ;
+	return c ;
+	}
+
+operator ++ ( a : int , b : int ) : int { 
+def c : int ;
+	def c1 : int = a ;
+	def c2 : int = b ;
+	invoke math -> operator_sum_int ( c1 , c2 ) :: c ;
+	return c ;
+	}
+ #refer Caixas; refer Linhas ;
+
+call Escopos -> { 
+def A : int = 12 ;
+	def B : int = Geral -> CAMPO ;
 	 #def C : int = Vermelha->VALOR; def l1 : Linha_Branca = init Linha_Branca ( );
-	 DEBUG -> REGRESSIVE :: ALL;
-}
+	DEBUG -> REGRESSIVE :: ALL ;
+	}
 
 struct Geral {
 	
 	explicit :
-		define CAMPO : int = 10 ;}
+		define CAMPO : int = 10 ;
+		}
  package Caixas {
 struct Vermelha {
 	
 	explicit :
-		define VALOR : int = 30 ;}
+		define VALOR : int = 30 ;
+		}
 
 struct Azul {
 	
 	explicit :
-		define VALOR : int = 40 ;}
- } package Linhas { refer Caixas ;
+		define VALOR : int = 40 ;
+		}
+ } package Linhas {
+refer Caixas ;
+
 struct Linha_Branca {
 	
-	init Linha_Branca ( ) {
-		 Valor = Vermelha -> VALOR;
-		 DEBUG -> REGRESSIVE :: ALL;
-	}
+	init Linha_Branca ( ) { 
+Valor = Vermelha -> VALOR ;
+		DEBUG -> REGRESSIVE :: ALL ;
+			}
+	
 
 	all :
-		define Valor : int = 0 ;}
+		define Valor : int = 0 ;
+		}
  }

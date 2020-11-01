@@ -4,40 +4,37 @@ struct Pessoa {
 	
 	all :
 		define nome : string ;
+		
 		define idade : int ;
-		func getNome ( ) : string {
-			 nome ="Luan Alves";
-			 return nome;
+		
+		func getNome ( ) : string { 
+nome = "Luan Alves" ;
+			return nome ;
+					}
+		
+		act mostrar ( ) { 
+DEBUG -> REGRESSIVE :: ALL ;
+					}
 		}
 
-		act mostrar ( ) {
-			 DEBUG -> REGRESSIVE :: ALL;
-		}
-}
-
-act pular ( ) {
-	 def P1 : Pessoa = init Pessoa ( );
-	 DEBUG -> REGRESSIVE :: ALL;
-	 alterador_Pessoa ( P1 );
-	 P1.nome ="Alice";
-	 P1.mostrar ( );
-	 def t : int = somar ( 2 , 2 );
-}
-
-act alterador_Pessoa ( az : Pessoa ) {
-	 def t : Pessoa = az;
-	 #def n : string = t.getNome("A").mostrar(); #def b : string = t.nome.pular().criar(12==13); def nome1 : string = az.getNome ( );
-	 def nome2 : string = az.nome;
-	 DEBUG -> REGRESSIVE :: ALL;
-}
-
-func somar ( a : int , b : int ) : int {
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R7;
-		 MOV 0;
-		 OPE R5 ADD R6;
+act pular ( ) { 
+def P1 : Pessoa = init Pessoa ( ) ;
+	DEBUG -> REGRESSIVE :: ALL ;
+	alterador_Pessoa ( P1 ) ;
+	P1 . nome = "Alice" ;
+	P1 . mostrar ( ) ;
+	def t : int = somar ( 2 , 2 ) ;
 	}
- return reg @ R7;
-}
+
+act alterador_Pessoa ( az : Pessoa ) { 
+def t : Pessoa = az ;
+	 #def n : string = t.getNome("A").mostrar(); #def b : string = t.nome.pular().criar(12==13); def nome1 : string = az.getNome ( );
+	def nome2 : string = az . nome ;
+	DEBUG -> REGRESSIVE :: ALL ;
+	}
+
+func somar ( a : int , b : int ) : int { 
+reg @ R5 -> a ;
+	reg @ R6 -> b ;
+	PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ;
+	}

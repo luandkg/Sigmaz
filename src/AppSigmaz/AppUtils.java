@@ -2,9 +2,9 @@ package AppSigmaz;
 
 import BioGerador.BioGerador;
 import Sigmaz.S00_Utilitarios.Tempo;
-import Sigmaz.S07_Executor.RunTime;
-import Sigmaz.S07_Executor.UML;
-import Sigmaz.S08_Ferramentas.*;
+import Sigmaz.S08_Executor.RunTime;
+import Sigmaz.S08_Executor.UML;
+import Sigmaz.S09_Ferramentas.*;
 import Sigmaz.Intellisenses.Intellisense;
 import Sigmaz.Intellisenses.IntellisenseTheme;
 import Sigmaz.S02_Lexer.Lexer;
@@ -162,7 +162,7 @@ public class AppUtils {
             SigmazC.setDebug_Lexer(false);
             SigmazC.setDebug_Parser(false);
             SigmazC.setDebug_Comentario(false);
-
+            SigmazC.setDebug_Integralizador(true);
             SigmazC.setDebug_Montagem(false);
 
             SigmazC.setDebug_PosProcessador_Requisidor(false);
@@ -170,7 +170,7 @@ public class AppUtils {
             SigmazC.setDebug_PosProcessador_Cast(false);
             SigmazC.setDebug_PosProcessador_Unificador(false);
             SigmazC.setDebug_PosProcessador_Heranca(false);
-            SigmazC.setDebug_PosProcessador_Modelador(true);
+            SigmazC.setDebug_PosProcessador_Modelador(false);
             SigmazC.setDebug_PosProcessador_Estagiador(false);
 
             SigmazC.setDebug_PosProcessador_Referenciador(false);
@@ -179,9 +179,8 @@ public class AppUtils {
 
             SigmazC.setDebug_PosProcessador_Alocador(false);
             SigmazC.setDebug_PosProcessador_Tipador(false);
-            SigmazC.setDebug_PosProcessador_Valorador(false);
             SigmazC.setDebug_PosProcessador_Estruturador(false);
-            SigmazC.setDebug_PosProcessador_Unicidade(true);
+            SigmazC.setDebug_PosProcessador_Unicidade(false);
 
             SigmazC.init(mOpcional.getConteudo(), eCompilado, eLocalLibs, 1);
 

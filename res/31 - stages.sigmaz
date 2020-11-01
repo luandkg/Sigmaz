@@ -1,10 +1,14 @@
 
 call iniciar -> varios_estagios ( ) ;
-act varios_estagios ( ) {
-	 DEBUG -> REGRESSIVE :: ALL;
-	 def cor1 : CORES = CORES :: AMARELO;
-	 def cor2 : CORES = CORES :: AZUL;
+act varios_estagios ( ) { 
+DEBUG -> REGRESSIVE :: ALL ;
+	def cor1 : CORES = CORES :: AMARELO ;
+	def cor2 : CORES = CORES :: AZUL ;
 	 #def igual : bool = CORES::AZUL == CORES::AMARELO; cor2 = CORES :: BRANCO;
-	 DEBUG -> REGRESSIVE :: ALL;
+	DEBUG -> REGRESSIVE :: ALL ;
+	}
+
+stages CORES -> {
+
+	 AMARELO , VERMELHO , AZUL , BRANCO
 }
- stages CORES -> { AMARELO , VERMELHO , AZUL , BRANCO }

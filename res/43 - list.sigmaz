@@ -1,543 +1,87 @@
 
-call iniciar -> inicio ( ) ; refer Delicia ;
-act inicio ( ) {
-	 def ls : Lista >> ( string ) = init Lista ( ) >> ( string );
-	 def lsi : Iterador >> ( Lista >> ( string ) , string ) = init Iterador ( ls ) >> ( Lista >> ( string ) , string );
-	 def ig : Lista >> ( int ) = init Lista ( ) >> ( int );
-	 ig.adicionar ( 10 );
-	 ig.adicionar ( 20 );
-	 def a : int = ig.getQuantidade ( );
-	 ig.adicionar ( 30 );
-	 ig.adicionar ( 40 );
-	 ig.adicionar ( 50 );
-	 ig.adicionar ( 60 );
-	 def b : int = ig.getQuantidade ( );
-	 println ("Quantidade : " , ig.getQuantidade ( ) );
+call iniciar -> inicio ( ) ;
+refer Delicia ;
+
+act inicio ( ) { 
+def ls : Lista >> ( string ) = init Lista ( ) >> ( string ) ;
+	def lsi : Iterador >> ( Lista >> ( string ) , string ) = init Iterador ( ls ) >> ( Lista >> ( string ) , string ) ;
+	def ig : Lista >> ( int ) = init Lista ( ) >> ( int ) ;
+	ig . adicionar ( 10 ) ;
+	ig . adicionar ( 20 ) ;
+	def a : int = ig . getQuantidade ( ) ;
+	ig . adicionar ( 30 ) ;
+	ig . adicionar ( 40 ) ;
+	ig . adicionar ( 50 ) ;
+	ig . adicionar ( 60 ) ;
+	def b : int = ig . getQuantidade ( ) ;
+	println ( "Quantidade : " , ig . getQuantidade ( ) ) ;
 	 #ig.listar ( ); println (" DEBUG  " , 0 );
-	 def iterando : Iterador >> ( Lista >> ( int ) , int ) = init Iterador ( ig ) >> ( Lista >> ( int ) , int );
-	 iterando.iniciar ( );
-	 println (" DEBUG  " , 1 );
-	 while ( iterando.continuar ( ) ) -> {
-		 println ("-> " , iterando.getValor ( ) );
-		 iterando.proximo ( );
-	}
- println (" DEBUG  " , 2 );
-	 println ("Quantidade : " , ig.getQuantidade ( ) );
-	 println ("Remover Item : " , 10 );
-	 ig.remover ( 10 );
-	 ig.listar ( );
-	 println ("Quantidade  : " , ig.getQuantidade ( ) );
-	 println ("Remover Item : " , 40 );
-	 ig.remover ( 40 );
-	 ig.listar ( );
-	 println ("Quantidade : " , ig.getQuantidade ( ) );
-	 println ("Remover Item : " , 60 );
-	 ig.remover ( 60 );
-	 ig.listar ( );
-	 println ("Quantidade : " , ig.getQuantidade ( ) );
-	 println ("Remover Item : " , 15 );
-	 ig.remover ( 15 );
-	 ig.listar ( );
-	 println ("Quantidade # : " , ig.getQuantidade ( ) );
-	 println ("Adicionar Item : " , 70 );
-	 ig.adicionar ( 70 );
+	def iterando : Iterador >> ( Lista >> ( int ) , int ) = init Iterador ( ig ) >> ( Lista >> ( int ) , int ) ;
+	iterando . iniciar ( ) ;
+	println ( " DEBUG  " , 1 ) ;
+	while ( iterando . continuar ( ) ) -> { println ( "-> " , iterando . getValor ( ) ) ; iterando . proximo ( ) ; } println ( " DEBUG  " , 2 ) ;
+	println ( "Quantidade : " , ig . getQuantidade ( ) ) ;
+	println ( "Remover Item : " , 10 ) ;
+	ig . remover ( 10 ) ;
+	ig . listar ( ) ;
+	println ( "Quantidade  : " , ig . getQuantidade ( ) ) ;
+	println ( "Remover Item : " , 40 ) ;
+	ig . remover ( 40 ) ;
+	ig . listar ( ) ;
+	println ( "Quantidade : " , ig . getQuantidade ( ) ) ;
+	println ( "Remover Item : " , 60 ) ;
+	ig . remover ( 60 ) ;
+	ig . listar ( ) ;
+	println ( "Quantidade : " , ig . getQuantidade ( ) ) ;
+	println ( "Remover Item : " , 15 ) ;
+	ig . remover ( 15 ) ;
+	ig . listar ( ) ;
+	println ( "Quantidade # : " , ig . getQuantidade ( ) ) ;
+	println ( "Adicionar Item : " , 70 ) ;
+	ig . adicionar ( 70 ) ;
 	 #ig.listar ( ); iterando.iniciar ( );
-	 while ( iterando.continuar ( ) ) -> {
-		 println ("-> " , iterando.getValor ( ) );
-		 iterando.proximo ( );
-	}
- println ("Quantidade : " , ig.getQuantidade ( ) );
-	 ig.remover ( 50 );
-	 ig.remover ( 20 );
-	 ig.adicionar ( 15 );
-	 ig.remover ( 70 );
-	 ig.remover ( 15 );
-	 ig.remover ( 30 );
-	 ig.remover ( 15 );
-	 ig.listar ( );
-	 println ("Quantidade : " , ig.getQuantidade ( ) );
-	 ig.adicionar ( 5 );
-	 ig.adicionar ( 2 );
-	 ig.adicionar ( 3 );
-	 ig.listar ( );
-	 println ("Quantidade : " , ig.getQuantidade ( ) );
-	 ig.limpar ( );
-	 ig.listar ( );
-	 println ("Quantidade : " , ig.getQuantidade ( ) );
-	 ig.adicionar ( 1000 );
-	 ig.listar ( );
-	 println ("Quantidade : " , ig.getQuantidade ( ) );
-	 ig.adicionar ( 40 );
-	 ig.adicionar ( 12 );
-	 ig.adicionar ( 60 );
-	 ig.adicionar ( 87 );
-	 ig.adicionar ( 90 );
-	 def iterar : Iterador >> ( Lista >> ( int ) , int ) = init Iterador ( ig ) >> ( Lista >> ( int ) , int );
-	 iterar.iniciar ( );
-	 while ( iterar.continuar ( ) ) -> {
-		 println ("-> " , iterar.getValor ( ) );
-		 iterar.proximo ( );
-	}
- def Frutas : Lista >> ( Fruta ) = init Lista ( ) >> ( Fruta );
-	 DEBUG -> LOCAL :: STACK;
-	 Frutas.adicionar ( init Fruta ( ) );
-}
-
-act println ( a : string , b : int ) {
-	 reg @ R13 -> a;
-	 reg @ R5 -> b;
-	 PROC -> {
-		 PROC CHANGE_LINE;
-		 PRINT R13;
-		 SET R13;
-		 MOV"";
-		 INT_STRING R5;
-		 PRINT R13;
-	}
-}
-
-act println ( a : string , b : bool ) {
-	 reg @ R13 -> a;
-	 reg @ R1 -> b;
-	 PROC -> {
-		 PROC CHANGE_LINE;
-		 PRINT R13;
-		 SET R13;
-		 MOV"";
-		 BOOL_STRING R1;
-		 PRINT R13;
-	}
-}
-
-func isNull ( ObjetoNulo : any ) : bool {
-	 reg @ R0 -> ObjetoNulo;
-	 return reg @ R0;
-}
- operator ++ ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ; } operator -- ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 SUB R6 ; } return reg @ R7 ; } operator ** ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 MUX R6 ; } return reg @ R7 ; } operator // ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 DIV R6 ; } return reg @ R7 ; } operator == ( a : int , b : int ) : bool { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 EQUAL R6 ; } return reg @ R1 ; } operator !! ( a : int , b : int ) : bool { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 DIFF R6 ; } return reg @ R1 ; } director ! ( a : int ) : int { reg @ R5 -> a ; PROC -> { SET R6 ; MOV 0 ; OPE R5 MUX -1 ; } return reg @ R6 ; }
-func somar ( a : int , b : int ) : int {
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R7;
-		 MOV 0;
-		 OPE R5 ADD R6;
-	}
- return reg @ R7;
-}
-
-func subtrair ( a : int , b : int ) : int {
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R7;
-		 MOV 0;
-		 OPE R5 SUB R6;
-	}
- return reg @ R7;
-}
-
-func multiplicar ( a : int , b : int ) : int {
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R7;
-		 MOV 0;
-		 OPE R5 MUX R6;
-	}
- return reg @ R7;
-}
-
-func dividir ( a : int , b : int ) : int {
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R7;
-		 MOV 0;
-		 OPE R5 DIV R6;
-	}
- return reg @ R7;
-}
-
-func resto ( a : int , b : int ) : int {
-	 def c : int;
-	 invoke math -> operator_mod_int ( a , b ) :: c;
-	 return c;
-}
-
-func menor ( a : int , b : int ) : bool {
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R1;
-		 MOV FALSE;
-		 OPE R5 LESS R6;
-	}
- return reg @ R1;
-}
-
-func maior ( a : int , b : int ) : bool {
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R1;
-		 MOV FALSE;
-		 OPE R5 GREAT R6;
-	}
- return reg @ R1;
-}
-
-func menor_igual ( a : int , b : int ) : bool {
-	 def ret : bool = false;
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R1;
-		 MOV FALSE;
-		 OPE R5 LESS R6;
-	}
- def e_menor : bool = reg @ R1;
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R1;
-		 MOV FALSE;
-		 OPE R5 EQUAL R6;
-	}
- def e_igual : bool = reg @ R1;
-	 if ( e_menor ) -> {
-		 ret = true;
-	}
- if ( e_igual ) -> {
-		 ret = true;
-	}
- return ret;
-}
-
-func igual ( a : int , b : int ) : bool {
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R1;
-		 MOV FALSE;
-		 OPE R5 EQUAL R6;
-	}
- return reg @ R1;
-}
-
-func diferente ( a : int , b : int ) : bool {
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R1;
-		 MOV FALSE;
-		 OPE R5 DIFF R6;
-	}
- return reg @ R1;
-}
- operator !! ( a : bool , b : bool ) : bool { reg @ R1 -> a ; reg @ R2 -> b ; PROC -> { SET R3 ; MOV FALSE ; OPE R1 UNMATCH R2 ; } return reg @ R3 ; }
-struct Lista in ( T ) {
-	
-	restrict :
-		define mPrimeiro : Item >> ( T ) = null ;
-		define mUltimo : Item >> ( T ) = null ;
-		define mQuantidade : int = 0 ;
-	all :
-		func getQuantidade ( ) : int {
-			 return mQuantidade;
-		}
-
-		act adicionar ( novo : T ) {
-			 #println ( "Adicionando : ", novo );
-			  if ( isNull ( mPrimeiro ) ) -> {
-				 #println ( "Adicionando EM NULO : ", novo );
-				  mPrimeiro = init Item ( ) >> ( T );
-				 mPrimeiro.setValor ( novo );
-				 mUltimo = mPrimeiro;
-				 mQuantidade = 1;
-				 #println ( "Adicionado EM NULO : ", novo );
-				 }
- others {
-				 #println ( "Adicionando NAO NULO : ", novo );
-				 def mCorrente : Item >> ( T ) = init Item ( ) >> ( T );
-				 mCorrente.setValor ( novo );
-				 mUltimo.setProximo ( mCorrente );
-				 mUltimo = mCorrente;
-				 mQuantidade = somar ( mQuantidade , 1 );
-				 #println ( "Adicionado NAO NULO : ", novo );
-				 }
- #println ( "Adicionado : ", novo );
- }
-
-		act remover ( a : T ) {
-			 #println ( "Removendo : ", a );
-			 if ( isNull ( mPrimeiro ) ) -> {
-			}
-            others {
-				 def mAnterior : Item >> ( T ) = null;
-				 def mCorrente : Item >> ( T ) = mPrimeiro;
-				 def mIndice : int = 0;
-				 def mUltimoIndice : int = mQuantidade -- 1;
-				 while ( isNull ( mCorrente ) == false ) -> {
-					 if ( mCorrente.getValor ( ) == a ) -> {
-						 println ("Removendo : " , a );
-						 if ( mIndice == 0 ) -> {
-							 if ( mQuantidade == 1 ) -> {
-								 mPrimeiro = null;
-								 mUltimo = null;
-							}
- others {
-								 mPrimeiro = mPrimeiro.getProximo ( );
-							}
- println (" R : " , 1 );
-						}
- other ( mIndice == mUltimoIndice ) -> {
-							 mAnterior.setProximo ( null );
-							 mUltimo = mAnterior;
-							 println (" R : " , 2 );
-						}
- others {
-							 mAnterior.setProximo ( mCorrente.getProximo ( ) );
-							 println (" R : " , 3 );
-						}
- mQuantidade = subtrair ( mQuantidade , 1 );
-						 if ( isNull ( mCorrente ) == false ) -> {
-							 delete mCorrente;
-						}
- cancel;
-					}
- #println("Passando Por : ",mCorrente.getValor());
-  mAnterior = mCorrente;
-					 mCorrente = mCorrente.getProximo ( );
-					 mIndice = somar ( mIndice , 1 );
-				}
-}
-}
-
-		act listar ( ) {
-			 if ( isNull ( mPrimeiro ) == false ) -> {
-				 def mCorrente : Item >> ( T ) = mPrimeiro;
-				 while ( isNull ( mCorrente ) == false ) -> {
-					 println (" - Valor : " , mCorrente.getValor ( ) );
-					 mCorrente = mCorrente.getProximo ( );
-				}
-}
-}
-
-		act limpar ( ) {
-			 if ( isNull ( mPrimeiro ) == false ) -> {
-				 def mCorrente : Item >> ( T ) = mPrimeiro;
-				 def mAnterior : Item >> ( T ) = mPrimeiro;
-				 while ( isNull ( mCorrente ) == false ) -> {
-					 mAnterior = mCorrente;
-					 mCorrente = mCorrente.getProximo ( );
-					 if ( isNull ( mAnterior ) == false ) -> {
-						 delete mAnterior;
-					}
-}
- if ( isNull ( mCorrente ) == false ) -> {
-					 delete mCorrente;
-				}
-}
- mPrimeiro = null;
-			 mUltimo = null;
-		}
-
-		func getValor ( indice : int ) : T {
-			 def ret : int = null;
-			 if ( maior_igual ( indice , 0 ) ) -> {
-				 def contando : int = 0;
-				 def enc : bool = false;
-				 if ( isNull ( mPrimeiro ) == false ) -> {
-					 def mCorrente : Item >> ( T ) = mPrimeiro;
-					 while ( isNull ( mCorrente ) == false ) -> {
-						 if ( contando == indice ) -> {
-							 ret = mCorrente.getValor ( );
-							 enc = true;
-						}
- contando = somar ( contando , 1 );
-						 mCorrente = mCorrente.getProximo ( );
-					}
-}
- if ( enc == false ) -> {
-					 exception"Indice invalido !";
-				}
-}
- others {
-				 exception"Indice invalido !";
-			}
- return ret;
-		}
-
-		act setValor ( indice : int , valor : T ) {
-			 def ret : int = null;
-			 if ( maior_igual ( indice , 0 ) ) -> {
-				 def contando : int = 0;
-				 def enc : bool = false;
-				 if ( isNull ( mPrimeiro ) == false ) -> {
-					 def mCorrente : Item >> ( T ) = mPrimeiro;
-					 while ( isNull ( mCorrente ) == false ) -> {
-						 if ( contando == indice ) -> {
-							 mCorrente.setValor ( valor );
-							 enc = true;
-						}
- contando = somar ( contando , 1 );
-						 mCorrente = mCorrente.getProximo ( );
-					}
-}
- if ( enc == false ) -> {
-					 exception"Indice invalido !";
-				}
-}
- others {
-				 exception"Indice invalido !";
-			}
-}
-}
-
-struct Item in ( T ) {
-	
-	restrict :
-		define mValor : T = null ;
-		define mProximo : Item >> ( T ) = null ;
-	all :
-		func getValor ( ) : T {
-			 return mValor;
-		}
-
-		act setValor ( eValor : T ) {
-			 mValor = eValor;
-		}
-
-		func getProximo ( ) : Item >> ( T ) {
-			 def tmp : Item >> ( T ) = mProximo;
-			 return tmp;
-		}
-
-		act setProximo ( eProximo : Item >> ( T ) ) {
-			 mProximo = eProximo;
-		}
-
-		func getProximo ( ) : Item >> ( T ) {
-			 return mProximo;
-		}
-}
-
-struct Iterador in ( T , T2 ) {
-	
-	init Iterador ( eLista : T ) {
-		 mLista = eLista;
-		 mIndex = 0;
-		 mTamanho = 0;
-		 mIniciado = false;
-		 mTerminou = false;
+	while ( iterando . continuar ( ) ) -> { println ( "-> " , iterando . getValor ( ) ) ; iterando . proximo ( ) ; } println ( "Quantidade : " , ig . getQuantidade ( ) ) ;
+	ig . remover ( 50 ) ;
+	ig . remover ( 20 ) ;
+	ig . adicionar ( 15 ) ;
+	ig . remover ( 70 ) ;
+	ig . remover ( 15 ) ;
+	ig . remover ( 30 ) ;
+	ig . remover ( 15 ) ;
+	ig . listar ( ) ;
+	println ( "Quantidade : " , ig . getQuantidade ( ) ) ;
+	ig . adicionar ( 5 ) ;
+	ig . adicionar ( 2 ) ;
+	ig . adicionar ( 3 ) ;
+	ig . listar ( ) ;
+	println ( "Quantidade : " , ig . getQuantidade ( ) ) ;
+	ig . limpar ( ) ;
+	ig . listar ( ) ;
+	println ( "Quantidade : " , ig . getQuantidade ( ) ) ;
+	ig . adicionar ( 1000 ) ;
+	ig . listar ( ) ;
+	println ( "Quantidade : " , ig . getQuantidade ( ) ) ;
+	ig . adicionar ( 40 ) ;
+	ig . adicionar ( 12 ) ;
+	ig . adicionar ( 60 ) ;
+	ig . adicionar ( 87 ) ;
+	ig . adicionar ( 90 ) ;
+	def iterar : Iterador >> ( Lista >> ( int ) , int ) = init Iterador ( ig ) >> ( Lista >> ( int ) , int ) ;
+	iterar . iniciar ( ) ;
+	while ( iterar . continuar ( ) ) -> { println ( "-> " , iterar . getValor ( ) ) ; iterar . proximo ( ) ; } def Frutas : Lista >> ( Fruta ) = init Lista ( ) >> ( Fruta ) ;
+	DEBUG -> LOCAL :: STACK ;
+	Frutas . adicionar ( init Fruta ( ) ) ;
 	}
 
-	restrict :
-		define mLista : T = null ;
-		define mIndex : int = 0 ;
-		define mTamanho : int = 0 ;
-		define mIniciado : bool = false ;
-		define mTerminou : bool = false ;
-	all :
-		act iniciar ( ) {
-			 mIndex = 0;
-			 mTamanho = mLista.getQuantidade ( );
-			 mIniciado = true;
-			 mTerminou = false;
-		}
-
-		act proximo ( ) {
-			 if ( mIniciado ) -> {
-				 if ( mTerminou == false ) -> {
-					 if ( menor ( mIndex , mTamanho ) ) -> {
-						 def um : int = 1;
-						 mIndex = somar ( mIndex , um );
-					}
- others {
-						 mTerminou = true;
-					}
-}
-}
-}
-
-		func continuar ( ) : bool {
-			 def ret : bool = false;
-			 if ( mIniciado ) -> {
-				 if ( maior_igual ( mIndex , mTamanho ) ) -> {
-					 mTerminou = true;
-				}
- others {
-					 ret = true;
-				}
-}
- others {
-				 ret = false;
-			}
- return ret;
-		}
-
-		func getIndex ( ) : int {
-			 if ( mIniciado ) -> {
-			}
- others {
-				 exception"O iterador nao foi iniciado !";
-			}
- return mIndex;
-		}
-
-		func getValor ( ) : T2 {
-			 def ii : int = getIndex ( );
-			 return mLista.getValor ( ii );
-		}
-}
- package Delicia {
-struct Fruta {
-	}
- }
-func operador_e ( a : bool , b : bool ) : bool {
-	 def c : bool = false;
-	 if ( a == true ) -> {
-		 if ( b == true ) -> {
-			 c = true;
-		}
-}
- return c;
-}
-
-func operador_ou ( a : bool , b : bool ) : bool {
-	 def c : bool = false;
-	 if ( a == true ) -> {
-		 c = true;
-	}
- if ( b == true ) -> {
-		 c = true;
-	}
- return c;
-}
- operator == ( a : bool , b : bool ) : bool { reg @ R1 -> a ; reg @ R2 -> b ; PROC -> { SET R3 ; MOV FALSE ; OPE R1 MATCH R2 ; } return reg @ R3 ; }
-func maior_igual ( a : int , b : int ) : bool {
-	 def ret : bool = false;
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R1;
-		 MOV FALSE;
-		 OPE R5 GREAT R6;
-	}
- def e_maior : bool = reg @ R1;
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R1;
-		 MOV FALSE;
-		 OPE R5 EQUAL R6;
-	}
- def e_igual : bool = reg @ R1;
-	 if ( e_maior ) -> {
-		 ret = true;
-	}
- if ( e_igual ) -> {
-		 ret = true;
-	}
- return ret;
-}
+act println ( a : string , b : int ) { 
+reg @ R13 -> a ;
+	reg @ R5 -> b ;
+	PROC -> { PROC CHANGE_LINE ; PRINT R13 ; SET R13 ; MOV "" ; INT_STRING R5 ; PRINT R13 ; } }act println ( a : string , b : bool ) { reg @ R13 -> a ; reg @ R1 -> b ; PROC -> { PROC CHANGE_LINE ; PRINT R13 ; SET R13 ; MOV "" ; BOOL_STRING R1 ; PRINT R13 ; } } func isNull ( ObjetoNulo : any ) : bool { reg @ R0 -> ObjetoNulo ; return reg @ R0 ; } operator ++ ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ; } operator -- ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 SUB R6 ; } return reg @ R7 ; } operator ** ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 MUX R6 ; } return reg @ R7 ; } operator // ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 DIV R6 ; } return reg @ R7 ; } operator == ( a : int , b : int ) : bool { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 EQUAL R6 ; } return reg @ R1 ; } operator !! ( a : int , b : int ) : bool { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 DIFF R6 ; } return reg @ R1 ; } director ! ( a : int ) : int { reg @ R5 -> a ; PROC -> { SET R6 ; MOV 0 ; OPE R5 MUX -1 ; } return reg @ R6 ; } func somar ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ; } func subtrair ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 SUB R6 ; } return reg @ R7 ; } func multiplicar ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 MUX R6 ; } return reg @ R7 ; } func dividir ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 DIV R6 ; } return reg @ R7 ; } func resto ( a : int , b : int ) : int { def c : int ; invoke math -> operator_mod_int ( a , b ) :: c ; return c ; } func menor ( a : int , b : int ) : bool { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 LESS R6 ; } return reg @ R1 ; } func maior ( a : int , b : int ) : bool { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 GREAT R6 ; } return reg @ R1 ; } func menor_igual ( a : int , b : int ) : bool { def ret : bool = false ; reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 LESS R6 ; } def e_menor : bool = reg @ R1 ; reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 EQUAL R6 ; } def e_igual : bool = reg @ R1 ; if ( e_menor ) -> { ret = true ; } if ( e_igual ) -> { ret = true ; } return ret ; } func igual ( a : int , b : int ) : bool { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 EQUAL R6 ; } return reg @ R1 ; } func diferente ( a : int , b : int ) : bool { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 DIFF R6 ; } return reg @ R1 ; } operator !! ( a : bool , b : bool ) : bool { reg @ R1 -> a ; reg @ R2 -> b ; PROC -> { SET R3 ; MOV FALSE ; OPE R1 UNMATCH R2 ; } return reg @ R3 ; } struct Lista in ( T ) { restrict : define mPrimeiro : Item >> ( T ) = null ; define mUltimo : Item >> ( T ) = null ; define mQuantidade : int = 0 ; all : func getQuantidade ( ) : int { return mQuantidade ; } act adicionar ( novo : T ) { #println ( "Adicionando : ", novo );
+ if ( isNull ( mPrimeiro ) ) -> { #println ( "Adicionando EM NULO : ", novo );
+ mPrimeiro = init Item ( ) >> ( T ) ; mPrimeiro . setValor ( novo ) ; mUltimo = mPrimeiro ; mQuantidade = 1 ; #println ( "Adicionado EM NULO : ", novo );
+ } others { #println ( "Adicionando NAO NULO : ", novo );
+ def mCorrente : Item >> ( T ) = init Item ( ) >> ( T ) ; mCorrente . setValor ( novo ) ; mUltimo . setProximo ( mCorrente ) ; mUltimo = mCorrente ; mQuantidade = somar ( mQuantidade , 1 ) ; #println ( "Adicionado NAO NULO : ", novo );
+ } #println ( "Adicionado : ", novo );
+ } act remover ( a : T ) { #println ( "Removendo : ", a );
+ if ( isNull ( mPrimeiro ) ) -> { } others { def mAnterior : Item >> ( T ) = null ; def mCorrente : Item >> ( T ) = mPrimeiro ; def mIndice : int = 0 ; def mUltimoIndice : int = mQuantidade -- 1 ; while ( isNull ( mCorrente ) == false ) -> { if ( mCorrente . getValor ( ) == a ) -> { println ( "Removendo : " , a ) ; if ( mIndice == 0 ) -> { if ( mQuantidade == 1 ) -> { mPrimeiro = null ; mUltimo = null ; } others { mPrimeiro = mPrimeiro . getProximo ( ) ; } println ( " R : " , 1 ) ; } other ( mIndice == mUltimoIndice ) -> { mAnterior . setProximo ( null ) ; mUltimo = mAnterior ; println ( " R : " , 2 ) ; } others { mAnterior . setProximo ( mCorrente . getProximo ( ) ) ; println ( " R : " , 3 ) ; } mQuantidade = subtrair ( mQuantidade , 1 ) ; if ( isNull ( mCorrente ) == false ) -> { delete mCorrente ; } cancel ; } #println("Passando Por : ",mCorrente.getValor());
+ mAnterior = mCorrente ; mCorrente = mCorrente . getProximo ( ) ; mIndice = somar ( mIndice , 1 ) ; } } } act listar ( ) { if ( isNull ( mPrimeiro ) == false ) -> { def mCorrente : Item >> ( T ) = mPrimeiro ; while ( isNull ( mCorrente ) == false ) -> { println ( " - Valor : " , mCorrente . getValor ( ) ) ; mCorrente = mCorrente . getProximo ( ) ; } } } act limpar ( ) { if ( isNull ( mPrimeiro ) == false ) -> { def mCorrente : Item >> ( T ) = mPrimeiro ; def mAnterior : Item >> ( T ) = mPrimeiro ; while ( isNull ( mCorrente ) == false ) -> { mAnterior = mCorrente ; mCorrente = mCorrente . getProximo ( ) ; if ( isNull ( mAnterior ) == false ) -> { delete mAnterior ; } } if ( isNull ( mCorrente ) == false ) -> { delete mCorrente ; } } mPrimeiro = null ; mUltimo = null ; } func getValor ( indice : int ) : T { def ret : int = null ; if ( maior_igual ( indice , 0 ) ) -> { def contando : int = 0 ; def enc : bool = false ; if ( isNull ( mPrimeiro ) == false ) -> { def mCorrente : Item >> ( T ) = mPrimeiro ; while ( isNull ( mCorrente ) == false ) -> { if ( contando == indice ) -> { ret = mCorrente . getValor ( ) ; enc = true ; } contando = somar ( contando , 1 ) ; mCorrente = mCorrente . getProximo ( ) ; } } if ( enc == false ) -> { exception "Indice invalido !" ; } } others { exception "Indice invalido !" ; } return ret ; } act setValor ( indice : int , valor : T ) { def ret : int = null ; if ( maior_igual ( indice , 0 ) ) -> { def contando : int = 0 ; def enc : bool = false ; if ( isNull ( mPrimeiro ) == false ) -> { def mCorrente : Item >> ( T ) = mPrimeiro ; while ( isNull ( mCorrente ) == false ) -> { if ( contando == indice ) -> { mCorrente . setValor ( valor ) ; enc = true ; } contando = somar ( contando , 1 ) ; mCorrente = mCorrente . getProximo ( ) ; } } if ( enc == false ) -> { exception "Indice invalido !" ; } } others { exception "Indice invalido !" ; } } } struct Item in ( T ) { restrict : define mValor : T = null ; define mProximo : Item >> ( T ) = null ; all : func getValor ( ) : T { return mValor ; } act setValor ( eValor : T ) { mValor = eValor ; } func getProximo ( ) : Item >> ( T ) { def tmp : Item >> ( T ) = mProximo ; return tmp ; } act setProximo ( eProximo : Item >> ( T ) ) { mProximo = eProximo ; } func getProximo ( ) : Item >> ( T ) { return mProximo ; } } struct Iterador in ( T , T2 ) { init Iterador ( eLista : T ) { mLista = eLista ; mIndex = 0 ; mTamanho = 0 ; mIniciado = false ; mTerminou = false ; } restrict : define mLista : T = null ; define mIndex : int = 0 ; define mTamanho : int = 0 ; define mIniciado : bool = false ; define mTerminou : bool = false ; all : act iniciar ( ) { mIndex = 0 ; mTamanho = mLista . getQuantidade ( ) ; mIniciado = true ; mTerminou = false ; } act proximo ( ) { if ( mIniciado ) -> { if ( mTerminou == false ) -> { if ( menor ( mIndex , mTamanho ) ) -> { def um : int = 1 ; mIndex = somar ( mIndex , um ) ; } others { mTerminou = true ; } } } } func continuar ( ) : bool { def ret : bool = false ; if ( mIniciado ) -> { if ( maior_igual ( mIndex , mTamanho ) ) -> { mTerminou = true ; } others { ret = true ; } } others { ret = false ; } return ret ; } func getIndex ( ) : int { if ( mIniciado ) -> { } others { exception "O iterador nao foi iniciado !" ; } return mIndex ; } func getValor ( ) : T2 { def ii : int = getIndex ( ) ; return mLista . getValor ( ii ) ; } } package Delicia { struct Fruta { } } func operador_e ( a : bool , b : bool ) : bool { def c : bool = false ; if ( a == true ) -> { if ( b == true ) -> { c = true ; } } return c ; } func operador_ou ( a : bool , b : bool ) : bool { def c : bool = false ; if ( a == true ) -> { c = true ; } if ( b == true ) -> { c = true ; } return c ; } operator == ( a : bool , b : bool ) : bool { reg @ R1 -> a ; reg @ R2 -> b ; PROC -> { SET R3 ; MOV FALSE ; OPE R1 MATCH R2 ; } return reg @ R3 ; } func maior_igual ( a : int , b : int ) : bool { def ret : bool = false ; reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 GREAT R6 ; } def e_maior : bool = reg @ R1 ; reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R1 ; MOV FALSE ; OPE R5 EQUAL R6 ; } def e_igual : bool = reg @ R1 ; if ( e_maior ) -> { ret = true ; } if ( e_igual ) -> { ret = true ; } return ret ; }

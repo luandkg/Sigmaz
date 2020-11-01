@@ -72,4 +72,15 @@ public class OrganizadorDeErros {
 
     }
 
+    public void getIntegralizador(ArrayList<String> eErros) {
+
+        mErros.add("\n\t ERROS DE INTEGRACAO : ");
+
+        for (String eErro : eErros) {
+            mErros.add("\t\t    ->> "  + eErro);
+        }
+
+
+    }
+
 }

@@ -18,6 +18,10 @@ public class SigmazStages {
         return mAST.getNome();
     }
 
+    public boolean mesmoNome(String eNome) {
+        return getNome().contentEquals(eNome);
+    }
+
     public String getDefinicao() {
         return mAST.getNome();
     }
@@ -64,6 +68,19 @@ public class SigmazStages {
             mLista.add(Sub2.getNome());
         }
         return mLista;
+    }
+
+    public boolean existeStage(String eStage) {
+
+        boolean ret = false;
+
+        for (AST Sub2 : mAST.getBranch("STAGES").getASTS()) {
+            if (eStage.contentEquals(Sub2.getNome())) {
+                ret = true;
+                break;
+            }
+        }
+        return ret;
     }
 
 

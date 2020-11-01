@@ -1,25 +1,17 @@
 
-define GLOBAL : int = 12 ; mockiz PI : num = 3.14 ; define SEG_GLOBAL : int = GLOBAL ++ GLOBAL ; define TER_GLOBAL : int = somar ( GLOBAL , GLOBAL ) ; call Pos_Processamento -> {
-	 def a : int = 12;
-	 moc b : int = 13;
-	 let c = 14;
-	 mut d = 15;
-	 def e : int = a;
-	 def k : bool = true;
-	 if ( k ) -> {
-		 def t : int = 40;
-		 def w : int = 5;
-		 def a : int = somar ( w , t );
-	}
-}
- operator ++ ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ; }
-func somar ( a : int , b : int ) : int {
-	 reg @ R5 -> a;
-	 reg @ R6 -> b;
-	 PROC -> {
-		 SET R7;
-		 MOV 0;
-		 OPE R5 ADD R6;
-	}
- return reg @ R7;
-}
+define GLOBAL : int = 12 ;
+
+mockiz PI : num = 3.14 ;
+
+define SEG_GLOBAL : int = GLOBAL ++ GLOBAL ;
+
+define TER_GLOBAL : int = somar ( GLOBAL , GLOBAL ) ;
+
+call Pos_Processamento -> { 
+def a : int = 12 ;
+	moc b : int = 13 ;
+	let c = 14 ;
+	mut d = 15 ;
+	def e : int = a ;
+	def k : bool = true ;
+	if ( k ) -> { def t : int = 40 ; def w : int = 5 ; def a : int = somar ( w , t ) ; } }operator ++ ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ; } func somar ( a : int , b : int ) : int { reg @ R5 -> a ; reg @ R6 -> b ; PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ; }

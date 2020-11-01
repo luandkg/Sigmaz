@@ -1,73 +1,78 @@
  import"libs/lib.sigmaz" ;
 call iniciar -> pular ( ) ;
-act pular ( ) {
-	 def sacola1 : Sacola = init Sacola ( );
-	 sacola1.aumentar ( 2 );
-	 def t : int = sacola1.getQuantidade ( );
-	 def s : int = somar ( 2 , sacola1.getQuantidade ( ) );
+act pular ( ) { 
+def sacola1 : Sacola = init Sacola ( ) ;
+	sacola1 . aumentar ( 2 ) ;
+	def t : int = sacola1 . getQuantidade ( ) ;
+	def s : int = somar ( 2 , sacola1 . getQuantidade ( ) ) ;
 	 #sacola1.tratar(3,3); sacola1.mostrar_struct ( );
-	 def sacola2 : Sacola = init Sacola ( );
-	 sacola2.aumentar ( 2 );
-	 sacola2.crivar ( 4 );
-	 def rr : bool = sacola1 == sacola2;
-	 DEBUG -> REGRESSIVE :: ALL;
-}
+	def sacola2 : Sacola = init Sacola ( ) ;
+	sacola2 . aumentar ( 2 ) ;
+	sacola2 . crivar ( 4 ) ;
+	def rr : bool = sacola1 == sacola2 ;
+	DEBUG -> REGRESSIVE :: ALL ;
+	}
 
 struct Sacola {
 	
-	init Sacola ( ) {
+	init Sacola ( ) { 
 	}
+	
 
 	all :
 		define itens : int = 0 ;
+		
 	all :
-		act aumentar ( g : int ) {
-			 itens = somar ( itens , g );
-		}
-
-		func quantidade ( ) : int {
-			 return itens;
-		}
-
-		func getQuantidade ( ) : int {
-			 return itens;
-		}
-
-		act mostrar ( ) {
-			 DEBUG -> REGRESSIVE :: ALL;
-		}
-
-		act mostrar_detalhes ( ) {
-			 println ("" );
-			 println (" SACOLA : " );
-			 println ("    - Itens : " , itens );
-		}
-
-		act mostrar_struct ( ) {
-			 DEBUG -> REGRESSIVE :: ALL;
-		}
-
-		func someisso ( a : int , b : int ) : int {
-			 return somar ( a , b );
-		}
-
+		act aumentar ( g : int ) { 
+itens = somar ( itens , g ) ;
+					}
+		
+		func quantidade ( ) : int { 
+return itens ;
+					}
+		
+		func getQuantidade ( ) : int { 
+return itens ;
+					}
+		
+		act mostrar ( ) { 
+DEBUG -> REGRESSIVE :: ALL ;
+					}
+		
+		act mostrar_detalhes ( ) { 
+println ( "" ) ;
+			println ( " SACOLA : " ) ;
+			println ( "    - Itens : " , itens ) ;
+					}
+		
+		act mostrar_struct ( ) { 
+DEBUG -> REGRESSIVE :: ALL ;
+					}
+		
+		func someisso ( a : int , b : int ) : int { 
+return somar ( a , b ) ;
+					}
+		
 	explicit :
-		func someisso ( a : int , b : int ) : int {
-			 return somar ( a , b );
-		}
-
+		func someisso ( a : int , b : int ) : int { 
+return somar ( a , b ) ;
+					}
+		
 	all :
-		func crivar ( a : int ) : int {
-			 return somar ( a , a );
-		}
-
+		func crivar ( a : int ) : int { 
+return somar ( a , a ) ;
+					}
+		
 	restrict :
-		func tratar ( a : int , b : int ) : int {
-			 return somar ( a , b );
+		func tratar ( a : int , b : int ) : int { 
+return somar ( a , b ) ;
+					}
+		
+	extra :
+		operator == ( a : Sacola , b : Sacola ) : bool { 
+DEBUG -> REGRESSIVE :: STACK ;
+			def t : bool = a . itens == b . itens ;
+			DEBUG -> REGRESSIVE :: ALL ;
+			return t ;
+					}
 		}
- extra : operator == ( a : Sacola , b : Sacola ) : bool { DEBUG -> REGRESSIVE :: STACK;
-	 def t : bool = a. itens == b. itens;
-	 DEBUG -> REGRESSIVE :: ALL;
-	 return t;
-}
- }

@@ -11,8 +11,6 @@ public class SigmazRaiz {
 
     public SigmazRaiz(AST eSigmazRaiz) {
         mSigmazRaiz = eSigmazRaiz;
-
-
     }
 
 

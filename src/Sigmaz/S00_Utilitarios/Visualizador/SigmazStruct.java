@@ -1,8 +1,6 @@
 package Sigmaz.S00_Utilitarios.Visualizador;
 
 import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S05_PosProcessamento.Pronoco.Pronoco_Function;
-import Sigmaz.S07_Executor.Indexador.Index_Function;
 
 import java.util.ArrayList;
 

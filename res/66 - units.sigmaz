@@ -1,15 +1,19 @@
- import"libs/lib.sigmaz" ; refer TesteUnitario ; refer Iterador ;
-call iniciar -> {
-	 println (" --------- TESTES UNITARIOS --------- " );
-	 println ("" );
-	 def AssertC : Assert = init Assert ( );
-	 AssertC.testar ("Teste 1" , true );
-	 AssertC.testar ("Teste 2" , true );
-	 AssertC.testar ("Teste 3" , false );
-	 AssertC.listar ( );
-	 DEBUG -> REGRESSIVE :: ALL;
-	 AssertC.limpar ( );
-	 AssertC.limpar ( );
-	 DEBUG -> REGRESSIVE :: ALL;
+ import"libs/lib.sigmaz" ;
+refer TesteUnitario ;
+
+refer Iterador ;
+
+call iniciar -> { 
+println ( " --------- TESTES UNITARIOS --------- " ) ;
+	println ( "" ) ;
+	def AssertC : Assert = init Assert ( ) ;
+	AssertC . testar ( "Teste 1" , true ) ;
+	AssertC . testar ( "Teste 2" , true ) ;
+	AssertC . testar ( "Teste 3" , false ) ;
+	AssertC . listar ( ) ;
+	DEBUG -> REGRESSIVE :: ALL ;
+	AssertC . limpar ( ) ;
+	AssertC . limpar ( ) ;
+	DEBUG -> REGRESSIVE :: ALL ;
 	 #def ASSERTABLE : Lista >> ( ASSERT_ITEM ) = AssertC.ASSERTABLE; DEBUG -> REGRESSIVE :: ALL;
-}
+	}

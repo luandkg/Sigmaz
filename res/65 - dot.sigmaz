@@ -1,135 +1,130 @@
 
 call iniciar -> inicio ( ) ; package Outros { external Mundo {
-define al : num = 12.0 ; } } type Pessoa {
-	 define nome : string ="";
-	 define idade : num = 0.0;
-	 mockiz TAXA : num = 5.20;
+define al : num = 12.0 ;
+ } }
+type Pessoa {
+
+	
+	define nome : string = "" ;
+	
+	define idade : num = 0.0 ;
+	
+	mockiz TAXA : num = 5.20 ;
+	
 }
 
 struct Alem {
 	
 	explicit :
 		mockiz V : num = 33.0 ;
-		func getAnjo ( n : string ) : Pessoa {
-			 return start Pessoa {
-				 nome = n;
-			}
-;
+		
+		func getAnjo ( n : string ) : Pessoa { 
+return start Pessoa { nome = n ; } ;
+					}
+		
+		func getCasal ( a : string , o : string ) : Casal { 
+def mP1 : Pessoa = start Pessoa { nome = a ; idade = 20.0 ; } ;
+			def mP2 : Pessoa = start Pessoa { nome = o ; idade = 30.0 ; } ;
+			return start Casal { P1 = mP1 ; P2 = mP2 ; } ;
+					}
 		}
-
-		func getCasal ( a : string , o : string ) : Casal {
-			 def mP1 : Pessoa = start Pessoa {
-				 nome = a;
-				 idade = 20.0;
-			}
-;
-			 def mP2 : Pessoa = start Pessoa {
-				 nome = o;
-				 idade = 30.0;
-			}
-;
-			 return start Casal {
-				 P1 = mP1;
-				 P2 = mP2;
-			}
-;
-		}
-}
 
 struct Bloco {
 	
 	all :
-		define modelo : string ="" ;
+		define modelo : string = "" ;
+		
 		define peso : num = 0.0 ;
-		act mudarPeso ( a : num ) {
-			 peso = a;
-		}
+		
+		act mudarPeso ( a : num ) { 
+peso = a ;
+					}
+		
+		func getPeso ( ) : num { 
+return peso ;
+					}
+		
+		func getBloco ( p : num ) : Bloco { 
+def a : Bloco = init Bloco ( ) ;
+			a . mudarPeso ( p ) ;
+			return a ;
+					}
+		
+		func getDono ( anome : string , aidade : num ) : Pessoa { 
+return start Pessoa { nome = anome ; idade = aidade ; } ;
+					}
+		 #restrict
 
-		func getPeso ( ) : num {
-			 return peso;
-		}
-
-		func getBloco ( p : num ) : Bloco {
-			 def a : Bloco = init Bloco ( );
-			 a.mudarPeso ( p );
-			 return a;
-		}
-
-		func getDono ( anome : string , aidade : num ) : Pessoa {
-			 return start Pessoa {
-				 nome = anome;
-				 idade = aidade;
-			}
-;
-		}
- #restrict
 	all :
-		define re : num = 12.0 ;}
- type Casal {
-define P1 : Pessoa = null ; define P2 : Pessoa = null ; } refer Outros ; act inicio ( ) {
-	 def a : Pessoa = start Pessoa {
-		 nome ="Luan";
-		 idade = 20.0;
-	}
-;
-	 def b : Pessoa = start Pessoa {
-		 nome ="Fernando";
-		 idade = 34.0;
-	}
-;
-	 a.nome ="AlineC";
-	 def a_nome : string = a.nome;
-	 def a_idade : num = a.idade;
-	 def b_nome : string = b.nome;
-	 def CasalC : Casal = start Casal {
-		 P1 = a;
-		 P2 = b;
-	}
-;
-	 def cs_p1_nome : string = CasalC.P1.nome;
+		define re : num = 12.0 ;
+		}
+
+type Casal {
+
+	
+	define P1 : Pessoa = null ;
+	
+	define P2 : Pessoa = null ;
+	
+}
+
+refer Outros ;
+
+act inicio ( ) { 
+def a : Pessoa = start Pessoa { nome = "Luan" ; idade = 20.0 ; } ;
+	def b : Pessoa = start Pessoa { nome = "Fernando" ; idade = 34.0 ; } ;
+	a . nome = "AlineC" ;
+	def a_nome : string = a . nome ;
+	def a_idade : num = a . idade ;
+	def b_nome : string = b . nome ;
+	def CasalC : Casal = start Casal { P1 = a ; P2 = b ; } ;
+	def cs_p1_nome : string = CasalC . P1 . nome ;
 	 #def b1 : Bloco = start Bloco {modelo="AC3"; peso =5;};
-	 def b1 : Bloco = init Bloco ( );
-	 b1.modelo ="AC3";
-	 def b1_modelo : string = b1.modelo;
-	 def b1_peso : num = b1.peso;
-	 def b1_re : num = b1.re;
-	 b1.mudarPeso ( 50.0 );
-	 DEBUG -> REGRESSIVE :: ALL;
-	 def b1_peso2 : num = b1.peso;
-	 def b1_peso3 : num = b1.getPeso ( );
-	 def b1_bloco : Bloco = b1.getBloco ( 32.0 );
-	 def b1_b_peso : num = b1_bloco.getPeso ( );
-	 def b1_b_peso2 : num = b1.getBloco ( 17.0 ).getPeso ( );
-	 def dono : Pessoa = b1.getDono ("lucas" , 40.0 );
-	 DEBUG -> REGRESSIVE :: ALL;
+	def b1 : Bloco = init Bloco ( ) ;
+	b1 . modelo = "AC3" ;
+	def b1_modelo : string = b1 . modelo ;
+	def b1_peso : num = b1 . peso ;
+	def b1_re : num = b1 . re ;
+	b1 . mudarPeso ( 50.0 ) ;
+	DEBUG -> REGRESSIVE :: ALL ;
+	def b1_peso2 : num = b1 . peso ;
+	def b1_peso3 : num = b1 . getPeso ( ) ;
+	def b1_bloco : Bloco = b1 . getBloco ( 32.0 ) ;
+	def b1_b_peso : num = b1_bloco . getPeso ( ) ;
+	def b1_b_peso2 : num = b1 . getBloco ( 17.0 ) . getPeso ( ) ;
+	def dono : Pessoa = b1 . getDono ( "lucas" , 40.0 ) ;
+	DEBUG -> REGRESSIVE :: ALL ;
 	 #def dono_nome : string = dono.nome;
-
-	  def dono2_nome : string = b1.getDono ("Feh" , 33.0 ).nome;
-
-	 b1_bloco.modelo ="AZZ - 6";
-	 def mc : string = b1_bloco.modelo;
-	 def cs_p1 : Pessoa = CasalC.P1;
-	 def aa : num = Alem -> V;
-	 def tt : num = algo ( algo ( Alem -> V ) );
-	 def pessoa_1 : Pessoa = Alem -> getAnjo ("Ana" );
-	 def pessoa_1_nome : string = Alem -> getAnjo ("Sara" ).nome;
-	 def pCasal : Casal = Alem -> getCasal ("Sara" ,"Lucas" );
-	 def pP1 : Pessoa = Alem -> getCasal ("Sara" ,"Lucas" ).P1;
-	 def pP1_nome : string = Alem -> getCasal ("Sara" ,"Lucas" ).P1.nome;
-	 def par1 : Par >> ( num , num ) = start Par >> ( num , num ) {
-		 chave = 0.0;
-		 valor = 1992.0;
-	}
-;
-	 def par1_valor : num = par1.valor;
-	 def m : num = Mundo -> al;
+	def dono2_nome : string = b1 . getDono ( "Feh" , 33.0 ) . nome ;
+	b1_bloco . modelo = "AZZ - 6" ;
+	def mc : string = b1_bloco . modelo ;
+	def cs_p1 : Pessoa = CasalC . P1 ;
+	def aa : num = Alem -> V ;
+	def tt : num = algo ( algo ( Alem -> V ) ) ;
+	def pessoa_1 : Pessoa = Alem -> getAnjo ( "Ana" ) ;
+	def pessoa_1_nome : string = Alem -> getAnjo ( "Sara" ) . nome ;
+	def pCasal : Casal = Alem -> getCasal ( "Sara" , "Lucas" ) ;
+	def pP1 : Pessoa = Alem -> getCasal ( "Sara" , "Lucas" ) . P1 ;
+	def pP1_nome : string = Alem -> getCasal ( "Sara" , "Lucas" ) . P1 . nome ;
+	def par1 : Par >> ( num , num ) = start Par >> ( num , num ) { chave = 0.0 ; valor = 1992.0 ; } ;
+	def par1_valor : num = par1 . valor ;
+	def m : num = Mundo -> al ;
 	 # def m2 : Mundo = init Mundo(); #algo(12) = 30; DEBUG -> REGRESSIVE :: ALL;
-}
- type Par in ( T1 , T2 ) {
-define chave : T1 = null ; define valor : T2 = null ; } func algo ( a : num ) : num {
-	 return a;
+	}
+
+type Par in ( T1 , T2 ) {
+
+	
+	define chave : T1 = null ;
+	
+	define valor : T2 = null ;
+	
 }
 
-act trash ( a : any ) {
-	 invoke __COMPILER__ -> OBJECT ( a ) :: REMOVE;
-}
+func algo ( a : num ) : num { 
+return a ;
+	}
+
+act trash ( a : any ) { 
+invoke __COMPILER__ -> OBJECT ( a ) :: REMOVE ;
+	}

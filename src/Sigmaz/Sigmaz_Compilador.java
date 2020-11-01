@@ -6,7 +6,8 @@ import Sigmaz.S00_Utilitarios.*;
 import Sigmaz.S01_PreProcessamento.Etapa;
 import Sigmaz.S01_PreProcessamento.Planejador;
 import Sigmaz.S04_Compilador.Compilador;
-import Sigmaz.S06_Montador.Montador;
+import Sigmaz.S06_Integralizador.Integrador;
+import Sigmaz.S07_Montador.Montador;
 import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
 
@@ -23,6 +24,7 @@ public class Sigmaz_Compilador {
     private String mETAPA_PARSER;
     private String mETAPA_POS_PROCESSAMENTO;
     private String mETAPA_MONTAGEM;
+    private String mETAPA_INTEGRALIZADOR;
 
     private String mSTATUS_NAO;
     private String mSTATUS_SUCESSO;
@@ -35,6 +37,7 @@ public class Sigmaz_Compilador {
     private boolean mDebug_Lexer;
     private boolean mDebug_Parser;
     private boolean mDebug_Montagem;
+    private boolean mDebug_Integralizador;
     private boolean mDebug_Comentario;
 
     private boolean mDebug_Requisidor;
@@ -42,7 +45,6 @@ public class Sigmaz_Compilador {
     private boolean mDebug_Modelador;
     private boolean mDebug_Estagiador;
     private boolean mDebug_Tipador;
-    private boolean mDebug_Valorador;
     private boolean mDebug_Cast;
     private boolean mDebug_Unificador;
     private boolean mDebug_Heranca;
@@ -55,8 +57,10 @@ public class Sigmaz_Compilador {
 
     private ArrayList<GrupoDeErro> mErros_PreProcessamento;
     private ArrayList<GrupoDeErro> mErros_Lexer;
-    private ArrayList<GrupoDeErro> mErros_Compiler;
+    private ArrayList<GrupoDeErro> mErros_Parser;
     private ArrayList<String> mErros_PosProcessamento;
+    private ArrayList<String> mErros_Integracao;
+
     private ArrayList<String> mErros_Execucao;
 
     private boolean mMostrar_Fases;
@@ -64,6 +68,8 @@ public class Sigmaz_Compilador {
     private boolean mMostrar_ArvoreFalhou;
     private boolean mMostrar_Erros;
     private boolean mMostrar_Execucao;
+    private boolean mMostrar_Integracao;
+
     private boolean mMostrar_Mensagens;
 
     private ArrayList<Etapa> mEtapas;
@@ -88,7 +94,7 @@ public class Sigmaz_Compilador {
     private String mComentario_Processamento;
 
     public enum Fases {
-        PRE_PROCESSAMENTO, LEXER, PARSER, POS_PROCESSAMENTO, MONTAGEM, PRONTO;
+        PRE_PROCESSAMENTO, LEXER, PARSER, POS_PROCESSAMENTO, INTEGRALIZADOR, MONTAGEM, PRONTO;
     }
 
     public Sigmaz_Compilador() {
@@ -106,6 +112,7 @@ public class Sigmaz_Compilador {
         mETAPA_PARSER = mSTATUS_NAO;
         mETAPA_POS_PROCESSAMENTO = mSTATUS_NAO;
         mETAPA_MONTAGEM = mSTATUS_NAO;
+        mETAPA_INTEGRALIZADOR = mSTATUS_NAO;
 
         mDebug = false;
         mDebugMensagens = new ArrayList<String>();
@@ -113,6 +120,7 @@ public class Sigmaz_Compilador {
         mDebug_Lexer = true;
         mDebug_Parser = true;
         mDebug_Comentario = true;
+        mDebug_Integralizador = true;
         mDebug_Montagem = true;
 
         mDebug_Requisidor = true;
@@ -120,7 +128,6 @@ public class Sigmaz_Compilador {
         mDebug_Modelador = true;
         mDebug_Estagiador = true;
         mDebug_Tipador = true;
-        mDebug_Valorador = true;
         mDebug_Cast = true;
         mDebug_Unificador = true;
         mDebug_Heranca = true;
@@ -137,6 +144,7 @@ public class Sigmaz_Compilador {
         mMostrar_ArvoreRunTime = true;
         mMostrar_ArvoreFalhou = true;
         mMostrar_Execucao = true;
+        mMostrar_Integracao = true;
         mMostrar_Mensagens = true;
 
         mEtapas = new ArrayList<Etapa>();
@@ -145,8 +153,9 @@ public class Sigmaz_Compilador {
 
         mErros_PreProcessamento = new ArrayList<>();
         mErros_Lexer = new ArrayList<>();
-        mErros_Compiler = new ArrayList<>();
+        mErros_Parser = new ArrayList<>();
         mErros_PosProcessamento = new ArrayList<>();
+        mErros_Integracao = new ArrayList<>();
         mErros_Execucao = new ArrayList<>();
         mASTS = new ArrayList<AST>();
 
@@ -159,7 +168,7 @@ public class Sigmaz_Compilador {
 
         mErros_PreProcessamento = new ArrayList<>();
         mErros_Lexer = new ArrayList<>();
-        mErros_Compiler = new ArrayList<>();
+        mErros_Parser = new ArrayList<>();
 
         mComentarios = new ArrayList<>();
 
@@ -200,6 +209,11 @@ public class Sigmaz_Compilador {
         mMostrar_Execucao = e;
     }
 
+    public void setMostrar_Integracao(boolean e) {
+        mMostrar_Integracao = e;
+    }
+
+
     public void setMostrar_Mensagens(boolean e) {
         mMostrar_Mensagens = e;
     }
@@ -226,6 +240,9 @@ public class Sigmaz_Compilador {
         mDebug_Montagem = e;
     }
 
+    public void setDebug_Integralizador(boolean e) {
+        mDebug_Integralizador = e;
+    }
 
     public void setDebug_PosProcessador_Requisidor(boolean e) {
         mDebug_Requisidor = e;
@@ -249,9 +266,6 @@ public class Sigmaz_Compilador {
         mDebug_Tipador = e;
     }
 
-    public void setDebug_PosProcessador_Valorador(boolean e) {
-        mDebug_Valorador = e;
-    }
 
     public void setDebug_PosProcessador_Estruturador(boolean e) {
         mDebug_Estruturador = e;
@@ -307,12 +321,16 @@ public class Sigmaz_Compilador {
         return mErros_Lexer;
     }
 
-    public ArrayList<GrupoDeErro> getErros_Compiler() {
-        return mErros_Compiler;
+    public ArrayList<GrupoDeErro> getErros_Parser() {
+        return mErros_Parser;
     }
 
     public ArrayList<String> getErros_PosProcessamento() {
         return mErros_PosProcessamento;
+    }
+
+    public ArrayList<String> getErros_Integracao() {
+        return mErros_Integracao;
     }
 
     public ArrayList<String> getErros_Execucao() {
@@ -355,7 +373,7 @@ public class Sigmaz_Compilador {
         mTemErros = false;
 
         mErros_Lexer.clear();
-        mErros_Compiler.clear();
+        mErros_Parser.clear();
         mErros_PosProcessamento.clear();
         mErros_Execucao.clear();
         mErros_PreProcessamento.clear();
@@ -365,9 +383,6 @@ public class Sigmaz_Compilador {
 
         mRequisitados.clear();
 
-        mErros_PreProcessamento.clear();
-        mErros_Lexer.clear();
-        mErros_Compiler.clear();
 
         mComentarios.clear();
 
@@ -430,6 +445,8 @@ public class Sigmaz_Compilador {
 
 
         executar_PosProcessamento(eLocalLibs);
+
+        executar_Integralizador(eLocalLibs);
 
 
         executar_Montagem(mSaida);
@@ -517,6 +534,8 @@ public class Sigmaz_Compilador {
 
         executar_PosProcessamento(eLocalLibs);
 
+        executar_Integralizador(eLocalLibs);
+
         executar_Montagem(mSaida);
 
         mIntervalo.marqueFim();
@@ -579,6 +598,8 @@ public class Sigmaz_Compilador {
         fase_Parser();
 
         executar_PosProcessamento(mLocalLibs);
+
+        executar_Integralizador(mLocalLibs);
 
 
         mIntervalo.marqueFim();
@@ -690,7 +711,7 @@ public class Sigmaz_Compilador {
         mTemErros = false;
 
         mErros_Lexer.clear();
-        mErros_Compiler.clear();
+        mErros_Parser.clear();
         mErros_PosProcessamento.clear();
         mErros_Execucao.clear();
         mErros_PreProcessamento.clear();
@@ -719,6 +740,7 @@ public class Sigmaz_Compilador {
 
 
         executar_PosProcessamento(eLocalLibs);
+
 
         //executar_Montagem(CompilerC, eLocalLibs);
 
@@ -860,8 +882,8 @@ public class Sigmaz_Compilador {
             }
 
 
-            for (GrupoDeErro mGrupoDeErro : mCompilador.getErros_Compiler()) {
-                mErros_Compiler.add(mGrupoDeErro);
+            for (GrupoDeErro mGrupoDeErro : mCompilador.getErros_Parser()) {
+                mErros_Parser.add(mGrupoDeErro);
             }
 
             if (mDebug_PreProcessamento) {
@@ -947,13 +969,13 @@ public class Sigmaz_Compilador {
 
             }
 
-            if (getErros_Compiler().size() == 0) {
+            if (mErros_Parser.size() == 0) {
                 mFase = Fases.POS_PROCESSAMENTO;
                 mETAPA_PARSER = mSTATUS_SUCESSO;
             } else {
                 mETAPA_PARSER = mSTATUS_FALHOU;
 
-                mOrganizadorDeErros.getParser(getErros_Compiler());
+                mOrganizadorDeErros.getParser(mErros_Parser);
 
             }
 
@@ -978,18 +1000,22 @@ public class Sigmaz_Compilador {
             PosProcessadorC.setDebug_Alocador(mDebug_Alocador);
             PosProcessadorC.setDebug_Modelador(mDebug_Modelador);
             PosProcessadorC.setDebug_Estagiador(mDebug_Estagiador);
-            PosProcessadorC.setDebug_Tipador(mDebug_Tipador);
-            PosProcessadorC.setDebug_Valorador(mDebug_Valorador);
+
 
             PosProcessadorC.setDebug_Cast(mDebug_Cast);
             PosProcessadorC.setDebug_Unificador(mDebug_Unificador);
             PosProcessadorC.setDebug_Heranca(mDebug_Heranca);
+
             PosProcessadorC.setDebug_Referenciador(mDebug_Referenciador);
+
             PosProcessadorC.setDebug_Argumentador(mDebug_Argumentador);
             PosProcessadorC.setDebug_Opcionador(mDebug_Opcionador);
-            PosProcessadorC.setDebug_Estruturador(mDebug_Estruturador);
-            PosProcessadorC.setDebug_Unicidade(mDebug_Unicidade);
 
+            PosProcessadorC.setDebug_Estruturador(mDebug_Estruturador);
+
+
+            PosProcessadorC.setDebug_Tipador(mDebug_Tipador);
+            PosProcessadorC.setDebug_Unicidade(mDebug_Unicidade);
 
             PosProcessadorC.init(getASTS(), mLocalLibs);
 
@@ -1001,7 +1027,7 @@ public class Sigmaz_Compilador {
             if (PosProcessadorC.getErros().size() == 0) {
 
 
-                mFase = Fases.MONTAGEM;
+                mFase = Fases.INTEGRALIZADOR;
                 mETAPA_POS_PROCESSAMENTO = mSTATUS_SUCESSO;
 
 
@@ -1024,6 +1050,49 @@ public class Sigmaz_Compilador {
 
 
     }
+
+    private void executar_Integralizador(String mLocalLibs) {
+
+        if (mFase == Fases.INTEGRALIZADOR) {
+
+            Integrador mIntegrador = new Integrador();
+
+            mIntegrador.setDebug(mDebug_Integralizador);
+
+            mIntegrador.init(getASTS(), mLocalLibs);
+
+            for (String eMensagem : mIntegrador.getMensagens()) {
+                mDebugMensagens.add(eMensagem);
+            }
+
+
+            if (mIntegrador.getErros().size() == 0) {
+
+
+                mFase = Fases.MONTAGEM;
+                mETAPA_INTEGRALIZADOR = mSTATUS_SUCESSO;
+
+
+            } else {
+
+                mETAPA_INTEGRALIZADOR = mSTATUS_FALHOU;
+
+                mOrganizadorDeErros.getIntegralizador(mIntegrador.getErros());
+                mErros_Integracao.addAll(mIntegrador.getErros());
+
+            }
+
+
+        }
+        if (mMostrar_Fases) {
+
+            System.out.println("\t - 6 : Integrealizador         : " + mETAPA_INTEGRALIZADOR);
+
+        }
+
+
+    }
+
 
     public void executar_Montagem(String mSaida) {
 
@@ -1058,7 +1127,7 @@ public class Sigmaz_Compilador {
         }
         if (mMostrar_Fases) {
 
-            System.out.println("\t - 6 : Montagem                : " + mETAPA_MONTAGEM);
+            System.out.println("\t - 7 : Montagem                : " + mETAPA_MONTAGEM);
 
         }
 
