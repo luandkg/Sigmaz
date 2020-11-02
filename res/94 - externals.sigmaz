@@ -1,43 +1,39 @@
 
 refer ECOLOGIA ;
 
-model Cidadao {
-
+model Cidadao { 
 	
 	func getNome ( ) : string ;
 	
 }
 
-model Pessoa_Brasil {
-
+model Pessoa_Brasil { 
 	
 	func getCPF ( ) : string ;
 	
 }
 
-struct Pessoa at Cidadao {
+struct Pessoa at Cidadao { 
 	
 	all :
 		func getNome ( ) : string { 
-return ;
+			return ;
 					}
-		}
+}
 
-struct Brasileiro with Pessoa at Pessoa_Brasil {
+struct Brasileiro with Pessoa at Pessoa_Brasil { 
 	
 	init Brasileiro ( ) -> Pessoa ( ) { 
-	}
-	
+			}
 
 	all :
 		func getNome ( ) : string { 
-return "" ;
+			return "" ;
 					}
-		
 		func getCPF ( ) : string { 
-return "" ;
+			return "" ;
 					}
-		}
+}
 
 call Externals -> { 
 def mAca : Cidadao = init Brasileiro ( ) ;
@@ -59,24 +55,18 @@ def mAca : Cidadao = init Brasileiro ( ) ;
 	}
 
 act passarGato ( g : Gato ) { 
-def referencia : Gato = g ;
-	DEBUG -> LOCAL :: INSTANCES ;
-	}
- package ECOLOGIA {
-struct Gato {
+	 def referencia : Gato = g ; DEBUG -> LOCAL :: INSTANCES ;} package ECOLOGIA {
+struct Gato { 
 	
 	init Gato ( ) { 
-ECO -> MAIS_ORGANISMO ( ) ;
-			}
-	
+		 ECO -> MAIS_ORGANISMO ( ) ;	}
 
 	all :
 		destruct -> { 
-ECO -> MENOS_ORGANISMOS ( ) ;
-					}
-		}
+			 ECO -> MENOS_ORGANISMOS ( ) ;		}
+}
 
-struct ECO {
+struct ECO { 
 	
 	implicit :
 		define Organismos : int = 0 ;
@@ -86,34 +76,32 @@ struct ECO {
 		
 	explicit :
 		act AUMENTAR ( MAIS_ENERGIA : int ) { 
-ENERGIA = ENERGIA ++ MAIS_ENERGIA ;
-					}
-		
+			 ENERGIA = ENERGIA ++ MAIS_ENERGIA ;		}
 		func GET_ENERGIA ( ) : int { 
-return ENERGIA ;
+			return ENERGIA ;
 					}
-		
 		act MAIS_ORGANISMO ( ) { 
-Organismos = Organismos ++ 1 ;
-					}
-		
+			 Organismos = Organismos ++ 1 ;		}
 		act MENOS_ORGANISMOS ( ) { 
-Organismos = Organismos -- 1 ;
-					}
-		
+			 Organismos = Organismos -- 1 ;		}
 		func GET_ORGANISMOS ( ) : int { 
-return Organismos ;
+			return Organismos ;
 					}
-		}
+}
  }
 operator ++ ( a : int , b : int ) : int { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ;
+	 reg @ R5 -> a ; reg @ R6 -> b ; PROC -> {
+		 SET R7;
+		 MOV 0;
+		 OPE R5 ADD R6;
+	
 	}
-
+	 return reg @ R7 ; }
 operator -- ( a : int , b : int ) : int { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R7 ; MOV 0 ; OPE R5 SUB R6 ; } return reg @ R7 ;
+	 reg @ R5 -> a ; reg @ R6 -> b ; PROC -> {
+		 SET R7;
+		 MOV 0;
+		 OPE R5 SUB R6;
+	
 	}
+	 return reg @ R7 ; }

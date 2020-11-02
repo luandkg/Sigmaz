@@ -20,7 +20,7 @@ public class Runner_AST {
         String TempBuild = mRunMake.getBuild() + ASTCGlobal.getValor();
 
         RunTime mDoc = new RunTime();
-        mDoc.init(TempBuild);
+        mDoc.init(TempBuild,false);
 
         ArrayList<AST> mASTS = mDoc.getASTS();
 

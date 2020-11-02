@@ -3,6 +3,7 @@ package Sigmaz;
 import Sigmaz.S00_Utilitarios.*;
 import Sigmaz.S01_PreProcessamento.Etapa;
 import Sigmaz.S04_Compilador.Compilador;
+import Sigmaz.S06_Integralizador.Integrador;
 import Sigmaz.S07_Montador.Montador;
 import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
@@ -21,6 +22,7 @@ public class Sigmaz_Etapas {
     private String mETAPA_PARSER;
     private String mETAPA_POS_PROCESSAMENTO;
     private String mETAPA_MONTAGEM;
+    private String mETAPA_INTEGRALIZACAO;
 
     private String mSTATUS_NAO;
     private String mSTATUS_SUCESSO;
@@ -83,8 +85,10 @@ public class Sigmaz_Etapas {
     private int mPosInt;
     private int mPassos;
 
+    private boolean mDebugar;
+
     public enum Fases {
-        PRE_PROCESSAMENTO, LEXER, PARSER, POS_PROCESSAMENTO, MONTAGEM, PRONTO;
+        PRE_PROCESSAMENTO, LEXER, PARSER, POS_PROCESSAMENTO, INTEGRALIZACAO, MONTAGEM, PRONTO;
     }
 
     public boolean estaPre() {
@@ -114,6 +118,7 @@ public class Sigmaz_Etapas {
         mETAPA_LEXER = mSTATUS_NAO;
         mETAPA_PARSER = mSTATUS_NAO;
         mETAPA_POS_PROCESSAMENTO = mSTATUS_NAO;
+        mETAPA_INTEGRALIZACAO = mSTATUS_NAO;
         mETAPA_MONTAGEM = mSTATUS_NAO;
 
         mASTS = new ArrayList<AST>();
@@ -160,14 +165,16 @@ public class Sigmaz_Etapas {
         mErros_Execucao = new ArrayList<String>();
 
         mEtapa = "";
+        mDebugar=false;
 
     }
 
 
-    public void init(String eArquivo, String eSaida, int eOpcao) {
+    public void init(String eArquivo, String eSaida, int eOpcao,boolean eDebugar) {
 
         limpar();
 
+        mDebugar=eDebugar;
 
         mSaida = eSaida;
         mArquivo = eArquivo;
@@ -286,26 +293,36 @@ public class Sigmaz_Etapas {
         }
 
         if (mContinuar == 5) {
-            montagem_iniciar(mSaida);
+            integralizar_iniciar();
             return;
         }
 
         if (mContinuar == 6) {
-            montagem_continuar();
+            integralizar_realizar();
             return;
         }
 
         if (mContinuar == 7) {
-            montagem_terminar();
+            montagem_iniciar(mSaida);
             return;
         }
 
         if (mContinuar == 8) {
-            terminar();
+            montagem_continuar();
             return;
         }
 
         if (mContinuar == 9) {
+            montagem_terminar();
+            return;
+        }
+
+        if (mContinuar == 10) {
+            terminar();
+            return;
+        }
+
+        if (mContinuar == 10) {
             mEtapa = "";
             mSubEtapa = "";
         }
@@ -315,8 +332,8 @@ public class Sigmaz_Etapas {
 
     public void verificarSeTemErros() {
 
-        if (mErros_Mensagens.size()>0){
-            mTemErros=true;
+        if (mErros_Mensagens.size() > 0) {
+            mTemErros = true;
         }
 
         if (mTemErros) {
@@ -329,7 +346,7 @@ public class Sigmaz_Etapas {
 
         mEstaPreProcessando = true;
 
-        executar_PreProcessamento(mArquivo, mOpcao);
+        executar_PreProcessamento(mArquivo, mOpcao,mDebugar);
 
     }
 
@@ -392,7 +409,6 @@ public class Sigmaz_Etapas {
         mEstaPreProcessando = false;
 
     }
-
 
 
     private void continuar_PosProcessamento() {
@@ -462,8 +478,7 @@ public class Sigmaz_Etapas {
         mEtapa = "Organizando";
         mSubEtapa = "";
         mContinuar = 5;
-        mFase = Fases.MONTAGEM;
-        mETAPA_MONTAGEM = "MONTANDO -->> " + mSaida;
+        mFase = Fases.INTEGRALIZACAO;
 
         try {
 
@@ -478,7 +493,7 @@ public class Sigmaz_Etapas {
 
     public void terminar() {
 
-        mContinuar = 9;
+        mContinuar = 10;
 
         if (mDebug) {
 
@@ -522,18 +537,18 @@ public class Sigmaz_Etapas {
     }
 
     public boolean getTerminou() {
-        return mContinuar > 7;
+        return mContinuar > 9;
     }
 
     public int getContinuar() {
         return mContinuar;
     }
 
-    private void executar_PreProcessamento(String eArquivo, int mOpcao) {
+    private void executar_PreProcessamento(String eArquivo, int mOpcao, boolean mDebugar) {
 
         if (mFase == Fases.PRE_PROCESSAMENTO) {
 
-            initPreProcessamento(eArquivo, mOpcao);
+            initPreProcessamento(eArquivo, mOpcao,mDebugar);
 
             mPreInt = 1;
 
@@ -696,6 +711,58 @@ public class Sigmaz_Etapas {
 
     }
 
+    public void integralizar_iniciar() {
+        if (mFase == Fases.INTEGRALIZACAO) {
+
+            mEtapa = "Integralizacao";
+            mSubEtapa = "";
+            mETAPA_INTEGRALIZACAO = "EXECUTANDO";
+            mContinuar = 6;
+
+        }
+    }
+
+    public void integralizar_realizar() {
+
+
+        if (mFase == Fases.INTEGRALIZACAO) {
+
+            mEtapa = "Integralizacao";
+            mSubEtapa = "";
+
+
+            Integrador mIntegrador = new Integrador();
+
+            mIntegrador.setDebug(false);
+
+            mIntegrador.init(getASTS(), "");
+
+            mETAPA_INTEGRALIZACAO = "CONCLUIDO";
+
+            for (String eMensagem : mIntegrador.getMensagens()) {
+                mDebugMensagens.add(eMensagem);
+            }
+
+
+            if (mIntegrador.getErros().size() == 0) {
+
+                mETAPA_INTEGRALIZACAO = mSTATUS_SUCESSO;
+                mFase = Fases.MONTAGEM;
+
+            } else {
+
+                mETAPA_INTEGRALIZACAO = mSTATUS_FALHOU;
+
+
+            }
+
+            System.out.println("\t - 5 : Integralizacao          : " + mETAPA_INTEGRALIZACAO);
+
+            mContinuar = 7;
+
+        }
+
+    }
 
     public void montagem_iniciar(String mSaida) {
 
@@ -704,6 +771,7 @@ public class Sigmaz_Etapas {
 
             mEtapa = "Montagem";
             mSubEtapa = "Objeto";
+            mETAPA_MONTAGEM = "MONTANDO -->> " + mSaida;
 
             ArrayList<AST> mASTCabecalhos = new ArrayList<AST>();
 
@@ -720,7 +788,7 @@ public class Sigmaz_Etapas {
 
             mETAPA_MONTAGEM = "EXECUTANDO -->> " + MontadorC.getFase();
 
-            mContinuar = 6;
+            mContinuar = 8;
 
         }
 
@@ -735,7 +803,7 @@ public class Sigmaz_Etapas {
             mETAPA_MONTAGEM = "EXECUTANDO -->> " + MontadorC.getFase();
 
             if (MontadorC.getTerminou()) {
-                mContinuar = 7;
+                mContinuar = 9;
             }
 
         }
@@ -753,15 +821,15 @@ public class Sigmaz_Etapas {
             for (String eMensagem : MontadorC.getMensagens()) {
                 mDebugMensagens.add(eMensagem);
             }
-            mContinuar = 8;
+            mContinuar = 10;
 
-            System.out.println("\t - 5 : Montagem                : " + mETAPA_MONTAGEM);
+            System.out.println("\t - 6 : Montagem                : " + mETAPA_MONTAGEM);
 
         }
     }
 
 
-    public void initprevarios(ArrayList<String> eArquivos, int mOpcao) {
+    public void initprevarios(ArrayList<String> eArquivos, int mOpcao,boolean mDebugar) {
 
         limpar();
 
@@ -788,14 +856,14 @@ public class Sigmaz_Etapas {
 
 
         mPreProcessador = new Compilador();
-        mPreProcessador.initPassos(eArquivos, AST_Raiz);
+        mPreProcessador.initPassos(eArquivos, AST_Raiz,mDebugar);
         mPreProcessando = mPreProcessador.getProcessando();
 
 
     }
 
 
-    public void initPreProcessamento(String eArquivo, int mOpcao) {
+    public void initPreProcessamento(String eArquivo, int mOpcao,boolean mDebugar) {
 
         mPreInt = 0;
         mPreProcessando = "";
@@ -805,7 +873,7 @@ public class Sigmaz_Etapas {
         ArrayList<String> eArquivos = new ArrayList<String>();
         eArquivos.add(eArquivo);
 
-        initprevarios(eArquivos, mOpcao);
+        initprevarios(eArquivos, mOpcao,mDebugar);
 
     }
 
@@ -943,6 +1011,11 @@ public class Sigmaz_Etapas {
     public String getMontagem() {
         return mETAPA_MONTAGEM;
     }
+
+    public String getIntegralizacao() {
+        return mETAPA_INTEGRALIZACAO;
+    }
+
 
     public void mostrarDebug(boolean eDebug) {
         mDebug = eDebug;

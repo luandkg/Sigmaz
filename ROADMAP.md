@@ -553,3 +553,7 @@ Linguagem de Programação Estruturada - Implementações
 		2020 11 01 -->> PosProcessador Tipador : Refatoramento
 		2020 11 01 -->> Integralizador
 
+
+		2020 11 02 -->> Integrealização - Compilador Etapas
+		2020 11 02 -->> Debug para execução
+

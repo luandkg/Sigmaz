@@ -59,36 +59,36 @@ public class RunValueType_Operator {
 
         if (eModo.mesmoNome("MATCH")) {
 
-            realizarOperacao(eRunValue,"MATCH", mRun_Esquerda, mRun_Direita, eRetorno);
+            realizarOperacao(eRunValue,ASTCorrente,"MATCH", mRun_Esquerda, mRun_Direita, eRetorno);
 
         } else if (eModo.mesmoNome("UNMATCH")) {
 
-            realizarOperacao(eRunValue,"UNMATCH", mRun_Esquerda, mRun_Direita, eRetorno);
+            realizarOperacao(eRunValue,ASTCorrente,"UNMATCH", mRun_Esquerda, mRun_Direita, eRetorno);
 
         } else if (eModo.mesmoNome("SUM")) {
 
-            realizarOperacao(eRunValue,"SUM", mRun_Esquerda, mRun_Direita, eRetorno);
+            realizarOperacao(eRunValue,ASTCorrente,"SUM", mRun_Esquerda, mRun_Direita, eRetorno);
         } else if (eModo.mesmoNome("SUB")) {
 
-            realizarOperacao(eRunValue,"SUB", mRun_Esquerda, mRun_Direita, eRetorno);
+            realizarOperacao(eRunValue,ASTCorrente,"SUB", mRun_Esquerda, mRun_Direita, eRetorno);
         } else if (eModo.mesmoNome("SUB")) {
 
-            realizarOperacao(eRunValue,"SUB", mRun_Esquerda, mRun_Direita, eRetorno);
+            realizarOperacao(eRunValue,ASTCorrente,"SUB", mRun_Esquerda, mRun_Direita, eRetorno);
         } else if (eModo.mesmoNome("MUX")) {
 
-            realizarOperacao(eRunValue,"MUX", mRun_Esquerda, mRun_Direita, eRetorno);
+            realizarOperacao(eRunValue,ASTCorrente,"MUX", mRun_Esquerda, mRun_Direita, eRetorno);
         } else if (eModo.mesmoNome("DIV")) {
 
-            realizarOperacao(eRunValue,"DIV", mRun_Esquerda, mRun_Direita, eRetorno);
+            realizarOperacao(eRunValue,ASTCorrente,"DIV", mRun_Esquerda, mRun_Direita, eRetorno);
         } else if (eModo.mesmoNome("GREAT")) {
 
-            realizarOperacao(eRunValue,"GREAT", mRun_Esquerda, mRun_Direita, eRetorno);
+            realizarOperacao(eRunValue,ASTCorrente,"GREAT", mRun_Esquerda, mRun_Direita, eRetorno);
         } else if (eModo.mesmoNome("LESS")) {
 
-            realizarOperacao(eRunValue,"LESS", mRun_Esquerda, mRun_Direita, eRetorno);
+            realizarOperacao(eRunValue,ASTCorrente,"LESS", mRun_Esquerda, mRun_Direita, eRetorno);
         } else if (eModo.mesmoNome("APPEND")) {
 
-            realizarOperacao(eRunValue,"APPEND", mRun_Esquerda, mRun_Direita, eRetorno);
+            realizarOperacao(eRunValue,ASTCorrente,"APPEND", mRun_Esquerda, mRun_Direita, eRetorno);
 
         } else {
             mRunTime.errar(mLocal, "Comparador Desconhecido : " + eModo.getNome());
@@ -97,7 +97,7 @@ public class RunValueType_Operator {
 
     }
 
-    public void realizarOperacao(Run_Value eRunValue,String eOperacao, Run_Value mRun_Esquerda, Run_Value mRun_Direita, String eRetorno) {
+    public void realizarOperacao(Run_Value eRunValue,AST ASTCorrente,String eOperacao, Run_Value mRun_Esquerda, Run_Value mRun_Direita, String eRetorno) {
 
 
         // System.out.println("Realizando Operacao : " + eOperacao + " :: " + eRetorno);
@@ -107,7 +107,7 @@ public class RunValueType_Operator {
 
 
         Run_Any mRun_Matchable = new Run_Any(mRunTime);
-        Item mItem = mRun_Matchable.init_Operation(eOperacao, mRun_Esquerda, mRun_Direita, mEscopo,eRetorno);
+        Item mItem = mRun_Matchable.init_Operation(eOperacao,ASTCorrente, mRun_Esquerda, mRun_Direita, mEscopo,eRetorno);
 
 
         if (mRunTime.getErros().size() > 0) {

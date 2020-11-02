@@ -255,7 +255,7 @@ public class Run_External {
             return mRet;
         }
 
-        return mRun_AnyScope.executeComRetorno("Run_Explicit_Function", "Function Explicit", ASTCorrente.getNome(), mEscopo, mEscopo.getOO().getFunctions_Extern(), mArgumentos, eRetorne);
+        return mRun_AnyScope.executeComRetorno("Run_Explicit_Function", "Function Explicit", ASTCorrente.getNome(), ASTCorrente,mEscopo, mEscopo.getOO().getFunctions_Extern(), mArgumentos, eRetorne);
 
 
     }
@@ -275,7 +275,7 @@ public class Run_External {
             return ;
         }
 
-         mRun_AnyScope.executeSemRetorno("Run_Explicit_Action", "Action Explicit", ASTCorrente.getNome(), mEscopo, mEscopo.getOO().getActionsFunctions_Extern(), mArgumentos);
+         mRun_AnyScope.executeSemRetorno("Run_Explicit_Action", "Action Explicit", ASTCorrente.getNome(),ASTCorrente, mEscopo, mEscopo.getOO().getActionsFunctions_Extern(), mArgumentos);
 
 
 

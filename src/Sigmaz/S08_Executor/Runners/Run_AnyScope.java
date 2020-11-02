@@ -1,5 +1,6 @@
 package Sigmaz.S08_Executor.Runners;
 
+import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S00_Utilitarios.Utilitario;
 import Sigmaz.S08_Executor.Escopo;
 import Sigmaz.S08_Executor.Indexador.Index_Action;
@@ -22,9 +23,9 @@ public class Run_AnyScope {
 
     }
 
-    public Item executeComRetorno(String eExecutor, String eGrupo, String eNome, Escopo mEscopo, ArrayList<Index_Function> eListagem, ArrayList<Item> mArgumentos, String eRetorno) {
+    public Item executeComRetorno(String eExecutor, String eGrupo, String eNome, AST ASTCorrente, Escopo mEscopo, ArrayList<Index_Function> eListagem, ArrayList<Item> mArgumentos, String eRetorno) {
 
-      //  System.out.println("\t\t  ------------------------------------------------");
+        //  System.out.println("\t\t  ------------------------------------------------");
 
         boolean realizada = false;
         Item mRet = new Item("");
@@ -48,15 +49,15 @@ public class Run_AnyScope {
         }
 
 
-        errar(eGrupo, eNome, mTipagem, mexecutarAST.mEnc, mexecutarAST.mAlgum, realizada, eExecutor);
+        errar(eGrupo, eNome, ASTCorrente, mTipagem, mexecutarAST.mEnc, mexecutarAST.mAlgum, realizada, eExecutor);
 
-      //  System.out.println("\t\t  ------------------------------------------------");
+        //  System.out.println("\t\t  ------------------------------------------------");
 
         return mRet;
 
     }
 
-    public Item executeComRetornoGet(String eExecutor, String eGrupo, String eNome, Escopo mEscopo, ArrayList<Index_Function> eListagem, ArrayList<Item> mArgumentos, String eRetorno) {
+    public Item executeComRetornoGet(String eExecutor, String eGrupo, String eNome, AST ASTCorrente, Escopo mEscopo, ArrayList<Index_Function> eListagem, ArrayList<Item> mArgumentos, String eRetorno) {
 
         boolean realizada = false;
         Item mRet = new Item("");
@@ -80,14 +81,14 @@ public class Run_AnyScope {
         }
 
 
-        errar(eGrupo, eNome, mTipagem, mexecutarAST.mEnc, mexecutarAST.mAlgum, realizada, eExecutor);
+        errar(eGrupo, eNome, ASTCorrente, mTipagem, mexecutarAST.mEnc, mexecutarAST.mAlgum, realizada, eExecutor);
 
         return mRet;
 
     }
 
 
-    public void executeSemRetorno(String eExecutor, String eGrupo, String eNome, Escopo mEscopo, ArrayList<Index_Action> eListagem, ArrayList<Item> mArgumentos) {
+    public void executeSemRetorno(String eExecutor, String eGrupo, String eNome, AST ASTCorrente, Escopo mEscopo, ArrayList<Index_Action> eListagem, ArrayList<Item> mArgumentos) {
 
         boolean realizada = false;
         Utilitario mUtilitario = new Utilitario();
@@ -108,25 +109,38 @@ public class Run_AnyScope {
 
         }
 
-        errar(eGrupo, eNome, mTipagem, mexecutarAST.mEnc, mexecutarAST.mAlgum, realizada, eExecutor);
+        errar(eGrupo, eNome, ASTCorrente, mTipagem, mexecutarAST.mEnc, mexecutarAST.mAlgum, realizada, eExecutor);
 
 
     }
 
 
-    public void errar(String eGrupo, String eNome, String mTipagem, boolean enc, boolean algum, boolean realizada, String mLocal) {
+    public void errar(String eGrupo, String eNome, AST ASTCorrente, String mTipagem, boolean enc, boolean algum, boolean realizada, String mLocal) {
 
         if (enc) {
             if (algum) {
                 if (realizada) {
                 } else {
                     mRunTime.errar(mLocal, eGrupo + " " + eNome + " : Argumentos incompativeis : " + mTipagem);
+
+                    if (mRunTime.isDebug()) {
+                        mRunTime.debug(ASTCorrente);
+                    }
                 }
             } else {
                 mRunTime.errar(mLocal, eGrupo + "  " + eNome + " " + mTipagem + " : Quantidade de Argumentos incompativeis !");
+
+                if (mRunTime.isDebug()) {
+                    mRunTime.debug(ASTCorrente);
+                }
             }
         } else {
             mRunTime.errar(mLocal, eGrupo + "  " + eNome + " " + mTipagem + " : Nao Encontrada !");
+
+            if (mRunTime.isDebug()) {
+                mRunTime.debug(ASTCorrente);
+            }
+
         }
 
 

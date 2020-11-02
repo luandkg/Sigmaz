@@ -32,3 +32,7 @@ Linguagem de Programação Estruturada - Implementações
 		 Iniciado : 2020 10 18
 		 Concluido : 2020 11 01
 		 Implementações : 72
+##  Bloco : 8
+		 Iniciado : 2020 11 02
+		 Atualização : 2020 11 02
+		 Implementações : 2

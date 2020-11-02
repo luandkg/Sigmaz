@@ -62,7 +62,7 @@ public class Runner_Generate {
               //  System.out.println("\t - INTELLISENSE -->> " + TempSource_Item);
              //   SigmazC.intellisense(TempSource_Item, TempIntellisenses, false, mRunMake.getIntellienseTheme(), TempIntellisenses);
 
-                SigmazC.initSemExecucao(TempSource_Item,TempIntellisenses,mRunMake.getLocal(),1);
+                SigmazC.initSemExecucao(TempSource_Item,TempIntellisenses,mRunMake.getLocal(),1,false);
 
                 if (!SigmazC.temErros())
                 {

@@ -58,7 +58,7 @@ public class Run_Required {
                     RunTime RunTimeC = new RunTime();
 
                     try {
-                        RunTimeC.init(mLocalBiblioteca);
+                        RunTimeC.init(mLocalBiblioteca,mRunTime.isDebug());
 
                         AST mBiblioteca = RunTimeC.getBranch("SIGMAZ");
 

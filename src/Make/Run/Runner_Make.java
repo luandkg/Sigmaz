@@ -52,7 +52,7 @@ public class Runner_Make {
                 //   System.out.println(" BUILD :: " + AST_MODE.getValor() + " -->> " + TempBuild);
 
 
-                SigmazC.initSemExecucao(TempSource, TempBuild,mRunMake.getBuild(), 1);
+                SigmazC.initSemExecucao(TempSource, TempBuild,mRunMake.getBuild(), 1,false);
 
             } else if (AST_MODE.mesmoValor("LIST")) {
 
@@ -78,7 +78,7 @@ public class Runner_Make {
                 //System.out.println(" BUILD :: " + AST_MODE.getValor() + " -->> " + TempBuild);
 
                 if (eQuantidade > 0) {
-                    SigmazC.initSemExecucao(eArquivos, TempBuild,mRunMake.getBuild(), 1);
+                    SigmazC.initSemExecucao(eArquivos, TempBuild,mRunMake.getBuild(), 1,false);
                 } else {
                     mRunMake.errar(mRunMake.getLocal(), "Make executable source vazio ! ");
                 }
@@ -105,7 +105,7 @@ public class Runner_Make {
                 //   System.out.println(" BUILD :: " + AST_MODE.getValor() + " -->> " + TempBuild);
 
 
-                SigmazC.initSemExecucao(TempSource, TempBuild, mRunMake.getBuild(),2);
+                SigmazC.initSemExecucao(TempSource, TempBuild, mRunMake.getBuild(),2,false);
 
 
             } else if (AST_MODE.mesmoValor("LIST")) {
@@ -132,7 +132,7 @@ public class Runner_Make {
                 //  System.out.println(" BUILD :: " + AST_MODE.getValor() + " -->> " + TempBuild);
 
                 if (eQuantidade > 0) {
-                    SigmazC.initSemExecucao(eArquivos, TempBuild, mRunMake.getBuild(),2);
+                    SigmazC.initSemExecucao(eArquivos, TempBuild, mRunMake.getBuild(),2,false);
                 } else {
                     mRunMake.errar(mRunMake.getLocal(), "Make executable source vazio ! ");
                 }

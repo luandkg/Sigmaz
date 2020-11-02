@@ -137,7 +137,7 @@ public class Integrador {
                                 RunTime RunTimeC = new RunTime();
 
                                 try {
-                                    RunTimeC.init(mReq);
+                                    RunTimeC.init(mReq,false);
 
 
                                     mRequisicoes.add(RunTimeC.getBranch("SIGMAZ"));

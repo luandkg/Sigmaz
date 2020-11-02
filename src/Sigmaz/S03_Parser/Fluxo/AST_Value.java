@@ -34,7 +34,6 @@ public class AST_Value {
     }
 
 
-
     public void setBuscadorDeArgumentos() {
 
         mTerminadorPrimario = TokenTipo.VIRGULA;
@@ -126,6 +125,9 @@ public class AST_Value {
 
         ASTDireita.setTipo("RIGHT");
 
+        if (mCompiler.getIsDebug()) {
+            mCompiler.debug(ASTPai);
+        }
 
     }
 
@@ -556,7 +558,6 @@ public class AST_Value {
             } else if (mCompiler.getTokenCorrente().getTipo() == mTerminadorSecundario) {
                 return;
             }
-
 
 
             terminar();

@@ -54,6 +54,7 @@ public class Compilador {
     private Etapa mEtapa;
 
     private String mArquivoCorrente;
+    private boolean mIsDebug;
 
     public Compilador() {
 
@@ -70,8 +71,8 @@ public class Compilador {
         mParser_Tokens = 0;
         mParser_Objetos = 0;
 
-        mComentario_Contagem=0;
-        mComentario_Tokens=0;
+        mComentario_Contagem = 0;
+        mComentario_Tokens = 0;
 
         mRequisitados = new ArrayList<>();
 
@@ -84,6 +85,7 @@ public class Compilador {
         mEtapas = new ArrayList<Etapa>();
         mEtapaID = 0;
         mQuantidade = 0;
+        mIsDebug = false;
 
     }
 
@@ -91,12 +93,12 @@ public class Compilador {
         return mEtapas;
     }
 
-    public void init(ArrayList<String> eArquivos, AST AST_Raiz) {
+    public void init(ArrayList<String> eArquivos, AST AST_Raiz, boolean mDebugar) {
 
 
-        initPassos(eArquivos,AST_Raiz);
+        initPassos(eArquivos, AST_Raiz, mDebugar);
 
-        while(!getTerminou()){
+        while (!getTerminou()) {
             continuar();
         }
 
@@ -178,12 +180,11 @@ public class Compilador {
     }
 
 
+    public void initPassos(ArrayList<String> eArquivos, AST eAST_Raiz, boolean mDebugar) {
 
+        mIsDebug = mDebugar;
 
-    public void initPassos(ArrayList<String> eArquivos, AST eAST_Raiz) {
-
-
-        AST_Raiz=eAST_Raiz;
+        AST_Raiz = eAST_Raiz;
 
         mLexer_Tokens = 0;
         mLexer_Chars = 0;
@@ -192,8 +193,8 @@ public class Compilador {
         mParser_Objetos = 0;
 
 
-        mComentario_Contagem=0;
-        mComentario_Tokens=0;
+        mComentario_Contagem = 0;
+        mComentario_Tokens = 0;
 
 
         mRequisitados.clear();
@@ -231,7 +232,6 @@ public class Compilador {
 
 
     }
-
 
 
     public void continuar() {
@@ -343,7 +343,7 @@ public class Compilador {
                 ArrayList<Token> mTokens = comentarios_remover(mArquivoCorrente, mLexer.getTokens());
 
 
-                 mParser = realizar_Parser(mArquivoCorrente, mLocal, mTokens, AST_Raiz, mRequisitados);
+                mParser = realizar_Parser(mArquivoCorrente, mLocal, mTokens, AST_Raiz, mRequisitados);
 
 
                 mQuantidade += 1;
@@ -459,7 +459,7 @@ public class Compilador {
     public Parser realizar_Parser(String eArquivo, String eLocal, ArrayList<Token> eTokens, AST AST_Raiz, ArrayList<String> eRequisitados) {
 
         Parser mParser = new Parser();
-        mParser.init(eArquivo, eLocal, eTokens, AST_Raiz, eRequisitados);
+        mParser.init(eArquivo, eLocal, mIsDebug,eTokens, AST_Raiz, eRequisitados);
 
         mParser_Processamento += "\t" + mQuantidade + "  -->> " + eArquivo + " [ Tokens : " + mParser.getTokens().size() + " ASTS : " + mParser.getObjetos() + " ]\n";
 
@@ -501,8 +501,8 @@ public class Compilador {
         mComentario_Processamento += "\t" + mQuantidade + "  -->> " + eArquivo + " [ Tokens : " + mTokens_Entrada.size() + " Comentarios : " + ic + " ]\n";
 
 
-        mComentario_Contagem+=ic;
-        mComentario_Tokens+=mTokens_Entrada.size();
+        mComentario_Contagem += ic;
+        mComentario_Tokens += mTokens_Entrada.size();
 
         return mTokens_Saida;
     }

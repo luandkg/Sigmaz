@@ -64,59 +64,59 @@ public class Formatador2 {
 
                 log("DEFINE");
 
-                formate_Valor(TokenC, mTab,true);
+                formate_Valor(TokenC, mTab, true);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 
                 log("MOCKIZ");
 
-                formate_Valor(TokenC, mTab,true);
+                formate_Valor(TokenC, mTab, true);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("refer")) {
 
                 log("REFER");
 
-                formate_Valor(TokenC, mTab,true);
+                formate_Valor(TokenC, mTab, true);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
 
                 log("ACT");
 
-                formate_Simples(TokenC, mTab);
+                formate_Simples(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
 
                 log("FUNC");
 
-                formate_Simples(TokenC, mTab);
+                formate_Simples(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("auto")) {
 
                 log("AUTO");
 
-                formate_Simples(TokenC, mTab);
+                formate_Simples(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("functor")) {
 
                 log("FUNCTOR");
 
-                formate_Simples(TokenC, mTab);
+                formate_Simples(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operator")) {
 
                 log("OPERATOR");
 
-                formate_Simples(TokenC, mTab);
+                formate_Simples(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("director")) {
 
-                formate_Simples(TokenC, mTab);
+                formate_Simples(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("default")) {
 
                 log("DEFAULT");
 
-                formate_Simples(TokenC, mTab);
+                formate_Simples(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("cast")) {
 
@@ -140,13 +140,13 @@ public class Formatador2 {
 
                 log("MODEL");
 
-                formate_Model(TokenC, mTab);
+                formate_Model(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("struct")) {
 
                 log("STRUCT");
 
-                formate_Struct(TokenC, mTab);
+                formate_Struct(mTab);
 
 
             } else {
@@ -220,17 +220,22 @@ public class Formatador2 {
 
     }
 
-    public void formate_Simples(Token TokenOrigem, int mTab) {
+    public void formate_Simples(int mTab) {
+
+
+        tudoAteIniciarEscopo(mTab);
+
+
+        int mDentro = mTab + 1;
 
         pularLinha();
-
-        eDocumento += getTabulacao(mTab) + TokenOrigem.getConteudo();
+        eDocumento += getTabulacao(mDentro);
 
         mIndex += 1;
 
-
         while (mIndex < mQuantidade) {
             Token TokenC = LexerC.getTokens().get(mIndex);
+
 
             if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
 
@@ -248,9 +253,19 @@ public class Formatador2 {
             } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
 
 
-                dentroCorpo(TokenC, mTab);
+                dentroSubCorpo(TokenC, mDentro);
 
                 break;
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
+                eDocumento += getTabulacao(mTab) + TokenC.getConteudo();
+
+                break;
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("return")) {
+
+                formate_Valor(TokenC, mDentro, false);
 
             } else {
 
@@ -407,13 +422,10 @@ public class Formatador2 {
 
     }
 
-    public void formate_Model(Token TokenOrigem, int mTab) {
+    public void tudoAteIniciarEscopo(int mTab) {
 
         pularLinha();
-
-        eDocumento += getTabulacao(mTab) + TokenOrigem.getConteudo();
-
-        mIndex += 1;
+        eDocumento += getTabulacao(mTab);
 
 
         while (mIndex < mQuantidade) {
@@ -425,23 +437,23 @@ public class Formatador2 {
 
             } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
 
-                eDocumento += " " + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
+                eDocumento += TokenC.getConteudo() + "\n" + getTabulacao(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
 
-                eDocumento += getTexto(TokenC);
+                eDocumento += getTexto(TokenC) + " ";
 
 
             } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
 
 
-                dentroCorpoModel(TokenC, mTab);
+                eDocumento += TokenC.getConteudo() + " ";
 
                 break;
 
             } else {
 
-                eDocumento += " " + TokenC.getConteudo();
+                eDocumento += TokenC.getConteudo() + " ";
 
 
             }
@@ -450,15 +462,17 @@ public class Formatador2 {
 
         }
 
-
     }
 
+    public void formate_Model(int mTab) {
 
-    public void formate_Struct(Token TokenOrigem, int mTab) {
+        tudoAteIniciarEscopo(mTab);
+
+
+        int mDentro = mTab + 1;
 
         pularLinha();
-
-        eDocumento += TokenOrigem.getConteudo();
+        eDocumento += getTabulacao(mDentro);
 
         mIndex += 1;
 
@@ -468,33 +482,180 @@ public class Formatador2 {
 
             if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
 
-                eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
+                eDocumento += "\n" + getTabulacao(mDentro) + TokenC.getConteudo() + "\n" + getTabulacao(mDentro);
 
             } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
 
-                eDocumento += " " + TokenC.getConteudo() + "\n";
+                eDocumento += " " + TokenC.getConteudo() + "\n" + getTabulacao(mDentro);
 
             } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
 
-                eDocumento += getTexto(TokenC);
-
+                eDocumento += " " + getTexto(TokenC);
 
             } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
 
+                dentroCorpo(TokenC, mDentro);
 
-                dentroCorpoStruct(TokenC, mTab);
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
+
+                pularLinha();
+                eDocumento += getTabulacao(mTab) + TokenC.getConteudo();
+                pularLinha();
+                eDocumento += getTabulacao(mTab);
 
                 break;
 
+            } else if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
+
+                eDocumento += TokenC.getConteudo();
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
+
+                formate_Valor(TokenC, mDentro, true);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
+
+                formate_Valor(TokenC, mDentro, true);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
+
+                formate_Valor(TokenC, mDentro, true);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
+
+                formate_Valor(TokenC, mDentro, true);
+
+            } else {
+                eDocumento += " " + TokenC.getConteudo();
+            }
+
+            mIndex += 1;
+        }
+
+
+    }
+
+
+    public void formate_Struct(int mTab) {
+
+        tudoAteIniciarEscopo(mTab);
+
+
+        int mDentro = mTab + 1;
+
+        pularLinha();
+        eDocumento += getTabulacao(mDentro);
+
+        mIndex += 1;
+
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = LexerC.getTokens().get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eDocumento += "\n" + getTabulacao(mDentro) + TokenC.getConteudo() + "\n" + getTabulacao(mDentro);
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eDocumento += " " + TokenC.getConteudo() + "\n" + getTabulacao(mDentro);
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eDocumento += getTexto(TokenC) + " ";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
+                pularLinha();
+                eDocumento += getTabulacao(mTab) + TokenC.getConteudo();
+                pularLinha();
+
+                break;
+
+            } else if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
+
+                eDocumento += TokenC.getConteudo();
+                pularLinha();
+                boolean fechador = false;
+
+                int mFuturo = mIndex + 1;
+                if (mFuturo < mQuantidade) {
+                    Token mTokenFuturo = LexerC.getTokens().get(mFuturo);
+                    if (mTokenFuturo.getTipo() == TokenTipo.CHAVE_FECHA) {
+                        fechador = true;
+                    }
+                }
+
+                if (fechador) {
+                    eDocumento += getTabulacao(mTab);
+                } else {
+                    eDocumento += getTabulacao(mDentro);
+                }
+
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("init")) {
+
+                System.out.println("\t STRUCT INIT");
+                formate_Simples(mTab+1);
+
+                pularLinha();
+                eDocumento += getTabulacao(mTab);
+
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("restrict")) {
+
+                System.out.println("\t STRUCT RESTRICT");
+
+                pularLinha();
+                eDocumento += getTabulacao(mTab + 1) + TokenC.getConteudo();
+                dentroStructSub(mDentro + 1);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("all")) {
+
+                System.out.println("\t STRUCT ALL");
+
+                pularLinha();
+                eDocumento += getTabulacao(mTab + 1) + TokenC.getConteudo();
+                dentroStructSub(mDentro + 1);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("explicit")) {
+
+                System.out.println("\t STRUCT EXPLICIT");
+
+                pularLinha();
+                eDocumento += getTabulacao(mTab + 1) + TokenC.getConteudo();
+                dentroStructSub(mDentro + 1);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("implicit")) {
+
+                System.out.println("\t STRUCT IMPLICIT");
+
+                pularLinha();
+                eDocumento += getTabulacao(mTab + 1) + TokenC.getConteudo();
+                dentroStructSub(mDentro + 1);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("extra")) {
+
+                System.out.println("\t STRUCT EXTRA");
+
+                pularLinha();
+                eDocumento += getTabulacao(mTab + 1) + TokenC.getConteudo();
+                dentroStructSub(mDentro + 1);
+
             } else {
 
-                eDocumento += " " + TokenC.getConteudo();
+                if (TokenC.getTipo() == TokenTipo.PONTO) {
+                    eDocumento += TokenC.getConteudo();
+                } else {
+                    eDocumento += " " + TokenC.getConteudo();
+                }
 
 
             }
 
             mIndex += 1;
-
         }
 
 
@@ -506,6 +667,7 @@ public class Formatador2 {
 
         eDocumento += " " + TokenOrigem.getConteudo() + " ";
 
+
         mIndex += 1;
 
         int mTabFora = mTab;
@@ -514,14 +676,13 @@ public class Formatador2 {
         pularLinha();
 
 
-        log(getTabulacao(mTab) + "CORPO : " + mTab);
-
-
-
+        log(getTabulacao(mTab) + "ICORPO : " + mTab);
 
 
         while (mIndex < mQuantidade) {
             Token TokenC = LexerC.getTokens().get(mIndex);
+
+            System.out.println(TokenC.getConteudo());
 
             if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
 
@@ -565,6 +726,33 @@ public class Formatador2 {
 
                 }
 
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("def")) {
+
+                formate_Valor(TokenC, mTabDentro, false);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("moc")) {
+
+                formate_Valor(TokenC, mTabDentro, false);
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("let")) {
+
+                formate_Valor(TokenC, mTabDentro, false);
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("voz")) {
+
+                formate_Valor(TokenC, mTabDentro, false);
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mut")) {
+
+                formate_Valor(TokenC, mTabDentro, false);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("each")) {
+
+                formate_Simples(mTabDentro);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("return")) {
+
+                System.out.println("RETURN");
+
+                formate_Valor(TokenC, mTabDentro, false);
+
             } else {
 
                 if (TokenC.getTipo() == TokenTipo.PONTO) {
@@ -585,36 +773,11 @@ public class Formatador2 {
                     if (pontuado) {
                         eDocumento += TokenC.getConteudo();
                     } else {
-                        if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("def")) {
 
-                            formate_Valor(TokenC, mTabDentro,false);
 
-                        } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("moc")) {
+                        formate_Valor(TokenC, mTabDentro, false);
 
-                            formate_Valor(TokenC, mTabDentro,false);
-                        } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("let")) {
 
-                            formate_Valor(TokenC, mTabDentro,false);
-                        } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("voz")) {
-
-                            formate_Valor(TokenC, mTabDentro,false);
-                        } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mut")) {
-
-                            formate_Valor(TokenC, mTabDentro,false);
-
-                        } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("each")) {
-
-                            formate_Simples(TokenC, mTabDentro);
-
-                        } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("return")) {
-
-                            formate_Valor(TokenC, mTabDentro,false);
-
-                        } else {
-
-                            formate_Valor(TokenC, mTabDentro,false);
-
-                        }
                     }
                 }
 
@@ -712,7 +875,7 @@ public class Formatador2 {
                     } else {
                         if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("def")) {
 
-                            formate_Valor(TokenC, mDentro,false);
+                            formate_Valor(TokenC, mDentro, false);
 
                         } else {
                             eDocumento += " " + TokenC.getConteudo();
@@ -892,105 +1055,11 @@ public class Formatador2 {
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
 
-                formate_Valor(TokenC, mTab,true);
+                formate_Valor(TokenC, mTab, true);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 
-                formate_Valor(TokenC, mTab,true);
-
-            } else {
-                eDocumento += " " + TokenC.getConteudo();
-            }
-
-            mIndex += 1;
-        }
-
-        mTab = mTabAntes;
-
-    }
-
-    public void dentroCorpoModel(Token TokenOrigem, int mTab) {
-
-
-        eDocumento += " " + TokenOrigem.getConteudo();
-
-        mIndex += 1;
-
-        int mTabAntes = mTab;
-
-        int mTabCorpo = mTab + 1;
-
-
-        pularLinha();
-        pularLinha();
-
-        mTab += 1;
-
-        boolean fechadorOrigem = false;
-
-        int mCorrente = mIndex;
-        if (mCorrente < mQuantidade) {
-            Token mTokenFuturo = LexerC.getTokens().get(mCorrente);
-            if (mTokenFuturo.getTipo() == TokenTipo.CHAVE_FECHA) {
-                fechadorOrigem = true;
-            }
-        }
-
-        if (fechadorOrigem) {
-            eDocumento += getTabulacao(mTab - 1);
-        } else {
-            eDocumento += getTabulacao(mTab);
-        }
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mTabCorpo) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n" + getTabulacao(mTabCorpo);
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += " " + getTexto(TokenC);
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
-
-                dentroCorpo(TokenC, mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
-
-
-                pularLinha();
-                eDocumento += getTabulacao(mTabAntes) + TokenC.getConteudo();
-                pularLinha();
-                eDocumento += getTabulacao(mTabAntes);
-
-                break;
-
-            } else if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
-
-                eDocumento += TokenC.getConteudo();
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
-
-                formate_Valor(TokenC, mTab,true);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
-
-                formate_Valor(TokenC, mTab,true);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
-
-                formate_Valor(TokenC, mTab,true);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
-
-                formate_Valor(TokenC, mTab,true);
+                formate_Valor(TokenC, mTab, true);
 
             } else {
                 eDocumento += " " + TokenC.getConteudo();
@@ -1055,19 +1124,19 @@ public class Formatador2 {
 
                 log("\tCAST GETTER");
 
-                formate_Simples(TokenC, mTab);
+                formate_Simples(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("setter")) {
 
                 log("\tCAST SETTER");
 
-                formate_Simples(TokenC, mTab);
+                formate_Simples(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("default")) {
 
                 log("\tCAST DEFAULT");
 
-                formate_Simples(TokenC, mTab);
+                formate_Simples(mTab);
 
 
             } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
@@ -1125,7 +1194,7 @@ public class Formatador2 {
                     } else {
                         if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("def")) {
 
-                            formate_Valor(TokenC, mTab,false);
+                            formate_Valor(TokenC, mTab, false);
 
                         } else {
                             eDocumento += " " + TokenC.getConteudo();
@@ -1313,10 +1382,10 @@ public class Formatador2 {
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("init")) {
 
-                formate_Simples(TokenC, mStructTab);
+                formate_Simples(mStructTab);
 
                 pularLinha();
-                eDocumento += getTabulacao(mTab) ;
+                eDocumento += getTabulacao(mTab);
 
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("restrict")) {
@@ -1420,43 +1489,45 @@ public class Formatador2 {
 
                 mTab = mAntes;
 
-                formate_Simples(TokenC, mTab);
+                formate_Simples(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
 
+                System.out.println("\t\t\tFUNC");
+
                 mTab = mAntes;
 
-                formate_Simples(TokenC, mTab);
+                formate_Simples(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
 
                 mTab = mAntes;
 
-                formate_Valor(TokenC, mTab,true);
+                formate_Valor(TokenC, mTab, true);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 
                 mTab = mAntes;
 
-                formate_Valor(TokenC, mTab,true);
+                formate_Valor(TokenC, mTab, true);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operator")) {
 
                 mTab = mAntes;
 
-                formate_Simples(TokenC, mTab);
+                formate_Simples(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("director")) {
 
                 mTab = mAntes;
 
-                formate_Simples(TokenC, mTab);
+                formate_Simples(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("destruct")) {
 
                 mTab = mAntes;
 
-                formate_Simples(TokenC, mTab);
+                formate_Simples(mTab);
 
             } else {
                 mIndex -= 1;

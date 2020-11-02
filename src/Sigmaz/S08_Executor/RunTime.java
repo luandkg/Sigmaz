@@ -16,6 +16,8 @@ public class RunTime {
 
 
     private ArrayList<String> mErros;
+    private ArrayList<String> mDebugs;
+
     private ArrayList<String> mMensagens;
 
     private Escopo mEscopoGlobal;
@@ -40,6 +42,8 @@ public class RunTime {
     private float mTempo_Execucao;
     private float mTempo_Inicializacao;
 
+    private boolean mIsDebug;
+    private AST mASTDebug;
 
     public RunTime() {
 
@@ -48,6 +52,7 @@ public class RunTime {
 
 
         mErros = new ArrayList<>();
+        mDebugs = new ArrayList<>();
         mMensagens = new ArrayList<String>();
 
         mGlobalPackages = new ArrayList<AST>();
@@ -69,11 +74,20 @@ public class RunTime {
         mTempo_Organizacao = 0.0F;
         mTempo_Execucao = 0.0F;
         mTempo_Inicializacao = 0.0F;
+
+        mIsDebug = false;
+        mASTDebug = null;
+
+    }
+
+    public AST getASTDebug() {
+        return mASTDebug;
     }
 
 
-    public void init(String eArquivo) {
+    public void init(String eArquivo, boolean eDebugar) {
 
+        mIsDebug = eDebugar;
 
         limpar();
 
@@ -123,6 +137,11 @@ public class RunTime {
 
         if (existeBranch("SIGMAZ")) {
 
+            AST ASTCGlobal = getBranch("SIGMAZ");
+
+            mASTDebug = getASTDebug(ASTCGlobal);
+
+
             Run_Required mRun_Required = new Run_Required(this);
             mRun_Required.requerer(getBranch("SIGMAZ"));
 
@@ -130,7 +149,6 @@ public class RunTime {
 
             mChronos.marqueInicio();
 
-            AST ASTCGlobal = getBranch("SIGMAZ");
 
             Escopo Global = new Escopo("GLOBAL", this);
 
@@ -147,12 +165,9 @@ public class RunTime {
             mTempo_Execucao = mChronos.getIntervalo();
 
 
-        }else{
+        } else {
             mErros.add("Sigmaz Vazio !");
         }
-
-
-
 
 
     }
@@ -206,6 +221,7 @@ public class RunTime {
     public void limpar() {
 
         mErros.clear();
+        mDebugs.clear();
         mMensagens.clear();
 
         mGlobalPackages.clear();
@@ -222,7 +238,7 @@ public class RunTime {
 
     }
 
-    public void limpar_run(){
+    public void limpar_run() {
 
         mTempo_Execucao = 0.0F;
         mErros.clear();
@@ -270,6 +286,16 @@ public class RunTime {
         return mErros;
     }
 
+    public ArrayList<String> getDebugs() {
+        return mDebugs;
+    }
+
+    public boolean isDebug() {
+        return mIsDebug;
+    }
+
+    ;
+
     public Processador getProcessador() {
         return mProcessador;
     }
@@ -285,7 +311,6 @@ public class RunTime {
         }
         return ret;
     }
-
 
 
     public AST getBranch(String eTipo) {
@@ -339,6 +364,44 @@ public class RunTime {
 
     }
 
+
+    public AST getASTDebug(AST AST_Raiz) {
+        AST mRet = null;
+        boolean mEnc = false;
+
+        for (AST eAST : AST_Raiz.getASTS()) {
+            if (eAST.mesmoTipo("DEBUG_MODE")) {
+                mRet = eAST;
+                mEnc = true;
+                break;
+            }
+        }
+        if (!mEnc) {
+            mRet = AST_Raiz.criarBranch("DEBUG_MODE");
+        }
+
+        return mRet;
+    }
+
+    public void debug(AST ASTCorrente) {
+
+        AST InDebug = ASTCorrente.getBranch("IN_DEBUG");
+
+        String eArquivo = InDebug.getNome();
+        String eLocalizacao = InDebug.getValor();
+
+        String mArquivo = eArquivo;
+
+        for (AST eD : mASTDebug.getASTS()) {
+            if (eD.mesmoNome(eArquivo)) {
+                mArquivo = eD.getValor();
+                break;
+            }
+        }
+
+        mDebugs.add(mArquivo + " -->> " + eLocalizacao);
+
+    }
 
     public float getTempo_Leitura() {
         return mTempo_Leitura;

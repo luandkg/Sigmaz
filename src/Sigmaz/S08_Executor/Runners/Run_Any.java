@@ -40,7 +40,7 @@ public class Run_Any {
             return mRet;
         }
 
-        mRet = mRun_AnyScope.executeComRetorno("Run_Function", "Function", ASTCorrente.getNome(), mEscopo, eFunctions, mArgumentos, eRetorno);
+        mRet = mRun_AnyScope.executeComRetorno("Run_Function", "Function", ASTCorrente.getNome(), ASTCorrente,mEscopo, eFunctions, mArgumentos, eRetorno);
 
         return mRet;
 
@@ -57,7 +57,7 @@ public class Run_Any {
             return;
         }
 
-        mRun_AnyScope.executeSemRetorno("Run_Action", "Action", ASTCorrente.getNome(), mEscopo, eActions, mArgumentos);
+        mRun_AnyScope.executeSemRetorno("Run_Action", "Action", ASTCorrente.getNome(),ASTCorrente, mEscopo, eActions, mArgumentos);
 
 
     }
@@ -73,12 +73,12 @@ public class Run_Any {
         }
 
 
-        mRun_AnyScope.executeSemRetorno("Run_Action", "Action", ASTCorrente.getNome(), mEscopo, mEscopo.getActionFunctionsCompleto(), mArgumentos);
+        mRun_AnyScope.executeSemRetorno("Run_Action", "Action", ASTCorrente.getNome(),ASTCorrente, mEscopo, mEscopo.getActionFunctionsCompleto(), mArgumentos);
 
 
     }
 
-    public Item init_Operation(String eNome, Run_Value Esquerda, Run_Value Direita, Escopo mEscopo, String eReturne) {
+    public Item init_Operation(String eNome,AST ASTCorrente, Run_Value Esquerda, Run_Value Direita, Escopo mEscopo, String eReturne) {
 
 
         Item mItem = new Item("");
@@ -97,7 +97,7 @@ public class Run_Any {
         }
 
         //  mItem = mRun_AnyScope.executeComRetorno("Run_Operator", "Operator", eNome, mEscopo, getIndexaveis(mOperadores, mEscopo), mArgumentos, eReturne);
-        mItem = mRun_AnyScope.executeComRetorno("Run_Operator", "Operator", eNome, mEscopo, mRun_Context.getOperatorsContexto(mEscopo), mArgumentos, eReturne);
+        mItem = mRun_AnyScope.executeComRetorno("Run_Operator", "Operator", eNome,ASTCorrente, mEscopo, mRun_Context.getOperatorsContexto(mEscopo), mArgumentos, eReturne);
 
 
         return mItem;
@@ -124,7 +124,7 @@ public class Run_Any {
             return mItem;
         }
 
-        mItem = mRun_AnyScope.executeComRetorno("Run_Director", "Director", eNome, mEscopo, mRun_Context.getDirectorsContexto(mEscopo), mArgumentos, eReturne);
+        mItem = mRun_AnyScope.executeComRetorno("Run_Director", "Director", eNome, new AST(""), mEscopo, mRun_Context.getDirectorsContexto(mEscopo), mArgumentos, eReturne);
 
 
         return mItem;
@@ -177,7 +177,7 @@ public class Run_Any {
 
         }
 
-        mRun_AnyScope.errar("Init", eNomeCompleto, mTipagem, mexecutarAST.mEnc, mexecutarAST.mAlgum, realizada, "Run_Init");
+        mRun_AnyScope.errar("Init", eNomeCompleto,new AST(""), mTipagem, mexecutarAST.mEnc, mexecutarAST.mAlgum, realizada, "Run_Init");
 
 
     }
@@ -238,7 +238,7 @@ public class Run_Any {
             return mItem;
         }
 
-        mItem = mRun_AnyScope.executeComRetorno("Run_Mark", "Marcador", eNome, mEscopo, eMarcadores, mArgumentos, eRetorne);
+        mItem = mRun_AnyScope.executeComRetorno("Run_Mark", "Marcador", eNome,new AST(""), mEscopo, eMarcadores, mArgumentos, eRetorne);
 
 
         return mItem;
@@ -278,7 +278,7 @@ public class Run_Any {
 
         }
 
-        mRun_AnyScope.errar("Init  " + eOrigem + "." + ASTCorrente.getNome(), eOrigem, mTipagem, mexecutarAST.mAlgum, mexecutarAST.mAlgum, realizada, "Run_Init");
+        mRun_AnyScope.errar("Init  " + eOrigem + "." + ASTCorrente.getNome(), eOrigem,new AST(""), mTipagem, mexecutarAST.mAlgum, mexecutarAST.mAlgum, realizada, "Run_Init");
 
 
     }
@@ -301,7 +301,7 @@ public class Run_Any {
             return mItem;
         }
 
-        mItem = mRun_AnyScope.executeComRetornoGet("Run_Getter", "Getter", eStruct, mEscopo, eFunctions, mArgumentos, eRetorne);
+        mItem = mRun_AnyScope.executeComRetornoGet("Run_Getter", "Getter", eStruct,new AST(""), mEscopo, eFunctions, mArgumentos, eRetorne);
 
 
         return mItem;
@@ -385,7 +385,7 @@ public class Run_Any {
 
         }
 
-        mRun_AnyScope.errar("Setter", eStruct, mTipagem, mexecutarAST.mEnc, mexecutarAST.mAlgum, realizada, "Run_Setter");
+        mRun_AnyScope.errar("Setter", eStruct,new AST(""), mTipagem, mexecutarAST.mEnc, mexecutarAST.mAlgum, realizada, "Run_Setter");
 
 
     }

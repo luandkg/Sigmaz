@@ -22,6 +22,11 @@ public class AST_Comando {
 
         AST ASTCorrente = ASTPai.criarBranch("EXECUTE");
 
+        if (mCompiler.getIsDebug()) {
+            mCompiler.debug(ASTCorrente);
+        }
+
+
 
         Token TokenD = mCompiler.getTokenCorrente();
         if (TokenD.getTipo() == TokenTipo.NUMERO) {

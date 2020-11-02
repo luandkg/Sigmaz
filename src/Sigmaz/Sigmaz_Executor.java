@@ -42,7 +42,7 @@ public class Sigmaz_Executor {
         return mErros_Execucao;
     }
 
-    public void executar(String eExecutor) {
+    public void executar(String eExecutor,boolean mDebugar) {
 
         mTemErros = false;
         mErros_Execucao.clear();
@@ -68,7 +68,7 @@ public class Sigmaz_Executor {
         }
 
 
-        RunTimeC.init(eExecutor);
+        RunTimeC.init(eExecutor,mDebugar);
 
         if (mMostrar_Execucao) {
 
@@ -143,7 +143,20 @@ public class Sigmaz_Executor {
                 for (String Erro : RunTimeC.getErros()) {
                     System.out.println("\t\t" + Erro);
                 }
+
+                if (mDebugar){
+
+                    System.out.println("\n\t LOCALIZACAO DEBUG : ");
+
+                    for (String eDebug : RunTimeC.getDebugs()) {
+                        System.out.println("\t\t" + eDebug);
+                    }
+
+                }
+
             }
+
+
 
             System.out.println("");
             System.out.println("----------------------------------------------");
@@ -166,7 +179,7 @@ public class Sigmaz_Executor {
         String DI = mChronos.getData();
 
 
-        RunTimeC.init(saida);
+        RunTimeC.init(saida,false);
 
         System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
         System.out.println("");

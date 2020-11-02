@@ -29,7 +29,20 @@ public class Run {
         return mRet;
     }
 
+
+
     public void runSigmaz(AST ASTSigmaz_Call, AST ASTCGlobal) {
+
+        if (mRunTime.isDebug()) {
+
+            if (mRunTime.getASTDebug().mesmoValor("TRUE")) {
+
+            } else {
+                mRunTime.errar("RunTime", "O objeto nao e debugavel !");
+                return;
+            }
+
+        }
 
 
         mapearPacotes(ASTCGlobal);
@@ -131,7 +144,6 @@ public class Run {
     public void alocadorGlobal(AST ASTCorrente) {
 
         for (AST ASTC : ASTCorrente.getASTS()) {
-
 
 
             if (ASTC.mesmoTipo("DEFINE")) {

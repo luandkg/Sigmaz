@@ -15,7 +15,6 @@ public class SigmazCompilador extends Cena {
 
     private Windows mWindows;
 
-    private Escritor TextoGrande;
     private Escritor TextoPequeno;
 
     private BotaoCor BTN_CRIAR;
@@ -31,7 +30,6 @@ public class SigmazCompilador extends Cena {
     public SigmazCompilador(Windows eWindows) {
         mWindows = eWindows;
 
-        TextoGrande = new Escritor(30, Color.BLACK);
         TextoPequeno = new Escritor(15, Color.BLACK);
 
         mClicavel = new Clicavel();
@@ -47,7 +45,7 @@ public class SigmazCompilador extends Cena {
 
     @Override
     public void iniciar() {
-        mWindows.setTitle("Sigmaz Compilador - V1");
+        mWindows.setTitle("Sigmaz Compilador - V2");
     }
 
     @Override
@@ -98,7 +96,7 @@ public class SigmazCompilador extends Cena {
                     String mCompilado = "res/build/Sigmaz.sigmad";
                     String mCompilar = "res/73 - vetores.sigmaz";
 
-                    SigmazC.init(mCompilar, mCompilado, 1);
+                    SigmazC.init(mCompilar, mCompilado, 1,false);
 
 
                     mContinuar = true;
@@ -129,7 +127,8 @@ public class SigmazCompilador extends Cena {
         TextoPequeno.EscreveNegrito(g, "LEXER : " + SigmazC.getLexer(), 20, 250);
         TextoPequeno.EscreveNegrito(g, "PARSER : " + SigmazC.getCompiler(), 20, 300);
         TextoPequeno.EscreveNegrito(g, "POS PROCESSAMENTO : " +  SigmazC.getPosProcessamento(), 20, 350);
-        TextoPequeno.EscreveNegrito(g, "MONTAGEM : " + SigmazC.getMontagem(), 20, 400);
+        TextoPequeno.EscreveNegrito(g, "INTEGRALIZAÇÃO : " +  SigmazC.getIntegralizacao(), 20, 400);
+        TextoPequeno.EscreveNegrito(g, "MONTAGEM : " + SigmazC.getMontagem(), 20, 450);
 
 
         barra(g, 0, SigmazC.getPreProcessamento());
@@ -140,7 +139,9 @@ public class SigmazCompilador extends Cena {
 
         barra(g, 3, SigmazC.getPosProcessamento());
 
-        barra(g, 4, SigmazC.getMontagem());
+        barra(g, 4, SigmazC.getIntegralizacao());
+
+        barra(g, 5, SigmazC.getMontagem());
 
 
     }
@@ -148,7 +149,7 @@ public class SigmazCompilador extends Cena {
     public void barra(Graphics g, int n, String status) {
 
         int sep = 30;
-        int ini = 100;
+        int ini = 40;
         int tam = 80;
 
         if (status.contains("SUCESSO")) {
