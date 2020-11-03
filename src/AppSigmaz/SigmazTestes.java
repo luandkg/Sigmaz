@@ -1,7 +1,7 @@
 package AppSigmaz;
 
 import Sigmaz.S00_Utilitarios.*;
-import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
+import Sigmaz.S02_PosProcessamento.Processadores.Cabecalho;
 import Sigmaz.Sigmaz_Compilador;
 
 import java.text.DecimalFormat;

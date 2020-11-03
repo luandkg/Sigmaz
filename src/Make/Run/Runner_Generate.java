@@ -1,12 +1,12 @@
 package Make.Run;
 
-import Sigmaz.S09_Ferramentas.Dependenciador;
+import Sigmaz.S06_Ferramentas.Dependenciador;
 import Sigmaz.Intellisenses.Intellisense;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S00_Utilitarios.Erro;
 import Sigmaz.S00_Utilitarios.GrupoDeErro;
 import Sigmaz.Sigmaz_Compilador;
-import Sigmaz.S09_Ferramentas.Syntax_HighLight;
+import Sigmaz.S06_Ferramentas.Syntax_HighLight;
 
 import java.util.ArrayList;
 

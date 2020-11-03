@@ -1,8 +1,8 @@
 package Sigmaz.S00_Utilitarios;
 
-import Sigmaz.S02_Lexer.Lexer;
-import Sigmaz.S02_Lexer.Token;
-import Sigmaz.S02_Lexer.TokenTipo;
+import Sigmaz.S01_Compilador.C02_Lexer.Lexer;
+import Sigmaz.S01_Compilador.C02_Lexer.Token;
+import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 
 import java.util.ArrayList;
 
@@ -54,6 +54,21 @@ public class Formatador2 {
             } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
 
                 eDocumento.adicionarLinha(mTab, getTexto(TokenC));
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("import")) {
+
+
+                formate_Linha(mTab);
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("require")) {
+
+
+                formate_Linha(mTab);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo_SemCS("DEBUG")) {
+
+
+                formate_Linha(mTab);
+
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("call")) {
 

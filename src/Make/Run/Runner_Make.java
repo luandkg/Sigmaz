@@ -1,6 +1,6 @@
 package Make.Run;
 
-import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
+import Sigmaz.S02_PosProcessamento.Processadores.Cabecalho;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.Sigmaz_Compilador;
 

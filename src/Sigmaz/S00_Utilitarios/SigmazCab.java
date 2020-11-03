@@ -1,6 +1,6 @@
 package Sigmaz.S00_Utilitarios;
 
-import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
+import Sigmaz.S02_PosProcessamento.Processadores.Cabecalho;
 
 import java.util.ArrayList;
 

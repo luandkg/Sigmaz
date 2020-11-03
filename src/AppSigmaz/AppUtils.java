@@ -2,13 +2,13 @@ package AppSigmaz;
 
 import BioGerador.BioGerador;
 import Sigmaz.S00_Utilitarios.Tempo;
-import Sigmaz.S08_Executor.RunTime;
-import Sigmaz.S08_Executor.UML;
-import Sigmaz.S09_Ferramentas.*;
+import Sigmaz.S05_Executor.RunTime;
+import Sigmaz.S05_Executor.UML;
+import Sigmaz.S06_Ferramentas.*;
 import Sigmaz.Intellisenses.Intellisense;
 import Sigmaz.Intellisenses.IntellisenseTheme;
-import Sigmaz.S02_Lexer.Lexer;
-import Sigmaz.S02_Lexer.Token;
+import Sigmaz.S01_Compilador.C02_Lexer.Lexer;
+import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.Sigmaz_Executor;
 import Sigmaz.Sigmaz_Compilador;
 
@@ -623,4 +623,11 @@ public class AppUtils {
 
     }
 
+
+    public static void RECURSOS(String eLocal ) {
+
+        Recursos mRecursos = new Recursos();
+        mRecursos.init(eLocal);
+
+    }
 }

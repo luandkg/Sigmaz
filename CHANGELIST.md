@@ -123,3 +123,6 @@ Linguagem de Programação Estruturada - Alterações
 		2020 11 02 -->> AST Value Float -> NUM
 		2020 11 02 -->> Remoção AST_Invock
 
+
+		2020 11 03 -->> Processador PROC -> INVOKE
+

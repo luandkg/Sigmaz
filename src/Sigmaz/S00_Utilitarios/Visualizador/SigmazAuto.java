@@ -1,7 +1,7 @@
 package Sigmaz.S00_Utilitarios.Visualizador;
 
 import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S08_Executor.Debuggers.Simplificador;
+import Sigmaz.S05_Executor.Debuggers.Simplificador;
 
 public class SigmazAuto {
     private AST mAST;

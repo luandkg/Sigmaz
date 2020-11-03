@@ -1,7 +1,7 @@
 package Make.Compiler;
 
-import Sigmaz.S02_Lexer.Token;
-import Sigmaz.S02_Lexer.TokenTipo;
+import Sigmaz.S01_Compilador.C02_Lexer.Token;
+import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
 
 public class AST_Corpo {

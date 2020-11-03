@@ -3,13 +3,13 @@ package Sigmaz;
 import Sigmaz.Intellisenses.Intellisense;
 import Sigmaz.Intellisenses.IntellisenseTheme;
 import Sigmaz.S00_Utilitarios.*;
-import Sigmaz.S01_PreProcessamento.Etapa;
-import Sigmaz.S01_PreProcessamento.Planejador;
-import Sigmaz.S04_Compilador.Compilador;
-import Sigmaz.S06_Integrador.Integrador;
-import Sigmaz.S07_Montador.Montador;
-import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
-import Sigmaz.S05_PosProcessamento.PosProcessador;
+import Sigmaz.S01_Compilador.C01_Enfileirador.Etapa;
+import Sigmaz.S01_Compilador.C01_Enfileirador.Planejador;
+import Sigmaz.S01_Compilador.Compilador;
+import Sigmaz.S03_Integrador.Integrador;
+import Sigmaz.S04_Montador.Montador;
+import Sigmaz.S02_PosProcessamento.Processadores.Cabecalho;
+import Sigmaz.S02_PosProcessamento.PosProcessador;
 
 import java.util.ArrayList;
 
@@ -398,13 +398,13 @@ public class Sigmaz_Compilador {
         return mASTS;
     }
 
-    public void init(String eArquivo, String mSaida, String eLocalLibs, int mOpcao,boolean mDebugar) {
+    public void init(String eArquivo, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
         ArrayList<String> aa = new ArrayList<String>();
         aa.add(eArquivo);
-        init(aa, mSaida, eLocalLibs, mOpcao,mDebugar);
+        init(aa, mSaida, eLocalLibs, mOpcao, mDebugar);
     }
 
-    public void init(ArrayList<String> eArquivos, String mSaida, String eLocalLibs, int mOpcao,boolean mDebugar) {
+    public void init(ArrayList<String> eArquivos, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
 
         limpar();
 
@@ -434,7 +434,7 @@ public class Sigmaz_Compilador {
         mIntervalo.marqueInicio();
 
 
-        executar_Compilador(eArquivos, mOpcao,mDebugar);
+        executar_Compilador(eArquivos, mOpcao, mDebugar);
 
 
         fase_Lexer();
@@ -462,7 +462,7 @@ public class Sigmaz_Compilador {
 
         if (mFase == Fases.PRONTO) {
 
-            executar(mSaida,mDebugar);
+            executar(mSaida, mDebugar);
 
         } else {
 
@@ -472,14 +472,14 @@ public class Sigmaz_Compilador {
 
     }
 
-    public void executar(String eSaida,boolean eDebugar) {
+    public void executar(String eSaida, boolean eDebugar) {
 
         Sigmaz_Executor mSigmaz_Executor = new Sigmaz_Executor();
 
         mSigmaz_Executor.setMostrar_Execucao(mMostrar_Execucao);
         mSigmaz_Executor.setMostrar_ArvoreRunTime(mMostrar_ArvoreRunTime);
 
-        mSigmaz_Executor.executar(eSaida,eDebugar);
+        mSigmaz_Executor.executar(eSaida, eDebugar);
 
         if (mSigmaz_Executor.temErros()) {
             for (String mErro : mSigmaz_Executor.getErros()) {
@@ -491,13 +491,13 @@ public class Sigmaz_Compilador {
     }
 
 
-    public void initSemExecucao(String eArquivo, String mSaida, String eLocalLibs, int mOpcao,boolean mDebugar) {
+    public void initSemExecucao(String eArquivo, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
         ArrayList<String> aa = new ArrayList<String>();
         aa.add(eArquivo);
-        initSemExecucao(aa, mSaida, eLocalLibs, mOpcao,mDebugar);
+        initSemExecucao(aa, mSaida, eLocalLibs, mOpcao, mDebugar);
     }
 
-    public void initSemExecucao(ArrayList<String> eArquivos, String mSaida, String eLocalLibs, int mOpcao,boolean mDebugar) {
+    public void initSemExecucao(ArrayList<String> eArquivos, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
 
         limpar();
 
@@ -526,7 +526,7 @@ public class Sigmaz_Compilador {
 
         mIntervalo.marqueInicio();
 
-        executar_Compilador(eArquivos, mOpcao,mDebugar);
+        executar_Compilador(eArquivos, mOpcao, mDebugar);
 
         fase_Lexer();
 
@@ -560,10 +560,10 @@ public class Sigmaz_Compilador {
     public void initSemObjeto(String eArquivo, String eLocalLibs, int mOpcao) {
         ArrayList<String> aa = new ArrayList<String>();
         aa.add(eArquivo);
-        initSemObjeto(aa, eLocalLibs, mOpcao,false);
+        initSemObjeto(aa, eLocalLibs, mOpcao, false);
     }
 
-    public void initSemObjeto(ArrayList<String> eArquivos, String mLocalLibs, int mOpcao,boolean mDebugar) {
+    public void initSemObjeto(ArrayList<String> eArquivos, String mLocalLibs, int mOpcao, boolean mDebugar) {
 
         limpar();
 
@@ -591,7 +591,7 @@ public class Sigmaz_Compilador {
 
         mIntervalo.marqueInicio();
 
-        executar_Compilador(eArquivos, mOpcao,mDebugar);
+        executar_Compilador(eArquivos, mOpcao, mDebugar);
 
         fase_Lexer();
 
@@ -732,7 +732,7 @@ public class Sigmaz_Compilador {
         System.out.println("");
 
 
-        executar_Compilador(eArquivos, mOpcao,false);
+        executar_Compilador(eArquivos, mOpcao, false);
 
         fase_Lexer();
 
@@ -824,7 +824,7 @@ public class Sigmaz_Compilador {
     }
 
 
-    private void executar_Compilador(ArrayList<String> eArquivos, int mOpcao,boolean mDebugar) {
+    private void executar_Compilador(ArrayList<String> eArquivos, int mOpcao, boolean mDebugar) {
 
         if (mFase == Fases.PRE_PROCESSAMENTO) {
 
@@ -853,7 +853,7 @@ public class Sigmaz_Compilador {
 
 
             Compilador mCompilador = new Compilador();
-            mCompilador.init(eArquivos, AST_Raiz,mDebugar);
+            mCompilador.init(eArquivos, AST_Raiz, mDebugar);
 
             mPreProcessamento = mCompilador.getPreProcessamento();
             mLexer_Processamento = mCompilador.getLexer_Processamento();
@@ -897,6 +897,8 @@ public class Sigmaz_Compilador {
 
                 mFase = Fases.LEXER;
                 mETAPA_PRE_PROCESSAMENTO = mSTATUS_SUCESSO;
+
+
 
             } else {
 
@@ -1219,7 +1221,7 @@ public class Sigmaz_Compilador {
 
         mIntervalo.marqueInicio();
 
-        executar_Compilador(eArquivos, mOpcao,false);
+        executar_Compilador(eArquivos, mOpcao, false);
 
         fase_Lexer();
 

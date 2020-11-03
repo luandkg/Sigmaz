@@ -6,7 +6,7 @@
 
 ### PROCESSO DE COMPILAÇÃO
 
-![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/sigmaz_02.png)
+![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/compiler.png)
 
 ![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/sigmaz_03.png)
 

@@ -40,12 +40,14 @@ public class AppSigmaz {
 
         String mLocalGerador = "res/gerador/";
 
+        String mLocalImagens = "res/imagens/";
+
         boolean mDebugar = true;
 
-        int ARQUIVO = 73;
+        int ARQUIVO = 5;
 
 
-        switch (Fases.TESTES) {
+        switch (Fases.RECURSOS) {
 
             case MONTAR_PLANO_COMPILACAO -> AppUtils.PLANO_COMPILACAO(ARQUIVO, mArquivos, mLOCAL_PLANOS, mLocalLibs);
 
@@ -89,6 +91,8 @@ public class AppSigmaz {
             case APP -> APP();
 
             case DUMP -> AppUtils.DUMP(mCompilado);
+
+            case RECURSOS -> AppUtils.RECURSOS(mLocalImagens);
 
             default -> System.out.println("\t - Fases : Desconhecida !");
         }

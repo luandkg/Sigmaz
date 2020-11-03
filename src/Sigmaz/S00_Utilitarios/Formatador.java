@@ -1,8 +1,8 @@
 package Sigmaz.S00_Utilitarios;
 
-import Sigmaz.S02_Lexer.Lexer;
-import Sigmaz.S02_Lexer.Token;
-import Sigmaz.S02_Lexer.TokenTipo;
+import Sigmaz.S01_Compilador.C02_Lexer.Lexer;
+import Sigmaz.S01_Compilador.C02_Lexer.Token;
+import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 
 public class Formatador {
 

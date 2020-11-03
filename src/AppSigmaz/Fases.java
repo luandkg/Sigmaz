@@ -27,5 +27,6 @@ public enum Fases {
     GERADOR_DETALHADO,
     GERADOR_INTELLISENSE,
     APP,
-    DUMP
+    DUMP,
+    RECURSOS
 }

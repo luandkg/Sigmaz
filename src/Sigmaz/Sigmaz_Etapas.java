@@ -1,12 +1,12 @@
 package Sigmaz;
 
 import Sigmaz.S00_Utilitarios.*;
-import Sigmaz.S01_PreProcessamento.Etapa;
-import Sigmaz.S04_Compilador.Compilador;
-import Sigmaz.S06_Integrador.Integrador;
-import Sigmaz.S07_Montador.Montador;
-import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
-import Sigmaz.S05_PosProcessamento.PosProcessador;
+import Sigmaz.S01_Compilador.C01_Enfileirador.Etapa;
+import Sigmaz.S01_Compilador.Compilador;
+import Sigmaz.S03_Integrador.Integrador;
+import Sigmaz.S04_Montador.Montador;
+import Sigmaz.S02_PosProcessamento.Processadores.Cabecalho;
+import Sigmaz.S02_PosProcessamento.PosProcessador;
 
 import java.io.File;
 import java.util.ArrayList;
