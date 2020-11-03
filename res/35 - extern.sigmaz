@@ -1,82 +1,74 @@
- import"libs/lib.sigmaz" ;
-struct Sacola {
+import
+"libs/lib.sigmaz"
+;
+struct Sacola  {
 	
-	init Sacola ( ) { 
+	init Sacola ( )  {
 	}
-	
-
 	explicit :
-		mockiz TGU : int = 4 ;
-		
+		mockiz TGU : int = 4  ;
 	explicit :
-		define BKA : int = 0 ;
-		
+		define BKA : int = 0  ;
 	all :
-		mockiz TGA : int = 4 ;
-		
+		mockiz TGA : int = 4  ;
 	all :
-		define itens : int = 0 ;
+		define itens : int = 0  ;
 		
-		act aumentar ( g : int ) { 
-itens = somar ( itens , g ) ;
-					}
-		
-		func quantidade ( ) : int { 
-return itens ;
-					}
-		
-		func getQuantidade ( ) : int { 
-return itens ;
-					}
-		
-		act mostrar ( ) { 
-invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL ;
-					}
-		
-		act mostrar_detalhes ( ) { 
-println ( "" ) ;
-			println ( " SACOLA : " ) ;
-			println ( "    - Itens : " , itens ) ;
-					}
-		
-		act mostrar_struct ( ) { 
-invoke __COMPILER__ -> SHOW_STRUCT ( ) :: ALL ;
-					}
-		
-		func someisso ( a : int , b : int ) : int { 
-return somar ( a , b ) ;
-					}
-		
-	all :
-	explicit : #extern : operation !! (a : Sacola,b : Sacola) : bool { return a.itens !! b.itens; }
-
-		func someisso ( a : int , b : int ) : int { 
-return somar ( a , b ) ;
-					}
-		
-	restrict :
-		func tratar ( a : int , b : int ) : int { 
-return somar ( a , b ) ;
-					}
-		
-	explicit :
-		func CRINNAR ( a : int , b : int ) : int { 
-return somar ( a , b ) ;
-					}
-		
-	extra :
-		operator == ( a : Sacola , b : Sacola ) : bool { 
-invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL ;
-			def t : bool = a . itens == b . itens ;
-			invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: ALL ;
-			return t ;
-					}
+		act aumentar ( g : int )  {
+			itens = somar ( itens , g )  ;
 		}
+		
+		func quantidade ( ) : int  {
+			return itens  ;
+		}
+		
+		func getQuantidade ( ) : int  {
+			return itens  ;
+		}
+		
+		act mostrar ( )  {
+			DEBUG -> GLOBAL :: STACK  ;
+		}
+		
+		act mostrar_detalhes ( )  {
+			println ( "")  ;
+			println ( " SACOLA : ")  ;
+			println ( "    - Itens : ", itens )  ;
+		}
+		
+		act mostrar_struct ( )  {
+			DEBUG -> GLOBAL :: STACK  ;
+		}
+		
+		func someisso ( a : int , b : int ) : int  {
+			return somar ( a , b )  ;
+		}
+	all :
+	explicit :
+		#extern : operation !! (a : Sacola,b : Sacola) : bool { return a.itens !! b.itens; }
+		
+		func someisso ( a : int , b : int ) : int  {
+			return somar ( a , b )  ;
+		}
+	restrict :
+		
+		func tratar ( a : int , b : int ) : int  {
+			return somar ( a , b )  ;
+		}
+	explicit :
+		
+		func CRINNAR ( a : int , b : int ) : int  {
+			return somar ( a , b )  ;
+		}
+	extra :operator == ( a : Sacola , b : Sacola ) : bool { DEBUG -> GLOBAL :: STACK ; def t : bool = a . itens == b . itens ; DEBUG -> GLOBAL :: STACK ; return t ; 
+}
+}
 
-call iniciar -> pular ( ) ;
-act pular ( ) { 
-def sacola1 : Sacola = init Sacola ( ) ;
-	def tt : int = Sacola -> CRINNAR ( 5 , 1 ) ;
-	def MGE : int = Sacola -> TGU ;
-	 #Sacola -> BKA = 12;
-	}
+call iniciar -> pular ( )  ;
+
+act pular ( )  {
+	def sacola1 : Sacola = init Sacola ( )  ;
+	def tt : int = Sacola -> CRINNAR ( 5 , 1 )  ;
+	def MGE : int = Sacola -> TGU  ;
+	#Sacola -> BKA = 12;
+}

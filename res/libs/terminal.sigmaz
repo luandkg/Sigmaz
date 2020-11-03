@@ -1,6 +1,6 @@
 act print_empty ( ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	
 }
@@ -51,7 +51,7 @@ act print ( a : int ) {
 act println ( a : string ) {
 	reg @ R13 -> a;
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 		PRINT R13;
 	}
 	
@@ -60,7 +60,7 @@ act println ( a : string ) {
 act println ( a : num ) {
 	reg @ R9 -> a;
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 		SET R13;
 		MOV "";
 		NUM_STRING R9;
@@ -72,7 +72,7 @@ act println ( a : num ) {
 act println ( a : bool ) {
 	reg @ R1 -> a;
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 		SET R13;
 		MOV "";
 		BOOL_STRING R1;
@@ -84,7 +84,7 @@ act println ( a : bool ) {
 act println ( a : int ) {
 	reg @ R5 -> a;
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 		SET R13;
 		MOV "";
 		INT_STRING R5;
@@ -96,7 +96,7 @@ act println ( a : int ) {
 # PRINTLN - 2 ARGUMENTOS
 act println ( a : string , b : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -111,7 +111,7 @@ act println ( a : string , b : string ) {
 
 act println ( a : string , b : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -129,7 +129,7 @@ act println ( a : string , b : num ) {
 
 act println ( a : string , b : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -147,7 +147,7 @@ act println ( a : string , b : bool ) {
 
 act println ( a : string , b : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -165,7 +165,7 @@ act println ( a : string , b : int ) {
 
 act println ( a : num , b : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -183,7 +183,7 @@ act println ( a : num , b : string ) {
 
 act println ( a : num , b : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -204,7 +204,7 @@ act println ( a : num , b : num ) {
 
 act println ( a : num , b : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -225,7 +225,7 @@ act println ( a : num , b : bool ) {
 
 act println ( a : num , b : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -246,7 +246,7 @@ act println ( a : num , b : int ) {
 
 act println ( a : bool , b : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -264,7 +264,7 @@ act println ( a : bool , b : string ) {
 
 act println ( a : bool , b : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -285,7 +285,7 @@ act println ( a : bool , b : num ) {
 
 act println ( a : bool , b : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -306,7 +306,7 @@ act println ( a : bool , b : bool ) {
 
 act println ( a : bool , b : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -327,7 +327,7 @@ act println ( a : bool , b : int ) {
 
 act println ( a : int , b : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -345,7 +345,7 @@ act println ( a : int , b : string ) {
 
 act println ( a : int , b : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -366,7 +366,7 @@ act println ( a : int , b : num ) {
 
 act println ( a : int , b : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -387,7 +387,7 @@ act println ( a : int , b : bool ) {
 
 act println ( a : int , b : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -409,7 +409,7 @@ act println ( a : int , b : int ) {
 # PRINTLN - 3 ARGUMENTOS
 act println ( a : string , b : string , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -428,7 +428,7 @@ act println ( a : string , b : string , c : string ) {
 
 act println ( a : string , b : string , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -450,7 +450,7 @@ act println ( a : string , b : string , c : num ) {
 
 act println ( a : string , b : string , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -472,7 +472,7 @@ act println ( a : string , b : string , c : bool ) {
 
 act println ( a : string , b : string , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -494,7 +494,7 @@ act println ( a : string , b : string , c : int ) {
 
 act println ( a : string , b : num , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -516,7 +516,7 @@ act println ( a : string , b : num , c : string ) {
 
 act println ( a : string , b : num , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -541,7 +541,7 @@ act println ( a : string , b : num , c : num ) {
 
 act println ( a : string , b : num , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -566,7 +566,7 @@ act println ( a : string , b : num , c : bool ) {
 
 act println ( a : string , b : num , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -591,7 +591,7 @@ act println ( a : string , b : num , c : int ) {
 
 act println ( a : string , b : bool , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -613,7 +613,7 @@ act println ( a : string , b : bool , c : string ) {
 
 act println ( a : string , b : bool , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -638,7 +638,7 @@ act println ( a : string , b : bool , c : num ) {
 
 act println ( a : string , b : bool , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -663,7 +663,7 @@ act println ( a : string , b : bool , c : bool ) {
 
 act println ( a : string , b : bool , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -688,7 +688,7 @@ act println ( a : string , b : bool , c : int ) {
 
 act println ( a : string , b : int , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -710,7 +710,7 @@ act println ( a : string , b : int , c : string ) {
 
 act println ( a : string , b : int , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -735,7 +735,7 @@ act println ( a : string , b : int , c : num ) {
 
 act println ( a : string , b : int , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -760,7 +760,7 @@ act println ( a : string , b : int , c : bool ) {
 
 act println ( a : string , b : int , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -785,7 +785,7 @@ act println ( a : string , b : int , c : int ) {
 
 act println ( a : num , b : string , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -807,7 +807,7 @@ act println ( a : num , b : string , c : string ) {
 
 act println ( a : num , b : string , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -832,7 +832,7 @@ act println ( a : num , b : string , c : num ) {
 
 act println ( a : num , b : string , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -857,7 +857,7 @@ act println ( a : num , b : string , c : bool ) {
 
 act println ( a : num , b : string , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -882,7 +882,7 @@ act println ( a : num , b : string , c : int ) {
 
 act println ( a : num , b : num , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -907,7 +907,7 @@ act println ( a : num , b : num , c : string ) {
 
 act println ( a : num , b : num , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -935,7 +935,7 @@ act println ( a : num , b : num , c : num ) {
 
 act println ( a : num , b : num , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -963,7 +963,7 @@ act println ( a : num , b : num , c : bool ) {
 
 act println ( a : num , b : num , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -991,7 +991,7 @@ act println ( a : num , b : num , c : int ) {
 
 act println ( a : num , b : bool , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -1016,7 +1016,7 @@ act println ( a : num , b : bool , c : string ) {
 
 act println ( a : num , b : bool , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -1044,7 +1044,7 @@ act println ( a : num , b : bool , c : num ) {
 
 act println ( a : num , b : bool , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -1072,7 +1072,7 @@ act println ( a : num , b : bool , c : bool ) {
 
 act println ( a : num , b : bool , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -1100,7 +1100,7 @@ act println ( a : num , b : bool , c : int ) {
 
 act println ( a : num , b : int , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -1125,7 +1125,7 @@ act println ( a : num , b : int , c : string ) {
 
 act println ( a : num , b : int , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -1153,7 +1153,7 @@ act println ( a : num , b : int , c : num ) {
 
 act println ( a : num , b : int , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -1181,7 +1181,7 @@ act println ( a : num , b : int , c : bool ) {
 
 act println ( a : num , b : int , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -1209,7 +1209,7 @@ act println ( a : num , b : int , c : int ) {
 
 act println ( a : bool , b : string , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1231,7 +1231,7 @@ act println ( a : bool , b : string , c : string ) {
 
 act println ( a : bool , b : string , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1256,7 +1256,7 @@ act println ( a : bool , b : string , c : num ) {
 
 act println ( a : bool , b : string , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1281,7 +1281,7 @@ act println ( a : bool , b : string , c : bool ) {
 
 act println ( a : bool , b : string , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1306,7 +1306,7 @@ act println ( a : bool , b : string , c : int ) {
 
 act println ( a : bool , b : num , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1331,7 +1331,7 @@ act println ( a : bool , b : num , c : string ) {
 
 act println ( a : bool , b : num , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1359,7 +1359,7 @@ act println ( a : bool , b : num , c : num ) {
 
 act println ( a : bool , b : num , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1387,7 +1387,7 @@ act println ( a : bool , b : num , c : bool ) {
 
 act println ( a : bool , b : num , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1415,7 +1415,7 @@ act println ( a : bool , b : num , c : int ) {
 
 act println ( a : bool , b : bool , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1440,7 +1440,7 @@ act println ( a : bool , b : bool , c : string ) {
 
 act println ( a : bool , b : bool , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1468,7 +1468,7 @@ act println ( a : bool , b : bool , c : num ) {
 
 act println ( a : bool , b : bool , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1496,7 +1496,7 @@ act println ( a : bool , b : bool , c : bool ) {
 
 act println ( a : bool , b : bool , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1524,7 +1524,7 @@ act println ( a : bool , b : bool , c : int ) {
 
 act println ( a : bool , b : int , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1549,7 +1549,7 @@ act println ( a : bool , b : int , c : string ) {
 
 act println ( a : bool , b : int , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1577,7 +1577,7 @@ act println ( a : bool , b : int , c : num ) {
 
 act println ( a : bool , b : int , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1605,7 +1605,7 @@ act println ( a : bool , b : int , c : bool ) {
 
 act println ( a : bool , b : int , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -1633,7 +1633,7 @@ act println ( a : bool , b : int , c : int ) {
 
 act println ( a : int , b : string , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -1655,7 +1655,7 @@ act println ( a : int , b : string , c : string ) {
 
 act println ( a : int , b : string , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -1680,7 +1680,7 @@ act println ( a : int , b : string , c : num ) {
 
 act println ( a : int , b : string , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -1705,7 +1705,7 @@ act println ( a : int , b : string , c : bool ) {
 
 act println ( a : int , b : string , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -1730,7 +1730,7 @@ act println ( a : int , b : string , c : int ) {
 
 act println ( a : int , b : num , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -1755,7 +1755,7 @@ act println ( a : int , b : num , c : string ) {
 
 act println ( a : int , b : num , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -1783,7 +1783,7 @@ act println ( a : int , b : num , c : num ) {
 
 act println ( a : int , b : num , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -1811,7 +1811,7 @@ act println ( a : int , b : num , c : bool ) {
 
 act println ( a : int , b : num , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -1839,7 +1839,7 @@ act println ( a : int , b : num , c : int ) {
 
 act println ( a : int , b : bool , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -1864,7 +1864,7 @@ act println ( a : int , b : bool , c : string ) {
 
 act println ( a : int , b : bool , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -1892,7 +1892,7 @@ act println ( a : int , b : bool , c : num ) {
 
 act println ( a : int , b : bool , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -1920,7 +1920,7 @@ act println ( a : int , b : bool , c : bool ) {
 
 act println ( a : int , b : bool , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -1948,7 +1948,7 @@ act println ( a : int , b : bool , c : int ) {
 
 act println ( a : int , b : int , c : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -1973,7 +1973,7 @@ act println ( a : int , b : int , c : string ) {
 
 act println ( a : int , b : int , c : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -2001,7 +2001,7 @@ act println ( a : int , b : int , c : num ) {
 
 act println ( a : int , b : int , c : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -2029,7 +2029,7 @@ act println ( a : int , b : int , c : bool ) {
 
 act println ( a : int , b : int , c : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -2058,7 +2058,7 @@ act println ( a : int , b : int , c : int ) {
 # PRINTLN - 4 ARGUMENTOS
 act println ( a : string , b : string , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2081,7 +2081,7 @@ act println ( a : string , b : string , c : string , d : string ) {
 
 act println ( a : string , b : string , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2107,7 +2107,7 @@ act println ( a : string , b : string , c : string , d : num ) {
 
 act println ( a : string , b : string , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2133,7 +2133,7 @@ act println ( a : string , b : string , c : string , d : bool ) {
 
 act println ( a : string , b : string , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2159,7 +2159,7 @@ act println ( a : string , b : string , c : string , d : int ) {
 
 act println ( a : string , b : string , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2185,7 +2185,7 @@ act println ( a : string , b : string , c : num , d : string ) {
 
 act println ( a : string , b : string , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2214,7 +2214,7 @@ act println ( a : string , b : string , c : num , d : num ) {
 
 act println ( a : string , b : string , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2243,7 +2243,7 @@ act println ( a : string , b : string , c : num , d : bool ) {
 
 act println ( a : string , b : string , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2272,7 +2272,7 @@ act println ( a : string , b : string , c : num , d : int ) {
 
 act println ( a : string , b : string , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2298,7 +2298,7 @@ act println ( a : string , b : string , c : bool , d : string ) {
 
 act println ( a : string , b : string , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2327,7 +2327,7 @@ act println ( a : string , b : string , c : bool , d : num ) {
 
 act println ( a : string , b : string , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2356,7 +2356,7 @@ act println ( a : string , b : string , c : bool , d : bool ) {
 
 act println ( a : string , b : string , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2385,7 +2385,7 @@ act println ( a : string , b : string , c : bool , d : int ) {
 
 act println ( a : string , b : string , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2411,7 +2411,7 @@ act println ( a : string , b : string , c : int , d : string ) {
 
 act println ( a : string , b : string , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2440,7 +2440,7 @@ act println ( a : string , b : string , c : int , d : num ) {
 
 act println ( a : string , b : string , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2469,7 +2469,7 @@ act println ( a : string , b : string , c : int , d : bool ) {
 
 act println ( a : string , b : string , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2498,7 +2498,7 @@ act println ( a : string , b : string , c : int , d : int ) {
 
 act println ( a : string , b : num , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2524,7 +2524,7 @@ act println ( a : string , b : num , c : string , d : string ) {
 
 act println ( a : string , b : num , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2553,7 +2553,7 @@ act println ( a : string , b : num , c : string , d : num ) {
 
 act println ( a : string , b : num , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2582,7 +2582,7 @@ act println ( a : string , b : num , c : string , d : bool ) {
 
 act println ( a : string , b : num , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2611,7 +2611,7 @@ act println ( a : string , b : num , c : string , d : int ) {
 
 act println ( a : string , b : num , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2640,7 +2640,7 @@ act println ( a : string , b : num , c : num , d : string ) {
 
 act println ( a : string , b : num , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2672,7 +2672,7 @@ act println ( a : string , b : num , c : num , d : num ) {
 
 act println ( a : string , b : num , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2704,7 +2704,7 @@ act println ( a : string , b : num , c : num , d : bool ) {
 
 act println ( a : string , b : num , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2736,7 +2736,7 @@ act println ( a : string , b : num , c : num , d : int ) {
 
 act println ( a : string , b : num , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2765,7 +2765,7 @@ act println ( a : string , b : num , c : bool , d : string ) {
 
 act println ( a : string , b : num , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2797,7 +2797,7 @@ act println ( a : string , b : num , c : bool , d : num ) {
 
 act println ( a : string , b : num , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2829,7 +2829,7 @@ act println ( a : string , b : num , c : bool , d : bool ) {
 
 act println ( a : string , b : num , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2861,7 +2861,7 @@ act println ( a : string , b : num , c : bool , d : int ) {
 
 act println ( a : string , b : num , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2890,7 +2890,7 @@ act println ( a : string , b : num , c : int , d : string ) {
 
 act println ( a : string , b : num , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2922,7 +2922,7 @@ act println ( a : string , b : num , c : int , d : num ) {
 
 act println ( a : string , b : num , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2954,7 +2954,7 @@ act println ( a : string , b : num , c : int , d : bool ) {
 
 act println ( a : string , b : num , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -2986,7 +2986,7 @@ act println ( a : string , b : num , c : int , d : int ) {
 
 act println ( a : string , b : bool , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3012,7 +3012,7 @@ act println ( a : string , b : bool , c : string , d : string ) {
 
 act println ( a : string , b : bool , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3041,7 +3041,7 @@ act println ( a : string , b : bool , c : string , d : num ) {
 
 act println ( a : string , b : bool , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3070,7 +3070,7 @@ act println ( a : string , b : bool , c : string , d : bool ) {
 
 act println ( a : string , b : bool , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3099,7 +3099,7 @@ act println ( a : string , b : bool , c : string , d : int ) {
 
 act println ( a : string , b : bool , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3128,7 +3128,7 @@ act println ( a : string , b : bool , c : num , d : string ) {
 
 act println ( a : string , b : bool , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3160,7 +3160,7 @@ act println ( a : string , b : bool , c : num , d : num ) {
 
 act println ( a : string , b : bool , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3192,7 +3192,7 @@ act println ( a : string , b : bool , c : num , d : bool ) {
 
 act println ( a : string , b : bool , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3224,7 +3224,7 @@ act println ( a : string , b : bool , c : num , d : int ) {
 
 act println ( a : string , b : bool , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3253,7 +3253,7 @@ act println ( a : string , b : bool , c : bool , d : string ) {
 
 act println ( a : string , b : bool , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3285,7 +3285,7 @@ act println ( a : string , b : bool , c : bool , d : num ) {
 
 act println ( a : string , b : bool , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3317,7 +3317,7 @@ act println ( a : string , b : bool , c : bool , d : bool ) {
 
 act println ( a : string , b : bool , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3349,7 +3349,7 @@ act println ( a : string , b : bool , c : bool , d : int ) {
 
 act println ( a : string , b : bool , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3378,7 +3378,7 @@ act println ( a : string , b : bool , c : int , d : string ) {
 
 act println ( a : string , b : bool , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3410,7 +3410,7 @@ act println ( a : string , b : bool , c : int , d : num ) {
 
 act println ( a : string , b : bool , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3442,7 +3442,7 @@ act println ( a : string , b : bool , c : int , d : bool ) {
 
 act println ( a : string , b : bool , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3474,7 +3474,7 @@ act println ( a : string , b : bool , c : int , d : int ) {
 
 act println ( a : string , b : int , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3500,7 +3500,7 @@ act println ( a : string , b : int , c : string , d : string ) {
 
 act println ( a : string , b : int , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3529,7 +3529,7 @@ act println ( a : string , b : int , c : string , d : num ) {
 
 act println ( a : string , b : int , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3558,7 +3558,7 @@ act println ( a : string , b : int , c : string , d : bool ) {
 
 act println ( a : string , b : int , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3587,7 +3587,7 @@ act println ( a : string , b : int , c : string , d : int ) {
 
 act println ( a : string , b : int , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3616,7 +3616,7 @@ act println ( a : string , b : int , c : num , d : string ) {
 
 act println ( a : string , b : int , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3648,7 +3648,7 @@ act println ( a : string , b : int , c : num , d : num ) {
 
 act println ( a : string , b : int , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3680,7 +3680,7 @@ act println ( a : string , b : int , c : num , d : bool ) {
 
 act println ( a : string , b : int , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3712,7 +3712,7 @@ act println ( a : string , b : int , c : num , d : int ) {
 
 act println ( a : string , b : int , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3741,7 +3741,7 @@ act println ( a : string , b : int , c : bool , d : string ) {
 
 act println ( a : string , b : int , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3773,7 +3773,7 @@ act println ( a : string , b : int , c : bool , d : num ) {
 
 act println ( a : string , b : int , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3805,7 +3805,7 @@ act println ( a : string , b : int , c : bool , d : bool ) {
 
 act println ( a : string , b : int , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3837,7 +3837,7 @@ act println ( a : string , b : int , c : bool , d : int ) {
 
 act println ( a : string , b : int , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3866,7 +3866,7 @@ act println ( a : string , b : int , c : int , d : string ) {
 
 act println ( a : string , b : int , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3898,7 +3898,7 @@ act println ( a : string , b : int , c : int , d : num ) {
 
 act println ( a : string , b : int , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3930,7 +3930,7 @@ act println ( a : string , b : int , c : int , d : bool ) {
 
 act println ( a : string , b : int , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R13 -> a;
 	PROC -> {
@@ -3962,7 +3962,7 @@ act println ( a : string , b : int , c : int , d : int ) {
 
 act println ( a : num , b : string , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -3988,7 +3988,7 @@ act println ( a : num , b : string , c : string , d : string ) {
 
 act println ( a : num , b : string , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4017,7 +4017,7 @@ act println ( a : num , b : string , c : string , d : num ) {
 
 act println ( a : num , b : string , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4046,7 +4046,7 @@ act println ( a : num , b : string , c : string , d : bool ) {
 
 act println ( a : num , b : string , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4075,7 +4075,7 @@ act println ( a : num , b : string , c : string , d : int ) {
 
 act println ( a : num , b : string , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4104,7 +4104,7 @@ act println ( a : num , b : string , c : num , d : string ) {
 
 act println ( a : num , b : string , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4136,7 +4136,7 @@ act println ( a : num , b : string , c : num , d : num ) {
 
 act println ( a : num , b : string , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4168,7 +4168,7 @@ act println ( a : num , b : string , c : num , d : bool ) {
 
 act println ( a : num , b : string , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4200,7 +4200,7 @@ act println ( a : num , b : string , c : num , d : int ) {
 
 act println ( a : num , b : string , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4229,7 +4229,7 @@ act println ( a : num , b : string , c : bool , d : string ) {
 
 act println ( a : num , b : string , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4261,7 +4261,7 @@ act println ( a : num , b : string , c : bool , d : num ) {
 
 act println ( a : num , b : string , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4293,7 +4293,7 @@ act println ( a : num , b : string , c : bool , d : bool ) {
 
 act println ( a : num , b : string , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4325,7 +4325,7 @@ act println ( a : num , b : string , c : bool , d : int ) {
 
 act println ( a : num , b : string , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4354,7 +4354,7 @@ act println ( a : num , b : string , c : int , d : string ) {
 
 act println ( a : num , b : string , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4386,7 +4386,7 @@ act println ( a : num , b : string , c : int , d : num ) {
 
 act println ( a : num , b : string , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4418,7 +4418,7 @@ act println ( a : num , b : string , c : int , d : bool ) {
 
 act println ( a : num , b : string , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4450,7 +4450,7 @@ act println ( a : num , b : string , c : int , d : int ) {
 
 act println ( a : num , b : num , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4479,7 +4479,7 @@ act println ( a : num , b : num , c : string , d : string ) {
 
 act println ( a : num , b : num , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4511,7 +4511,7 @@ act println ( a : num , b : num , c : string , d : num ) {
 
 act println ( a : num , b : num , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4543,7 +4543,7 @@ act println ( a : num , b : num , c : string , d : bool ) {
 
 act println ( a : num , b : num , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4575,7 +4575,7 @@ act println ( a : num , b : num , c : string , d : int ) {
 
 act println ( a : num , b : num , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4607,7 +4607,7 @@ act println ( a : num , b : num , c : num , d : string ) {
 
 act println ( a : num , b : num , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4642,7 +4642,7 @@ act println ( a : num , b : num , c : num , d : num ) {
 
 act println ( a : num , b : num , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4677,7 +4677,7 @@ act println ( a : num , b : num , c : num , d : bool ) {
 
 act println ( a : num , b : num , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4712,7 +4712,7 @@ act println ( a : num , b : num , c : num , d : int ) {
 
 act println ( a : num , b : num , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4744,7 +4744,7 @@ act println ( a : num , b : num , c : bool , d : string ) {
 
 act println ( a : num , b : num , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4779,7 +4779,7 @@ act println ( a : num , b : num , c : bool , d : num ) {
 
 act println ( a : num , b : num , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4814,7 +4814,7 @@ act println ( a : num , b : num , c : bool , d : bool ) {
 
 act println ( a : num , b : num , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4849,7 +4849,7 @@ act println ( a : num , b : num , c : bool , d : int ) {
 
 act println ( a : num , b : num , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4881,7 +4881,7 @@ act println ( a : num , b : num , c : int , d : string ) {
 
 act println ( a : num , b : num , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4916,7 +4916,7 @@ act println ( a : num , b : num , c : int , d : num ) {
 
 act println ( a : num , b : num , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4951,7 +4951,7 @@ act println ( a : num , b : num , c : int , d : bool ) {
 
 act println ( a : num , b : num , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -4986,7 +4986,7 @@ act println ( a : num , b : num , c : int , d : int ) {
 
 act println ( a : num , b : bool , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5015,7 +5015,7 @@ act println ( a : num , b : bool , c : string , d : string ) {
 
 act println ( a : num , b : bool , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5047,7 +5047,7 @@ act println ( a : num , b : bool , c : string , d : num ) {
 
 act println ( a : num , b : bool , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5079,7 +5079,7 @@ act println ( a : num , b : bool , c : string , d : bool ) {
 
 act println ( a : num , b : bool , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5111,7 +5111,7 @@ act println ( a : num , b : bool , c : string , d : int ) {
 
 act println ( a : num , b : bool , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5143,7 +5143,7 @@ act println ( a : num , b : bool , c : num , d : string ) {
 
 act println ( a : num , b : bool , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5178,7 +5178,7 @@ act println ( a : num , b : bool , c : num , d : num ) {
 
 act println ( a : num , b : bool , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5213,7 +5213,7 @@ act println ( a : num , b : bool , c : num , d : bool ) {
 
 act println ( a : num , b : bool , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5248,7 +5248,7 @@ act println ( a : num , b : bool , c : num , d : int ) {
 
 act println ( a : num , b : bool , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5280,7 +5280,7 @@ act println ( a : num , b : bool , c : bool , d : string ) {
 
 act println ( a : num , b : bool , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5315,7 +5315,7 @@ act println ( a : num , b : bool , c : bool , d : num ) {
 
 act println ( a : num , b : bool , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5350,7 +5350,7 @@ act println ( a : num , b : bool , c : bool , d : bool ) {
 
 act println ( a : num , b : bool , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5385,7 +5385,7 @@ act println ( a : num , b : bool , c : bool , d : int ) {
 
 act println ( a : num , b : bool , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5417,7 +5417,7 @@ act println ( a : num , b : bool , c : int , d : string ) {
 
 act println ( a : num , b : bool , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5452,7 +5452,7 @@ act println ( a : num , b : bool , c : int , d : num ) {
 
 act println ( a : num , b : bool , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5487,7 +5487,7 @@ act println ( a : num , b : bool , c : int , d : bool ) {
 
 act println ( a : num , b : bool , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5522,7 +5522,7 @@ act println ( a : num , b : bool , c : int , d : int ) {
 
 act println ( a : num , b : int , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5551,7 +5551,7 @@ act println ( a : num , b : int , c : string , d : string ) {
 
 act println ( a : num , b : int , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5583,7 +5583,7 @@ act println ( a : num , b : int , c : string , d : num ) {
 
 act println ( a : num , b : int , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5615,7 +5615,7 @@ act println ( a : num , b : int , c : string , d : bool ) {
 
 act println ( a : num , b : int , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5647,7 +5647,7 @@ act println ( a : num , b : int , c : string , d : int ) {
 
 act println ( a : num , b : int , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5679,7 +5679,7 @@ act println ( a : num , b : int , c : num , d : string ) {
 
 act println ( a : num , b : int , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5714,7 +5714,7 @@ act println ( a : num , b : int , c : num , d : num ) {
 
 act println ( a : num , b : int , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5749,7 +5749,7 @@ act println ( a : num , b : int , c : num , d : bool ) {
 
 act println ( a : num , b : int , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5784,7 +5784,7 @@ act println ( a : num , b : int , c : num , d : int ) {
 
 act println ( a : num , b : int , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5816,7 +5816,7 @@ act println ( a : num , b : int , c : bool , d : string ) {
 
 act println ( a : num , b : int , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5851,7 +5851,7 @@ act println ( a : num , b : int , c : bool , d : num ) {
 
 act println ( a : num , b : int , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5886,7 +5886,7 @@ act println ( a : num , b : int , c : bool , d : bool ) {
 
 act println ( a : num , b : int , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5921,7 +5921,7 @@ act println ( a : num , b : int , c : bool , d : int ) {
 
 act println ( a : num , b : int , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5953,7 +5953,7 @@ act println ( a : num , b : int , c : int , d : string ) {
 
 act println ( a : num , b : int , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -5988,7 +5988,7 @@ act println ( a : num , b : int , c : int , d : num ) {
 
 act println ( a : num , b : int , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -6023,7 +6023,7 @@ act println ( a : num , b : int , c : int , d : bool ) {
 
 act println ( a : num , b : int , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R9 -> a;
 	PROC -> {
@@ -6058,7 +6058,7 @@ act println ( a : num , b : int , c : int , d : int ) {
 
 act println ( a : bool , b : string , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6084,7 +6084,7 @@ act println ( a : bool , b : string , c : string , d : string ) {
 
 act println ( a : bool , b : string , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6113,7 +6113,7 @@ act println ( a : bool , b : string , c : string , d : num ) {
 
 act println ( a : bool , b : string , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6142,7 +6142,7 @@ act println ( a : bool , b : string , c : string , d : bool ) {
 
 act println ( a : bool , b : string , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6171,7 +6171,7 @@ act println ( a : bool , b : string , c : string , d : int ) {
 
 act println ( a : bool , b : string , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6200,7 +6200,7 @@ act println ( a : bool , b : string , c : num , d : string ) {
 
 act println ( a : bool , b : string , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6232,7 +6232,7 @@ act println ( a : bool , b : string , c : num , d : num ) {
 
 act println ( a : bool , b : string , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6264,7 +6264,7 @@ act println ( a : bool , b : string , c : num , d : bool ) {
 
 act println ( a : bool , b : string , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6296,7 +6296,7 @@ act println ( a : bool , b : string , c : num , d : int ) {
 
 act println ( a : bool , b : string , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6325,7 +6325,7 @@ act println ( a : bool , b : string , c : bool , d : string ) {
 
 act println ( a : bool , b : string , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6357,7 +6357,7 @@ act println ( a : bool , b : string , c : bool , d : num ) {
 
 act println ( a : bool , b : string , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6389,7 +6389,7 @@ act println ( a : bool , b : string , c : bool , d : bool ) {
 
 act println ( a : bool , b : string , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6421,7 +6421,7 @@ act println ( a : bool , b : string , c : bool , d : int ) {
 
 act println ( a : bool , b : string , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6450,7 +6450,7 @@ act println ( a : bool , b : string , c : int , d : string ) {
 
 act println ( a : bool , b : string , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6482,7 +6482,7 @@ act println ( a : bool , b : string , c : int , d : num ) {
 
 act println ( a : bool , b : string , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6514,7 +6514,7 @@ act println ( a : bool , b : string , c : int , d : bool ) {
 
 act println ( a : bool , b : string , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6546,7 +6546,7 @@ act println ( a : bool , b : string , c : int , d : int ) {
 
 act println ( a : bool , b : num , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6575,7 +6575,7 @@ act println ( a : bool , b : num , c : string , d : string ) {
 
 act println ( a : bool , b : num , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6607,7 +6607,7 @@ act println ( a : bool , b : num , c : string , d : num ) {
 
 act println ( a : bool , b : num , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6639,7 +6639,7 @@ act println ( a : bool , b : num , c : string , d : bool ) {
 
 act println ( a : bool , b : num , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6671,7 +6671,7 @@ act println ( a : bool , b : num , c : string , d : int ) {
 
 act println ( a : bool , b : num , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6703,7 +6703,7 @@ act println ( a : bool , b : num , c : num , d : string ) {
 
 act println ( a : bool , b : num , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6738,7 +6738,7 @@ act println ( a : bool , b : num , c : num , d : num ) {
 
 act println ( a : bool , b : num , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6773,7 +6773,7 @@ act println ( a : bool , b : num , c : num , d : bool ) {
 
 act println ( a : bool , b : num , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6808,7 +6808,7 @@ act println ( a : bool , b : num , c : num , d : int ) {
 
 act println ( a : bool , b : num , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6840,7 +6840,7 @@ act println ( a : bool , b : num , c : bool , d : string ) {
 
 act println ( a : bool , b : num , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6875,7 +6875,7 @@ act println ( a : bool , b : num , c : bool , d : num ) {
 
 act println ( a : bool , b : num , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6910,7 +6910,7 @@ act println ( a : bool , b : num , c : bool , d : bool ) {
 
 act println ( a : bool , b : num , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6945,7 +6945,7 @@ act println ( a : bool , b : num , c : bool , d : int ) {
 
 act println ( a : bool , b : num , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -6977,7 +6977,7 @@ act println ( a : bool , b : num , c : int , d : string ) {
 
 act println ( a : bool , b : num , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7012,7 +7012,7 @@ act println ( a : bool , b : num , c : int , d : num ) {
 
 act println ( a : bool , b : num , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7047,7 +7047,7 @@ act println ( a : bool , b : num , c : int , d : bool ) {
 
 act println ( a : bool , b : num , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7082,7 +7082,7 @@ act println ( a : bool , b : num , c : int , d : int ) {
 
 act println ( a : bool , b : bool , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7111,7 +7111,7 @@ act println ( a : bool , b : bool , c : string , d : string ) {
 
 act println ( a : bool , b : bool , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7143,7 +7143,7 @@ act println ( a : bool , b : bool , c : string , d : num ) {
 
 act println ( a : bool , b : bool , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7175,7 +7175,7 @@ act println ( a : bool , b : bool , c : string , d : bool ) {
 
 act println ( a : bool , b : bool , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7207,7 +7207,7 @@ act println ( a : bool , b : bool , c : string , d : int ) {
 
 act println ( a : bool , b : bool , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7239,7 +7239,7 @@ act println ( a : bool , b : bool , c : num , d : string ) {
 
 act println ( a : bool , b : bool , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7274,7 +7274,7 @@ act println ( a : bool , b : bool , c : num , d : num ) {
 
 act println ( a : bool , b : bool , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7309,7 +7309,7 @@ act println ( a : bool , b : bool , c : num , d : bool ) {
 
 act println ( a : bool , b : bool , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7344,7 +7344,7 @@ act println ( a : bool , b : bool , c : num , d : int ) {
 
 act println ( a : bool , b : bool , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7376,7 +7376,7 @@ act println ( a : bool , b : bool , c : bool , d : string ) {
 
 act println ( a : bool , b : bool , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7411,7 +7411,7 @@ act println ( a : bool , b : bool , c : bool , d : num ) {
 
 act println ( a : bool , b : bool , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7446,7 +7446,7 @@ act println ( a : bool , b : bool , c : bool , d : bool ) {
 
 act println ( a : bool , b : bool , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7481,7 +7481,7 @@ act println ( a : bool , b : bool , c : bool , d : int ) {
 
 act println ( a : bool , b : bool , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7513,7 +7513,7 @@ act println ( a : bool , b : bool , c : int , d : string ) {
 
 act println ( a : bool , b : bool , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7548,7 +7548,7 @@ act println ( a : bool , b : bool , c : int , d : num ) {
 
 act println ( a : bool , b : bool , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7583,7 +7583,7 @@ act println ( a : bool , b : bool , c : int , d : bool ) {
 
 act println ( a : bool , b : bool , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7618,7 +7618,7 @@ act println ( a : bool , b : bool , c : int , d : int ) {
 
 act println ( a : bool , b : int , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7647,7 +7647,7 @@ act println ( a : bool , b : int , c : string , d : string ) {
 
 act println ( a : bool , b : int , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7679,7 +7679,7 @@ act println ( a : bool , b : int , c : string , d : num ) {
 
 act println ( a : bool , b : int , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7711,7 +7711,7 @@ act println ( a : bool , b : int , c : string , d : bool ) {
 
 act println ( a : bool , b : int , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7743,7 +7743,7 @@ act println ( a : bool , b : int , c : string , d : int ) {
 
 act println ( a : bool , b : int , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7775,7 +7775,7 @@ act println ( a : bool , b : int , c : num , d : string ) {
 
 act println ( a : bool , b : int , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7810,7 +7810,7 @@ act println ( a : bool , b : int , c : num , d : num ) {
 
 act println ( a : bool , b : int , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7845,7 +7845,7 @@ act println ( a : bool , b : int , c : num , d : bool ) {
 
 act println ( a : bool , b : int , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7880,7 +7880,7 @@ act println ( a : bool , b : int , c : num , d : int ) {
 
 act println ( a : bool , b : int , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7912,7 +7912,7 @@ act println ( a : bool , b : int , c : bool , d : string ) {
 
 act println ( a : bool , b : int , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7947,7 +7947,7 @@ act println ( a : bool , b : int , c : bool , d : num ) {
 
 act println ( a : bool , b : int , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -7982,7 +7982,7 @@ act println ( a : bool , b : int , c : bool , d : bool ) {
 
 act println ( a : bool , b : int , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -8017,7 +8017,7 @@ act println ( a : bool , b : int , c : bool , d : int ) {
 
 act println ( a : bool , b : int , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -8049,7 +8049,7 @@ act println ( a : bool , b : int , c : int , d : string ) {
 
 act println ( a : bool , b : int , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -8084,7 +8084,7 @@ act println ( a : bool , b : int , c : int , d : num ) {
 
 act println ( a : bool , b : int , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -8119,7 +8119,7 @@ act println ( a : bool , b : int , c : int , d : bool ) {
 
 act println ( a : bool , b : int , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R1 -> a;
 	PROC -> {
@@ -8154,7 +8154,7 @@ act println ( a : bool , b : int , c : int , d : int ) {
 
 act println ( a : int , b : string , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8180,7 +8180,7 @@ act println ( a : int , b : string , c : string , d : string ) {
 
 act println ( a : int , b : string , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8209,7 +8209,7 @@ act println ( a : int , b : string , c : string , d : num ) {
 
 act println ( a : int , b : string , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8238,7 +8238,7 @@ act println ( a : int , b : string , c : string , d : bool ) {
 
 act println ( a : int , b : string , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8267,7 +8267,7 @@ act println ( a : int , b : string , c : string , d : int ) {
 
 act println ( a : int , b : string , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8296,7 +8296,7 @@ act println ( a : int , b : string , c : num , d : string ) {
 
 act println ( a : int , b : string , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8328,7 +8328,7 @@ act println ( a : int , b : string , c : num , d : num ) {
 
 act println ( a : int , b : string , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8360,7 +8360,7 @@ act println ( a : int , b : string , c : num , d : bool ) {
 
 act println ( a : int , b : string , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8392,7 +8392,7 @@ act println ( a : int , b : string , c : num , d : int ) {
 
 act println ( a : int , b : string , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8421,7 +8421,7 @@ act println ( a : int , b : string , c : bool , d : string ) {
 
 act println ( a : int , b : string , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8453,7 +8453,7 @@ act println ( a : int , b : string , c : bool , d : num ) {
 
 act println ( a : int , b : string , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8485,7 +8485,7 @@ act println ( a : int , b : string , c : bool , d : bool ) {
 
 act println ( a : int , b : string , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8517,7 +8517,7 @@ act println ( a : int , b : string , c : bool , d : int ) {
 
 act println ( a : int , b : string , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8546,7 +8546,7 @@ act println ( a : int , b : string , c : int , d : string ) {
 
 act println ( a : int , b : string , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8578,7 +8578,7 @@ act println ( a : int , b : string , c : int , d : num ) {
 
 act println ( a : int , b : string , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8610,7 +8610,7 @@ act println ( a : int , b : string , c : int , d : bool ) {
 
 act println ( a : int , b : string , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8642,7 +8642,7 @@ act println ( a : int , b : string , c : int , d : int ) {
 
 act println ( a : int , b : num , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8671,7 +8671,7 @@ act println ( a : int , b : num , c : string , d : string ) {
 
 act println ( a : int , b : num , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8703,7 +8703,7 @@ act println ( a : int , b : num , c : string , d : num ) {
 
 act println ( a : int , b : num , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8735,7 +8735,7 @@ act println ( a : int , b : num , c : string , d : bool ) {
 
 act println ( a : int , b : num , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8767,7 +8767,7 @@ act println ( a : int , b : num , c : string , d : int ) {
 
 act println ( a : int , b : num , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8799,7 +8799,7 @@ act println ( a : int , b : num , c : num , d : string ) {
 
 act println ( a : int , b : num , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8834,7 +8834,7 @@ act println ( a : int , b : num , c : num , d : num ) {
 
 act println ( a : int , b : num , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8869,7 +8869,7 @@ act println ( a : int , b : num , c : num , d : bool ) {
 
 act println ( a : int , b : num , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8904,7 +8904,7 @@ act println ( a : int , b : num , c : num , d : int ) {
 
 act println ( a : int , b : num , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8936,7 +8936,7 @@ act println ( a : int , b : num , c : bool , d : string ) {
 
 act println ( a : int , b : num , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -8971,7 +8971,7 @@ act println ( a : int , b : num , c : bool , d : num ) {
 
 act println ( a : int , b : num , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9006,7 +9006,7 @@ act println ( a : int , b : num , c : bool , d : bool ) {
 
 act println ( a : int , b : num , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9041,7 +9041,7 @@ act println ( a : int , b : num , c : bool , d : int ) {
 
 act println ( a : int , b : num , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9073,7 +9073,7 @@ act println ( a : int , b : num , c : int , d : string ) {
 
 act println ( a : int , b : num , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9108,7 +9108,7 @@ act println ( a : int , b : num , c : int , d : num ) {
 
 act println ( a : int , b : num , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9143,7 +9143,7 @@ act println ( a : int , b : num , c : int , d : bool ) {
 
 act println ( a : int , b : num , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9178,7 +9178,7 @@ act println ( a : int , b : num , c : int , d : int ) {
 
 act println ( a : int , b : bool , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9207,7 +9207,7 @@ act println ( a : int , b : bool , c : string , d : string ) {
 
 act println ( a : int , b : bool , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9239,7 +9239,7 @@ act println ( a : int , b : bool , c : string , d : num ) {
 
 act println ( a : int , b : bool , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9271,7 +9271,7 @@ act println ( a : int , b : bool , c : string , d : bool ) {
 
 act println ( a : int , b : bool , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9303,7 +9303,7 @@ act println ( a : int , b : bool , c : string , d : int ) {
 
 act println ( a : int , b : bool , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9335,7 +9335,7 @@ act println ( a : int , b : bool , c : num , d : string ) {
 
 act println ( a : int , b : bool , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9370,7 +9370,7 @@ act println ( a : int , b : bool , c : num , d : num ) {
 
 act println ( a : int , b : bool , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9405,7 +9405,7 @@ act println ( a : int , b : bool , c : num , d : bool ) {
 
 act println ( a : int , b : bool , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9440,7 +9440,7 @@ act println ( a : int , b : bool , c : num , d : int ) {
 
 act println ( a : int , b : bool , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9472,7 +9472,7 @@ act println ( a : int , b : bool , c : bool , d : string ) {
 
 act println ( a : int , b : bool , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9507,7 +9507,7 @@ act println ( a : int , b : bool , c : bool , d : num ) {
 
 act println ( a : int , b : bool , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9542,7 +9542,7 @@ act println ( a : int , b : bool , c : bool , d : bool ) {
 
 act println ( a : int , b : bool , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9577,7 +9577,7 @@ act println ( a : int , b : bool , c : bool , d : int ) {
 
 act println ( a : int , b : bool , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9609,7 +9609,7 @@ act println ( a : int , b : bool , c : int , d : string ) {
 
 act println ( a : int , b : bool , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9644,7 +9644,7 @@ act println ( a : int , b : bool , c : int , d : num ) {
 
 act println ( a : int , b : bool , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9679,7 +9679,7 @@ act println ( a : int , b : bool , c : int , d : bool ) {
 
 act println ( a : int , b : bool , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9714,7 +9714,7 @@ act println ( a : int , b : bool , c : int , d : int ) {
 
 act println ( a : int , b : int , c : string , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9743,7 +9743,7 @@ act println ( a : int , b : int , c : string , d : string ) {
 
 act println ( a : int , b : int , c : string , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9775,7 +9775,7 @@ act println ( a : int , b : int , c : string , d : num ) {
 
 act println ( a : int , b : int , c : string , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9807,7 +9807,7 @@ act println ( a : int , b : int , c : string , d : bool ) {
 
 act println ( a : int , b : int , c : string , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9839,7 +9839,7 @@ act println ( a : int , b : int , c : string , d : int ) {
 
 act println ( a : int , b : int , c : num , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9871,7 +9871,7 @@ act println ( a : int , b : int , c : num , d : string ) {
 
 act println ( a : int , b : int , c : num , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9906,7 +9906,7 @@ act println ( a : int , b : int , c : num , d : num ) {
 
 act println ( a : int , b : int , c : num , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9941,7 +9941,7 @@ act println ( a : int , b : int , c : num , d : bool ) {
 
 act println ( a : int , b : int , c : num , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -9976,7 +9976,7 @@ act println ( a : int , b : int , c : num , d : int ) {
 
 act println ( a : int , b : int , c : bool , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -10008,7 +10008,7 @@ act println ( a : int , b : int , c : bool , d : string ) {
 
 act println ( a : int , b : int , c : bool , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -10043,7 +10043,7 @@ act println ( a : int , b : int , c : bool , d : num ) {
 
 act println ( a : int , b : int , c : bool , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -10078,7 +10078,7 @@ act println ( a : int , b : int , c : bool , d : bool ) {
 
 act println ( a : int , b : int , c : bool , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -10113,7 +10113,7 @@ act println ( a : int , b : int , c : bool , d : int ) {
 
 act println ( a : int , b : int , c : int , d : string ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -10145,7 +10145,7 @@ act println ( a : int , b : int , c : int , d : string ) {
 
 act println ( a : int , b : int , c : int , d : num ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -10180,7 +10180,7 @@ act println ( a : int , b : int , c : int , d : num ) {
 
 act println ( a : int , b : int , c : int , d : bool ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {
@@ -10215,7 +10215,7 @@ act println ( a : int , b : int , c : int , d : bool ) {
 
 act println ( a : int , b : int , c : int , d : int ) {
 	PROC -> {
-		PROC CHANGE_LINE;
+		INVOKE CHANGE_LINE;
 	}
 	reg @ R5 -> a;
 	PROC -> {

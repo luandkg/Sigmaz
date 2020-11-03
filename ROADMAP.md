@@ -556,4 +556,16 @@ Linguagem de Programação Estruturada - Implementações
 
 		2020 11 02 -->> Integrealização - Compilador Etapas
 		2020 11 02 -->> Debug para execução
+		2020 11 02 -->> AST Value Num -> INT
+		2020 11 02 -->> AST Value Text -> STRING
+		2020 11 02 -->> AST Value Float -> NUM
+		2020 11 02 -->> AST_Call : Argumentos Usando ReceberArgumentos
+		2020 11 02 -->> Remoção AST_Invock
+
+
+		2020 11 03 -->> Formatador Struct
+		2020 11 03 -->> Formatador Type
+		2020 11 03 -->> Formatador Stages
+		2020 11 03 -->> Formatador External
+		2020 11 03 -->> Formatador Package
 

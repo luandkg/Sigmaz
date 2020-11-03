@@ -1,15 +1,22 @@
+call iniciar -> inicio ( )  ;
 
-call iniciar -> inicio ( ) ;
-act inicio ( ) { 
-def valor : num = 1.0 ;
-	def alfa : num = if ( maior ( valor , 2.0 ) ) :: ( +1.0 ) not ( -1.0 ) ;
-	def beta : num = if ( maior ( 5.0 , 2.0 ) ) :: ( +1.0 ) ;
-	def gama : num = if ( maior ( valor , 2.0 ) ) :: ( +1.0 ) ;
-	DEBUG -> REGRESSIVE :: ALL ;
+act inicio ( )  {
+	def valor : num = 1.0  ;
+	def alfa : num = if ( maior ( valor , 2.0 ) ) :: ( +1.0 ) not ( -1.0 )  ;
+	def beta : num = if ( maior ( 5.0 , 2.0 ) ) :: ( +1.0 )  ;
+	def gama : num = if ( maior ( valor , 2.0 ) ) :: ( +1.0 )  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+}
+
+func maior ( a : num , b : num ) : bool  {
+	reg @ R9 -> a  ;
+	reg @ R10 -> b  ;
+	
+	PROC ->  {
+		SET R1  ;
+		MOV FALSE  ;
+		OPE R9 DROEN R10  ;
 	}
 
-func maior ( a : num , b : num ) : bool { 
-reg @ R9 -> a ;
-	reg @ R10 -> b ;
-	PROC -> { SET R1 ; MOV FALSE ; OPE R9 DROEN R10 ; } return reg @ R1 ;
-	}
+	return reg @ R1  ;
+}

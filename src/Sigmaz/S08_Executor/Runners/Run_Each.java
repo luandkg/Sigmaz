@@ -71,6 +71,7 @@ public class Run_Each {
 
 
         Escopo EachEscopo = new Escopo(mRunTime, mEscopo);
+        EachEscopo.setNome("{{EACH}}");
 
         AST mDef = ASTCorrente.getBranch("DEF");
         AST mType = ASTCorrente.getBranch("TYPE");

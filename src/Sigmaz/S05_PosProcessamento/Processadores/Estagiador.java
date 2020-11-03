@@ -162,7 +162,7 @@ public class Estagiador {
 
         AST mValue = mBeta.criarBranch("VALUE");
         mValue.setNome("Desconhecido");
-        mValue.setValor("Text");
+        mValue.setValor("STRING");
 
 
         for (AST AST_STAGE : mStageDef.getBranch("STAGES").getASTS()) {
@@ -195,7 +195,7 @@ public class Estagiador {
 
                 AST mVALUE = mApply.criarBranch("VALUE");
                 mVALUE.setNome(eNomeStage);
-                mVALUE.setValor("Text");
+                mVALUE.setValor("STRING");
             }
 
 
@@ -273,7 +273,7 @@ public class Estagiador {
 
                 AST mVALUE = mApply.criarBranch("VALUE");
                 mVALUE.setNome(AST_STAGE.getValor());
-                mVALUE.setValor("Num");
+                mVALUE.setValor("INT");
 
             }
 
@@ -347,7 +347,7 @@ public class Estagiador {
 
                 AST mRight = mCondition.criarBranch("RIGHT");
                 mRight.setNome(AST_STAGE.getValor());
-                mRight.setValor("Num");
+                mRight.setValor("INT");
 
 
                 AST mIfbody = mIf.criarBranch("BODY");
@@ -595,7 +595,7 @@ public class Estagiador {
 
         AST mMov = mProc.criarBranch("MOV");
         mMov.setNome("0");
-        mMov.setValor("Num");
+        mMov.setValor("INT");
 
         AST mStage = mProc.criarBranch("STAGE");
         mStage.setNome("R19");

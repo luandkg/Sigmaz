@@ -385,21 +385,24 @@ public class RunTime {
 
     public void debug(AST ASTCorrente) {
 
-        AST InDebug = ASTCorrente.getBranch("IN_DEBUG");
+        if (ASTCorrente.existeBranch("IN_DEBUG")){
+            AST InDebug = ASTCorrente.getBranch("IN_DEBUG");
 
-        String eArquivo = InDebug.getNome();
-        String eLocalizacao = InDebug.getValor();
+            String eArquivo = InDebug.getNome();
+            String eLocalizacao = InDebug.getValor();
 
-        String mArquivo = eArquivo;
+            String mArquivo = eArquivo;
 
-        for (AST eD : mASTDebug.getASTS()) {
-            if (eD.mesmoNome(eArquivo)) {
-                mArquivo = eD.getValor();
-                break;
+            for (AST eD : mASTDebug.getASTS()) {
+                if (eD.mesmoNome(eArquivo)) {
+                    mArquivo = eD.getValor();
+                    break;
+                }
             }
+
+            mDebugs.add(mArquivo + " -->> " + eLocalizacao);
         }
 
-        mDebugs.add(mArquivo + " -->> " + eLocalizacao);
 
     }
 

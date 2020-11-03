@@ -1,48 +1,61 @@
-
-call iniciar -> emPOST ( ) ;
-cast pos {
+call iniciar -> emPOST ( )  ;
+cast pos  {
 	
-	getter a : int -> { 
+	getter a : int ->  {
 	}
 	
-	setter b : int -> { 
+	setter b : int ->  {
 	}
+}
+
+operator == ( a : int , b : int ) : bool  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R1  ;
+		MOV FALSE  ;
+		OPE R5 EQUAL R6  ;
 	}
 
-operator == ( a : int , b : int ) : bool { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R1 ; MOV FALSE ; OPE R5 EQUAL R6 ; } return reg @ R1 ;
+	return reg @ R1  ;
+}
+
+operator !! ( a : int , b : int ) : bool  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R1  ;
+		MOV FALSE  ;
+		OPE R5 DIFF R6  ;
 	}
 
-operator !! ( a : int , b : int ) : bool { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R1 ; MOV FALSE ; OPE R5 DIFF R6 ; } return reg @ R1 ;
-	}
+	return reg @ R1  ;
+}
 
-operator == ( a : pos , b : pos ) : bool { 
-def c1 : int = a ;
-	def c2 : int = b ;
-	return c1 == c2 ;
-	}
+operator == ( a : pos , b : pos ) : bool  {
+	def c1 : int = a  ;
+	def c2 : int = b  ;
+	return c1 == c2  ;
+}
 
-operator !! ( a : pos , b : pos ) : bool { 
-def c1 : int = a ;
-	def c2 : int = b ;
-	return c1 !! c2 ;
-	}
+operator !! ( a : pos , b : pos ) : bool  {
+	def c1 : int = a  ;
+	def c2 : int = b  ;
+	return c1 !! c2  ;
+}
 
-act emPOST ( ) { 
-def f : pos = 13 ;
-	def v : int = f ;
-	def g : pos = f ;
-	def m : int = 100 ;
-	DEBUG -> REGRESSIVE :: ALL ;
-	def igual : bool = f == g ;
-	def diferente : bool = f !! g ;
-	DEBUG -> REGRESSIVE :: ALL ;
-	def p1 : int = int ( f ) ;
-	def p2 : pos = pos ( 12 ) ;
-	DEBUG -> REGRESSIVE :: ALL ;
-	}
+act emPOST ( )  {
+	def f : pos = 13  ;
+	def v : int = f  ;
+	def g : pos = f  ;
+	def m : int = 100  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+	def igual : bool = f == g  ;
+	def diferente : bool = f !! g  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+	def p1 : int = int ( f )  ;
+	def p2 : pos = pos ( 12 )  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+}

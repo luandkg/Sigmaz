@@ -29,10 +29,10 @@ public class AST_Comando {
 
 
         Token TokenD = mCompiler.getTokenCorrente();
-        if (TokenD.getTipo() == TokenTipo.NUMERO) {
+        if (TokenD.getTipo() == TokenTipo.INTEIRO) {
 
             ASTCorrente.setNome(TokenD.getConteudo());
-            ASTCorrente.setValor("Num");
+            ASTCorrente.setValor("INT");
 
             Token P2 = mCompiler.getTokenAvante();
 

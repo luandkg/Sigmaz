@@ -15,6 +15,6 @@ operator == ( a : pos , b : pos ) : bool {
 operator !! ( a : pos , b : pos ) : bool {
 	def c1 : num = a;
 	def c2 : num = b;
-	invoke math -> operator_not ( c1 , c2 ) :: c;
 	return c1 !! c2;
+
 }

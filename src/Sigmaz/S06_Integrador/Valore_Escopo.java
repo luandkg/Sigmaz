@@ -1,4 +1,4 @@
-package Sigmaz.S06_Integralizador;
+package Sigmaz.S06_Integrador;
 
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S08_Executor.Debuggers.Simplificador;
@@ -301,6 +301,8 @@ public class Valore_Escopo {
             } else if (mAST.mesmoTipo("DELETE")) {
 
             } else if (mAST.mesmoTipo("STRUCT_SETTER")) {
+
+            } else if (mAST.mesmoTipo("IN_DEBUG")) {
 
             } else {
 

@@ -117,7 +117,6 @@ public class Escopo {
     }
 
 
-
     public void setNome(String eNome) {
         mNome = eNome;
     }
@@ -125,7 +124,6 @@ public class Escopo {
     public String getNome() {
         return mNome;
     }
-
 
 
     public RunTime getRunTime() {
@@ -451,7 +449,6 @@ public class Escopo {
     }
 
 
-
     public Item getItem(String eNome) {
         return mEscopoStack.getItem(eNome);
     }
@@ -472,5 +469,12 @@ public class Escopo {
         return mLocal;
     }
 
+    public String getCaminho() {
+        if (mTemAnterior) {
+            return mEscopoAnterior.getCaminho()+ " -> " + this.getNome();
+        } else {
+            return this.getNome();
+        }
+    }
 
 }

@@ -28,14 +28,14 @@ public class AST_Recebimentos {
 
                 saiu = true;
                 break;
-            } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
+            } else if (TokenD.getTipo() == TokenTipo.INTEIRO) {
 
                 mais=false;
 
 
                 AST ASTCorrente =   ASTPai.criarBranch("ARGUMENT");
                 ASTCorrente.setNome(TokenD.getConteudo());
-                ASTCorrente.setValor("Num");
+                ASTCorrente.setValor("INT");
 
 
                 Token P2 = mCompiler.getTokenAvante();

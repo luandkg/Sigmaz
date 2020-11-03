@@ -38,14 +38,14 @@ public class AST_Int {
             AST_Corrente.setValor("ID");
             AST_Corrente.setNome(TokenC.getConteudo().toUpperCase());
 
-        } else if (TokenC.getTipo() == TokenTipo.NUMERO) {
+        } else if (TokenC.getTipo() == TokenTipo.INTEIRO) {
 
-            AST_Corrente.setValor("Num");
+            AST_Corrente.setValor("INT");
             AST_Corrente.setNome(TokenC.getConteudo());
 
         } else if (TokenC.getTipo() == TokenTipo.NUMERO_FLOAT) {
 
-            AST_Corrente.setValor("Float");
+            AST_Corrente.setValor("NUM");
             AST_Corrente.setNome(TokenC.getConteudo());
 
         } else if (TokenC.getTipo() == TokenTipo.TEXTO) {

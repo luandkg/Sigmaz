@@ -1,4 +1,4 @@
-package Sigmaz.S06_Integralizador;
+package Sigmaz.S06_Integrador;
 
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S00_Utilitarios.Visualizador.SigmazExternal;

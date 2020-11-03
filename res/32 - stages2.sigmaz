@@ -1,48 +1,66 @@
+call iniciar -> varios_estagios ( )  ;
 
-call iniciar -> varios_estagios ( ) ;
-act varios_estagios ( ) { 
-DEBUG -> REGRESSIVE :: ALL ;
-	def cor1 : CORES = CORES :: AMARELO ;
-	def cor2 : CORES = CORES :: AZUL ;
-	def z1 : bool = DIAS :: SEGUNDA == DIAS :: SEGUNDA ;
-	def z2 : bool = DIAS :: SEGUNDA == DIAS :: QUARTA ;
-	def dia1 : DIAS = DIAS :: SEGUNDA ;
-	def dia2 : DIAS = DIAS :: QUARTA ;
-	def s_dia1 : string = DIAS -> nameOf ( DIAS :: SEGUNDA ) ;
-	def s_dia2 : string = DIAS -> nameOf ( DIAS :: QUARTA ) ;
-	def i_dia1 : int = DIAS -> valueOf ( DIAS :: SEGUNDA ) ;
-	def i_dia2 : int = DIAS -> valueOf ( DIAS :: QUARTA ) ;
-	def r_dia : DIAS = DIAS -> get ( 6 ) ;
-	DEBUG -> REGRESSIVE :: ALL ;
-	def q1 : string = qualDia ( DIAS :: DOMINGO ) ;
-	def q2 : string = qualDia ( DIAS :: SEGUNDA ) ;
-	def q3 : string = qualDia ( DIAS :: TERCA ) ;
-	def q4 : string = qualDia ( DIAS :: QUARTA ) ;
-	def q5 : string = qualDia ( DIAS :: QUINTA ) ;
-	def q6 : string = qualDia ( DIAS :: SEXTA ) ;
-	def q7 : string = qualDia ( DIAS :: SABADO ) ;
-	DEBUG -> REGRESSIVE :: ALL ;
-	def d1 : bool = DIAS :: SEGUNDA == DIAS :: SEGUNDA ;
-	 #def n1 : string = DIAS -> nameOf ( DIAS :: TERCA ); #def v1 : num = DIAS -> valueOf ( DIAS :: TERCA ); #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
-	}
-
-stages DIAS -> {
-
-	 SEGUNDA , TERCA , QUARTA , QUINTA , SEXTA , SABADO , DOMINGO
+act varios_estagios ( )  {
+	DEBUG -> REGRESSIVE :: ALL  ;
+	def cor1 : CORES = CORES :: AMARELO  ;
+	def cor2 : CORES = CORES :: AZUL  ;
+	def z1 : bool = DIAS :: SEGUNDA == DIAS :: SEGUNDA  ;
+	def z2 : bool = DIAS :: SEGUNDA == DIAS :: QUARTA  ;
+	def dia1 : DIAS = DIAS :: SEGUNDA  ;
+	def dia2 : DIAS = DIAS :: QUARTA  ;
+	def s_dia1 : string = DIAS -> nameOf ( DIAS :: SEGUNDA )  ;
+	def s_dia2 : string = DIAS -> nameOf ( DIAS :: QUARTA )  ;
+	def i_dia1 : int = DIAS -> valueOf ( DIAS :: SEGUNDA )  ;
+	def i_dia2 : int = DIAS -> valueOf ( DIAS :: QUARTA )  ;
+	def r_dia : DIAS = DIAS -> get ( 6 )  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+	def q1 : string = qualDia ( DIAS :: DOMINGO )  ;
+	def q2 : string = qualDia ( DIAS :: SEGUNDA )  ;
+	def q3 : string = qualDia ( DIAS :: TERCA )  ;
+	def q4 : string = qualDia ( DIAS :: QUARTA )  ;
+	def q5 : string = qualDia ( DIAS :: QUINTA )  ;
+	def q6 : string = qualDia ( DIAS :: SEXTA )  ;
+	def q7 : string = qualDia ( DIAS :: SABADO )  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+	def d1 : bool = DIAS :: SEGUNDA == DIAS :: SEGUNDA  ;
+	#def n1 : string = DIAS -> nameOf ( DIAS :: TERCA ); #def v1 : num = DIAS -> valueOf ( DIAS :: TERCA ); #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL;
 }
 
-stages CORES -> not {
+stages DIAS ->  {SEGUNDA , TERCA , QUARTA , QUINTA , SEXTA , SABADO , DOMINGO  }
 
-	 AMARELO , VERMELHO , AZUL , BRANCO
+
+stages CORES -> not  {AMARELO , VERMELHO , AZUL , BRANCO  }
+
+
+func qualDia ( a : DIAS ) : string  {
+	def resp : string = "Desconhecido" ;
+	
+	if ( a == DIAS :: SEGUNDA ) ->  {
+		resp = "SEGUNDA" ;
+	}
+
+	
+	if ( a == DIAS :: TERCA ) ->  {
+		resp = "TERCA" ;
+	}
+
+	
+	if ( a == DIAS :: QUARTA ) ->  {
+		resp = "QUARTA" ;
+	}
+
+	return resp  ;
 }
 
-func qualDia ( a : DIAS ) : string { 
-def resp : string = "Desconhecido" ;
-	if ( a == DIAS :: SEGUNDA ) -> { resp = "SEGUNDA" ; } if ( a == DIAS :: TERCA ) -> { resp = "TERCA" ; } if ( a == DIAS :: QUARTA ) -> { resp = "QUARTA" ; } return resp ;
+operator == ( a : int , b : int ) : bool  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R1  ;
+		MOV FALSE  ;
+		OPE R5 EQUAL R6  ;
 	}
 
-operator == ( a : int , b : int ) : bool { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R1 ; MOV FALSE ; OPE R5 EQUAL R6 ; } return reg @ R1 ;
-	}
+	return reg @ R1  ;
+}

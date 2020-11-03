@@ -117,3 +117,9 @@ Linguagem de Programação Estruturada - Alterações
 		2020 11 01 -->> PosProcessador Tipador : Refatoramento
 		2020 11 01 -->> Pos Processador Valorador -> Fase Integralizador
 
+
+		2020 11 02 -->> AST Value Num -> INT
+		2020 11 02 -->> AST Value Text -> STRING
+		2020 11 02 -->> AST Value Float -> NUM
+		2020 11 02 -->> Remoção AST_Invock
+

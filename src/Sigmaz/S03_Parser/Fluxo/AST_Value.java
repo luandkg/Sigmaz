@@ -216,9 +216,9 @@ public class AST_Value {
             SegundaParte(ASTPai);
 
 
-        } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
+        } else if (TokenD.getTipo() == TokenTipo.INTEIRO) {
 
-            mAST_ValueTypes.dentro_num(TokenD, ASTPai);
+            mAST_ValueTypes.dentro_inteiro(TokenD, ASTPai);
 
             SegundaParte(ASTPai);
 
@@ -231,7 +231,7 @@ public class AST_Value {
 
         } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
 
-            mAST_ValueTypes.dentro_texto(TokenD, ASTPai);
+            mAST_ValueTypes.dentro_string(TokenD, ASTPai);
 
             SegundaParte(ASTPai);
 
@@ -516,10 +516,10 @@ public class AST_Value {
             terminar();
 
 
-        } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
+        } else if (TokenD.getTipo() == TokenTipo.INTEIRO) {
 
 
-            mAST_ValueTypes.dentro_num(TokenD, ASTPai);
+            mAST_ValueTypes.dentro_inteiro(TokenD, ASTPai);
 
 
             terminar();
@@ -534,7 +534,7 @@ public class AST_Value {
         } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
 
 
-            mAST_ValueTypes.dentro_texto(TokenD, ASTPai);
+            mAST_ValueTypes.dentro_string(TokenD, ASTPai);
 
             terminar();
 
@@ -709,10 +709,10 @@ public class AST_Value {
             mAST_ValueTypes.dentro_block(ASTPai, mTemTipo, mTipo);
 
 
-        } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
+        } else if (TokenD.getTipo() == TokenTipo.INTEIRO) {
 
 
-            mAST_ValueTypes.dentro_num(TokenD, ASTPai);
+            mAST_ValueTypes.dentro_inteiro(TokenD, ASTPai);
 
 
         } else if (TokenD.getTipo() == TokenTipo.NUMERO_FLOAT) {
@@ -723,7 +723,7 @@ public class AST_Value {
         } else if (TokenD.getTipo() == TokenTipo.TEXTO) {
 
 
-            mAST_ValueTypes.dentro_texto(TokenD, ASTPai);
+            mAST_ValueTypes.dentro_string(TokenD, ASTPai);
 
 
         } else if (TokenD.getTipo() == TokenTipo.NEGADOR) {

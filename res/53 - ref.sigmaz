@@ -1,40 +1,40 @@
+call iniciar -> inicio ( )  ;
 
-call iniciar -> inicio ( ) ;
-act inicio ( ) { 
-def w : int = 5 ;
-	 #invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-	passador ( w ) ;
-	 #invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-	referenciador ( w ) ;
-	 #invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-	def t : int = -1 ;
-	janelador ( t ) ;
-	 #invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-	ref_janelador ( t ) ;
-	 #invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK; #ref_janelador(ale()); #invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
-	moc X : int = 3 ;
-	 #ref_janelador(X);
-	}
+act inicio ( )  {
+	def w : int = 5  ;
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	passador ( w )  ;
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	referenciador ( w )  ;
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	def t : int = -1  ;
+	janelador ( t )  ;
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	ref_janelador ( t )  ;
+	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK; #ref_janelador(ale()); #invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
+	moc X : int = 3  ;
+	#ref_janelador(X);
+}
 
-act passador ( a : int ) { 
-a = 10 ;
-	}
+act passador ( a : int )  {
+	a = 10  ;
+}
 
-act referenciador ( ref a : int ) { 
-DEBUG -> REGRESSIVE :: ALL ;
-	a = 10 ;
-	}
+act referenciador ( ref a : int )  {
+	DEBUG -> REGRESSIVE :: ALL  ;
+	a = 10  ;
+}
 
-func janelador ( a : int ) : bool { 
-a = 10 ;
-	return true ;
-	}
+func janelador ( a : int ) : bool  {
+	a = 10  ;
+	return true  ;
+}
 
-func ref_janelador ( ref a : int ) : bool { 
-a = 10 ;
-	return true ;
-	}
+func ref_janelador ( ref a : int ) : bool  {
+	a = 10  ;
+	return true  ;
+}
 
-func ale ( ) : int { 
-return 3 ;
-	}
+func ale ( ) : int  {
+	return 3  ;
+}

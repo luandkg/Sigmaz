@@ -1,46 +1,51 @@
-
-call iniciar -> inicio ( ) ;
-type Pessoa {
-
-	
+call iniciar -> inicio ( )  ;
+type Pessoa  {
 	define nome : string = "" ;
-	
-	define idade : int = 0 ;
-	
-	mockiz TAXA : num = 5.20 ;
-	
+	define idade : int = 0  ;
+	mockiz TAXA : num = 5.20  ;
+}
+type Casal  {
+	define P1 : Pessoa = null  ;
+	define P2 : Pessoa = null  ;
 }
 
-type Casal {
-
-	
-	define P1 : Pessoa = null ;
-	
-	define P2 : Pessoa = null ;
-	
+act inicio ( )  {
+	def a : Pessoa = start Pessoa 
+		{
+			nome = "Luan" ;
+			idade = 20  ;
+		} ;
+	def b : Pessoa = start Pessoa 
+		{
+			nome = "Fernando" ;
+			idade = 34  ;
+		} ;
+	def c : Pessoa = start Pessoa 
+		{
+			nome = "Carlos" ;
+			idade = 50  ;
+		} ;
+	def a_nome : string = a . nome  ;
+	def a_idade : int = a . idade  ;
+	def b_nome : string = b . nome  ;
+	def CasalC : Casal = start Casal 
+		{
+			P1 = a  ;
+			P2 = b  ;
+		} ;
+	def cs_p1_nome : string = CasalC . P1 . nome  ;
+	def cs_p1 : Pessoa = CasalC . P1  ;
+	DEBUG -> REGRESSIVE :: STACK  ;
+	#invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL; a.nome ="Jana";
+	DEBUG -> REGRESSIVE :: STACK  ;
+	trash ( c )  ;
+	DEBUG -> REGRESSIVE :: STACK  ;
+	def a_nome2 : string = a . nome  ;
+	def t : num = a . TAXA  ;
+	DEBUG -> REGRESSIVE :: STACK  ;
+	DEBUG -> REGRESSIVE :: STACK  ;
 }
 
-act inicio ( ) { 
-def a : Pessoa = start Pessoa { nome = "Luan" ; idade = 20 ; } ;
-	def b : Pessoa = start Pessoa { nome = "Fernando" ; idade = 34 ; } ;
-	def c : Pessoa = start Pessoa { nome = "Carlos" ; idade = 50 ; } ;
-	def a_nome : string = a . nome ;
-	def a_idade : int = a . idade ;
-	def b_nome : string = b . nome ;
-	def CasalC : Casal = start Casal { P1 = a ; P2 = b ; } ;
-	def cs_p1_nome : string = CasalC . P1 . nome ;
-	def cs_p1 : Pessoa = CasalC . P1 ;
-	DEBUG -> REGRESSIVE :: STACK ;
-	 #invoke __COMPILER__ -> SHOW_SCOPE ( ) :: ALL; a.nome ="Jana";
-	DEBUG -> REGRESSIVE :: STACK ;
-	trash ( c ) ;
-	DEBUG -> REGRESSIVE :: STACK ;
-	def a_nome2 : string = a . nome ;
-	def t : num = a . TAXA ;
-	DEBUG -> REGRESSIVE :: STACK ;
-	DEBUG -> REGRESSIVE :: STACK ;
-	}
-
-act trash ( a : any ) { 
-DEBUG -> REGRESSIVE :: STACK ;
-	}
+act trash ( a : any )  {
+	DEBUG -> REGRESSIVE :: STACK  ;
+}

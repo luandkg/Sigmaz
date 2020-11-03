@@ -5,7 +5,6 @@ import Sigmaz.S03_Parser.Alocador.AST_Alocador;
 import Sigmaz.S03_Parser.Bloco.*;
 import Sigmaz.S03_Parser.Complexo.*;
 import Sigmaz.S03_Parser.Fluxo.AST_Default;
-import Sigmaz.S03_Parser.Fluxo.AST_Invoke;
 import Sigmaz.S03_Parser.Organizador.AST_Import;
 import Sigmaz.S03_Parser.Organizador.AST_Refer;
 import Sigmaz.S03_Parser.Organizador.AST_Require;
@@ -294,10 +293,6 @@ public class Parser {
                 AST_Alocador mAST = new AST_Alocador(this);
                 mAST.init("DEFINE", AST_Raiz, "ALL");
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("invoke")) {
-
-                AST_Invoke mAST = new AST_Invoke(this);
-                mAST.init(AST_Raiz);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operator")) {
 

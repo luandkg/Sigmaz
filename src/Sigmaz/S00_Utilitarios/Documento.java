@@ -27,6 +27,47 @@ public class Documento {
         mConteudo += "\n";
     }
 
+    public void pularLinhaTabulada(int mTab) {
+
+
+        String sTabs = "";
+
+        if (mTab > 0) {
+            for (int t = 0; t < mTab; t++) {
+                sTabs += "\t";
+            }
+        }
+
+
+        if (mConteudo.length() == 0) {
+            mConteudo += sTabs + "";
+        } else {
+            mConteudo += "\n" + sTabs + "";
+        }
+
+    }
+
+    public void adicionarTab(int mTab) {
+
+
+        String sTabs = "";
+
+        if (mTab > 0) {
+            for (int t = 0; t < mTab; t++) {
+                sTabs += "\t";
+            }
+        }
+
+
+        if (mConteudo.length() == 0) {
+            mConteudo += sTabs + "";
+        } else {
+            mConteudo += sTabs + "";
+        }
+
+    }
+
+
     public void adicionarLinha(int mTab, String eConteudo) {
 
         String sTabs = "";

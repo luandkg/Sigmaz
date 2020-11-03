@@ -51,7 +51,7 @@ public class AST_Exception {
 
                 saiu = true;
                 break;
-            } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
+            } else if (TokenD.getTipo() == TokenTipo.INTEIRO) {
 
                 mais=false;
 

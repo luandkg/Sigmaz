@@ -1,88 +1,89 @@
-
-struct Objeto {
+struct Objeto  {
 	
-	init Objeto ( ) { 
+	init Objeto ( )  {
 	}
-	
-
 	all :
-		act trash ( ) { 
- #delete this;
-					}
 		
-		func equal ( ObjetoCorrente : Objeto ) : bool { 
-return false ;
-					}
-		
-		func hash ( ) : string { 
-return "" ;
-					}
+		act trash ( )  {
+			#delete this;
 		}
-
-struct O1 with Objeto {
-	
-	init O1 ( ) -> Objeto ( ) { 
-	}
-	
+		
+		func equal ( ObjetoCorrente : Objeto ) : bool  {
+			return false  ;
+		}
+		
+		func hash ( ) : string  {
+			return "" ;
+		}
 }
-
-struct O2 with Objeto {
+struct O1 with Objeto  {
 	
-	init O2 ( ) -> Objeto ( ) { 
+	init O1 ( ) -> Objeto ( )  {
 	}
-	
 }
-
-struct O3 with Objeto {
+struct O2 with Objeto  {
 	
-	init O3 ( eValor : int ) -> Objeto ( ) { 
-mValor = eValor ;
-			}
+	init O2 ( ) -> Objeto ( )  {
+	}
+}
+struct O3 with Objeto  {
 	
-
+	init O3 ( eValor : int ) -> Objeto ( )  {
+		mValor = eValor  ;
+	}
 	restrict :
-		define mValor : int = 0 ;
-		
+		define mValor : int = 0  ;
 	all :
-		func equal ( ObjetoCorrente : O3 ) : bool { 
-return this . mValor == ObjetoCorrente . getValor ( ) ;
-					}
 		
-		func getValor ( ) : int { 
-return mValor ;
-					}
-		 allow : func hash ( ) : string { return"@OBJETO::O3";
+		func equal ( ObjetoCorrente : O3 ) : bool  {
+			return this . mValor == ObjetoCorrente . getValor ( )  ;
+		}
+		
+		func getValor ( ) : int  {
+			return mValor  ;
+		}allow : 
+		
+		func hash ( ) : string  {
+			return "@OBJETO::O3" ;
+		}
 }
- }
-operator == ( a : int , b : int ) : bool { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R1 ; MOV FALSE ; OPE R5 EQUAL R6 ; } return reg @ R1 ;
+
+operator == ( a : int , b : int ) : bool  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R1  ;
+		MOV FALSE  ;
+		OPE R5 EQUAL R6  ;
 	}
 
-call iniciar -> { 
-def obj_1 : Objeto = init Objeto ( ) ;
-	def obj_2 : Objeto = init Objeto ( ) ;
-	DEBUG -> REGRESSIVE :: STACK ;
-	def obj_3 : O1 = init O1 ( ) ;
-	def obj_4 : O1 = init O1 ( ) ;
-	DEBUG -> REGRESSIVE :: STACK ;
-	def obj_5 : Objeto = obj_4 ;
-	def obj_6 : O1 = obj_5 ;
-	DEBUG -> REGRESSIVE :: STACK ;
-	 #def obj_7 : O2 = obj_5; def igual : bool = obj_1.equal ( obj_2 );
-	def igual2 : bool = obj_3 . equal ( obj_5 ) ;
-	def obj_8 : O3 = init O3 ( 12 ) ;
-	def obj_9 : O3 = init O3 ( 13 ) ;
-	def igual3 : bool = obj_8 . equal ( obj_9 ) ;
-	def hash_o8 : string = obj_8 . hash ( ) ;
-	DEBUG -> REGRESSIVE :: STACK ;
-	DEBUG -> GLOBAL :: INSTANCES ;
-	 #obj_1.trash ( ); obj_2.trash ( );
-	obj_3 . trash ( ) ;
-	obj_4 . trash ( ) ;
-	 #obj_5.trash(); obj_8.trash ( );
-	obj_9 . trash ( ) ;
-	DEBUG -> REGRESSIVE :: STACK ;
-	DEBUG -> GLOBAL :: INSTANCES ;
-	}
+	return reg @ R1  ;
+}
+
+call iniciar ->  {
+	def obj_1 : Objeto = init Objeto ( )  ;
+	def obj_2 : Objeto = init Objeto ( )  ;
+	DEBUG -> REGRESSIVE :: STACK  ;
+	def obj_3 : O1 = init O1 ( )  ;
+	def obj_4 : O1 = init O1 ( )  ;
+	DEBUG -> REGRESSIVE :: STACK  ;
+	def obj_5 : Objeto = obj_4  ;
+	def obj_6 : O1 = obj_5  ;
+	DEBUG -> REGRESSIVE :: STACK  ;
+	#def obj_7 : O2 = obj_5; def igual : bool = obj_1.equal ( obj_2 );
+	def igual2 : bool = obj_3 . equal ( obj_5 )  ;
+	def obj_8 : O3 = init O3 ( 12 )  ;
+	def obj_9 : O3 = init O3 ( 13 )  ;
+	def igual3 : bool = obj_8 . equal ( obj_9 )  ;
+	def hash_o8 : string = obj_8 . hash ( )  ;
+	DEBUG -> REGRESSIVE :: STACK  ;
+	DEBUG -> GLOBAL :: INSTANCES  ;
+	#obj_1.trash ( ); obj_2.trash ( );
+	obj_3 . trash ( )  ;
+	obj_4 . trash ( )  ;
+	#obj_5.trash(); obj_8.trash ( );
+	obj_9 . trash ( )  ;
+	DEBUG -> REGRESSIVE :: STACK  ;
+	DEBUG -> GLOBAL :: INSTANCES  ;
+}

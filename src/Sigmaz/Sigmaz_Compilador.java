@@ -6,7 +6,7 @@ import Sigmaz.S00_Utilitarios.*;
 import Sigmaz.S01_PreProcessamento.Etapa;
 import Sigmaz.S01_PreProcessamento.Planejador;
 import Sigmaz.S04_Compilador.Compilador;
-import Sigmaz.S06_Integralizador.Integrador;
+import Sigmaz.S06_Integrador.Integrador;
 import Sigmaz.S07_Montador.Montador;
 import Sigmaz.S05_PosProcessamento.Processadores.Cabecalho;
 import Sigmaz.S05_PosProcessamento.PosProcessador;
@@ -446,7 +446,7 @@ public class Sigmaz_Compilador {
 
         executar_PosProcessamento(eLocalLibs);
 
-        executar_Integralizador(eLocalLibs);
+        executar_Integracao(eLocalLibs);
 
 
         executar_Montagem(mSaida);
@@ -534,7 +534,7 @@ public class Sigmaz_Compilador {
 
         executar_PosProcessamento(eLocalLibs);
 
-        executar_Integralizador(eLocalLibs);
+        executar_Integracao(eLocalLibs);
 
         executar_Montagem(mSaida);
 
@@ -599,7 +599,7 @@ public class Sigmaz_Compilador {
 
         executar_PosProcessamento(mLocalLibs);
 
-        executar_Integralizador(mLocalLibs);
+        executar_Integracao(mLocalLibs);
 
 
         mIntervalo.marqueFim();
@@ -1051,7 +1051,7 @@ public class Sigmaz_Compilador {
 
     }
 
-    private void executar_Integralizador(String mLocalLibs) {
+    private void executar_Integracao(String mLocalLibs) {
 
         if (mFase == Fases.INTEGRALIZADOR) {
 
@@ -1086,7 +1086,7 @@ public class Sigmaz_Compilador {
         }
         if (mMostrar_Fases) {
 
-            System.out.println("\t - 6 : Integrealizador         : " + mETAPA_INTEGRALIZADOR);
+            System.out.println("\t - 6 : Integracao              : " + mETAPA_INTEGRALIZADOR);
 
         }
 

@@ -1,0 +1,297 @@
+SIGMAZ :: "EXECUTABLE" =  "VTIT6.VC48P.ZDQF0@H8NW" { 
+DEBUG_MODE :: "" =  "TRUE" { 
+DEBUG :: "0" =  "res/91 @H delete.sigmaz" { } } 
+CALL :: "Remocao" =  "AUTO" { 
+SENDING :: { 
+ARGUMENTS :: { } } 
+BODY :: { 
+DEF :: "u1" =  "" { 
+TYPE :: "Usuario" =  "CONCRETE" { }
+VALUE :: "Usuario" =  "START" { 
+GENERIC :: "FALSE" =  "" { }
+STARTED :: { 
+APPLY :: { 
+SETTABLE :: "Nome" =  "ID" { }
+VALUE :: "Luan" =  "Text" { } } 
+APPLY :: { 
+SETTABLE :: "Idade" =  "ID" { }
+VALUE :: "27" =  "Num" { } }  }  }  } 
+DEF :: "u2" =  "" { 
+TYPE :: "Usuario" =  "CONCRETE" { }
+VALUE :: "Usuario" =  "START" { 
+GENERIC :: "FALSE" =  "" { }
+STARTED :: { 
+APPLY :: { 
+SETTABLE :: "Nome" =  "ID" { }
+VALUE :: "Alice" =  "Text" { } } 
+APPLY :: { 
+SETTABLE :: "Idade" =  "ID" { }
+VALUE :: "34" =  "Num" { } }  }  }  } 
+DEF :: "u3" =  "" { 
+TYPE :: "Usuario" =  "CONCRETE" { }
+VALUE :: "Usuario" =  "START" { 
+GENERIC :: "FALSE" =  "" { }
+STARTED :: { 
+APPLY :: { 
+SETTABLE :: "Nome" =  "ID" { }
+VALUE :: "Alex" =  "Text" { } } 
+APPLY :: { 
+SETTABLE :: "Idade" =  "ID" { }
+VALUE :: "20" =  "Num" { } }  }  }  } 
+DEF :: "valor" =  "" { 
+TYPE :: "int" =  "CONCRETE" { }
+VALUE :: "12" =  "Num" { } } 
+DEBUG :: "LOCAL" =  "STACK" { }
+DEBUG :: "GLOBAL" =  "INSTANCES" { }
+DELETE :: { 
+VALUE :: "u2" =  "ID" { } } 
+DELETE :: { 
+VALUE :: "valor" =  "ID" { } } 
+DELETE :: { 
+VALUE :: "Usuario" =  "START" { 
+GENERIC :: "FALSE" =  "" { }
+STARTED :: { 
+APPLY :: { 
+SETTABLE :: "Nome" =  "ID" { }
+VALUE :: "Bruna" =  "Text" { } } 
+APPLY :: { 
+SETTABLE :: "Idade" =  "ID" { }
+VALUE :: "25" =  "Num" { } }  }  }  } 
+DEBUG :: "LOCAL" =  "STACK" { }
+DEBUG :: "GLOBAL" =  "INSTANCES" { }
+DEF :: "alfa" =  "" { 
+TYPE :: "Objeto" =  "CONCRETE" { }
+VALUE :: "Objeto" =  "INIT" { 
+ARGUMENTS :: { 
+ARGUMENT :: "12" =  "Num" { } } 
+GENERIC :: "FALSE" =  "" { } }  } 
+DEF :: "vv" =  "" { 
+TYPE :: "int" =  "CONCRETE" { }
+VALUE :: "alfa" =  "STRUCT" { 
+INTERNAL :: "getSI" =  "STRUCT_FUNCT" { 
+ARGUMENTS :: { }
+INTERNAL :: "getGuardado" =  "STRUCT_FUNCT" { 
+ARGUMENTS :: { } }  }  }  } 
+DEF :: "beta" =  "" { 
+TYPE :: "Objeto" =  "CONCRETE" { }
+VALUE :: "Objeto" =  "INIT" { 
+ARGUMENTS :: { 
+ARGUMENT :: "13" =  "Num" { } } 
+GENERIC :: "FALSE" =  "" { } }  } 
+DEBUG :: "LOCAL" =  "STACK" { }
+DEBUG :: "GLOBAL" =  "INSTANCES" { }
+DELETE :: { 
+VALUE :: "alfa" =  "ID" { } } 
+DEBUG :: "LOCAL" =  "STACK" { }
+DEBUG :: "GLOBAL" =  "INSTANCES" { }
+EXECUTE :: "indo" =  "FUNCT" { 
+IN_DEBUG :: "0" =  "23:2" { }
+ARGUMENTS :: { } } 
+EXECUTE :: "indo" =  "FUNCT" { 
+IN_DEBUG :: "0" =  "24:2" { }
+ARGUMENTS :: { } } 
+EXECUTE :: "indo" =  "FUNCT" { 
+IN_DEBUG :: "0" =  "25:2" { }
+ARGUMENTS :: { } } 
+DEF :: "aza" =  "" { 
+TYPE :: "ZA" =  "CONCRETE" { }
+VALUE :: "ZA" =  "INIT" { 
+ARGUMENTS :: { }
+GENERIC :: "FALSE" =  "" { } }  }  }  } 
+ACTION :: "indo" =  "" { 
+VISIBILITY :: "ALL" =  "" { }
+ARGUMENTS :: { }
+BODY :: { 
+DEF :: "aga" =  "" { 
+TYPE :: "Usuario" =  "CONCRETE" { }
+VALUE :: "Usuario" =  "START" { 
+GENERIC :: "FALSE" =  "" { }
+STARTED :: { 
+APPLY :: { 
+SETTABLE :: "Nome" =  "ID" { }
+VALUE :: "Agatha" =  "Text" { } } 
+APPLY :: { 
+SETTABLE :: "Idade" =  "ID" { }
+VALUE :: "52" =  "Num" { } }  }  }  } 
+DEF :: "eta" =  "" { 
+TYPE :: "Usuario" =  "CONCRETE" { }
+VALUE :: "aga" =  "ID" { } } 
+DEF :: "SI2" =  "" { 
+TYPE :: "SubItem" =  "CONCRETE" { }
+VALUE :: "SubItem" =  "INIT" { 
+ARGUMENTS :: { }
+GENERIC :: "FALSE" =  "" { } }  } 
+DEF :: "SI3" =  "" { 
+TYPE :: "SubItem" =  "CONCRETE" { }
+VALUE :: "SubItem" =  "INIT" { 
+ARGUMENTS :: { }
+GENERIC :: "FALSE" =  "" { } }  } 
+DEBUG :: "GLOBAL" =  "INSTANCES" { } }  } 
+STRUCT :: "Usuario" =  "Usuario" { 
+GENERIC :: "FALSE" =  "" { }
+WITH :: "" =  "FALSE" { }
+MODEL :: "" =  "FALSE" { }
+STAGES :: "" =  "FALSE" { }
+EXTENDED :: "TYPE" =  "" { }
+BASES :: { }
+REFERS :: { }
+INITS :: { }
+BODY :: { 
+DEFINE :: "Nome" =  "" { 
+VISIBILITY :: "ALL" =  "" { }
+TYPE :: "string" =  "CONCRETE" { }
+VALUE :: "" =  "Text" { } } 
+DEFINE :: "Idade" =  "" { 
+VISIBILITY :: "ALL" =  "" { }
+TYPE :: "int" =  "CONCRETE" { }
+VALUE :: "0" =  "Num" { } }  }  } 
+STRUCT :: "Objeto" =  "Objeto" { 
+GENERIC :: "FALSE" =  "" { }
+WITH :: "" =  "FALSE" { 
+GENERIC :: "" =  "FALSE" { } } 
+MODEL :: "" =  "FALSE" { }
+STAGES :: "" =  "FALSE" { }
+EXTENDED :: "STRUCT" =  "" { }
+BASES :: { }
+MODELS :: { }
+REFERS :: { }
+INITS :: { 
+INIT :: "Objeto" =  "" { 
+VISIBILITY :: "INIT" =  "" { }
+CALL :: "" =  "FALSE" { }
+ARGUMENTS :: { 
+ARGUMENT :: "a" =  "VALUE" { 
+TYPE :: "int" =  "CONCRETE" { } }  } 
+BODY :: { 
+APPLY :: { 
+SETTABLE :: "this" =  "STRUCT" { 
+IN_DEBUG :: "0" =  "52:9" { }
+INTERNAL_THIS :: "mA" =  "STRUCT_OBJECT" { } } 
+VALUE :: "a" =  "ID" { } } 
+APPLY :: { 
+SETTABLE :: "this" =  "STRUCT" { 
+IN_DEBUG :: "0" =  "53:3" { }
+INTERNAL_THIS :: "mSI" =  "STRUCT_OBJECT" { } } 
+VALUE :: "SubItem" =  "INIT" { 
+ARGUMENTS :: { }
+GENERIC :: "FALSE" =  "" { } }  }  }  }  } 
+BODY :: { 
+FUNCTION :: "getSI" =  "" { 
+VISIBILITY :: "ALL" =  "" { }
+ARGUMENTS :: { }
+TYPE :: "SubItem" =  "CONCRETE" { }
+BODY :: { 
+RETURN :: { 
+VALUE :: "mSI" =  "ID" { } }  }  } 
+DEFINE :: "mA" =  "" { 
+VISIBILITY :: "RESTRICT" =  "" { }
+TYPE :: "int" =  "CONCRETE" { }
+VALUE :: "" =  "NULL" { } } 
+DEFINE :: "mSI" =  "" { 
+VISIBILITY :: "RESTRICT" =  "" { }
+TYPE :: "SubItem" =  "CONCRETE" { }
+VALUE :: "" =  "NULL" { } } 
+FUNCTION :: "getA" =  "" { 
+VISIBILITY :: "ALL" =  "" { }
+ARGUMENTS :: { }
+TYPE :: "int" =  "CONCRETE" { }
+BODY :: { 
+RETURN :: { 
+VALUE :: "mA" =  "ID" { } }  }  }  } 
+DESTRUCT :: { 
+DELETE :: { 
+VALUE :: "mSI" =  "ID" { } }  }  } 
+STRUCT :: "SubItem" =  "SubItem" { 
+GENERIC :: "FALSE" =  "" { }
+WITH :: "" =  "FALSE" { 
+GENERIC :: "" =  "FALSE" { } } 
+MODEL :: "" =  "FALSE" { }
+STAGES :: "" =  "FALSE" { }
+EXTENDED :: "STRUCT" =  "" { }
+BASES :: { }
+MODELS :: { }
+REFERS :: { }
+INITS :: { 
+INIT :: "SubItem" =  "" { 
+VISIBILITY :: "INIT" =  "" { }
+CALL :: "" =  "FALSE" { }
+ARGUMENTS :: { }
+BODY :: { 
+APPLY :: { 
+SETTABLE :: "mGuardado" =  "ID" { 
+IN_DEBUG :: "0" =  "81:9" { } } 
+VALUE :: "15" =  "Num" { } }  }  }  } 
+BODY :: { 
+DEFINE :: "mGuardado" =  "" { 
+VISIBILITY :: "RESTRICT" =  "" { }
+TYPE :: "int" =  "CONCRETE" { }
+VALUE :: "0" =  "Num" { } } 
+FUNCTION :: "getGuardado" =  "" { 
+VISIBILITY :: "ALL" =  "" { }
+ARGUMENTS :: { }
+TYPE :: "int" =  "CONCRETE" { }
+BODY :: { 
+RETURN :: { 
+VALUE :: "mGuardado" =  "ID" { } }  }  }  } 
+DESTRUCT :: { } } 
+STRUCT :: "ZA" =  "ZA" { 
+GENERIC :: "FALSE" =  "" { }
+WITH :: "ZE" =  "TRUE" { 
+GENERIC :: "" =  "FALSE" { } } 
+MODEL :: "" =  "FALSE" { }
+STAGES :: "" =  "FALSE" { }
+EXTENDED :: "STRUCT" =  "" { }
+BASES :: { 
+BASE :: "ZE" =  "" { } } 
+MODELS :: { }
+REFERS :: { }
+INITS :: { 
+INIT :: "ZA" =  "" { 
+VISIBILITY :: "INIT" =  "" { }
+CALL :: "ZE" =  "TRUE" { 
+ARGUMENTS :: { } } 
+ARGUMENTS :: { }
+BODY :: { } } 
+INIT :: "ZE" =  "" { 
+ARGUMENTS :: { }
+BODY :: { }
+VISIBILITY :: "INIT" =  "" { }
+CALL :: "" =  "FALSE" { } }  } 
+BODY :: { 
+DEFINE :: "mE" =  "" { 
+VISIBILITY :: "RESTRICT" =  "" { }
+TYPE :: "int" =  "CONCRETE" { }
+VALUE :: "0" =  "Num" { } } 
+DEFINE :: "mA" =  "" { 
+VISIBILITY :: "RESTRICT" =  "" { }
+TYPE :: "int" =  "CONCRETE" { }
+VALUE :: "0" =  "Num" { } }  } 
+DESTRUCT :: { 
+DELETE :: { 
+VALUE :: "mA" =  "ID" { } } 
+DELETE :: { 
+VALUE :: "mE" =  "ID" { } }  }  } 
+STRUCT :: "ZE" =  "ZE" { 
+GENERIC :: "FALSE" =  "" { }
+WITH :: "" =  "FALSE" { 
+GENERIC :: "" =  "FALSE" { } } 
+MODEL :: "" =  "FALSE" { }
+STAGES :: "" =  "FALSE" { }
+EXTENDED :: "STRUCT" =  "" { }
+BASES :: { }
+MODELS :: { }
+REFERS :: { }
+INITS :: { 
+INIT :: "ZE" =  "" { 
+ARGUMENTS :: { }
+BODY :: { }
+VISIBILITY :: "INIT" =  "" { }
+CALL :: "" =  "FALSE" { } }  } 
+BODY :: { 
+DEFINE :: "mE" =  "" { 
+VISIBILITY :: "RESTRICT" =  "" { }
+TYPE :: "int" =  "CONCRETE" { }
+VALUE :: "0" =  "Num" { } }  } 
+DESTRUCT :: { 
+DELETE :: { 
+VALUE :: "mE" =  "ID" { } }  }  }  } 

@@ -1,59 +1,53 @@
- #import "libs/lib.sigmaz";
- package Cores {
-stages Cores -> {
-
-	 BRANCO , AMARELO , VERMELHO , AZUL , VERDE , PRETO , CINZA
-}
-
-struct Cor {
+#import "libs/lib.sigmaz";
+package Cores  {
 	
-	init Cor ( r : int , g : int , b : int ) { 
-DEBUG -> REGRESSIVE :: STACK ;
-		this . mR = r ;
-		this . mG = g ;
-		this . mB = b ;
-			}
-	
+	stages Cores ->  {BRANCO , AMARELO , VERMELHO , AZUL , VERDE , PRETO , CINZA  }
 
-	restrict :
-		define mR : int = 0 ;
+	struct Cor  {
 		
-		define mG : int = 0 ;
-		
-		define mB : int = 0 ;
-		
-	all :
-		func getR ( ) : int { 
-return mR ;
-					}
-		
-		func getG ( ) : int { 
-return mG ;
-					}
-		
-		func getB ( ) : int { 
-return mB ;
-					}
-		
-	explicit :
-		func getCor ( r : int , g : int , b : int ) : Cor { 
-DEBUG -> REGRESSIVE :: STACK ;
-			def t : Cor = init Cor ( r , g , b ) ;
-			return t ;
-					}
+		init Cor ( r : int , g : int , b : int )  {
+			DEBUG -> REGRESSIVE :: STACK  ;
+			this . mR = r  ;
+			this . mG = g  ;
+			this . mB = b  ;
 		}
- }
-refer Cores ;
-
-call iniciar -> { 
-def r : int = 100 ;
-	def g : int = 50 ;
-	def b : int = 80 ;
-	DEBUG -> REGRESSIVE :: STACK ;
-	def cor1 : Cor = Cor -> getCor ( r , g , b ) ;
-	DEBUG -> REGRESSIVE :: STACK ;
-	def cor1_r : int = cor1 . getR ( ) ;
-	def cor1_g : int = cor1 . getG ( ) ;
-	def cor1_b : int = cor1 . getB ( ) ;
-	DEBUG -> REGRESSIVE :: STACK ;
+		restrict :
+			define mR : int = 0  ;
+			define mG : int = 0  ;
+			define mB : int = 0  ;
+		all :
+			
+			func getR ( ) : int  {
+				return mR  ;
+			}
+			
+			func getG ( ) : int  {
+				return mG  ;
+			}
+			
+			func getB ( ) : int  {
+				return mB  ;
+			}
+		explicit :
+			
+			func getCor ( r : int , g : int , b : int ) : Cor  {
+				DEBUG -> REGRESSIVE :: STACK  ;
+				def t : Cor = init Cor ( r , g , b )  ;
+				return t  ;
+			}
 	}
+}
+refer Cores  ;
+
+call iniciar ->  {
+	def r : int = 100  ;
+	def g : int = 50  ;
+	def b : int = 80  ;
+	DEBUG -> REGRESSIVE :: STACK  ;
+	def cor1 : Cor = Cor -> getCor ( r , g , b )  ;
+	DEBUG -> REGRESSIVE :: STACK  ;
+	def cor1_r : int = cor1 . getR ( )  ;
+	def cor1_g : int = cor1 . getG ( )  ;
+	def cor1_b : int = cor1 . getB ( )  ;
+	DEBUG -> REGRESSIVE :: STACK  ;
+}

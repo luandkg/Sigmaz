@@ -25,16 +25,14 @@ public class RunValueType_Vector {
 
     public void init(Run_Value eRunValue,AST ASTCorrente, String eRetorno) {
 
+        long VECTORID = mRunTime.getHeap().getVECTORID();
+        String eNomeVector = "{{VECTOR}}::" + VECTORID;
 
         Escopo tmp = new Escopo(mRunTime, mEscopo);
+        tmp.setNome(eNomeVector);
 
         // System.out.println("VECTOR  -> ");
 
-        long VECTORID = mRunTime.getHeap().getVECTORID();
-
-
-
-        String eNomeVector = "{{VECTOR}}::" + VECTORID;
 
 
         String eTipado = "";
@@ -67,12 +65,13 @@ public class RunValueType_Vector {
 
 
         Escopo EachEscopo = new Escopo(mRunTime, tmp);
+        EachEscopo.setNome("{{VECTOR_ITEM}}");
 
 
         AST eAST = mImplementador.criar_InitGenerico("Vetor", eTipado);
         AST eArg = eAST.getBranch("ARGUMENTS").criarBranch("ARGUMENT");
         eArg.setNome(ASTCorrente.getASTS().size() + "");
-        eArg.setValor("Num");
+        eArg.setValor("INT");
 
         // System.out.println(eAST.ImprimirArvoreDeInstrucoes());
 
@@ -108,13 +107,13 @@ public class RunValueType_Vector {
 
                     if (eRV.getIsNulo()) {
 
-                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", "null", "ID");
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Float", "null", "ID");
                         Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
                         mASTExecute.init(mExecute);
 
                     } else {
 
-                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", eRV.getConteudo(), "Num");
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Float", eRV.getConteudo(), "Float");
                         Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
                         mASTExecute.init(mExecute);
 
@@ -127,13 +126,13 @@ public class RunValueType_Vector {
 
                     if (eRV.getIsNulo()) {
 
-                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", "null", "ID");
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "INT", "null", "ID");
                         Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
                         mASTExecute.init(mExecute);
 
                     } else {
 
-                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", eRV.getConteudo(), "Num");
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "INT", eRV.getConteudo(), "INT");
                         Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
                         mASTExecute.init(mExecute);
 
@@ -146,13 +145,13 @@ public class RunValueType_Vector {
 
                     if (eRV.getIsNulo()) {
 
-                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", "null", "ID");
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "INT", "null", "ID");
                         Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
                         mASTExecute.init(mExecute);
 
                     } else {
 
-                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", eRV.getConteudo(), "Text");
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "INT", eRV.getConteudo(), "STRING");
                         Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
                         mASTExecute.init(mExecute);
 
@@ -168,12 +167,12 @@ public class RunValueType_Vector {
                     if (eRV.getIsNulo()) {
 
 
-                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", "null", "ID");
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "INT", "null", "ID");
                         Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
                         mASTExecute.init(mExecute);
 
                     } else {
-                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", eRV.getConteudo(), "ID");
+                        AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "INT", eRV.getConteudo(), "ID");
                         Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
                         mASTExecute.init(mExecute);
                     }
@@ -199,7 +198,7 @@ public class RunValueType_Vector {
 
                 if (eRV.getIsNulo()) {
 
-                    AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", "null", "ID");
+                    AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "INT", "null", "ID");
                     Run_Execute mASTExecute = new Run_Execute(mRunTime, EachEscopo);
                     mASTExecute.init(mExecute);
 
@@ -212,7 +211,7 @@ public class RunValueType_Vector {
 
                     // System.out.println(" -->> " + eRV.getConteudo());
 
-                    AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "Num", eNomeRef, "ID");
+                    AST mExecute = mImplementador.criar_ExecuteFunction2Args(eNomeVector, "set", String.valueOf(eV), "INT", eNomeRef, "ID");
 
                     //System.out.println(mExecute.ImprimirArvoreDeInstrucoes());
 

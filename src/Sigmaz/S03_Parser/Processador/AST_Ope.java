@@ -46,9 +46,9 @@ public class AST_Ope {
             AST_Corrente.setValor("ID");
             AST_Corrente.setNome(TokenC.getConteudo().toUpperCase());
 
-        } else if (TokenC.getTipo() == TokenTipo.NUMERO) {
+        } else if (TokenC.getTipo() == TokenTipo.INTEIRO) {
 
-            AST_Corrente.setValor("Num");
+            AST_Corrente.setValor("INT");
             AST_Corrente.setNome(TokenC.getConteudo());
 
         } else if (TokenC.getTipo() == TokenTipo.NUMERO_FLOAT) {
@@ -58,7 +58,7 @@ public class AST_Ope {
 
         } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
 
-            AST_Corrente.setValor("Text");
+            AST_Corrente.setValor("STRING");
             AST_Corrente.setNome(TokenC.getConteudo());
 
         } else {

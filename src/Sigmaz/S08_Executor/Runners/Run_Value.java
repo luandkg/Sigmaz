@@ -111,14 +111,14 @@ public class Run_Value {
 
     }
 
-    public void retorno_Text(AST ASTCorrente,String eRetorno) {
+    public void retorno_String(AST ASTCorrente,String eRetorno) {
         mIsNulo = false;
         mIsPrimitivo = true;
         mRetornoTipo = "string";
         mConteudo = ASTCorrente.getNome();
     }
 
-    public void retorno_Num(AST ASTCorrente,String eRetorno) {
+    public void retorno_Int(AST ASTCorrente,String eRetorno) {
 
         mIsNulo = false;
         mIsPrimitivo = true;
@@ -149,16 +149,16 @@ public class Run_Value {
 
             retorno_Null(ASTCorrente,eRetorno);
 
-        } else if (ASTCorrente.mesmoValor("Text")) {
+        } else if (ASTCorrente.mesmoValor("STRING")) {
 
-            retorno_Text(ASTCorrente,eRetorno);
+            retorno_String(ASTCorrente,eRetorno);
 
-        } else if (ASTCorrente.mesmoValor("Num")) {
+        } else if (ASTCorrente.mesmoValor("INT")) {
 
-            retorno_Num(ASTCorrente,eRetorno);
+            retorno_Int(ASTCorrente,eRetorno);
 
 
-        } else if (ASTCorrente.mesmoValor("Float")) {
+        } else if (ASTCorrente.mesmoValor("NUM")) {
 
 
             retorno_Float(ASTCorrente,eRetorno);
@@ -293,8 +293,7 @@ public class Run_Value {
 
 
             mRunTime.errar(mLocal, "AST_Value --> FAILED STRUCTURED  : " + ASTCorrente.getValor());
-
-
+            mRunTime.errar(mLocal,mEscopo.getCaminho());
         }
 
         if (mRunTime.getErros().size() > 0) {
@@ -304,6 +303,7 @@ public class Run_Value {
 
 
     }
+
 
 
 }

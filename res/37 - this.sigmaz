@@ -1,36 +1,41 @@
-
-struct Pessoa {
-	
+struct Pessoa  {
 	all :
-		define idade : num = 0.0 ;
+		define idade : num = 0.0  ;
 		
-		act aumentar ( ) { 
-idade = somar_inteiro ( idade , 1.0 ) ;
-					}
-		
-		act aumentar_comigo ( ) { 
-this . aumentar ( ) ;
-					}
-		
-		func getContagem ( ) : num { 
-return somar_inteiro ( idade , Pessoa -> TGR ) ;
-					}
-		
-	explicit :
-		mockiz TGR : num = 2.0 ;
+		act aumentar ( )  {
+			idade = somar_inteiro ( idade , 1.0 )  ;
 		}
+		
+		act aumentar_comigo ( )  {
+			this . aumentar ( )  ;
+		}
+		
+		func getContagem ( ) : num  {
+			return somar_inteiro ( idade , Pessoa -> TGR )  ;
+		}
+	explicit :
+		mockiz TGR : num = 2.0  ;
+}
 
-call iniciar -> inicio ( ) ;
-act inicio ( ) { 
-def P1 : Pessoa = init Pessoa ( ) ;
-	P1 . aumentar_comigo ( ) ;
-	def tt : num = P1 . idade ;
-	def cc : num = P1 . getContagem ( ) ;
-	DEBUG -> REGRESSIVE :: ALL ;
+call iniciar -> inicio ( )  ;
+
+act inicio ( )  {
+	def P1 : Pessoa = init Pessoa ( )  ;
+	P1 . aumentar_comigo ( )  ;
+	def tt : num = P1 . idade  ;
+	def cc : num = P1 . getContagem ( )  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+}
+
+func somar_inteiro ( a : num , b : num ) : num  {
+	reg @ R9 -> a  ;
+	reg @ R10 -> b  ;
+	
+	PROC ->  {
+		SET R11  ;
+		MOV 0.0  ;
+		OPE R9 SAX R10  ;
 	}
 
-func somar_inteiro ( a : num , b : num ) : num { 
-reg @ R9 -> a ;
-	reg @ R10 -> b ;
-	PROC -> { SET R11 ; MOV 0.0 ; OPE R9 SAX R10 ; } return reg @ R11 ;
-	}
+	return reg @ R11  ;
+}

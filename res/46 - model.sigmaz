@@ -1,76 +1,50 @@
+call iniciar -> inicio ( )  ;
+define A : num = 10.0  ;
 
-call iniciar -> inicio ( ) ;
-define A : num = 10.0 ;
-
-act inicio ( ) { 
-DEBUG -> REGRESSIVE :: STACK ;
+act inicio ( )  {
+	DEBUG -> REGRESSIVE :: STACK  ;
+}
+struct Bloco  {
+}
+struct Contador at M_Contagem  {
+	all :
+		define Base : num = 10.0  ;
+		mockiz Fluxo : num = 12.0  ;
+		define val : vax >> ( num ) = 12.0  ;
+		
+		act contar ( a : num )  {
+		}
+		
+		func retornar ( b : num ) : num  {
+		}
+}
+model M_Contagem  {
+	define Base : num  ;
+	mockiz Fluxo : num  ;
+	define val : vax >> ( num )  ;
+	act contar ( num )  ;
+	func retornar ( num ) : num  ;
+}
+model Bioma  {
+	define mNome : string  ;
+}
+package Biomas  {
+	struct Cerrado at Bioma  {
+		all :
+			define mNome : string  ;
 	}
-
-struct Bloco {
+	struct Pantanal at Bioma  {
+		all :
+			define mNome : string  ;
 	}
-
-struct Contador at M_Contagem {
-	
-	all :
-		define Base : num = 10.0 ;
-		
-		mockiz Fluxo : num = 12.0 ;
-		
-		define val : vax >> ( num ) = 12.0 ;
-		
-		act contar ( a : num ) { 
-		}
-		
-		func retornar ( b : num ) : num { 
-		}
-		}
-
-model M_Contagem {
-
-	
-	define Base : num ;
-	
-	mockiz Fluxo : num ;
-	
-	define val : vax >> ( num ) ;
-	
-	act contar ( num ) ;
-	
-	func retornar ( num ) : num ;
-	
+	model SuperBioma  {
+		define mNome : string  ;
+	}
 }
-
-model Bioma {
-
-	
-	define mNome : string ;
-	
+package SuperBiomas  {
+	refer Biomas  ;
+	struct SuperPantanal at SuperBioma  {
+		all :
+			define mNome : string  ;
+	}
 }
- package Biomas {
-struct Cerrado at Bioma {
-	
-	all :
-		define mNome : string ;
-		}
-
-struct Pantanal at Bioma {
-	
-	all :
-		define mNome : string ;
-		}
-
-model SuperBioma {
-
-	
-	define mNome : string ;
-	
-}
- } package SuperBiomas {
-refer Biomas ;
-
-struct SuperPantanal at SuperBioma {
-	
-	all :
-		define mNome : string ;
-		}
- }

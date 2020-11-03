@@ -16,7 +16,7 @@ public class AST_ValueTypes {
 
     }
 
-    public void dentro_num(Token TokenD, AST ASTPai) {
+    public void dentro_inteiro(Token TokenD, AST ASTPai) {
 
         String eConteudo = TokenD.getConteudo();
 
@@ -39,12 +39,12 @@ public class AST_ValueTypes {
 
             AST eVal = ASTPai.criarBranch("VALUE");
             eVal.setNome(eConteudo);
-            eVal.setValor("Num");
+            eVal.setValor("INT");
 
         } else {
 
             ASTPai.setNome(eConteudo);
-            ASTPai.setValor("Num");
+            ASTPai.setValor("INT");
 
 
         }
@@ -75,19 +75,19 @@ public class AST_ValueTypes {
 
             AST eVal = ASTPai.criarBranch("VALUE");
             eVal.setNome(eConteudo);
-            eVal.setValor("Float");
+            eVal.setValor("NUM");
 
         } else {
 
             ASTPai.setNome(eConteudo);
-            ASTPai.setValor("Float");
+            ASTPai.setValor("NUM");
 
 
         }
 
     }
 
-    public void dentro_texto(Token TokenD, AST ASTPai) {
+    public void dentro_string(Token TokenD, AST ASTPai) {
 
 
         String eConteudo = TokenD.getConteudo();
@@ -111,12 +111,12 @@ public class AST_ValueTypes {
 
             AST eVal = ASTPai.criarBranch("VALUE");
             eVal.setNome(eConteudo);
-            eVal.setValor("Text");
+            eVal.setValor("STRING");
 
         } else {
 
             ASTPai.setNome(eConteudo);
-            ASTPai.setValor("Text");
+            ASTPai.setValor("STRING");
 
 
         }
@@ -504,7 +504,12 @@ public class AST_ValueTypes {
     }
 
 
+    public void ReceberArgumentos_AbrirParenteses(AST ASTAvo, boolean mTemTipo, AST mTipo) {
 
+        mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE,"Era esperado abrir paresenteses !");
+
+        ReceberArgumentos(ASTAvo,mTemTipo,mTipo);
+    }
 
     public void ReceberArgumentos(AST ASTAvo, boolean mTemTipo, AST mTipo) {
 
@@ -526,7 +531,7 @@ public class AST_ValueTypes {
 
                 saiu = true;
                 break;
-            } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
+            } else if (TokenD.getTipo() == TokenTipo.INTEIRO) {
 
                 mais = false;
 
@@ -701,7 +706,7 @@ public class AST_ValueTypes {
 
                 saiu = true;
                 break;
-            } else if (TokenD.getTipo() == TokenTipo.NUMERO) {
+            } else if (TokenD.getTipo() == TokenTipo.INTEIRO) {
 
                 mais = false;
 

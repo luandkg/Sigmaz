@@ -80,3 +80,8 @@
 2020 10 28  -->>  Run_External
 2020 11 01  -->>  PosProcessador Tipador : Refatoramento
 2020 11 01  -->>  Pos Processador Valorador -> Fase Integralizador
+2020 11 02  -->>  AST Value Num -> INT
+2020 11 02  -->>  AST Value Text -> STRING
+2020 11 02  -->>  AST Value Float -> NUM
+2020 11 02  -->>  Remoção AST_Invock
+2020 11 03  -->>  Processador PROC -> INVOKE

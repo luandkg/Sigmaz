@@ -1,4 +1,4 @@
-package Sigmaz.S06_Integralizador;
+package Sigmaz.S06_Integrador;
 
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S00_Utilitarios.AgrupadorAST;
@@ -179,17 +179,17 @@ public class Valoramento {
 
             mIntegrador.mensagem(ePrefixo + "Valore NULL");
 
-        } else if (mValue.mesmoValor("Text")) {
+        } else if (mValue.mesmoValor("STRING")) {
 
-            mIntegrador.mensagem(ePrefixo + "Valore Text : " + mValue.getNome());
+            mIntegrador.mensagem(ePrefixo + "Valore STRING : " + mValue.getNome());
 
-        } else if (mValue.mesmoValor("Num")) {
+        } else if (mValue.mesmoValor("INT")) {
 
-            mIntegrador.mensagem(ePrefixo + "Valore Num : " + mValue.getNome());
+            mIntegrador.mensagem(ePrefixo + "Valore INT : " + mValue.getNome());
 
-        } else if (mValue.mesmoValor("Float")) {
+        } else if (mValue.mesmoValor("NUM")) {
 
-            mIntegrador.mensagem(ePrefixo + "Valore Float : " + mValue.getNome());
+            mIntegrador.mensagem(ePrefixo + "Valore NUM : " + mValue.getNome());
 
         } else if (mValue.mesmoValor("ID")) {
 

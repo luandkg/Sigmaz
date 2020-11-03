@@ -1,54 +1,221 @@
+type Tipado  {
+	define a : int = 0  ;
+	define b : int = 0  ;
+}
+define GERAL : int = 10  ;
+mockiz SUPREMO : int = 13  ;
 
-type Tipado {
-
-	
-	define a : int = 0 ;
-	
-	define b : int = 0 ;
-	
+call Mark ->  {
+	def a : int = 6  ;
+	def c : int = 6  ;
+	def Tipado_1 : Tipado = start Tipado 
+		{
+			a = a  ;
+		} ;
+	def Tipado_2 : Tipado = start Tipado 
+		{
+			a = c  ;
+		} ;
+	def Tipado_1_A : int = Tipado_1 . a  ;
+	def Tipado_1_B : int = Tipado_1 . b  ;
+	def Tipado_2_A : int = Tipado_2 . a  ;
+	def Tipado_2_B : int = Tipado_2 . b  ;
+	def indice_1 : int = 10  ;
+	def indice_2 : int = ! indice_1  ;
+	def indice_3 : int = indice_1 ++ indice_1  ;
+	def indice_4 : int = ! indice_1 ++ ! indice_1  ;
+	def indice_5 : int = indice_1 ++ ! indice_1  ;
+	def indice_6 : int = ! indice_1 ++ indice_1  ;
+	def metragem_1 : int = 10 Km  ;
+	def metragem_2 : int = 10000 m  ;
+	def metragem_3 : int = 10 Km ++ 12 Dam  ;
+	def metragem_4 : int = metragem_3 Km  ;
+	def metragem_5 : int = ! ( ! 10 Km )  ;
+	DEBUG -> REGRESSIVE :: STACK  ;
 }
 
-define GERAL : int = 10 ;
-
-mockiz SUPREMO : int = 13 ;
-
-call Mark -> { 
-def a : int = 6 ;
-	def c : int = 6 ;
-	def Tipado_1 : Tipado = start Tipado { a = a ; } ;
-	def Tipado_2 : Tipado = start Tipado { a = c ; } ;
-	def Tipado_1_A : int = Tipado_1 . a ;
-	def Tipado_1_B : int = Tipado_1 . b ;
-	def Tipado_2_A : int = Tipado_2 . a ;
-	def Tipado_2_B : int = Tipado_2 . b ;
-	def indice_1 : int = 10 ;
-	def indice_2 : int = ! indice_1 ;
-	def indice_3 : int = indice_1 ++ indice_1 ;
-	def indice_4 : int = ! indice_1 ++ ! indice_1 ;
-	def indice_5 : int = indice_1 ++ ! indice_1 ;
-	def indice_6 : int = ! indice_1 ++ indice_1 ;
-	def metragem_1 : int = 10 Km ;
-	def metragem_2 : int = 10000 m ;
-	def metragem_3 : int = 10 Km ++ 12 Dam ;
-	def metragem_4 : int = metragem_3 Km ;
-	def metragem_5 : int = ! ( ! 10 Km ) ;
-	DEBUG -> REGRESSIVE :: STACK ;
+director ! ( a : int ) : int  {
+	reg @ R5 -> a  ;
+	
+	PROC ->  {
+		SET R6  ;
+		MOV 0  ;
+		OPE R5 MUX -1  ;
 	}
 
-director ! ( a : int ) : int { 
-reg @ R5 -> a ;
-	PROC -> { SET R6 ; MOV 0 ; OPE R5 MUX -1 ; } return reg @ R6 ;
+	return reg @ R6  ;
+}
+
+operator ** ( a : int , b : int ) : int  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R7  ;
+		MOV 0  ;
+		OPE R5 MUX R6  ;
 	}
 
-operator ** ( a : int , b : int ) : int { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R7 ; MOV 0 ; OPE R5 MUX R6 ; } return reg @ R7 ;
+	return reg @ R7  ;
+}
+
+operator ++ ( a : int , b : int ) : int  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R7  ;
+		MOV 0  ;
+		OPE R5 ADD R6  ;
 	}
 
-operator ++ ( a : int , b : int ) : int { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ;
-	}
- mark Km ( a : int ) : int { reg @ R5 -> a ; PROC -> { SET R7 ; MOV 0 ; OPE R5 MUX 1000 ; } return reg @ R7 ; } mark Hm ( a : int ) : int { reg @ R5 -> a ; PROC -> { SET R7 ; MOV 0 ; OPE R5 MUX 100 ; } return reg @ R7 ; } mark Dam ( a : int ) : int { reg @ R5 -> a ; PROC -> { SET R7 ; MOV 0 ; OPE R5 MUX 10 ; } return reg @ R7 ; } mark m ( a : int ) : int { reg @ R5 -> a ; PROC -> { SET R7 ; MOV 0 ; OPE R5 MUX 1 ; } return reg @ R7 ; }
+	return reg @ R7  ;
+}
+mark
+Km
+(
+a
+:
+int
+)
+:
+int
+{
+reg
+@
+R5
+->
+a
+;
+PROC
+->
+{
+SET
+R7
+;
+MOV
+0
+;
+OPE
+R5
+MUX
+1000
+;
+}
+return
+reg
+@
+R7
+;
+}
+mark
+Hm
+(
+a
+:
+int
+)
+:
+int
+{
+reg
+@
+R5
+->
+a
+;
+PROC
+->
+{
+SET
+R7
+;
+MOV
+0
+;
+OPE
+R5
+MUX
+100
+;
+}
+return
+reg
+@
+R7
+;
+}
+mark
+Dam
+(
+a
+:
+int
+)
+:
+int
+{
+reg
+@
+R5
+->
+a
+;
+PROC
+->
+{
+SET
+R7
+;
+MOV
+0
+;
+OPE
+R5
+MUX
+10
+;
+}
+return
+reg
+@
+R7
+;
+}
+mark
+m
+(
+a
+:
+int
+)
+:
+int
+{
+reg
+@
+R5
+->
+a
+;
+PROC
+->
+{
+SET
+R7
+;
+MOV
+0
+;
+OPE
+R5
+MUX
+1
+;
+}
+return
+reg
+@
+R7
+;
+}

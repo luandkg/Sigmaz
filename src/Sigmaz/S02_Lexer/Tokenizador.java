@@ -102,7 +102,7 @@ public class Tokenizador {
         if (eTokenConteudo.contains(".")) {
             return new Token(TokenTipo.NUMERO_FLOAT, eTokenConteudo, eInicio, eFim, mLexer.getLinha());
         } else {
-            return new Token(TokenTipo.NUMERO, eTokenConteudo, eInicio, eFim, mLexer.getLinha());
+            return new Token(TokenTipo.INTEIRO, eTokenConteudo, eInicio, eFim, mLexer.getLinha());
         }
 
     }

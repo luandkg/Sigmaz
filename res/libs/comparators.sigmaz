@@ -21,12 +21,22 @@ func operador_ou ( a : bool , b : bool ) : bool {
 	return c;
 }
 func igual ( a : bool , b : bool ) : bool {
-	def c : bool;
-	invoke math -> operator_match ( a , b ) :: c;
-	return c;
+	reg @ R1 -> a;
+	reg @ R2 -> b;
+	PROC -> {
+		SET R3;
+		MOV FALSE;
+		OPE R1 MATCH R2;
+	}
+	return reg @ R3;
 }
 func diferente ( a : bool , b : bool ) : bool {
-	def c : bool;
-	invoke math -> operator_unmatch ( a , b ) :: c;
-	return c;
+	reg @ R1 -> a;
+	reg @ R2 -> b;
+	PROC -> {
+		SET R3;
+		MOV FALSE;
+		OPE R1 UNMATCH R2;
+	}
+	return reg @ R3;
 }

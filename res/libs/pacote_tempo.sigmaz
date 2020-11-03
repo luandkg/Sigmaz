@@ -10,19 +10,19 @@ package Tempo {
     			PROC -> {
     				SET R5;
     				MOV 0;
-    				PROC CHRONOS_SECOND;
+    				INVOKE CHRONOS_SECOND;
     			}
     			mSegundo = reg @ R5;
     			PROC -> {
     				SET R5;
     				MOV 0;
-    				PROC CHRONOS_MINUTE;
+    				INVOKE CHRONOS_MINUTE;
     			}
     			mMinuto = reg @ R5;
     			PROC -> {
     				SET R5;
     				MOV 0;
-    				PROC CHRONOS_HOUR;
+    				INVOKE CHRONOS_HOUR;
     			}
     			mHora = reg @ R5;
     		}
@@ -76,19 +76,19 @@ package Tempo {
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_SECOND;
+				INVOKE CHRONOS_SECOND;
 			}
 			mSegundo = reg @ R5;
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_MINUTE;
+				INVOKE CHRONOS_MINUTE;
 			}
 			mMinuto = reg @ R5;
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_HOUR;
+				INVOKE CHRONOS_HOUR;
 			}
 			mHora = reg @ R5;
 			def f1 : string = num_to_string ( mHora );
@@ -120,19 +120,19 @@ package Tempo {
     			PROC -> {
     				SET R5;
     				MOV 0;
-    				PROC CHRONOS_DAY;
+    				INVOKE CHRONOS_DAY;
     			}
     			mDia = reg @ R5;
     			PROC -> {
     				SET R5;
     				MOV 0;
-    				PROC CHRONOS_MONTH;
+    				INVOKE CHRONOS_MONTH;
     			}
     			mMes = reg @ R5;
     			PROC -> {
     				SET R5;
     				MOV 0;
-    				PROC CHRONOS_YEAR;
+    				INVOKE CHRONOS_YEAR;
     			}
     			mAno = reg @ R5;
     		}
@@ -171,19 +171,19 @@ package Tempo {
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_DAY;
+				INVOKE CHRONOS_DAY;
 			}
 			mDia = reg @ R5;
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_MONTH;
+				INVOKE CHRONOS_MONTH;
 			}
 			mMes = reg @ R5;
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_YEAR;
+				INVOKE CHRONOS_YEAR;
 			}
 			mAno = reg @ R5;
 			def f1 : string = num_to_string ( mDia );
@@ -216,37 +216,37 @@ package Tempo {
     			PROC -> {
     				SET R5;
     				MOV 0;
-    				PROC CHRONOS_SECOND;
+    				INVOKE CHRONOS_SECOND;
     			}
     			mSegundo = reg @ R5;
     			PROC -> {
     				SET R5;
     				MOV 0;
-    				PROC CHRONOS_MINUTE;
+    				INVOKE CHRONOS_MINUTE;
     			}
     			mMinuto = reg @ R5;
     			PROC -> {
     				SET R5;
     				MOV 0;
-    				PROC CHRONOS_HOUR;
+    				INVOKE CHRONOS_HOUR;
     			}
     			mHora = reg @ R5;
     			PROC -> {
     				SET R5;
     				MOV 0;
-    				PROC CHRONOS_DAY;
+    				INVOKE CHRONOS_DAY;
     			}
     			mDia = reg @ R5;
     			PROC -> {
     				SET R5;
     				MOV 0;
-    				PROC CHRONOS_MONTH;
+    				INVOKE CHRONOS_MONTH;
     			}
     			mMes = reg @ R5;
     			PROC -> {
     				SET R5;
     				MOV 0;
-    				PROC CHRONOS_YEAR;
+    				INVOKE CHRONOS_YEAR;
     			}
     			mAno = reg @ R5;
     		}
@@ -315,37 +315,37 @@ package Tempo {
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_SECOND;
+				INVOKE CHRONOS_SECOND;
 			}
 			mSegundo = reg @ R5;
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_MINUTE;
+				INVOKE CHRONOS_MINUTE;
 			}
 			mMinuto = reg @ R5;
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_HOUR;
+				INVOKE CHRONOS_HOUR;
 			}
 			mHora = reg @ R5;
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_DAY;
+				INVOKE CHRONOS_DAY;
 			}
 			mDia = reg @ R5;
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_MONTH;
+				INVOKE CHRONOS_MONTH;
 			}
 			mMes = reg @ R5;
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_YEAR;
+				INVOKE CHRONOS_YEAR;
 			}
 			mAno = reg @ R5;
 			def f1 : string = num_to_string ( mDia );
@@ -384,37 +384,37 @@ package Tempo {
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_SECOND;
+				INVOKE CHRONOS_SECOND;
 			}
 			mSegundo = reg @ R5;
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_MINUTE;
+				INVOKE CHRONOS_MINUTE;
 			}
 			mMinuto = reg @ R5;
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_HOUR;
+				INVOKE CHRONOS_HOUR;
 			}
 			mHora = reg @ R5;
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_DAY;
+				INVOKE CHRONOS_DAY;
 			}
 			mDia = reg @ R5;
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_MONTH;
+				INVOKE CHRONOS_MONTH;
 			}
 			mMes = reg @ R5;
 			PROC -> {
 				SET R5;
 				MOV 0;
-				PROC CHRONOS_YEAR;
+				INVOKE CHRONOS_YEAR;
 			}
 			mAno = reg @ R5;
 			def f1 : string = num_to_string ( mDia );

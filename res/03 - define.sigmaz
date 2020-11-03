@@ -1,8 +1,7 @@
+define INDICE : num = 50.0  ;
+define VALIDACAO : bool = false  ;
 
-define INDICE : num = 50.0 ;
+call passaro -> voar ( INDICE , VALIDACAO )  ;
 
-define VALIDACAO : bool = false ;
-
-call passaro -> voar ( INDICE , VALIDACAO ) ;
-act voar ( n : num , b : bool ) { 
+act voar ( n : num , b : bool )  {
 }

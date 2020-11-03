@@ -1,41 +1,49 @@
+stages Tipos ->  {ALFA , BETA , ZETA  }
 
-stages Tipos -> {
-
-	 ALFA , BETA , ZETA
+struct Pessoa  {
+	all :
+		define privado : num = somar_inteiro ( 30.0 , 20.0 )  ;
+	explicit :
+		define publico : num = Pessoa -> vazar ( 10.0 , 10.0 )  ;
+		define tipo : Tipos = Tipos :: ALFA  ;
+	explicit :
+		
+		func vazar ( a : num , b : num ) : num  {
+			reg @ R9 -> a  ;
+			reg @ R10 -> b  ;
+			
+			PROC ->  {
+				SET R11  ;
+				MOV 0.0  ;
+				OPE R9 SAX R10  ;
+			}
+		
+			return reg @ R11  ;
+		}
 }
 
-struct Pessoa {
+call iniciar -> inicio ( )  ;
+
+act inicio ( )  {
+	def pa : num = 10.0  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+	def valor : num = Pessoa -> publico  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+	def P1 : Pessoa = init Pessoa ( )  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+	Pessoa -> publico = 2.0  ;
+	Pessoa -> tipo = Tipos :: ZETA  ;
+}
+
+func somar_inteiro ( a : num , b : num ) : num  {
+	reg @ R9 -> a  ;
+	reg @ R10 -> b  ;
 	
-	all :
-		define privado : num = somar_inteiro ( 30.0 , 20.0 ) ;
-		
-	explicit :
-		define publico : num = Pessoa -> vazar ( 10.0 , 10.0 ) ;
-		
-		define tipo : Tipos = Tipos :: ALFA ;
-		
-	explicit :
-		func vazar ( a : num , b : num ) : num { 
-reg @ R9 -> a ;
-			reg @ R10 -> b ;
-			PROC -> { SET R11 ; MOV 0.0 ; OPE R9 SAX R10 ; } return reg @ R11 ;
-					}
-		}
-
-call iniciar -> inicio ( ) ;
-act inicio ( ) { 
-def pa : num = 10.0 ;
-	DEBUG -> REGRESSIVE :: ALL ;
-	def valor : num = Pessoa -> publico ;
-	DEBUG -> REGRESSIVE :: ALL ;
-	def P1 : Pessoa = init Pessoa ( ) ;
-	DEBUG -> REGRESSIVE :: ALL ;
-	Pessoa -> publico = 2.0 ;
-	Pessoa -> tipo = Tipos :: ZETA ;
+	PROC ->  {
+		SET R11  ;
+		MOV 0.0  ;
+		OPE R9 SAX R10  ;
 	}
 
-func somar_inteiro ( a : num , b : num ) : num { 
-reg @ R9 -> a ;
-	reg @ R10 -> b ;
-	PROC -> { SET R11 ; MOV 0.0 ; OPE R9 SAX R10 ; } return reg @ R11 ;
-	}
+	return reg @ R11  ;
+}

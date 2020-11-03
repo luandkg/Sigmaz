@@ -97,7 +97,7 @@ public class Run_Proc {
                 instrucao_PRINT(mAST);
 
 
-            } else if (mAST.mesmoTipo("PROC")) {
+            } else if (mAST.mesmoTipo("INVOKE")) {
 
                 instrucao_PROC(mAST);
 
@@ -128,7 +128,7 @@ public class Run_Proc {
                 mRegistrado = mRunTime.getProcessador().getRegistrador(eAST.getNome().toUpperCase());
 
             }
-        } else if (eAST.mesmoValor("Num")) {
+        } else if (eAST.mesmoValor("INT")) {
 
             mRegistrado.atribuir(eAST.getNome(), "Inteiro");
 

@@ -1,257 +1,486 @@
-
-call Processadores -> { 
- # IMPLEMENT O que
-	def verdadeiro : bool = true ;
-	def falso : bool = false ;
-	def logico_igual1 : bool = verdadeiro == verdadeiro ;
-	def logico_igual2 : bool = verdadeiro == falso ;
-	def logico_igual3 : bool = falso == verdadeiro ;
-	def logico_igual4 : bool = falso == falso ;
-	def logico_diferente1 : bool = verdadeiro !! verdadeiro ;
-	def logico_diferente2 : bool = verdadeiro !! falso ;
-	def logico_diferente3 : bool = falso !! verdadeiro ;
-	def logico_diferente4 : bool = falso !! falso ;
-	def a : int = 10 ++ 12 ;
-	def b : int = 30 -- 10 ;
-	def c : int = 30 ** 2 ;
-	def d : int = 30 // 2 ;
-	def e : num = 1.5 ++ 0.5 ;
-	def f : num = 1.5 -- 0.5 ;
-	def g : num = 1.5 ** 2.0 ;
-	def h : num = 1.5 // 0.5 ;
-	def i : int = ! 10 ;
-	def j : int = ! -10 ;
-	def k : num = ! 2.5 ;
-	def l : num = ! -2.5 ;
-	def tam1 : int = getTamanho ( "Luan" ) ;
-	def tam2 : int = getTamanho ( "Oie meu nome é luan !" ) ;
-	def c1 : string = getChar ( "Luan" , 0 ) ;
-	def c2 : string = getChar ( "Luan" , 1 ) ;
-	def c3 : string = getChar ( "Luan" , 2 ) ;
-	def c4 : string = getChar ( "Luan" , 3 ) ;
-	let ll = 0 ;
-	let tt = getTamanho ( "Luan" ) ;
-	def e_menor : bool = 2 << 5 ;
-	def e_igual : bool = 2 == 5 ;
-	def e_maior : bool = 2 >> 5 ;
-	def e_diferente : bool = 2 !! 5 ;
-	def i_menor : bool = 5 << 2 ;
-	def i_igual : bool = 2 == 2 ;
-	def i_maior : bool = 5 >> 2 ;
-	def i_diferente : bool = 5 !! 2 ;
-	def o_diferente : bool = 5 !! 5 ;
-	def o_igual : bool = 5 == 5 ;
-	def u_menor : bool = 5.0 << 2.0 ;
-	def u_igual : bool = 2.0 == 2.0 ;
-	def u_maior : bool = 5.0 >> 2.0 ;
-	def u_diferente : bool = 5.0 !! 2.0 ;
-	def z_diferente : bool = 5.0 !! 5.0 ;
-	def z_igual : bool = 5.0 == 5.0 ;
-	def int_1 : int = int ( 2.5 ) ;
-	def int_2 : int = int ( 10 ) ;
-	def num_1 : num = num ( 2.5 ) ;
-	def num_2 : num = num ( int_2 ) ;
+call Processadores ->  {
+	# IMPLEMENT O que
+	def verdadeiro : bool = true  ;
+	def falso : bool = false  ;
+	def logico_igual1 : bool = verdadeiro == verdadeiro  ;
+	def logico_igual2 : bool = verdadeiro == falso  ;
+	def logico_igual3 : bool = falso == verdadeiro  ;
+	def logico_igual4 : bool = falso == falso  ;
+	def logico_diferente1 : bool = verdadeiro !! verdadeiro  ;
+	def logico_diferente2 : bool = verdadeiro !! falso  ;
+	def logico_diferente3 : bool = falso !! verdadeiro  ;
+	def logico_diferente4 : bool = falso !! falso  ;
+	def a : int = 10 ++ 12  ;
+	def b : int = 30 -- 10  ;
+	def c : int = 30 ** 2  ;
+	def d : int = 30 // 2  ;
+	def e : num = 1.5 ++ 0.5  ;
+	def f : num = 1.5 -- 0.5  ;
+	def g : num = 1.5 ** 2.0  ;
+	def h : num = 1.5 // 0.5  ;
+	def i : int = ! 10  ;
+	def j : int = ! -10  ;
+	def k : num = ! 2.5  ;
+	def l : num = ! -2.5  ;
+	def tam1 : int = getTamanho ( "Luan")  ;
+	def tam2 : int = getTamanho ( "Oie meu nome é luan !")  ;
+	def c1 : string = getChar ( "Luan", 0 )  ;
+	def c2 : string = getChar ( "Luan", 1 )  ;
+	def c3 : string = getChar ( "Luan", 2 )  ;
+	def c4 : string = getChar ( "Luan", 3 )  ;
+	let ll = 0  ;
+	let tt = getTamanho ( "Luan")  ;
+	def e_menor : bool = 2 << 5  ;
+	def e_igual : bool = 2 == 5  ;
+	def e_maior : bool = 2 >> 5  ;
+	def e_diferente : bool = 2 !! 5  ;
+	def i_menor : bool = 5 << 2  ;
+	def i_igual : bool = 2 == 2  ;
+	def i_maior : bool = 5 >> 2  ;
+	def i_diferente : bool = 5 !! 2  ;
+	def o_diferente : bool = 5 !! 5  ;
+	def o_igual : bool = 5 == 5  ;
+	def u_menor : bool = 5.0 << 2.0  ;
+	def u_igual : bool = 2.0 == 2.0  ;
+	def u_maior : bool = 5.0 >> 2.0  ;
+	def u_diferente : bool = 5.0 !! 2.0  ;
+	def z_diferente : bool = 5.0 !! 5.0  ;
+	def z_igual : bool = 5.0 == 5.0  ;
+	def int_1 : int = int ( 2.5 )  ;
+	def int_2 : int = int ( 10 )  ;
+	def num_1 : num = num ( 2.5 )  ;
+	def num_2 : num = num ( int_2 )  ;
 	def gga : string = "luan alves freitas" ;
 	def a1 : string = "Meu " ;
 	def a2 : string = "Nome" ;
-	def a3 : string = texto_unir ( a1 , a2 ) ;
-	def data_dia : int = getData_Dia ( ) ;
-	def data_mes : int = getData_Mes ( ) ;
-	def data_ano : int = getData_Ano ( ) ;
-	def data_hora : int = getData_Hora ( ) ;
-	def data_minuto : int = getData_Minuto ( ) ;
-	def data_segundo : int = getData_Segundo ( ) ;
-	def aleatorio_int : int = aleatorio ( 0 , 100 ) ;
-	def aleatorio_num : num = aleatorio ( 0.0 , 100.0 ) ;
-	DEBUG -> REGRESSIVE :: ALL ;
+	def a3 : string = texto_unir ( a1 , a2 )  ;
+	def data_dia : int = getData_Dia ( )  ;
+	def data_mes : int = getData_Mes ( )  ;
+	def data_ano : int = getData_Ano ( )  ;
+	def data_hora : int = getData_Hora ( )  ;
+	def data_minuto : int = getData_Minuto ( )  ;
+	def data_segundo : int = getData_Segundo ( )  ;
+	def aleatorio_int : int = aleatorio ( 0 , 100 )  ;
+	def aleatorio_num : num = aleatorio ( 0.0 , 100.0 )  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+}
+
+operator == ( a : bool , b : bool ) : bool  {
+	reg @ R1 -> a  ;
+	reg @ R2 -> b  ;
+	
+	PROC ->  {
+		SET R3  ;
+		MOV FALSE  ;
+		OPE R1 MATCH R2  ;
 	}
 
-operator == ( a : bool , b : bool ) : bool { 
-reg @ R1 -> a ;
-	reg @ R2 -> b ;
-	PROC -> { SET R3 ; MOV FALSE ; OPE R1 MATCH R2 ; } return reg @ R3 ;
+	return reg @ R3  ;
+}
+
+operator !! ( a : bool , b : bool ) : bool  {
+	reg @ R1 -> a  ;
+	reg @ R2 -> b  ;
+	
+	PROC ->  {
+		SET R3  ;
+		MOV FALSE  ;
+		OPE R1 UNMATCH R2  ;
 	}
 
-operator !! ( a : bool , b : bool ) : bool { 
-reg @ R1 -> a ;
-	reg @ R2 -> b ;
-	PROC -> { SET R3 ; MOV FALSE ; OPE R1 UNMATCH R2 ; } return reg @ R3 ;
+	return reg @ R3  ;
+}
+
+operator ++ ( a : int , b : int ) : int  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R7  ;
+		MOV 0  ;
+		OPE R5 ADD R6  ;
 	}
 
-operator ++ ( a : int , b : int ) : int { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ;
+	return reg @ R7  ;
+}
+
+operator -- ( a : int , b : int ) : int  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R7  ;
+		MOV 0  ;
+		OPE R5 SUB R6  ;
 	}
 
-operator -- ( a : int , b : int ) : int { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R7 ; MOV 0 ; OPE R5 SUB R6 ; } return reg @ R7 ;
+	return reg @ R7  ;
+}
+
+operator ** ( a : int , b : int ) : int  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R7  ;
+		MOV 0  ;
+		OPE R5 MUX R6  ;
 	}
 
-operator ** ( a : int , b : int ) : int { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R7 ; MOV 0 ; OPE R5 MUX R6 ; } return reg @ R7 ;
+	return reg @ R7  ;
+}
+
+director ! ( a : int ) : int  {
+	reg @ R5 -> a  ;
+	
+	PROC ->  {
+		SET R6  ;
+		MOV 0  ;
+		OPE R5 MUX -1  ;
 	}
 
-director ! ( a : int ) : int { 
-reg @ R5 -> a ;
-	PROC -> { SET R6 ; MOV 0 ; OPE R5 MUX -1 ; } return reg @ R6 ;
+	return reg @ R6  ;
+}
+
+operator // ( a : int , b : int ) : int  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R7  ;
+		MOV 0  ;
+		OPE R5 DIV R6  ;
 	}
 
-operator // ( a : int , b : int ) : int { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R7 ; MOV 0 ; OPE R5 DIV R6 ; } return reg @ R7 ;
+	return reg @ R7  ;
+}
+
+operator ++ ( a : num , b : num ) : num  {
+	reg @ R9 -> a  ;
+	reg @ R10 -> b  ;
+	
+	PROC ->  {
+		SET R11  ;
+		MOV 0.0  ;
+		OPE R9 SAX R10  ;
 	}
 
-operator ++ ( a : num , b : num ) : num { 
-reg @ R9 -> a ;
-	reg @ R10 -> b ;
-	PROC -> { SET R11 ; MOV 0.0 ; OPE R9 SAX R10 ; } return reg @ R11 ;
+	return reg @ R11  ;
+}
+
+operator -- ( a : num , b : num ) : num  {
+	reg @ R9 -> a  ;
+	reg @ R10 -> b  ;
+	
+	PROC ->  {
+		SET R11  ;
+		MOV 0.0  ;
+		OPE R9 VEZ R10  ;
 	}
 
-operator -- ( a : num , b : num ) : num { 
-reg @ R9 -> a ;
-	reg @ R10 -> b ;
-	PROC -> { SET R11 ; MOV 0.0 ; OPE R9 VEZ R10 ; } return reg @ R11 ;
+	return reg @ R11  ;
+}
+
+operator ** ( a : num , b : num ) : num  {
+	reg @ R9 -> a  ;
+	reg @ R10 -> b  ;
+	
+	PROC ->  {
+		SET R11  ;
+		MOV 0.0  ;
+		OPE R9 PUC R10  ;
 	}
 
-operator ** ( a : num , b : num ) : num { 
-reg @ R9 -> a ;
-	reg @ R10 -> b ;
-	PROC -> { SET R11 ; MOV 0.0 ; OPE R9 PUC R10 ; } return reg @ R11 ;
+	return reg @ R11  ;
+}
+
+operator // ( a : num , b : num ) : num  {
+	reg @ R9 -> a  ;
+	reg @ R10 -> b  ;
+	
+	PROC ->  {
+		SET R11  ;
+		MOV 0.0  ;
+		OPE R9 INK R10  ;
 	}
 
-operator // ( a : num , b : num ) : num { 
-reg @ R9 -> a ;
-	reg @ R10 -> b ;
-	PROC -> { SET R11 ; MOV 0.0 ; OPE R9 INK R10 ; } return reg @ R11 ;
+	return reg @ R11  ;
+}
+
+director ! ( a : num ) : num  {
+	reg @ R9 -> a  ;
+	
+	PROC ->  {
+		SET R10  ;
+		MOV 0.0  ;
+		OPE R9 PUC -1.0  ;
 	}
 
-director ! ( a : num ) : num { 
-reg @ R9 -> a ;
-	PROC -> { SET R10 ; MOV 0.0 ; OPE R9 PUC -1.0 ; } return reg @ R10 ;
+	return reg @ R10  ;
+}
+
+func getTamanho ( a : string ) : int  {
+	reg @ R13 -> a  ;
+	
+	PROC ->  {
+		SET R5  ;
+		MOV 0  ;
+		SIZE R13  ;
 	}
 
-func getTamanho ( a : string ) : int { 
-reg @ R13 -> a ;
-	PROC -> { SET R5 ; MOV 0 ; SIZE R13 ; } return reg @ R5 ;
+	return reg @ R5  ;
+}
+
+func texto_unir ( a : string , b : string ) : string  {
+	reg @ R13 -> a  ;
+	reg @ R14 -> b  ;
+	
+	PROC ->  {
+		SET R13  ;
+		APPEND R14  ;
 	}
 
-func texto_unir ( a : string , b : string ) : string { 
-reg @ R13 -> a ;
-	reg @ R14 -> b ;
-	PROC -> { SET R13 ; APPEND R14 ; } return reg @ R13 ;
+	return reg @ R13  ;
+}
+
+func getChar ( a : string , b : int ) : string  {
+	reg @ R13 -> a  ;
+	reg @ R5 -> b  ;
+	
+	PROC ->  {
+		SET R14  ;
+		MOV "" ;
+		OPE R13 CHAR R5  ;
 	}
 
-func getChar ( a : string , b : int ) : string { 
-reg @ R13 -> a ;
-	reg @ R5 -> b ;
-	PROC -> { SET R14 ; MOV "" ; OPE R13 CHAR R5 ; } return reg @ R14 ;
+	return reg @ R14  ;
+}
+
+operator >> ( a : int , b : int ) : bool  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R1  ;
+		MOV FALSE  ;
+		OPE R5 GREAT R6  ;
 	}
 
-operator >> ( a : int , b : int ) : bool { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R1 ; MOV FALSE ; OPE R5 GREAT R6 ; } return reg @ R1 ;
+	return reg @ R1  ;
+}
+
+operator << ( a : int , b : int ) : bool  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R1  ;
+		MOV FALSE  ;
+		OPE R5 LESS R6  ;
 	}
 
-operator << ( a : int , b : int ) : bool { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R1 ; MOV FALSE ; OPE R5 LESS R6 ; } return reg @ R1 ;
+	return reg @ R1  ;
+}
+
+operator == ( a : int , b : int ) : bool  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R1  ;
+		MOV FALSE  ;
+		OPE R5 EQUAL R6  ;
 	}
 
-operator == ( a : int , b : int ) : bool { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R1 ; MOV FALSE ; OPE R5 EQUAL R6 ; } return reg @ R1 ;
+	return reg @ R1  ;
+}
+
+operator !! ( a : int , b : int ) : bool  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R1  ;
+		MOV FALSE  ;
+		OPE R5 DIFF R6  ;
 	}
 
-operator !! ( a : int , b : int ) : bool { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R1 ; MOV FALSE ; OPE R5 DIFF R6 ; } return reg @ R1 ;
-	}
- # OPERADORES NUM
+	return reg @ R1  ;
+}
+# OPERADORES NUM
 
-operator >> ( a : num , b : num ) : bool { 
-reg @ R9 -> a ;
-	reg @ R10 -> b ;
-	PROC -> { SET R1 ; MOV FALSE ; OPE R9 DROEN R10 ; } return reg @ R1 ;
-	}
-
-operator << ( a : num , b : num ) : bool { 
-reg @ R9 -> a ;
-	reg @ R10 -> b ;
-	PROC -> { SET R1 ; MOV FALSE ; OPE R9 MOZZ R10 ; } return reg @ R1 ;
+operator >> ( a : num , b : num ) : bool  {
+	reg @ R9 -> a  ;
+	reg @ R10 -> b  ;
+	
+	PROC ->  {
+		SET R1  ;
+		MOV FALSE  ;
+		OPE R9 DROEN R10  ;
 	}
 
-operator == ( a : num , b : num ) : bool { 
-reg @ R9 -> a ;
-	reg @ R10 -> b ;
-	PROC -> { SET R1 ; MOV FALSE ; OPE R9 OPUAL R10 ; } return reg @ R1 ;
+	return reg @ R1  ;
+}
+
+operator << ( a : num , b : num ) : bool  {
+	reg @ R9 -> a  ;
+	reg @ R10 -> b  ;
+	
+	PROC ->  {
+		SET R1  ;
+		MOV FALSE  ;
+		OPE R9 MOZZ R10  ;
 	}
 
-operator !! ( a : num , b : num ) : bool { 
-reg @ R9 -> a ;
-	reg @ R10 -> b ;
-	PROC -> { SET R1 ; MOV FALSE ; OPE R9 TOLL R10 ; } return reg @ R1 ;
+	return reg @ R1  ;
+}
+
+operator == ( a : num , b : num ) : bool  {
+	reg @ R9 -> a  ;
+	reg @ R10 -> b  ;
+	
+	PROC ->  {
+		SET R1  ;
+		MOV FALSE  ;
+		OPE R9 OPUAL R10  ;
 	}
 
-func int ( a : num ) : int { 
-reg @ R9 -> a ;
-	PROC -> { SET R5 ; MOV 0 ; INT R9 ; } return reg @ R5 ;
+	return reg @ R1  ;
+}
+
+operator !! ( a : num , b : num ) : bool  {
+	reg @ R9 -> a  ;
+	reg @ R10 -> b  ;
+	
+	PROC ->  {
+		SET R1  ;
+		MOV FALSE  ;
+		OPE R9 TOLL R10  ;
 	}
 
-func int ( a : int ) : int { 
-return a ;
+	return reg @ R1  ;
+}
+
+func int ( a : num ) : int  {
+	reg @ R9 -> a  ;
+	
+	PROC ->  {
+		SET R5  ;
+		MOV 0  ;
+		INT R9  ;
 	}
 
-func num ( a : int ) : num { 
-reg @ R5 -> a ;
-	PROC -> { SET R9 ; MOV 0.0 ; REAL R5 ; } return reg @ R9 ;
+	return reg @ R5  ;
+}
+
+func int ( a : int ) : int  {
+	return a  ;
+}
+
+func num ( a : int ) : num  {
+	reg @ R5 -> a  ;
+	
+	PROC ->  {
+		SET R9  ;
+		MOV 0.0  ;
+		REAL R5  ;
 	}
 
-func num ( a : num ) : num { 
-return a ;
+	return reg @ R9  ;
+}
+
+func num ( a : num ) : num  {
+	return a  ;
+}
+
+func getData_Dia ( ) : int  {
+	
+	PROC ->  {
+		SET R5  ;
+		MOV 0  ;
+		INVOKE CHRONOS_DAY  ;
 	}
 
-func getData_Dia ( ) : int { 
-PROC -> { SET R5 ; MOV 0 ; PROC CHRONOS_DAY ; } return reg @ R5 ;
+	return reg @ R5  ;
+}
+
+func getData_Mes ( ) : int  {
+	
+	PROC ->  {
+		SET R5  ;
+		MOV 0  ;
+		INVOKE CHRONOS_MONTH  ;
 	}
 
-func getData_Mes ( ) : int { 
-PROC -> { SET R5 ; MOV 0 ; PROC CHRONOS_MONTH ; } return reg @ R5 ;
+	return reg @ R5  ;
+}
+
+func getData_Ano ( ) : int  {
+	
+	PROC ->  {
+		SET R5  ;
+		MOV 0  ;
+		INVOKE CHRONOS_YEAR  ;
 	}
 
-func getData_Ano ( ) : int { 
-PROC -> { SET R5 ; MOV 0 ; PROC CHRONOS_YEAR ; } return reg @ R5 ;
+	return reg @ R5  ;
+}
+
+func getData_Hora ( ) : int  {
+	
+	PROC ->  {
+		SET R5  ;
+		MOV 0  ;
+		INVOKE CHRONOS_HOUR  ;
 	}
 
-func getData_Hora ( ) : int { 
-PROC -> { SET R5 ; MOV 0 ; PROC CHRONOS_HOUR ; } return reg @ R5 ;
+	return reg @ R5  ;
+}
+
+func getData_Minuto ( ) : int  {
+	
+	PROC ->  {
+		SET R5  ;
+		MOV 0  ;
+		INVOKE CHRONOS_MINUTE  ;
 	}
 
-func getData_Minuto ( ) : int { 
-PROC -> { SET R5 ; MOV 0 ; PROC CHRONOS_MINUTE ; } return reg @ R5 ;
+	return reg @ R5  ;
+}
+
+func getData_Segundo ( ) : int  {
+	
+	PROC ->  {
+		SET R5  ;
+		MOV 0  ;
+		INVOKE CHRONOS_SECOND  ;
 	}
 
-func getData_Segundo ( ) : int { 
-PROC -> { SET R5 ; MOV 0 ; PROC CHRONOS_SECOND ; } return reg @ R5 ;
+	return reg @ R5  ;
+}
+
+func aleatorio ( min : int , max : int ) : int  {
+	reg @ R5 -> min  ;
+	reg @ R6 -> max  ;
+	
+	PROC ->  {
+		SET R7  ;
+		MOV 0  ;
+		OPE R5 ALE R6  ;
 	}
 
-func aleatorio ( min : int , max : int ) : int { 
-reg @ R5 -> min ;
-	reg @ R6 -> max ;
-	PROC -> { SET R7 ; MOV 0 ; OPE R5 ALE R6 ; } return reg @ R7 ;
+	return reg @ R7  ;
+}
+
+func aleatorio ( min : num , max : num ) : num  {
+	reg @ R9 -> min  ;
+	reg @ R10 -> max  ;
+	
+	PROC ->  {
+		SET R11  ;
+		MOV 0.0  ;
+		OPE R9 OZU R10  ;
 	}
 
-func aleatorio ( min : num , max : num ) : num { 
-reg @ R9 -> min ;
-	reg @ R10 -> max ;
-	PROC -> { SET R11 ; MOV 0.0 ; OPE R9 OZU R10 ; } return reg @ R11 ;
-	}
+	return reg @ R11  ;
+}

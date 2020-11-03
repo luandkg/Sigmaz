@@ -189,7 +189,7 @@ public class ASTDocumento {
 
             }
 
-            mDocumento.adicionarLinha(mTab, " } ");
+            mDocumento.adicionar( " } ");
 
 
         }

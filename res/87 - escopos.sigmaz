@@ -1,40 +1,90 @@
+define versao : int = 1  ;
+mockiz guardado : int = 6  ;
 
-define versao : int = 1 ;
-
-mockiz guardado : int = 6 ;
-
-func ateOnde ( a : int ) : int { 
-if ( a == 1 ) -> { return -1 ; } DEBUG -> REGRESSIVE :: ALL ;
-	return 0 ;
-	}
-
-operator == ( a : int , b : int ) : bool { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R1 ; MOV FALSE ; OPE R5 EQUAL R6 ; } return reg @ R1 ;
-	}
-
-call Escopos -> { 
-def A : int = 12 ;
-	 {
-		def B : int = 13 ;
-		 DEBUG -> REGRESSIVE :: ALL;
+func ateOnde ( a : int ) : int  {
 	
+	if ( a == 1 ) ->  {
+		return -1  ;
 	}
-	 {
-		def C : int = 15 ;
-		def D : int = A ;
-		 DEBUG -> REGRESSIVE :: ALL;
+
+	DEBUG -> REGRESSIVE :: ALL  ;
+	return 0  ;
+}
+
+operator == ( a : int , b : int ) : bool  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
 	
+	PROC ->  {
+		SET R1  ;
+		MOV FALSE  ;
+		OPE R5 EQUAL R6  ;
 	}
-	DEBUG -> REGRESSIVE :: ALL ;
-	 #def v : int = @();
-	local -> ( v : int ) { def t : int = v ; DEBUG -> REGRESSIVE :: ALL ; } DEBUG -> REGRESSIVE :: ALL ;
-	@ ( 54 ) ;
-	local -> ( a : num , b : num ) : num { reg @ R9 -> a ; reg @ R10 -> b ; PROC -> { SET R11 ; MOV 0.0 ; OPE R9 SAX R10 ; } return reg @ R11 ; } { local -> ( v1 : int , v2 : int ) : int { reg @ R5 -> v1 ; reg @ R6 -> v2 ; PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ; } def t1 : num = @ ( 2.2 , 3.3 ) ; def t2 : int = @ ( 2 , 3 ) ; DEBUG -> REGRESSIVE :: ALL ; } DEBUG -> REGRESSIVE :: ALL ;
-	def t : num = @ ( 20.0 , 50.0 ) ;
-	def r0 : int = ateOnde ( 0 ) ;
-	def r1 : int = ateOnde ( 1 ) ;
-	def r2 : int = ateOnde ( 2 ) ;
-	DEBUG -> REGRESSIVE :: ALL ;
+
+	return reg @ R1  ;
+}
+
+call Escopos ->  {
+	def A : int = 12  ;
+	{
+		def B : int = 13  ;
+		DEBUG -> REGRESSIVE :: ALL  ;
 	}
+
+	{
+		def C : int = 15  ;
+		def D : int = A  ;
+		DEBUG -> REGRESSIVE :: ALL  ;
+	}
+
+	DEBUG -> REGRESSIVE :: ALL  ;
+	#def v : int = @();
+	
+	local -> ( v : int )  {
+		def t : int = v  ;
+		DEBUG -> REGRESSIVE :: ALL  ;
+	}
+
+	DEBUG -> REGRESSIVE :: ALL  ;
+	@ ( 54 )  ;
+	
+	local -> ( a : num , b : num ) : num  {
+		reg @ R9 -> a  ;
+		reg @ R10 -> b  ;
+		
+		PROC ->  {
+			SET R11  ;
+			MOV 0.0  ;
+			OPE R9 SAX R10  ;
+		}
+	
+		return reg @ R11  ;
+	}
+
+	{
+		
+		local -> ( v1 : int , v2 : int ) : int  {
+			reg @ R5 -> v1  ;
+			reg @ R6 -> v2  ;
+			
+			PROC ->  {
+				SET R7  ;
+				MOV 0  ;
+				OPE R5 ADD R6  ;
+			}
+		
+			return reg @ R7  ;
+		}
+	
+		def t1 : num = @ ( 2.2 , 3.3 )  ;
+		def t2 : int = @ ( 2 , 3 )  ;
+		DEBUG -> REGRESSIVE :: ALL  ;
+	}
+
+	DEBUG -> REGRESSIVE :: ALL  ;
+	def t : num = @ ( 20.0 , 50.0 )  ;
+	def r0 : int = ateOnde ( 0 )  ;
+	def r1 : int = ateOnde ( 1 )  ;
+	def r2 : int = ateOnde ( 2 )  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+}

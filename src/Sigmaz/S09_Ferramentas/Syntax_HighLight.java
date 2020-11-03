@@ -629,7 +629,7 @@ public class Syntax_HighLight {
             eSyntax_Corrente = mSyntaxTheme.getSyntax_Delimitadores();
         } else if (TokenC.getTipo() == TokenTipo.QUAD) {
             eSyntax_Corrente = mSyntaxTheme.getSyntax_Delimitadores();
-        } else if (TokenC.getTipo() == TokenTipo.NUMERO) {
+        } else if (TokenC.getTipo() == TokenTipo.INTEIRO) {
             eSyntax_Corrente = mSyntaxTheme.getSyntax_Numero();
 
         } else if (TokenC.getTipo() == TokenTipo.NUMERO_FLOAT) {

@@ -4,36 +4,36 @@ import Sigmaz.S02_Lexer.Lexer;
 import Sigmaz.S02_Lexer.Token;
 import Sigmaz.S02_Lexer.TokenTipo;
 
+import java.util.ArrayList;
+
 public class Formatador2 {
 
 
-    private String eDocumento;
+    private Documento eDocumento;
 
     private int mQuantidade;
     private int mIndex;
-    private Lexer LexerC;
-    private int mLinha;
+    private ArrayList<Token> mTokens;
 
     public Formatador2() {
 
         mQuantidade = 0;
         mIndex = 0;
-        eDocumento = "";
-        LexerC = new Lexer();
-        mLinha = 0;
-
+        eDocumento = new Documento();
+        mTokens = new ArrayList<Token>();
     }
 
 
     public void identar(String eArquivoOrigem, String eArquivoDestino) {
 
 
+        Lexer LexerC = new Lexer();
         LexerC.init(eArquivoOrigem);
-
-        mQuantidade = LexerC.getTokens().size();
+        mTokens = LexerC.getTokens();
+        mQuantidade = mTokens.size();
         mIndex = 0;
-        eDocumento = "";
-        mLinha = 0;
+
+        eDocumento = new Documento();
 
         int mTab = 0;
 
@@ -43,115 +43,109 @@ public class Formatador2 {
 
             if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
 
-                eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
+                eDocumento.adicionarLinha(mTab, TokenC.getConteudo());
+
 
             } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
 
-                eDocumento += " " + TokenC.getConteudo() + "\n";
+                eDocumento.adicionarLinha(mTab, TokenC.getConteudo());
 
 
             } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
 
-                eDocumento += getTexto(TokenC);
+                eDocumento.adicionarLinha(mTab, getTexto(TokenC));
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("call")) {
 
-                log("CALL");
 
-                formate_Call(TokenC, mTab);
+                formate_Call(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
 
-                log("DEFINE");
 
-                formate_Valor(TokenC, mTab, true);
+                formate_Linha(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 
-                log("MOCKIZ");
 
-                formate_Valor(TokenC, mTab, true);
+                formate_Linha(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("refer")) {
 
-                log("REFER");
 
-                formate_Valor(TokenC, mTab, true);
+                formate_Linha(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
 
-                log("ACT");
 
-                formate_Simples(mTab);
+                formate_AlgoComBloco(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
 
-                log("FUNC");
 
-                formate_Simples(mTab);
+                formate_AlgoComBloco(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("auto")) {
 
-                log("AUTO");
 
-                formate_Simples(mTab);
+                formate_AlgoComBloco(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("functor")) {
 
-                log("FUNCTOR");
 
-                formate_Simples(mTab);
+                formate_AlgoComBloco(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operator")) {
 
-                log("OPERATOR");
 
-                formate_Simples(mTab);
+                formate_AlgoComBloco(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("director")) {
 
-                formate_Simples(mTab);
+                formate_AlgoComBloco(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("default")) {
 
-                log("DEFAULT");
 
-                formate_Simples(mTab);
+                formate_AlgoComBloco(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("cast")) {
 
-                log("CAST");
 
-                formate_Cast(TokenC, mTab);
+                formate_Cast(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("stages")) {
 
-                log("STAGES");
-
-                formate_Stages(TokenC, mTab);
+                formate_Stages(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("type")) {
 
-                log("TYPE");
 
-                formate_Type(TokenC, mTab);
+                formate_Type(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("model")) {
 
-                log("MODEL");
 
                 formate_Model(mTab);
 
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("external")) {
+
+
+                formate_External(mTab);
+
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("struct")) {
 
-                log("STRUCT");
 
                 formate_Struct(mTab);
 
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("package")) {
+
+
+                formate_Package(mTab);
 
             } else {
 
-                eDocumento += " " + TokenC.getConteudo();
+                eDocumento.adicionarLinha(mTab, TokenC.getConteudo());
 
 
             }
@@ -160,55 +154,341 @@ public class Formatador2 {
         }
 
 
-        Texto.Escrever(eArquivoDestino, eDocumento);
+        Texto.Escrever(eArquivoDestino, eDocumento.getConteudo());
+
+
+        System.out.println(eDocumento.getConteudo());
+
 
     }
 
-    public void pularLinha() {
-        eDocumento += "\n";
-    }
 
-    public void formate_Call(Token TokenOrigem, int mTab) {
+    public void formate_Call(int mTab) {
 
-        pularLinha();
+        eDocumento.pularLinhaTabulada(mTab);
 
-        eDocumento += TokenOrigem.getConteudo();
 
-        mIndex += 1;
+        String eLinha = "";
+
+
+        boolean isPontoEVirgula = false;
+        boolean isBloco = false;
 
 
         while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
+            Token TokenC = mTokens.get(mIndex);
 
             if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
 
-                eDocumento += "\n" + TokenC.getConteudo() + "\n";
+                eLinha += "\n" + TokenC.getConteudo() + "\n";
 
             } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
 
-                eDocumento += " " + TokenC.getConteudo() + "\n";
+                eLinha += " " + TokenC.getConteudo() + "\n";
 
 
             } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
 
-                eDocumento += getTexto(TokenC);
+                eLinha += getTexto(TokenC) + " ";
 
 
             } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
 
 
-                dentroCorpo(TokenC, mTab);
+                eLinha += " " + TokenC.getConteudo();
+                isBloco = true;
 
                 break;
 
             } else if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
 
-                eDocumento += " " + TokenC.getConteudo();
+                eLinha += " " + TokenC.getConteudo();
+                isPontoEVirgula = true;
+
                 break;
 
             } else {
 
-                eDocumento += " " + TokenC.getConteudo();
+                eLinha += TokenC.getConteudo() + " ";
+
+
+            }
+
+            mIndex += 1;
+
+        }
+
+
+        eDocumento.adicionarLinha(mTab, eLinha);
+
+        if (isPontoEVirgula) {
+            return;
+        }
+
+
+        if (isBloco) {
+            formate_bloco(mTab);
+        }
+
+    }
+
+    public void formate_AlgoComBloco(int mTab) {
+
+        eDocumento.pularLinhaTabulada(mTab);
+
+
+        String eLinha = "";
+
+
+        boolean isBloco = false;
+
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = mTokens.get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eLinha += "\n" + TokenC.getConteudo() + "\n";
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eLinha += " " + TokenC.getConteudo() + "\n";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eLinha += getTexto(TokenC) + " ";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                eLinha += " " + TokenC.getConteudo();
+                isBloco = true;
+
+                break;
+
+            } else {
+
+                eLinha += TokenC.getConteudo() + " ";
+
+
+            }
+
+            mIndex += 1;
+
+        }
+
+
+        eDocumento.adicionarLinha(mTab, eLinha);
+
+
+        if (isBloco) {
+            formate_bloco(mTab);
+        }
+
+    }
+
+    public void formate_BlocoIf(int mTab) {
+
+        eDocumento.pularLinhaTabulada(mTab);
+
+
+        String eLinha = "";
+
+
+        boolean isBloco = false;
+
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = mTokens.get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eLinha += "\n" + TokenC.getConteudo() + "\n";
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eLinha += " " + TokenC.getConteudo() + "\n";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eLinha += getTexto(TokenC) + " ";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                eLinha += " " + TokenC.getConteudo();
+                isBloco = true;
+
+                break;
+
+            } else {
+
+                eLinha += TokenC.getConteudo() + " ";
+
+
+            }
+
+            mIndex += 1;
+
+        }
+
+
+        eDocumento.adicionarLinha(mTab, eLinha);
+
+
+        if (isBloco) {
+            formate_dentroIf(mTab);
+        }
+
+    }
+
+    public void formate_BlocoIfOthers(int mTab) {
+
+
+        String eLinha = "";
+
+
+        boolean isBloco = false;
+
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = mTokens.get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eLinha += "\n" + TokenC.getConteudo() + "\n";
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eLinha += " " + TokenC.getConteudo() + "\n";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eLinha += getTexto(TokenC) + " ";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                eLinha += " " + TokenC.getConteudo();
+                isBloco = true;
+
+                break;
+
+            } else {
+
+                eLinha += TokenC.getConteudo() + " ";
+
+
+            }
+
+            mIndex += 1;
+
+        }
+
+
+        eDocumento.adicionar(eLinha);
+
+
+        if (isBloco) {
+            formate_dentroIf(mTab);
+        }
+
+    }
+
+    public void formate_dentroIf(int mTab) {
+
+
+        int mDentro = mTab + 1;
+
+
+        mIndex += 1;
+
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = mTokens.get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eDocumento.adicionarLinha(mDentro, getTexto(TokenC) + " ");
+
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+                formate_bloco(mDentro);
+
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
+
+                if (isFuturoID("other")) {
+
+                    eDocumento.pularLinha();
+                    eDocumento.adicionarTab(mTab);
+                    eDocumento.adicionar("} ");
+
+                    mIndex += 1;
+
+                    formate_BlocoIfOthers(mTab);
+
+
+                    break;
+                } else if (isFuturoID("others")) {
+
+                    eDocumento.pularLinha();
+                    eDocumento.adicionarTab(mTab);
+                    eDocumento.adicionar("} ");
+
+                    mIndex += 1;
+
+                    formate_BlocoIfOthers(mTab);
+
+                    break;
+                } else {
+
+                    eDocumento.adicionarLinha(mTab, TokenC.getConteudo());
+                    break;
+
+                }
+
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo_SemCS("PROC")) {
+
+                formate_AlgoComBloco(mDentro);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("if")) {
+
+                formate_BlocoIf(mDentro);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("while")) {
+
+                formate_AlgoComBloco(mDentro);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("daz")) {
+
+                formate_AlgoComBloco(mDentro);
+
+
+            } else {
+
+                formate_Linha(mDentro);
 
 
             }
@@ -220,56 +500,1216 @@ public class Formatador2 {
 
     }
 
-    public void formate_Simples(int mTab) {
+
+    public void formate_Cast(int mTab) {
 
 
-        tudoAteIniciarEscopo(mTab);
+        String eLinha = "";
 
 
-        int mDentro = mTab + 1;
+        boolean isBloco = false;
 
-        pularLinha();
-        eDocumento += getTabulacao(mDentro);
-
-        mIndex += 1;
 
         while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
+            Token TokenC = mTokens.get(mIndex);
 
             if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
 
-                eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
+                eLinha += "\n" + TokenC.getConteudo() + "\n";
 
             } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
 
-                eDocumento += " " + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
+                eLinha += " " + TokenC.getConteudo() + "\n";
+
 
             } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
 
-                eDocumento += getTexto(TokenC);
+                eLinha += getTexto(TokenC) + " ";
 
 
             } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
 
 
-                dentroSubCorpo(TokenC, mDentro);
+                eLinha += " " + TokenC.getConteudo();
+                isBloco = true;
 
                 break;
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
-
-                eDocumento += getTabulacao(mTab) + TokenC.getConteudo();
-
-                break;
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("return")) {
-
-                formate_Valor(TokenC, mDentro, false);
 
             } else {
 
-                eDocumento += " " + TokenC.getConteudo();
+                eLinha += TokenC.getConteudo() + " ";
+
+
+            }
+
+            mIndex += 1;
+
+        }
+
+
+        eDocumento.adicionarLinha(mTab, eLinha);
+
+
+        if (isBloco) {
+
+
+            int mDentro = mTab + 1;
+
+
+            mIndex += 1;
+
+
+            while (mIndex < mQuantidade) {
+                Token TokenC = mTokens.get(mIndex);
+
+                if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+                } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+
+                } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                    eDocumento.adicionarLinha(mDentro, getTexto(TokenC) + " ");
+
+
+                } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+                    formate_bloco(mDentro);
+
+
+                } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
+                    eDocumento.adicionarLinha(mTab, TokenC.getConteudo());
+
+                    break;
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("getter")) {
+
+                    formate_AlgoComBloco(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("setter")) {
+
+                    formate_AlgoComBloco(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("default")) {
+
+                    formate_AlgoComBloco(mDentro);
+
+
+                } else {
+
+                    formate_Linha(mDentro);
+
+
+                }
+
+                mIndex += 1;
+
+            }
+
+
+        }
+
+    }
+
+    public void formate_Type(int mTab) {
+
+
+        String eLinha = "";
+
+
+        boolean isBloco = false;
+
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = mTokens.get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eLinha += "\n" + TokenC.getConteudo() + "\n";
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eLinha += " " + TokenC.getConteudo() + "\n";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eLinha += getTexto(TokenC) + " ";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                eLinha += " " + TokenC.getConteudo();
+                isBloco = true;
+
+                break;
+
+            } else {
+
+                eLinha += TokenC.getConteudo() + " ";
+
+
+            }
+
+            mIndex += 1;
+
+        }
+
+
+        eDocumento.adicionarLinha(mTab, eLinha);
+
+
+        if (isBloco) {
+
+
+            int mDentro = mTab + 1;
+
+
+            mIndex += 1;
+
+
+            while (mIndex < mQuantidade) {
+                Token TokenC = mTokens.get(mIndex);
+
+                if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+                } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+
+                } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                    eDocumento.adicionarLinha(mDentro, getTexto(TokenC) + " ");
+
+
+                } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+                    formate_bloco(mDentro);
+
+
+                } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
+                    eDocumento.adicionarLinha(mTab, TokenC.getConteudo());
+
+                    break;
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
+
+                    formate_Linha(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
+
+                    formate_Linha(mDentro);
+
+                } else {
+
+                    formate_Linha(mDentro);
+
+                }
+
+                mIndex += 1;
+
+            }
+
+
+        }
+
+    }
+
+    public void formate_Model(int mTab) {
+
+
+        String eLinha = "";
+
+
+        boolean isBloco = false;
+
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = mTokens.get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eLinha += "\n" + TokenC.getConteudo() + "\n";
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eLinha += " " + TokenC.getConteudo() + "\n";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eLinha += getTexto(TokenC) + " ";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                eLinha += " " + TokenC.getConteudo();
+                isBloco = true;
+
+                break;
+
+            } else {
+
+                eLinha += TokenC.getConteudo() + " ";
+
+
+            }
+
+            mIndex += 1;
+
+        }
+
+
+        eDocumento.adicionarLinha(mTab, eLinha);
+
+
+        if (isBloco) {
+
+
+            int mDentro = mTab + 1;
+
+
+            mIndex += 1;
+
+
+            while (mIndex < mQuantidade) {
+                Token TokenC = mTokens.get(mIndex);
+
+                if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+                } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+
+                } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                    eDocumento.adicionarLinha(mDentro, getTexto(TokenC) + " ");
+
+
+                } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+                    formate_bloco(mDentro);
+
+
+                } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
+                    eDocumento.adicionarLinha(mTab, TokenC.getConteudo());
+
+                    break;
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
+
+                    formate_Linha(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
+
+                    formate_Linha(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
+
+                    formate_Linha(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
+
+                    formate_Linha(mDentro);
+
+                } else {
+
+                    formate_Linha(mDentro);
+
+                }
+
+                mIndex += 1;
+
+            }
+
+
+        }
+
+    }
+
+    public void formate_External(int mTab) {
+
+
+        String eLinha = "";
+
+
+        boolean isBloco = false;
+
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = mTokens.get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eLinha += "\n" + TokenC.getConteudo() + "\n";
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eLinha += " " + TokenC.getConteudo() + "\n";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eLinha += getTexto(TokenC) + " ";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                eLinha += " " + TokenC.getConteudo();
+                isBloco = true;
+
+                break;
+
+            } else {
+
+                eLinha += TokenC.getConteudo() + " ";
+
+
+            }
+
+            mIndex += 1;
+
+        }
+
+
+        eDocumento.adicionarLinha(mTab, eLinha);
+
+
+        if (isBloco) {
+
+
+            int mDentro = mTab + 1;
+
+
+            mIndex += 1;
+
+
+            while (mIndex < mQuantidade) {
+                Token TokenC = mTokens.get(mIndex);
+
+                if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+                } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+
+                } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                    eDocumento.adicionarLinha(mDentro, getTexto(TokenC) + " ");
+
+
+                } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+                    formate_bloco(mDentro);
+
+
+                } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
+                    eDocumento.adicionarLinha(mTab, TokenC.getConteudo());
+
+                    break;
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
+
+                    formate_Linha(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
+
+                    formate_Linha(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
+
+                    formate_AlgoComBloco(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
+
+                    formate_AlgoComBloco(mDentro);
+
+                } else {
+
+                    formate_Linha(mDentro);
+
+                }
+
+                mIndex += 1;
+
+            }
+
+
+        }
+
+    }
+
+
+    public void formate_Struct(int mTab) {
+
+
+        String eLinha = "";
+
+
+        boolean isBloco = false;
+
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = mTokens.get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eLinha += "\n" + TokenC.getConteudo() + "\n";
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eLinha += " " + TokenC.getConteudo() + "\n";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eLinha += getTexto(TokenC) + " ";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                eLinha += " " + TokenC.getConteudo();
+                isBloco = true;
+
+                break;
+
+            } else {
+
+                eLinha += TokenC.getConteudo() + " ";
+
+
+            }
+
+            mIndex += 1;
+
+        }
+
+
+        eDocumento.adicionarLinha(mTab, eLinha);
+
+
+        if (isBloco) {
+
+
+            int mDentro = mTab + 1;
+
+
+            mIndex += 1;
+
+
+            while (mIndex < mQuantidade) {
+                Token TokenC = mTokens.get(mIndex);
+
+                if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+                } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+
+                } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                    eDocumento.adicionarLinha(mDentro, getTexto(TokenC) + " ");
+
+
+                } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+                    formate_bloco(mDentro);
+
+
+                } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
+                    //eDocumento.adicionarLinha("## SAINDO STRUCT");
+
+                    eDocumento.adicionarLinha(mTab, TokenC.getConteudo());
+
+
+                    break;
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("init")) {
+
+                    formate_AlgoComBloco(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("destruct")) {
+
+                    formate_AlgoComBloco(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
+
+                    formate_Linha(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
+
+                    formate_Linha(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("all")) {
+
+                    formate_StructSub(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("restrict")) {
+
+                    formate_StructSub(mDentro);
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("extra")) {
+
+                    formate_StructSub(mDentro);
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("block")) {
+
+                    formate_StructSub(mDentro);
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("explicit")) {
+
+                    formate_StructSub(mDentro);
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("implicit")) {
+
+                    formate_StructSub(mDentro);
+
+                } else {
+
+                    formate_Linha(mDentro);
+
+                }
+
+                mIndex += 1;
+
+            }
+
+
+        }
+
+    }
+
+    public void formate_Stages(int mTab) {
+
+        eDocumento.pularLinhaTabulada(mTab);
+
+
+        String eLinha = "";
+
+
+        boolean isBloco = false;
+
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = mTokens.get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eLinha += "\n" + TokenC.getConteudo() + "\n";
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eLinha += " " + TokenC.getConteudo() + "\n";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eLinha += getTexto(TokenC) + " ";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                eLinha += " " + TokenC.getConteudo();
+                isBloco = true;
+
+                break;
+
+            } else {
+
+                eLinha += TokenC.getConteudo() + " ";
+
+
+            }
+
+            mIndex += 1;
+
+        }
+
+
+        eDocumento.adicionarLinha(mTab, eLinha);
+
+        // eDocumento.adicionar("{@@@}");
+
+        if (isBloco) {
+
+            mIndex += 1;
+
+            while (mIndex < mQuantidade) {
+                Token TokenC = mTokens.get(mIndex);
+
+                if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                    eDocumento.adicionarLinha(TokenC.getConteudo());
+
+                } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                    eDocumento.adicionarLinha(TokenC.getConteudo());
+
+
+                } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                    eDocumento.adicionarLinha(getTexto(TokenC));
+
+
+                } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
+
+                    eDocumento.adicionar(" " + TokenC.getConteudo());
+                    eDocumento.pularLinha();
+
+                    break;
+
+                } else {
+
+                    eDocumento.adicionar(TokenC.getConteudo() + " ");
+
+
+                }
+
+                mIndex += 1;
+
+            }
+
+        }
+
+    }
+
+
+    public void formate_Package(int mTab) {
+
+
+        String eLinha = "";
+
+
+        boolean isBloco = false;
+
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = mTokens.get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eLinha += "\n" + TokenC.getConteudo() + "\n";
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eLinha += " " + TokenC.getConteudo() + "\n";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eLinha += getTexto(TokenC) + " ";
+
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                eLinha += " " + TokenC.getConteudo();
+                isBloco = true;
+
+                break;
+
+            } else {
+
+                eLinha += TokenC.getConteudo() + " ";
+
+
+            }
+
+            mIndex += 1;
+
+        }
+
+
+        eDocumento.adicionarLinha(mTab, eLinha);
+
+
+        if (isBloco) {
+
+
+            int mDentro = mTab + 1;
+
+
+            mIndex += 1;
+
+
+            while (mIndex < mQuantidade) {
+                Token TokenC = mTokens.get(mIndex);
+
+                if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+                } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                    eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+
+                } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                    eDocumento.adicionarLinha(mDentro, getTexto(TokenC) + " ");
+
+
+                } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
+                    eDocumento.adicionarLinha(mTab, TokenC.getConteudo());
+
+                    break;
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("refer")) {
+
+                    formate_Linha(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
+
+                    formate_Linha(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
+
+                    formate_Linha(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("default")) {
+
+                    formate_AlgoComBloco(mDentro);
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
+
+                    formate_AlgoComBloco(mDentro);
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
+
+                    formate_AlgoComBloco(mDentro);
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("auto")) {
+
+                    formate_AlgoComBloco(mDentro);
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("functor")) {
+
+                    formate_AlgoComBloco(mDentro);
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("type")) {
+
+                    formate_Type(mDentro);
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("struct")) {
+
+                    formate_Struct(mDentro);
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("cast")) {
+
+                    formate_Cast(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("stages")) {
+
+                    formate_Stages(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("model")) {
+
+
+                    formate_Model(mDentro);
+
+                } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("external")) {
+
+
+                    formate_External(mDentro);
+
+
+                } else {
+
+                    formate_Linha(mDentro);
+
+                }
+
+                mIndex += 1;
+
+            }
+
+
+        }
+
+    }
+
+    public void formate_bloco(int mTab) {
+
+
+        int mDentro = mTab + 1;
+
+
+        mIndex += 1;
+
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = mTokens.get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eDocumento.adicionarLinha(mDentro, getTexto(TokenC) + " ");
+
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+                formate_bloco(mDentro);
+                eDocumento.pularLinha();
+
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
+                eDocumento.adicionarLinha(mTab, TokenC.getConteudo());
+
+                break;
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo_SemCS("PROC")) {
+
+                formate_AlgoComBloco(mDentro);
+                eDocumento.pularLinhaTabulada(mTab);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("if")) {
+
+                formate_BlocoIf(mDentro);
+
+                eDocumento.pularLinhaTabulada(mTab);
+
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("while")) {
+
+                formate_AlgoComBloco(mDentro);
+                eDocumento.pularLinhaTabulada(mTab);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("daz")) {
+
+                formate_AlgoComBloco(mDentro);
+                eDocumento.pularLinhaTabulada(mTab);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("local")) {
+
+                formate_AlgoComBloco(mDentro);
+                eDocumento.pularLinhaTabulada(mTab);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("each")) {
+
+                formate_AlgoComBloco(mDentro);
+                eDocumento.pularLinhaTabulada(mTab);
+
+
+            } else {
+
+                formate_Linha(mDentro);
+
+
+            }
+
+            mIndex += 1;
+
+        }
+
+
+    }
+
+
+    public void formate_Linha(int mTab) {
+
+        eDocumento.pularLinhaTabulada(mTab);
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = mTokens.get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eDocumento.adicionarLinha(mTab, TokenC.getConteudo());
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eDocumento.adicionarLinha(mTab, TokenC.getConteudo());
+
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eDocumento.adicionar(getTexto(TokenC));
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                eDocumento.adicionarLinha(mTab + 1, TokenC.getConteudo());
+
+                formate_blocoLinear(mTab + 1);
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
+                eDocumento.adicionar(" " + TokenC.getConteudo());
+                break;
+
+            } else if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
+
+                eDocumento.adicionar(" " + TokenC.getConteudo());
+
+                break;
+
+            } else {
+
+                eDocumento.adicionar(TokenC.getConteudo() + " ");
+
+
+            }
+
+            mIndex += 1;
+
+        }
+
+
+    }
+
+    public void formate_blocoLinear(int mTab) {
+
+
+        int mDentro = mTab + 1;
+
+
+        mIndex += 1;
+
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = mTokens.get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eDocumento.adicionarLinha(mDentro, getTexto(TokenC) + " ");
+
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
+
+
+                eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+                formate_blocoLinear(mDentro);
+
+                eDocumento.pularLinha();
+                eDocumento.adicionarTab(mTab);
+
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
+                eDocumento.adicionarLinha(mTab, TokenC.getConteudo());
+
+                break;
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo_SemCS("PROC")) {
+
+                formate_AlgoComBloco(mDentro);
+                eDocumento.pularLinhaTabulada(mTab);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("if")) {
+
+                formate_BlocoIf(mDentro);
+
+                eDocumento.pularLinhaTabulada(mTab);
+
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("while")) {
+
+                formate_AlgoComBloco(mDentro);
+                eDocumento.pularLinhaTabulada(mTab);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("daz")) {
+
+                formate_AlgoComBloco(mDentro);
+                eDocumento.pularLinhaTabulada(mTab);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("local")) {
+
+                formate_AlgoComBloco(mDentro);
+                eDocumento.pularLinhaTabulada(mTab);
+
+
+            } else {
+
+                formate_Linha(mDentro);
+
+                if (mTokens.get(mIndex).getTipo() == TokenTipo.CHAVE_FECHA) {
+                    break;
+                }
+
+            }
+
+            mIndex += 1;
+
+        }
+
+
+    }
+
+
+    public void formate_StructSub(int mTab) {
+
+        int mDentro = mTab;
+
+        eDocumento.pularLinhaTabulada(mDentro);
+
+        boolean isDuplado = false;
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = mTokens.get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eDocumento.adicionar(getTexto(TokenC));
+
+            } else if (TokenC.getTipo() == TokenTipo.DOISPONTOS) {
+
+                eDocumento.adicionar(TokenC.getConteudo());
+                mIndex += 1;
+
+                isDuplado = true;
+                break;
+
+            } else {
+
+                eDocumento.adicionar(TokenC.getConteudo() + " ");
+
+
+            }
+
+            mIndex += 1;
+
+        }
+
+        if (isDuplado) {
+
+
+            formate_StructSub2(mTab + 1);
+
+        }
+
+
+    }
+
+    public void formate_StructSub2(int mTab) {
+
+        int mDentro = mTab;
+
+
+        while (mIndex < mQuantidade) {
+            Token TokenC = mTokens.get(mIndex);
+
+            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+
+                eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+
+                eDocumento.adicionarLinha(mDentro, TokenC.getConteudo());
+
+
+            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
+
+                eDocumento.adicionar(getTexto(TokenC));
+
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
+
+                formate_Linha(mTab);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
+
+                formate_Linha(mTab);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
+
+                formate_AlgoComBloco(mTab);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
+
+                formate_AlgoComBloco(mTab);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("destruct")) {
+
+                formate_AlgoComBloco(mTab);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("all")) {
+                mIndex -= 1;
+                break;
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("restrict")) {
+                mIndex -= 1;
+                break;
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("implicit")) {
+                mIndex -= 1;
+                break;
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("explicit")) {
+                mIndex -= 1;
+                break;
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("block")) {
+                mIndex -= 1;
+                break;
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("extra")) {
+                mIndex -= 1;
+                break;
+            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
+
+                mIndex -= 1;
+                break;
+
+            } else {
+
+                eDocumento.adicionar(TokenC.getConteudo() + " ");
 
 
             }
@@ -283,1265 +1723,6 @@ public class Formatador2 {
 
     public void log(String e) {
         System.out.println(e);
-    }
-
-    public void formate_Cast(Token TokenOrigem, int mTab) {
-
-        pularLinha();
-
-        eDocumento += getTabulacao(mTab) + TokenOrigem.getConteudo();
-
-        mIndex += 1;
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n";
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += getTexto(TokenC);
-
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
-
-
-                dentroCorpoCast(TokenC, mTab);
-
-                break;
-
-            } else {
-
-                eDocumento += " " + TokenC.getConteudo();
-
-
-            }
-
-            mIndex += 1;
-
-        }
-
-
-    }
-
-    public void formate_Stages(Token TokenOrigem, int mTab) {
-
-        pularLinha();
-
-        eDocumento += getTabulacao(mTab) + TokenOrigem.getConteudo();
-
-        mIndex += 1;
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += getTexto(TokenC);
-
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
-
-
-                dentroCorpoStages(TokenC, mTab);
-
-                break;
-
-            } else {
-
-                eDocumento += " " + TokenC.getConteudo();
-
-
-            }
-
-            mIndex += 1;
-
-        }
-
-
-    }
-
-    public void formate_Type(Token TokenOrigem, int mTab) {
-
-        pularLinha();
-
-        eDocumento += getTabulacao(mTab) + TokenOrigem.getConteudo();
-
-        mIndex += 1;
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += getTexto(TokenC);
-
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
-
-
-                dentroCorpoType(TokenC, mTab);
-
-                break;
-
-            } else {
-
-                eDocumento += " " + TokenC.getConteudo();
-
-
-            }
-
-            mIndex += 1;
-
-        }
-
-
-    }
-
-    public void tudoAteIniciarEscopo(int mTab) {
-
-        pularLinha();
-        eDocumento += getTabulacao(mTab);
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += getTexto(TokenC) + " ";
-
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
-
-
-                eDocumento += TokenC.getConteudo() + " ";
-
-                break;
-
-            } else {
-
-                eDocumento += TokenC.getConteudo() + " ";
-
-
-            }
-
-            mIndex += 1;
-
-        }
-
-    }
-
-    public void formate_Model(int mTab) {
-
-        tudoAteIniciarEscopo(mTab);
-
-
-        int mDentro = mTab + 1;
-
-        pularLinha();
-        eDocumento += getTabulacao(mDentro);
-
-        mIndex += 1;
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mDentro) + TokenC.getConteudo() + "\n" + getTabulacao(mDentro);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n" + getTabulacao(mDentro);
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += " " + getTexto(TokenC);
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
-
-                dentroCorpo(TokenC, mDentro);
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
-
-
-                pularLinha();
-                eDocumento += getTabulacao(mTab) + TokenC.getConteudo();
-                pularLinha();
-                eDocumento += getTabulacao(mTab);
-
-                break;
-
-            } else if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
-
-                eDocumento += TokenC.getConteudo();
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
-
-                formate_Valor(TokenC, mDentro, true);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
-
-                formate_Valor(TokenC, mDentro, true);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
-
-                formate_Valor(TokenC, mDentro, true);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
-
-                formate_Valor(TokenC, mDentro, true);
-
-            } else {
-                eDocumento += " " + TokenC.getConteudo();
-            }
-
-            mIndex += 1;
-        }
-
-
-    }
-
-
-    public void formate_Struct(int mTab) {
-
-        tudoAteIniciarEscopo(mTab);
-
-
-        int mDentro = mTab + 1;
-
-        pularLinha();
-        eDocumento += getTabulacao(mDentro);
-
-        mIndex += 1;
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mDentro) + TokenC.getConteudo() + "\n" + getTabulacao(mDentro);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n" + getTabulacao(mDentro);
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += getTexto(TokenC) + " ";
-
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
-
-                pularLinha();
-                eDocumento += getTabulacao(mTab) + TokenC.getConteudo();
-                pularLinha();
-
-                break;
-
-            } else if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
-
-                eDocumento += TokenC.getConteudo();
-                pularLinha();
-                boolean fechador = false;
-
-                int mFuturo = mIndex + 1;
-                if (mFuturo < mQuantidade) {
-                    Token mTokenFuturo = LexerC.getTokens().get(mFuturo);
-                    if (mTokenFuturo.getTipo() == TokenTipo.CHAVE_FECHA) {
-                        fechador = true;
-                    }
-                }
-
-                if (fechador) {
-                    eDocumento += getTabulacao(mTab);
-                } else {
-                    eDocumento += getTabulacao(mDentro);
-                }
-
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("init")) {
-
-                System.out.println("\t STRUCT INIT");
-                formate_Simples(mTab+1);
-
-                pularLinha();
-                eDocumento += getTabulacao(mTab);
-
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("restrict")) {
-
-                System.out.println("\t STRUCT RESTRICT");
-
-                pularLinha();
-                eDocumento += getTabulacao(mTab + 1) + TokenC.getConteudo();
-                dentroStructSub(mDentro + 1);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("all")) {
-
-                System.out.println("\t STRUCT ALL");
-
-                pularLinha();
-                eDocumento += getTabulacao(mTab + 1) + TokenC.getConteudo();
-                dentroStructSub(mDentro + 1);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("explicit")) {
-
-                System.out.println("\t STRUCT EXPLICIT");
-
-                pularLinha();
-                eDocumento += getTabulacao(mTab + 1) + TokenC.getConteudo();
-                dentroStructSub(mDentro + 1);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("implicit")) {
-
-                System.out.println("\t STRUCT IMPLICIT");
-
-                pularLinha();
-                eDocumento += getTabulacao(mTab + 1) + TokenC.getConteudo();
-                dentroStructSub(mDentro + 1);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("extra")) {
-
-                System.out.println("\t STRUCT EXTRA");
-
-                pularLinha();
-                eDocumento += getTabulacao(mTab + 1) + TokenC.getConteudo();
-                dentroStructSub(mDentro + 1);
-
-            } else {
-
-                if (TokenC.getTipo() == TokenTipo.PONTO) {
-                    eDocumento += TokenC.getConteudo();
-                } else {
-                    eDocumento += " " + TokenC.getConteudo();
-                }
-
-
-            }
-
-            mIndex += 1;
-        }
-
-
-    }
-
-
-    public void dentroCorpo(Token TokenOrigem, int mTab) {
-
-
-        eDocumento += " " + TokenOrigem.getConteudo() + " ";
-
-
-        mIndex += 1;
-
-        int mTabFora = mTab;
-        int mTabDentro = mTab + 1;
-
-        pularLinha();
-
-
-        log(getTabulacao(mTab) + "ICORPO : " + mTab);
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            System.out.println(TokenC.getConteudo());
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mTabDentro) + TokenC.getConteudo() + "\n" + getTabulacao(mTabDentro);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n" + getTabulacao(mTabDentro);
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += " " + getTexto(TokenC);
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
-
-
-                dentroSubCorpo(TokenC, mTabDentro);
-
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
-
-                eDocumento += getTabulacao(mTabFora) + TokenC.getConteudo();
-                pularLinha();
-                eDocumento += getTabulacao(mTabFora);
-
-                break;
-
-            } else if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
-
-                if (isFuturo(TokenTipo.CHAVE_FECHA)) {
-
-                    eDocumento += TokenC.getConteudo();
-                    pularLinha();
-                    eDocumento += getTabulacao(mTabFora);
-
-                } else {
-
-                    eDocumento += TokenC.getConteudo();
-                    pularLinha();
-                    eDocumento += getTabulacao(mTabDentro);
-
-                }
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("def")) {
-
-                formate_Valor(TokenC, mTabDentro, false);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("moc")) {
-
-                formate_Valor(TokenC, mTabDentro, false);
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("let")) {
-
-                formate_Valor(TokenC, mTabDentro, false);
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("voz")) {
-
-                formate_Valor(TokenC, mTabDentro, false);
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mut")) {
-
-                formate_Valor(TokenC, mTabDentro, false);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("each")) {
-
-                formate_Simples(mTabDentro);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("return")) {
-
-                System.out.println("RETURN");
-
-                formate_Valor(TokenC, mTabDentro, false);
-
-            } else {
-
-                if (TokenC.getTipo() == TokenTipo.PONTO) {
-                    eDocumento += TokenC.getConteudo();
-                } else {
-
-
-                    boolean pontuado = false;
-
-                    int mPassado = mIndex - 1;
-                    if (mPassado < mQuantidade) {
-                        Token mTokenPassado = LexerC.getTokens().get(mPassado);
-                        if (mTokenPassado.getTipo() == TokenTipo.PONTO) {
-                            pontuado = true;
-                        }
-                    }
-
-                    if (pontuado) {
-                        eDocumento += TokenC.getConteudo();
-                    } else {
-
-
-                        formate_Valor(TokenC, mTabDentro, false);
-
-
-                    }
-                }
-
-
-            }
-
-            mIndex += 1;
-        }
-
-
-    }
-
-    public void dentroSubCorpo(Token TokenOrigem, int mTab) {
-
-
-        eDocumento += " " + TokenOrigem.getConteudo();
-
-        mIndex += 1;
-
-        int mFora = mTab;
-        int mDentro = mTab + 1;
-
-
-        pularLinha();
-
-        eDocumento += getTabulacao(mDentro);
-
-        log(getTabulacao(mTab) + "SUB_CORPO : " + mDentro);
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mDentro) + TokenC.getConteudo() + "\n" + getTabulacao(mDentro);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n" + getTabulacao(mDentro);
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += " " + getTexto(TokenC);
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
-
-
-                dentroSubCorpo(TokenC, mDentro);
-
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
-
-                pularLinha();
-                eDocumento += getTabulacao(mFora) + TokenC.getConteudo() + "\n" + getTabulacao(mFora);
-
-                break;
-
-            } else if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
-
-                if (isFuturo(TokenTipo.CHAVE_FECHA)) {
-
-                    eDocumento += TokenC.getConteudo();
-                    eDocumento += "\n" + getTabulacao(mFora);
-
-                } else {
-
-                    eDocumento += TokenC.getConteudo();
-                    pularLinha();
-                    eDocumento += getTabulacao(mDentro);
-
-
-                }
-
-
-            } else {
-
-                if (TokenC.getTipo() == TokenTipo.PONTO) {
-                    eDocumento += TokenC.getConteudo();
-                } else {
-
-
-                    boolean pontuado = false;
-
-                    int mPassado = mIndex - 1;
-                    if (mPassado < mQuantidade) {
-                        Token mTokenPassado = LexerC.getTokens().get(mPassado);
-                        if (mTokenPassado.getTipo() == TokenTipo.PONTO) {
-                            pontuado = true;
-                        }
-                    }
-
-                    if (pontuado) {
-                        eDocumento += TokenC.getConteudo();
-                    } else {
-                        if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("def")) {
-
-                            formate_Valor(TokenC, mDentro, false);
-
-                        } else {
-                            eDocumento += " " + TokenC.getConteudo();
-                        }
-                    }
-                }
-
-
-            }
-
-            mIndex += 1;
-        }
-
-
-    }
-
-
-    public boolean isFuturo(TokenTipo eTokenTipo) {
-
-        boolean pontuado = false;
-
-        int mFuturo = mIndex + 1;
-        if (mFuturo < mQuantidade) {
-            Token mTokenPassado = LexerC.getTokens().get(mFuturo);
-            if (mTokenPassado.getTipo() == eTokenTipo) {
-                pontuado = true;
-            }
-        }
-
-        return pontuado;
-
-    }
-
-    public void dentroCorpoStages(Token TokenOrigem, int mTab) {
-
-
-        eDocumento += " " + TokenOrigem.getConteudo();
-
-        mIndex += 1;
-
-        int mTabAntes = mTab;
-        int mTabCorpo = mTab;
-
-
-        pularLinha();
-        pularLinha();
-
-        mTab += 1;
-
-        boolean fechadorOrigem = false;
-
-        int mCorrente = mIndex;
-        if (mCorrente < mQuantidade) {
-            Token mTokenFuturo = LexerC.getTokens().get(mCorrente);
-            if (mTokenFuturo.getTipo() == TokenTipo.CHAVE_FECHA) {
-                fechadorOrigem = true;
-            }
-        }
-
-        if (fechadorOrigem) {
-            eDocumento += getTabulacao(mTab - 1);
-        } else {
-            eDocumento += getTabulacao(mTab);
-        }
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += " " + getTexto(TokenC);
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
-
-                dentroCorpo(TokenC, mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
-
-                pularLinha();
-                eDocumento += getTabulacao(mTabAntes) + TokenC.getConteudo();
-                pularLinha();
-
-                break;
-
-            } else if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
-
-                eDocumento += TokenC.getConteudo();
-
-
-            } else {
-                eDocumento += " " + TokenC.getConteudo();
-            }
-
-            mIndex += 1;
-        }
-
-
-        mTab = mTabAntes;
-
-    }
-
-    public void dentroCorpoType(Token TokenOrigem, int mTab) {
-
-
-        eDocumento += " " + TokenOrigem.getConteudo();
-
-        mIndex += 1;
-
-        int mTabAntes = mTab;
-
-        int mTabCorpo = mTab + 1;
-
-
-        pularLinha();
-        pularLinha();
-
-        mTab += 1;
-
-        boolean fechadorOrigem = false;
-
-        int mCorrente = mIndex;
-        if (mCorrente < mQuantidade) {
-            Token mTokenFuturo = LexerC.getTokens().get(mCorrente);
-            if (mTokenFuturo.getTipo() == TokenTipo.CHAVE_FECHA) {
-                fechadorOrigem = true;
-            }
-        }
-
-        if (fechadorOrigem) {
-            eDocumento += getTabulacao(mTab - 1);
-        } else {
-            eDocumento += getTabulacao(mTab);
-        }
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mTabCorpo) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n" + getTabulacao(mTabCorpo);
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += " " + getTexto(TokenC);
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
-
-                dentroCorpo(TokenC, mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
-
-
-                pularLinha();
-                eDocumento += getTabulacao(mTabAntes) + TokenC.getConteudo();
-                pularLinha();
-                eDocumento += getTabulacao(mTabAntes);
-
-                break;
-
-            } else if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
-
-                eDocumento += TokenC.getConteudo();
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
-
-                formate_Valor(TokenC, mTab, true);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
-
-                formate_Valor(TokenC, mTab, true);
-
-            } else {
-                eDocumento += " " + TokenC.getConteudo();
-            }
-
-            mIndex += 1;
-        }
-
-        mTab = mTabAntes;
-
-    }
-
-
-    public void dentroCorpoCast(Token TokenOrigem, int mTab) {
-
-        log("\tCORPO CAST");
-
-        eDocumento += " " + TokenOrigem.getConteudo();
-
-        mIndex += 1;
-
-        int mTabCorpo = mTab;
-
-
-        pularLinha();
-        mTab += 1;
-
-        boolean fechadorOrigem = false;
-
-        int mCorrente = mIndex;
-        if (mCorrente < mQuantidade) {
-            Token mTokenFuturo = LexerC.getTokens().get(mCorrente);
-            if (mTokenFuturo.getTipo() == TokenTipo.CHAVE_FECHA) {
-                fechadorOrigem = true;
-            }
-        }
-
-        if (fechadorOrigem) {
-            eDocumento += getTabulacao(mTab - 1);
-        } else {
-            eDocumento += getTabulacao(mTab);
-        }
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += " " + getTexto(TokenC);
-
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("getter")) {
-
-                log("\tCAST GETTER");
-
-                formate_Simples(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("setter")) {
-
-                log("\tCAST SETTER");
-
-                formate_Simples(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("default")) {
-
-                log("\tCAST DEFAULT");
-
-                formate_Simples(mTab);
-
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
-
-                dentroCorpo(TokenC, mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
-
-                mTab = mTabCorpo;
-                eDocumento += TokenC.getConteudo();
-                pularLinha();
-
-                break;
-
-            } else if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
-
-                eDocumento += TokenC.getConteudo();
-                pularLinha();
-                boolean fechador = false;
-
-                int mFuturo = mIndex + 1;
-                if (mFuturo < mQuantidade) {
-                    Token mTokenFuturo = LexerC.getTokens().get(mFuturo);
-                    if (mTokenFuturo.getTipo() == TokenTipo.CHAVE_FECHA) {
-                        fechador = true;
-                    }
-                }
-
-                if (fechador) {
-                    eDocumento += getTabulacao(mTabCorpo);
-                } else {
-                    eDocumento += getTabulacao(mTab);
-                }
-
-
-            } else {
-
-                if (TokenC.getTipo() == TokenTipo.PONTO) {
-                    eDocumento += TokenC.getConteudo();
-                } else {
-
-
-                    boolean pontuado = false;
-
-                    int mPassado = mIndex - 1;
-                    if (mPassado < mQuantidade) {
-                        Token mTokenPassado = LexerC.getTokens().get(mPassado);
-                        if (mTokenPassado.getTipo() == TokenTipo.PONTO) {
-                            pontuado = true;
-                        }
-                    }
-
-                    if (pontuado) {
-                        eDocumento += TokenC.getConteudo();
-                    } else {
-                        if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("def")) {
-
-                            formate_Valor(TokenC, mTab, false);
-
-                        } else {
-                            eDocumento += " " + TokenC.getConteudo();
-                        }
-                    }
-                }
-
-
-            }
-
-            mIndex += 1;
-        }
-
-
-    }
-
-
-    public void formate_Valor(Token TokenOrigem, int mTab, boolean isPular) {
-
-        if (isPular) {
-            pularLinha();
-            eDocumento += getTabulacao(mTab);
-        }
-
-        eDocumento += TokenOrigem.getConteudo();
-
-        mIndex += 1;
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n";
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += " " + getTexto(TokenC);
-
-
-            } else if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
-
-
-                eDocumento += " " + TokenC.getConteudo();
-                eDocumento += "\n" + getTabulacao(mTab);
-
-                break;
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
-
-                formate_ValorChaves(TokenC, mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
-
-                eDocumento += " " + TokenC.getConteudo();
-
-                break;
-
-            } else {
-
-                eDocumento += " " + TokenC.getConteudo();
-
-
-            }
-
-            mIndex += 1;
-
-        }
-
-
-    }
-
-    public void formate_ValorChaves(Token TokenOrigem, int mTab) {
-
-        eDocumento += " " + TokenOrigem.getConteudo();
-
-        mIndex += 1;
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n";
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += " " + getTexto(TokenC);
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
-
-                eDocumento += " " + TokenC.getConteudo();
-                break;
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_ABRE) {
-
-                formate_ValorChaves(TokenC, mTab);
-
-
-            } else {
-
-                eDocumento += " " + TokenC.getConteudo();
-
-
-            }
-
-            mIndex += 1;
-
-        }
-
-
-    }
-
-
-    public void dentroCorpoStruct(Token TokenOrigem, int mTab) {
-
-
-        eDocumento += " " + TokenOrigem.getConteudo();
-
-        mIndex += 1;
-
-
-        int mStructTab = mTab + 1;
-        int mTabFora = mTab;
-
-
-        pularLinha();
-        eDocumento += getTabulacao(mStructTab);
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mStructTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n";
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += getTexto(TokenC);
-
-
-            } else if (TokenC.getTipo() == TokenTipo.CHAVE_FECHA) {
-
-
-                eDocumento += getTabulacao(mTabFora) + TokenC.getConteudo();
-                pularLinha();
-
-                break;
-
-            } else if (TokenC.getTipo() == TokenTipo.PONTOVIRGULA) {
-
-                eDocumento += TokenC.getConteudo();
-                pularLinha();
-                boolean fechador = false;
-
-                int mFuturo = mIndex + 1;
-                if (mFuturo < mQuantidade) {
-                    Token mTokenFuturo = LexerC.getTokens().get(mFuturo);
-                    if (mTokenFuturo.getTipo() == TokenTipo.CHAVE_FECHA) {
-                        fechador = true;
-                    }
-                }
-
-                if (fechador) {
-                    eDocumento += getTabulacao(mTabFora);
-                } else {
-                    eDocumento += getTabulacao(mStructTab);
-                }
-
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("init")) {
-
-                formate_Simples(mStructTab);
-
-                pularLinha();
-                eDocumento += getTabulacao(mTab);
-
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("restrict")) {
-
-                pularLinha();
-                eDocumento += getTabulacao(mTab + 1) + TokenC.getConteudo();
-                dentroStructSub(mStructTab + 1);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("all")) {
-
-                pularLinha();
-                eDocumento += getTabulacao(mTab + 1) + TokenC.getConteudo();
-                dentroStructSub(mStructTab + 1);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("explicit")) {
-
-                pularLinha();
-                eDocumento += getTabulacao(mTab + 1) + TokenC.getConteudo();
-                dentroStructSub(mStructTab + 1);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("implicit")) {
-
-                pularLinha();
-                eDocumento += getTabulacao(mTab + 1) + TokenC.getConteudo();
-                dentroStructSub(mStructTab + 1);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("extra")) {
-
-                pularLinha();
-                eDocumento += getTabulacao(mTab + 1) + TokenC.getConteudo();
-                dentroStructSub(mStructTab + 1);
-
-            } else {
-
-                if (TokenC.getTipo() == TokenTipo.PONTO) {
-                    eDocumento += TokenC.getConteudo();
-                } else {
-                    eDocumento += " " + TokenC.getConteudo();
-                }
-
-
-            }
-
-            mIndex += 1;
-        }
-
-
-    }
-
-    public void dentroStructSub(int mTab) {
-
-        mIndex += 1;
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n";
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += getTexto(TokenC);
-
-            } else {
-
-                eDocumento += " " + TokenC.getConteudo();
-
-            }
-
-            mIndex += 1;
-            break;
-
-        }
-
-        int mAntes = mTab;
-
-
-        while (mIndex < mQuantidade) {
-            Token TokenC = LexerC.getTokens().get(mIndex);
-
-            if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
-
-                eDocumento += "\n" + getTabulacao(mTab) + TokenC.getConteudo() + "\n" + getTabulacao(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
-
-                eDocumento += " " + TokenC.getConteudo() + "\n";
-
-            } else if (TokenC.getTipo() == TokenTipo.TEXTO) {
-
-                eDocumento += getTexto(TokenC);
-
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
-
-                mTab = mAntes;
-
-                formate_Simples(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
-
-                System.out.println("\t\t\tFUNC");
-
-                mTab = mAntes;
-
-                formate_Simples(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
-
-                mTab = mAntes;
-
-                formate_Valor(TokenC, mTab, true);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
-
-                mTab = mAntes;
-
-                formate_Valor(TokenC, mTab, true);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operator")) {
-
-                mTab = mAntes;
-
-                formate_Simples(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("director")) {
-
-                mTab = mAntes;
-
-                formate_Simples(mTab);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("destruct")) {
-
-                mTab = mAntes;
-
-                formate_Simples(mTab);
-
-            } else {
-                mIndex -= 1;
-
-                break;
-
-
-            }
-
-            mIndex += 1;
-        }
-
-        mTab = mAntes;
-
     }
 
 
@@ -1579,5 +1760,16 @@ public class Formatador2 {
         return ret;
     }
 
+    public boolean isFuturoID(String eConteudo) {
+        boolean e = false;
+
+        if (mIndex + 1 < mQuantidade) {
+            if (mTokens.get(mIndex + 1).getTipo() == TokenTipo.ID && mTokens.get(mIndex + 1).mesmoConteudo(eConteudo)) {
+                e = true;
+            }
+        }
+
+        return e;
+    }
 
 }

@@ -1,39 +1,44 @@
+refer COISAS  ;
+refer ESTRELAS  ;
 
-refer COISAS ;
-
-refer ESTRELAS ;
-
-call iniciar -> { 
-def mID1 : int = Pessoa -> ID ( ) ;
-	def mID2 : int = Pessoa -> ID ( ) ;
-	def mLuz : int = Sol -> Luminosidade ( ) ;
-	DEBUG -> REGRESSIVE :: ALL ;
+call iniciar ->  {
+	def mID1 : int = Pessoa -> ID ( )  ;
+	def mID2 : int = Pessoa -> ID ( )  ;
+	def mLuz : int = Sol -> Luminosidade ( )  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+}
+package ESTRELAS  {
+	struct Sol  {
+		explicit :
+			define mLuz : int = 12  ;
+			
+			func Luminosidade ( ) : int  {
+				return mLuz  ;
+			}
 	}
- package ESTRELAS {
-struct Sol {
-	
-	explicit :
-		define mLuz : int = 12 ;
-		
-		func Luminosidade ( ) : int { 
-return mLuz ;
-					}
-		}
- } package COISAS {
-struct Pessoa {
-	
-	explicit :
-		define mID : int = 0 ;
-		
-	explicit :
-		func ID ( ) : int { 
-mID = somar_inteiro ( mID , 1 ) ;
-			return mID ;
-					}
-		}
- }
-func somar_inteiro ( a : int , b : int ) : int { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R7 ; MOV 0 ; OPE R5 ADD R6 ; } return reg @ R7 ;
+}
+package COISAS  {
+	struct Pessoa  {
+		explicit :
+			define mID : int = 0  ;
+		explicit :
+			
+			func ID ( ) : int  {
+				mID = somar_inteiro ( mID , 1 )  ;
+				return mID  ;
+			}
 	}
+}
+
+func somar_inteiro ( a : int , b : int ) : int  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R7  ;
+		MOV 0  ;
+		OPE R5 ADD R6  ;
+	}
+
+	return reg @ R7  ;
+}

@@ -67,7 +67,7 @@ public class AST_Proc {
                 mAST.init(AST_Corrente);
 
 
-            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("PROC")) {
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("INVOKE")) {
 
                 AST_Instrucao mAST = new AST_Instrucao(mCompiler);
                 mAST.init(AST_Corrente);

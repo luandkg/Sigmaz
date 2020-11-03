@@ -36,10 +36,10 @@ public class AST_Block {
                 } else {
                     mCompiler.voltar();
                 }
-            } else if (TokenProximo.getTipo() == TokenTipo.NUMERO) {
+            } else if (TokenProximo.getTipo() == TokenTipo.INTEIRO) {
 
                 AST eItem = ASTPai.criarBranch("ITEM");
-                eItem.setNome("NUM");
+                eItem.setNome("INT");
                 eItem.setValor(TokenProximo.getConteudo());
 
                 mais = false;

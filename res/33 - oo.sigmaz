@@ -1,10 +1,20 @@
- import"libs/lib.sigmaz" ; import"sacola.sigmaz" ; import"pessoa.sigmaz" ;
-call iniciar -> pular ( ) ;
-act pular ( ) { 
-def sacola1 : Sacola = init Sacola ( ) ;
-	sacola1 . aumentar ( 2 ) ;
-	def t : int = sacola1 . getQuantidade ( ) ;
-	def s : int = somar ( 2 , sacola1 . getQuantidade ( ) ) ;
-	DEBUG -> REGRESSIVE :: ALL ;
-	 #sacola1.mostrar_struct();
-	}
+import
+"libs/lib.sigmaz"
+;
+import
+"sacola.sigmaz"
+;
+import
+"pessoa.sigmaz"
+;
+
+call iniciar -> pular ( )  ;
+
+act pular ( )  {
+	def sacola1 : Sacola = init Sacola ( )  ;
+	sacola1 . aumentar ( 2 )  ;
+	def t : int = sacola1 . getQuantidade ( )  ;
+	def s : int = somar ( 2 , sacola1 . getQuantidade ( ) )  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+	#sacola1.mostrar_struct();
+}

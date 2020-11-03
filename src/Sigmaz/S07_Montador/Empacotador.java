@@ -2,6 +2,7 @@ package Sigmaz.S07_Montador;
 
 
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S00_Utilitarios.Texto;
 
 import java.util.ArrayList;
 
@@ -39,19 +40,17 @@ public class Empacotador {
         mProfundidade = 0;
 
         mOK = false;
-        mDesempacotado=lsAST;
+        mDesempacotado = lsAST;
 
         analisar();
 
         ASTDocumento mASTDocumento = new ASTDocumento();
-
-        // String mDocumentoNovo = mOLM.toDocumento(lsAST);
         String mDocumentoReduzido = mASTDocumento.toDocumentoReduzido(lsAST);
 
         mTamanho = mDocumentoReduzido.length();
 
-          // Texto.Escrever("res/build/ASTS.txt", mDocumentoNovo);
-        //  Texto.Escrever("res/build/ASTR.txt", mDocumentoReduzido);
+      //  Texto.Escrever("res/build/ASTS.txt", mASTDocumento.toDocumento(lsAST));
+      //  Texto.Escrever("res/build/ASTR.txt", mDocumentoReduzido);
 
 
         mOK = true;
@@ -60,7 +59,7 @@ public class Empacotador {
 
     }
 
-    public void analisar(){
+    public void analisar() {
 
         for (AST a : mDesempacotado) {
             mInstrucoes += a.getInstrucoes();
@@ -70,7 +69,7 @@ public class Empacotador {
                 mProfundidade = prof;
             }
 
-         //   System.out.println(a.getImpressao());
+            //   System.out.println(a.getImpressao());
 
         }
 

@@ -1,48 +1,52 @@
-
-call iniciar -> pular ( ) ;
-struct Pessoa {
-	
+call iniciar -> pular ( )  ;
+struct Pessoa  {
 	all :
 		define nome : string = "" ;
+		define idade : int = 0  ;
 		
-		define idade : int = 0 ;
-		
-		act setNome ( _nome : string ) { 
-nome = _nome ;
-					}
-		
-		func getNome ( ) : string { 
-return nome ;
-					}
-		
-		act setIdade ( _idade : int ) { 
-idade = _idade ;
-					}
-		
-		func getIdade ( ) : int { 
-return idade ;
-					}
-		
-		act mostrar ( ) { 
-DEBUG -> REGRESSIVE :: ALL ;
-					}
+		act setNome ( _nome : string )  {
+			nome = _nome  ;
 		}
+		
+		func getNome ( ) : string  {
+			return nome  ;
+		}
+		
+		act setIdade ( _idade : int )  {
+			idade = _idade  ;
+		}
+		
+		func getIdade ( ) : int  {
+			return idade  ;
+		}
+		
+		act mostrar ( )  {
+			DEBUG -> REGRESSIVE :: ALL  ;
+		}
+}
 
-act pular ( ) { 
-def p1 : Pessoa = init Pessoa ( ) ;
-	p1 . setNome ( "Luan Alves Freitas" ) ;
-	p1 . setIdade ( 12 ) ;
-	p1 . mostrar ( ) ;
-	def p2 : Pessoa = init Pessoa ( ) ;
-	p2 . setNome ( "Ana Bucar Xord" ) ;
-	p2 . setIdade ( 12 ) ;
-	p2 . mostrar ( ) ;
-	def igual : bool = p1 . getIdade ( ) == p2 . getIdade ( ) ;
-	DEBUG -> REGRESSIVE :: ALL ;
+act pular ( )  {
+	def p1 : Pessoa = init Pessoa ( )  ;
+	p1 . setNome ( "Luan Alves Freitas")  ;
+	p1 . setIdade ( 12 )  ;
+	p1 . mostrar ( )  ;
+	def p2 : Pessoa = init Pessoa ( )  ;
+	p2 . setNome ( "Ana Bucar Xord")  ;
+	p2 . setIdade ( 12 )  ;
+	p2 . mostrar ( )  ;
+	def igual : bool = p1 . getIdade ( ) == p2 . getIdade ( )  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+}
+
+operator == ( a : int , b : int ) : bool  {
+	reg @ R5 -> a  ;
+	reg @ R6 -> b  ;
+	
+	PROC ->  {
+		SET R1  ;
+		MOV FALSE  ;
+		OPE R5 EQUAL R6  ;
 	}
 
-operator == ( a : int , b : int ) : bool { 
-reg @ R5 -> a ;
-	reg @ R6 -> b ;
-	PROC -> { SET R1 ; MOV FALSE ; OPE R5 EQUAL R6 ; } return reg @ R1 ;
-	}
+	return reg @ R1  ;
+}

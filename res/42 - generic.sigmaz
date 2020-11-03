@@ -1,24 +1,20 @@
+call iniciar -> inicio ( )  ;
+define GERAL : Item >> ( num ) = null  ;
 
-call iniciar -> inicio ( ) ;
-define GERAL : Item >> ( num ) = null ;
-
-act inicio ( ) { 
-def ig : Item >> ( num ) = init Item ( ) >> ( num ) ;
-	DEBUG -> REGRESSIVE :: ALL ;
-	def a : num = ig . getA ( ) ;
-	DEBUG -> REGRESSIVE :: ALL ;
-	}
-
-struct Item in ( T ) {
-	
+act inicio ( )  {
+	def ig : Item >> ( num ) = init Item ( ) >> ( num )  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+	def a : num = ig . getA ( )  ;
+	DEBUG -> REGRESSIVE :: ALL  ;
+}
+struct Item in ( T )  {
 	all :
-		define A : T = null ;
+		define A : T = null  ;
 		
-		func getA ( ) : T { 
-def mA : T = A ;
-			return mA ;
-					}
+		func getA ( ) : T  {
+			def mA : T = A  ;
+			return mA  ;
 		}
-
-struct Normal {
-	}
+}
+struct Normal  {
+}

@@ -1,4 +1,4 @@
-package Sigmaz.S06_Integralizador;
+package Sigmaz.S06_Integrador;
 
 import Sigmaz.S00_Utilitarios.Contador;
 import Sigmaz.S00_Utilitarios.Mensageiro;

@@ -1,4 +1,4 @@
-package Sigmaz.S06_Integralizador;
+package Sigmaz.S06_Integrador;
 
 import java.util.ArrayList;
 

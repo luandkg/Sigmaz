@@ -1,7 +1,43 @@
- #import "libs/lib.sigmaz";
+#import "libs/lib.sigmaz";
 
-call iniciar -> operando ( ) ;
-act operando ( ) { 
-def escolha : int = 2 ;
+call iniciar -> operando ( )  ;
+
+act operando ( )  {
+	def escolha : int = 2  ;
 	def resposta : string = "" ;
-	when ( escolha ) -> { case 3 -> { continue ; resposta = "Branco" ; println ( "Escolheu : = " , resposta ) ; } case 1 -> { resposta = "Amarelo" ; println ( "Escolheu : = " , resposta ) ; } case 2 -> { resposta = "Azul" ; println ( "Escolheu : = " , resposta ) ; } case 3 -> { resposta = "Laranja" ; println ( "Escolheu : = " , resposta ) ; } others { resposta = "Verde" ; println ( "Escolheu : = " , resposta ) ; } } }act println ( a : string , b : string ) { reg @ R13 -> a ; reg @ R14 -> b ; PROC -> { PROC CHANGE_LINE ; PRINT R13 ; PRINT R14 ; } }
+	when ( escolha ) -> 
+		{
+			case 3 -> 
+				{
+					continue  ;
+					resposta = "Branco" ;
+					println ( "Escolheu : = ", resposta )  ;
+				}case 1 -> 
+				{
+					resposta = "Amarelo" ;
+					println ( "Escolheu : = ", resposta )  ;
+				}case 2 -> 
+				{
+					resposta = "Azul" ;
+					println ( "Escolheu : = ", resposta )  ;
+				}case 3 -> 
+				{
+					resposta = "Laranja" ;
+					println ( "Escolheu : = ", resposta )  ;
+				}others 
+				{
+					resposta = "Verde" ;
+					println ( "Escolheu : = ", resposta )  ;
+				} } }
+	act println ( a : string , b : string ) 
+		{
+			reg @ R13 -> a  ;
+			reg @ R14 -> b  ;
+			
+			PROC ->  {
+				INVOKE CHANGE_LINE  ;
+				PRINT R13  ;
+				PRINT R14  ;
+			}
+		
+		}
