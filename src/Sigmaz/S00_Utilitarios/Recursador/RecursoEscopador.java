@@ -1,4 +1,4 @@
-package AppSigmaz;
+package Sigmaz.S00_Utilitarios.Recursador;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -7,9 +7,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
-public class RecursoSequenciador {
+public class RecursoEscopador {
 
     private int mCaixaGrandeAltura;
     private int mCaixaMediaAltura;
@@ -44,7 +43,10 @@ public class RecursoSequenciador {
     private int eCaixaPequena;
 
 
-    public RecursoSequenciador(int eLargura, int eAltura) {
+    private int mEscopando;
+    private int mLugar;
+
+    public RecursoEscopador(int eLargura, int eAltura) {
 
 
         mTamanho_Grande = 50;
@@ -54,7 +56,7 @@ public class RecursoSequenciador {
 
         eFonte_TituloGrande = new Font("TimesRoman", Font.BOLD, mTamanho_Grande);
         eFonte_Media = new Font("TimesRoman", Font.BOLD, mTamanho_Medio);
-        eFonte_Pequena = new Font("TimesRoman", Font.BOLD, mTamanho_Medio);
+        eFonte_Pequena = new Font("TimesRoman", Font.BOLD, mTamanho_Pequena);
 
         mCaixaGrandeAltura = (mTamanho_Grande * 2) + 20;
         mCaixaMediaAltura = (mTamanho_Medio * 2) + 20;
@@ -86,15 +88,115 @@ public class RecursoSequenciador {
 
         ALTURANDO = 0;
 
-    }
-
-    public void criarTitulo(String eNome, Color eCor) {
-
-        criarCaixaTituloGrande(g, 0, ALTURANDO, mIMAGEM_LARGURA, eCor);
-        tituloGrande(g, 0, ALTURANDO, mIMAGEM_LARGURA, "SIGMAZ");
-
+        mEscopando = 100;
+        mLugar = 0;
 
     }
+
+    public Ponto criarEscopo(String eNome, Color eCorFundo, Color eCorDentro) {
+
+        int eLargura = 500;
+        int eAltura = 700;
+
+        int eMargem = 10;
+
+        int eY = 85;
+
+        tituloMedio(g, mEscopando, 20, eLargura, eNome);
+
+
+        g.setColor(eCorFundo);
+        g.fillRect(mEscopando, eY, eLargura, eAltura);
+
+        g.setColor(eCorDentro);
+        g.fillRect(mEscopando + eMargem, eY + eMargem, eLargura - (2 * eMargem), eAltura - (2 * eMargem));
+
+        int mX = mEscopando;
+
+        mEscopando += eLargura + 100;
+        mLugar = 120;
+
+        return new Ponto(mX,eY);
+    }
+
+    public Ponto criarCaixa(String eNome, Ponto eEscopo, Color eCorFundo, Color eCorDentro) {
+
+        int eLargura = 400;
+        int eAltura = 60;
+
+        int eMargem = 10;
+
+        int eY = mLugar;
+
+        int inicioX = eEscopo.getX() + 50;
+
+
+        g.setColor(eCorFundo);
+        g.fillRect(inicioX, eY, eLargura, eAltura);
+
+        g.setColor(eCorDentro);
+        g.fillRect(inicioX + eMargem, eY + eMargem, eLargura - (2 * eMargem), eAltura - (2 * eMargem));
+
+        tituloPequeno(g, inicioX, eY, eLargura, eNome);
+
+
+        int mY = eY;
+        mLugar += eAltura + 20;
+
+        return new Ponto(inicioX, mY);
+    }
+
+    public void escopoPular(int eAltura) {
+        mLugar += eAltura;
+    }
+
+    public int criarDivisorCaixa(Ponto eEscopo, Color eCorFundo) {
+
+        int eLargura = 500;
+        int eAltura = 10;
+
+
+        int eY = mLugar;
+        int inicioX = eEscopo.getX();
+
+        g.setColor(eCorFundo);
+        g.fillRect(inicioX, eY, eLargura, eAltura);
+
+        int mX = eY;
+        mLugar += eAltura + 20;
+
+        return mX;
+    }
+
+
+    public void associar(Ponto v, Ponto eEscopo, Color eCor) {
+
+        int inicioX = v.getX() + 400 ;
+        int inicioY = v.getY() + (30 / 2) + (10/2);
+
+        g.setColor(eCor);
+        g.fillRect(inicioX, inicioY, 100, 10);
+        g.fillRect(inicioX + 100, eEscopo.getY()-30, 10, inicioY-eEscopo.getY() + 40);
+        g.fillRect(inicioX + 100, eEscopo.getY()-30, 50, 10);
+
+        // SETA DIREITA
+
+        int seta_x = (inicioX + 110) + 10 + 30 + 10;
+        int seta_y = (eEscopo.getY()-30) - 5;
+        int seta_largura = 25;
+        int seta_altura = 20;
+
+
+        Polygon triangle = new Polygon();
+        triangle.addPoint(seta_x, seta_y);
+        triangle.addPoint(seta_x, seta_y + seta_altura);
+
+        triangle.addPoint(seta_x + seta_largura, seta_y + (seta_altura / 2));
+
+        g.fillPolygon(triangle);
+
+    }
+
 
     public int criarSessao(String eNome, Color eCor) {
 
@@ -203,7 +305,7 @@ public class RecursoSequenciador {
 
         // SETA ABAIXO
 
-        int seta_x = x  - 8 ;
+        int seta_x = x - 8;
         int seta_y = ey2 + 5;
         int seta_largura = 25;
         int seta_altura = 20;
@@ -211,9 +313,9 @@ public class RecursoSequenciador {
 
         Polygon triangle = new Polygon();
         triangle.addPoint(seta_x, seta_y);
-        triangle.addPoint(seta_x+seta_largura, seta_y );
+        triangle.addPoint(seta_x + seta_largura, seta_y);
 
-        triangle.addPoint(seta_x + (seta_largura/2), seta_y + (seta_altura ));
+        triangle.addPoint(seta_x + (seta_largura / 2), seta_y + (seta_altura));
 
         g.fillPolygon(triangle);
 

@@ -1,7 +1,7 @@
 package Sigmaz.S06_Ferramentas;
 
 import Sigmaz.S00_Utilitarios.Erro;
-import Sigmaz.S00_Utilitarios.Formatador2;
+import Sigmaz.S00_Utilitarios.Formatador;
 import Sigmaz.S01_Compilador.C02_Lexer.Lexer;
 
 public class Identador {
@@ -43,7 +43,7 @@ public class Identador {
             System.out.println("\t - Inicio : " + LexerC.getData());
             System.out.println("\t - Destino : " + eArquivoDestino);
 
-            Formatador2 mFormatador = new Formatador2();
+            Formatador mFormatador = new Formatador();
             mFormatador.identar(eArquivoOrigem, eArquivoDestino);
 
             System.out.println("\t - Fim : " + LexerC.getData());
@@ -64,7 +64,7 @@ public class Identador {
         LexerC.init(eArquivoOrigem);
         if (LexerC.getErros().size() == 0) {
 
-            Formatador2 mFormatador = new Formatador2();
+            Formatador mFormatador = new Formatador();
 
             mFormatador.identar(eArquivoOrigem, eArquivoDestino);
             ret = true;

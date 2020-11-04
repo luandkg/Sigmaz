@@ -51,8 +51,16 @@ public class AST_Argumentos {
                 if (TokenD.mesmoConteudo("ref")) {
                     ASTCorrente.setValor("REF");
 
-                    Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro");
+                    Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro referenciado");
                     ASTCorrente.setNome(TokenC4.getConteudo());
+
+                } else if (TokenD.mesmoConteudo("moc")) {
+
+                    ASTCorrente.setValor("MOC");
+
+                    Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro constante");
+                    ASTCorrente.setNome(TokenC4.getConteudo());
+
 
                 } else if (TokenD.mesmoConteudo("opt")) {
                     mOpt = true;
@@ -65,7 +73,13 @@ public class AST_Argumentos {
 
                         ASTCorrente.setValor("OPTREF");
 
-                        Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro");
+                        Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro opcional referenciado");
+                        ASTCorrente.setNome(TokenC5.getConteudo());
+                    } else       if (TokenC4.mesmoConteudo("moc")) {
+
+                        ASTCorrente.setValor("OPTMOC");
+
+                        Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro opcional constante");
                         ASTCorrente.setNome(TokenC5.getConteudo());
 
                     } else {

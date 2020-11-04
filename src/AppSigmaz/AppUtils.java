@@ -155,14 +155,14 @@ public class AppUtils {
             SigmazC.setMostrar_Erros(true);
 
             SigmazC.setMostrarArvoreRunTime(true);
-            SigmazC.setMostrar_ArvoreFalhou(false);
+            SigmazC.setMostrar_ArvoreFalhou(true);
 
 
             SigmazC.setDebug_PreProcessamento(false);
             SigmazC.setDebug_Lexer(false);
             SigmazC.setDebug_Parser(false);
             SigmazC.setDebug_Comentario(false);
-            SigmazC.setDebug_Integralizador(true);
+            SigmazC.setDebug_Integralizador(false);
             SigmazC.setDebug_Montagem(false);
 
             SigmazC.setDebug_PosProcessador_Requisidor(false);
@@ -175,7 +175,7 @@ public class AppUtils {
 
             SigmazC.setDebug_PosProcessador_Referenciador(false);
             SigmazC.setDebug_PosProcessador_Argumentador(false);
-            SigmazC.setDebug_PosProcessador_Opcionador(false);
+            SigmazC.setDebug_PosProcessador_Opcionador(true);
 
             SigmazC.setDebug_PosProcessador_Alocador(false);
             SigmazC.setDebug_PosProcessador_Tipador(false);
@@ -626,8 +626,8 @@ public class AppUtils {
 
     public static void RECURSOS(String eLocal ) {
 
-        Recursos mRecursos = new Recursos();
-        mRecursos.init(eLocal);
+        GeradorRecursal mGeradorRecursal = new GeradorRecursal();
+        mGeradorRecursal.init(eLocal);
 
     }
 }

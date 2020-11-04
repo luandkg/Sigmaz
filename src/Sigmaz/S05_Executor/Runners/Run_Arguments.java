@@ -80,6 +80,8 @@ public class Run_Arguments {
                         mRun_Pass.passarParametroByValue(eParametros.get(argC).getNome(), mArgumentos.get(argC));
                     } else if (eParametros.get(argC).getModo().contentEquals("REF")) {
                         mRun_Pass.passarParametroByRef(eParametros.get(argC).getNome(), mArgumentos.get(argC));
+                    } else if (eParametros.get(argC).getModo().contentEquals("MOC")) {
+                        mRun_Pass.passarParametroByMoc(eParametros.get(argC).getNome(), mArgumentos.get(argC));
                     } else {
                         mEscopoInterno.getRunTime().getErros().add("Passagem de parametro desconhecida : " + eParametros.get(argC).getModo());
                         return;

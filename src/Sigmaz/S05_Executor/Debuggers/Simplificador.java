@@ -61,6 +61,65 @@ public class Simplificador {
         return ret;
     }
 
+
+    public String getParametros_SoTipos(AST ASTPai) {
+        String ret = "";
+
+        int total = 0;
+
+        for (AST mAST : ASTPai.getBranch("ARGUMENTS").getASTS()) {
+            if (mAST.mesmoTipo("ARGUMENT")) {
+                total += 1;
+            }
+        }
+
+        int contando = 0;
+
+        for (AST mAST : ASTPai.getBranch("ARGUMENTS").getASTS()) {
+            if (mAST.mesmoTipo("ARGUMENT")) {
+                contando += 1;
+
+                if (contando < total) {
+                    ret += " " + getTipagem(mAST.getBranch("TYPE")) + " , ";
+                } else {
+                    ret += " " + getTipagem(mAST.getBranch("TYPE")) + " ";
+                }
+            }
+        }
+
+        return ret;
+    }
+
+
+    public String getParametragemFormas(AST ASTPai) {
+        String ret = "";
+
+        int total = 0;
+
+        for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("ARGUMENT")) {
+                total += 1;
+            }
+        }
+
+        int contando = 0;
+
+        for (AST mAST : ASTPai.getASTS()) {
+            if (mAST.mesmoTipo("ARGUMENT")) {
+                contando += 1;
+
+                if (contando < total) {
+                    ret += mAST.getValor() + " :: " + mAST.getNome() + " : " + getTipagem(mAST.getBranch("TYPE")) + " , ";
+                } else {
+                    ret += mAST.getValor() + " :: " + mAST.getNome() + " : " + getTipagem(mAST.getBranch("TYPE")) + " ";
+                }
+            }
+        }
+
+        return " ( " + ret + " ) ";
+    }
+
+
     public String getTipagem(AST eAST) {
 
         String mTipagem = "";
@@ -117,6 +176,10 @@ public class Simplificador {
         return eAST.getNome() + " (" + getParametros(eAST) + ")";
     }
 
+    public String getAlgo_SoTipos(AST eAST) {
+        return eAST.getNome() + " (" + getParametros_SoTipos(eAST) + ")";
+    }
+
     public String getInit(AST eAST) {
         return eAST.getNome() + " (" + getParametros(eAST) + ")";
     }
@@ -131,21 +194,22 @@ public class Simplificador {
     }
 
     public String getStruct(AST eAST) {
-        return eAST.getNome() ;
+        return eAST.getNome();
     }
+
     public String getExternal(AST eAST) {
-        return eAST.getNome() ;
+        return eAST.getNome();
     }
 
     public String getModel(AST eAST) {
-        return eAST.getNome() ;
+        return eAST.getNome();
     }
 
-    public String getBlocoGetter(String eStructNome,AST eAST) {
+    public String getBlocoGetter(String eStructNome, AST eAST) {
         return eStructNome + " [" + getParametros(eAST) + "] : " + getTipagem(eAST.getBranch("TYPE"));
     }
 
-    public String getBlocoSetter(String eStructNome,AST eAST) {
+    public String getBlocoSetter(String eStructNome, AST eAST) {
         return eStructNome + " [" + getParametros(eAST) + "] ";
     }
 
@@ -176,7 +240,7 @@ public class Simplificador {
     }
 
     public String getCast(AST eAST) {
-        return eAST.getNome() ;
+        return eAST.getNome();
     }
 
 }

@@ -40,6 +40,30 @@ public class Run_Pass {
 
     }
 
+    public void passarParametroByMoc(String eNome, Item eItem) {
+
+        if (eItem.getIsEstrutura()) {
+
+            if (eItem.getNulo()) {
+                mEscopo.criarConstanteStructNula(eNome, eItem.getTipo());
+            } else {
+                mEscopo.criarConstanteStruct(eNome, eItem.getTipo(), eItem.getValor(mRunTime, mEscopo));
+            }
+
+
+        } else {
+
+            if (eItem.getNulo()) {
+                mEscopo.criarConstanteNula(eNome, eItem.getTipo());
+            } else {
+                mEscopo.criarConstante(eNome, eItem.getTipo(), eItem.getValor(mRunTime, mEscopo));
+            }
+
+
+        }
+
+    }
+
     public void passarParametroByRef(String eNome, Item eItem) {
 
 //        System.out.println("Ref :: " + eNome + " de " + eItem.getReferencia().getNome());

@@ -12,7 +12,11 @@
 
 ### ARQUITETURA DA LINGUAGEM
 
-![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/sigmaz_01.png)
+## ACTIONS
+![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/escopo_01.png)
+
+## FUNCTIONS
+![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/escopo_02.png)
 
     
  ### TIPOS PRIMITIVOS

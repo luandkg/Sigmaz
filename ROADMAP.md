@@ -569,3 +569,8 @@ Linguagem de Programação Estruturada - Implementações
 		2020 11 03 -->> Formatador External
 		2020 11 03 -->> Formatador Package
 
+
+		2020 11 04 -->> Pos - Processador Opcinalizador
+		2020 11 04 -->> Gerador de Recursos
+		2020 11 04 -->> Recurso Escopo
+

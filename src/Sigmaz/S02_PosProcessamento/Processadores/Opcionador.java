@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import Sigmaz.S02_PosProcessamento.PosProcessador;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S05_Executor.Debuggers.Simplificador;
 
 public class Opcionador {
 
@@ -29,7 +30,7 @@ public class Opcionador {
 
     public void init(ArrayList<AST> mTodos) {
 
-       mensagem("");
+        mensagem("");
         mensagem(" ------------------ FASE OPCIONADOR ----------------------- ");
 
 
@@ -38,7 +39,7 @@ public class Opcionador {
             if (mAST.mesmoTipo("SIGMAZ")) {
 
 
-              mensagem("");
+                mensagem("");
 
                 for (AST ePacote : mAST.getASTS()) {
                     if (ePacote.mesmoTipo("PACKAGE")) {
@@ -56,67 +57,364 @@ public class Opcionador {
 
     }
 
+    public String QualConflito(String eProcurando, String eTipo, ArrayList<AST> lsa, ArrayList<AST> lsb) {
+
+        String ret = "";
+
+        Simplificador mSimplificador = new Simplificador();
+
+        boolean mEnc = false;
+
+        for (AST mAST : lsa) {
+            if (mAST.mesmoTipo(eTipo)) {
+
+                if (mSimplificador.getAlgo_SoTipos(mAST).contentEquals(eProcurando)) {
+                    ret = mSimplificador.getAction(mAST);
+                    mEnc = true;
+                    break;
+                }
+
+            }
+        }
+        if (!mEnc) {
+            for (AST mAST : lsb) {
+                if (mAST.mesmoTipo(eTipo)) {
+
+                    if (mSimplificador.getAlgo_SoTipos(mAST).contentEquals(eProcurando)) {
+                        ret = mSimplificador.getAction(mAST);
+                        mEnc = true;
+                        break;
+                    }
+
+                }
+            }
+        }
+
+
+        return ret;
+
+    }
+
+    public String QualConflito_Function(String eProcurando, String eTipo, ArrayList<AST> lsa, ArrayList<AST> lsb) {
+
+        String ret = "";
+
+        Simplificador mSimplificador = new Simplificador();
+
+        boolean mEnc = false;
+
+        for (AST mAST : lsa) {
+            if (mAST.mesmoTipo(eTipo)) {
+
+                if (mSimplificador.getAlgo_SoTipos(mAST).contentEquals(eProcurando)) {
+                    ret = mSimplificador.getFuction(mAST);
+                    mEnc = true;
+                    break;
+                }
+
+            }
+        }
+        if (!mEnc) {
+            for (AST mAST : lsb) {
+                if (mAST.mesmoTipo(eTipo)) {
+
+                    if (mSimplificador.getAlgo_SoTipos(mAST).contentEquals(eProcurando)) {
+                        ret = mSimplificador.getFuction(mAST);
+                        mEnc = true;
+                        break;
+                    }
+
+                }
+            }
+        }
+
+
+        return ret;
+
+    }
+
+
+    public void emActions(AST mCriando, ArrayList<AST> mTodos, ArrayList<AST> mInserindo, ArrayList<String> mConferindo) {
+
+        String eTipoOpcional = "ACTION";
+        String eTipoOpcionalMostrar = "Action";
+
+        Simplificador mSimplificador = new Simplificador();
+
+        mInserindo.add(mCriando);
+
+        String sImplementando = eTipoOpcional + " :: " + mSimplificador.getAlgo_SoTipos(mCriando);
+        if (!mConferindo.contains(sImplementando)) {
+            mConferindo.add(sImplementando);
+        } else {
+
+            String mConflito = QualConflito(mSimplificador.getAlgo_SoTipos(mCriando), eTipoOpcional, mTodos, mInserindo);
+            errar(eTipoOpcionalMostrar + " conflitante : " + mSimplificador.getAction(mCriando) + " e " + mConflito);
+
+        }
+
+    }
+
+    public void emGrupo_Action(AST mAST, ArrayList<AST> mTodos, ArrayList<AST> mInserindo, ArrayList<String> mConferindo) {
+
+        Simplificador mSimplificador = new Simplificador();
+
+        mConferindo.add("ACTION :: " + mSimplificador.getAction(mAST));
+
+        if (getOpcionais(mAST.getBranch("ARGUMENTS")) > 0) {
+
+            mensagem("ACTION :: " + mAST.getNome() + " " + mSimplificador.getParametragemFormas(mAST.getBranch("ARGUMENTS")));
+
+            AST mOriginal = mAST.copiar();
+
+            int mOriginal_Argumentos = getOpcionais(mOriginal.getBranch("ARGUMENTS"));
+            if (mOriginal_Argumentos > 0) {
+                for (AST eArgumento : mOriginal.getBranch("ARGUMENTS").getASTS()) {
+                    if (eArgumento.mesmoValor("OPT")) {
+                        AST mCriando = reorganizar(mOriginal.copiar(), eArgumento.getNome());
+                        emActions(mCriando, mTodos, mInserindo, mConferindo);
+                    } else if (eArgumento.mesmoValor("OPTREF")) {
+                        AST mCriando = reorganizar(mOriginal.copiar(), eArgumento.getNome());
+                        emActions(mCriando, mTodos, mInserindo, mConferindo);
+                    } else if (eArgumento.mesmoValor("OPTMOC")) {
+                        AST mCriando = reorganizar(mOriginal.copiar(), eArgumento.getNome());
+                        emActions(mCriando, mTodos, mInserindo, mConferindo);
+                    }
+                }
+            }
+
+
+            if (mOriginal_Argumentos > 1) {
+                AST mCriando = reorganizarTodos(mOriginal.copiar());
+                emActions(mCriando, mTodos, mInserindo, mConferindo);
+            }
+
+            removerOpcionais(mAST.getBranch("ARGUMENTS"));
+
+
+        }
+
+    }
+
+
+    public void emFunctions(AST mCriando, ArrayList<AST> mTodos, ArrayList<AST> mInserindo, ArrayList<String> mConferindo) {
+
+        String eTipoOpcional = "FUNCTION";
+        String eTipoOpcionalMostrar = "Function";
+
+        Simplificador mSimplificador = new Simplificador();
+
+        mInserindo.add(mCriando);
+
+        String sImplementando = eTipoOpcional + " :: " + mSimplificador.getAlgo_SoTipos(mCriando);
+        if (!mConferindo.contains(sImplementando)) {
+            mConferindo.add(sImplementando);
+        } else {
+
+            String mConflito = QualConflito_Function(mSimplificador.getAlgo_SoTipos(mCriando), eTipoOpcional, mTodos, mInserindo);
+            errar(eTipoOpcionalMostrar + " conflitante : " + mSimplificador.getFuction(mCriando) + " e " + mConflito);
+
+        }
+
+    }
+
+    public void emGrupo_Function(AST mAST, ArrayList<AST> mTodos, ArrayList<AST> mInserindo, ArrayList<String> mConferindo) {
+
+        Simplificador mSimplificador = new Simplificador();
+
+        mConferindo.add("FUNCTION :: " + mSimplificador.getFuction(mAST));
+
+        if (getOpcionais(mAST.getBranch("ARGUMENTS")) > 0) {
+
+            mensagem("FUNCTION :: " + mAST.getNome() + " " + mSimplificador.getParametragemFormas(mAST.getBranch("ARGUMENTS")));
+
+            AST mOriginal = mAST.copiar();
+
+            int mOriginal_Argumentos = getOpcionais(mOriginal.getBranch("ARGUMENTS"));
+            if (mOriginal_Argumentos > 0) {
+                for (AST eArgumento : mOriginal.getBranch("ARGUMENTS").getASTS()) {
+                    if (eArgumento.mesmoValor("OPT")) {
+                        AST mCriando = reorganizar(mOriginal.copiar(), eArgumento.getNome());
+                        emFunctions(mCriando, mTodos, mInserindo, mConferindo);
+                    } else if (eArgumento.mesmoValor("OPTREF")) {
+                        AST mCriando = reorganizar(mOriginal.copiar(), eArgumento.getNome());
+                        emFunctions(mCriando, mTodos, mInserindo, mConferindo);
+                    } else if (eArgumento.mesmoValor("OPTMOC")) {
+                        AST mCriando = reorganizar(mOriginal.copiar(), eArgumento.getNome());
+                        emFunctions(mCriando, mTodos, mInserindo, mConferindo);
+                    }
+                }
+            }
+
+
+            if (mOriginal_Argumentos > 1) {
+                AST mCriando = reorganizarTodos(mOriginal.copiar());
+                emFunctions(mCriando, mTodos, mInserindo, mConferindo);
+            }
+
+            removerOpcionais(mAST.getBranch("ARGUMENTS"));
+
+
+        }
+
+    }
+
+
+    public void emAutos(AST mCriando, ArrayList<AST> mTodos, ArrayList<AST> mInserindo, ArrayList<String> mConferindo) {
+
+        String eTipoOpcional = "PROTOTYPE_AUTO";
+        String eTipoOpcionalMostrar = "Auto";
+
+        Simplificador mSimplificador = new Simplificador();
+
+        mInserindo.add(mCriando);
+
+        String sImplementando = eTipoOpcional + " :: " + mSimplificador.getAlgo_SoTipos(mCriando);
+        if (!mConferindo.contains(sImplementando)) {
+            mConferindo.add(sImplementando);
+        } else {
+
+            String mConflito = QualConflito(mSimplificador.getAlgo_SoTipos(mCriando), eTipoOpcional, mTodos, mInserindo);
+            errar(eTipoOpcionalMostrar + " conflitante : " + mSimplificador.getAuto(mCriando) + " e " + mConflito);
+
+        }
+
+    }
+
+    public void emGrupo_Auto(AST mAST, ArrayList<AST> mTodos, ArrayList<AST> mInserindo, ArrayList<String> mConferindo) {
+
+        Simplificador mSimplificador = new Simplificador();
+
+        mConferindo.add("AUTO :: " + mSimplificador.getAuto(mAST));
+
+        if (getOpcionais(mAST.getBranch("ARGUMENTS")) > 0) {
+
+            mensagem("AUTO :: " + mAST.getNome() + " " + mSimplificador.getParametragemFormas(mAST.getBranch("ARGUMENTS")));
+
+            AST mOriginal = mAST.copiar();
+
+            int mOriginal_Argumentos = getOpcionais(mOriginal.getBranch("ARGUMENTS"));
+            if (mOriginal_Argumentos > 0) {
+                for (AST eArgumento : mOriginal.getBranch("ARGUMENTS").getASTS()) {
+                    if (eArgumento.mesmoValor("OPT")) {
+                        AST mCriando = reorganizar(mOriginal.copiar(), eArgumento.getNome());
+                        emAutos(mCriando, mTodos, mInserindo, mConferindo);
+                    } else if (eArgumento.mesmoValor("OPTREF")) {
+                        AST mCriando = reorganizar(mOriginal.copiar(), eArgumento.getNome());
+                        emAutos(mCriando, mTodos, mInserindo, mConferindo);
+                    } else if (eArgumento.mesmoValor("OPTMOC")) {
+                        AST mCriando = reorganizar(mOriginal.copiar(), eArgumento.getNome());
+                        emAutos(mCriando, mTodos, mInserindo, mConferindo);
+                    }
+                }
+            }
+
+
+            if (mOriginal_Argumentos > 1) {
+                AST mCriando = reorganizarTodos(mOriginal.copiar());
+                emAutos(mCriando, mTodos, mInserindo, mConferindo);
+            }
+
+            removerOpcionais(mAST.getBranch("ARGUMENTS"));
+
+
+        }
+
+    }
+
+    public void emFunctors(AST mCriando, ArrayList<AST> mTodos, ArrayList<AST> mInserindo, ArrayList<String> mConferindo) {
+
+        String eTipoOpcional = "PROTOTYPE_FUNCTOR";
+        String eTipoOpcionalMostrar = "Functor";
+
+        Simplificador mSimplificador = new Simplificador();
+
+        mInserindo.add(mCriando);
+
+        String sImplementando = eTipoOpcional + " :: " + mSimplificador.getAlgo_SoTipos(mCriando);
+        if (!mConferindo.contains(sImplementando)) {
+            mConferindo.add(sImplementando);
+        } else {
+
+            String mConflito = QualConflito_Function(mSimplificador.getAlgo_SoTipos(mCriando), eTipoOpcional, mTodos, mInserindo);
+            errar(eTipoOpcionalMostrar + " conflitante : " + mSimplificador.getFunctor(mCriando) + " e " + mConflito);
+
+        }
+
+    }
+
+    public void emGrupo_Functor(AST mAST, ArrayList<AST> mTodos, ArrayList<AST> mInserindo, ArrayList<String> mConferindo) {
+
+        Simplificador mSimplificador = new Simplificador();
+
+        mConferindo.add("FUNCTOR :: " + mSimplificador.getFunctor(mAST));
+
+        if (getOpcionais(mAST.getBranch("ARGUMENTS")) > 0) {
+
+            mensagem("FUNCTOR :: " + mAST.getNome() + " " + mSimplificador.getParametragemFormas(mAST.getBranch("ARGUMENTS")));
+
+            AST mOriginal = mAST.copiar();
+
+            int mOriginal_Argumentos = getOpcionais(mOriginal.getBranch("ARGUMENTS"));
+            if (mOriginal_Argumentos > 0) {
+                for (AST eArgumento : mOriginal.getBranch("ARGUMENTS").getASTS()) {
+                    if (eArgumento.mesmoValor("OPT")) {
+                        AST mCriando = reorganizar(mOriginal.copiar(), eArgumento.getNome());
+                        emFunctors(mCriando, mTodos, mInserindo, mConferindo);
+                    } else if (eArgumento.mesmoValor("OPTREF")) {
+                        AST mCriando = reorganizar(mOriginal.copiar(), eArgumento.getNome());
+                        emFunctors(mCriando, mTodos, mInserindo, mConferindo);
+                    } else if (eArgumento.mesmoValor("OPTMOC")) {
+                        AST mCriando = reorganizar(mOriginal.copiar(), eArgumento.getNome());
+                        emFunctors(mCriando, mTodos, mInserindo, mConferindo);
+                    }
+                }
+            }
+
+
+            if (mOriginal_Argumentos > 1) {
+                AST mCriando = reorganizarTodos(mOriginal.copiar());
+                emFunctors(mCriando, mTodos, mInserindo, mConferindo);
+            }
+
+            removerOpcionais(mAST.getBranch("ARGUMENTS"));
+
+
+        }
+
+    }
+
 
     public void processar(AST eASTPai) {
 
-        ArrayList<AST> mInserirActions = new ArrayList<AST>();
+        ArrayList<AST> mInserindo = new ArrayList<AST>();
+
+        ArrayList<String> mConferindo = new ArrayList<String>();
+
 
         for (AST mAST : eASTPai.getASTS()) {
 
             if (mAST.mesmoTipo("ACTION")) {
 
-
-                if (getOpcionais(mAST.getBranch("ARGUMENTS")) > 0) {
-
-                 mensagem("Action " + mAST.getNome() + " :: OPT " + getOpcionais(mAST.getBranch("ARGUMENTS")));
-
-                    action_desopcionar(mAST.copiar(), mInserirActions);
-                    removerOpcionais(mAST.getBranch("ARGUMENTS"));
-
-                }
-
+                emGrupo_Action(mAST, eASTPai.getASTS(), mInserindo, mConferindo);
 
             } else if (mAST.mesmoTipo("FUNCTION")) {
 
-
-                if (getOpcionais(mAST.getBranch("ARGUMENTS")) > 0) {
-
-               mensagem("Function " + mAST.getNome() + " :: OPT " + getOpcionais(mAST.getBranch("ARGUMENTS")));
-
-                    function_desopcionar(mAST.copiar(), mInserirActions);
-                    removerOpcionais(mAST.getBranch("ARGUMENTS"));
-
-                }
+                emGrupo_Function(mAST, eASTPai.getASTS(), mInserindo, mConferindo);
 
             } else if (mAST.mesmoTipo("PROTOTYPE_AUTO")) {
 
-                if (getOpcionais(mAST.getBranch("ARGUMENTS")) > 0) {
-
-                    mensagem("Auto " + mAST.getNome() + " :: OPT " + getOpcionais(mAST.getBranch("ARGUMENTS")));
-
-                    auto_desopcionar(mAST.copiar(), mInserirActions);
-                    removerOpcionais(mAST.getBranch("ARGUMENTS"));
-
-                }
-
+                emGrupo_Auto(mAST, eASTPai.getASTS(), mInserindo, mConferindo);
 
             } else if (mAST.mesmoTipo("PROTOTYPE_FUNCTOR")) {
 
-                if (getOpcionais(mAST.getBranch("ARGUMENTS")) > 0) {
-
-              mensagem("Functor " + mAST.getNome() + " :: OPT " + getOpcionais(mAST.getBranch("ARGUMENTS")));
-
-                    functor_desopcionar(mAST.copiar(), mInserirActions);
-                    removerOpcionais(mAST.getBranch("ARGUMENTS"));
-
-                }
+                emGrupo_Functor(mAST, eASTPai.getASTS(), mInserindo, mConferindo);
 
             }
 
-
         }
 
-        for (AST mAST : mInserirActions) {
+        for (AST mAST : mInserindo) {
             eASTPai.getASTS().add(mAST);
         }
 
@@ -133,248 +431,14 @@ public class Opcionador {
                 o += 1;
             } else if (mAST.mesmoValor("OPTREF")) {
                 o += 1;
+            } else if (mAST.mesmoValor("OPTMOC")) {
+                o += 1;
             }
 
         }
 
         return o;
     }
-
-
-    public void action_desopcionarCom(AST eAction, AST eCom, ArrayList<AST> mArgumentar, ArrayList<AST> mInserirActions) {
-
-
-        AST nAction = eAction;
-        AST segAction = nAction.copiar();
-
-
-        for (AST mAST : segAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-
-                mAST.setValor("VALUE");
-
-                if (getOpcionais(segAction.getBranch("ARGUMENTS")) > 0) {
-                    action_desopcionarCom(segAction, mAST, mArgumentar, mInserirActions);
-                }
-
-                break;
-            } else if (mAST.mesmoValor("OPTREF")) {
-
-                mAST.setValor("REF");
-
-                if (getOpcionais(segAction.getBranch("ARGUMENTS")) > 0) {
-                    action_desopcionarCom(segAction, mAST, mArgumentar, mInserirActions);
-                }
-
-                break;
-            }
-        }
-
-        for (AST mAST : nAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-                mAST.setValor("VALUE");
-            } else if (mAST.mesmoValor("OPTREF")) {
-                mAST.setValor("REF");
-            }
-
-            if (mAST.existeBranch("VALUE")) {
-                mAST.getASTS().remove(mAST.getBranch("VALUE"));
-            }
-        }
-
-        for (AST mAST : nAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoNome(eCom.getNome())) {
-                nAction.getBranch("ARGUMENTS").getASTS().remove(mAST);
-                break;
-            }
-        }
-
-        ArrayList<String> mExiste = new ArrayList<String>();
-        for (AST mAST : nAction.getBranch("ARGUMENTS").getASTS()) {
-            mExiste.add(mAST.getNome());
-        }
-
-
-        mensagem("Criando Opcional Action : " + eAction.getNome() + " por " + eCom.getNome());
-
-        nAction.getBranch("BODY").getASTS().clear();
-
-        //  for (AST mAST : mArgumentar) {
-        //    mAnalisador.mensagem("ARGUMENTO " + mAST.getNome() + " : " + mAST.getValor());
-        // }
-
-
-        for (AST mAST : mArgumentar) {
-
-
-            if (!mExiste.contains(mAST.getNome())) {
-
-                AST eDef = nAction.getBranch("BODY").criarBranch("DEF");
-                eDef.setNome(mAST.getNome());
-
-                for (AST gAST : segAction.getBranch("ARGUMENTS").getASTS()) {
-                    if (gAST.mesmoNome(mAST.getNome())) {
-                        eDef.getASTS().add(gAST.getBranch("TYPE").copiar());
-                        break;
-                    }
-                }
-
-                eDef.getASTS().add(mAST.getBranch("VALUE").copiar());
-
-            }
-        }
-
-
-        AST eExecute = nAction.getBranch("BODY").criarBranch("EXECUTE");
-        eExecute.setNome(nAction.getNome());
-        eExecute.setValor("FUNCT");
-
-        AST eExecuteArguments = eExecute.criarBranch("ARGUMENTS");
-        for (AST mAST : mArgumentar) {
-            AST eArg = eExecuteArguments.criarBranch("ARGUMENT");
-            eArg.setNome(mAST.getNome());
-            // if(mExiste.contains(mAST.getNome())){
-            eArg.setValor("ID");
-            // }
-        }
-
-
-        // System.out.println(nAction.ImprimirArvoreDeInstrucoes());
-        mInserirActions.add(nAction);
-
-    }
-
-    public void action_desopcionar(AST eAction, ArrayList<AST> mInserirActions) {
-
-        AST nAction = eAction;
-        AST segAction = nAction.copiar();
-        AST oAction = nAction.copiar();
-
-        ArrayList<AST> mArgumentar = new ArrayList<AST>();
-
-        ArrayList<String> mExiste = new ArrayList<String>();
-
-
-        for (AST mAST : nAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-
-                AST eArg = mAST.copiar();
-                mArgumentar.add(eArg);
-            } else if (mAST.mesmoValor("OPTREF")) {
-
-                AST eArg = mAST.copiar();
-                mArgumentar.add(eArg);
-            } else {
-                AST eArg = mAST.copiar();
-
-                mArgumentar.add(eArg);
-                mExiste.add(mAST.getNome());
-            }
-        }
-
-
-        for (AST mAST : segAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-
-                mAST.setValor("VALUE");
-
-                if (getOpcionais(segAction.getBranch("ARGUMENTS")) > 0) {
-                    action_desopcionarCom(segAction, mAST, mArgumentar, mInserirActions);
-                }
-
-                break;
-            } else if (mAST.mesmoValor("OPTREF")) {
-
-                mAST.setValor("REF");
-
-                if (getOpcionais(segAction.getBranch("ARGUMENTS")) > 0) {
-                    action_desopcionarCom(segAction, mAST, mArgumentar, mInserirActions);
-                }
-
-                break;
-            }
-        }
-
-        int opt = 0;
-
-        AST tAction = eAction.copiar();
-
-
-        for (AST mAST : tAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-                opt += 1;
-            } else if (mAST.mesmoValor("OPTREF")) {
-                opt += 1;
-            }
-        }
-
-
-        while (opt > 0) {
-
-            for (AST mAST : tAction.getBranch("ARGUMENTS").getASTS()) {
-                if (mAST.mesmoValor("OPT")) {
-                    tAction.getBranch("ARGUMENTS").getASTS().remove(mAST);
-                    break;
-                } else if (mAST.mesmoValor("OPTREF")) {
-                    tAction.getBranch("ARGUMENTS").getASTS().remove(mAST);
-                    break;
-                }
-            }
-
-            opt = 0;
-            for (AST mAST : tAction.getBranch("ARGUMENTS").getASTS()) {
-                if (mAST.mesmoValor("OPT")) {
-                    opt += 1;
-                } else if (mAST.mesmoValor("OPTREF")) {
-                    opt += 1;
-                }
-            }
-        }
-
-       mensagem("Criando Opcional Action : " + eAction.getNome() + " Sem opcionais");
-
-
-        tAction.getBranch("BODY").getASTS().clear();
-
-        for (AST mAST : mArgumentar) {
-
-
-            if (!mExiste.contains(mAST.getNome())) {
-
-                AST eDef = tAction.getBranch("BODY").criarBranch("DEF");
-                eDef.setNome(mAST.getNome());
-
-                for (AST gAST : oAction.getBranch("ARGUMENTS").getASTS()) {
-                    if (gAST.mesmoNome(mAST.getNome())) {
-                        eDef.getASTS().add(gAST.getBranch("TYPE").copiar());
-                        break;
-                    }
-                }
-
-                eDef.getASTS().add(mAST.getBranch("VALUE").copiar());
-
-            }
-        }
-
-
-        AST eExecute = tAction.getBranch("BODY").criarBranch("EXECUTE");
-        eExecute.setNome(nAction.getNome());
-        eExecute.setValor("FUNCT");
-
-        AST eExecuteArguments = eExecute.criarBranch("ARGUMENTS");
-        for (AST mAST : mArgumentar) {
-            AST eArg = eExecuteArguments.criarBranch("ARGUMENT");
-            eArg.setNome(mAST.getNome());
-            // if(mExiste.contains(mAST.getNome())){
-            eArg.setValor("ID");
-            // }
-        }
-
-        //  System.out.println(tAction.ImprimirArvoreDeInstrucoes());
-
-        mInserirActions.add(tAction);
-    }
-
 
     public void removerOpcionais(AST eArgumentos) {
 
@@ -385,6 +449,8 @@ public class Opcionador {
                 mAST.setValor("VALUE");
             } else if (mAST.mesmoValor("OPTREF")) {
                 mAST.setValor("REF");
+            } else if (mAST.mesmoValor("OPTMOC")) {
+                mAST.setValor("MOC");
             }
 
         }
@@ -392,622 +458,128 @@ public class Opcionador {
 
     }
 
-    public void function_desopcionarCom(AST eAction, AST eCom, ArrayList<AST> mArgumentar, ArrayList<AST> mInserirActions) {
+    public AST reorganizar(AST eAction, String eArgumentoNome) {
 
 
-        AST nAction = eAction;
-        AST segAction = nAction.copiar();
+        AST mCriando = eAction.copiar();
 
+        AST eGuardar = null;
+        boolean eGuardado = false;
 
-        for (AST mAST : segAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
+        String eModo = "DEF";
 
-                mAST.setValor("VALUE");
-                if (getOpcionais(segAction.getBranch("ARGUMENTS")) > 0) {
+        for (AST eArgumento : mCriando.getBranch("ARGUMENTS").getASTS()) {
 
-                    function_desopcionarCom(segAction, mAST, mArgumentar, mInserirActions);
+            if (eArgumento.mesmoNome(eArgumentoNome)) {
+                eGuardar = eArgumento.copiar();
+                eGuardado = true;
+
+                //  mensagem("\t - Criar Por : " + eArgumento.getValor() + " :: " + eArgumento.getNome() + " : " + eArgumento.getNome());
+
+            }
+
+            if (eArgumento.mesmoValor("OPT")) {
+                eArgumento.setValor("VALUE");
+                eModo = "DEF";
+            } else if (eArgumento.mesmoValor("OPTREF")) {
+                eArgumento.setValor("REF");
+                eModo = "DEF";
+            } else if (eArgumento.mesmoValor("OPTMOC")) {
+                eArgumento.setValor("MOC");
+                eModo = "MOC";
+            }
+
+        }
+
+        if (eGuardado) {
+
+            for (AST mAST : mCriando.getBranch("ARGUMENTS").getASTS()) {
+                if (mAST.mesmoNome(eArgumentoNome)) {
+                    mCriando.getBranch("ARGUMENTS").getASTS().remove(mAST);
+                    break;
                 }
-                break;
-            } else if (mAST.mesmoValor("OPTREF")) {
-
-                mAST.setValor("REF");
-
-                if (getOpcionais(segAction.getBranch("ARGUMENTS")) > 0) {
-                    function_desopcionarCom(segAction, mAST, mArgumentar, mInserirActions);
-                }
-
-                break;
-            }
-        }
-
-        for (AST mAST : nAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-                mAST.setValor("VALUE");
-
-            } else if (mAST.mesmoValor("OPTREF")) {
-                mAST.setValor("REF");
             }
 
-            if (mAST.existeBranch("VALUE")) {
-                mAST.getASTS().remove(mAST.getBranch("VALUE"));
-            }
         }
 
-        for (AST mAST : nAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoNome(eCom.getNome())) {
-                nAction.getBranch("ARGUMENTS").getASTS().remove(mAST);
-                break;
-            }
-        }
+        Simplificador mSimplificador = new Simplificador();
 
-        ArrayList<String> mExiste = new ArrayList<String>();
-        for (AST mAST : nAction.getBranch("ARGUMENTS").getASTS()) {
-            mExiste.add(mAST.getNome());
-        }
+        mensagem("\t Criando " + eAction.getTipo() + " :: " + mCriando.getNome() + " " + mSimplificador.getParametragemFormas(mCriando.getBranch("ARGUMENTS")));
 
+        AST eDef = new AST(eModo);
+        eDef.setNome(eGuardar.getNome());
+        eDef.getASTS().add(eGuardar.getBranch("TYPE").copiar());
+        eDef.getASTS().add(eGuardar.getBranch("VALUE").copiar());
 
-       mensagem("Criando Opcional Function : " + eAction.getNome() + " por " + eCom.getNome());
+        mCriando.getBranch("BODY").getASTS().add(0, eDef);
 
-        nAction.getBranch("BODY").getASTS().clear();
+        // mensagem(mCriando.getImpressao());
 
-        //  for (AST mAST : mArgumentar) {
-        //  mAnalisador.mensagem("ARGUMENTO " + mAST.getNome() + " : " + mAST.getValor());
-        // }
-
-
-        for (AST mAST : mArgumentar) {
-
-
-            if (!mExiste.contains(mAST.getNome())) {
-
-                AST eDef = nAction.getBranch("BODY").criarBranch("DEF");
-                eDef.setNome(mAST.getNome());
-
-                for (AST gAST : segAction.getBranch("ARGUMENTS").getASTS()) {
-                    if (gAST.mesmoNome(mAST.getNome())) {
-                        eDef.getASTS().add(gAST.getBranch("TYPE").copiar());
-                        break;
-                    }
-                }
-
-                eDef.getASTS().add(mAST.getBranch("VALUE").copiar());
-
-            }
-        }
-
-
-        AST eExecute = nAction.getBranch("BODY").criarBranch("RETURN");
-        AST eReturn_Value = eExecute.criarBranch("VALUE");
-
-        eReturn_Value.setNome(nAction.getNome());
-        eReturn_Value.setValor("FUNCT");
-
-        AST eExecuteArguments = eReturn_Value.criarBranch("ARGUMENTS");
-
-        for (AST mAST : mArgumentar) {
-            AST eArg = eExecuteArguments.criarBranch("ARGUMENT");
-            eArg.setNome(mAST.getNome());
-            // if(mExiste.contains(mAST.getNome())){
-            eArg.setValor("ID");
-            // }
-        }
-
-
-        // System.out.println(nAction.ImprimirArvoreDeInstrucoes());
-        mInserirActions.add(nAction);
+        return mCriando;
 
     }
 
-    public void function_desopcionar(AST eAction, ArrayList<AST> mInserirActions) {
-
-        AST nAction = eAction;
-        AST segAction = nAction.copiar();
-        AST oAction = nAction.copiar();
-
-        ArrayList<AST> mArgumentar = new ArrayList<AST>();
-
-        ArrayList<String> mExiste = new ArrayList<String>();
+    public AST reorganizarTodos(AST eAction) {
 
 
-        for (AST mAST : nAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-
-                AST eArg = mAST.copiar();
-                mArgumentar.add(eArg);
-            } else if (mAST.mesmoValor("OPTREF")) {
-
-                AST eArg = mAST.copiar();
-                mArgumentar.add(eArg);
-            } else {
-                AST eArg = mAST.copiar();
-
-                mArgumentar.add(eArg);
-                mExiste.add(mAST.getNome());
-            }
-        }
+        AST mCriando = eAction.copiar();
 
 
-        for (AST mAST : segAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
+        while (getOpcionais(mCriando.getBranch("ARGUMENTS")) > 0) {
 
-                mAST.setValor("VALUE");
-                if (getOpcionais(segAction.getBranch("ARGUMENTS")) > 0) {
+            for (AST mAST : mCriando.getBranch("ARGUMENTS").getASTS()) {
 
-                    function_desopcionarCom(segAction, mAST, mArgumentar, mInserirActions);
-                }
+                boolean desOpcionalizar = false;
+                AST eGuardar = null;
+                boolean eGuardado = false;
 
-                break;
-            } else if (mAST.mesmoValor("OPTREF")) {
+                String eModo = "DEF";
 
-                mAST.setValor("REF");
-
-                if (getOpcionais(segAction.getBranch("ARGUMENTS")) > 0) {
-                    function_desopcionarCom(segAction, mAST, mArgumentar, mInserirActions);
-                }
-
-                break;
-            }
-        }
-
-        int opt = 0;
-
-        AST tAction = eAction.copiar();
-
-
-        for (AST mAST : tAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-                opt += 1;
-            } else if (mAST.mesmoValor("OPTREF")) {
-                opt += 1;
-            }
-        }
-
-
-        while (opt > 0) {
-
-            for (AST mAST : tAction.getBranch("ARGUMENTS").getASTS()) {
                 if (mAST.mesmoValor("OPT")) {
-                    tAction.getBranch("ARGUMENTS").getASTS().remove(mAST);
-                    break;
+                    mAST.setValor("VALUE");
+                    eModo = "DEF";
+                    desOpcionalizar = true;
                 } else if (mAST.mesmoValor("OPTREF")) {
-                    tAction.getBranch("ARGUMENTS").getASTS().remove(mAST);
+                    mAST.setValor("REF");
+                    eModo = "DEF";
+                    desOpcionalizar = true;
+
+                } else if (mAST.mesmoValor("OPTMOC")) {
+                    mAST.setValor("MOC");
+                    eModo = "MOC";
+                    desOpcionalizar = true;
+
+                }
+
+                if (desOpcionalizar) {
+                    eGuardar = mAST.copiar();
+                    eGuardado = true;
+                    mCriando.getBranch("ARGUMENTS").getASTS().remove(mAST);
+
+                    AST eDef = new AST(eModo);
+                    eDef.setNome(eGuardar.getNome());
+                    eDef.getASTS().add(eGuardar.getBranch("TYPE").copiar());
+                    eDef.getASTS().add(eGuardar.getBranch("VALUE").copiar());
+
+                    mCriando.getBranch("BODY").getASTS().add(0, eDef);
                     break;
-                }
-            }
 
-            opt = 0;
-            for (AST mAST : tAction.getBranch("ARGUMENTS").getASTS()) {
-                if (mAST.mesmoValor("OPT")) {
-                    opt += 1;
-                } else if (mAST.mesmoValor("OPTREF")) {
-                    opt += 1;
-                }
-            }
-        }
-
-       mensagem("Criando Opcional Function : " + eAction.getNome() + " Sem opcionais");
-
-
-        tAction.getBranch("BODY").getASTS().clear();
-
-        for (AST mAST : mArgumentar) {
-
-
-            if (!mExiste.contains(mAST.getNome())) {
-
-                AST eDef = tAction.getBranch("BODY").criarBranch("DEF");
-                eDef.setNome(mAST.getNome());
-
-                for (AST gAST : oAction.getBranch("ARGUMENTS").getASTS()) {
-                    if (gAST.mesmoNome(mAST.getNome())) {
-                        eDef.getASTS().add(gAST.getBranch("TYPE").copiar());
-                        break;
-                    }
                 }
 
-                eDef.getASTS().add(mAST.getBranch("VALUE").copiar());
 
             }
+
         }
 
 
-        AST eExecute = tAction.getBranch("BODY").criarBranch("RETURN");
+        Simplificador mSimplificador = new Simplificador();
 
-        AST eReturn_Value = eExecute.criarBranch("VALUE");
+        mensagem("\t Criando " + eAction.getTipo() + " :: " + mCriando.getNome() + " " + mSimplificador.getParametragemFormas(mCriando.getBranch("ARGUMENTS")));
 
-        eReturn_Value.setNome(nAction.getNome());
-        eReturn_Value.setValor("FUNCT");
+        // mensagem(mCriando.getImpressao());
 
-        AST eExecuteArguments = eReturn_Value.criarBranch("ARGUMENTS");
-        for (AST mAST : mArgumentar) {
-            AST eArg = eExecuteArguments.criarBranch("ARGUMENT");
-            eArg.setNome(mAST.getNome());
-            // if(mExiste.contains(mAST.getNome())){
-            eArg.setValor("ID");
-            // }
-        }
-
-
-        mInserirActions.add(tAction);
-    }
-
-    public void functor_desopcionarCom(AST eAction, AST eCom, ArrayList<AST> mArgumentar, ArrayList<AST> mInserirActions) {
-
-
-        AST nAction = eAction;
-        AST segAction = nAction.copiar();
-
-
-        for (AST mAST : segAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-
-                mAST.setValor("VALUE");
-                if (getOpcionais(segAction.getBranch("ARGUMENTS")) > 0) {
-
-                    function_desopcionarCom(segAction, mAST, mArgumentar, mInserirActions);
-                }
-                break;
-            } else if (mAST.mesmoValor("OPTREF")) {
-
-                mAST.setValor("REF");
-
-                if (getOpcionais(segAction.getBranch("ARGUMENTS")) > 0) {
-                    function_desopcionarCom(segAction, mAST, mArgumentar, mInserirActions);
-                }
-
-                break;
-            }
-        }
-
-        for (AST mAST : nAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-                mAST.setValor("VALUE");
-
-            } else if (mAST.mesmoValor("OPTREF")) {
-                mAST.setValor("REF");
-            }
-
-            if (mAST.existeBranch("VALUE")) {
-                mAST.getASTS().remove(mAST.getBranch("VALUE"));
-            }
-        }
-
-        for (AST mAST : nAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoNome(eCom.getNome())) {
-                nAction.getBranch("ARGUMENTS").getASTS().remove(mAST);
-                break;
-            }
-        }
-
-        ArrayList<String> mExiste = new ArrayList<String>();
-        for (AST mAST : nAction.getBranch("ARGUMENTS").getASTS()) {
-            mExiste.add(mAST.getNome());
-        }
-
-
-      mensagem("Criando Opcional Function : " + eAction.getNome() + " por " + eCom.getNome());
-
-        nAction.getBranch("BODY").getASTS().clear();
-
-        //  for (AST mAST : mArgumentar) {
-        //  mAnalisador.mensagem("ARGUMENTO " + mAST.getNome() + " : " + mAST.getValor());
-        // }
-
-
-        for (AST mAST : mArgumentar) {
-
-
-            if (!mExiste.contains(mAST.getNome())) {
-
-                AST eDef = nAction.getBranch("BODY").criarBranch("DEF");
-                eDef.setNome(mAST.getNome());
-
-                for (AST gAST : segAction.getBranch("ARGUMENTS").getASTS()) {
-                    if (gAST.mesmoNome(mAST.getNome())) {
-                        eDef.getASTS().add(gAST.getBranch("TYPE").copiar());
-                        break;
-                    }
-                }
-
-                eDef.getASTS().add(mAST.getBranch("VALUE").copiar());
-
-            }
-        }
-
-
-        AST eExecute = nAction.getBranch("BODY").criarBranch("RETURN");
-        AST eReturn_Value = eExecute.criarBranch("VALUE");
-
-        eReturn_Value.setNome(nAction.getNome());
-        eReturn_Value.setValor("FUNCT");
-
-        AST eExecuteArguments = eReturn_Value.criarBranch("ARGUMENTS");
-
-        for (AST mAST : mArgumentar) {
-            AST eArg = eExecuteArguments.criarBranch("ARGUMENT");
-            eArg.setNome(mAST.getNome());
-            // if(mExiste.contains(mAST.getNome())){
-            eArg.setValor("ID");
-            // }
-        }
-
-
-        // System.out.println(nAction.ImprimirArvoreDeInstrucoes());
-        mInserirActions.add(nAction);
+        return mCriando;
 
     }
-
-    public void auto_desopcionar(AST eAction, ArrayList<AST> mInserirActions) {
-
-        AST nAction = eAction;
-        AST segAction = nAction.copiar();
-        AST oAction = nAction.copiar();
-
-        ArrayList<AST> mArgumentar = new ArrayList<AST>();
-
-        ArrayList<String> mExiste = new ArrayList<String>();
-
-        AST eGenericsCopia = eAction.getBranch("GENERICS").copiar();
-
-        for (AST mAST : nAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-
-                AST eArg = mAST.copiar();
-                mArgumentar.add(eArg);
-            } else if (mAST.mesmoValor("OPTREF")) {
-
-                AST eArg = mAST.copiar();
-                mArgumentar.add(eArg);
-            } else {
-                AST eArg = mAST.copiar();
-
-                mArgumentar.add(eArg);
-                mExiste.add(mAST.getNome());
-            }
-        }
-
-
-        for (AST mAST : segAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-
-                mAST.setValor("VALUE");
-                if (getOpcionais(segAction.getBranch("ARGUMENTS")) > 0) {
-
-                    functor_desopcionarCom(segAction, mAST, mArgumentar, mInserirActions);
-                }
-
-                break;
-            } else if (mAST.mesmoValor("OPTREF")) {
-
-                mAST.setValor("REF");
-
-                if (getOpcionais(segAction.getBranch("ARGUMENTS")) > 0) {
-                    functor_desopcionarCom(segAction, mAST, mArgumentar, mInserirActions);
-                }
-
-                break;
-            }
-        }
-
-        int opt = 0;
-
-        AST tAction = eAction.copiar();
-
-
-        for (AST mAST : tAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-                opt += 1;
-            } else if (mAST.mesmoValor("OPTREF")) {
-                opt += 1;
-            }
-        }
-
-
-        while (opt > 0) {
-
-            for (AST mAST : tAction.getBranch("ARGUMENTS").getASTS()) {
-                if (mAST.mesmoValor("OPT")) {
-                    tAction.getBranch("ARGUMENTS").getASTS().remove(mAST);
-                    break;
-                } else if (mAST.mesmoValor("OPTREF")) {
-                    tAction.getBranch("ARGUMENTS").getASTS().remove(mAST);
-                    break;
-                }
-            }
-
-            opt = 0;
-            for (AST mAST : tAction.getBranch("ARGUMENTS").getASTS()) {
-                if (mAST.mesmoValor("OPT")) {
-                    opt += 1;
-                } else if (mAST.mesmoValor("OPTREF")) {
-                    opt += 1;
-                }
-            }
-        }
-
-        mensagem("Criando Opcional Auto : " + eAction.getNome() + " Sem opcionais");
-
-
-        tAction.getBranch("BODY").getASTS().clear();
-
-        for (AST mAST : mArgumentar) {
-
-
-            if (!mExiste.contains(mAST.getNome())) {
-
-                AST eDef = tAction.getBranch("BODY").criarBranch("DEF");
-                eDef.setNome(mAST.getNome());
-
-                for (AST gAST : oAction.getBranch("ARGUMENTS").getASTS()) {
-                    if (gAST.mesmoNome(mAST.getNome())) {
-                        eDef.getASTS().add(gAST.getBranch("TYPE").copiar());
-                        break;
-                    }
-                }
-
-                eDef.getASTS().add(mAST.getBranch("VALUE").copiar());
-
-            }
-        }
-
-
-        AST eReturn_Value = tAction.getBranch("BODY").criarBranch("EXECUTE_AUTO");
-
-        eReturn_Value.setNome(nAction.getNome());
-
-        AST eGenerics = eReturn_Value.criarBranch("GENERICS");
-        for (AST eG : eGenericsCopia.getASTS()) {
-            eGenerics.getASTS().add(eG);
-        }
-
-        AST eExecuteArguments = eReturn_Value.criarBranch("ARGUMENTS");
-        for (AST mAST : mArgumentar) {
-            AST eArg = eExecuteArguments.criarBranch("ARGUMENT");
-            eArg.setNome(mAST.getNome());
-            eArg.setValor("ID");
-        }
-
-
-        mInserirActions.add(tAction);
-    }
-
-
-    public void functor_desopcionar(AST eAction, ArrayList<AST> mInserirActions) {
-
-        AST nAction = eAction;
-        AST segAction = nAction.copiar();
-        AST oAction = nAction.copiar();
-
-        ArrayList<AST> mArgumentar = new ArrayList<AST>();
-
-        ArrayList<String> mExiste = new ArrayList<String>();
-
-        AST eGenericsCopia = eAction.getBranch("GENERICS").copiar();
-
-        for (AST mAST : nAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-
-                AST eArg = mAST.copiar();
-                mArgumentar.add(eArg);
-            } else if (mAST.mesmoValor("OPTREF")) {
-
-                AST eArg = mAST.copiar();
-                mArgumentar.add(eArg);
-            } else {
-                AST eArg = mAST.copiar();
-
-                mArgumentar.add(eArg);
-                mExiste.add(mAST.getNome());
-            }
-        }
-
-
-        for (AST mAST : segAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-
-                mAST.setValor("VALUE");
-                if (getOpcionais(segAction.getBranch("ARGUMENTS")) > 0) {
-
-                    functor_desopcionarCom(segAction, mAST, mArgumentar, mInserirActions);
-                }
-
-                break;
-            } else if (mAST.mesmoValor("OPTREF")) {
-
-                mAST.setValor("REF");
-
-                if (getOpcionais(segAction.getBranch("ARGUMENTS")) > 0) {
-                    functor_desopcionarCom(segAction, mAST, mArgumentar, mInserirActions);
-                }
-
-                break;
-            }
-        }
-
-        int opt = 0;
-
-        AST tAction = eAction.copiar();
-
-
-        for (AST mAST : tAction.getBranch("ARGUMENTS").getASTS()) {
-            if (mAST.mesmoValor("OPT")) {
-                opt += 1;
-            } else if (mAST.mesmoValor("OPTREF")) {
-                opt += 1;
-            }
-        }
-
-
-        while (opt > 0) {
-
-            for (AST mAST : tAction.getBranch("ARGUMENTS").getASTS()) {
-                if (mAST.mesmoValor("OPT")) {
-                    tAction.getBranch("ARGUMENTS").getASTS().remove(mAST);
-                    break;
-                } else if (mAST.mesmoValor("OPTREF")) {
-                    tAction.getBranch("ARGUMENTS").getASTS().remove(mAST);
-                    break;
-                }
-            }
-
-            opt = 0;
-            for (AST mAST : tAction.getBranch("ARGUMENTS").getASTS()) {
-                if (mAST.mesmoValor("OPT")) {
-                    opt += 1;
-                } else if (mAST.mesmoValor("OPTREF")) {
-                    opt += 1;
-                }
-            }
-        }
-
-        mensagem("Criando Opcional Functor : " + eAction.getNome() + " Sem opcionais");
-
-
-        tAction.getBranch("BODY").getASTS().clear();
-
-        for (AST mAST : mArgumentar) {
-
-
-            if (!mExiste.contains(mAST.getNome())) {
-
-                AST eDef = tAction.getBranch("BODY").criarBranch("DEF");
-                eDef.setNome(mAST.getNome());
-
-                for (AST gAST : oAction.getBranch("ARGUMENTS").getASTS()) {
-                    if (gAST.mesmoNome(mAST.getNome())) {
-                        eDef.getASTS().add(gAST.getBranch("TYPE").copiar());
-                        break;
-                    }
-                }
-
-                eDef.getASTS().add(mAST.getBranch("VALUE").copiar());
-
-            }
-        }
-
-
-        AST eExecute = tAction.getBranch("BODY").criarBranch("RETURN");
-
-        AST eReturn_Value = eExecute.criarBranch("VALUE");
-
-        eReturn_Value.setNome(nAction.getNome());
-        eReturn_Value.setValor("EXECUTE_FUNCTOR");
-
-        AST eGenerics = eReturn_Value.criarBranch("GENERICS");
-        for (AST eG : eGenericsCopia.getASTS()) {
-            eGenerics.getASTS().add(eG);
-        }
-
-        AST eExecuteArguments = eReturn_Value.criarBranch("ARGUMENTS");
-        for (AST mAST : mArgumentar) {
-            AST eArg = eExecuteArguments.criarBranch("ARGUMENT");
-            eArg.setNome(mAST.getNome());
-            eArg.setValor("ID");
-        }
-
-
-        mInserirActions.add(tAction);
-    }
-
 
 }

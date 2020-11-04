@@ -44,7 +44,7 @@ public class AppSigmaz {
 
         boolean mDebugar = true;
 
-        int ARQUIVO = 5;
+        int ARQUIVO = 69;
 
 
         switch (Fases.RECURSOS) {
