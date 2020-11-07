@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazStruct;
+import Sigmaz.S02_PosProcessamento.ObjetoProcurado;
 import Sigmaz.S02_PosProcessamento.PosProcessador;
 import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S02_PosProcessamento.ProcurandoStruct;
+import Sigmaz.S02_PosProcessamento.Procurador;
 import Sigmaz.S05_Executor.Alterador;
 
 public class Heranca {
@@ -90,9 +91,9 @@ public class Heranca {
 
             if (eStruct.isIncompleta()) {
 
+                Procurador mProcurador = new Procurador();
 
-                ProcurandoStruct mProcurandoStruct = new ProcurandoStruct(this);
-                mProcurandoStruct.procurarSigmaz(eStruct.getBase(), mSigmazRaiz, mPacotes);
+                ObjetoProcurado<SigmazStruct> mProcurandoStruct = mProcurador.procurarStruct_Sigmaz(eStruct.getBase(), mSigmazRaiz, mPacotes);
 
                 realizarMontagem(mHerdando, mSigmazRaiz, eStruct, mPacotes, mProcurandoStruct);
 
@@ -119,8 +120,9 @@ public class Heranca {
 
             if (eStruct.isIncompleta()) {
 
-                ProcurandoStruct mProcurandoStruct = new ProcurandoStruct(this);
-                mProcurandoStruct.procurar(eStruct.getBase(), mSigmazRaiz, mSigmazPackage, mPacotes);
+
+                Procurador mProcurador = new Procurador();
+                ObjetoProcurado<SigmazStruct> mProcurandoStruct = mProcurador.procurarStruct_Package(eStruct.getBase(), mSigmazRaiz, mSigmazPackage, mPacotes);
 
                 realizarMontagem(mHerdando, mSigmazRaiz, eStruct, mPacotes, mProcurandoStruct);
 
@@ -132,7 +134,7 @@ public class Heranca {
     }
 
 
-    public void realizarMontagem(ArrayList<String> mHerdando, SigmazRaiz mSigmazRaiz, SigmazStruct eStruct, ArrayList<SigmazPackage> mPacotes, ProcurandoStruct mProcurandoStruct) {
+    public void realizarMontagem(ArrayList<String> mHerdando, SigmazRaiz mSigmazRaiz, SigmazStruct eStruct, ArrayList<SigmazPackage> mPacotes, ObjetoProcurado<SigmazStruct> mProcurandoStruct) {
 
         String eBase = eStruct.getBase();
 
@@ -158,21 +160,21 @@ public class Heranca {
 
             if (mProcurandoStruct.getEncontrado()) {
 
-                mensagem("\t\t           - BASE FORMA : " + mProcurandoStruct.getStruct().getCompletude());
+                mensagem("\t\t           - BASE FORMA : " + mProcurandoStruct.getObjeto().getCompletude());
 
-                String incluir = mProcurandoStruct.getPacote() + "<>" + mProcurandoStruct.getStruct().getNome();
+                String incluir = mProcurandoStruct.getPacote() + "<>" + mProcurandoStruct.getObjeto().getNome();
                 if (mHerdando.contains(incluir)) {
-                    errar("Heranca Ciclica  : " + eStruct.getNome() + " com " + mProcurandoStruct.getStruct().getNome());
+                    errar("Heranca Ciclica  : " + eStruct.getNome() + " com " + mProcurandoStruct.getObjeto().getNome());
                 } else {
                     mHerdando.add(incluir);
 
-                    if (mProcurandoStruct.getStruct().isCompleta()) {
+                    if (mProcurandoStruct.getObjeto().isCompleta()) {
 
-                        herdarAgora(mProcurandoStruct.getPacote(), eStruct.getAlteravel(), mProcurandoStruct.getStruct().getLeitura().copiar());
+                        herdarAgora(mProcurandoStruct.getPacote(), eStruct.getAlteravel(), mProcurandoStruct.getObjeto().getLeitura().copiar());
 
                     } else {
 
-                        AST mBaseMontada = montarBase(mHerdando, mProcurandoStruct.getStruct().getLeitura().copiar(), mProcurandoStruct, mSigmazRaiz, mPacotes);
+                        AST mBaseMontada = montarBase(mHerdando, mProcurandoStruct.getObjeto().getLeitura().copiar(), mProcurandoStruct, mSigmazRaiz, mPacotes);
 
                         herdarAgora(mProcurandoStruct.getPacote(), eStruct.getAlteravel(), mBaseMontada.copiar());
 
@@ -201,7 +203,7 @@ public class Heranca {
     }
 
 
-    public AST montarBase(ArrayList<String> mHerdando, AST eSuperAST, ProcurandoStruct vindoProcurandoStruct, SigmazRaiz mSigmazRaiz, ArrayList<SigmazPackage> mPacotes) {
+    public AST montarBase(ArrayList<String> mHerdando, AST eSuperAST, ObjetoProcurado<SigmazStruct> vindoProcurandoStruct, SigmazRaiz mSigmazRaiz, ArrayList<SigmazPackage> mPacotes) {
 
 
         SigmazStruct eSuper = new SigmazStruct(eSuperAST);
@@ -211,7 +213,10 @@ public class Heranca {
         mensagem("\t\t           - STRUCT : " + eSuper.getNome());
         mensagem("\t\t           - FORMA : " + eSuper.getCompletude());
 
-        ProcurandoStruct mProcurandoStruct = new ProcurandoStruct(this);
+
+        Procurador mProcurador = new Procurador();
+        ObjetoProcurado<SigmazStruct> mProcurandoStruct = null;
+
 
         String eBase = eSuper.getBase();
 
@@ -219,7 +224,7 @@ public class Heranca {
 
             if (vindoProcurandoStruct.getEstaSigmaz()) {
 
-                mProcurandoStruct.procurarSigmaz(eBase, mSigmazRaiz, mPacotes);
+                mProcurandoStruct = mProcurador.procurarStruct_Sigmaz(eBase, mSigmazRaiz, mPacotes);
 
             } else if (vindoProcurandoStruct.getEstaLocal()) {
 
@@ -232,7 +237,8 @@ public class Heranca {
                     }
                 }
 
-                mProcurandoStruct.procurar(eBase, mSigmazRaiz, mPacote, mPacotes);
+
+                mProcurandoStruct = mProcurador.procurarStruct_Package(eBase, mSigmazRaiz,mPacote, mPacotes);
 
             } else if (vindoProcurandoStruct.getEstaPacote()) {
 
@@ -244,7 +250,7 @@ public class Heranca {
                     }
                 }
 
-                mProcurandoStruct.procurar(eBase, mSigmazRaiz, mPacote, mPacotes);
+                mProcurandoStruct = mProcurador.procurarStruct_Package(eBase, mSigmazRaiz,mPacote, mPacotes);
 
 
             }
@@ -272,21 +278,21 @@ public class Heranca {
 
                 if (mProcurandoStruct.getEncontrado()) {
 
-                    mensagem("\t\t           - BASE FORMA : " + mProcurandoStruct.getStruct().getCompletude());
+                    mensagem("\t\t           - BASE FORMA : " + mProcurandoStruct.getObjeto().getCompletude());
 
-                    String incluir = mProcurandoStruct.getPacote() + "<>" + mProcurandoStruct.getStruct().getNome();
+                    String incluir = mProcurandoStruct.getPacote() + "<>" + mProcurandoStruct.getObjeto().getNome();
                     if (mHerdando.contains(incluir)) {
-                        errar("Heranca Ciclica  : " + eSuper.getNome() + " com " + mProcurandoStruct.getStruct().getNome());
+                        errar("Heranca Ciclica  : " + eSuper.getNome() + " com " + mProcurandoStruct.getObjeto().getNome());
                     } else {
                         mHerdando.add(incluir);
 
-                        if (mProcurandoStruct.getStruct().isCompleta()) {
+                        if (mProcurandoStruct.getObjeto().isCompleta()) {
 
-                            herdarAgora(mProcurandoStruct.getPacote(), eSuper.getAlteravel(), mProcurandoStruct.getStruct().getLeitura().copiar());
+                            herdarAgora(mProcurandoStruct.getPacote(), eSuper.getAlteravel(), mProcurandoStruct.getObjeto().getLeitura().copiar());
 
                         } else {
 
-                            AST mBaseMontada = montarBase(mHerdando, mProcurandoStruct.getStruct().getLeitura().copiar(), mProcurandoStruct, mSigmazRaiz, mPacotes);
+                            AST mBaseMontada = montarBase(mHerdando, mProcurandoStruct.getObjeto().getLeitura().copiar(), mProcurandoStruct, mSigmazRaiz, mPacotes);
 
                             if (temErros()) {
                                 return eSuperAST;

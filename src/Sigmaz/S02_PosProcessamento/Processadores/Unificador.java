@@ -4,7 +4,8 @@ import Sigmaz.S00_Utilitarios.*;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazType;
-import Sigmaz.S02_PosProcessamento.ProcurandoType;
+import Sigmaz.S02_PosProcessamento.ObjetoProcurado;
+import Sigmaz.S02_PosProcessamento.Procurador;
 import Sigmaz.S05_Executor.Alterador;
 import Sigmaz.S02_PosProcessamento.PosProcessador;
 
@@ -136,12 +137,11 @@ public class Unificador {
 
             mensagem(ePrefixo + " - Unificando : " + eT1.getNome() + " e " + eT2.getNome());
 
+            Procurador mProcurador = new Procurador();
 
-            ProcurandoType mProcurandoT1 = new ProcurandoType(this);
-            mProcurandoT1.procurarSigmaz(eT1.getNome(), mSigmazRaiz, mPacotes);
+            ObjetoProcurado<SigmazType> mProcurandoT1=   mProcurador.procurarType_Sigmaz( mSigmazRaiz, mPacotes,eT1.getNome());
+            ObjetoProcurado<SigmazType> mProcurandoT2=   mProcurador.procurarType_Sigmaz( mSigmazRaiz, mPacotes,eT2.getNome());
 
-            ProcurandoType mProcurandoT2 = new ProcurandoType(this);
-            mProcurandoT2.procurarSigmaz(eT2.getNome(), mSigmazRaiz, mPacotes);
 
 
             if (mProcurandoT1.getEncontrado()) {
@@ -161,13 +161,11 @@ public class Unificador {
             if (mProcurandoT1.getEncontrado() && mProcurandoT2.getEncontrado()) {
 
 
-
                 ArrayList<String> mCompondo = new ArrayList<String>();
 
-                AST eBase_01 = organizarBASE(ePrefixo, eType, mProcurandoT1.getType().getLeitura().copiar(), mCompondo, mProcurandoT1, mSigmazRaiz, mPacotes);
+                AST eBase_01 = organizarBASE(ePrefixo, eType, mProcurandoT1.getObjeto().getLeitura().copiar(), mCompondo, mProcurandoT1, mSigmazRaiz, mPacotes);
 
-                AST eBase_02 = organizarBASE(ePrefixo, eType, mProcurandoT2.getType().getLeitura().copiar(), mCompondo, mProcurandoT2, mSigmazRaiz, mPacotes);
-
+                AST eBase_02 = organizarBASE(ePrefixo, eType, mProcurandoT2.getObjeto().getLeitura().copiar(), mCompondo, mProcurandoT2, mSigmazRaiz, mPacotes);
 
 
                 ArrayList<String> mCampos = new ArrayList<String>();
@@ -188,9 +186,9 @@ public class Unificador {
 
     }
 
-    public AST organizarBASE(String ePrefixo, SigmazType eType, AST eBase_01, ArrayList<String> mCompondo, ProcurandoType mProcurandoT1, SigmazRaiz mSigmazRaiz, ArrayList<SigmazPackage> mPacotes) {
+    public AST organizarBASE(String ePrefixo, SigmazType eType, AST eBase_01, ArrayList<String> mCompondo, ObjetoProcurado<SigmazType> mProcurandoT1, SigmazRaiz mSigmazRaiz, ArrayList<SigmazPackage> mPacotes) {
 
-        if (mProcurandoT1.getType().precisaUnir()) {
+        if (mProcurandoT1.getObjeto().precisaUnir()) {
 
             eBase_01 = montarBase(ePrefixo, mCompondo, eBase_01, mProcurandoT1, mSigmazRaiz, mPacotes);
 
@@ -215,12 +213,11 @@ public class Unificador {
 
             mensagem(ePrefixo + " - Unificando : " + eT1.getNome() + " e " + eT2.getNome());
 
+            Procurador mProcurador = new Procurador();
 
-            ProcurandoType mProcurandoT1 = new ProcurandoType(this);
-            mProcurandoT1.procurar(eT1.getNome(), mSigmazRaiz, mSigmazPackage, mPacotes);
+            ObjetoProcurado<SigmazType> mProcurandoT1=   mProcurador.procurarType_Package( eT1.getNome(),mSigmazRaiz, mSigmazPackage,mPacotes);
+            ObjetoProcurado<SigmazType> mProcurandoT2=   mProcurador.procurarType_Package( eT2.getNome(),mSigmazRaiz, mSigmazPackage,mPacotes);
 
-            ProcurandoType mProcurandoT2 = new ProcurandoType(this);
-            mProcurandoT2.procurar(eT2.getNome(), mSigmazRaiz, mSigmazPackage, mPacotes);
 
 
             if (mProcurandoT1.getEncontrado()) {
@@ -244,9 +241,9 @@ public class Unificador {
 
                 ArrayList<String> mCompondo = new ArrayList<String>();
 
-                AST eBase_01 = organizarBASE(ePrefixo, eType, mProcurandoT1.getType().getLeitura().copiar(), mCompondo, mProcurandoT1, mSigmazRaiz, mPacotes);
+                AST eBase_01 = organizarBASE(ePrefixo, eType, mProcurandoT1.getObjeto().getLeitura().copiar(), mCompondo, mProcurandoT1, mSigmazRaiz, mPacotes);
 
-                AST eBase_02 = organizarBASE(ePrefixo, eType, mProcurandoT2.getType().getLeitura().copiar(), mCompondo, mProcurandoT2, mSigmazRaiz, mPacotes);
+                AST eBase_02 = organizarBASE(ePrefixo, eType, mProcurandoT2.getObjeto().getLeitura().copiar(), mCompondo, mProcurandoT2, mSigmazRaiz, mPacotes);
 
 
                 realizarComposicao(ePrefixo, eType, mCampos, eT1, eBase_01);
@@ -389,7 +386,7 @@ public class Unificador {
     }
 
 
-    public AST montarBase(String ePrefixo, ArrayList<String> mCompondo, AST eSuperAST, ProcurandoType vindoProcurandoStruct, SigmazRaiz mSigmazRaiz, ArrayList<SigmazPackage> mPacotes) {
+    public AST montarBase(String ePrefixo, ArrayList<String> mCompondo, AST eSuperAST, ObjetoProcurado<SigmazType> vindoProcurandoStruct, SigmazRaiz mSigmazRaiz, ArrayList<SigmazPackage> mPacotes) {
 
 
         SigmazType eSuper = new SigmazType(eSuperAST);

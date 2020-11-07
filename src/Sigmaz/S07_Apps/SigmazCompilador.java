@@ -1,4 +1,4 @@
-package AppSigmaz;
+package Sigmaz.S07_Apps;
 
 import Mottum.Cenarios.Cena;
 import Mottum.UI.BotaoCor;

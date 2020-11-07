@@ -34,19 +34,14 @@ public class Arquivador {
         long ePos = 0;
 
 
+        ArquivadorUtils ma = new ArquivadorUtils(eArquivo);
+        ma.setPonteiro(ma.getLength());
 
+        ePos = ma.getPonteiro();
 
+        ma.writeLong(0);
 
-            ArquivadorUtils ma = new ArquivadorUtils(eArquivo);
-            ma.setPonteiro(ma.getLength());
-
-            ePos = ma.getPonteiro();
-
-            ma.writeLong(0);
-
-            ma.close();
-
-
+        ma.close();
 
 
         return ePos;
@@ -57,50 +52,41 @@ public class Arquivador {
     public void marcarLocal(long ePos, long eDados, String eArquivo) {
 
 
+        ArquivadorUtils ma = new ArquivadorUtils(eArquivo);
+        ma.setPonteiro(ePos);
 
+        ma.writeLong(eDados);
 
-
-            ArquivadorUtils ma = new ArquivadorUtils(eArquivo);
-            ma.setPonteiro(ePos);
-
-            ma.writeLong(eDados);
-
-            ma.close();
-
-
-
+        ma.close();
 
 
     }
 
-    public long guardarSetor(byte[] eDados, String eArquivo) {
+    public long guardarSetor(byte[] eDados,  String eArquivo) {
 
         long ePos = 0;
 
 
+        ArquivadorUtils ma = new ArquivadorUtils(eArquivo);
+        ma.setPonteiro(ma.getLength());
 
-            ArquivadorUtils ma = new ArquivadorUtils(eArquivo);
-            ma.setPonteiro(ma.getLength());
-
-            ePos = ma.getPonteiro();
-
-
-            int mIndex = 0;
-            int mTamanho = eDados.length;
-
-            while (mIndex < mTamanho) {
-
-                byte mByte = eDados[mIndex];
-
-                ma.writeByte(mByte);
-
-                mIndex += 1;
-            }
+        ePos = ma.getPonteiro();
 
 
-            ma.close();
+        int mIndex = 0;
+        int mTamanho = eDados.length;
+
+        while (mIndex < mTamanho) {
+
+            byte mByte = eDados[mIndex];
+
+            ma.writeByte(mByte);
+
+            mIndex += 1;
+        }
 
 
+        ma.close();
 
 
         return ePos;
@@ -108,33 +94,28 @@ public class Arquivador {
     }
 
 
-
     public byte[] lerBloco(long eInicio, long eTamanho, String eArquivo) {
 
         byte mDados[] = new byte[(int) eTamanho];
 
 
+        ArquivadorUtils ma = new ArquivadorUtils(eArquivo);
+        ma.setPonteiro(eInicio);
 
 
+        int mIndex = 0;
 
-            ArquivadorUtils ma = new ArquivadorUtils(eArquivo);
-            ma.setPonteiro(eInicio);
+        while (mIndex < eTamanho) {
 
+            byte mByte = ma.readByte();
 
-            int mIndex = 0;
+            mDados[mIndex] = mByte;
 
-            while (mIndex < eTamanho) {
-
-                byte mByte = ma.readByte();
-
-                mDados[mIndex] = mByte;
-
-                mIndex += 1;
-            }
+            mIndex += 1;
+        }
 
 
-            ma.close();
-
+        ma.close();
 
 
         return mDados;

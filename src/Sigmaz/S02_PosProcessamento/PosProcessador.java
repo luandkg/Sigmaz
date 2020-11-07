@@ -3,6 +3,8 @@ package Sigmaz.S02_PosProcessamento;
 import java.util.ArrayList;
 
 import Sigmaz.S00_Utilitarios.Mensageiro;
+import Sigmaz.S00_Utilitarios.OrganizadorDeProcessos;
+import Sigmaz.S00_Utilitarios.ProcessoCallback;
 import Sigmaz.S02_PosProcessamento.Processadores.*;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S05_Executor.Debuggers.Simplificador;
@@ -31,14 +33,12 @@ public class PosProcessador {
     private boolean mDebug_Estruturador;
     private boolean mDebug_Unicidade;
 
-    private String mFase;
     private String mLocalLibs;
 
-    private int mPosInt;
-    private int mPosMax;
     private boolean mTerminou;
 
     private Simplificador mSimplificador;
+    private OrganizadorDeProcessos mProcessador;
 
     public PosProcessador() {
 
@@ -66,7 +66,7 @@ public class PosProcessador {
         mDebug_Estruturador = true;
         mDebug_Unicidade = true;
 
-        mFase = "";
+        mProcessador = new OrganizadorDeProcessos();
 
     }
 
@@ -211,9 +211,6 @@ public class PosProcessador {
 
     public void initPassos(ArrayList<AST> eASTs, String eLocalLibs) {
 
-        mFase = "";
-        mPosInt = 0;
-        mPosMax = 12;
         mTerminou = false;
 
 
@@ -224,179 +221,212 @@ public class PosProcessador {
         mRequisicoes.clear();
 
 
-        mFase = "Init";
+        PosProcessador mPosProcessador = this;
 
-        for (AST eAST : eASTs) {
-            if (eAST.mesmoTipo("SIGMAZ")) {
+        mProcessador.implementeStatus("Caller");
 
-                if (eAST.mesmoNome("EXECUTABLE")) {
+        mProcessador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+                Caller mCaller = new Caller(mPosProcessador);
+                mCaller.init(mASTS);
+            }
+        });
 
-                    int mCalls = 0;
+        mProcessador.implementeStatus("Requeridor");
 
-                    for (AST oAST : eAST.getASTS()) {
-                        if (oAST.mesmoTipo("CALL")) {
-                            mCalls += 1;
-                        }
-                    }
+        mProcessador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+                if (tudoOK()) {
+                    Requeridor mRequeridor = new Requeridor(mPosProcessador);
+                    mRequeridor.init(mASTS, mLocalLibs);
+                    mRequisicoes = mRequeridor.getRequisicoes();
+                }
+            }
+        });
 
-                    if (mCalls == 0) {
-                        errar("O Executavel precisa ter um chamador : CALL");
-                    } else if (mCalls > 1) {
-                        errar("O Executavel so pode ter um unico chamador : CALL");
-                    }
+        mProcessador.implementeStatus("Alocador");
 
-                } else if (eAST.mesmoNome("LIBRARY")) {
+        mProcessador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+
+                if (tudoOK()) {
+                    Alocador mAlocador = new Alocador(mPosProcessador);
+                    mAlocador.init(mASTS);
+                }
+            }
+        });
+
+        mProcessador.implementeStatus("Castificador");
+
+        mProcessador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+
+                if (tudoOK()) {
+                    Castificador mCastificador = new Castificador(mPosProcessador);
+                    mCastificador.init(mASTS);
+                }
+            }
+        });
 
 
-                    int mCalls = 0;
+        mProcessador.implementeStatus("Unificador");
 
-                    for (AST oAST : eAST.getASTS()) {
-                        if (oAST.mesmoTipo("CALL")) {
-                            mCalls += 1;
-                        }
-                    }
+        mProcessador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
 
-                    if (mCalls > 0) {
-                        errar("A Biblioteca nao pode ter chamadores : CALL");
-                    }
+                if (tudoOK()) {
+
+                    Unificador mUnificador = new Unificador(mPosProcessador);
+                    mUnificador.init(mASTS);
+                }
+            }
+        });
+
+        mProcessador.implementeStatus("Heranca");
+
+        mProcessador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+
+                if (tudoOK()) {
+                    Heranca mHeranca = new Heranca(mPosProcessador);
+                    mHeranca.init(mASTS);
+                }
+
+            }
+        });
+
+        mProcessador.implementeStatus("Modelador");
+
+
+        mProcessador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+
+                if (tudoOK()) {
+
+                    Modelador mModelador = new Modelador(mPosProcessador);
+                    mModelador.init(mASTS);
+                }
+            }
+        });
+
+        mProcessador.implementeStatus("Estagiador");
+
+        mProcessador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+
+                if (tudoOK()) {
+                    Estagiador mEstagiador = new Estagiador(mPosProcessador);
+                    mEstagiador.init(mASTS);
+                }
+            }
+        });
+
+        mProcessador.implementeStatus("Tipador");
+
+        mProcessador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+
+                if (tudoOK()) {
+                    Tipador mTipador = new Tipador(mPosProcessador);
+                    mTipador.init(mASTS);
+                }
+            }
+        });
+
+        mProcessador.implementeStatus("Referenciador");
+
+        mProcessador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+
+                if (tudoOK()) {
+                    Referenciador mReferenciador = new Referenciador(mPosProcessador);
+                    mReferenciador.init(mASTS);
+                }
+            }
+        });
+
+        mProcessador.implementeStatus("Argumentador");
+
+        mProcessador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+                if (tudoOK()) {
+                    Argumentador mArgumentador = new Argumentador(mPosProcessador);
+                    mArgumentador.init(mASTS);
+                }
+            }
+        });
+
+        mProcessador.implementeStatus("Opcionador");
+
+        mProcessador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+                if (tudoOK()) {
+                    Opcionador mOpcionador = new Opcionador(mPosProcessador);
+                    mOpcionador.init(mASTS);
 
                 }
 
-
             }
-        }
+        });
+
+        mProcessador.implementeStatus("Estruturador");
+
+        mProcessador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+
+                if (tudoOK()) {
+                    Estruturador mEstruturador = new Estruturador(mPosProcessador);
+                    mEstruturador.init(mASTS);
+                }
+            }
+        });
+
+        mProcessador.implementeStatus("Uniciade");
+
+
+        mProcessador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+
+                if (tudoOK()) {
+                    Unicidade mUnicidade = new Unicidade(mPosProcessador);
+                    mUnicidade.init(mASTS);
+                }
+            }
+        });
 
 
     }
 
     public void continuar() {
 
-        if (mPosInt > mPosMax) {
+        if (mMensageiro.temErros()) {
             mTerminou = true;
         } else {
-
-            if (mPosInt == 0) {
-
-                mFase = "Requeridor";
-
-                if (tudoOK()) {
-                    Requeridor mRequeridor = new Requeridor(this);
-                    mRequeridor.init(mASTS, mLocalLibs);
-                    mRequisicoes = mRequeridor.getRequisicoes();
-                }
-
-            } else if (mPosInt == 1) {
-
-                mFase = "Alocador";
-
-                if (tudoOK()) {
-                    Alocador mAlocador = new Alocador(this);
-                    mAlocador.init(mASTS);
-                }
-            } else if (mPosInt == 2) {
-
-                mFase = "Castificador";
-
-                if (tudoOK()) {
-                    Castificador mCastificador = new Castificador(this);
-                    mCastificador.init(mASTS);
-                }
-            } else if (mPosInt == 3) {
-
-                mFase = "Unificador";
-
-                if (tudoOK()) {
-
-                    Unificador mUnificador = new Unificador(this);
-                    mUnificador.init(mASTS);
-                }
-            } else if (mPosInt == 4) {
-
-                mFase = "Heranca";
-
-                if (tudoOK()) {
-                    Heranca mHeranca = new Heranca(this);
-                    mHeranca.init(mASTS);
-                }
-
-            } else if (mPosInt == 5) {
-
-                mFase = "Modelador";
-
-                if (tudoOK()) {
-
-                    Modelador mModelador = new Modelador(this);
-                    mModelador.init(mASTS);
-                }
-            } else if (mPosInt == 6) {
-                mFase = "Estagiador";
-
-                if (tudoOK()) {
-                    Estagiador mEstagiador = new Estagiador(this);
-                    mEstagiador.init(mASTS);
-                }
-            } else if (mPosInt == 7) {
-                mFase = "Tipador";
-
-                if (tudoOK()) {
-                    Tipador mTipador = new Tipador(this);
-                    mTipador.init(mASTS);
-                }
-
-            } else if (mPosInt == 8) {
-
-                mFase = "Referenciador";
-
-                if (tudoOK()) {
-                    Referenciador mReferenciador = new Referenciador(this);
-                    mReferenciador.init(mASTS);
-                }
-            } else if (mPosInt == 9) {
-
-                mFase = "Argumentador";
-                if (tudoOK()) {
-                    Argumentador mArgumentador = new Argumentador(this);
-                    mArgumentador.init(mASTS);
-                }
-            } else if (mPosInt == 10) {
-
-                mFase = "Opcionador";
-                if (tudoOK()) {
-                    Opcionador mOpcionador = new Opcionador(this);
-                    mOpcionador.init(mASTS);
-
-                }
-
-
-            } else if (mPosInt == 11) {
-
-                mFase = "Estruturador";
-
-                if (tudoOK()) {
-                    Estruturador mEstruturador = new Estruturador(this);
-                    mEstruturador.init(mASTS);
-                }
-
-            } else if (mPosInt == 12) {
-
-                mFase = "Uniciade";
-
-                if (tudoOK()) {
-                    Unicidade mUnicidade = new Unicidade(this);
-                    mUnicidade.init(mASTS);
-                }
-
-
+            if (mProcessador.getTerminou()) {
+                mTerminou = true;
+            } else {
+                mProcessador.processe();
             }
-
-
-            mPosInt += 1;
         }
 
     }
 
     public String getFase() {
-        return mFase;
+        return mProcessador.getStatus();
     }
 
     public boolean getTerminou() {

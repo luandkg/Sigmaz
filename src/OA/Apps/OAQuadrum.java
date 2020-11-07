@@ -1,4 +1,4 @@
-package OA;
+package OA.Apps;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import OA.Utils.*;
 import Sigmaz.S00_Utilitarios.Tempo;
 
 public class OAQuadrum {
@@ -141,7 +143,7 @@ public class OAQuadrum {
 
         int maxAltura = eAltura;
 
-        for (OA.Grupo<AOAnotacao> Grupo : mAgrupador.getGrupos()) {
+        for (OA.Utils.Grupo<AOAnotacao> Grupo : mAgrupador.getGrupos()) {
             int cAltura = eAltura;
             for (AOAnotacao mObjeto : Grupo.getObjetos()) {
 
@@ -203,7 +205,7 @@ public class OAQuadrum {
         x += separador;
 
 
-        for (OA.Grupo<AOAnotacao> Grupo : mAgrupador.getGrupos()) {
+        for (OA.Utils.Grupo<AOAnotacao> Grupo : mAgrupador.getGrupos()) {
 
 
             Color eCor = new Color(189, 195, 199);

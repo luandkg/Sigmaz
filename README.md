@@ -10,13 +10,13 @@
 
 ![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/sigmaz_03.png)
 
-### ARQUITETURA DA LINGUAGEM
+## ARQUITETURA DA LINGUAGEM
 
-## ACTIONS
-![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/escopo_01.png)
+### ACTIONS
+![Actions](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/escopo_01.png)
 
-## FUNCTIONS
-![Sigmaz](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/escopo_02.png)
+### FUNCTIONS
+![Functions](https://raw.githubusercontent.com/luandkg/Sigmaz/master/res/imagens/escopo_02.png)
 
     
  ### TIPOS PRIMITIVOS

@@ -1,4 +1,8 @@
-package OA;
+package OA.Apps;
+
+import OA.Utils.BlocoDeTrilha;
+import OA.Utils.EmTrila;
+import OA.Utils.Grupo;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -30,7 +34,7 @@ public class OATrilha {
 
         int entreLinhas = 40;
 
-        for (OA.Grupo<String> Grupo : mGrupos) {
+        for (OA.Utils.Grupo<String> Grupo : mGrupos) {
 
             int alturando = 220;
 
@@ -85,7 +89,7 @@ public class OATrilha {
 
         intercalador = 0;
 
-        for (OA.Grupo<String> Grupo : mGrupos) {
+        for (OA.Utils.Grupo<String> Grupo : mGrupos) {
 
 
             if (intercalador == 0) {
@@ -199,7 +203,7 @@ public class OATrilha {
 
 
         BlocoDeTrilha BDT = new BlocoDeTrilha(10);
-        for (OA.Grupo<String> Grupo : mGrupos) {
+        for (OA.Utils.Grupo<String> Grupo : mGrupos) {
             BDT.adicionar(Grupo);
         }
 
@@ -394,7 +398,7 @@ public class OATrilha {
             }
 
             boolean submodo = mEmTrila.getIntercalador();
-            for (OA.Grupo<String> Grupo : mEmTrila.getGrupos()) {
+            for (OA.Utils.Grupo<String> Grupo : mEmTrila.getGrupos()) {
 
 
                 g.drawImage(IMG_ROAD, (c * eLarguraGrupo) + (eLarguraGrupo / 2) - (IMG_ROAD.getWidth() / 2) + eixoX, BarraY + (eTamanhoFonte_Grande / 2), null);

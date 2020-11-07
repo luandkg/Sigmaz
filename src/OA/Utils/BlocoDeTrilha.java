@@ -1,10 +1,10 @@
-package OA;
+package OA.Utils;
 
 import java.util.ArrayList;
 
 public class BlocoDeTrilha {
 
-    private ArrayList<EmTrila >mGrupos;
+    private ArrayList<EmTrila>mGrupos;
 
     private int mContador ;
     private int mMaximo;

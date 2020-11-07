@@ -1,4 +1,4 @@
-package AppSigmaz;
+package Sigmaz.S07_Apps;
 
 import Sigmaz.S00_Utilitarios.Recursador.RecursoSequenciador;
 import Sigmaz.S00_Utilitarios.Recursador.Recursos;
@@ -6,7 +6,7 @@ import Sigmaz.S00_Utilitarios.Recursador.Recursos;
 import java.awt.*;
 
 
-public class GeradorRecursal {
+public class AppRecursos {
 
 
     public void init(String eLocal) {

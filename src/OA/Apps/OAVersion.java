@@ -1,7 +1,9 @@
-package OA;
+package OA.Apps;
 
 import LuanDKG.LuanDKG;
 import LuanDKG.Pacote;
+import OA.Utils.Agrupador;
+import OA.Utils.Grupo;
 
 import java.awt.*;
 import java.io.File;

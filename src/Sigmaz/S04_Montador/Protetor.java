@@ -82,6 +82,40 @@ public class Protetor {
         return mR5Resposta;
     }
 
+    public R5Resposta guardar(byte[] eOrigemData) {
+
+        R5Resposta mR5Resposta = new R5Resposta();
+
+
+        int mIndex = 0;
+        int mTamanho = eOrigemData.length;
+
+        int mChave_Index = 0;
+        int mChave_Tamanho = mChaveador.getChaveTamanho();
+
+
+        byte[] mGuardado = new byte[mTamanho];
+
+        while (mIndex < mTamanho) {
+
+            mGuardado[mIndex] =organizarByte( eOrigemData[mIndex] + mChaveador.getChave()[mChave_Index]);
+
+
+            mChave_Index += 1;
+            if (mChave_Index == mChave_Tamanho) {
+                mChave_Index = 0;
+            }
+
+
+            mIndex += 1;
+        }
+
+
+        mR5Resposta.validarComData(mGuardado);
+
+
+        return mR5Resposta;
+    }
 
     public R5Resposta revelar(byte[] eDados) {
 

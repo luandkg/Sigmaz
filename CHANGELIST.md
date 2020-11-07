@@ -126,3 +126,6 @@ Linguagem de Programação Estruturada - Alterações
 
 		2020 11 03 -->> Processador PROC -> INVOKE
 
+
+		2020 11 07 -->> Sistema de Etapas
+

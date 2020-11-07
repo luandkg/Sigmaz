@@ -1,10 +1,12 @@
-package OA;
+package OA.Apps;
 
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import OA.Utils.Agrupador;
+import OA.Utils.Grupo;
 import Sigmaz.S00_Utilitarios.Texto;
 
 public class OARoad {
@@ -222,7 +224,7 @@ public class OARoad {
         eConteudo += "\n" + eTitulo;
         eConteudo += "\n\n";
 
-        for (OA.Grupo<String> Grupo : mGrupos) {
+        for (OA.Utils.Grupo<String> Grupo : mGrupos) {
 
 
             for (String eLinha : Grupo.getObjetos()) {
@@ -261,7 +263,7 @@ public class OARoad {
 
         int eImplementacoes = 0;
 
-        for (OA.Grupo<String> Grupo : mGrupos) {
+        for (OA.Utils.Grupo<String> Grupo : mGrupos) {
 
             if (eContador == 0) {
                 eBloco_inicio = Grupo.getNome();

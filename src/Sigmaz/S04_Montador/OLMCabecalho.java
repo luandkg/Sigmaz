@@ -15,6 +15,15 @@ public class OLMCabecalho {
     private long mAssinatura_Inicio;
     private long mAssinatura_Tamanho;
 
+    private long mL0;
+    private long mL1;
+    private long mL2;
+    private long mL3;
+
+    private long mL4;
+    private long mL5;
+
+
     public OLMCabecalho() {
 
         mTitulo = "";
@@ -29,6 +38,15 @@ public class OLMCabecalho {
 
         mAssinatura_Inicio = 0;
         mAssinatura_Tamanho = 0;
+
+        mL0 = 0;
+        mL1 = 0;
+        mL2 = 0;
+        mL3 = 0;
+        mL4 = 0;
+        mL5 = 0;
+
+
     }
 
     public String getTitulo() {
@@ -43,7 +61,7 @@ public class OLMCabecalho {
         return mSetorSigmaz;
     }
 
-    public long getSigmaz_Fim(){
+    public long getSigmaz_Fim() {
         return mSetorSigmaz + mSetorSigmaz_Tamanho;
     }
 
@@ -56,11 +74,9 @@ public class OLMCabecalho {
     }
 
 
-    public long getCodigo_Fim(){
+    public long getCodigo_Fim() {
         return mSetorCodigo + mCodigo_Tamanho;
     }
-
-
 
 
     public long getCodigo_Tamanho() {
@@ -75,7 +91,7 @@ public class OLMCabecalho {
         return mAssinatura_Tamanho;
     }
 
-    public long getAssinatura_Fim(){
+    public long getAssinatura_Fim() {
         return mAssinatura_Inicio + mAssinatura_Tamanho;
     }
 
@@ -104,6 +120,29 @@ public class OLMCabecalho {
     }
 
 
+    public void definirLocais_Sigmaz(long eSetorSigmaz, long eSetorSigmaz_Tamanho) {
+
+
+        mL0 = eSetorSigmaz;
+        mL1 = eSetorSigmaz_Tamanho;
+
+
+    }
+
+    public void definirLocais_Codigo(long eSetorCodigo, long eCodigo_Tamanho) {
+
+        mL2 = eSetorCodigo;
+        mL3 = eCodigo_Tamanho;
+
+    }
+
+    public void definirLocais_Assinatura(long eSetorAssinatura, long eAssinatura_Tamanho) {
+
+        mL4 = eSetorAssinatura;
+        mL5 = eAssinatura_Tamanho;
+
+    }
+
     public void definir(String eTitulo, int eVersao, long eSetorSigmaz, long eSetorSigmaz_Tamanho, long eSetorCodigo, long eCodigo_Tamanho, long eSetorAssinatura, long eAssinatura_Tamanho) {
 
 
@@ -121,7 +160,53 @@ public class OLMCabecalho {
 
     }
 
+    public void definirSigmaz(long eSetorSigmaz, long eSetorSigmaz_Tamanho) {
+
+        mSetorSigmaz = eSetorSigmaz;
+        mSetorSigmaz_Tamanho = eSetorSigmaz_Tamanho;
+
+    }
+
+    public void definirCodigo( long eSetorCodigo, long eCodigo_Tamanho) {
+        mSetorCodigo = eSetorCodigo;
+        mCodigo_Tamanho = eCodigo_Tamanho;
+
+    }
+
+    public void definirAssinatura(long eSetorAssinatura, long eAssinatura_Tamanho) {
+        mAssinatura_Inicio = eSetorAssinatura;
+        mAssinatura_Tamanho = eAssinatura_Tamanho;
+
+    }
+
+
     public long getTamanho() {
         return mTamanho;
     }
+
+
+    public long getL0() {
+        return mL0;
+    }
+
+    public long getL1() {
+        return mL1;
+    }
+
+    public long getL2() {
+        return mL2;
+    }
+
+    public long getL3() {
+        return mL3;
+    }
+
+    public long getL4() {
+        return mL4;
+    }
+
+    public long getL5() {
+        return mL5;
+    }
+
 }

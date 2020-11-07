@@ -1,7 +1,11 @@
-package OA;
+package OA.Apps;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import OA.Utils.AOAnotacao;
+import OA.Utils.AOPagina;
+import OA.Utils.AOTarefa;
 import Sigmaz.S00_Utilitarios.Texto;
 
 public class OAOrganizador {

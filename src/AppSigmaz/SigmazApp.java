@@ -1,6 +1,6 @@
 package AppSigmaz;
 
-public enum Fases {
+public enum SigmazApp {
     LEXER,
     COMPILAR_EXECUTAVEL,
     COMPILAR_BIBLIOTECA,

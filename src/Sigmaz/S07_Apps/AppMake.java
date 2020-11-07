@@ -1,5 +1,6 @@
-package AppSigmaz;
+package Sigmaz.S07_Apps;
 
+import AppSigmaz.Opcional;
 import Make.Make;
 import Sigmaz.S01_Compilador.C02_Lexer.Lexer;
 import Sigmaz.S00_Utilitarios.Erro;

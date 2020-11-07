@@ -5,13 +5,13 @@ import Sigmaz.S00_Utilitarios.SigmazLocal;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazModel;
 import Sigmaz.S02_PosProcessamento.Processadores.Modelador;
 
-public class ProcurandoModelo {
+public class ObjetoProcurado<T> {
 
     private String eOrigem;
     private SigmazLocal mLocal;
 
     private boolean enc;
-    private SigmazModel mModelo;
+    private T mModelo;
     private String eNomePacote;
 
     private boolean estaSigmaz;
@@ -21,63 +21,67 @@ public class ProcurandoModelo {
     private boolean mOk;
     private String mErro;
 
-    private Modelador mModelador;
     private String mLocalNome;
     private SigmazPackage mLocalPackage;
     private SigmazPackage mPackage;
 
-    public ProcurandoModelo(){
+    public ObjetoProcurado() {
 
 
-        enc=false;
-        estaSigmaz=false;
-        estaLocal=false;
-        estaPacote=false;
-        mOk=false;
+        enc = false;
+        estaSigmaz = false;
+        estaLocal = false;
+        estaPacote = false;
+        mOk = false;
+
+        mLocalNome = "";
+        eNomePacote = "";
+
+        mLocalPackage = null;
 
     }
 
-    public void setSigmaz(SigmazModel eSigmazModel) {
+    public void setSigmaz(T eT) {
 
         eOrigem = "Sigmaz";
         mLocal = SigmazLocal.Sigmaz;
 
         enc = true;
-        mModelo = eSigmazModel;
+        mModelo = eT;
         estaSigmaz = true;
-        mOk=true;
+        mOk = true;
 
     }
 
-    public void setLocal(SigmazPackage mPacote,SigmazModel eSigmazModel){
+    public void setLocal(SigmazPackage mPacote, T eT) {
 
         eOrigem = "Package -> " + mPacote.getNome();
         mLocal = SigmazLocal.Package;
 
         eNomePacote = mPacote.getNome();
-        mPackage=mPacote;
+        mPackage = mPacote;
 
-        mModelo = eSigmazModel;
+        mModelo = eT;
         estaPacote = true;
         enc = true;
-        mOk=true;
+        mOk = true;
 
     }
 
 
-    public void setPackage(SigmazPackage mPacote,SigmazModel eSigmazModel){
+    public void setPackage(SigmazPackage mPacote, T eT) {
 
         eOrigem = "Package -> " + mPacote.getNome();
         eNomePacote = mPacote.getNome();
-        mModelo = eSigmazModel;
+        mModelo = eT;
         estaPacote = true;
         enc = true;
-        mOk=true;
+        mOk = true;
 
     }
 
 
-    public void setErro(String eErro){
+    public void setErro(String eErro) {
 
         mErro = eErro;
         mOk = false;
@@ -119,8 +123,13 @@ public class ProcurandoModelo {
         return m;
     }
 
-    public SigmazPackage getLocalPackage(){return mLocalPackage;}
-    public SigmazPackage getPackage(){return mPackage;}
+    public SigmazPackage getLocalPackage() {
+        return mLocalPackage;
+    }
+
+    public SigmazPackage getPackage() {
+        return mPackage;
+    }
 
 
     public boolean getOk() {
@@ -139,7 +148,7 @@ public class ProcurandoModelo {
         return eOrigem;
     }
 
-    public SigmazModel getModelo() {
+    public T getObjeto() {
         return mModelo;
     }
 

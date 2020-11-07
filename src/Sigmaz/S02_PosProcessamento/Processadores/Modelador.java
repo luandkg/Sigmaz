@@ -1,10 +1,11 @@
 package Sigmaz.S02_PosProcessamento.Processadores;
 
+import Sigmaz.S00_Utilitarios.Alterador.SigmazModel;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazStruct;
 import Sigmaz.S02_PosProcessamento.Procurador;
-import Sigmaz.S02_PosProcessamento.ProcurandoModelo;
+import Sigmaz.S02_PosProcessamento.ObjetoProcurado;
 import Sigmaz.S05_Executor.Alterador;
 
 import java.util.ArrayList;
@@ -93,13 +94,13 @@ public class Modelador {
                 mensagem("\t - MODELO : " + mStruct.getModelo());
 
                 Procurador mProcurador = new Procurador();
-                ProcurandoModelo mProcurandoModelo = mProcurador.procurarModelo_Sigmaz(mSigmazRaiz, mPacotes, mStruct.getModelo());
+                ObjetoProcurado<SigmazModel> mProcurandoModelo = mProcurador.procurarModelo_Sigmaz(mSigmazRaiz, mPacotes, mStruct.getModelo());
 
                 if (mProcurandoModelo.getEncontrado()) {
 
                     mensagem("\t - ORIGEM : " + mProcurandoModelo.getOrigem());
 
-                    modelar(mStruct.getLeitura(), mProcurandoModelo.getModelo().getLeitura());
+                    modelar(mStruct.getLeitura(), mProcurandoModelo.getObjeto().getLeitura());
 
                 } else {
                     errar("Modelo nao encontrado : " + mStruct.getModelo());
@@ -128,13 +129,13 @@ public class Modelador {
                 mensagem("\t\t - MODELO : " + mStruct.getModelo());
 
                 Procurador mProcurador = new Procurador();
-                ProcurandoModelo mProcurandoModelo = mProcurador.procurarModelo_Package(mStruct.getModelo(), mSigmazRaiz, mSigmazPackage, mPacotes);
+                ObjetoProcurado<SigmazModel> mProcurandoModelo = mProcurador.procurarModelo_Package(mStruct.getModelo(), mSigmazRaiz, mSigmazPackage, mPacotes);
 
                 if (mProcurandoModelo.getEncontrado()) {
 
                     mensagem("\t\t - ORIGEM : " + mProcurandoModelo.getOrigem());
 
-                    modelar(mStruct.getLeitura(), mProcurandoModelo.getModelo().getLeitura());
+                    modelar(mStruct.getLeitura(), mProcurandoModelo.getObjeto().getLeitura());
 
                 } else {
                     errar("Modelo nao encontrado : " + mStruct.getModelo());

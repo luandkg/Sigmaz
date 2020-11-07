@@ -1,5 +1,6 @@
-package AppSigmaz;
+package Sigmaz.S07_Apps;
 
+import AppSigmaz.Opcional;
 import BioGerador.BioGerador;
 import Sigmaz.S00_Utilitarios.Tempo;
 import Sigmaz.S05_Executor.RunTime;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 import Sigmaz.S00_Utilitarios.Erro;
 
-public class AppUtils {
+public class AppSigmazUtils {
 
     public static void LEXER(int eIndice, ArrayList<String> mArquivos) {
 
@@ -163,13 +164,13 @@ public class AppUtils {
             SigmazC.setDebug_Parser(false);
             SigmazC.setDebug_Comentario(false);
             SigmazC.setDebug_Integralizador(false);
-            SigmazC.setDebug_Montagem(false);
+            SigmazC.setDebug_Montagem(true);
 
             SigmazC.setDebug_PosProcessador_Requisidor(false);
 
             SigmazC.setDebug_PosProcessador_Cast(false);
             SigmazC.setDebug_PosProcessador_Unificador(false);
-            SigmazC.setDebug_PosProcessador_Heranca(false);
+            SigmazC.setDebug_PosProcessador_Heranca(true);
             SigmazC.setDebug_PosProcessador_Modelador(false);
             SigmazC.setDebug_PosProcessador_Estagiador(false);
 
@@ -626,8 +627,8 @@ public class AppUtils {
 
     public static void RECURSOS(String eLocal ) {
 
-        GeradorRecursal mGeradorRecursal = new GeradorRecursal();
-        mGeradorRecursal.init(eLocal);
+        AppRecursos mAppRecursos = new AppRecursos();
+        mAppRecursos.init(eLocal);
 
     }
 }
