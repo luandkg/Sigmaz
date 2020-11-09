@@ -578,4 +578,5 @@ Linguagem de Programação Estruturada - Implementações
 		2020 11 07 -->> Unificação dos Procuradores
 		2020 11 07 -->> Sistema de Divisão de Etapas
 		2020 11 07 -->> Sistema de Status em Etapas
+		2020 11 07 -->> Setor Debug em OLM
 

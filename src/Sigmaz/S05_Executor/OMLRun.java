@@ -8,18 +8,21 @@ public class OMLRun {
 
     private ArrayList<AST> mCabecalho;
     private ArrayList<AST> mCodigo;
+    private ArrayList<AST> mDebug;
 
     public OMLRun() {
 
         mCabecalho = new ArrayList<AST>();
         mCodigo = new ArrayList<AST>();
+        mDebug = new ArrayList<AST>();
 
     }
 
-    public void carregar(ArrayList<AST> eCabecalho, ArrayList<AST> eCodigo) {
+    public void carregar(ArrayList<AST> eCabecalho, ArrayList<AST> eCodigo,ArrayList<AST> eDebug) {
 
         mCabecalho = eCabecalho;
         mCodigo = eCodigo;
+        mDebug = eDebug;
 
     }
 
@@ -30,6 +33,10 @@ public class OMLRun {
 
     public ArrayList<AST> getCodigo() {
         return mCodigo;
+    }
+
+    public ArrayList<AST> getDebug() {
+        return mDebug;
     }
 
 }

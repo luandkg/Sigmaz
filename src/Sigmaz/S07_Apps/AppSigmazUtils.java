@@ -1,6 +1,7 @@
 package Sigmaz.S07_Apps;
 
 import AppSigmaz.Opcional;
+import AppSigmaz.OrdenadorSigmaz;
 import BioGerador.BioGerador;
 import Sigmaz.S00_Utilitarios.Tempo;
 import Sigmaz.S05_Executor.RunTime;
@@ -17,6 +18,9 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 
 import Sigmaz.S00_Utilitarios.Erro;
 
@@ -73,7 +77,7 @@ public class AppSigmazUtils {
 
     }
 
-    public static void COMPILAR_BIBLIOTECA(int eIndice, ArrayList<String> mArquivos, String eCompilado, String eLocalLibs,boolean mDebugar) {
+    public static void COMPILAR_BIBLIOTECA(int eIndice, ArrayList<String> mArquivos, String eCompilado, String eLocalLibs, boolean mDebugar) {
 
         Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
 
@@ -81,7 +85,7 @@ public class AppSigmazUtils {
 
 
             Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
-            SigmazC.initSemExecucao(mOpcional.getConteudo(), eCompilado, eLocalLibs, 2,mDebugar);
+            SigmazC.initSemExecucao(mOpcional.getConteudo(), eCompilado, eLocalLibs, 2, mDebugar);
 
 
         } else {
@@ -91,7 +95,7 @@ public class AppSigmazUtils {
 
     }
 
-    public static void COMPILAR_EXECUTAVEL(int eIndice, ArrayList<String> mArquivos, String eCompilado, String eLocalLibs,boolean mDebugar) {
+    public static void COMPILAR_EXECUTAVEL(int eIndice, ArrayList<String> mArquivos, String eCompilado, String eLocalLibs, boolean mDebugar) {
 
 
         Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
@@ -100,7 +104,7 @@ public class AppSigmazUtils {
 
 
             Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
-            SigmazC.initSemExecucao(mOpcional.getConteudo(), eCompilado, eLocalLibs, 1,mDebugar);
+            SigmazC.initSemExecucao(mOpcional.getConteudo(), eCompilado, eLocalLibs, 1, mDebugar);
 
 
         } else {
@@ -111,7 +115,7 @@ public class AppSigmazUtils {
     }
 
 
-    public static void COMPILAR_SIMPLES(int eIndice, ArrayList<String> mArquivos, String eCompilado, String eLocalLibs,boolean mDebugar) {
+    public static void COMPILAR_SIMPLES(int eIndice, ArrayList<String> mArquivos, String eCompilado, String eLocalLibs, boolean mDebugar) {
 
 
         Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
@@ -125,7 +129,7 @@ public class AppSigmazUtils {
             SigmazC.setMostrar_ArvoreFalhou(false);
             SigmazC.setMostrar_Mensagens(false);
 
-            SigmazC.init(mOpcional.getConteudo(), eCompilado, eLocalLibs, 1,mDebugar);
+            SigmazC.init(mOpcional.getConteudo(), eCompilado, eLocalLibs, 1, mDebugar);
 
 
         } else {
@@ -135,15 +139,15 @@ public class AppSigmazUtils {
 
     }
 
-    public static void EXECUTAR(String eCompilado, String eLocalLibs,boolean mDebugar) {
+    public static void EXECUTAR(String eCompilado, String eLocalLibs, boolean mDebugar) {
 
         Sigmaz_Executor mSE = new Sigmaz_Executor();
         mSE.setMostrar_Execucao(true);
-        mSE.executar(eCompilado,mDebugar);
+        mSE.executar(eCompilado, mDebugar);
 
     }
 
-    public static void COMPILAR_DETALHADO(int eIndice, ArrayList<String> mArquivos, String eCompilado, String eLocalLibs,boolean mDebugar) {
+    public static void COMPILAR_DETALHADO(int eIndice, ArrayList<String> mArquivos, String eCompilado, String eLocalLibs, boolean mDebugar) {
 
 
         Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
@@ -155,35 +159,36 @@ public class AppSigmazUtils {
             SigmazC.mostrarDebug(true);
             SigmazC.setMostrar_Erros(true);
 
-            SigmazC.setMostrarArvoreRunTime(true);
-            SigmazC.setMostrar_ArvoreFalhou(true);
+            SigmazC.setMostrarArvoreRunTime(false);
+            SigmazC.setMostrar_ArvoreFalhou(false);
 
 
-            SigmazC.setDebug_PreProcessamento(false);
-            SigmazC.setDebug_Lexer(false);
-            SigmazC.setDebug_Parser(false);
+            SigmazC.setDebug_PreProcessamento(true);
+            SigmazC.setDebug_Lexer(true);
+            SigmazC.setDebug_Parser(true);
             SigmazC.setDebug_Comentario(false);
             SigmazC.setDebug_Integralizador(false);
             SigmazC.setDebug_Montagem(true);
+            SigmazC.setMostrar_Debugador(false);
 
             SigmazC.setDebug_PosProcessador_Requisidor(false);
 
             SigmazC.setDebug_PosProcessador_Cast(false);
             SigmazC.setDebug_PosProcessador_Unificador(false);
-            SigmazC.setDebug_PosProcessador_Heranca(true);
+            SigmazC.setDebug_PosProcessador_Heranca(false);
             SigmazC.setDebug_PosProcessador_Modelador(false);
             SigmazC.setDebug_PosProcessador_Estagiador(false);
 
             SigmazC.setDebug_PosProcessador_Referenciador(false);
             SigmazC.setDebug_PosProcessador_Argumentador(false);
-            SigmazC.setDebug_PosProcessador_Opcionador(true);
+            SigmazC.setDebug_PosProcessador_Opcionador(false);
 
             SigmazC.setDebug_PosProcessador_Alocador(false);
             SigmazC.setDebug_PosProcessador_Tipador(false);
             SigmazC.setDebug_PosProcessador_Estruturador(false);
             SigmazC.setDebug_PosProcessador_Unicidade(false);
 
-            SigmazC.init(mOpcional.getConteudo(), eCompilado, eLocalLibs, 1,mDebugar);
+            SigmazC.init(mOpcional.getConteudo(), eCompilado, eLocalLibs, 1, mDebugar);
 
 
         } else {
@@ -214,16 +219,16 @@ public class AppSigmazUtils {
         return mOpcional;
     }
 
-    public static void MONTAR_BIBLIOTECA(String eArquivo, String eSaida, String eLocalLibs,boolean mDebugar) {
+    public static void MONTAR_BIBLIOTECA(String eArquivo, String eSaida, String eLocalLibs, boolean mDebugar) {
 
 
         Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
-        SigmazC.initSemExecucao(eArquivo, eSaida, eLocalLibs, 2,mDebugar);
+        SigmazC.initSemExecucao(eArquivo, eSaida, eLocalLibs, 2, mDebugar);
 
 
     }
 
-    public static void DEPENDENCIA(int eIndice, ArrayList<String> mArquivos,String mLocallibs) {
+    public static void DEPENDENCIA(int eIndice, ArrayList<String> mArquivos, String mLocallibs) {
 
 
         Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
@@ -232,7 +237,7 @@ public class AppSigmazUtils {
 
 
             Dependenciador mDependenciador = new Dependenciador();
-            mDependenciador.init_debug(mOpcional.getConteudo(),mLocallibs);
+            mDependenciador.init_debug(mOpcional.getConteudo(), mLocallibs);
 
 
         } else {
@@ -251,14 +256,14 @@ public class AppSigmazUtils {
         if (mOpcional.estaValido()) {
 
             Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
-            SigmazC.initSemExecucao(mOpcional.getConteudo(), eSaida, eLocalLibs, 1,false);
+            SigmazC.initSemExecucao(mOpcional.getConteudo(), eSaida, eLocalLibs, 1, false);
 
             if (!SigmazC.temErros()) {
 
                 System.out.println("");
 
                 RunTime RunTimeC = new RunTime();
-                RunTimeC.init(eSaida,false);
+                RunTimeC.init(eSaida, false);
                 RunTimeC.estrutura();
 
 
@@ -280,7 +285,7 @@ public class AppSigmazUtils {
         if (mOpcional.estaValido()) {
 
             Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
-            SigmazC.initSemExecucao(mOpcional.getConteudo(), eSaida, eLocalLibs, 1,false);
+            SigmazC.initSemExecucao(mOpcional.getConteudo(), eSaida, eLocalLibs, 1, false);
 
             if (!SigmazC.temErros()) {
 
@@ -306,7 +311,7 @@ public class AppSigmazUtils {
         if (mOpcional.estaValido()) {
 
             Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
-            SigmazC.initIntellisenses(mOpcional.getConteudo(), eSaida, eLocalLibs, 1,eLocalIntellisenses);
+            SigmazC.initIntellisenses(mOpcional.getConteudo(), eSaida, eLocalLibs, 1, eLocalIntellisenses);
 
 
         } else {
@@ -320,7 +325,7 @@ public class AppSigmazUtils {
 
 
         Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
-        SigmazC.initIntellisenses(eFonte, eSaida, eLocalLibs, 1,eLocalIntellisenses);
+        SigmazC.initIntellisenses(eFonte, eSaida, eLocalLibs, 1, eLocalIntellisenses);
 
 
     }
@@ -333,7 +338,7 @@ public class AppSigmazUtils {
         if (mOpcional.estaValido()) {
 
             Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
-            SigmazC.initSemExecucao(mOpcional.getConteudo(), eSaida, eLocalLibs, 1,false);
+            SigmazC.initSemExecucao(mOpcional.getConteudo(), eSaida, eLocalLibs, 1, false);
 
             if (!SigmazC.temErros()) {
 
@@ -356,7 +361,7 @@ public class AppSigmazUtils {
 
 
         Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
-        SigmazC.initSemExecucao(eFonte, eSaida, eLocalLibs, 1,false);
+        SigmazC.initSemExecucao(eFonte, eSaida, eLocalLibs, 1, false);
 
 
         if (!SigmazC.temErros()) {
@@ -498,7 +503,7 @@ public class AppSigmazUtils {
 
     }
 
-    public static void COMENTARIOS(int eIndice, ArrayList<String> mArquivos,String mLocalLibs) {
+    public static void COMENTARIOS(int eIndice, ArrayList<String> mArquivos, String mLocalLibs) {
 
 
         int iContando = 0;
@@ -513,7 +518,7 @@ public class AppSigmazUtils {
 
                 Comentarios comentariosC = new Comentarios();
 
-                comentariosC.init(mArquivo,mLocalLibs);
+                comentariosC.init(mArquivo, mLocalLibs);
 
                 break;
             }
@@ -526,7 +531,7 @@ public class AppSigmazUtils {
 
     }
 
-    public static void TODO(int eIndice, ArrayList<String> mArquivos,String mLocallibs) {
+    public static void TODO(int eIndice, ArrayList<String> mArquivos, String mLocallibs) {
 
         Opcional mOpcional = OBTER_ARQUIVO(eIndice, mArquivos);
 
@@ -535,13 +540,20 @@ public class AppSigmazUtils {
 
             Todos TodosC = new Todos();
 
-            TodosC.init(mOpcional.getConteudo(),mLocallibs);
+            TodosC.init(mOpcional.getConteudo(), mLocallibs);
 
 
         } else {
             System.out.println("\n - Indice de Arquivo nao encontrado : " + eIndice);
         }
 
+
+    }
+
+    public static void ORDENADOR(String eLocal) {
+
+        OrdenadorSigmaz mOrdenadorSigmaz = new OrdenadorSigmaz();
+        mOrdenadorSigmaz.init(eLocal);
 
     }
 
@@ -573,7 +585,7 @@ public class AppSigmazUtils {
     }
 
 
-    public static void GERADOR_DETALHADO(String eLocalGerador, String eCompilado, String eLocalLibs,boolean mDebugar) {
+    public static void GERADOR_DETALHADO(String eLocalGerador, String eCompilado, String eLocalLibs, boolean mDebugar) {
 
         BioGerador mBioGerador = new BioGerador(eLocalGerador);
         mBioGerador.gerar();
@@ -586,7 +598,7 @@ public class AppSigmazUtils {
         SigmazC.setMostrarArvoreRunTime(false);
         SigmazC.setMostrar_ArvoreFalhou(false);
 
-        SigmazC.init(mArquivo, eCompilado, eLocalLibs, 1,mDebugar);
+        SigmazC.init(mArquivo, eCompilado, eLocalLibs, 1, mDebugar);
 
 
     }
@@ -601,7 +613,7 @@ public class AppSigmazUtils {
 
 
         Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
-        SigmazC.initSemExecucao(mArquivo, eSaida, eLocalLibs, 1,false);
+        SigmazC.initSemExecucao(mArquivo, eSaida, eLocalLibs, 1, false);
 
         if (!SigmazC.temErros()) {
 
@@ -617,7 +629,7 @@ public class AppSigmazUtils {
 
     }
 
-    public static void DUMP(String eCompilado ) {
+    public static void DUMP(String eCompilado) {
 
         OLMDump mOMLDump = new OLMDump();
         mOMLDump.dump(eCompilado);
@@ -625,7 +637,7 @@ public class AppSigmazUtils {
     }
 
 
-    public static void RECURSOS(String eLocal ) {
+    public static void RECURSOS(String eLocal) {
 
         AppRecursos mAppRecursos = new AppRecursos();
         mAppRecursos.init(eLocal);

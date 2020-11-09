@@ -28,5 +28,6 @@ public enum SigmazApp {
     GERADOR_INTELLISENSE,
     APP,
     DUMP,
-    RECURSOS
+    RECURSOS,
+    ORDENADOR
 }

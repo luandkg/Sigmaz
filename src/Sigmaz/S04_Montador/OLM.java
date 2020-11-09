@@ -28,6 +28,9 @@ public class OLM {
         long eSetorAssinatura_Inicio = mArquivador.criarSetor(eArquivo);
         long eSetorAssinatura_Tamanho = mArquivador.criarSetor(eArquivo);
 
+        long eSetorDebug_Inicio = mArquivador.criarSetor(eArquivo);
+        long eSetorDebug_Tamanho = mArquivador.criarSetor(eArquivo);
+
         mArquivador.marcarLocal(eSetorSigmaz_Inicio, 0, eArquivo);
         mArquivador.marcarLocal(eSetorDados_Inicio, 0, eArquivo);
         mArquivador.marcarLocal(eSetorAssinatura_Inicio, 0, eArquivo);
@@ -43,6 +46,7 @@ public class OLM {
         mOLMCabecalho.definirLocais_Codigo(eSetorDados_Inicio,eSetorDados_Tamanho);
         mOLMCabecalho.definirLocais_Assinatura(eSetorAssinatura_Inicio,eSetorAssinatura_Tamanho);
 
+        mOLMCabecalho.definirLocais_Debug(eSetorDebug_Inicio,eSetorDebug_Tamanho);
 
         mOLMCabecalho.definir(Titulo,Versao,0,0,0,0,0, 0);
 

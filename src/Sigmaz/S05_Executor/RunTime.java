@@ -13,6 +13,7 @@ public class RunTime {
 
     private ArrayList<AST> mCabecalho;
     private ArrayList<AST> mASTS;
+    private ArrayList<AST> mASTDebug;
 
 
     private ArrayList<String> mErros;
@@ -43,7 +44,6 @@ public class RunTime {
     private float mTempo_Inicializacao;
 
     private boolean mIsDebug;
-    private AST mASTDebug;
 
     public RunTime() {
 
@@ -80,7 +80,7 @@ public class RunTime {
 
     }
 
-    public AST getASTDebug() {
+    public ArrayList<AST> getASTDebug() {
         return mASTDebug;
     }
 
@@ -105,6 +105,7 @@ public class RunTime {
 
         mCabecalho = mOMLRun.getCabecalho();
         mASTS = mOMLRun.getCodigo();
+        mASTDebug = mOMLRun.getDebug();
 
 
         mTempo_Leitura = mMontador.getTempo_Leitura();
@@ -138,8 +139,6 @@ public class RunTime {
         if (existeBranch("SIGMAZ")) {
 
             AST ASTCGlobal = getBranch("SIGMAZ");
-
-            mASTDebug = getASTDebug(ASTCGlobal);
 
 
             Run_Required mRun_Required = new Run_Required(this);
@@ -178,6 +177,20 @@ public class RunTime {
         String ret = "";
 
         for (AST eAST : getASTS()) {
+
+            ret += eAST.ImprimirArvoreDeInstrucoes();
+        }
+
+        return ret;
+
+    }
+
+
+    public String getArvoreDeDebug() {
+
+        String ret = "";
+
+        for (AST eAST : mASTDebug) {
 
             ret += eAST.ImprimirArvoreDeInstrucoes();
         }
@@ -385,7 +398,7 @@ public class RunTime {
 
     public void debug(AST ASTCorrente) {
 
-        if (ASTCorrente.existeBranch("IN_DEBUG")){
+        if (ASTCorrente.existeBranch("IN_DEBUG")) {
             AST InDebug = ASTCorrente.getBranch("IN_DEBUG");
 
             String eArquivo = InDebug.getNome();
@@ -393,11 +406,14 @@ public class RunTime {
 
             String mArquivo = eArquivo;
 
-            for (AST eD : mASTDebug.getASTS()) {
-                if (eD.mesmoNome(eArquivo)) {
-                    mArquivo = eD.getValor();
-                    break;
+            for (AST eD : mASTDebug) {
+                for(AST oD : eD.getASTS()){
+                    if (oD.mesmoNome(eArquivo)) {
+                        mArquivo = oD.getValor();
+                        break;
+                    }
                 }
+
             }
 
             mDebugs.add(mArquivo + " -->> " + eLocalizacao);

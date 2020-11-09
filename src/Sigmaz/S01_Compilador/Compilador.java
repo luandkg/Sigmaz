@@ -46,6 +46,7 @@ public class Compilador {
 
     private Enfileirador mFila;
     private AST AST_Raiz;
+    private AST mAST_DEBUGGER;
 
     private int mContinuarInterno = 0;
 
@@ -93,10 +94,10 @@ public class Compilador {
         return mEtapas;
     }
 
-    public void init(ArrayList<String> eArquivos, AST AST_Raiz, boolean mDebugar) {
+    public void init(ArrayList<String> eArquivos, AST AST_Raiz, boolean mDebugar, AST eAST_DEBUGGER) {
 
 
-        initPassos(eArquivos, AST_Raiz, mDebugar);
+        initPassos(eArquivos, AST_Raiz, mDebugar, eAST_DEBUGGER);
 
         while (!getTerminou()) {
             continuar();
@@ -180,11 +181,12 @@ public class Compilador {
     }
 
 
-    public void initPassos(ArrayList<String> eArquivos, AST eAST_Raiz, boolean mDebugar) {
+    public void initPassos(ArrayList<String> eArquivos, AST eAST_Raiz, boolean mDebugar, AST eAST_DEBUGGER) {
 
         mIsDebug = mDebugar;
 
         AST_Raiz = eAST_Raiz;
+        mAST_DEBUGGER = eAST_DEBUGGER;
 
         mLexer_Tokens = 0;
         mLexer_Chars = 0;
@@ -233,84 +235,36 @@ public class Compilador {
 
     }
 
-
-    public void continuar() {
-
-        mCorrentePreprocessando = false;
-        mCorrenteParseando = false;
-        mCorrenteCompilando = false;
+    public void continuar_01() {
 
 
-        if (mContinuarInterno == 0) {
-
-            // PRE PROCESSAR
+        // PRE PROCESSAR
 
 
-            mArquivoCorrente = mFila.processar();
+        mArquivoCorrente = mFila.processar();
 
-            if (mFila.isTerminou()) {
-                mFila.terminar();
+        if (mFila.isTerminou()) {
 
+            mFila.terminar();
 
-            } else {
-
-
-                if (mArquivoCorrente != null) {
-
-                    mEtapa = new Etapa(mEtapaID, mArquivoCorrente);
-                    mEtapaID += 1;
-                    mEtapas.add(mEtapa);
+        } else {
 
 
-                    mRequisitados.add(mArquivoCorrente);
+            if (mArquivoCorrente != null) {
 
-                    File arq = new File(mArquivoCorrente);
-
-                    mPreProcessando = mArquivoCorrente;
-
-                    mCorrentePreprocessando = true;
-                    if (arq.exists()) {
-                    } else {
-
-                        GrupoDeErro nG = new GrupoDeErro("SIGMAZ");
-                        nG.adicionarErro("Arquivo nao encontrado : " + mArquivoCorrente, 0, 0);
-                        mErros_Processamento.add(nG);
-                        mFila.terminar();
-
-                    }
+                mEtapa = new Etapa(mEtapaID, mArquivoCorrente);
+                mEtapaID += 1;
+                mEtapas.add(mEtapa);
 
 
-                }
-
-
-            }
-
-
-            mContinuarInterno = 1;
-
-        } else if (mContinuarInterno == 1) {
-
-            // PARSER
-
-            if (mFila.isTerminou()) {
-                mFila.terminar();
-            } else {
+                mRequisitados.add(mArquivoCorrente);
 
                 File arq = new File(mArquivoCorrente);
+
+                mPreProcessando = mArquivoCorrente;
+
+                mCorrentePreprocessando = true;
                 if (arq.exists()) {
-
-                    mCorrenteParseando = true;
-
-                    mLexer = realizar_Lexer(mArquivoCorrente);
-
-
-                    mQuantidade += 1;
-
-
-                    if (mErros_Processamento.size() > 0) {
-                        mFila.terminar();
-                    }
-
                 } else {
 
                     GrupoDeErro nG = new GrupoDeErro("SIGMAZ");
@@ -323,60 +277,119 @@ public class Compilador {
 
             }
 
-            mContinuarInterno = 2;
 
+        }
+
+
+        mContinuarInterno = 1;
+    }
+
+    public void continuar_02() {
+
+        // PARSER
+
+        if (mFila.isTerminou()) {
+            mFila.terminar();
         } else {
 
-            // COMPILAR
+            File arq = new File(mArquivoCorrente);
+            if (arq.exists()) {
 
-            if (mFila.isTerminou()) {
+                mCorrenteParseando = true;
 
-                mFila.terminar();
-
-            } else {
-
-                mCorrenteCompilando = true;
-
-                File arq = new File(mArquivoCorrente);
-                String mLocal = arq.getParent() + "/";
-
-                ArrayList<Token> mTokens = comentarios_remover(mArquivoCorrente, mLexer.getTokens());
-
-
-                mParser = realizar_Parser(mArquivoCorrente, mLocal, mTokens, AST_Raiz, mRequisitados);
+                mLexer = realizar_Lexer(mArquivoCorrente);
 
 
                 mQuantidade += 1;
 
 
-                fila_modificar(mFila, mParser, mEtapa);
-
-
-                mFila.organizar();
                 if (mErros_Processamento.size() > 0) {
                     mFila.terminar();
                 }
 
-                if (mFila.isTerminou()) {
-                    mContinuarInterno += 1;
-                }
+            } else {
 
-                if (getTerminou()) {
-
-
-                    mLexer_Processamento += "\n\tLexer Total -->> " + mQuantidade + " [ Chars : " + mLexer_Chars + " Tokens : " + mLexer_Tokens + " ]\n";
-                    mParser_Processamento += "\n\tParser Total -->> " + mQuantidade + " [ Tokens : " + mParser_Tokens + " ASTS : " + mParser_Objetos + " ]\n";
-                    mComentario_Processamento += "\n\tComentarios Total -->> " + mQuantidade + " [ Tokens : " + mComentario_Tokens + " Comentarios : " + mComentario_Contagem + " ]\n";
-
-
-                    mPreProcessamento = mFila.getProcessamento();
-
-                }
-
-                mContinuarInterno = 0;
+                GrupoDeErro nG = new GrupoDeErro("SIGMAZ");
+                nG.adicionarErro("Arquivo nao encontrado : " + mArquivoCorrente, 0, 0);
+                mErros_Processamento.add(nG);
+                mFila.terminar();
 
             }
 
+
+        }
+
+        mContinuarInterno = 2;
+
+    }
+
+    public void continuar_03() {
+
+        // COMPILAR
+
+        if (mFila.isTerminou()) {
+
+            mFila.terminar();
+
+        } else {
+
+            mCorrenteCompilando = true;
+
+            File arq = new File(mArquivoCorrente);
+            String mLocal = arq.getParent() + "/";
+
+            ArrayList<Token> mTokens = comentarios_remover(mArquivoCorrente, mLexer.getTokens());
+
+
+            mParser = realizar_Parser(mArquivoCorrente, mLocal, mTokens, AST_Raiz, mAST_DEBUGGER, mRequisitados);
+
+
+            mQuantidade += 1;
+
+
+            fila_modificar(mFila, mParser, mEtapa);
+
+
+            mFila.organizar();
+            if (mErros_Processamento.size() > 0) {
+                mFila.terminar();
+            }
+
+            if (mFila.isTerminou()) {
+                mContinuarInterno += 1;
+            }
+
+            if (getTerminou()) {
+
+
+                mLexer_Processamento += "\n\tLexer Total -->> " + mQuantidade + " [ Chars : " + mLexer_Chars + " Tokens : " + mLexer_Tokens + " ]\n";
+                mParser_Processamento += "\n\tParser Total -->> " + mQuantidade + " [ Tokens : " + mParser_Tokens + " ASTS : " + mParser_Objetos + " ]\n";
+                mComentario_Processamento += "\n\tComentarios Total -->> " + mQuantidade + " [ Tokens : " + mComentario_Tokens + " Comentarios : " + mComentario_Contagem + " ]\n";
+
+
+                mPreProcessamento = mFila.getProcessamento();
+                mPreProcessamento += " TERMINOU :: " + mQuantidade;
+
+            }
+
+            mContinuarInterno = 0;
+
+        }
+    }
+
+
+    public void continuar() {
+
+        mCorrentePreprocessando = false;
+        mCorrenteParseando = false;
+        mCorrenteCompilando = false;
+
+        if (mContinuarInterno == 0) {
+            continuar_01();
+        } else if (mContinuarInterno == 1) {
+            continuar_02();
+        } else {
+            continuar_03();
         }
 
 
@@ -456,10 +469,10 @@ public class Compilador {
     }
 
 
-    public Parser realizar_Parser(String eArquivo, String eLocal, ArrayList<Token> eTokens, AST AST_Raiz, ArrayList<String> eRequisitados) {
+    public Parser realizar_Parser(String eArquivo, String eLocal, ArrayList<Token> eTokens, AST AST_Raiz, AST mAST_DEBUGGER, ArrayList<String> eRequisitados) {
 
         Parser mParser = new Parser();
-        mParser.init(eArquivo, eLocal, mIsDebug,eTokens, AST_Raiz, eRequisitados);
+        mParser.init(eArquivo, eLocal, mIsDebug, eTokens, AST_Raiz, mAST_DEBUGGER, eRequisitados);
 
         mParser_Processamento += "\t" + mQuantidade + "  -->> " + eArquivo + " [ Tokens : " + mParser.getTokens().size() + " ASTS : " + mParser.getObjetos() + " ]\n";
 

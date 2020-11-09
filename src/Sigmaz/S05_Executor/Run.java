@@ -35,7 +35,7 @@ public class Run {
 
         if (mRunTime.isDebug()) {
 
-            if (mRunTime.getASTDebug().mesmoValor("TRUE")) {
+            if (mRunTime.getASTDebug().get(0).mesmoValor("TRUE")) {
 
             } else {
                 mRunTime.errar("RunTime", "O objeto nao e debugavel !");

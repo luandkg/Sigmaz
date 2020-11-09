@@ -8,9 +8,11 @@ public class OLMCabecalho {
 
     private long mSetorSigmaz;
     private long mSetorCodigo;
+    private long  mDebug_Inicio;
 
     private long mSetorSigmaz_Tamanho;
     private long mCodigo_Tamanho;
+    private long mDebug_Tamanho;
 
     private long mAssinatura_Inicio;
     private long mAssinatura_Tamanho;
@@ -23,6 +25,8 @@ public class OLMCabecalho {
     private long mL4;
     private long mL5;
 
+    private long mL6;
+    private long mL7;
 
     public OLMCabecalho() {
 
@@ -39,12 +43,16 @@ public class OLMCabecalho {
         mAssinatura_Inicio = 0;
         mAssinatura_Tamanho = 0;
 
+        mDebug_Inicio=0;
+
         mL0 = 0;
         mL1 = 0;
         mL2 = 0;
         mL3 = 0;
         mL4 = 0;
         mL5 = 0;
+        mL6 = 0;
+        mL7 = 0;
 
 
     }
@@ -95,6 +103,23 @@ public class OLMCabecalho {
         return mAssinatura_Inicio + mAssinatura_Tamanho;
     }
 
+
+
+    public long getSetorDebug_Inicio() {
+        return mDebug_Inicio;
+    }
+
+    public long getDebug_Tamanho() {
+        return mDebug_Tamanho;
+    }
+
+    public long getDebug_Fim() {
+        return mDebug_Inicio + mDebug_Tamanho;
+    }
+
+
+
+
     public void ler(String eArquivo) {
 
 
@@ -113,6 +138,9 @@ public class OLMCabecalho {
 
         mAssinatura_Inicio = ma.readLong();
         mAssinatura_Tamanho = ma.readLong();
+
+        mDebug_Inicio = ma.readLong();
+        mDebug_Tamanho = ma.readLong();
 
         ma.close();
 
@@ -142,6 +170,15 @@ public class OLMCabecalho {
         mL5 = eAssinatura_Tamanho;
 
     }
+
+
+    public void definirLocais_Debug(long eSetorDebug, long eDebug_Tamanho) {
+
+        mL6 = eSetorDebug;
+        mL7 = eDebug_Tamanho;
+
+    }
+
 
     public void definir(String eTitulo, int eVersao, long eSetorSigmaz, long eSetorSigmaz_Tamanho, long eSetorCodigo, long eCodigo_Tamanho, long eSetorAssinatura, long eAssinatura_Tamanho) {
 
@@ -179,6 +216,11 @@ public class OLMCabecalho {
 
     }
 
+    public void definirDebug(long eInicio, long eTamanho) {
+        mDebug_Inicio = eInicio;
+        mDebug_Tamanho = eTamanho;
+
+    }
 
     public long getTamanho() {
         return mTamanho;
@@ -207,6 +249,14 @@ public class OLMCabecalho {
 
     public long getL5() {
         return mL5;
+    }
+
+    public long getL6() {
+        return mL6;
+    }
+
+    public long getL7() {
+        return mL7;
     }
 
 }

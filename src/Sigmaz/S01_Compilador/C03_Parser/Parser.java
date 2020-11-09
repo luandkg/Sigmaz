@@ -168,23 +168,7 @@ public class Parser {
         return mErros_Parser;
     }
 
-    public AST getASTDebug(AST AST_Raiz) {
-        AST mRet = null;
-        boolean mEnc = false;
 
-        for (AST eAST : AST_Raiz.getASTS()) {
-            if (eAST.mesmoTipo("DEBUG_MODE")) {
-                mRet = eAST;
-                mEnc = true;
-                break;
-            }
-        }
-        if (!mEnc) {
-            mRet = AST_Raiz.criarBranch("DEBUG_MODE");
-        }
-
-        return mRet;
-    }
 
     public boolean getIsDebug() {
         return mIsDebug;
@@ -202,7 +186,7 @@ public class Parser {
 
     }
 
-    public void init(String eArquivo, String eLocal, boolean eDebugar, ArrayList<Token> eTokens, AST AST_Raiz, ArrayList<String> eRequisitados) {
+    public void init(String eArquivo, String eLocal, boolean eDebugar, ArrayList<Token> eTokens, AST AST_Raiz,AST mAST_DEBUGGER, ArrayList<String> eRequisitados) {
 
         mArquivo = eArquivo;
         mLocal = eLocal;
@@ -219,18 +203,16 @@ public class Parser {
 
         if (mIsDebug) {
 
+            mAST_DEBUGGER.setValor("TRUE");
 
-            AST mDebugMode = getASTDebug(AST_Raiz);
-            mDebugMode.setValor("TRUE");
+            mArquivoDebug = mAST_DEBUGGER.getASTS().size();
 
-            mArquivoDebug = mDebugMode.getASTS().size();
-
-            AST eDebug = mDebugMode.criarBranch("DEBUG");
+            AST eDebug = mAST_DEBUGGER.criarBranch("DEBUG");
             eDebug.setNome(String.valueOf(mArquivoDebug));
             eDebug.setValor(eArquivo);
 
         } else {
-            getASTDebug(AST_Raiz).setValor("FALSE");
+            mAST_DEBUGGER.setValor("FALSE");
         }
 
         int mAntes = AST_Raiz.getObjetos();

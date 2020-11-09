@@ -1,5 +1,13 @@
-import
-"anexo.sigmaz"
-;
+
 
 call iniciar -> amontoar ( )  ;
+
+act correr(){}
+
+act pular(){}
+
+act andar(){}
+
+act amontoar(){}
+
+act retardar(){}

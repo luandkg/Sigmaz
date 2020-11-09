@@ -83,6 +83,7 @@ public class SigmazTestes {
             SigmazC.setMostrar_Erros(false);
             SigmazC.setMostrar_Execucao(false);
             SigmazC.setMostrar_Integracao(true);
+            SigmazC.setMostrar_Debugador(false);
 
             SigmazC.init(Arquivo, mSaida, mLocalLibs, 1,false);
 

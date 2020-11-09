@@ -1,7 +1,0 @@
-
-import "acoes.sigmaz";
-
-
-act amontoar(){}
-
-act retardar(){}

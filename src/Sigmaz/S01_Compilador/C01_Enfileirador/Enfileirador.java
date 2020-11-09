@@ -7,6 +7,7 @@ public class Enfileirador {
     private ArrayList<String> mFila;
     private int mTamanho;
     private int mAntes;
+    private int mEtapas;
 
     private String mProcessamento;
 
@@ -29,6 +30,7 @@ public class Enfileirador {
         mRemovido = new ArrayList<String>();
 
         mProcessados = new ArrayList<String>();
+        mEtapas = 0;
 
     }
 
@@ -63,6 +65,7 @@ public class Enfileirador {
         mRemover.clear();
         mProcessados.clear();
         mProcessandoCorrente = "";
+        mProcessamento += "\nTERMINOU :: " + mEtapas + "\n";
     }
 
     public void iniciar() {
@@ -72,13 +75,15 @@ public class Enfileirador {
         mProcessandoCorrente = "";
 
         mAntes = 0;
+        mEtapas = 0;
 
         mAdicionar = new ArrayList<String>();
         mRemover = new ArrayList<String>();
         mRemovido = new ArrayList<String>();
         mProcessados = new ArrayList<String>();
 
-        mProcessamento += "PRE-PROCESSAMENTO \n";
+        mProcessamento = "################################ PLANO DE COMPILACAO ################################ ";
+        mProcessamento += "\n";
         mProcessamento += "\n";
 
         mProcessamento += "INICIAR COM : \n";
@@ -88,7 +93,6 @@ public class Enfileirador {
         }
 
         mProcessamento += "\n";
-        isTerminou=false;
 
     }
 
@@ -105,10 +109,9 @@ public class Enfileirador {
         return mProcessandoCorrente;
     }
 
-    private boolean isTerminou;
 
-    public boolean isTerminou(){
-        return isTerminou;
+    public boolean isTerminou() {
+        return getTamanho() == 0;
     }
 
     public String processar() {
@@ -116,9 +119,13 @@ public class Enfileirador {
         mAntes = getTamanho();
 
         if (mAntes > 0) {
+            mEtapas += 1;
 
             String mCorrente = obter(0);
             if (mFila.size() > 0) {
+
+                mProcessamento += "ETAPA :: " + mEtapas + "\n";
+
                 if (mRemovido.contains(mCorrente)) {
 
                     mProcessamento += "PROCESSANDO : " + mCorrente + " :: " + mAntes + " - DUPLICADO \n";
@@ -140,7 +147,6 @@ public class Enfileirador {
 
         } else {
             mProcessandoCorrente = null;
-            isTerminou=true;
         }
 
 

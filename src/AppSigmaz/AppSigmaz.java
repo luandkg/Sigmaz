@@ -52,7 +52,9 @@ public class AppSigmaz {
         int ARQUIVO = 23;
 
 
-        switch (SigmazApp.TESTES) {
+        switch (SigmazApp.ORDENADOR) {
+
+            case ORDENADOR -> AppSigmazUtils.ORDENADOR(mLocal);
 
             case MONTAR_PLANO_COMPILACAO -> AppSigmazUtils.PLANO_COMPILACAO(ARQUIVO, mArquivos, mLOCAL_PLANOS, mLocalLibs);
 

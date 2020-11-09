@@ -1,12 +1,4 @@
-import
-"libs/lib.sigmaz"
-;
-import
-"sacola.sigmaz"
-;
-import
-"pessoa.sigmaz"
-;
+import "libs/lib.sigmaz" ;
 
 call iniciar -> pular ( )  ;
 
@@ -17,4 +9,90 @@ act pular ( )  {
 	def s : int = somar ( 2 , sacola1 . getQuantidade ( ) )  ;
 	DEBUG -> REGRESSIVE :: ALL  ;
 	#sacola1.mostrar_struct();
+}
+
+
+struct Pessoa{
+
+all:
+    define nome : string = "";
+    define idade : int = 0;
+
+    define sacola : Sacola;
+
+    act setNome(_nome : string)  {
+         nome=_nome;
+    }
+
+    func getNome() : string {
+        return nome;
+    }
+
+    act setIdade(_idade : int)  {
+         idade=_idade;
+    }
+
+    func getIdade() : int {
+        return idade;
+    }
+
+    act sacola_aumentar(){
+        #sacola.aumentar(1);
+    }
+
+    act mostrar()  {
+
+       DEBUG -> REGRESSIVE :: STACK;
+
+    }
+
+  act mostrar_detalhes(){
+
+        println("");
+        println(" PESSOA : ");
+        println("    - Nome : ", nome);
+        println("    - Idade : ", idade);
+
+    }
+
+}
+
+struct Sacola {
+
+all:
+    define itens : int = 0;
+
+    act aumentar( g : int)  {
+         itens= somar(itens,g);
+    }
+
+    func quantidade() : int { return itens; }
+
+    func getQuantidade() : int { return itens; }
+
+
+
+   act mostrar()  {
+DEBUG -> REGRESSIVE :: STACK;
+    }
+
+    act mostrar_detalhes(){
+
+        println("");
+
+        println(" SACOLA : ");
+        println("    - Itens : ", itens);
+
+    }
+
+    act mostrar_struct(){
+
+       DEBUG -> REGRESSIVE :: STACK;
+
+    }
+
+    func someisso(a:int,b:int) : int {
+        return somar(a,b);
+    }
+
 }

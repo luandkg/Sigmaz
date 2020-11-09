@@ -784,7 +784,7 @@ public class Sigmaz_Etapas {
 
             MontadorC = new Montador();
 
-            MontadorC.compilar_iniciar(mASTCabecalhos, getASTS(), mSaida);
+            MontadorC.compilar_iniciar(mASTCabecalhos, getASTS(),new ArrayList<AST>(), mSaida);
 
             mETAPA_MONTAGEM = "EXECUTANDO -->> " + MontadorC.getFase();
 
@@ -856,7 +856,7 @@ public class Sigmaz_Etapas {
 
 
         mPreProcessador = new Compilador();
-        mPreProcessador.initPassos(eArquivos, AST_Raiz,mDebugar);
+        mPreProcessador.initPassos(eArquivos, AST_Raiz,mDebugar,new AST(""));
         mPreProcessando = mPreProcessador.getProcessando();
 
 

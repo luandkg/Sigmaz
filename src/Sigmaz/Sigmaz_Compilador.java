@@ -66,9 +66,11 @@ public class Sigmaz_Compilador {
     private boolean mMostrar_Fases;
     private boolean mMostrar_ArvoreRunTime;
     private boolean mMostrar_ArvoreFalhou;
+
     private boolean mMostrar_Erros;
     private boolean mMostrar_Execucao;
     private boolean mMostrar_Integracao;
+    private boolean mMostrar_Debugador;
 
     private boolean mMostrar_Mensagens;
 
@@ -77,6 +79,8 @@ public class Sigmaz_Compilador {
     private boolean mTemErros;
 
     private ArrayList<AST> mASTS;
+    private ArrayList<AST> mDebugs;
+
 
     private ArrayList<AST> mCabecalhos;
 
@@ -122,6 +126,8 @@ public class Sigmaz_Compilador {
         mDebug_Comentario = true;
         mDebug_Integralizador = true;
         mDebug_Montagem = true;
+        mMostrar_Integracao = true;
+        mMostrar_Debugador = true;
 
         mDebug_Requisidor = true;
         mDebug_Alocador = true;
@@ -158,7 +164,7 @@ public class Sigmaz_Compilador {
         mErros_Integracao = new ArrayList<>();
         mErros_Execucao = new ArrayList<>();
         mASTS = new ArrayList<AST>();
-
+        mDebugs = new ArrayList<AST>();
 
         mCabecalhos = new ArrayList<>();
         mASTS = new ArrayList<>();
@@ -201,6 +207,15 @@ public class Sigmaz_Compilador {
         mMostrar_ArvoreFalhou = e;
     }
 
+
+    public void setMostrar_Integracao(boolean e) {
+        mMostrar_Integracao = e;
+    }
+
+    public void setMostrar_Debugador(boolean e) {
+        mMostrar_Debugador = e;
+    }
+
     public void mostrarDebug(boolean eDebug) {
         mDebug = eDebug;
     }
@@ -209,9 +224,6 @@ public class Sigmaz_Compilador {
         mMostrar_Execucao = e;
     }
 
-    public void setMostrar_Integracao(boolean e) {
-        mMostrar_Integracao = e;
-    }
 
 
     public void setMostrar_Mensagens(boolean e) {
@@ -379,6 +391,7 @@ public class Sigmaz_Compilador {
         mErros_PreProcessamento.clear();
 
         mASTS.clear();
+        mDebugs.clear();
 
 
         mRequisitados.clear();
@@ -397,6 +410,11 @@ public class Sigmaz_Compilador {
     public ArrayList<AST> getASTS() {
         return mASTS;
     }
+
+    public ArrayList<AST> getDebugs() {
+        return mDebugs;
+    }
+
 
     public void init(String eArquivo, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
         ArrayList<String> aa = new ArrayList<String>();
@@ -478,6 +496,7 @@ public class Sigmaz_Compilador {
 
         mSigmaz_Executor.setMostrar_Execucao(mMostrar_Execucao);
         mSigmaz_Executor.setMostrar_ArvoreRunTime(mMostrar_ArvoreRunTime);
+        mSigmaz_Executor.setMostrar_ArvoreDebug(mMostrar_Debugador);
 
         mSigmaz_Executor.executar(eSaida, eDebugar);
 
@@ -851,9 +870,13 @@ public class Sigmaz_Compilador {
 
             }
 
+            AST AST_DEBUGGER = new AST("DEBUGGER");
+
+            mDebugs.add(AST_DEBUGGER);
+
 
             Compilador mCompilador = new Compilador();
-            mCompilador.init(eArquivos, AST_Raiz, mDebugar);
+            mCompilador.init(eArquivos, AST_Raiz, mDebugar, AST_DEBUGGER);
 
             mPreProcessamento = mCompilador.getPreProcessamento();
             mLexer_Processamento = mCompilador.getLexer_Processamento();
@@ -897,7 +920,6 @@ public class Sigmaz_Compilador {
 
                 mFase = Fases.LEXER;
                 mETAPA_PRE_PROCESSAMENTO = mSTATUS_SUCESSO;
-
 
 
             } else {
@@ -1110,7 +1132,7 @@ public class Sigmaz_Compilador {
 
             Montador MontadorC = new Montador();
 
-            MontadorC.compilar(mASTCabecalhos, getASTS(), mSaida);
+            MontadorC.compilar(mASTCabecalhos, getASTS(), getDebugs(), mSaida);
 
             mASTS = getASTS();
 

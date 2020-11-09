@@ -29,7 +29,7 @@ public class Montador {
     private boolean mTerminou;
     private ArrayList<AST> CASTCabecalho;
     private ArrayList<AST> CASTCodigo;
-
+    private ArrayList<AST> ASTDebug;
 
     private OLMCabecalho mOLM;
 
@@ -87,10 +87,10 @@ public class Montador {
         return mMensageiro.getErros();
     }
 
-    public void compilar(ArrayList<AST> ASTCabecalho, ArrayList<AST> ASTCodigo, String eArquivo) {
+    public void compilar(ArrayList<AST> ASTCabecalho, ArrayList<AST> ASTCodigo, ArrayList<AST> ASTDebug, String eArquivo) {
 
 
-        compilar_iniciar(ASTCabecalho, ASTCodigo, eArquivo);
+        compilar_iniciar(ASTCabecalho, ASTCodigo,ASTDebug, eArquivo);
 
         while (!getTerminou()) {
             continuar();
@@ -100,12 +100,14 @@ public class Montador {
     }
 
 
-    public void compilar_iniciar(ArrayList<AST> ASTCabecalho, ArrayList<AST> ASTCodigo, String eArquivo) {
+    public void compilar_iniciar(ArrayList<AST> ASTCabecalho, ArrayList<AST> ASTCodigo,ArrayList<AST> eASTDebug,  String eArquivo) {
 
         limpar();
 
         CASTCabecalho = ASTCabecalho;
         CASTCodigo = ASTCodigo;
+        ASTDebug=eASTDebug;
+
         mArquivo = eArquivo;
 
 
@@ -116,15 +118,11 @@ public class Montador {
             }
         });
 
-
-
         mProcessador.implementeComStatus("Criando Objeto OLM",new ProcessoCallback() {
             @Override
-            public void processar() {
-                mOLM = OLM.criarVazio(mArquivo);
+            public void processar() { mOLM = OLM.criarVazio(mArquivo);
             }
         });
-
 
         mProcessador.implementeComStatus("Setor Sigmaz",new ProcessoCallback() {
             @Override
@@ -133,15 +131,12 @@ public class Montador {
             }
         });
 
-
-
         mProcessador.implementeComStatus("Setor Codigo",new ProcessoCallback() {
             @Override
             public void processar() {
                 guardar_codigo();
             }
         });
-
 
         mProcessador.implementeComStatus("Setor Assinatura",new ProcessoCallback() {
             @Override
@@ -150,6 +145,12 @@ public class Montador {
             }
         });
 
+        mProcessador.implementeComStatus("Setor Debug",new ProcessoCallback() {
+            @Override
+            public void processar() {
+                guardar_debug();
+            }
+        });
 
         mProcessador.implementeComStatus("Finalizando Montagem",new ProcessoCallback() {
             @Override
@@ -395,6 +396,70 @@ public class Montador {
 
     }
 
+    private void guardar_debug() {
+
+        Chronos_Intervalo mTempoTodo = new Chronos_Intervalo();
+        Chronos_Intervalo mTempoDocumentando = new Chronos_Intervalo();
+        Chronos_Intervalo mTempoProtegendo = new Chronos_Intervalo();
+        Chronos_Intervalo mTempoArquivando = new Chronos_Intervalo();
+
+
+        mTempoTodo.marqueInicio();
+        Empacotador mCPacotador_Codigo = new Empacotador();
+
+        // DOCUMENTAR
+
+        mTempoDocumentando.marqueInicio();
+        String CDocumento = mCPacotador_Codigo.empacotar(ASTDebug);
+        mTempoDocumentando.marqueFim();
+
+        mMensageiro.mensagem("\tDEBUG : " + mCPacotador_Codigo.getObjetos());
+
+        // PROTEGER
+
+        Protetor mCSegurador_Codigo = new Protetor(mChave_Cogido);
+
+        mTempoProtegendo.marqueInicio();
+        R5Resposta mDebug = mCSegurador_Codigo.guardar(CDocumento);
+        mTempoProtegendo.marqueFim();
+
+        if (mDebug.getOk()) {
+
+            Arquivador mArquivador = new Arquivador();
+
+            mTempoArquivando.marqueInicio();
+            long eSetor = mArquivador.guardarSetor(mDebug.getData(), mArquivo);
+            mTempoArquivando.marqueFim();
+
+            int eTamanho = mDebug.getData().length;
+
+            mArquivador.marcarLocal(mOLM.getL6(), eSetor, mArquivo);
+            mArquivador.marcarLocal(mOLM.getL7(), eTamanho, mArquivo);
+
+            mOLM.definirCodigo(eSetor, eTamanho);
+
+            mTempo_Escrita += mTempoArquivando.getIntervalo();
+
+        } else {
+            mMensageiro.errar("Houve um problema na montagem do Setor Debug !");
+        }
+
+
+        mTempoTodo.marqueFim();
+        mMensageiro.mensagem("\tTempo Setor Debug : " + mTempoTodo.getIntervalo());
+        mMensageiro.mensagem("\t\t - Documentando : " + mTempoDocumentando.getIntervalo());
+        mMensageiro.mensagem("\t\t - Protegendo : " + mTempoProtegendo.getIntervalo());
+        mMensageiro.mensagem("\t\t - Arquivando : " + mTempoArquivando.getIntervalo());
+
+
+        if (mMensageiro.temErros()) {
+            mTerminou = true;
+        }
+
+
+    }
+
+
     private void finalizar_Montagem() {
 
         mMensageiro.mensagem("\tOLM Titulo : " + mOLM.getTitulo());
@@ -560,6 +625,18 @@ public class Montador {
 
                 boolean mProblemaCodigo = false;
 
+
+
+                byte[] mDados_Debug = mArquivador.lerBloco(mOLMCabecalho.getSetorDebug_Inicio(), mOLMCabecalho.getDebug_Tamanho(), eArquivo);
+
+                R5Resposta mDebug_Decifrar = mDesSegurador_Codigo.revelar(mDados_Debug);
+
+                Empacotador mDesemPacotador_Debug = new Empacotador();
+
+                if (mDebug_Decifrar.getOk()){
+                    mDesemPacotador_Debug.desempacotar(mDebug_Decifrar.getConteudo());
+                }
+
                 if (mResposta.getOk()) {
 
                     // System.out.println("-->> ABRINDO");
@@ -581,7 +658,7 @@ public class Montador {
 
                     if (mDesemPacotador_Codigo.getOK()) {
 
-                        mOMLRun.carregar(mDesempacotador.getDesempacotado(), mDesemPacotador_Codigo.getDesempacotado());
+                        mOMLRun.carregar(mDesempacotador.getDesempacotado(), mDesemPacotador_Codigo.getDesempacotado(),mDesemPacotador_Debug.getDesempacotado());
 
                     } else {
                         mProblemaCodigo = true;

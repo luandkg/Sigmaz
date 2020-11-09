@@ -364,6 +364,9 @@ public class AST_ValueTypes {
 
         ASTPai.setValor("FUNCT");
 
+        if (mCompiler.getIsDebug()) {
+            mCompiler.debug(ASTPai);
+        }
 
         ReceberArgumentos(ASTPai, mTemTipo, mTipo);
 

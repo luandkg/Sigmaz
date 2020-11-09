@@ -11,6 +11,8 @@ public class Sigmaz_Executor {
 
     private boolean mMostrar_Execucao;
     private boolean mMostrar_ArvoreRunTime;
+    private boolean mMostrar_ArvoreDebug;
+
     private boolean mTemErros;
     private ArrayList<String> mErros_Execucao;
 
@@ -20,6 +22,7 @@ public class Sigmaz_Executor {
 
         mMostrar_Execucao = false;
         mMostrar_ArvoreRunTime = false;
+        mMostrar_ArvoreDebug = false;
 
         mTemErros = false;
         mErros_Execucao = new ArrayList<String>();
@@ -34,6 +37,10 @@ public class Sigmaz_Executor {
         mMostrar_ArvoreRunTime = e;
     }
 
+    public void setMostrar_ArvoreDebug(boolean e) {
+        mMostrar_ArvoreDebug = e;
+    }
+
     public boolean temErros() {
         return mTemErros;
     }
@@ -42,7 +49,7 @@ public class Sigmaz_Executor {
         return mErros_Execucao;
     }
 
-    public void executar(String eExecutor,boolean mDebugar) {
+    public void executar(String eExecutor, boolean mDebugar) {
 
         mTemErros = false;
         mErros_Execucao.clear();
@@ -68,7 +75,7 @@ public class Sigmaz_Executor {
         }
 
 
-        RunTimeC.init(eExecutor,mDebugar);
+        RunTimeC.init(eExecutor, mDebugar);
 
         if (mMostrar_Execucao) {
 
@@ -80,7 +87,7 @@ public class Sigmaz_Executor {
 
             System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
 
-            for(String e : RunTimeC.getMensagens()){
+            for (String e : RunTimeC.getMensagens()) {
                 System.out.println("\t - " + e);
             }
 
@@ -90,16 +97,20 @@ public class Sigmaz_Executor {
 
 
             if (mMostrar_ArvoreRunTime) {
-
                 System.out.println("");
+                System.out.println("----------------------------------------------");
                 System.out.println(RunTimeC.getArvoreDeInstrucoes());
             }
 
-            if (mMostrar_Execucao) {
-
+            if (mMostrar_ArvoreDebug) {
                 System.out.println("");
                 System.out.println("----------------------------------------------");
+                System.out.println(RunTimeC.getArvoreDeDebug());
+            }
 
+            if (mMostrar_Execucao ) {
+                System.out.println("");
+                System.out.println("----------------------------------------------");
             }
 
             RunTimeC.run();
@@ -144,7 +155,7 @@ public class Sigmaz_Executor {
                     System.out.println("\t\t" + Erro);
                 }
 
-                if (mDebugar){
+                if (mDebugar) {
 
                     System.out.println("\n\t LOCALIZACAO DEBUG : ");
 
@@ -155,7 +166,6 @@ public class Sigmaz_Executor {
                 }
 
             }
-
 
 
             System.out.println("");
@@ -179,7 +189,7 @@ public class Sigmaz_Executor {
         String DI = mChronos.getData();
 
 
-        RunTimeC.init(saida,false);
+        RunTimeC.init(saida, false);
 
         System.out.println("\t - Instrucoes : " + RunTimeC.getInstrucoes());
         System.out.println("");
