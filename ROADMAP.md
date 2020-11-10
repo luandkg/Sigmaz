@@ -580,3 +580,12 @@ Linguagem de Programação Estruturada - Implementações
 		2020 11 07 -->> Sistema de Status em Etapas
 		2020 11 07 -->> Setor Debug em OLM
 
+
+		2020 11 10 -->> Precedencia entre Diretor e Marcador
+		2020 11 10 -->> Verificação de Escopo de Condição
+		2020 11 10 -->> Debug em Condição : IF OTHER e OTHERS
+		2020 11 10 -->> Refatoramento do Compilador : Simplificação
+		2020 11 10 -->> Organização de Estatisticas Lexer
+		2020 11 10 -->> Organização de Estatisticas Parser
+		2020 11 10 -->> Organização de Estatisticas Comentarios
+

@@ -22,6 +22,7 @@ act operando ( )  {
 		modo = "Igual" ;
 	} others  {
 		modo = "Maior" ;
+
 	}
 
 	println ( "Comparacao : ", modo )  ;
@@ -43,6 +44,9 @@ act operando ( )  {
 	println ( "4 <= 6 : ", cei3 )  ;
 	def CC : bool = ( 10.0 == 12.0 ) == false  ;
 	def w : string = ( "Luan")  ;
+
+
+
 	DEBUG -> REGRESSIVE :: ALL  ;
 }
 

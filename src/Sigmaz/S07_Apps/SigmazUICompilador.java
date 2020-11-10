@@ -11,7 +11,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 
-public class SigmazCompilador extends Cena {
+public class SigmazUICompilador extends Cena {
 
     private Windows mWindows;
 
@@ -27,7 +27,7 @@ public class SigmazCompilador extends Cena {
     private Sigmaz_Etapas SigmazC;
 
 
-    public SigmazCompilador(Windows eWindows) {
+    public SigmazUICompilador(Windows eWindows) {
         mWindows = eWindows;
 
         TextoPequeno = new Escritor(15, Color.BLACK);

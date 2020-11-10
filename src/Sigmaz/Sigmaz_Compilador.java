@@ -191,229 +191,6 @@ public class Sigmaz_Compilador {
     }
 
 
-    public void setMostrar_Fases(boolean e) {
-        mMostrar_Fases = e;
-    }
-
-    public void setMostrar_Erros(boolean e) {
-        mMostrar_Erros = e;
-    }
-
-    public void setMostrarArvoreRunTime(boolean e) {
-        mMostrar_ArvoreRunTime = e;
-    }
-
-    public void setMostrar_ArvoreFalhou(boolean e) {
-        mMostrar_ArvoreFalhou = e;
-    }
-
-
-    public void setMostrar_Integracao(boolean e) {
-        mMostrar_Integracao = e;
-    }
-
-    public void setMostrar_Debugador(boolean e) {
-        mMostrar_Debugador = e;
-    }
-
-    public void mostrarDebug(boolean eDebug) {
-        mDebug = eDebug;
-    }
-
-    public void setMostrar_Execucao(boolean e) {
-        mMostrar_Execucao = e;
-    }
-
-
-
-    public void setMostrar_Mensagens(boolean e) {
-        mMostrar_Mensagens = e;
-    }
-
-
-    public void setDebug_PreProcessamento(boolean e) {
-        mDebug_PreProcessamento = e;
-    }
-
-    public void setDebug_Lexer(boolean e) {
-        mDebug_Lexer = e;
-    }
-
-    public void setDebug_Parser(boolean e) {
-        mDebug_Parser = e;
-    }
-
-    public void setDebug_Comentario(boolean e) {
-        mDebug_Comentario = e;
-    }
-
-
-    public void setDebug_Montagem(boolean e) {
-        mDebug_Montagem = e;
-    }
-
-    public void setDebug_Integralizador(boolean e) {
-        mDebug_Integralizador = e;
-    }
-
-    public void setDebug_PosProcessador_Requisidor(boolean e) {
-        mDebug_Requisidor = e;
-    }
-
-    public void setDebug_PosProcessador_Alocador(boolean e) {
-        mDebug_Alocador = e;
-    }
-
-
-    public void setDebug_PosProcessador_Modelador(boolean e) {
-        mDebug_Modelador = e;
-    }
-
-
-    public void setDebug_PosProcessador_Estagiador(boolean e) {
-        mDebug_Estagiador = e;
-    }
-
-    public void setDebug_PosProcessador_Tipador(boolean e) {
-        mDebug_Tipador = e;
-    }
-
-
-    public void setDebug_PosProcessador_Estruturador(boolean e) {
-        mDebug_Estruturador = e;
-    }
-
-    public void setDebug_PosProcessador_Unicidade(boolean e) {
-        mDebug_Unicidade = e;
-    }
-
-
-    public void setDebug_PosProcessador_Cast(boolean e) {
-        mDebug_Cast = e;
-    }
-
-    public void setDebug_PosProcessador_Unificador(boolean e) {
-        mDebug_Unificador = e;
-    }
-
-    public void setDebug_PosProcessador_Heranca(boolean e) {
-        mDebug_Heranca = e;
-    }
-
-    public void setDebug_PosProcessador_Referenciador(boolean e) {
-        mDebug_Referenciador = e;
-    }
-
-    public void setDebug_PosProcessador_Argumentador(boolean e) {
-        mDebug_Argumentador = e;
-    }
-
-    public void setDebug_PosProcessador_Opcionador(boolean e) {
-        mDebug_Opcionador = e;
-    }
-
-
-    public void setCabecalho(Cabecalho eCabecalho) {
-        mCabecalho = eCabecalho;
-    }
-
-    public ArrayList<Etapa> getEtapas() {
-        return mEtapas;
-    }
-
-    public boolean temErros() {
-        return mTemErros;
-    }
-
-    public ArrayList<GrupoDeErro> getErros_PreProcessamento() {
-        return mErros_PreProcessamento;
-    }
-
-    public ArrayList<GrupoDeErro> getErros_Lexer() {
-        return mErros_Lexer;
-    }
-
-    public ArrayList<GrupoDeErro> getErros_Parser() {
-        return mErros_Parser;
-    }
-
-    public ArrayList<String> getErros_PosProcessamento() {
-        return mErros_PosProcessamento;
-    }
-
-    public ArrayList<String> getErros_Integracao() {
-        return mErros_Integracao;
-    }
-
-    public ArrayList<String> getErros_Execucao() {
-        return mErros_Execucao;
-    }
-
-    public Fases getFase() {
-        return mFase;
-    }
-
-
-    public String getModo(int mOpcao) {
-        String eModo = "DESCONHECIDO";
-
-        if (mOpcao == 1) {
-            eModo = "EXECUTAVEL";
-        }
-
-        if (mOpcao == 2) {
-            eModo = "BIBLIOTECA";
-        }
-
-        return eModo;
-    }
-
-
-    public void limpar() {
-
-        mFase = Fases.PRE_PROCESSAMENTO;
-
-        mETAPA_PRE_PROCESSAMENTO = mSTATUS_NAO;
-        mETAPA_LEXER = mSTATUS_NAO;
-        mETAPA_PARSER = mSTATUS_NAO;
-        mETAPA_POS_PROCESSAMENTO = mSTATUS_NAO;
-        mETAPA_MONTAGEM = mSTATUS_NAO;
-
-        mDebugMensagens.clear();
-        mDebugMensagens.clear();
-
-        mTemErros = false;
-
-        mErros_Lexer.clear();
-        mErros_Parser.clear();
-        mErros_PosProcessamento.clear();
-        mErros_Execucao.clear();
-        mErros_PreProcessamento.clear();
-
-        mASTS.clear();
-        mDebugs.clear();
-
-
-        mRequisitados.clear();
-
-
-        mComentarios.clear();
-
-        mIChars = 0;
-        mITokens = 0;
-        mPreProcessamento = "";
-        mLexer_Processamento = "";
-        mOrganizadorDeErros.limpar();
-
-    }
-
-    public ArrayList<AST> getASTS() {
-        return mASTS;
-    }
-
-    public ArrayList<AST> getDebugs() {
-        return mDebugs;
-    }
 
 
     public void init(String eArquivo, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
@@ -424,28 +201,7 @@ public class Sigmaz_Compilador {
 
     public void init(ArrayList<String> eArquivos, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
 
-        limpar();
-
-
-        mFase = Fases.PRE_PROCESSAMENTO;
-
-
-        if (mMostrar_Fases) {
-
-            System.out.println("");
-            System.out.println("################ SIGMAZ FASES ################");
-            System.out.println("");
-
-            for (String a : eArquivos) {
-                System.out.println("\t - Source : " + a);
-            }
-            System.out.println("\t - Local  : " + eLocalLibs);
-            System.out.println("\t - Build  : " + mSaida);
-            System.out.println("\t - Modo   : " + getModo(mOpcao));
-
-            System.out.println("");
-
-        }
+        iniciar(eArquivos, mSaida, eLocalLibs, mOpcao, mDebugar);
 
         Chronos_Intervalo mIntervalo = new Chronos_Intervalo();
 
@@ -454,18 +210,15 @@ public class Sigmaz_Compilador {
 
         executar_Compilador(eArquivos, mOpcao, mDebugar);
 
-
         fase_Lexer();
 
         fase_Comentario();
 
         fase_Parser();
 
-
         executar_PosProcessamento(eLocalLibs);
 
         executar_Integracao(eLocalLibs);
-
 
         executar_Montagem(mSaida);
 
@@ -516,10 +269,9 @@ public class Sigmaz_Compilador {
         initSemExecucao(aa, mSaida, eLocalLibs, mOpcao, mDebugar);
     }
 
-    public void initSemExecucao(ArrayList<String> eArquivos, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
+    private void iniciar(ArrayList<String> eArquivos, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
 
         limpar();
-
 
         mFase = Fases.PRE_PROCESSAMENTO;
 
@@ -540,6 +292,38 @@ public class Sigmaz_Compilador {
             System.out.println("");
 
         }
+
+    }
+
+    private void iniciarSemObjeto(ArrayList<String> eArquivos, String eLocalLibs, int mOpcao) {
+
+        limpar();
+
+        mFase = Fases.PRE_PROCESSAMENTO;
+
+
+        if (mMostrar_Fases) {
+
+            System.out.println("");
+            System.out.println("################ SIGMAZ FASES ################");
+            System.out.println("");
+
+            for (String a : eArquivos) {
+                System.out.println("\t - Source : " + a);
+            }
+            System.out.println("\t - Local  : " + eLocalLibs);
+            System.out.println("\t - Modo   : " + getModo(mOpcao));
+
+            System.out.println("");
+
+        }
+
+    }
+
+    public void initSemExecucao(ArrayList<String> eArquivos, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
+
+
+        iniciar(eArquivos, mSaida, eLocalLibs, mOpcao, mDebugar);
 
         Chronos_Intervalo mIntervalo = new Chronos_Intervalo();
 
@@ -566,12 +350,8 @@ public class Sigmaz_Compilador {
 
         listar_mensagens();
 
-        if (mFase == Fases.PRONTO) {
-
-        } else {
-
+        if (mFase != Fases.PRONTO) {
             falhou();
-
         }
 
     }
@@ -588,7 +368,6 @@ public class Sigmaz_Compilador {
 
 
         mFase = Fases.PRE_PROCESSAMENTO;
-
 
         if (mMostrar_Fases) {
 
@@ -620,7 +399,6 @@ public class Sigmaz_Compilador {
 
         executar_Integracao(mLocalLibs);
 
-
         mIntervalo.marqueFim();
 
         listar_mensagens();
@@ -630,13 +408,8 @@ public class Sigmaz_Compilador {
             System.out.println("\t - Tempo   : " + mIntervalo.getIntervalo() + " segundos");
         }
 
-        if (mFase == Fases.MONTAGEM) {
-
-
-        } else {
-
+        if (mFase != Fases.MONTAGEM) {
             falhou();
-
         }
 
     }
@@ -706,34 +479,7 @@ public class Sigmaz_Compilador {
     public void montarPlano(ArrayList<String> eArquivos, String eLocalLibs, String mArquivoPlano, int mOpcao) {
 
 
-        String eModo = "DESCONHECIDO";
-
-        if (mOpcao == 1) {
-            eModo = "EXECUTAVEL";
-        }
-
-        if (mOpcao == 2) {
-            eModo = "BIBLIOTECA";
-        }
-
-        mFase = Fases.PRE_PROCESSAMENTO;
-
-        mETAPA_PRE_PROCESSAMENTO = mSTATUS_NAO;
-        mETAPA_LEXER = mSTATUS_NAO;
-        mETAPA_PARSER = mSTATUS_NAO;
-        mETAPA_POS_PROCESSAMENTO = mSTATUS_NAO;
-        mETAPA_MONTAGEM = mSTATUS_NAO;
-
-        mDebugMensagens.clear();
-        mDebugMensagens.clear();
-
-        mTemErros = false;
-
-        mErros_Lexer.clear();
-        mErros_Parser.clear();
-        mErros_PosProcessamento.clear();
-        mErros_Execucao.clear();
-        mErros_PreProcessamento.clear();
+        limpar();
 
         System.out.println("");
         System.out.println("################ SIGMAZ FASES ################");
@@ -745,7 +491,7 @@ public class Sigmaz_Compilador {
 
         System.out.println("\t - Local  : " + eLocalLibs);
         System.out.println("\t - Build  : " + eLocalLibs);
-        System.out.println("\t - Modo   : " + eModo);
+        System.out.println("\t - Modo   : " + getModo(mOpcao));
         System.out.println("\t - Plano   : " + mArquivoPlano);
 
         System.out.println("");
@@ -757,11 +503,7 @@ public class Sigmaz_Compilador {
 
         fase_Parser();
 
-
         executar_PosProcessamento(eLocalLibs);
-
-
-        //executar_Montagem(CompilerC, eLocalLibs);
 
 
         if (mDebug) {
@@ -942,11 +684,8 @@ public class Sigmaz_Compilador {
 
     private void fase_Comentario() {
 
-
         if (mDebug_Comentario) {
-
             mDebugMensagens.add(getComentario_Processamento());
-
         }
 
     }
@@ -957,29 +696,21 @@ public class Sigmaz_Compilador {
         if (mFase == Fases.LEXER) {
 
             if (mDebug_Lexer) {
-
                 mDebugMensagens.add(getLexer_Processamento());
-
             }
-
 
             if (getErros_Lexer().size() == 0) {
                 mFase = Fases.PARSER;
                 mETAPA_LEXER = mSTATUS_SUCESSO;
             } else {
                 mETAPA_LEXER = mSTATUS_FALHOU;
-
                 mOrganizadorDeErros.getLexer(getErros_Lexer());
-
-
             }
 
         }
         if (mMostrar_Fases) {
             System.out.println("\t - 2 : Lexer                   : " + mETAPA_LEXER);
-
         }
-
 
     }
 
@@ -1012,7 +743,6 @@ public class Sigmaz_Compilador {
 
 
     }
-
 
     private void executar_PosProcessamento(String mLocalLibs) {
 
@@ -1117,7 +847,6 @@ public class Sigmaz_Compilador {
 
     }
 
-
     public void executar_Montagem(String mSaida) {
 
 
@@ -1158,11 +887,9 @@ public class Sigmaz_Compilador {
 
     }
 
-
     public ArrayList<AST> getCabecalhos() {
         return mCabecalhos;
     }
-
 
     public int getIChars() {
         return mIChars;
@@ -1216,28 +943,7 @@ public class Sigmaz_Compilador {
 
     public void initIntellisenses(ArrayList<String> eArquivos, String mSaida, String eLocalLibs, int mOpcao, String eLocalIntellisenses) {
 
-        limpar();
-
-
-        mFase = Fases.PRE_PROCESSAMENTO;
-
-
-        if (mMostrar_Fases) {
-
-            System.out.println("");
-            System.out.println("################ SIGMAZ FASES ################");
-            System.out.println("");
-
-            for (String a : eArquivos) {
-                System.out.println("\t - Source : " + a);
-            }
-            System.out.println("\t - Local  : " + eLocalLibs);
-            System.out.println("\t - Build  : " + mSaida);
-            System.out.println("\t - Modo   : " + getModo(mOpcao));
-
-            System.out.println("");
-
-        }
+        iniciar(eArquivos, mSaida, eLocalLibs, mOpcao, false);
 
         Chronos_Intervalo mIntervalo = new Chronos_Intervalo();
 
@@ -1259,15 +965,11 @@ public class Sigmaz_Compilador {
             Intellisense IntellisenseC = new Intellisense();
             IntellisenseC.run(getASTS(), new IntellisenseTheme(), eLocalIntellisenses);
 
-
             System.out.println("\t - 7 : Intellisense\t\t\t   : SUCESSO");
-
 
         } else {
 
-
             System.out.println("\t - 7 : Intellisense\t\t\t   : FALHOU");
-
 
         }
 
@@ -1280,14 +982,234 @@ public class Sigmaz_Compilador {
 
         listar_mensagens();
 
-        if (mFase == Fases.PRONTO) {
-
-        } else {
-
+        if (mFase != Fases.PRONTO) {
             falhou();
-
         }
 
+    }
+
+
+
+    public void setMostrar_Fases(boolean e) {
+        mMostrar_Fases = e;
+    }
+
+    public void setMostrar_Erros(boolean e) {
+        mMostrar_Erros = e;
+    }
+
+    public void setMostrarArvoreRunTime(boolean e) {
+        mMostrar_ArvoreRunTime = e;
+    }
+
+    public void setMostrar_ArvoreFalhou(boolean e) {
+        mMostrar_ArvoreFalhou = e;
+    }
+
+
+    public void setMostrar_Integracao(boolean e) {
+        mMostrar_Integracao = e;
+    }
+
+    public void setMostrar_Debugador(boolean e) {
+        mMostrar_Debugador = e;
+    }
+
+    public void mostrarDebug(boolean eDebug) {
+        mDebug = eDebug;
+    }
+
+    public void setMostrar_Execucao(boolean e) {
+        mMostrar_Execucao = e;
+    }
+
+
+    public void setMostrar_Mensagens(boolean e) {
+        mMostrar_Mensagens = e;
+    }
+
+
+    public void setDebug_PreProcessamento(boolean e) {
+        mDebug_PreProcessamento = e;
+    }
+
+    public void setDebug_Lexer(boolean e) {
+        mDebug_Lexer = e;
+    }
+
+    public void setDebug_Parser(boolean e) {
+        mDebug_Parser = e;
+    }
+
+    public void setDebug_Comentario(boolean e) {
+        mDebug_Comentario = e;
+    }
+
+
+    public void setDebug_Montagem(boolean e) {
+        mDebug_Montagem = e;
+    }
+
+    public void setDebug_Integralizador(boolean e) {
+        mDebug_Integralizador = e;
+    }
+
+    public void setDebug_PosProcessador_Requisidor(boolean e) {
+        mDebug_Requisidor = e;
+    }
+
+    public void setDebug_PosProcessador_Alocador(boolean e) {
+        mDebug_Alocador = e;
+    }
+
+
+    public void setDebug_PosProcessador_Modelador(boolean e) {
+        mDebug_Modelador = e;
+    }
+
+
+    public void setDebug_PosProcessador_Estagiador(boolean e) {
+        mDebug_Estagiador = e;
+    }
+
+    public void setDebug_PosProcessador_Tipador(boolean e) {
+        mDebug_Tipador = e;
+    }
+
+
+    public void setDebug_PosProcessador_Estruturador(boolean e) {
+        mDebug_Estruturador = e;
+    }
+
+    public void setDebug_PosProcessador_Unicidade(boolean e) {
+        mDebug_Unicidade = e;
+    }
+
+
+    public void setDebug_PosProcessador_Cast(boolean e) {
+        mDebug_Cast = e;
+    }
+
+    public void setDebug_PosProcessador_Unificador(boolean e) {
+        mDebug_Unificador = e;
+    }
+
+    public void setDebug_PosProcessador_Heranca(boolean e) {
+        mDebug_Heranca = e;
+    }
+
+    public void setDebug_PosProcessador_Referenciador(boolean e) {
+        mDebug_Referenciador = e;
+    }
+
+    public void setDebug_PosProcessador_Argumentador(boolean e) {
+        mDebug_Argumentador = e;
+    }
+
+    public void setDebug_PosProcessador_Opcionador(boolean e) {
+        mDebug_Opcionador = e;
+    }
+
+
+    public void setCabecalho(Cabecalho eCabecalho) {
+        mCabecalho = eCabecalho;
+    }
+
+    public ArrayList<Etapa> getEtapas() {
+        return mEtapas;
+    }
+
+    public boolean temErros() {
+        return mTemErros;
+    }
+
+    public ArrayList<GrupoDeErro> getErros_PreProcessamento() {
+        return mErros_PreProcessamento;
+    }
+
+    public ArrayList<GrupoDeErro> getErros_Lexer() {
+        return mErros_Lexer;
+    }
+
+    public ArrayList<GrupoDeErro> getErros_Parser() {
+        return mErros_Parser;
+    }
+
+    public ArrayList<String> getErros_PosProcessamento() {
+        return mErros_PosProcessamento;
+    }
+
+    public ArrayList<String> getErros_Integracao() {
+        return mErros_Integracao;
+    }
+
+    public ArrayList<String> getErros_Execucao() {
+        return mErros_Execucao;
+    }
+
+    public Fases getFase() {
+        return mFase;
+    }
+
+    public String getModo(int mOpcao) {
+        String eModo = "DESCONHECIDO";
+
+        if (mOpcao == 1) {
+            eModo = "EXECUTAVEL";
+        }
+
+        if (mOpcao == 2) {
+            eModo = "BIBLIOTECA";
+        }
+
+        return eModo;
+    }
+
+
+    public void limpar() {
+
+        mFase = Fases.PRE_PROCESSAMENTO;
+
+        mETAPA_PRE_PROCESSAMENTO = mSTATUS_NAO;
+        mETAPA_LEXER = mSTATUS_NAO;
+        mETAPA_PARSER = mSTATUS_NAO;
+        mETAPA_POS_PROCESSAMENTO = mSTATUS_NAO;
+        mETAPA_MONTAGEM = mSTATUS_NAO;
+
+        mDebugMensagens.clear();
+        mDebugMensagens.clear();
+
+        mTemErros = false;
+
+        mErros_Lexer.clear();
+        mErros_Parser.clear();
+        mErros_PosProcessamento.clear();
+        mErros_Execucao.clear();
+        mErros_PreProcessamento.clear();
+
+        mASTS.clear();
+        mDebugs.clear();
+
+
+        mRequisitados.clear();
+
+
+        mComentarios.clear();
+
+        mIChars = 0;
+        mITokens = 0;
+        mPreProcessamento = "";
+        mLexer_Processamento = "";
+        mOrganizadorDeErros.limpar();
+
+    }
+
+    public ArrayList<AST> getASTS() {
+        return mASTS;
+    }
+
+    public ArrayList<AST> getDebugs() {
+        return mDebugs;
     }
 
 

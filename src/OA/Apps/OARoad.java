@@ -255,13 +255,18 @@ public class OARoad {
         int eContador = 0;
         int eMaximo = eQuantidade;
 
-        String eBloco = "";
         int eBlocoID = 1;
 
         String eBloco_inicio = "";
         String eBloco_fim = "";
 
         int eImplementacoes = 0;
+
+
+        eConteudo += "\n | Bloco | Iniciado | Concluido | Implementações |";
+        eConteudo += "\n | --- | ---  | ---  | ---  |";
+
+
 
         for (OA.Utils.Grupo<String> Grupo : mGrupos) {
 
@@ -270,29 +275,27 @@ public class OARoad {
             }
 
             eBloco_fim = Grupo.getNome();
-            eImplementacoes+=Grupo.getObjetos().size();
+            eImplementacoes += Grupo.getObjetos().size();
 
             for (String eLinha : Grupo.getObjetos()) {
 
-                eBloco += "\n\t\t" + Grupo.getNome() + " -->> " + eLinha;
+               // eConteudo += "\n\t\t" + Grupo.getNome() + " -->> " + eLinha;
 
             }
 
-            eBloco += "\n\n";
+           // eConteudo += "\n\n";
 
             eContador += 1;
 
             if (eContador == eMaximo) {
 
-                eConteudo += "\n  ## Bloco : " + eBlocoID;
-                eConteudo += "\n\t\t Iniciado : " + eBloco_inicio;
-                eConteudo += "\n\t\t Concluido : " + eBloco_fim;
-                eConteudo += "\n\t\t Implementações : " + eImplementacoes;
+
+                eConteudo += "\n | " + eBlocoID + "| " + eBloco_inicio + "  | " + eBloco_fim + "  | " + eImplementacoes + " |";
 
                 // eConteudo += eBloco;
 
                 eContador = 0;
-                eImplementacoes=0;
+                eImplementacoes = 0;
                 eBlocoID += 1;
             }
         }
@@ -300,11 +303,7 @@ public class OARoad {
         if (eContador > 0) {
 
 
-            eConteudo += "\n##  Bloco : " + eBlocoID;
-
-            eConteudo += "\n\t\t Iniciado : " + eBloco_inicio;
-            eConteudo += "\n\t\t Atualização : " + eBloco_fim;
-            eConteudo += "\n\t\t Implementações : " + eImplementacoes;
+            eConteudo += "\n | " + eBlocoID + "| " + eBloco_inicio + "  | " + eBloco_fim + "  | " + eImplementacoes + " |";
 
 
         }

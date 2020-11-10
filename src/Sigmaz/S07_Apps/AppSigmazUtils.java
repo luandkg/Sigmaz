@@ -164,8 +164,8 @@ public class AppSigmazUtils {
 
 
             SigmazC.setDebug_PreProcessamento(true);
-            SigmazC.setDebug_Lexer(true);
-            SigmazC.setDebug_Parser(true);
+            SigmazC.setDebug_Lexer(false);
+            SigmazC.setDebug_Parser(false);
             SigmazC.setDebug_Comentario(false);
             SigmazC.setDebug_Integralizador(false);
             SigmazC.setDebug_Montagem(true);

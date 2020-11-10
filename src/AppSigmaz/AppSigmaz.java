@@ -6,7 +6,7 @@ import OA.Apps.OARoad;
 import OA.Apps.OAVersion;
 import Sigmaz.S07_Apps.AppMake;
 import Sigmaz.S07_Apps.AppSigmazUtils;
-import Sigmaz.S07_Apps.SigmazCompilador;
+import Sigmaz.S07_Apps.SigmazUICompilador;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -49,10 +49,10 @@ public class AppSigmaz {
 
         boolean mDebugar = true;
 
-        int ARQUIVO = 23;
+        int ARQUIVO = 86;
 
 
-        switch (SigmazApp.ORDENADOR) {
+        switch (SigmazApp.TESTES) {
 
             case ORDENADOR -> AppSigmazUtils.ORDENADOR(mLocal);
 
@@ -113,9 +113,9 @@ public class AppSigmaz {
 
         //  mWindows.setIconImage(Imaginador.CarregarStream(Local.Carregar("editor.png")));
 
-        SigmazCompilador eSigmazCompilador = new SigmazCompilador(mWindows);
+        SigmazUICompilador eSigmazUICompilador = new SigmazUICompilador(mWindows);
 
-        mWindows.CriarCenarioAplicavel(eSigmazCompilador);
+        mWindows.CriarCenarioAplicavel(eSigmazUICompilador);
 
         Thread mThread = new Thread(mWindows);
         mThread.start();

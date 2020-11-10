@@ -31,6 +31,11 @@ call Mark ->  {
 	def metragem_3 : int = 10 Km ++ 12 Dam  ;
 	def metragem_4 : int = metragem_3 Km  ;
 	def metragem_5 : int = ! ( ! 10 Km )  ;
+
+	def ma : int = ! 2 aza  ;
+    def mb : int = (! 2) aza  ;
+	def mc : int = ! (2 aza)  ;
+
 	DEBUG -> REGRESSIVE :: STACK  ;
 }
 
@@ -71,151 +76,63 @@ operator ++ ( a : int , b : int ) : int  {
 
 	return reg @ R7  ;
 }
-mark
-Km
-(
-a
-:
-int
-)
-:
-int
-{
-reg
-@
-R5
-->
-a
-;
-PROC
-->
-{
-SET
-R7
-;
-MOV
-0
-;
-OPE
-R5
-MUX
-1000
-;
+
+mark Km ( a : int ) : int  {
+	reg @ R5 -> a  ;
+	
+	PROC ->  {
+		SET R7  ;
+		MOV 0  ;
+		OPE R5 MUX 1000  ;
+	}
+
+	return reg @ R7  ;
 }
-return
-reg
-@
-R7
-;
+
+mark Hm ( a : int ) : int  {
+	reg @ R5 -> a  ;
+	
+	PROC ->  {
+		SET R7  ;
+		MOV 0  ;
+		OPE R5 MUX 100  ;
+	}
+
+	return reg @ R7  ;
 }
-mark
-Hm
-(
-a
-:
-int
-)
-:
-int
-{
-reg
-@
-R5
-->
-a
-;
-PROC
-->
-{
-SET
-R7
-;
-MOV
-0
-;
-OPE
-R5
-MUX
-100
-;
+
+mark Dam ( a : int ) : int  {
+	reg @ R5 -> a  ;
+	
+	PROC ->  {
+		SET R7  ;
+		MOV 0  ;
+		OPE R5 MUX 10  ;
+	}
+
+	return reg @ R7  ;
 }
-return
-reg
-@
-R7
-;
+
+mark m ( a : int ) : int  {
+	reg @ R5 -> a  ;
+	
+	PROC ->  {
+		SET R7  ;
+		MOV 0  ;
+		OPE R5 MUX 1  ;
+	}
+
+	return reg @ R7  ;
 }
-mark
-Dam
-(
-a
-:
-int
-)
-:
-int
-{
-reg
-@
-R5
-->
-a
-;
-PROC
-->
-{
-SET
-R7
-;
-MOV
-0
-;
-OPE
-R5
-MUX
-10
-;
-}
-return
-reg
-@
-R7
-;
-}
-mark
-m
-(
-a
-:
-int
-)
-:
-int
-{
-reg
-@
-R5
-->
-a
-;
-PROC
-->
-{
-SET
-R7
-;
-MOV
-0
-;
-OPE
-R5
-MUX
-1
-;
-}
-return
-reg
-@
-R7
-;
+
+mark aza ( a : int ) : int  {
+	reg @ R5 -> a  ;
+	
+	PROC ->  {
+		SET R7  ;
+		MOV 0  ;
+		OPE R5 ADD 10  ;
+	}
+
+	return reg @ R7  ;
 }

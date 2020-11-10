@@ -4,35 +4,13 @@
 Linguagem de Programação Estruturada - Implementações
 
 
-  ## Bloco : 1
-		 Iniciado : 2020 06 13
-		 Concluido : 2020 06 24
-		 Implementações : 72
-  ## Bloco : 2
-		 Iniciado : 2020 06 25
-		 Concluido : 2020 07 08
-		 Implementações : 55
-  ## Bloco : 3
-		 Iniciado : 2020 07 09
-		 Concluido : 2020 07 20
-		 Implementações : 41
-  ## Bloco : 4
-		 Iniciado : 2020 07 21
-		 Concluido : 2020 09 16
-		 Implementações : 32
-  ## Bloco : 5
-		 Iniciado : 2020 09 17
-		 Concluido : 2020 09 29
-		 Implementações : 55
-  ## Bloco : 6
-		 Iniciado : 2020 09 30
-		 Concluido : 2020 10 16
-		 Implementações : 55
-  ## Bloco : 7
-		 Iniciado : 2020 10 18
-		 Concluido : 2020 11 01
-		 Implementações : 72
-##  Bloco : 8
-		 Iniciado : 2020 11 02
-		 Atualização : 2020 11 07
-		 Implementações : 19
+ | Bloco | Iniciado | Concluido | Implementações |
+ | --- | ---  | ---  | ---  |
+ | 1| 2020 06 13  | 2020 06 24  | 72 |
+ | 2| 2020 06 25  | 2020 07 08  | 55 |
+ | 3| 2020 07 09  | 2020 07 20  | 41 |
+ | 4| 2020 07 21  | 2020 09 16  | 32 |
+ | 5| 2020 09 17  | 2020 09 29  | 55 |
+ | 6| 2020 09 30  | 2020 10 16  | 55 |
+ | 7| 2020 10 18  | 2020 11 01  | 72 |
+ | 8| 2020 11 02  | 2020 11 10  | 26 |

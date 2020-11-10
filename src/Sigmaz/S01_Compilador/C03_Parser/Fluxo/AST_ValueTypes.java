@@ -29,7 +29,7 @@ public class AST_ValueTypes {
 
             String eMarcador = eProximo.getConteudo();
 
-           // System.out.println("Possivel marcador : " + eMarcador);
+            // System.out.println("Possivel marcador : " + eMarcador);
 
             ASTPai.setValor("MARKER");
 
@@ -167,7 +167,7 @@ public class AST_ValueTypes {
 
         Token TokenC2 = mCompiler.getTokenAvante();
 
-      //  System.out.println("STRUCT :: " +mCompiler.getTokenCorrente().getConteudo() + " "+ mCompiler.getTokenCorrente().getLinha() + ":" + mCompiler.getTokenCorrente().getPosicao());
+        //  System.out.println("STRUCT :: " +mCompiler.getTokenCorrente().getConteudo() + " "+ mCompiler.getTokenCorrente().getLinha() + ":" + mCompiler.getTokenCorrente().getPosicao());
 
         if (TokenC2.getTipo() == TokenTipo.ID) {
 
@@ -357,6 +357,33 @@ public class AST_ValueTypes {
 
         mAST.init(ASTPai.criarBranch("VALUE"));
 
+
+        Token eProximo = mCompiler.getTokenFuturo();
+
+        if (eProximo.getTipo() == TokenTipo.ID) {
+
+            mCompiler.proximo();
+
+            AST eVal = ASTPai.copiar();
+
+            ASTPai.getASTS().clear();
+
+            String eMarcador = eProximo.getConteudo();
+
+            // System.out.println("Possivel marcador : " + eMarcador);
+
+            ASTPai.setValor("MARKER");
+
+            AST eMark = ASTPai.criarBranch("MARK");
+            eMark.setNome(eMarcador);
+            eMark.setValor("ID");
+
+
+            ASTPai.getASTS().add(eVal);
+
+        }
+
+
     }
 
 
@@ -379,11 +406,11 @@ public class AST_ValueTypes {
 
         ReceberArgumentos_Colchete(ASTPai, mTemTipo, mTipo);
 
-        if (mCompiler.getTokenFuturo().getTipo() == TokenTipo.PONTO){
+        if (mCompiler.getTokenFuturo().getTipo() == TokenTipo.PONTO) {
 
             mCompiler.proximo();
 
-            ReceberNovoEscopo(ASTPai,mTemTipo,mTipo);
+            ReceberNovoEscopo(ASTPai, mTemTipo, mTipo);
 
         }
 
@@ -509,9 +536,9 @@ public class AST_ValueTypes {
 
     public void ReceberArgumentos_AbrirParenteses(AST ASTAvo, boolean mTemTipo, AST mTipo) {
 
-        mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE,"Era esperado abrir paresenteses !");
+        mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado abrir paresenteses !");
 
-        ReceberArgumentos(ASTAvo,mTemTipo,mTipo);
+        ReceberArgumentos(ASTAvo, mTemTipo, mTipo);
     }
 
     public void ReceberArgumentos(AST ASTAvo, boolean mTemTipo, AST mTipo) {
@@ -873,8 +900,6 @@ public class AST_ValueTypes {
 
         ASTPai.setNome(TokenC.getConteudo());
         ASTPai.setValor("REG");
-
-
 
 
     }

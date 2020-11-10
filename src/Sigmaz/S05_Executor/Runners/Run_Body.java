@@ -379,6 +379,7 @@ public class Run_Body {
                 Run_Setter mRun_Setter = new Run_Setter(mRunTime, mEscopo);
                 mRun_Setter.init(fAST);
 
+            } else if (fAST.mesmoTipo("IN_DEBUG")) {
 
             } else {
 

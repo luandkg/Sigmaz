@@ -123,6 +123,10 @@ public class Formatador {
 
 
                 formate_AlgoComBloco(mTab);
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mark")) {
+
+
+                formate_AlgoComBloco(mTab);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("cast")) {
 

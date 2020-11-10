@@ -52,6 +52,14 @@ public class Run_Condition {
                 return;
             }
 
+            if (mAST.getIsNulo()){
+                mRunTime.errar(mLocal, "A condição nao pode ser nula !");
+                if (mRunTime.isDebug()) {
+                    mRunTime.debug(mCondicao);
+                }
+                return;
+            }
+
             if (mAST.getConteudo().contentEquals("true")) {
 
                 //   System.out.println(" --> CONDICIONAR : Escopo Pai : " + mEscopo.getNome() + " -> Structs : " +mEscopo.getStructs().size() );
@@ -95,6 +103,10 @@ public class Run_Condition {
                     if (sucesso) {
                         break;
                     }
+                    if (mRunTime.getErros().size() > 0) {
+                        return;
+                    }
+
                 }
 
                 if (sucesso == false) {
@@ -108,6 +120,9 @@ public class Run_Condition {
 
         } else {
             mRunTime.errar(mLocal, "A condição deve possuir tipo BOOL !");
+            if (mRunTime.isDebug()) {
+                mRunTime.debug(mCondicao);
+            }
         }
 
     }
@@ -124,6 +139,14 @@ public class Run_Condition {
 
         if (mRunTime.getErros().size() > 0) {
             return sucesso;
+        }
+
+        if (ouAST.getIsNulo()){
+            mRunTime.errar(mLocal, "A condição nao pode ser nula !");
+            if (mRunTime.isDebug()) {
+                mRunTime.debug(ouCondicao);
+            }
+            return false;
         }
 
 
