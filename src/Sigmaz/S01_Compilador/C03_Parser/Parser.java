@@ -19,7 +19,7 @@ public class Parser {
     private int mTamanho;
 
 
-    private ArrayList<GrupoDeErro> mErros_Parser;
+    private ArrayList<Erro> mErros_Parser;
 
 
     private String mArquivo;
@@ -164,10 +164,9 @@ public class Parser {
     }
 
 
-    public ArrayList<GrupoDeErro> getErros_Parser() {
+    public ArrayList<Erro> getErros_Parser() {
         return mErros_Parser;
     }
-
 
 
     public boolean getIsDebug() {
@@ -178,7 +177,7 @@ public class Parser {
         return mArquivoDebug;
     }
 
-    public void debug(AST eASTLocal){
+    public void debug(AST eASTLocal) {
 
         AST eDebug = eASTLocal.criarBranch("IN_DEBUG");
         eDebug.setNome(String.valueOf(getArquivoDebug()));
@@ -186,7 +185,7 @@ public class Parser {
 
     }
 
-    public void init(String eArquivo, String eLocal, boolean eDebugar, ArrayList<Token> eTokens, AST AST_Raiz,AST mAST_DEBUGGER, ArrayList<String> eRequisitados) {
+    public void init(String eArquivo, String eLocal, boolean eDebugar, ArrayList<Token> eTokens, AST AST_Raiz, AST mAST_DEBUGGER, ArrayList<String> eRequisitados) {
 
         mArquivo = eArquivo;
         mLocal = eLocal;
@@ -418,21 +417,8 @@ public class Parser {
 
     public void errarCompilacao(String eMensagem, Token eToken) {
 
-        boolean enc = false;
+        mErros_Parser.add(new Erro(eMensagem, eToken.getLinha(), eToken.getPosicao()));
 
-        for (GrupoDeErro G : mErros_Parser) {
-            if (G.mesmmoArquivo(mArquivo)) {
-                G.adicionarErro(eMensagem, eToken.getLinha(), eToken.getPosicao());
-                enc = true;
-                break;
-            }
-        }
-
-        if (!enc) {
-            GrupoDeErro nG = new GrupoDeErro(mArquivo);
-            nG.adicionarErro(eMensagem, eToken.getLinha(), eToken.getPosicao());
-            mErros_Parser.add(nG);
-        }
     }
 
 

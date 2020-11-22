@@ -6,7 +6,10 @@ public class Escopante {
 
     private String mNome;
 
+    private ArrayList<String> mRefers;
+
     private ArrayList<String> mAlocado;
+
     private boolean mTemAnterior;
     private Escopante mAnterior;
 
@@ -14,7 +17,9 @@ public class Escopante {
 
         mNome = eNome;
 
+        mRefers = new ArrayList<String>();
         mAlocado = new ArrayList<String>();
+
         mTemAnterior = false;
         mAnterior = null;
 
@@ -23,6 +28,11 @@ public class Escopante {
     public void setAnterior(Escopante eAnterior) {
         mAnterior = eAnterior;
         mTemAnterior = true;
+    }
+
+
+    public void referencie(String eRefer) {
+        mRefers.add(eRefer);
     }
 
     public void alocar(String eNome) {
@@ -64,6 +74,27 @@ public class Escopante {
         }
 
         return mRet;
+    }
+
+    public boolean existeRefer(String eRefer) {
+
+        boolean ret = false;
+
+        for (String pRefer : mRefers) {
+            if (pRefer.contentEquals(eRefer)) {
+                ret = true;
+                break;
+            }
+        }
+
+        if (!ret) {
+            if (mTemAnterior) {
+                ret = mAnterior.existeRefer(eRefer);
+            }
+        }
+
+        return ret;
+
     }
 
 }

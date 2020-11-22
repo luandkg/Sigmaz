@@ -42,11 +42,7 @@ call Externals ->  {
 	passarGato ( G2 )  ;
 	delete G2  ;
 	def organismos_2 : int = ECO -> GET_ORGANISMOS ( )  ;
-
-
-	def a : int = 10  ++ 5;
-
-
+	def a : int = 10 ++ 5  ;
 	DEBUG -> LOCAL :: STACK  ;
 	DEBUG -> LOCAL :: INSTANCES  ;
 }

@@ -1,4 +1,4 @@
-package Sigmaz.S01_Compilador;
+package Sigmaz.S01_Compilador.Avisos;
 
 public class InfoParser {
 

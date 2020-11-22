@@ -23,7 +23,7 @@ public class SigmazUICompilador extends Cena {
 
     private boolean mPode;
 
-    private  boolean mContinuar;
+    private boolean mContinuar;
     private Sigmaz_Etapas SigmazC;
 
 
@@ -53,12 +53,17 @@ public class SigmazUICompilador extends Cena {
 
         mClicavel.update(dt, mWindows.getMouse().Pressed());
 
+        if (mPode) {
+            BTN_CRIAR.setCor(Color.GREEN);
+        } else {
+            BTN_CRIAR.setCor(Color.RED);
+        }
 
         if (mContinuar) {
 
             try {
 
-                Thread.sleep(200);
+                Thread.sleep(100);
 
             } catch (Exception e) {
 
@@ -67,11 +72,17 @@ public class SigmazUICompilador extends Cena {
 
             SigmazC.continuar();
 
-        //   System.out.println(SigmazC.getContinuar() + " :: " + "Passo : " + SigmazC.getPassos() + " -->> " + SigmazC.getEtapa() + " :: " + SigmazC.getSubEtapa());
+            //   System.out.println(SigmazC.getContinuar() + " :: " + "Passo : " + SigmazC.getPassos() + " -->> " + SigmazC.getEtapa() + " :: " + SigmazC.getSubEtapa());
 
 
             if (SigmazC.getTerminou()) {
                 mContinuar = false;
+
+                if (SigmazC.temErros()) {
+                    SigmazC.mostrarErros();
+                }
+
+
             }
 
         } else {
@@ -96,7 +107,7 @@ public class SigmazUICompilador extends Cena {
                     String mCompilado = "res/build/Sigmaz.sigmad";
                     String mCompilar = "res/73 - vetores.sigmaz";
 
-                    SigmazC.init(mCompilar, mCompilado, 1,false);
+                    SigmazC.init(mCompilar, mCompilado, 1, false);
 
 
                     mContinuar = true;
@@ -126,8 +137,8 @@ public class SigmazUICompilador extends Cena {
         TextoPequeno.EscreveNegrito(g, "PRE PROCESAMENTO : " + SigmazC.getPreProcessamento(), 20, 200);
         TextoPequeno.EscreveNegrito(g, "LEXER : " + SigmazC.getLexer(), 20, 250);
         TextoPequeno.EscreveNegrito(g, "PARSER : " + SigmazC.getCompiler(), 20, 300);
-        TextoPequeno.EscreveNegrito(g, "POS PROCESSAMENTO : " +  SigmazC.getPosProcessamento(), 20, 350);
-        TextoPequeno.EscreveNegrito(g, "INTEGRALIZAÇÃO : " +  SigmazC.getIntegralizacao(), 20, 400);
+        TextoPequeno.EscreveNegrito(g, "POS PROCESSAMENTO : " + SigmazC.getPosProcessamento(), 20, 350);
+        TextoPequeno.EscreveNegrito(g, "INTEGRALIZAÇÃO : " + SigmazC.getIntegralizacao(), 20, 400);
         TextoPequeno.EscreveNegrito(g, "MONTAGEM : " + SigmazC.getMontagem(), 20, 450);
 
 
@@ -153,13 +164,13 @@ public class SigmazUICompilador extends Cena {
         int tam = 80;
 
         if (status.contains("SUCESSO")) {
-            g.setColor(new Color(0,128,0));
+            g.setColor(new Color(0, 128, 0));
         } else if (status.contains("EXECUTANDO")) {
-            g.setColor(new Color(255,225,53));
+            g.setColor(new Color(255, 225, 53));
         } else if (status.contains("FALHOU")) {
-            g.setColor(new Color(255,105,97));
+            g.setColor(new Color(255, 105, 97));
         } else {
-            g.setColor(new Color(105,105,105));
+            g.setColor(new Color(105, 105, 105));
         }
 
         g.fillRect(ini + (n * tam) + (n * sep), 500, tam, 50);

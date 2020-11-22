@@ -7,8 +7,8 @@ define DUPLO : num = somar ( 10.0 , somar ( 1.0 , 1.0 ) )  ;
 define ABERTO : bool = true  ;
 define FECHADO : bool = false  ;
 
-call iniciar -> {
-    DEBUG -> GLOBAL :: STACK  ;
+call iniciar ->  {
+	DEBUG -> GLOBAL :: STACK  ;
 }
 
 func somar ( a : num , b : num ) : num  {

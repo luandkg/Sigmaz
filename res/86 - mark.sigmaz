@@ -31,11 +31,9 @@ call Mark ->  {
 	def metragem_3 : int = 10 Km ++ 12 Dam  ;
 	def metragem_4 : int = metragem_3 Km  ;
 	def metragem_5 : int = ! ( ! 10 Km )  ;
-
 	def ma : int = ! 2 aza  ;
-    def mb : int = (! 2) aza  ;
-	def mc : int = ! (2 aza)  ;
-
+	def mb : int = ( ! 2 ) aza  ;
+	def mc : int = ! ( 2 aza )  ;
 	DEBUG -> REGRESSIVE :: STACK  ;
 }
 

@@ -1,8 +1,5 @@
-
 call iniciar2 ->  {
-
-    operando();
-
+	operando ( )  ;
 	def a : int = 12  ;
 	def b : bool = true  ;
 }

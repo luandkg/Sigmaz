@@ -589,3 +589,15 @@ Linguagem de Programação Estruturada - Implementações
 		2020 11 10 -->> Organização de Estatisticas Parser
 		2020 11 10 -->> Organização de Estatisticas Comentarios
 
+
+		2020 11 12 -->> Ciclos Sequenciais com CallBack
+		2020 11 12 -->> Organizador de Ciclos
+		2020 11 12 -->> Compilador com Ciclos
+		2020 11 12 -->> Avisador
+		2020 11 12 -->> Aviso - Lexer
+		2020 11 12 -->> Aviso - Parser
+		2020 11 12 -->> Aviso - Comentarios
+
+
+		2020 11 22 -->> Verificar se Each tem Refer Iterador
+

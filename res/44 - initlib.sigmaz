@@ -1,13 +1,14 @@
-require
-lib
-;
+require lib  ;
 
 call iniciar -> inicio ( )  ;
+
 refer Tempo  ;
 refer Lista  ;
 refer Vetor  ;
+refer Iterador  ;
 
 act inicio ( )  {
+
 	def valor : int = 1  ;
 	def ternario_1 : int = if ( maior ( valor , 2 ) ) :: ( +1 ) not ( -1 )  ;
 	def ternario_2 : int = if ( maior ( valor , 0 ) ) :: ( +1 ) not ( -1 )  ;
@@ -15,19 +16,31 @@ act inicio ( )  {
 	def hora : string = Tempo -> getTempo_Formatado ( )  ;
 	def data : string = Data -> getData_Formatado ( )  ;
 	def lista : Lista >> ( int ) = init Lista ( ) >> ( int )  ;
+
 	lista . adicionar ( 5 )  ;
 	lista . adicionar ( 6 )  ;
+
 	def lista_v1 : int = lista [ 1 ]  ;
 	lista [ 1 ] = -20  ;
 	def lista_v2 : int = lista [ 1 ]  ;
-	def vetor : Vetor >> ( int ) = 
-		{
-			10 , 20 , 30 , 40 , 50  } ;
+
+	def vetor : Vetor >> ( int ) = { 10 , 20 , 30 , 40 , 50  } ;
+
 	def vetor_tamanho : int = vetor . getQuantidade ( )  ;
 	def vetor_v0 : int = vetor [ 0 ]  ;
 	def vetor_v1 : int = vetor [ 1 ]  ;
 	def vetor_v2 : int = vetor [ 2 ]  ;
 	def vetor_v3 : int = vetor [ 3 ]  ;
 	def vetor_v4 : int = vetor [ 4 ]  ;
+
+	DEBUG -> LOCAL :: STRUCTS  ;
+
+	each a : int  :: (vetor) -> {
+
+	    	DEBUG -> LOCAL :: STACK  ;
+
+
+	}
+
 	DEBUG -> LOCAL :: STACK  ;
 }

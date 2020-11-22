@@ -27,6 +27,8 @@ import "unit.sigmaz";
 import "marcadores.sigmaz";
 import "idealismo.sigmaz";
 
+
+
 stages Numeros -> {
 	POSITIVO , NEGATIVO , ZERO
 }

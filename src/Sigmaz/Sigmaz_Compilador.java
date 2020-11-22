@@ -739,6 +739,7 @@ public class Sigmaz_Compilador {
 
             System.out.println("\t - 3 : Parser                  : " + mETAPA_PARSER);
 
+
         }
 
 

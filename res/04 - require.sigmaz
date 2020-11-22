@@ -1,13 +1,16 @@
-
-
 call iniciar -> amontoar ( )  ;
 
-act correr(){}
+act correr ( )  {
+}
 
-act pular(){}
+act pular ( )  {
+}
 
-act andar(){}
+act andar ( )  {
+}
 
-act amontoar(){}
+act amontoar ( )  {
+}
 
-act retardar(){}
+act retardar ( )  {
+}

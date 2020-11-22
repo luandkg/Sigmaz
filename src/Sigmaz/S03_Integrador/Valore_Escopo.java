@@ -51,25 +51,25 @@ public class Valore_Escopo {
 
             if (mAST.mesmoTipo("DEF")) {
 
-                mValoramento.atribuicaoItem(ePrefixo, mAST,mIntegralizante, mEscopo);
+                mValoramento.atribuicaoItem(ePrefixo, mAST, mIntegralizante, mEscopo);
 
                 mEscopo.alocar((mAST.getNome()));
 
             } else if (mAST.mesmoTipo("MOC")) {
 
-                mValoramento.atribuicaoItem(ePrefixo, mAST,mIntegralizante,  mEscopo);
+                mValoramento.atribuicaoItem(ePrefixo, mAST, mIntegralizante, mEscopo);
 
                 mEscopo.alocar((mAST.getNome()));
 
             } else if (mAST.mesmoTipo("LET")) {
 
-                mValoramento.atribuicaoItem(ePrefixo, mAST,mIntegralizante,  mEscopo);
+                mValoramento.atribuicaoItem(ePrefixo, mAST, mIntegralizante, mEscopo);
 
                 mEscopo.alocar((mAST.getNome()));
 
             } else if (mAST.mesmoTipo("VOZ")) {
 
-                mValoramento.atribuicaoItem(ePrefixo, mAST,mIntegralizante,  mEscopo);
+                mValoramento.atribuicaoItem(ePrefixo, mAST, mIntegralizante, mEscopo);
 
                 mEscopo.alocar((mAST.getNome()));
 
@@ -133,7 +133,7 @@ public class Valore_Escopo {
 
                 if (mAST.existeBranch("INTERNAL")) {
 
-                    Valore_StructThis mValore_StructThis = new Valore_StructThis(mIntegrador,mValoramento);
+                    Valore_StructThis mValore_StructThis = new Valore_StructThis(mIntegrador, mValoramento);
 
                     mValore_StructThis.emInternal(ePrefixo + "\t", mAST.getBranch("INTERNAL"), mIntegralizante, mEscopo);
 
@@ -149,7 +149,7 @@ public class Valore_Escopo {
 
             } else if (mAST.mesmoTipo("INTERNAL")) {
 
-                Valore_Struct mValore_Struct = new Valore_Struct(mIntegrador,mValoramento);
+                Valore_Struct mValore_Struct = new Valore_Struct(mIntegrador, mValoramento);
 
                 mValore_Struct.emInternal(ePrefixo, mAST, mIntegralizante, mEscopo);
 
@@ -162,6 +162,9 @@ public class Valore_Escopo {
                 Escopante mAqui = new Escopante("EACH");
                 mAqui.setAnterior(mEscopo);
 
+                if (!mAqui.existeRefer("Iterador")) {
+                    mIntegrador.getErros().add(mAqui.getRegressivo() + " : Precisa incluir Refer Iterador ! ");
+                }
 
                 AST eDef = mAST.getBranch("DEF");
 
@@ -176,7 +179,7 @@ public class Valore_Escopo {
 
                 for (AST od : mAST.getBranch("BODY").getASTS()) {
 
-                    atribuicao_escopo(ePrefixo, od, mIntegralizante,mAqui);
+                    atribuicao_escopo(ePrefixo, od, mIntegralizante, mAqui);
 
                 }
 
@@ -205,7 +208,7 @@ public class Valore_Escopo {
 
                 mValoramento.obterVarArgumentos(mAST.getBranch("ARGUMENTS"), mAqui);
 
-                atribuicao_escopo(ePrefixo + "\t", mAST.getBranch("BODY"), mIntegralizante,mAqui);
+                atribuicao_escopo(ePrefixo + "\t", mAST.getBranch("BODY"), mIntegralizante, mAqui);
 
             } else if (mAST.mesmoTipo("EXECUTE_LOCAL")) {
 
@@ -242,7 +245,7 @@ public class Valore_Escopo {
                 Escopante mAqui = new Escopante("LOOP");
                 mAqui.setAnterior(mEscopo);
 
-                getValore_Escopo().atribuicao_escopo(ePrefixo + "\t", mAST.getBranch("BODY"),mIntegralizante, mAqui);
+                getValore_Escopo().atribuicao_escopo(ePrefixo + "\t", mAST.getBranch("BODY"), mIntegralizante, mAqui);
 
             } else if (mAST.mesmoTipo("SCOPE")) {
 
@@ -252,27 +255,24 @@ public class Valore_Escopo {
                 mAqui.setAnterior(mEscopo);
 
 
-                getValore_Escopo().atribuicao_escopo(ePrefixo + "\t", mAST,mIntegralizante, mAqui);
-
-
-
+                getValore_Escopo().atribuicao_escopo(ePrefixo + "\t", mAST, mIntegralizante, mAqui);
 
 
             } else if (mAST.mesmoTipo("EXTERN_REFERED")) {
 
                 mIntegrador.mensagem(ePrefixo + "EXTERN_REFERED ");
 
-                String mExternRefered =mAST.getNome();
+                String mExternRefered = mAST.getNome();
                 String mStruct = mAST.getBranch("STRUCT").getNome();
                 String mRefered = mAST.getBranch("REFERED").getNome();
 
                 mIntegrador.mensagem(ePrefixo + "\t - Extern Refered : " + mAST.getNome());
                 mIntegrador.mensagem(ePrefixo + "\t - Struct : " + mStruct);
-                mIntegrador.mensagem(ePrefixo + "\t - Refered : "+mRefered);
+                mIntegrador.mensagem(ePrefixo + "\t - Refered : " + mRefered);
 
                 if (mEscopo.existeNesse(mExternRefered)) {
 
-                    mIntegrador.mensagem(ePrefixo +" Argumento Duplicado : " + mExternRefered);
+                    mIntegrador.mensagem(ePrefixo + " Argumento Duplicado : " + mExternRefered);
                     mIntegrador.getErros().add("Argumento Duplicado : " + mExternRefered);
 
                 } else {
@@ -280,10 +280,9 @@ public class Valore_Escopo {
                 }
 
 
-
                 if (mIntegralizante.existeExtern(mStruct)) {
 
-                }else{
+                } else {
                     mIntegrador.errar("Struct desconhecida : " + mEscopo.getRegressivo() + " :: " + mStruct);
                 }
 

@@ -13,11 +13,8 @@ act inicio ( )  {
 	ref_janelador ( t )  ;
 	#invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK; #ref_janelador(ale()); #invoke __COMPILER__ -> SHOW_GLOBAL ( ) :: STACK;
 	moc X : int = 3  ;
-
 	#ref_janelador(X);
-
-	constar(5);
-
+	constar ( 5 )  ;
 }
 
 act passador ( a : int )  {
@@ -45,5 +42,4 @@ func ale ( ) : int  {
 
 act constar ( moc a : int )  {
 	DEBUG -> REGRESSIVE :: ALL  ;
-
 }

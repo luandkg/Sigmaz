@@ -107,7 +107,6 @@ public class Montador {
         CASTCabecalho = ASTCabecalho;
         CASTCodigo = ASTCodigo;
         ASTDebug=eASTDebug;
-
         mArquivo = eArquivo;
 
 

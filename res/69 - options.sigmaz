@@ -9,29 +9,20 @@ call iniciar ->  {
 	fofocar ( w )  ;
 	fofocar ( )  ;
 	def ga : num = gral ( 5.0 )  ;
-
-	opcional(3);
-	opcional();
-
-
+	opcional ( 3 )  ;
+	opcional ( )  ;
 	DEBUG -> REGRESSIVE :: STACK  ;
 	DEBUG -> REGRESSIVE :: STACK  ;
-
-	DEBUG -> REGRESSIVE :: FUNCTIONS;
+	DEBUG -> REGRESSIVE :: FUNCTIONS  ;
 }
 
-
-
-
-act fofocar (  opt ref r : num = 50.0 , opt a : int = 5 )  {
+act fofocar ( opt ref r : num = 50.0 , opt a : int = 5 )  {
 	DEBUG -> REGRESSIVE :: STACK  ;
 }
 
-act opcional(opt moc opcional_const : int = 5) {
+act opcional ( opt moc opcional_const : int = 5 )  {
 	DEBUG -> LOCAL :: STACK  ;
 }
-
-
 
 func bla ( ) : num  {
 	return som ( 2.0 , false )  ;
@@ -41,12 +32,11 @@ func som ( g : num , opt v : bool = false ) : num  {
 	return g  ;
 }
 
-
 act algo ( opt a : num = 5.0 )  {
 	DEBUG -> REGRESSIVE :: ACTIONS  ;
 }
 
-act duplo ( opt a : num = 5.0 , opt b : int = 2)  {
+act duplo ( opt a : num = 5.0 , opt b : int = 2 )  {
 	DEBUG -> REGRESSIVE :: ACTIONS  ;
 }
 
@@ -63,11 +53,8 @@ func gral ( g : num , opt ref v : bool = false ) : num  {
 	return g  ;
 }
 
-act correr(a:int, opt b : int = 4, opt c : num = 6.0){
-
+act correr ( a : int , opt b : int = 4 , opt c : num = 6.0 )  {
 }
-
-
 package COX  {
 	struct Coxa  {
 		all :

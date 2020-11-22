@@ -34,7 +34,7 @@ public class SigmazTestes {
 
         System.out.println("");
 
-        System.out.println("################ " + eTitulo + " ################");
+        System.out.println("############################ " + eTitulo + " ############################");
 
         Chronos mChronos = new Chronos();
 
@@ -85,7 +85,7 @@ public class SigmazTestes {
             SigmazC.setMostrar_Integracao(true);
             SigmazC.setMostrar_Debugador(false);
 
-            SigmazC.init(Arquivo, mSaida, mLocalLibs, 1,false);
+            SigmazC.init(Arquivo, mSaida, mLocalLibs, 1, false);
 
 
             if (SigmazC.temErros()) {
@@ -166,7 +166,7 @@ public class SigmazTestes {
 
             if (mTeste.tudoOk()) {
 
-                System.out.println(" Arquivo : " + sContador + " -> " + mTeste.getArquivo() + " : SUCESSO ");
+                System.out.println(getTextoOrganizado(" Arquivo : " + sContador + " -> " + mTeste.getArquivo(), 55, " : SUCESSO "));
 
                 if (isPrimeiro) {
                     isPrimeiro = false;
@@ -174,8 +174,8 @@ public class SigmazTestes {
                     mMaisRapido = mTempoCorrente.getIntervalo();
                     mMaisDevagar = mTempoCorrente.getIntervalo();
 
-                    mLocalRapido=mTeste.getArquivo();
-                    mLocalDevagar=mTeste.getArquivo();
+                    mLocalRapido = mTeste.getArquivo();
+                    mLocalDevagar = mTeste.getArquivo();
 
                 } else {
 
@@ -183,19 +183,19 @@ public class SigmazTestes {
 
                     if (mTempoCorrente.getIntervalo() > mMaisDevagar) {
                         mMaisDevagar = mTempoCorrente.getIntervalo();
-                        mLocalDevagar=mTeste.getArquivo();
+                        mLocalDevagar = mTeste.getArquivo();
                     }
 
                     if (mTempoCorrente.getIntervalo() < mMaisRapido) {
                         mMaisRapido = mTempoCorrente.getIntervalo();
-                        mLocalRapido=mTeste.getArquivo();
+                        mLocalRapido = mTeste.getArquivo();
                     }
 
                 }
 
             } else {
 
-                System.out.println(" Arquivo : " + sContador + " -> " + mTeste.getArquivo() + " : FALHOU -> " + mTeste.getProblema());
+                System.out.println(getTextoOrganizado(" Arquivo : " + sContador + " -> " + mTeste.getArquivo(), 55, " : FALHOU -> " + mTeste.getProblema()));
                 System.out.println(mTeste.getComplemento().getConteudo());
 
             }
@@ -218,7 +218,7 @@ public class SigmazTestes {
 
         if (mSequenciadorDeTestes.getTotal() > 0) {
 
-            if (isVelocidades){
+            if (isVelocidades) {
 
                 System.out.println(" - VELOCIDADES ");
 
@@ -235,7 +235,6 @@ public class SigmazTestes {
             System.out.println(" - TESTES  	: " + mSequenciadorDeTestes.getTotal() + " -> 100.00 % ");
             System.out.println("\t - SUCESSO  : " + mSequenciadorDeTestes.getCorretos().size() + " -> " + s);
             System.out.println("\t - FALHOU  	: " + mSequenciadorDeTestes.getProblemas().size() + " -> " + f);
-
 
 
             if (mSequenciadorDeTestes.temProblemas()) {
@@ -264,4 +263,12 @@ public class SigmazTestes {
         return formatarFloat.format(s).replace(",", ".") + " % ";
     }
 
+    public String getTextoOrganizado(String eAntes, int eTamanho, String eDepois) {
+        String ret = eAntes;
+        while (ret.length() < eTamanho) {
+            ret += " ";
+        }
+        ret += eDepois;
+        return ret;
+    }
 }

@@ -21,13 +21,16 @@ call iniciar -> {
 	def Lobinho_Fuc_especie : string = Lobinho_Fuc.getEspecie();
 	
 	Gatinho_Ana.envelhecer(3);
+
 	def Gatinho_Ana_idade : int = Gatinho_Ana.getIdade();
 	def Gatinho_Ana_especie : string = Gatinho_Ana.getEspecie();
 	def mamifero_1 : Mamifero = Gatinho_Ana;
 	def mamifero_2 : Mamifero = Lobinho_Fuc;
 	def Tartaruga_Carlos : Tartaruga = init Tartaruga('Carlos',112);
 	def reptil_1 : Reptil = Tartaruga_Carlos;
+
 	gato_envelhecer(Gatinho_Ana);
+
 	def Gatinho_Ana_idade2 : int = Gatinho_Ana.getIdade();
 
 	DEBUG -> LOCAL :: STACK;

@@ -49,10 +49,10 @@ public class AppSigmaz {
 
         boolean mDebugar = true;
 
-        int ARQUIVO = 86;
+        int ARQUIVO = 44;
 
 
-        switch (SigmazApp.TESTES) {
+        switch (SigmazApp.COMPILAR_E_EXECUTAR_DETALHADO) {
 
             case ORDENADOR -> AppSigmazUtils.ORDENADOR(mLocal);
 
@@ -113,9 +113,7 @@ public class AppSigmaz {
 
         //  mWindows.setIconImage(Imaginador.CarregarStream(Local.Carregar("editor.png")));
 
-        SigmazUICompilador eSigmazUICompilador = new SigmazUICompilador(mWindows);
-
-        mWindows.CriarCenarioAplicavel(eSigmazUICompilador);
+        mWindows.CriarCenarioAplicavel(new SigmazUICompilador(mWindows));
 
         Thread mThread = new Thread(mWindows);
         mThread.start();

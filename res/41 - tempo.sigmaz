@@ -1,6 +1,4 @@
-import
-"libs/lib.sigmaz"
-;
+import "libs/lib.sigmaz" ;
 
 call iniciar -> inicio ( )  ;
 refer Tempo  ;
