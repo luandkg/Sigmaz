@@ -601,3 +601,9 @@ Linguagem de Programação Estruturada - Implementações
 
 		2020 11 22 -->> Verificar se Each tem Refer Iterador
 
+
+		2021 01 10 -->> Arquivo - Criar
+		2021 01 10 -->> Arquivo - Abrir
+		2021 01 10 -->> Arquivo - Escrever Texto
+		2021 01 10 -->> Arquivo - Fechar
+

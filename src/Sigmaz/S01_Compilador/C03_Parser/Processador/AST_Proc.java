@@ -115,6 +115,21 @@ public class AST_Proc {
                 AST_Instrucao mAST = new AST_Instrucao(mCompiler);
                 mAST.init(AST_Corrente);
 
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("OPEN")) {
+
+                AST_Instrucao mAST = new AST_Instrucao(mCompiler);
+                mAST.init(AST_Corrente);
+
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("OPEN_OR_CREATE")) {
+
+                AST_Instrucao mAST = new AST_Instrucao(mCompiler);
+                mAST.init(AST_Corrente);
+
+
+            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo_SemCS("CLOSE")) {
+
+                AST_Instrucao mAST = new AST_Instrucao(mCompiler);
+                mAST.init(AST_Corrente);
 
             } else {
 

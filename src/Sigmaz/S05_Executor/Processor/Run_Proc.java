@@ -4,6 +4,8 @@ import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S05_Executor.Escopo;
 import Sigmaz.S05_Executor.RunTime;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -91,7 +93,6 @@ public class Run_Proc {
                 instrucao_NUM_DEC(mAST);
 
 
-
             } else if (mAST.mesmoTipo("PRINT")) {
 
                 instrucao_PRINT(mAST);
@@ -100,6 +101,18 @@ public class Run_Proc {
             } else if (mAST.mesmoTipo("INVOKE")) {
 
                 instrucao_PROC(mAST);
+
+            } else if (mAST.mesmoTipo("OPEN")) {
+
+                instrucao_OPEN(mAST);
+
+            } else if (mAST.mesmoTipo("OPEN_OR_CREATE")) {
+
+                instrucao_OPEN_OR_CREATE(mAST);
+
+            } else if (mAST.mesmoTipo("CLOSE")) {
+
+                instrucao_CLOSE(mAST);
 
             } else {
 
@@ -165,84 +178,82 @@ public class Run_Proc {
 
     }
 
-    public void instrucao_INT_STRING(AST eAST){
+    public void instrucao_INT_STRING(AST eAST) {
 
         Registrado eConteudo = getConteudo(eAST);
 
-        if(eConteudo.getTipo().contentEquals("Inteiro")){
+        if (eConteudo.getTipo().contentEquals("Inteiro")) {
             Registrado mRegistrado = new Registrado();
-            mRegistrado.atribuir(eConteudo.getConteudo(),"Texto");
+            mRegistrado.atribuir(eConteudo.getConteudo(), "Texto");
 
             mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mRegistrado);
 
-        }else{
+        } else {
             mRunTime.errar(mLocal, "Processador - A Instrucao INT_STRING so executa com inteiros !");
         }
 
 
-
-
     }
 
-    public void instrucao_NUM_STRING(AST eAST){
+    public void instrucao_NUM_STRING(AST eAST) {
 
         Registrado eConteudo = getConteudo(eAST);
 
-        if(eConteudo.getTipo().contentEquals("Real")){
+        if (eConteudo.getTipo().contentEquals("Real")) {
             Registrado mRegistrado = new Registrado();
-            mRegistrado.atribuir(eConteudo.getConteudo(),"Texto");
+            mRegistrado.atribuir(eConteudo.getConteudo(), "Texto");
 
             mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mRegistrado);
 
-        }else{
+        } else {
             mRunTime.errar(mLocal, "Processador - A Instrucao NUM_STRING so executa com reais !");
         }
 
     }
 
-    public void instrucao_BOOL_STRING(AST eAST){
+    public void instrucao_BOOL_STRING(AST eAST) {
 
         Registrado eConteudo = getConteudo(eAST);
 
-        if(eConteudo.getTipo().contentEquals("Logico")){
+        if (eConteudo.getTipo().contentEquals("Logico")) {
             Registrado mRegistrado = new Registrado();
-            mRegistrado.atribuir(eConteudo.getConteudo(),"Texto");
+            mRegistrado.atribuir(eConteudo.getConteudo(), "Texto");
 
             mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mRegistrado);
 
-        }else{
+        } else {
             mRunTime.errar(mLocal, "Processador - A Instrucao BOOL_STRING so executa com logicos !");
         }
 
     }
 
-    public void instrucao_BOOL_INVERSE(AST eAST){
+    public void instrucao_BOOL_INVERSE(AST eAST) {
 
         Registrado eConteudo = getConteudo(eAST);
 
-        if(eConteudo.getTipo().contentEquals("Logico")){
+        if (eConteudo.getTipo().contentEquals("Logico")) {
             Registrado mRegistrado = new Registrado();
 
-            if (eConteudo.getConteudo().contentEquals("true")){
-                mRegistrado.atribuir("false","Logico");
-            }else{
-                mRegistrado.atribuir("true","Logico");
+            if (eConteudo.getConteudo().contentEquals("true")) {
+                mRegistrado.atribuir("false", "Logico");
+            } else {
+                mRegistrado.atribuir("true", "Logico");
             }
 
             mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mRegistrado);
 
-        }else{
+        } else {
             mRunTime.errar(mLocal, "Processador - A Instrucao BOOL_INVERSE so executa com logicos !");
         }
 
     }
 
 
-    public void instrucao_NUM_INT(AST eAST){
+    public void instrucao_NUM_INT(AST eAST) {
 
         Registrado eConteudo = getConteudo(eAST);
 
-        if(eConteudo.getTipo().contentEquals("Real")){
+        if (eConteudo.getTipo().contentEquals("Real")) {
 
             String s = String.valueOf(eConteudo.getConteudo());
             String inteiro = "";
@@ -260,24 +271,22 @@ public class Run_Proc {
             }
 
 
-
             Registrado mRegistrado = new Registrado();
-            mRegistrado.atribuir(inteiro + ".0","Real");
+            mRegistrado.atribuir(inteiro + ".0", "Real");
 
             mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mRegistrado);
 
-        }else{
+        } else {
             mRunTime.errar(mLocal, "Processador - A Instrucao NUM_INT so executa com Reais !");
         }
 
     }
 
-    public void instrucao_NUM_DEC(AST eAST){
+    public void instrucao_NUM_DEC(AST eAST) {
 
         Registrado eConteudo = getConteudo(eAST);
 
-        if(eConteudo.getTipo().contentEquals("Real")){
-
+        if (eConteudo.getTipo().contentEquals("Real")) {
 
 
             String p1 = eConteudo.getConteudo();
@@ -312,31 +321,29 @@ public class Run_Proc {
             }
 
 
-
             Registrado mRegistrado = new Registrado();
-            mRegistrado.atribuir("0." + inteiro,"Real");
+            mRegistrado.atribuir("0." + inteiro, "Real");
 
             mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mRegistrado);
 
-        }else{
+        } else {
             mRunTime.errar(mLocal, "Processador - A Instrucao NUM_DEC so executa com Reais !");
         }
 
     }
 
 
-
-    public void instrucao_PRINT(AST eAST){
+    public void instrucao_PRINT(AST eAST) {
 
         Registrado eConteudo = getConteudo(eAST);
 
-        if(eConteudo.getTipo().contentEquals("Texto")){
+        if (eConteudo.getTipo().contentEquals("Texto")) {
 
-        if (mRunTime.getVisibilidade()){
-            System.out.print(eConteudo.getConteudo());
-        }
+            if (mRunTime.getVisibilidade()) {
+                System.out.print(eConteudo.getConteudo());
+            }
 
-        }else{
+        } else {
             mRunTime.errar(mLocal, "Processador - A Instrucao NUM_STRING so executa com reais !");
         }
 
@@ -546,13 +553,15 @@ public class Run_Proc {
         } else if (eOperador.contentEquals("UNCONTENT")) {
             operador_Texto_Logico(eOperador, eConteudo_Direita, eConteudo_Esquerda);
 
+        } else if (eOperador.contentEquals("DATA")) {
+            operador_Inteiro_Texto(eOperador, eConteudo_Direita, eConteudo_Esquerda);
+
 
         } else {
 
             mRunTime.errar(mLocal, "Processador - Operador desconhecido : " + eOperador);
 
         }
-
 
 
     }
@@ -968,7 +977,6 @@ public class Run_Proc {
                     mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mReg);
 
 
-
                 } else {
 
                     mRunTime.errar(mLocal, "Processador - Operador desconhecido : " + eOperador);
@@ -1114,6 +1122,132 @@ public class Run_Proc {
     }
 
 
+    public void operador_Inteiro_Texto(String eOperador, Registrado eDireita, Registrado eEsquerda) {
+
+
+        if (eDireita.getTipo().contentEquals("Inteiro")) {
+            if (eEsquerda.getTipo().contentEquals("Texto")) {
+
+                String A = "";
+                String B = "";
+
+                try {
+                    A = eDireita.getConteudo();
+                } catch (Exception e) {
+                    mRunTime.errar(mLocal, "A instrucao " + eOperador + " nao pode ser realizada com valor do tipo : " + eDireita.getTipo());
+                    return;
+                }
+
+                try {
+                    B = eEsquerda.getConteudo();
+                } catch (Exception e) {
+                    mRunTime.errar(mLocal, "A instrucao " + eOperador + " nao pode ser realizada com valor do tipo : " + eEsquerda.getTipo());
+                    return;
+                }
+
+                if (eOperador.contentEquals("DATA")) {
+
+                    System.out.println("Bora Escrever :: " + B + " em " + A);
+
+                    mRunTime.getTabelaDeArquivos().escrever(Integer.parseInt(A), B);
+
+                } else {
+
+                    mRunTime.errar(mLocal, "Processador - Operador desconhecido : " + eOperador);
+
+                }
+
+
+            } else {
+                mRunTime.errar(mLocal, "A instrucao " + eOperador + " nao pode ser realizada com valor do tipo : " + eEsquerda.getTipo());
+            }
+        } else {
+            mRunTime.errar(mLocal, "A instrucao " + eOperador + " nao pode ser realizada com valor do tipo : " + eDireita.getTipo());
+        }
+
+    }
+
+
+    public void instrucao_OPEN(AST eAST) {
+
+        Registrado eConteudo = getConteudo(eAST);
+
+        if (eConteudo.getTipo().contentEquals("Texto")) {
+            Registrado mRegistrado = new Registrado();
+
+            String eArquivo = eConteudo.getConteudo();
+
+            int eFD = -1;
+
+            if (new File(eArquivo).exists()) {
+                eFD = mRunTime.getTabelaDeArquivos().abrir(eArquivo);
+                System.out.println("Abrindo arquivo :: " + eArquivo + " -->> " + eFD);
+            }
+
+            mRegistrado.atribuir(String.valueOf(eFD), "Inteiro");
+
+            mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mRegistrado);
+
+        } else {
+            mRunTime.errar(mLocal, "Processador - A Instrucao OPEN so executa com textos !");
+        }
+
+    }
+
+    public void instrucao_OPEN_OR_CREATE(AST eAST) {
+
+        Registrado eConteudo = getConteudo(eAST);
+
+        if (eConteudo.getTipo().contentEquals("Texto")) {
+            Registrado mRegistrado = new Registrado();
+
+            String eArquivo = eConteudo.getConteudo();
+
+            int eFD = -1;
+
+            if (new File(eArquivo).exists()) {
+                eFD = mRunTime.getTabelaDeArquivos().abrir(eArquivo);
+                mRegistrado.atribuir(String.valueOf(eFD), "Inteiro");
+                System.out.println("Abrindo arquivo :: " + eArquivo + " -->> " + eFD);
+            } else {
+
+                try {
+                    new File(eArquivo).createNewFile();
+                    eFD = mRunTime.getTabelaDeArquivos().abrir(eArquivo);
+                    mRegistrado.atribuir(String.valueOf(eFD), "Inteiro");
+                    System.out.println("Abrindo arquivo :: " + eArquivo + " -->> " + eFD);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mRegistrado);
+
+        } else {
+            mRunTime.errar(mLocal, "Processador - A Instrucao OPEN_OR_CREATE so executa com texto !");
+        }
+
+    }
+
+    public void instrucao_CLOSE(AST eAST) {
+
+        Registrado eConteudo = getConteudo(eAST);
+
+        if (eConteudo.getTipo().contentEquals("Inteiro")) {
+
+            String eArquivo = eConteudo.getConteudo();
+
+            mRunTime.getTabelaDeArquivos().fechar(Integer.parseInt(eArquivo));
+
+            //  mRunTime.getProcessador().aplicar(mRunTime.getProcessador().getApontando(), mRegistrado);
+
+        } else {
+            mRunTime.errar(mLocal, "Processador - A Instrucao CLOSE so executa com inteiro !");
+        }
+
+    }
+
     public void instrucao_PROC(AST eAST) {
 
 
@@ -1129,7 +1263,7 @@ public class Run_Proc {
 
             } else if (eAST.mesmoNome_SCS("CHANGE_LINE")) {
 
-                if (mRunTime.getVisibilidade()){
+                if (mRunTime.getVisibilidade()) {
                     System.out.print("\n");
                 }
 
@@ -1161,8 +1295,7 @@ public class Run_Proc {
 
                 Calendar c = Calendar.getInstance();
 
-               int ano = c.get(Calendar.YEAR);
-
+                int ano = c.get(Calendar.YEAR);
 
 
                 Registrado mReg = new Registrado();
@@ -1184,7 +1317,7 @@ public class Run_Proc {
 
                 Calendar c = Calendar.getInstance();
 
-              int minutos = c.get(Calendar.MINUTE);
+                int minutos = c.get(Calendar.MINUTE);
 
 
                 Registrado mReg = new Registrado();
@@ -1195,7 +1328,7 @@ public class Run_Proc {
 
                 Calendar c = Calendar.getInstance();
 
-              int segundos = c.get(Calendar.SECOND);
+                int segundos = c.get(Calendar.SECOND);
 
 
                 Registrado mReg = new Registrado();

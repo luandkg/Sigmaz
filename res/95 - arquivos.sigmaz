@@ -1,0 +1,138 @@
+call Arquivar ->  {
+
+
+   # criarOuSalvarArquivoTexto("res/build/texto.txt","Oi...");
+
+    def arquivo : ArquivoTexto = init ArquivoTexto("res/build/texto.txt");
+
+    arquivo.exportar("Oi...");
+
+    arquivo.abrir();
+    arquivo.escrever("Luan Alves Freitas");
+    arquivo.fechar();
+
+
+	DEBUG -> REGRESSIVE :: STACK  ;
+
+}
+
+act criarOuSalvarArquivoTexto(mLocal:string,mConteudo:string){
+
+            reg @ R13 -> mLocal;
+            reg @ R14 -> mConteudo;
+
+            proc -> {
+                		SET R5;
+                		MOV -1;
+                		OPEN_OR_CREATE R13;
+                		OPE R5 DATA R14;
+                		CLOSE R5;
+
+            }
+
+}
+
+struct ArquivoTexto {
+
+    init ArquivoTexto(eLocal:string){
+        mLocal =eLocal;
+    }
+
+    all:
+        act abrir(){
+
+            reg @R5 -> -1;
+            reg @ R13 -> mLocal;
+
+            proc -> {
+                		SET R5;
+                		MOV -1;
+                		OPEN R13;
+            }
+
+            FD = reg @R5;
+
+        }
+        act escrever(eConteudo:string){
+
+            if (FD !! -1) -> {
+
+            reg @R5 -> FD;
+            reg @ R13 -> eConteudo;
+
+            proc -> {
+                		OPE R5 DATA R13;
+            }
+
+            }others{
+                exception "Arquivo nao aberto :: " && mLocal;
+            }
+        }
+
+        act fechar(){
+
+           if (FD !! -1) -> {
+
+                reg @R5 -> FD;
+
+                proc -> {
+                    CLOSE R5;
+                }
+
+                FD = -1;
+
+            }others{
+                exception "Arquivo nao aberto :: " && mLocal;
+            }
+
+
+
+        }
+
+        act exportar(mConteudo:string){
+
+                    reg @ R13 -> mLocal;
+                    reg @ R14 -> mConteudo;
+
+                    proc -> {
+                        		SET R5;
+                        		MOV -1;
+                        		OPEN_OR_CREATE R13;
+                        		OPE R5 DATA R14;
+                        		CLOSE R5;
+
+                    }
+
+        }
+
+
+    restrict:
+        define FD : int = -1;
+        define mLocal : string = "";
+}
+
+
+
+
+
+operator !! ( a : int , b : int ) : bool {
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 DIFF R6;
+	}
+	return reg @ R1;
+}
+
+
+operator && ( a : string , b : string ) : string {
+	reg @ R13 -> a;
+	reg @ R14 -> b;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
+}

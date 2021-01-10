@@ -8,6 +8,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S05_Executor.Processor.TabelaDeArquivos;
 
 public class RunTime {
 
@@ -44,6 +45,7 @@ public class RunTime {
     private float mTempo_Inicializacao;
 
     private boolean mIsDebug;
+    private TabelaDeArquivos mTabelaDeArquivos;
 
     public RunTime() {
 
@@ -78,6 +80,12 @@ public class RunTime {
         mIsDebug = false;
         mASTDebug = null;
 
+        mTabelaDeArquivos = new TabelaDeArquivos();
+
+    }
+
+    public TabelaDeArquivos getTabelaDeArquivos() {
+        return mTabelaDeArquivos;
     }
 
     public ArrayList<AST> getASTDebug() {
@@ -407,7 +415,7 @@ public class RunTime {
             String mArquivo = eArquivo;
 
             for (AST eD : mASTDebug) {
-                for(AST oD : eD.getASTS()){
+                for (AST oD : eD.getASTS()) {
                     if (oD.mesmoNome(eArquivo)) {
                         mArquivo = oD.getValor();
                         break;

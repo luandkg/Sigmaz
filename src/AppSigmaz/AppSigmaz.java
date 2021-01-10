@@ -14,7 +14,6 @@ import java.util.ArrayList;
 public class AppSigmaz {
 
 
-
     public static void main(String[] args) {
 
 
@@ -49,7 +48,7 @@ public class AppSigmaz {
 
         boolean mDebugar = true;
 
-        int ARQUIVO = 44;
+        int ARQUIVO = 95;
 
 
         switch (SigmazApp.COMPILAR_E_EXECUTAR_DETALHADO) {

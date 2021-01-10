@@ -1,16 +1,26 @@
 call StructsWithGeneric ->  {
+
 	def a1 : ChaveValor >> ( int , int ) = init ChaveValor ( ) >> ( int , int )  ;
+
 	def b : Par >> ( int , bool ) = init Par ( ) >> ( int , bool )  ;
 	def c : Associado >> ( bool ) = init Associado ( ) >> ( bool )  ;
 	def d : IntPar = init IntPar ( )  ;
 	def d1 : int = d . getValor ( )  ;
+
+	mut g = 12;
+
+    let g2 = 34;
+
 	DEBUG -> REGRESSIVE :: STACK  ;
+
 }
 
+
 act colocar_valor ( cv : ChaveValor >> ( string , string ) , chave : string , valor : string )  {
-	cv . setChave ( chave )  ;
-	cv . setValor ( valor )  ;
+	cv.setChave ( chave )  ;
+	cv.setValor ( valor )  ;
 }
+
 struct ChaveValor in ( A , B )  {
 	restrict :
 		define Chave : A  ;
@@ -47,4 +57,27 @@ struct IntPar with ChaveValor >> ( int , int )  {
 	
 	init IntPar ( ) -> ChaveValor ( )  {
 	}
+}
+
+
+operator !! ( a : int , b : int ) : bool {
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R1;
+		MOV FALSE;
+		OPE R5 DIFF R6;
+	}
+	return reg @ R1;
+}
+
+
+operator && ( a : string , b : string ) : string {
+	reg @ R13 -> a;
+	reg @ R14 -> b;
+	PROC -> {
+		SET R13;
+		APPEND R14;
+	}
+	return reg @ R13;
 }

@@ -38,8 +38,6 @@ act inicio ( )  {
 	each a : int  :: (vetor) -> {
 
 	    	DEBUG -> LOCAL :: STACK  ;
-
-
 	}
 
 	DEBUG -> LOCAL :: STACK  ;
