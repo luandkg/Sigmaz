@@ -130,6 +130,7 @@ public class SigmazUICompilador extends Cena {
     public void draw(Graphics g) {
 
         mWindows.Limpar(g);
+
         BTN_CRIAR.draw(g);
 
         g.setColor(Color.RED);

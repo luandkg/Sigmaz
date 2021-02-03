@@ -1,0 +1,21 @@
+
+require constaz ;
+
+package Tronarko{
+
+    refer Constaz;
+
+    struct Tronarko {
+
+        all:
+            func getSuperarko() : int { return 1;}
+            func getHiperarko() : int { return 1;}
+            func getTronarko() : int {
+
+                def eConstaz : Constaz = init Constaz();
+                return eConstaz.getValor();
+            }
+
+    }
+
+}

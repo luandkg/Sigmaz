@@ -1,6 +1,7 @@
 package Sigmaz.S05_Executor;
 
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S00_Utilitarios.Contador;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -14,6 +15,25 @@ public class Run_Required {
     public Run_Required(RunTime eRunTime) {
         mRunTime = eRunTime;
         mLocal = "Run_Required";
+    }
+
+    public ArrayList<String> getBibliotecas(AST eAST, String mLocalLibs) {
+
+        ArrayList<String> mBibliotecas = new ArrayList<String>();
+
+        for (AST ASTC : eAST.getASTS()) {
+            if (ASTC.mesmoTipo("REQUIRED")) {
+
+                String mReq = mLocalLibs + ASTC.getNome() + ".sigmad";
+
+                if (!mBibliotecas.contains(mReq)) {
+                    mBibliotecas.add(mReq);
+                }
+            }
+
+        }
+
+        return mBibliotecas;
     }
 
     public void requerer(AST eSigmaz) {
@@ -31,64 +51,90 @@ public class Run_Required {
         }
 
 
-        ArrayList<String> mRequiscoes = new ArrayList<>();
 
-        int i = 0;
-        int o = mReq.size();
-
-        while (i < o) {
-
-            AST ASTReq = mReq.get(i);
+        // IMPORTANDO BIBLIOTECAS EXTERNAS
 
 
-            String mLocalBiblioteca = mRunTime.getLocal_Bibliotecas() + ASTReq.getNome() + ".sigmad";
-
-            if (!mRequiscoes.contains(ASTReq.getNome())) {
-
-              //  System.out.println("Importando :: " + mLocalBiblioteca);
+        ArrayList<String> mBibliotecas = new ArrayList<String>();
 
 
-                mRequiscoes.add(mLocalBiblioteca);
+        for (String mBiblioteca : getBibliotecas(eSigmaz, mRunTime.getLocal_Bibliotecas())) {
 
-                File arq = new File(mLocalBiblioteca);
+            if (!mBibliotecas.contains(mBiblioteca)) {
+                mBibliotecas.add(mBiblioteca);
+            }
+
+        }
+
+
+        ArrayList<String> mRequisicoes_Unicamente = new ArrayList<>();
+
+        while (mBibliotecas.size() > 0) {
+
+            String mBiblioteca = mBibliotecas.get(0);
+
+            if (!mRequisicoes_Unicamente.contains(mBiblioteca)) {
+
+                mRequisicoes_Unicamente.add(mBiblioteca);
+
+                File arq = new File(mBiblioteca);
 
                 if (arq.exists()) {
-
 
                     RunTime RunTimeC = new RunTime();
 
                     try {
-                        RunTimeC.init(mLocalBiblioteca,mRunTime.isDebug());
+                        RunTimeC.init(mBiblioteca, false);
 
-                        AST mBiblioteca = RunTimeC.getBranch("SIGMAZ");
 
-                        if (ASTReq.getValor().contentEquals(RunTimeC.getShared())) {
+                        AST mBibliotecaAST = RunTimeC.getBranch("SIGMAZ");
 
-                            for (AST ASTR : mBiblioteca.getASTS()) {
 
-                                eSigmaz.getASTS().add(ASTR);
+                        for (String mBibliotecaSecundaria : getBibliotecas(mBibliotecaAST, mRunTime.getLocal_Bibliotecas())) {
 
+                            if (!mBibliotecas.contains(mBibliotecaSecundaria)) {
+                                mBibliotecas.add(mBibliotecaSecundaria);
                             }
 
-                        } else {
-                            mRunTime.errar(mLocal, "Biblioteca " + ASTReq.getNome() + " : Problema com Chave Compartilhada !");
+                        }
+
+
+                        Contador mContador = new Contador();
+                        mContador.init(mBibliotecaAST);
+
+                        for (AST ASTR : mBibliotecaAST.getASTS()) {
+
+                            eSigmaz.getASTS().add(ASTR);
+
                         }
 
 
                     } catch (Exception e) {
-                        mRunTime.errar(mLocal, "Biblioteca " + ASTReq.getNome() + " : Problema ao carregar !");
+
+                        mRunTime.errar(mLocal, "\t - Status : Corrompida");
+
+
+                        mRunTime.errar(mLocal, "Biblioteca " + mBiblioteca + " : Problema ao carregar !");
+
+                        for (String mLibErro : RunTimeC.getErros()) {
+                            mRunTime.errar(mLocal, "Biblioteca " + mBiblioteca + " : " + mLibErro);
+                        }
                     }
 
                 } else {
-                    mRunTime.errar(mLocal, "Biblioteca " + ASTReq.getNome() + " : Nao Encontrado !");
-                }
 
+                    mRunTime.errar(mLocal,"Biblioteca " + mBiblioteca + " : Nao encontrada !");
+
+                }
 
             }
 
 
-            i += 1;
+            mBibliotecas.remove(mBiblioteca);
+
         }
+
+
 
     }
 

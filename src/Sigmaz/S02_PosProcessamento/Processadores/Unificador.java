@@ -43,6 +43,8 @@ public class Unificador {
         mensagem(" ------------------ FASE UNIFICADOR ----------------------- ");
 
 
+
+
         for (AST mAST : mTodos) {
 
             if (mAST.mesmoTipo("SIGMAZ")) {

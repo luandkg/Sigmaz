@@ -1,0 +1,13 @@
+
+require lib  ;
+
+package Constaz{
+
+    struct Constaz {
+
+        all:
+            func getValor() : int { return 7000 ++ 1;}
+
+    }
+
+}

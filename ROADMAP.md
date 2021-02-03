@@ -607,3 +607,6 @@ Linguagem de Programação Estruturada - Implementações
 		2021 01 10 -->> Arquivo - Escrever Texto
 		2021 01 10 -->> Arquivo - Fechar
 
+
+		2021 02 03 -->> Carregamento de Bibliotecas recursivas
+

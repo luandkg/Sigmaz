@@ -33,6 +33,12 @@ public class AppSigmaz {
         String mBiblioteca_Fonte = "res/libs/lib.sigmaz";
         String mBiblioteca_Sigmad = "res/build/lib.sigmad";
 
+        String mBiblioteca_TronarkoFonte = "res/tron/tron.sigmaz";
+        String mBiblioteca_Tronarko = "res/build/tron.sigmad";
+
+        String mBiblioteca_ConstazFonte = "res/tron/constaz.sigmaz";
+        String mBiblioteca_Constaz = "res/build/constaz.sigmad";
+
 
         String mUML = "res/uml/uml.txt";
         String mIntellisense = "res/intellisenses/";
@@ -48,7 +54,7 @@ public class AppSigmaz {
 
         boolean mDebugar = true;
 
-        int ARQUIVO = 95;
+        int ARQUIVO = 44;
 
 
         switch (SigmazApp.COMPILAR_E_EXECUTAR_DETALHADO) {
@@ -80,6 +86,8 @@ public class AppSigmaz {
             case IDENTAR_BIBLIOTECAS -> AppSigmazUtils.IDENTAR_LOTE("BIBLIOTECAS", mBibliotecas);
 
             case MONTAR_BIBLIOTECAS -> AppSigmazUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad, mLocalLibs,mDebugar);
+            case MONTAR_BIB_TRONARKO -> AppSigmazUtils.MONTAR_BIBLIOTECA(mBiblioteca_TronarkoFonte, mBiblioteca_Tronarko, mLocalLibs,mDebugar);
+            case MONTAR_BIB_CONSTAZ -> AppSigmazUtils.MONTAR_BIBLIOTECA(mBiblioteca_ConstazFonte, mBiblioteca_Constaz, mLocalLibs,mDebugar);
 
             case INTELLISENSE -> AppSigmazUtils.INTELISENSE(ARQUIVO, mArquivos, mCompilado, mLocalLibs, mIntellisense);
             case INTELLISENSE_BIBLIOTECA -> AppSigmazUtils.INTELISENSE_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad, mLocalLibs, mIntellisense);

@@ -67,17 +67,43 @@ public class Local {
 
         ArrayList<Item> ls_Defines = new ArrayList<>();
         ArrayList<Item> ls_Constants = new ArrayList<>();
+        ArrayList<Item> ls_mutavel = new ArrayList<>();
 
         for (Item i : mEscopo.getStacks()) {
             if (i.getModo() == 0) {
                 ls_Defines.add(i);
-
             } else if (i.getModo() == 1) {
                 ls_Constants.add(i);
+            } else if (i.getModo() == 2) {
+                ls_mutavel.add(i);
             }
 
             // System.out.println("DEFINICAO :: " + i.getNome());
         }
+
+
+        if (ls_mutavel.size() > 0) {
+
+            System.out.println(" - MUTABLE : ");
+
+            System.out.println("\t - NAO NULOS : ");
+
+            for (Item i : ls_mutavel) {
+                if (!i.getNulo()) {
+                    mostrarItem(i);
+                }
+            }
+
+            System.out.println("\t - NULOS : ");
+            for (Item i : ls_mutavel) {
+
+                if (i.getNulo()) {
+                    mostrarItem(i);
+                }
+            }
+
+        }
+
 
         System.out.println(" - DEFINES : ");
 

@@ -62,9 +62,6 @@ public class Integrador {
         ArrayList<SigmazPackage> mPacotes = new ArrayList<SigmazPackage>();
 
 
-
-
-
         for (AST mAST : mTodos) {
 
             if (mAST.mesmoTipo("SIGMAZ")) {
@@ -102,6 +99,37 @@ public class Integrador {
         return mRequisicoes;
     }
 
+    public ArrayList<Ligacao> getBibliotecas(AST eAST, String mLocalLibs) {
+
+        ArrayList<Ligacao> mBibliotecas = new ArrayList<Ligacao>();
+
+        for (AST ASTC : eAST.getASTS()) {
+            if (ASTC.mesmoTipo("REQUIRED")) {
+
+                String mReq = mLocalLibs + ASTC.getNome() + ".sigmad";
+
+                if (!jaExiste(mBibliotecas,mReq)) {
+                    mBibliotecas.add(new Ligacao(mReq,ASTC));
+                }
+            }
+
+        }
+
+        return mBibliotecas;
+    }
+
+
+    public boolean jaExiste(ArrayList<Ligacao> mBibliotecas, String eBiblioteca) {
+        boolean ret = false;
+
+        for (Ligacao eLigacao : mBibliotecas) {
+            if (eLigacao.getBiblioteca().contentEquals(eBiblioteca)) {
+                ret = true;
+                break;
+            }
+        }
+        return ret;
+    }
 
     public void requisitar(ArrayList<AST> mTodos, String mLocalLibs) {
 
@@ -113,92 +141,119 @@ public class Integrador {
 
         // IMPORTANDO BIBLIOTECAS EXTERNAS
 
-        ArrayList<String> mRequisicoes_Unicamente = new ArrayList<>();
+
+        ArrayList<Ligacao> mBibliotecas = new ArrayList<Ligacao>();
 
 
         for (AST ASTCGlobal : mTodos) {
             if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
-                for (AST ASTC : ASTCGlobal.getASTS()) {
-                    if (ASTC.mesmoTipo("REQUIRED")) {
 
-                        String mReq = mLocalLibs + ASTC.getNome() + ".sigmad";
+                for (Ligacao mBiblioteca : getBibliotecas(ASTCGlobal, mLocalLibs)) {
 
-                        if (!mRequisicoes_Unicamente.contains(mReq)) {
-
-                            mRequisicoes_Unicamente.add(mReq);
-
-                            mensagem("Biblioteca Externa " + ASTC.getNome() + " -> " + mReq);
-
-
-                            File arq = new File(mReq);
-
-                            if (arq.exists()) {
-
-                                RunTime RunTimeC = new RunTime();
-
-                                try {
-                                    RunTimeC.init(mReq,false);
-
-
-                                    mRequisicoes.add(RunTimeC.getBranch("SIGMAZ"));
-
-
-                                    mensagem("\t - Encontrada : Sim");
-                                    mensagem("\t - Status : OK");
-                                    mensagem("\t - Chave : " + RunTimeC.getShared());
-
-
-                                    AST mBiblioteca = RunTimeC.getBranch("SIGMAZ");
-
-                                    Contador mContador = new Contador();
-                                    mContador.init(mBiblioteca);
-
-
-                                    ASTC.setValor(RunTimeC.getShared());
-
-
-                                    mensagem("");
-
-                                    mensagem("\t - Actions : " + mContador.getActions());
-                                    mensagem("\t - Functions : " + mContador.getFunctions());
-                                    mensagem("\t - Autos : " + mContador.getAutos());
-                                    mensagem("\t - Functors : " + mContador.getFunctors());
-                                    mensagem("\t - Casts : " + mContador.getCasts());
-                                    mensagem("\t - Stages : " + mContador.getStages());
-                                    mensagem("\t - Types : " + mContador.getTypes());
-                                    mensagem("\t - Structs : " + mContador.getStructs());
-                                    mensagem("\t - Models : " + mContador.getModels());
-                                    mensagem("\t - Externals : " + mContador.getExternals());
-                                    mensagem("\t - Packages : " + mContador.getPackages());
-
-
-                                } catch (Exception e) {
-
-                                    mensagem("\t - Status : Corrompida");
-
-
-                                    errar("Biblioteca " + mReq + " : Problema ao carregar !");
-
-                                    for (String mLibErro : RunTimeC.getErros()) {
-                                        errar("Biblioteca " + ASTC.getNome() + " : " + mLibErro);
-                                    }
-                                }
-
-                            } else {
-                                mensagem("\t - Encontrada : Nao");
-
-                                errar("Biblioteca " + mReq + " : Nao encontrada !");
-
-                            }
-
-                        }
-
-
+                    if (!jaExiste(mBibliotecas,mBiblioteca.getBiblioteca())) {
+                        mBibliotecas.add(mBiblioteca);
                     }
 
                 }
 
             }
+        }
+
+        ArrayList<String> mRequisicoes_Unicamente = new ArrayList<>();
+
+        while (mBibliotecas.size() > 0) {
+
+            Ligacao mBiblioteca = mBibliotecas.get(0);
+
+            if (!mRequisicoes_Unicamente.contains(mBiblioteca)) {
+                mensagem("Carregar Biblioteca : " + mBiblioteca);
+
+                mRequisicoes_Unicamente.add(mBiblioteca.getBiblioteca());
+
+                mensagem("Biblioteca Externa  -> " + mBiblioteca);
+
+
+                File arq = new File(mBiblioteca.getBiblioteca());
+
+                if (arq.exists()) {
+
+                    RunTime RunTimeC = new RunTime();
+
+                    try {
+                        RunTimeC.init(mBiblioteca.getBiblioteca(), false);
+
+
+                        mRequisicoes.add(RunTimeC.getBranch("SIGMAZ"));
+
+
+                        mensagem("\t - Encontrada : Sim");
+                        mensagem("\t - Status : OK");
+                        mensagem("\t - Chave : " + RunTimeC.getShared());
+
+
+                        AST mBibliotecaAST = RunTimeC.getBranch("SIGMAZ");
+
+
+                        for (Ligacao mBibliotecaSecundaria : getBibliotecas(mBibliotecaAST, mLocalLibs)) {
+
+                            if (!jaExiste(mBibliotecas,mBibliotecaSecundaria.getBiblioteca())) {
+                                mBibliotecas.add(mBibliotecaSecundaria);
+                            }
+
+                        }
+
+
+                        Contador mContador = new Contador();
+                        mContador.init(mBibliotecaAST);
+
+
+                        mBiblioteca.getAST().setValor(RunTimeC.getShared());
+
+                        if (mDebug) {
+
+                            mensagem("");
+
+                            mensagem("\t - Actions : " + mContador.getActions());
+                            mensagem("\t - Functions : " + mContador.getFunctions());
+                            mensagem("\t - Autos : " + mContador.getAutos());
+                            mensagem("\t - Functors : " + mContador.getFunctors());
+                            mensagem("\t - Casts : " + mContador.getCasts());
+                            mensagem("\t - Stages : " + mContador.getStages());
+                            mensagem("\t - Types : " + mContador.getTypes());
+                            mensagem("\t - Structs : " + mContador.getStructs());
+                            mensagem("\t - Models : " + mContador.getModels());
+                            mensagem("\t - Externals : " + mContador.getExternals());
+                            mensagem("\t - Packages : " + mContador.getPackages());
+
+                        }
+
+
+                    } catch (Exception e) {
+
+                        if (mDebug) {
+                            mensagem("\t - Status : Corrompida");
+                        }
+
+                        errar("Biblioteca " + mBiblioteca + " : Problema ao carregar !");
+
+                        for (String mLibErro : RunTimeC.getErros()) {
+                            errar("Biblioteca " + mBiblioteca + " : " + mLibErro);
+                        }
+                    }
+
+                } else {
+                    if (mDebug) {
+                        mensagem("\t - Encontrada : Nao");
+                    }
+                    errar("Biblioteca " + mBiblioteca + " : Nao encontrada !");
+
+                }
+
+            }
+
+
+            mBibliotecas.remove(mBiblioteca);
+
         }
 
 
@@ -265,7 +320,7 @@ public class Integrador {
 
         Escopante mEscopoGlobal = new Escopante("GLOBAL");
 
-        mValoramento.realizarValoramento("\t", mAST, mIntegralizante,mEscopoGlobal);
+        mValoramento.realizarValoramento("\t", mAST, mIntegralizante, mEscopoGlobal);
 
 
         for (SigmazPackage ePacote : mPacotes) {
@@ -288,7 +343,7 @@ public class Integrador {
             mEscopoPacote.setAnterior(mEscopoGlobal);
 
 
-            mValoramento.realizarValoramento("\t\t", ePacote.getAST(), mIntegralizantePackage,mEscopoPacote);
+            mValoramento.realizarValoramento("\t\t", ePacote.getAST(), mIntegralizantePackage, mEscopoPacote);
 
 
             if (mMensageiro.getErros().size() > 0) {

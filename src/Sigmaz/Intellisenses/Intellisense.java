@@ -339,7 +339,7 @@ public class Intellisense {
         g.drawString(eInfo, r.x + 40, r.y + b);
 
 
-        y += mAposTexto;
+        y += mAposTexto +20;
 
 
         return y;

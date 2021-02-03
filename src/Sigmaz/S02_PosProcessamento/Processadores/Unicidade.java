@@ -435,7 +435,30 @@ public class Unicidade {
             }
 
             if (!enc) {
-                errar("Pacote nao encontrado : " + eRefer);
+                for (AST mRequisicao : mAnalisador.getRequisicoes()) {
+
+                    for (AST mPackage : mRequisicao.getASTS()) {
+
+                        SigmazPackage ePacote = new SigmazPackage(mPackage);
+
+                        mensagem("passando por " + ePacote.getNome() + " atras de " + eNome);
+
+                        if (ePacote.getNome().contentEquals(eNome)) {
+                            v += getLocal(ePacote, eNome);
+                            enc = true;
+                            break;
+                        }
+
+                    }
+
+
+
+
+                }
+
+                if (!enc) {
+                  //  errar("Pacote nao encontrado : " + eRefer);
+                }
             }
         }
 

@@ -223,6 +223,7 @@ public class AppSigmazUtils {
 
 
         Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
+        SigmazC.mostrarDebug(true);
         SigmazC.initSemExecucao(eArquivo, eSaida, eLocalLibs, 2, mDebugar);
 
 

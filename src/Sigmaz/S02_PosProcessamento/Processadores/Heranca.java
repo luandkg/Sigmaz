@@ -71,6 +71,29 @@ public class Heranca {
 
         }
 
+        for (AST mBiblioteca : mPosProcessador.getRequisicoes()) {
+            mensagem("Requisicao Externa :: " + mBiblioteca.getNome());
+
+            ArrayList<SigmazPackage> mPacotes = new ArrayList<SigmazPackage>();
+            SigmazRaiz mSigmazRaiz = new SigmazRaiz(mBiblioteca);
+
+
+            for (AST Struct_AST : mBiblioteca.getASTS()) {
+                if (Struct_AST.mesmoTipo("PACKAGE")) {
+                    mPacotes.add(new SigmazPackage(Struct_AST));
+                }
+            }
+
+
+            processarSigmaz(mSigmazRaiz, mPacotes);
+
+            for (SigmazPackage ePacote : mPacotes) {
+                processarPacote(mSigmazRaiz, ePacote, mPacotes);
+            }
+
+
+        }
+
 
     }
 
@@ -238,7 +261,7 @@ public class Heranca {
                 }
 
 
-                mProcurandoStruct = mProcurador.procurarStruct_Package(eBase, mSigmazRaiz,mPacote, mPacotes);
+                mProcurandoStruct = mProcurador.procurarStruct_Package(eBase, mSigmazRaiz, mPacote, mPacotes);
 
             } else if (vindoProcurandoStruct.getEstaPacote()) {
 
@@ -250,7 +273,7 @@ public class Heranca {
                     }
                 }
 
-                mProcurandoStruct = mProcurador.procurarStruct_Package(eBase, mSigmazRaiz,mPacote, mPacotes);
+                mProcurandoStruct = mProcurador.procurarStruct_Package(eBase, mSigmazRaiz, mPacote, mPacotes);
 
 
             }

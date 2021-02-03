@@ -1,11 +1,16 @@
-require lib  ;
+require lib;
+require tron ;
+require constaz;
 
 call iniciar -> inicio ( )  ;
 
-refer Tempo  ;
-refer Lista  ;
-refer Vetor  ;
-refer Iterador  ;
+refer Tempo;
+refer Lista;
+refer Vetor;
+refer Iterador ;
+
+refer Tronarko;
+refer Constaz;
 
 act inicio ( )  {
 
@@ -39,6 +44,17 @@ act inicio ( )  {
 
 	    	DEBUG -> LOCAL :: STACK  ;
 	}
+
+
+    def t : Tronarko = init Tronarko();
+
+    def superarko : int = t.getSuperarko();
+    def hiperarko : int = t.getHiperarko();
+    def tronarko : int = t.getTronarko();
+
+    mut ano  = 1992;
+    mut mais_ano = 2;
+    mut final = ano ++ mais_ano;
 
 	DEBUG -> LOCAL :: STACK  ;
 }

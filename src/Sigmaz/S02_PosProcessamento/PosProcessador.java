@@ -390,6 +390,7 @@ public class PosProcessador {
                 if (tudoOK()) {
                     Estruturador mEstruturador = new Estruturador(mPosProcessador);
                     mEstruturador.init(mASTS);
+
                 }
             }
         });
@@ -402,11 +403,16 @@ public class PosProcessador {
             public void processar() {
 
                 if (tudoOK()) {
+                    mMensageiro.mensagem("Quantos Erros 1 :: " + mPosProcessador.getErros().size());
+
                     Unicidade mUnicidade = new Unicidade(mPosProcessador);
                     mUnicidade.init(mASTS);
+                    mMensageiro.mensagem("Quantos Erros 2 :: " + mPosProcessador.getErros().size());
+
                 }
             }
         });
+
 
 
     }
