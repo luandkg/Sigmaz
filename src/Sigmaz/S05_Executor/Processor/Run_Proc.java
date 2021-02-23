@@ -1147,7 +1147,7 @@ public class Run_Proc {
 
                 if (eOperador.contentEquals("DATA")) {
 
-                    System.out.println("Bora Escrever :: " + B + " em " + A);
+                   // System.out.println("Bora Escrever :: " + B + " em " + A);
 
                     mRunTime.getTabelaDeArquivos().escrever(Integer.parseInt(A), B);
 
@@ -1181,7 +1181,7 @@ public class Run_Proc {
 
             if (new File(eArquivo).exists()) {
                 eFD = mRunTime.getTabelaDeArquivos().abrir(eArquivo);
-                System.out.println("Abrindo arquivo :: " + eArquivo + " -->> " + eFD);
+              //  System.out.println("Abrindo arquivo :: " + eArquivo + " -->> " + eFD);
             }
 
             mRegistrado.atribuir(String.valueOf(eFD), "Inteiro");
@@ -1208,14 +1208,14 @@ public class Run_Proc {
             if (new File(eArquivo).exists()) {
                 eFD = mRunTime.getTabelaDeArquivos().abrir(eArquivo);
                 mRegistrado.atribuir(String.valueOf(eFD), "Inteiro");
-                System.out.println("Abrindo arquivo :: " + eArquivo + " -->> " + eFD);
+               // System.out.println("Abrindo arquivo :: " + eArquivo + " -->> " + eFD);
             } else {
 
                 try {
                     new File(eArquivo).createNewFile();
                     eFD = mRunTime.getTabelaDeArquivos().abrir(eArquivo);
                     mRegistrado.atribuir(String.valueOf(eFD), "Inteiro");
-                    System.out.println("Abrindo arquivo :: " + eArquivo + " -->> " + eFD);
+                 //   System.out.println("Abrindo arquivo :: " + eArquivo + " -->> " + eFD);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

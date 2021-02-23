@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import Sigmaz.S00_Utilitarios.Mensageiro;
 import Sigmaz.S00_Utilitarios.Utilitario;
-import Sigmaz.S02_PosProcessamento.EscopoTipos;
+import Sigmaz.S00_Utilitarios.EscopoTipos;
 import Sigmaz.S05_Executor.Debuggers.Simplificador;
 import Sigmaz.S02_PosProcessamento.PosProcessador;
 import Sigmaz.S00_Utilitarios.AST;

@@ -1,6 +1,5 @@
 package Sigmaz.S01_Compilador.C03_Parser.Complexo;
 
-import Sigmaz.S01_Compilador.C03_Parser.AST_Recebimentos;
 import Sigmaz.S01_Compilador.C03_Parser.Alocador.AST_Alocador;
 import Sigmaz.S01_Compilador.C03_Parser.Alocador.AST_Def;
 import Sigmaz.S01_Compilador.C03_Parser.Bloco.*;

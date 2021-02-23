@@ -1,6 +1,4 @@
-import "libs/int.sigmaz" ;
-import "libs/num.sigmaz" ;
-import "libs/int_num.sigmaz" ;
+import "libs/lib.sigmaz" ;
 
 call iniciar -> mutavel ( )  ;
 

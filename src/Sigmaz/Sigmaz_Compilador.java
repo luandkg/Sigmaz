@@ -97,6 +97,9 @@ public class Sigmaz_Compilador {
     private String mParser_Processamento;
     private String mComentario_Processamento;
 
+    private long mLexerTempo;
+    private long mParserTempo;
+
     public enum Fases {
         PRE_PROCESSAMENTO, LEXER, PARSER, POS_PROCESSAMENTO, INTEGRALIZADOR, MONTAGEM, PRONTO;
     }
@@ -188,15 +191,19 @@ public class Sigmaz_Compilador {
 
         mEtapas = new ArrayList<Etapa>();
 
+        mLexerTempo = 0;
+        mParserTempo = 0;
+
     }
 
 
-
-
     public void init(String eArquivo, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
-        ArrayList<String> aa = new ArrayList<String>();
-        aa.add(eArquivo);
-        init(aa, mSaida, eLocalLibs, mOpcao, mDebugar);
+
+        ArrayList<String> mListaDeArquivos = new ArrayList<String>();
+        mListaDeArquivos.add(eArquivo);
+
+        init(mListaDeArquivos, mSaida, eLocalLibs, mOpcao, mDebugar);
+
     }
 
     public void init(ArrayList<String> eArquivos, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
@@ -243,6 +250,64 @@ public class Sigmaz_Compilador {
 
     }
 
+
+
+
+    public void testes_unitarios(String eArquivo, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
+
+        ArrayList<String> mListaDeArquivos = new ArrayList<String>();
+        mListaDeArquivos.add(eArquivo);
+
+        testes_unitarios(mListaDeArquivos, mSaida, eLocalLibs, mOpcao, mDebugar);
+
+    }
+
+    public void testes_unitarios(ArrayList<String> eArquivos, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
+
+        iniciar(eArquivos, mSaida, eLocalLibs, mOpcao, mDebugar);
+
+        Chronos_Intervalo mIntervalo = new Chronos_Intervalo();
+
+        mIntervalo.marqueInicio();
+
+
+        executar_Compilador(eArquivos, mOpcao, mDebugar);
+
+        fase_Lexer();
+
+        fase_Comentario();
+
+        fase_Parser();
+
+        executar_PosProcessamento(eLocalLibs);
+
+        executar_Integracao(eLocalLibs);
+
+        executar_Montagem(mSaida);
+
+        mIntervalo.marqueFim();
+
+        if (mMostrar_Fases) {
+            System.out.println("");
+            System.out.println("\t - Tempo   : " + mIntervalo.getIntervalo() + " segundos");
+        }
+
+        listar_mensagens();
+
+        if (mFase == Fases.PRONTO) {
+
+            executar_testes_unitarios(mSaida, mDebugar);
+
+        } else {
+
+            falhou();
+
+        }
+
+    }
+
+
+
     public void executar(String eSaida, boolean eDebugar) {
 
         Sigmaz_Executor mSigmaz_Executor = new Sigmaz_Executor();
@@ -262,6 +327,25 @@ public class Sigmaz_Compilador {
 
     }
 
+
+    public void executar_testes_unitarios(String eSaida, boolean eDebugar) {
+
+        Sigmaz_ExecutorTestesUnitarios mSigmaz_Sigmaz_ExecutorTestesUnitarios = new Sigmaz_ExecutorTestesUnitarios();
+
+        mSigmaz_Sigmaz_ExecutorTestesUnitarios.setMostrar_Execucao(mMostrar_Execucao);
+        mSigmaz_Sigmaz_ExecutorTestesUnitarios.setMostrar_ArvoreRunTime(mMostrar_ArvoreRunTime);
+        mSigmaz_Sigmaz_ExecutorTestesUnitarios.setMostrar_ArvoreDebug(mMostrar_Debugador);
+
+        mSigmaz_Sigmaz_ExecutorTestesUnitarios.executar(eSaida, eDebugar);
+
+        if (mSigmaz_Sigmaz_ExecutorTestesUnitarios.temErros()) {
+            for (String mErro : mSigmaz_Sigmaz_ExecutorTestesUnitarios.getErros()) {
+                mErros_Execucao.add(mErro);
+                mTemErros = true;
+            }
+        }
+
+    }
 
     public void initSemExecucao(String eArquivo, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
         ArrayList<String> aa = new ArrayList<String>();
@@ -628,6 +712,9 @@ public class Sigmaz_Compilador {
             mIChars = mCompilador.getIChars();
             mITokens = mCompilador.getITokens();
 
+            mLexerTempo = mCompilador.getLexer_Tempo();
+            mParserTempo = mCompilador.getParser_Tempo();
+
             mEtapas = mCompilador.getEtapas();
 
             for (String mRequisicao : mCompilador.getRequisitados()) {
@@ -771,6 +858,7 @@ public class Sigmaz_Compilador {
 
             PosProcessadorC.setDebug_Tipador(mDebug_Tipador);
             PosProcessadorC.setDebug_Unicidade(mDebug_Unicidade);
+            PosProcessadorC.setDebug_Valorador(false);
 
             PosProcessadorC.init(getASTS(), mLocalLibs);
 
@@ -990,7 +1078,6 @@ public class Sigmaz_Compilador {
     }
 
 
-
     public void setMostrar_Fases(boolean e) {
         mMostrar_Fases = e;
     }
@@ -1203,6 +1290,9 @@ public class Sigmaz_Compilador {
         mLexer_Processamento = "";
         mOrganizadorDeErros.limpar();
 
+        mLexerTempo = 0;
+        mParserTempo = 0;
+
     }
 
     public ArrayList<AST> getASTS() {
@@ -1213,5 +1303,7 @@ public class Sigmaz_Compilador {
         return mDebugs;
     }
 
+    public long getLexer_Tempo(){return mLexerTempo;}
+    public long getParser_Tempo(){return mParserTempo;}
 
 }

@@ -179,6 +179,46 @@ public class RunTime {
 
     }
 
+    public void runTestes() {
+
+        limpar_run();
+
+
+        if (existeBranch("SIGMAZ")) {
+
+            AST ASTCGlobal = getBranch("SIGMAZ");
+
+
+            Run_Required mRun_Required = new Run_Required(this);
+            mRun_Required.requerer(getBranch("SIGMAZ"));
+
+            Chronos_Intervalo mChronos = new Chronos_Intervalo();
+
+            mChronos.marqueInicio();
+
+
+            Escopo Global = new Escopo("GLOBAL", this);
+
+            mEscopoGlobal = Global;
+            mGlobal = new Global(mEscopoGlobal);
+
+
+            Run eRun = new Run(this, Global);
+            eRun.runTestes(ASTCGlobal, ASTCGlobal);
+
+
+            mChronos.marqueFim();
+
+            mTempo_Execucao = mChronos.getIntervalo();
+
+
+        } else {
+            mErros.add("Sigmaz Vazio !");
+        }
+
+
+    }
+
 
     public String getArvoreDeInstrucoes() {
 

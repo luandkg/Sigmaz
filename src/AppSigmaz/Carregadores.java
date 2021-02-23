@@ -163,6 +163,12 @@ public class Carregadores {
         mArquivos.add("res/94 - externals.sigmaz");
         mArquivos.add("res/95 - arquivos.sigmaz");
 
+        // 2021
+
+        mArquivos.add("res/96 - testes.sigmaz");
+
+
+
         return mArquivos;
     }
 

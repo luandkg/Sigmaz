@@ -18,41 +18,41 @@ func num ( a : int ) : num {
 }
 operator ++ ( a : int , b : num ) : num {
 	def a1 : num = num ( a );
-	def b1 : num = num ( a );
+	def b1 : num = num ( b );
 	return a1 ++ b1;
 }
 operator ++ ( a : num , b : int ) : num {
 	def a1 : num = num ( a );
-	def b1 : num = num ( a );
+	def b1 : num = num ( b );
 	return a1 ++ b1;
 }
 operator -- ( a : int , b : num ) : num {
 	def a1 : num = num ( a );
-	def b1 : num = num ( a );
+	def b1 : num = num ( b );
 	return a1 -- b1;
 }
 operator -- ( a : num , b : int ) : num {
 	def a1 : num = num ( a );
-	def b1 : num = num ( a );
+	def b1 : num = num ( b );
 	return a1 -- b1;
 }
 operator ** ( a : int , b : num ) : num {
 	def a1 : num = num ( a );
-	def b1 : num = num ( a );
+	def b1 : num = num ( b );
 	return a1 ** b1;
 }
 operator ** ( a : num , b : int ) : num {
 	def a1 : num = num ( a );
-	def b1 : num = num ( a );
+	def b1 : num = num ( b );
 	return a1 ** b1;
 }
 operator // ( a : int , b : num ) : num {
 	def a1 : num = num ( a );
-	def b1 : num = num ( a );
+	def b1 : num = num ( b );
 	return a1 // b1;
 }
 operator // ( a : num , b : int ) : num {
 	def a1 : num = num ( a );
-	def b1 : num = num ( a );
+	def b1 : num = num ( b );
 	return a1 // b1;
 }

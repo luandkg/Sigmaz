@@ -1,9 +1,33 @@
 
+
 # OPERADORES INT
 func int ( a : int ) : int {
 	return a;
 }
 operator ++ ( a : int , b : int ) : int {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R5 -> a;
 	reg @ R6 -> b;
 	PROC -> {
@@ -14,6 +38,29 @@ operator ++ ( a : int , b : int ) : int {
 	return reg @ R7;
 }
 operator -- ( a : int , b : int ) : int {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R5 -> a;
 	reg @ R6 -> b;
 	PROC -> {
@@ -24,6 +71,29 @@ operator -- ( a : int , b : int ) : int {
 	return reg @ R7;
 }
 operator ** ( a : int , b : int ) : int {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R5 -> a;
 	reg @ R6 -> b;
 	PROC -> {
@@ -34,6 +104,29 @@ operator ** ( a : int , b : int ) : int {
 	return reg @ R7;
 }
 operator // ( a : int , b : int ) : int {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R5 -> a;
 	reg @ R6 -> b;
 	PROC -> {
@@ -44,6 +137,29 @@ operator // ( a : int , b : int ) : int {
 	return reg @ R7;
 }
 operator == ( a : int , b : int ) : bool {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R5 -> a;
 	reg @ R6 -> b;
 	PROC -> {
@@ -54,6 +170,29 @@ operator == ( a : int , b : int ) : bool {
 	return reg @ R1;
 }
 operator !! ( a : int , b : int ) : bool {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R5 -> a;
 	reg @ R6 -> b;
 	PROC -> {
@@ -64,6 +203,20 @@ operator !! ( a : int , b : int ) : bool {
 	return reg @ R1;
 }
 director ! ( a : int ) : int {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+
+
 	reg @ R5 -> a;
 	PROC -> {
 		SET R6;
@@ -83,6 +236,29 @@ func somar ( a : int , b : int ) : int {
 	return reg @ R7;
 }
 func subtrair ( a : int , b : int ) : int {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R5 -> a;
 	reg @ R6 -> b;
 	PROC -> {
@@ -93,6 +269,29 @@ func subtrair ( a : int , b : int ) : int {
 	return reg @ R7;
 }
 func multiplicar ( a : int , b : int ) : int {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R5 -> a;
 	reg @ R6 -> b;
 	PROC -> {
@@ -103,6 +302,29 @@ func multiplicar ( a : int , b : int ) : int {
 	return reg @ R7;
 }
 func dividir ( a : int , b : int ) : int {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R5 -> a;
 	reg @ R6 -> b;
 	PROC -> {
@@ -113,6 +335,29 @@ func dividir ( a : int , b : int ) : int {
 	return reg @ R7;
 }
 func resto ( a : int , b : int ) : int {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R5 -> a;
 	reg @ R6 -> b;
 	PROC -> {
@@ -123,6 +368,29 @@ func resto ( a : int , b : int ) : int {
 	return reg @ R7;
 }
 func menor ( a : int , b : int ) : bool {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R5 -> a;
 	reg @ R6 -> b;
 	PROC -> {
@@ -133,6 +401,29 @@ func menor ( a : int , b : int ) : bool {
 	return reg @ R1;
 }
 func maior ( a : int , b : int ) : bool {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R5 -> a;
 	reg @ R6 -> b;
 	PROC -> {
@@ -143,6 +434,29 @@ func maior ( a : int , b : int ) : bool {
 	return reg @ R1;
 }
 func menor_igual ( a : int , b : int ) : bool {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	def ret : bool = false;
 	reg @ R5 -> a;
 	reg @ R6 -> b;
@@ -169,6 +483,29 @@ func menor_igual ( a : int , b : int ) : bool {
 	return ret;
 }
 func maior_igual ( a : int , b : int ) : bool {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	def ret : bool = false;
 	reg @ R5 -> a;
 	reg @ R6 -> b;
@@ -195,6 +532,29 @@ func maior_igual ( a : int , b : int ) : bool {
 	return ret;
 }
 func igual ( a : int , b : int ) : bool {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R5 -> a;
 	reg @ R6 -> b;
 	PROC -> {
@@ -205,6 +565,29 @@ func igual ( a : int , b : int ) : bool {
 	return reg @ R1;
 }
 func diferente ( a : int , b : int ) : bool {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R5 -> a;
 	reg @ R6 -> b;
 	PROC -> {

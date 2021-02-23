@@ -60,6 +60,8 @@ public class Lexer {
     private int mLinha_Max;
     private int mLinha_Min;
 
+    private long mTempo;
+
     public Lexer() {
 
         mConteudo = "";
@@ -72,6 +74,7 @@ public class Lexer {
         mLinhas = 0;
         mLinha_Min = 0;
         mLinha_Max = 0;
+        mTempo = 0;
 
     }
 
@@ -152,6 +155,9 @@ public class Lexer {
             return;
         }
 
+        mTempo = 0;
+
+        long mInicio = System.nanoTime();
 
         Tokenizador mTokenizador = new Tokenizador();
         mTokenizador.init(this);
@@ -169,106 +175,106 @@ public class Lexer {
 
                 mTokens.add(mTokenizador.getNumero());
 
-            } else if (igual(charC,MAIS)) {
+            } else if (igual(charC, MAIS)) {
 
                 mTokens.add(mTokenizador.getMais());
 
-            } else if (igual(charC,MENOS)) {
+            } else if (igual(charC, MENOS)) {
 
                 mTokens.add(mTokenizador.getMenos());
 
-            } else if (igual(charC,ASTERISCO)) {
+            } else if (igual(charC, ASTERISCO)) {
 
                 mTokens.add(mTokenizador.getAsterisco());
 
-            } else if (igual(charC,BARRA)) {
+            } else if (igual(charC, BARRA)) {
 
                 mTokens.add(mTokenizador.getBarra());
 
-            } else if (igual(charC,PONTO)) {
+            } else if (igual(charC, PONTO)) {
 
                 mTokens.add(mTokenizador.getPonto());
 
-            } else if (igual(charC,DOIS_PONTOS)) {
+            } else if (igual(charC, DOIS_PONTOS)) {
 
                 mTokens.add(mTokenizador.getDoisPontos());
 
-            } else if (igual(charC,VIRGULA)) {
+            } else if (igual(charC, VIRGULA)) {
 
                 mTokens.add(mTokenizador.getVirgula());
 
-            } else if (igual(charC,IGUAL)) {
+            } else if (igual(charC, IGUAL)) {
 
                 mTokens.add(mTokenizador.getIgual());
 
-            } else if (igual(charC,EXCLAMACAO)) {
+            } else if (igual(charC, EXCLAMACAO)) {
 
                 mTokens.add(mTokenizador.getExclamacao());
 
-            } else if (igual(charC,MENOR)) {
+            } else if (igual(charC, MENOR)) {
 
                 mTokens.add(mTokenizador.getMenor());
 
-            } else if (igual(charC,MAIOR)) {
+            } else if (igual(charC, MAIOR)) {
 
                 mTokens.add(mTokenizador.getMaior());
 
-            } else if (igual(charC,E)) {
+            } else if (igual(charC, E)) {
 
                 mTokens.add(mTokenizador.getE());
 
-            } else if (igual(charC,CERQUILHA)) {
+            } else if (igual(charC, CERQUILHA)) {
 
                 mTokens.add(mTokenizador.getComentario());
 
-            } else if (igual(charC,ASPAS_DUPLA)) {
+            } else if (igual(charC, ASPAS_DUPLA)) {
 
                 mTokens.add(mTokenizador.getTextoDuplo());
 
-            } else if (igual(charC,ASPAS_SIMPLES)) {
+            } else if (igual(charC, ASPAS_SIMPLES)) {
 
                 mTokens.add(mTokenizador.getTextoSimples());
 
-            } else if (igual(charC,CHAVE_ABRE)) {
+            } else if (igual(charC, CHAVE_ABRE)) {
 
                 mTokens.add(mTokenizador.getChave_Abre());
 
-            } else if (igual(charC,CHAVE_FECHA)) {
+            } else if (igual(charC, CHAVE_FECHA)) {
 
                 mTokens.add(mTokenizador.getChave_Fecha());
 
-            } else if (igual(charC,COLCHETE_ABRE)) {
+            } else if (igual(charC, COLCHETE_ABRE)) {
 
                 mTokens.add(mTokenizador.getColchete_Abre());
 
-            } else if (igual(charC,COLCHETE_FECHA)) {
+            } else if (igual(charC, COLCHETE_FECHA)) {
 
                 mTokens.add(mTokenizador.getColchete_Fecha());
 
-            } else if (igual(charC,PONTO_E_VIRGULA)) {
+            } else if (igual(charC, PONTO_E_VIRGULA)) {
 
                 mTokens.add(mTokenizador.getPontoEVirgula());
 
-            } else if (igual(charC,PARENTESES_ABRE)) {
+            } else if (igual(charC, PARENTESES_ABRE)) {
 
                 mTokens.add(mTokenizador.getParenteses_Abre());
 
-            } else if (igual(charC,PARENTESES_FECHA)) {
+            } else if (igual(charC, PARENTESES_FECHA)) {
 
                 mTokens.add(mTokenizador.getParenteses_Fecha());
 
-            } else if (igual(charC,ARROBA)) {
+            } else if (igual(charC, ARROBA)) {
 
                 mTokens.add(mTokenizador.getArroba());
 
 
-            } else if (igual(charC,LINHA)) {
+            } else if (igual(charC, LINHA)) {
 
                 descerLinha();
 
-            } else if (igual(charC,TABULACAO)) {
+            } else if (igual(charC, TABULACAO)) {
 
-            } else if (igual(charC,ESPACO)) {
+            } else if (igual(charC, ESPACO)) {
 
             } else {
 
@@ -286,6 +292,9 @@ public class Lexer {
         mLinhas = mLinha;
 
 
+        long mFim = System.nanoTime();
+
+        mTempo = mFim - mInicio;
     }
 
 
@@ -350,4 +359,7 @@ public class Lexer {
         return Tempo.getData();
     }
 
+    public long getTempo() {
+        return mTempo;
+    }
 }

@@ -1,6 +1,7 @@
-package Sigmaz.S02_PosProcessamento;
+package Sigmaz.S00_Utilitarios;
 
 import Sigmaz.S00_Utilitarios.Alterador.*;
+import Sigmaz.S00_Utilitarios.ObjetoProcurado;
 
 import java.util.ArrayList;
 

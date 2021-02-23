@@ -60,6 +60,9 @@ public class Compilador {
     private ArrayList<Importacao> eImportacoes;
 
 
+    private long mLexerTempo;
+    private long mParserTempo;
+
     public Compilador() {
 
         mPreProcessando = "";
@@ -85,6 +88,9 @@ public class Compilador {
 
         mTodosTokens = new ArrayList<>();
         mCiclador = new OrganizadorDeCiclos();
+
+        mLexerTempo = 0;
+        mParserTempo = 0;
 
     }
 
@@ -214,6 +220,9 @@ public class Compilador {
 
         mEtapas.clear();
 
+        mLexerTempo = 0;
+        mParserTempo = 0;
+
 
         mFila = new Enfileirador();
 
@@ -290,6 +299,7 @@ public class Compilador {
 
                         Lexer LexerC = new Lexer();
                         LexerC.init(mArquivoCorrente);
+                        mLexerTempo = LexerC.getTempo();
 
                         GrupoDeErro mErrosLexer = new GrupoDeErro(mArquivoCorrente);
 
@@ -383,6 +393,7 @@ public class Compilador {
 
                 Parser mParser = new Parser();
                 mParser.init(mArquivoCorrente, mLocal, mIsDebug, mTodosTokens, AST_Raiz, mAST_DEBUGGER, mRequisitados);
+                mParserTempo = mParser.getTempo();
 
                 mInfoParser.add(new InfoParser(mArquivoCorrente, mParser.getTokens().size(), mParser.getObjetos()));
 
@@ -445,9 +456,6 @@ public class Compilador {
     }
 
 
-
-
-
     public void continuar() {
 
         mCorrentePreprocessando = false;
@@ -491,5 +499,7 @@ public class Compilador {
         return mCorrenteCompilando;
     }
 
+    public long getLexer_Tempo(){return mLexerTempo;}
+    public long getParser_Tempo(){return mParserTempo;}
 
 }

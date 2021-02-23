@@ -227,7 +227,7 @@ public class Run_Body {
 
                 Run_Return mRun_Return = new Run_Return(mRunTime, mEscopo);
 
-                mItem = mRun_Return.init(fAST,mEsperaRetornar);
+                mItem = mRun_Return.init(fAST, mEsperaRetornar);
 
                 Retornar();
 
@@ -306,80 +306,75 @@ public class Run_Body {
 
             } else if (fAST.mesmoTipo("EXECUTE_AUTO")) {
 
-
-                Run_ExecuteAuto mRun_ExecuteAuto = new Run_ExecuteAuto(mRunTime, mEscopo);
-                mRun_ExecuteAuto.init(fAST);
+                Run_ExecuteAuto mSubRun = new Run_ExecuteAuto(mRunTime, mEscopo);
+                mSubRun.init(fAST);
 
             } else if (fAST.mesmoTipo("CHANGE")) {
 
 
-                Run_Change nRun_Change = new Run_Change(mRunTime, mEscopo);
-                nRun_Change.init(fAST);
+                Run_Change mSubRun = new Run_Change(mRunTime, mEscopo);
+                mSubRun.init(fAST);
 
             } else if (fAST.mesmoTipo("USING")) {
 
 
-                Run_Using mRun_Using = new Run_Using(mRunTime, mEscopo);
-                mRun_Using.init(fAST);
+                Run_Using mSubRun = new Run_Using(mRunTime, mEscopo);
+                mSubRun.init(fAST);
 
             } else if (fAST.mesmoTipo("SCOPE")) {
 
-                Escopo eNovoEscopo = new Escopo(mRunTime, mEscopo);
-                eNovoEscopo.setNome("SUBSCOPE::" + mEscopo.getNome());
+                Run_SubScope mSubRun = new Run_SubScope(mRunTime, mEscopo);
+                mSubRun.init(fAST);
 
-                Run_Body mAST = new Run_Body(mRunTime, eNovoEscopo);
-                mAST.init(fAST);
-
-                if (mAST.getRetornado()) {
-
-                    if (mRunTime.getErros().size() > 0) {
-                        break;
-                    }
-
-                    mEscopo.retorne(mAST.getRetorno());
-
+                if (mSubRun.getRetornado()) {
                     break;
-
                 }
 
             } else if (fAST.mesmoTipo("REG")) {
 
 
-                Run_Reg mRun_Reg = new Run_Reg(mRunTime, mEscopo);
-                mRun_Reg.init(fAST);
+                Run_Reg mSubRun = new Run_Reg(mRunTime, mEscopo);
+                mSubRun.init(fAST);
 
             } else if (fAST.mesmoTipo("PROC")) {
 
 
-                Run_Proc mRun_Proc = new Run_Proc(mRunTime, mEscopo);
-                mRun_Proc.init(fAST);
+                Run_Proc mSubRun = new Run_Proc(mRunTime, mEscopo);
+                mSubRun.init(fAST);
 
             } else if (fAST.mesmoTipo("MOVE_DATA")) {
 
-                Run_MoveData mAST = new Run_MoveData(mRunTime, mEscopo);
-                mAST.init(fAST);
+                Run_MoveData mSubRun = new Run_MoveData(mRunTime, mEscopo);
+                mSubRun.init(fAST);
 
             } else if (fAST.mesmoTipo("STAGE_GET")) {
 
-                Run_Stages mAST = new Run_Stages(mRunTime, mEscopo);
-                mAST.init(fAST);
+                Run_Stages mSubRun = new Run_Stages(mRunTime, mEscopo);
+                mSubRun.init(fAST);
 
             } else if (fAST.mesmoTipo("DEBUG")) {
 
-                Run_Debug mRun_Debug = new Run_Debug(mRunTime, mEscopo);
-                mRun_Debug.init(fAST);
+                Run_Debug mSubRun = new Run_Debug(mRunTime, mEscopo);
+                mSubRun.init(fAST);
 
             } else if (fAST.mesmoTipo("DELETE")) {
 
-                Run_Delete mRun_Delete = new Run_Delete(mRunTime, mEscopo);
-                mRun_Delete.init(fAST);
+                Run_Delete mSubRun = new Run_Delete(mRunTime, mEscopo);
+                mSubRun.init(fAST);
 
             } else if (fAST.mesmoTipo("STRUCT_SETTER")) {
 
-                Run_Setter mRun_Setter = new Run_Setter(mRunTime, mEscopo);
-                mRun_Setter.init(fAST);
+                Run_Setter mSubRun = new Run_Setter(mRunTime, mEscopo);
+                mSubRun.init(fAST);
 
             } else if (fAST.mesmoTipo("IN_DEBUG")) {
+
+
+            } else if (fAST.mesmoTipo("ASSERTIVE")) {
+
+
+                Run_Assertive mSubRun = new Run_Assertive(mRunTime, mEscopo);
+                mSubRun.init(fAST);
 
             } else {
 

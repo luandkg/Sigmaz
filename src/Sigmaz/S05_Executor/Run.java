@@ -5,6 +5,8 @@ import Sigmaz.S05_Executor.Runners.*;
 
 import Sigmaz.S00_Utilitarios.AST;
 
+import java.util.ArrayList;
+
 public class Run {
 
     private RunTime mRunTime;
@@ -30,8 +32,7 @@ public class Run {
     }
 
 
-
-    public void runSigmaz(AST ASTSigmaz_Call, AST ASTCGlobal) {
+    private void runMontagem(AST ASTSigmaz_Call, AST ASTCGlobal) {
 
         if (mRunTime.isDebug()) {
 
@@ -72,6 +73,18 @@ public class Run {
         }
 
 
+    }
+
+
+    public void runSigmaz(AST ASTSigmaz_Call, AST ASTCGlobal) {
+
+        runMontagem(ASTSigmaz_Call, ASTCGlobal);
+
+        if (mRunTime.temErros()) {
+            return;
+        }
+
+
         for (AST ASTC : ASTSigmaz_Call.getASTS()) {
 
             if (ASTC.mesmoTipo("CALL")) {
@@ -89,6 +102,96 @@ public class Run {
         }
 
     }
+
+    public void runTestes(AST ASTSigmaz_Call, AST ASTCGlobal) {
+
+
+        runMontagem(ASTSigmaz_Call, ASTCGlobal);
+
+        if (mRunTime.temErros()) {
+            return;
+        }
+
+        int cSucesso = 0;
+        int cFalhou = 0;
+
+        ArrayList<String> mTestando = new ArrayList<String>();
+
+        System.out.println("################### TESTES UNITARIOS #####################");
+        System.out.println("");
+        System.out.println("");
+
+
+        for (AST ASTC : ASTSigmaz_Call.getASTS()) {
+
+            String mValor = "SUCESSO";
+
+            if (ASTC.mesmoTipo("TEST")) {
+
+                boolean mSucesso = true;
+
+                Escopo mEscopoInterno = new Escopo(mRunTime, mGlobal);
+                mEscopoInterno.setNome(ASTC.getBranch("GROUP").getNome() + "::" + ASTC.getBranch("TEST").getNome());
+
+
+                if (mRunTime.getErros().size() > 0) {
+                    mSucesso = false;
+                }
+
+                if (mSucesso) {
+                    Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
+                    mAST.init(ASTC.getBranch("BODY"));
+                    if (mRunTime.getErros().size() > 0) {
+                        mSucesso = false;
+                    }
+                }
+
+
+
+                if (mSucesso) {
+                    cSucesso += 1;
+                } else {
+                    cFalhou += 1;
+                    mValor = "FALHOU";
+                }
+
+
+                mTestando.add("TEST -> " + ASTC.getBranch("GROUP").getNome() + "::" + ASTC.getBranch("TEST").getNome() + "  -->>  " + mValor);
+
+                System.out.println("TESTE :: " + ASTC.getBranch("GROUP").getNome() + "::" + ASTC.getBranch("TEST").getNome() + " --->>> " + mValor );
+                if (mRunTime.getErros().size()>0){
+                    for(String eErro : mRunTime.getErros()){
+                        System.out.println("\t " + eErro);
+                    }
+                }
+
+
+            }
+
+
+
+            mRunTime.getErros().clear();
+
+
+        }
+
+        System.out.println("################### TESTES UNITARIOS #####################");
+        System.out.println("");
+        System.out.println("");
+
+
+        for (String eTestando : mTestando) {
+            System.out.println("\t " + eTestando);
+        }
+
+        System.out.println("");
+        System.out.println("\t - TESTES    = " + (cSucesso + cFalhou));
+        System.out.println("\t - SUCESSO   = " + (cSucesso));
+        System.out.println("\t - FALHOU    = " + (cFalhou));
+        System.out.println("");
+
+    }
+
 
     public void mapearPacotes(AST ASTCGlobal) {
 

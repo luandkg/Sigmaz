@@ -4,8 +4,8 @@ import Sigmaz.S00_Utilitarios.Alterador.SigmazModel;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazStruct;
-import Sigmaz.S02_PosProcessamento.Procurador;
-import Sigmaz.S02_PosProcessamento.ObjetoProcurado;
+import Sigmaz.S00_Utilitarios.Procurador;
+import Sigmaz.S00_Utilitarios.ObjetoProcurado;
 import Sigmaz.S05_Executor.Alterador;
 
 import java.util.ArrayList;

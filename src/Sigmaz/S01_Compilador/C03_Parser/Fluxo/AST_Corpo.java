@@ -10,6 +10,7 @@ import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S01_Compilador.C03_Parser.Processador.AST_Proc;
+import Sigmaz.S01_Compilador.C03_Parser.Testes.AST_Assertive;
 
 public class AST_Corpo {
 
@@ -198,23 +199,34 @@ public class AST_Corpo {
 
             } else if (TokenD.getTipo() == TokenTipo.ID) {
 
-
                 AST_Comando mAST = new AST_Comando(mCompiler);
                 mAST.init(ASTPai);
 
             } else if (TokenD.getTipo() == TokenTipo.ARROBA) {
 
-                Token TokenP2 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado ABRIR PARESENTESES !");
+                Token TokenP2 = mCompiler.getTokenAvante();
+
+                if (TokenP2.getTipo() == TokenTipo.SETA) {
+
+                    AST_Assertive mAST = new AST_Assertive(mCompiler);
+                    mAST.init(ASTPai);
 
 
-                AST ASTCorrente = new AST("EXECUTE_LOCAL");
+                } else if (TokenP2.getTipo() == TokenTipo.PARENTESES_ABRE) {
 
-                AST_ValueTypes mAVA = new AST_ValueTypes(mCompiler);
-                mAVA.ReceberArgumentos(ASTCorrente, false, null);
+                    AST ASTCorrente = new AST("EXECUTE_LOCAL");
 
-                ASTPai.getASTS().add(ASTCorrente);
+                    AST_ValueTypes mAVA = new AST_ValueTypes(mCompiler);
+                    mAVA.ReceberArgumentos(ASTCorrente, false, null);
 
-                Token TokenP3 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA, "Era esperado PONTO E VIRGULA !");
+                    ASTPai.getASTS().add(ASTCorrente);
+
+                    Token TokenP3 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA, "Era esperado PONTO E VIRGULA !");
+
+
+                } else {
+                    mCompiler.errarCompilacao("Era esperdo abrir parenteses ou seta !", TokenP2);
+                }
 
 
             } else {

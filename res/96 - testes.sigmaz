@@ -1,0 +1,43 @@
+import "libs/lib.sigmaz";
+
+call comecar -> {
+
+    def a : num = 2.0;
+    def b : int = 5;
+
+    def c : num = a ++ b;
+
+    DEBUG -> LOCAL :: STACK  ;
+
+}
+
+
+test TESTE_G4 -> Somatorio {
+
+    def a : int = 30;
+
+    DEBUG -> LOCAL :: STACK  ;
+
+    @->ASSERT_DIFF(2,5);
+
+    DEBUG -> LOCAL :: STACK  ;
+
+}
+
+test TESTE_G4 -> Pulatorio {
+
+    def a : int = 30;
+
+    DEBUG -> LOCAL :: STACK  ;
+
+    @->ASSERT_DIFF(2,5);
+    @->ASSERT_DIFF(2,5);
+    @->ASSERT_DIFF(2,5);
+    @->ASSERT_DIFF(2,5);
+    @->ASSERT_DIFF(2,5);
+    @->ASSERT_NULLABLE(null,null);
+    @->ASSERT_NOTNULLABLE(null,5);
+
+    DEBUG -> LOCAL :: STACK  ;
+
+}

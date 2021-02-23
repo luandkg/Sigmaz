@@ -470,14 +470,6 @@ public class PosProcessador {
     }
 
 
-    public void MostrarMensagens() {
 
-        System.out.println("\n\t MENSAGENS DE POS-PROCESSAMENTO : ");
-
-        for (String Erro : getMensagens()) {
-            System.out.println("\t" + Erro);
-        }
-
-    }
 
 }

@@ -610,3 +610,13 @@ Linguagem de Programação Estruturada - Implementações
 
 		2021 02 03 -->> Carregamento de Bibliotecas recursivas
 
+
+		2021 02 19 -->> Testes Unitarios
+
+
+		2021 02 23 -->> Assertivas Run_Assertive
+		2021 02 23 -->> ASSERT_EQUAL
+		2021 02 23 -->> ASSERT_DIFF
+		2021 02 23 -->> ASSERT_NULLABLE
+		2021 02 23 -->> ASSERT_NOTNULLABLE
+

@@ -4,12 +4,14 @@ import Sigmaz.S00_Utilitarios.*;
 import Sigmaz.S01_Compilador.C03_Parser.Alocador.AST_Alocador;
 import Sigmaz.S01_Compilador.C03_Parser.Bloco.*;
 import Sigmaz.S01_Compilador.C03_Parser.Complexo.*;
+import Sigmaz.S01_Compilador.C03_Parser.Fluxo.AST_Debug;
 import Sigmaz.S01_Compilador.C03_Parser.Fluxo.AST_Default;
 import Sigmaz.S01_Compilador.C03_Parser.Organizador.AST_Import;
 import Sigmaz.S01_Compilador.C03_Parser.Organizador.AST_Refer;
 import Sigmaz.S01_Compilador.C03_Parser.Organizador.AST_Require;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
+import Sigmaz.S01_Compilador.C03_Parser.Testes.AST_Test;
 
 import java.util.ArrayList;
 
@@ -39,6 +41,8 @@ public class Parser {
     private boolean mIsDebug;
     private int mArquivoDebug;
 
+    private long mTempo;
+
     public Parser() {
 
         mArquivo = "";
@@ -54,6 +58,7 @@ public class Parser {
         mErros_Parser = new ArrayList<>();
         mIsDebug = false;
         mArquivoDebug = 0;
+        mTempo = 0;
 
     }
 
@@ -75,6 +80,7 @@ public class Parser {
 
         mArquivo = "";
         mErros_Parser.clear();
+        mTempo = 0;
 
 
     }
@@ -199,6 +205,10 @@ public class Parser {
         mInstrucoes = 0;
 
         mIsDebug = eDebugar;
+        mTempo = 0;
+
+
+        long mInicio = System.nanoTime();
 
         if (mIsDebug) {
 
@@ -338,6 +348,12 @@ public class Parser {
                 AST_Marcador mAST = new AST_Marcador(this);
                 mAST.init(AST_Raiz, "ALL");
 
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("test")) {
+
+                AST_Test mAST = new AST_Test(this);
+                mAST.init(AST_Raiz);
+
+
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo_SemCS("DEBUG")) {
 
                 AST_Debug mAST = new AST_Debug(this);
@@ -360,6 +376,9 @@ public class Parser {
 
         mInstrucoes = mDepois - mAntes;
 
+        long mFim = System.nanoTime();
+
+        mTempo = mFim - mInicio;
 
     }
 
@@ -422,4 +441,7 @@ public class Parser {
     }
 
 
+    public long getTempo() {
+        return mTempo;
+    }
 }

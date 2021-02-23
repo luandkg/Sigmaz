@@ -12,13 +12,11 @@ public class SigmazTestes {
 
     private ArrayList<String> mArquivos;
     private String mSaida;
-    private Cabecalho mCabecalho;
 
     public SigmazTestes() {
 
         mArquivos = new ArrayList<String>();
         mSaida = "Compiled.sigmad";
-        mCabecalho = new Cabecalho();
 
     }
 
@@ -36,6 +34,8 @@ public class SigmazTestes {
 
         System.out.println("############################ " + eTitulo + " ############################");
 
+        Estatisticas mEstatisticas = new Estatisticas();
+
         Chronos mChronos = new Chronos();
 
 
@@ -45,26 +45,22 @@ public class SigmazTestes {
         System.out.println("");
         System.out.println(" - AUTOR	: LUAN FREITAS");
         System.out.println(" - VERSAO   : 1.0");
-        System.out.println(" - STATUS  	: ALPHA");
+        System.out.println(" - STATUS  	: BETA");
 
         System.out.println("");
         System.out.println(" - INICIO  	: " + mChronos.getData());
         System.out.println("");
 
-        boolean isPrimeiro = true;
-        boolean isVelocidades = false;
 
-        float mMaisRapido = 0;
-        float mMaisDevagar = 0;
-
-        String mLocalRapido = "";
-        String mLocalDevagar = "";
 
 
         int Contador = 1;
 
         SequenciadorDeTestes mSequenciadorDeTestes = new SequenciadorDeTestes();
 
+        long iChars = 0;
+        long iTokens = 0;
+        long iTempoParser = 0;
 
         for (String Arquivo : mArquivos) {
 
@@ -87,75 +83,13 @@ public class SigmazTestes {
 
             SigmazC.init(Arquivo, mSaida, mLocalLibs, 1, false);
 
-
-            if (SigmazC.temErros()) {
-
-                if (SigmazC.getFase() == Sigmaz_Compilador.Fases.PRE_PROCESSAMENTO) {
-
-                    mTeste.setProblema("PRE-PROCESSAMENTO");
-
-                    for (GrupoDeErro eGE : SigmazC.getErros_PreProcessamento()) {
-                        mTeste.getComplemento().adicionarLinha(2, eGE.getArquivo());
-                        for (Erro eErro : eGE.getErros()) {
-                            mTeste.getComplemento().adicionarLinha(2, "->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem());
-                        }
-                    }
-
-                } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.LEXER) {
-
-                    mTeste.setProblema("PRE-LEXER");
-
-                    for (GrupoDeErro eGE : SigmazC.getErros_Lexer()) {
-                        mTeste.getComplemento().adicionarLinha(2, eGE.getArquivo());
-                        for (Erro eErro : eGE.getErros()) {
-                            mTeste.getComplemento().adicionarLinha(2, "->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem());
-                        }
-                    }
-
-                } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.PARSER) {
-
-                    mTeste.setProblema("PARSER");
-
-                    for (GrupoDeErro eGE : SigmazC.getErros_Parser()) {
-                        mTeste.getComplemento().adicionarLinha(2, eGE.getArquivo());
-                        for (Erro eErro : eGE.getErros()) {
-                            mTeste.getComplemento().adicionarLinha(2, "->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem());
-                        }
-                    }
-
-                } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.POS_PROCESSAMENTO) {
-
-                    mTeste.setProblema("POS-PROCESSAMENTO");
-
-                    for (String Erro : SigmazC.getErros_PosProcessamento()) {
-                        mTeste.getComplemento().adicionarLinha(2, Erro);
-                    }
-
-                } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.INTEGRALIZADOR) {
-
-                    mTeste.setProblema("INTEGRALIZADOR");
-
-                    for (String Erro : SigmazC.getErros_Integracao()) {
-                        mTeste.getComplemento().adicionarLinha(2, Erro);
-                    }
-
-                } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.MONTAGEM) {
-
-                    mTeste.setProblema("MONTAGEM");
-
-                } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.PRONTO) {
-
-                    mTeste.setProblema("EXECUCAO");
-
-                    for (String Erro : SigmazC.getErros_Execucao()) {
-                        mTeste.getComplemento().adicionarLinha(2, Erro);
-                    }
-
-                }
-
-            }
+            adicionarProblemas(SigmazC, mTeste);
 
             mTempoCorrente.marqueFim();
+
+            iChars += SigmazC.getIChars();
+            iTokens += SigmazC.getITokens();
+            iTempoParser += SigmazC.getLexer_Tempo() + SigmazC.getParser_Tempo();
 
 
             String sContador = String.valueOf(Contador);
@@ -166,36 +100,14 @@ public class SigmazTestes {
 
             if (mTeste.tudoOk()) {
 
-                System.out.println(getTextoOrganizado(" Arquivo : " + sContador + " -> " + mTeste.getArquivo(), 55, " : SUCESSO "));
+                System.out.println(getTextoOrganizado("\t -->> Arquivo : " + sContador + " -> " + mTeste.getArquivo(), 55, " : SUCESSO "));
 
-                if (isPrimeiro) {
-                    isPrimeiro = false;
+                mEstatisticas.velocidades(mTeste,mTempoCorrente.getIntervalo());
 
-                    mMaisRapido = mTempoCorrente.getIntervalo();
-                    mMaisDevagar = mTempoCorrente.getIntervalo();
-
-                    mLocalRapido = mTeste.getArquivo();
-                    mLocalDevagar = mTeste.getArquivo();
-
-                } else {
-
-                    isVelocidades = true;
-
-                    if (mTempoCorrente.getIntervalo() > mMaisDevagar) {
-                        mMaisDevagar = mTempoCorrente.getIntervalo();
-                        mLocalDevagar = mTeste.getArquivo();
-                    }
-
-                    if (mTempoCorrente.getIntervalo() < mMaisRapido) {
-                        mMaisRapido = mTempoCorrente.getIntervalo();
-                        mLocalRapido = mTeste.getArquivo();
-                    }
-
-                }
 
             } else {
 
-                System.out.println(getTextoOrganizado(" Arquivo : " + sContador + " -> " + mTeste.getArquivo(), 55, " : FALHOU -> " + mTeste.getProblema()));
+                System.out.println(getTextoOrganizado("\t -->> Arquivo : " + sContador + " -> " + mTeste.getArquivo(), 55, " : FALHOU -> " + mTeste.getProblema()));
                 System.out.println(mTeste.getComplemento().getConteudo());
 
             }
@@ -218,12 +130,12 @@ public class SigmazTestes {
 
         if (mSequenciadorDeTestes.getTotal() > 0) {
 
-            if (isVelocidades) {
+            if (mEstatisticas.isVelocidades()) {
 
                 System.out.println(" - VELOCIDADES ");
 
-                System.out.println("\t - RAPIDO  : " + mLocalRapido + " -> " + mMaisRapido);
-                System.out.println("\t - DEVAGAR  : " + mLocalDevagar + " -> " + mMaisDevagar);
+                System.out.println("\t - RAPIDO  : " + mEstatisticas.getLocalRapido() + " -> " + mEstatisticas.getTempoRapido());
+                System.out.println("\t - DEVAGAR  : " + mEstatisticas.getLocalDevagar() + " -> " + mEstatisticas.getTempoDevagar());
 
                 System.out.println("");
 
@@ -236,6 +148,14 @@ public class SigmazTestes {
             System.out.println("\t - SUCESSO  : " + mSequenciadorDeTestes.getCorretos().size() + " -> " + s);
             System.out.println("\t - FALHOU  	: " + mSequenciadorDeTestes.getProblemas().size() + " -> " + f);
 
+            double mSegundos = (double) iTempoParser / (double) 1_000_000_000.0;
+
+            System.out.println("");
+            System.out.println(" - ESTATISTICAS  DE COMPILACAO	");
+            System.out.println("\t - Chars      : " + iChars);
+            System.out.println("\t - Tokens  	: " + iTokens);
+            System.out.println("\t - Tempo  	: " + mSegundos);
+            System.out.println("");
 
             if (mSequenciadorDeTestes.temProblemas()) {
 
@@ -270,5 +190,77 @@ public class SigmazTestes {
         }
         ret += eDepois;
         return ret;
+    }
+
+
+    private void adicionarProblemas(Sigmaz_Compilador SigmazC, ArquivoTeste mTeste) {
+
+        if (SigmazC.temErros()) {
+
+            if (SigmazC.getFase() == Sigmaz_Compilador.Fases.PRE_PROCESSAMENTO) {
+
+                mTeste.setProblema("PRE-PROCESSAMENTO");
+
+                for (GrupoDeErro eGE : SigmazC.getErros_PreProcessamento()) {
+                    mTeste.getComplemento().adicionarLinha(2, eGE.getArquivo());
+                    for (Erro eErro : eGE.getErros()) {
+                        mTeste.getComplemento().adicionarLinha(2, "->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem());
+                    }
+                }
+
+            } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.LEXER) {
+
+                mTeste.setProblema("PRE-LEXER");
+
+                for (GrupoDeErro eGE : SigmazC.getErros_Lexer()) {
+                    mTeste.getComplemento().adicionarLinha(2, eGE.getArquivo());
+                    for (Erro eErro : eGE.getErros()) {
+                        mTeste.getComplemento().adicionarLinha(2, "->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem());
+                    }
+                }
+
+            } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.PARSER) {
+
+                mTeste.setProblema("PARSER");
+
+                for (GrupoDeErro eGE : SigmazC.getErros_Parser()) {
+                    mTeste.getComplemento().adicionarLinha(2, eGE.getArquivo());
+                    for (Erro eErro : eGE.getErros()) {
+                        mTeste.getComplemento().adicionarLinha(2, "->> " + eErro.getLinha() + ":" + eErro.getPosicao() + " -> " + eErro.getMensagem());
+                    }
+                }
+
+            } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.POS_PROCESSAMENTO) {
+
+                mTeste.setProblema("POS-PROCESSAMENTO");
+
+                for (String Erro : SigmazC.getErros_PosProcessamento()) {
+                    mTeste.getComplemento().adicionarLinha(2, Erro);
+                }
+
+            } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.INTEGRALIZADOR) {
+
+                mTeste.setProblema("INTEGRALIZADOR");
+
+                for (String Erro : SigmazC.getErros_Integracao()) {
+                    mTeste.getComplemento().adicionarLinha(2, Erro);
+                }
+
+            } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.MONTAGEM) {
+
+                mTeste.setProblema("MONTAGEM");
+
+            } else if (SigmazC.getFase() == Sigmaz_Compilador.Fases.PRONTO) {
+
+                mTeste.setProblema("EXECUCAO");
+
+                for (String Erro : SigmazC.getErros_Execucao()) {
+                    mTeste.getComplemento().adicionarLinha(2, Erro);
+                }
+
+            }
+
+        }
+
     }
 }

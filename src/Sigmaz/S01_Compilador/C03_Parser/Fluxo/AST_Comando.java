@@ -8,12 +8,11 @@ import Sigmaz.S00_Utilitarios.AST;
 public class AST_Comando {
 
     private Parser mCompiler;
+    private AST mGuardeASTSub;
 
     public AST_Comando(Parser eCompiler) {
         mCompiler = eCompiler;
     }
-
-    private AST mGuardeASTSub;
 
 
     public void init(AST ASTPai) {
@@ -25,7 +24,6 @@ public class AST_Comando {
         if (mCompiler.getIsDebug()) {
             mCompiler.debug(ASTCorrente);
         }
-
 
 
         Token TokenD = mCompiler.getTokenCorrente();
@@ -255,6 +253,7 @@ public class AST_Comando {
 
 
     }
+
 
 
 }

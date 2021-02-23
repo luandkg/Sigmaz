@@ -135,7 +135,7 @@ public class Valoramento {
 
                 Escopante mAqui = new Escopante(mAST.getNome());
 
-                System.out.println(mAST.getImpressao());
+              //  System.out.println(mAST.getImpressao());
 
                 if (mIntegrador.getErros().size() > 0) {
                     break;

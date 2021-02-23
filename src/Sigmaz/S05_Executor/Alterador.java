@@ -26,10 +26,6 @@ public class Alterador {
             return mTipo;
         }
 
-        public boolean mesmoAbstrato(String eAbstrato) {
-            return mAbstrato.contentEquals(eAbstrato);
-        }
-
     }
 
     public Alterador() {

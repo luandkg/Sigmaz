@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
 import Sigmaz.S00_Utilitarios.Alterador.SigmazStruct;
-import Sigmaz.S02_PosProcessamento.ObjetoProcurado;
+import Sigmaz.S00_Utilitarios.ObjetoProcurado;
 import Sigmaz.S02_PosProcessamento.PosProcessador;
 import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S02_PosProcessamento.Procurador;
+import Sigmaz.S00_Utilitarios.Procurador;
 import Sigmaz.S05_Executor.Alterador;
 
 public class Heranca {

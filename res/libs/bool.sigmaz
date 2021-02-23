@@ -1,4 +1,27 @@
 operator == ( a : bool , b : bool ) : bool {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R1 -> a;
 	reg @ R2 -> b;
 	PROC -> {
@@ -9,6 +32,29 @@ operator == ( a : bool , b : bool ) : bool {
 	return reg @ R3;
 }
 operator !! ( a : bool , b : bool ) : bool {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R1 -> a;
 	reg @ R2 -> b;
 	PROC -> {

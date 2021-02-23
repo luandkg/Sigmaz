@@ -1,6 +1,29 @@
 
 #   COMPARATORS
 func operador_e ( a : bool , b : bool ) : bool {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	def c : bool = false;
 	if ( a == true ) -> {
 		if ( b == true ) -> {
@@ -11,6 +34,29 @@ func operador_e ( a : bool , b : bool ) : bool {
 	return c;
 }
 func operador_ou ( a : bool , b : bool ) : bool {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	def c : bool = false;
 	if ( a == true ) -> {
 		c = true;
@@ -21,6 +67,29 @@ func operador_ou ( a : bool , b : bool ) : bool {
 	return c;
 }
 func igual ( a : bool , b : bool ) : bool {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R1 -> a;
 	reg @ R2 -> b;
 	PROC -> {
@@ -31,6 +100,29 @@ func igual ( a : bool , b : bool ) : bool {
 	return reg @ R3;
 }
 func diferente ( a : bool , b : bool ) : bool {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
 	reg @ R1 -> a;
 	reg @ R2 -> b;
 	PROC -> {

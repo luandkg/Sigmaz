@@ -282,6 +282,8 @@ public class Integrador {
         for (AST eAlgumaCoisa : mAST.getASTS()) {
             if (eAlgumaCoisa.mesmoTipo("PACKAGE")) {
                 mPacotes.add(new SigmazPackage(eAlgumaCoisa));
+
+
             }
         }
 
@@ -290,6 +292,7 @@ public class Integrador {
             mensagem("PACOTES : " + mPacotes.size());
             mensagem("");
             int pi = 1;
+
 
             for (SigmazPackage ePacote : mPacotes) {
                 mensagem("\t - " + pi + " : " + ePacote.getNome());

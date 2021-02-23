@@ -1,4 +1,4 @@
-package Sigmaz.S02_PosProcessamento;
+package Sigmaz.S00_Utilitarios;
 
 import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
 import Sigmaz.S00_Utilitarios.SigmazLocal;

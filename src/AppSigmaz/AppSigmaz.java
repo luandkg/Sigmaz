@@ -30,6 +30,7 @@ public class AppSigmaz {
         String mCompilado = "res/build/Sigmaz.sigmad";
         String mLocalLibs = "res/build/";
 
+
         String mBiblioteca_Fonte = "res/libs/lib.sigmaz";
         String mBiblioteca_Sigmad = "res/build/lib.sigmad";
 
@@ -54,10 +55,10 @@ public class AppSigmaz {
 
         boolean mDebugar = true;
 
-        int ARQUIVO = 44;
+        int ARQUIVO = 96;
 
 
-        switch (SigmazApp.COMPILAR_E_EXECUTAR_DETALHADO) {
+        switch (SigmazApp.TESTES) {
 
             case ORDENADOR -> AppSigmazUtils.ORDENADOR(mLocal);
 
@@ -73,6 +74,8 @@ public class AppSigmaz {
 
             case COMPILAR_E_EXECUTAR_SIMPLES -> AppSigmazUtils.COMPILAR_SIMPLES(ARQUIVO, mArquivos, mCompilado, mLocalLibs,mDebugar);
             case COMPILAR_E_EXECUTAR_DETALHADO -> AppSigmazUtils.COMPILAR_DETALHADO(ARQUIVO, mArquivos, mCompilado, mLocalLibs,mDebugar);
+
+            case TESTES_UNITARIOS ->AppSigmazUtils.TESTE_UNITARIO(ARQUIVO, mArquivos, mCompilado, mLocalLibs,mDebugar);
 
             case EXECUTAR -> AppSigmazUtils.EXECUTAR(mCompilado, mLocalLibs,false);
             case EXECUTAR_DEBUG -> AppSigmazUtils.EXECUTAR(mCompilado, mLocalLibs,true);

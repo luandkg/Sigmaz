@@ -2,7 +2,7 @@ package Sigmaz.S01_Compilador.C03_Parser.Bloco;
 
 import Sigmaz.S01_Compilador.C03_Parser.Organizador.AST_Argumentos;
 import Sigmaz.S01_Compilador.C03_Parser.Fluxo.AST_Corpo;
-import Sigmaz.S01_Compilador.C03_Parser.AST_TYPE;
+import Sigmaz.S01_Compilador.C03_Parser.Alocador.AST_TYPE;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;

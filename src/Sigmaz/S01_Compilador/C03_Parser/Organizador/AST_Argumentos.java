@@ -1,6 +1,6 @@
 package Sigmaz.S01_Compilador.C03_Parser.Organizador;
 
-import Sigmaz.S01_Compilador.C03_Parser.AST_TYPE;
+import Sigmaz.S01_Compilador.C03_Parser.Alocador.AST_TYPE;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C03_Parser.Fluxo.AST_Value;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
