@@ -1306,4 +1306,174 @@ public class Sigmaz_Compilador {
     public long getLexer_Tempo(){return mLexerTempo;}
     public long getParser_Tempo(){return mParserTempo;}
 
+
+
+    public void initDireto(String eCodigo, String mSaida, String eLocalLibs, int mOpcao, boolean mDebugar) {
+
+
+        limpar();
+
+        mFase = Fases.PRE_PROCESSAMENTO;
+
+
+        if (mMostrar_Fases) {
+
+            System.out.println("");
+            System.out.println("################ SIGMAZ FASES ################");
+            System.out.println("");
+
+
+            System.out.println("\t - Source : DIRETO :: " + eCodigo.length());
+
+            System.out.println("\t - Local  : " + eLocalLibs);
+            System.out.println("\t - Build  : " + mSaida);
+            System.out.println("\t - Modo   : " + getModo(mOpcao));
+
+            System.out.println("");
+
+        }
+
+        Chronos_Intervalo mIntervalo = new Chronos_Intervalo();
+
+        mIntervalo.marqueInicio();
+
+
+        executar_CompiladorDireto(eCodigo, mOpcao, mDebugar);
+
+        fase_Lexer();
+
+        fase_Comentario();
+
+        fase_Parser();
+
+        executar_PosProcessamento(eLocalLibs);
+
+        executar_Integracao(eLocalLibs);
+
+        executar_Montagem(mSaida);
+
+        mIntervalo.marqueFim();
+
+        if (mMostrar_Fases) {
+            System.out.println("");
+            System.out.println("\t - Tempo   : " + mIntervalo.getIntervalo() + " segundos");
+        }
+
+        listar_mensagens();
+
+        if (mFase == Fases.PRONTO) {
+
+            executar(mSaida, mDebugar);
+
+        } else {
+
+            falhou();
+
+        }
+
+    }
+
+    private void executar_CompiladorDireto(String eCodigo, int mOpcao, boolean mDebugar) {
+
+        if (mFase == Fases.PRE_PROCESSAMENTO) {
+
+
+            limpar();
+
+
+            AST AST_Raiz = new AST("SIGMAZ");
+
+
+            mASTS.add(AST_Raiz);
+
+            UUID mUUIDC = new UUID();
+
+            AST_Raiz.setValor(mUUIDC.getUUID());
+
+            if (mOpcao == 1) {
+
+                AST_Raiz.setNome("EXECUTABLE");
+
+            } else if (mOpcao == 2) {
+
+                AST_Raiz.setNome("LIBRARY");
+
+            }
+
+            AST AST_DEBUGGER = new AST("DEBUGGER");
+
+            mDebugs.add(AST_DEBUGGER);
+
+
+            Compilador mCompilador = new Compilador();
+            mCompilador.initDireto(eCodigo, AST_Raiz, mDebugar, AST_DEBUGGER);
+
+            mPreProcessamento = mCompilador.getPreProcessamento();
+            mLexer_Processamento = mCompilador.getLexer_Processamento();
+            mParser_Processamento = mCompilador.getParser_Processamento();
+            mComentario_Processamento = mCompilador.getComentario_Processamento();
+
+            mIChars = mCompilador.getIChars();
+            mITokens = mCompilador.getITokens();
+
+            mLexerTempo = mCompilador.getLexer_Tempo();
+            mParserTempo = mCompilador.getParser_Tempo();
+
+            mEtapas = mCompilador.getEtapas();
+
+            for (String mRequisicao : mCompilador.getRequisitados()) {
+                mRequisitados.add(mRequisicao);
+            }
+
+            for (GrupoDeComentario mGrupoDeComentario : mCompilador.getComentarios()) {
+                mComentarios.add(mGrupoDeComentario);
+            }
+
+            for (GrupoDeErro mGrupoDeErro : mCompilador.getErros_Processamento()) {
+                mErros_PreProcessamento.add(mGrupoDeErro);
+            }
+
+            for (GrupoDeErro mGrupoDeErro : mCompilador.getErros_Lexer()) {
+                mErros_Lexer.add(mGrupoDeErro);
+            }
+
+
+            for (GrupoDeErro mGrupoDeErro : mCompilador.getErros_Parser()) {
+                mErros_Parser.add(mGrupoDeErro);
+            }
+
+            if (mDebug_PreProcessamento) {
+                mDebugMensagens.add(getPreProcessamento());
+            }
+
+
+            mEtapas = getEtapas();
+
+            if (getErros_PreProcessamento().size() == 0) {
+
+                mFase = Fases.LEXER;
+                mETAPA_PRE_PROCESSAMENTO = mSTATUS_SUCESSO;
+
+
+            } else {
+
+                mETAPA_PRE_PROCESSAMENTO = mSTATUS_FALHOU;
+
+                mOrganizadorDeErros.getPreProcessador(getErros_PreProcessamento());
+            }
+
+
+        }
+
+        if (mMostrar_Fases) {
+            System.out.println("\t - 1 : Pre Processamento       : " + mETAPA_PRE_PROCESSAMENTO);
+
+        }
+
+
+    }
+
+
+
+
 }

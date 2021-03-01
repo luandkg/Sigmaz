@@ -402,6 +402,14 @@ public class Run_Struct {
 
                     mAST_Struct = ASTC;
 
+                    if (ASTC.existeBranch("COMPLEMENT")) {
+                        if (ASTC.getBranch("COMPLEMENT").mesmoNome("INHENTABLE")) {
+                            mRunTime.errar(mLocal, "A Struct " + mStructNome + " : Nao pode ser instanciada porque e apenas herdavel ! !");
+                            return false;
+                        }
+                    }
+
+
                     AST init_Extend = ASTC.getBranch("EXTENDED");
 
                     if (init_Extend.mesmoNome("STRUCT")) {
@@ -796,14 +804,14 @@ public class Run_Struct {
 
         boolean temHeranca = false;
 
-       // System.out.println("\t " + this.getNome() + " : " + this.getStructNome() + " :: Procurando Base --> " + eQualBase);
+        // System.out.println("\t " + this.getNome() + " : " + this.getStructNome() + " :: Procurando Base --> " + eQualBase);
 
         if (getStructNome().contentEquals(eQualBase)) {
-            temHeranca=true;
-        }else{
+            temHeranca = true;
+        } else {
             for (String eBase : getBases()) {
 
-             //   System.out.println("\t " + this.getNome() + " :: BASE ->> " + eBase);
+                //   System.out.println("\t " + this.getNome() + " :: BASE ->> " + eBase);
 
                 if (eBase.contentEquals(eQualBase)) {
                     temHeranca = true;
@@ -826,8 +834,8 @@ public class Run_Struct {
         //  System.out.println(mModelos.getImpressao());
 
         if (getStructNome().contentEquals(eQualModelo)) {
-            temModelo=true;
-        }else{
+            temModelo = true;
+        } else {
             for (String eBase : getModelos()) {
 
                 //   System.out.println("\t " + this.getNome() + " :: BASE ->> " + eBase);

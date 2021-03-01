@@ -200,6 +200,49 @@ public class AppSigmazUtils {
     }
 
 
+    public static void COMPILAR_DIRETO_DETALHADO(String eSigmazCodigo, String eCompilado, String eLocalLibs, boolean mDebugar) {
+
+
+        Sigmaz_Compilador SigmazC = new Sigmaz_Compilador();
+
+        SigmazC.mostrarDebug(true);
+        SigmazC.setMostrar_Erros(true);
+
+        SigmazC.setMostrarArvoreRunTime(false);
+        SigmazC.setMostrar_ArvoreFalhou(false);
+
+
+        SigmazC.setDebug_PreProcessamento(true);
+        SigmazC.setDebug_Lexer(false);
+        SigmazC.setDebug_Parser(false);
+        SigmazC.setDebug_Comentario(false);
+        SigmazC.setDebug_Integralizador(false);
+        SigmazC.setDebug_Montagem(true);
+        SigmazC.setMostrar_Debugador(false);
+
+        SigmazC.setDebug_PosProcessador_Requisidor(false);
+
+        SigmazC.setDebug_PosProcessador_Cast(false);
+        SigmazC.setDebug_PosProcessador_Unificador(false);
+        SigmazC.setDebug_PosProcessador_Heranca(false);
+        SigmazC.setDebug_PosProcessador_Modelador(false);
+        SigmazC.setDebug_PosProcessador_Estagiador(false);
+
+        SigmazC.setDebug_PosProcessador_Referenciador(false);
+        SigmazC.setDebug_PosProcessador_Argumentador(false);
+        SigmazC.setDebug_PosProcessador_Opcionador(false);
+
+        SigmazC.setDebug_PosProcessador_Alocador(false);
+        SigmazC.setDebug_PosProcessador_Tipador(false);
+        SigmazC.setDebug_PosProcessador_Estruturador(false);
+        SigmazC.setDebug_PosProcessador_Unicidade(false);
+
+        SigmazC.initDireto(eSigmazCodigo, eCompilado, eLocalLibs, 1, mDebugar);
+
+
+    }
+
+
     public static void TESTE_UNITARIO(int eIndice, ArrayList<String> mArquivos, String eCompilado, String eLocalLibs, boolean mDebugar) {
 
 

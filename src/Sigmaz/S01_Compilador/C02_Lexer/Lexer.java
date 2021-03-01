@@ -70,6 +70,7 @@ public class Lexer {
         mLinha = 0;
         mPosicao = 0;
         mTokens = new ArrayList<>();
+        mErros = new ArrayList<>();
 
         mLinhas = 0;
         mLinha_Min = 0;
@@ -120,11 +121,7 @@ public class Lexer {
         return a.contentEquals(b);
     }
 
-
-    public void init(String eArquivo) {
-
-        File arq = new File(eArquivo);
-
+    public void limpar() {
 
         mConteudo = "";
         mIndex = 0;
@@ -137,14 +134,29 @@ public class Lexer {
         mLinha_Min = -1;
         mLinha_Max = -1;
 
-        mErros = new ArrayList<>();
+        mErros.clear();
+
+    }
+
+    public void init(String eArquivo) {
+
+        limpar();
+
+
+        File arq = new File(eArquivo);
 
         if (arq.exists()) {
-            mConteudo = Texto.Ler(eArquivo);
+            initDireto(Texto.Ler(eArquivo));
         } else {
             errar("Arquivo nao encontrado : " + eArquivo, 0, 0);
         }
 
+
+    }
+
+    public void initDireto(String eConteudo) {
+
+        mConteudo = eConteudo;
         mTamanho = mConteudo.length();
 
         if (mTamanho == 0) {
@@ -295,8 +307,8 @@ public class Lexer {
         long mFim = System.nanoTime();
 
         mTempo = mFim - mInicio;
-    }
 
+    }
 
     public void organizar() {
 

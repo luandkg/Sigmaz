@@ -110,6 +110,17 @@ public class Compilador {
 
     }
 
+    public void initDireto(String eCodigo, AST AST_Raiz, boolean mDebugar, AST eAST_DEBUGGER) {
+
+
+        initPassosDireto(eCodigo, AST_Raiz, mDebugar, eAST_DEBUGGER);
+
+        while (!getTerminou()) {
+            continuar();
+        }
+
+
+    }
 
     public int getIChars() {
         int somando = 0;
@@ -455,6 +466,283 @@ public class Compilador {
         });
     }
 
+    public void initPassosDireto(String eCodigo, AST eAST_Raiz, boolean mDebugar, AST eAST_DEBUGGER) {
+
+        mIsDebug = mDebugar;
+
+        AST_Raiz = eAST_Raiz;
+        mAST_DEBUGGER = eAST_DEBUGGER;
+
+        mRequisitados.clear();
+
+        mErros_Processamento.clear();
+        mErros_Lexer.clear();
+        mErros_Parser.clear();
+
+        mInfoLexers.clear();
+
+        mComentarios.clear();
+
+        mEtapas.clear();
+
+        mLexerTempo = 0;
+        mParserTempo = 0;
+
+
+        mFila = new Enfileirador();
+
+        mFila.setCodigo(eCodigo);
+
+        mFila.iniciar();
+
+        mExecutando = true;
+
+
+        mCiclador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+
+                if (mFila.estaPorCodigo()) {
+                    mFila.adicionar("CODIGO");
+                }
+
+
+                // INICIAR
+
+                int mIDCorrente = mFila.getProcessados().size();
+                int mIDTotal = mFila.getProcessados().size() + mFila.getTamanho();
+
+
+                mArquivoCorrente = mFila.processar();
+
+                if (mFila.isTerminou()) {
+                    mFila.terminar();
+                    mExecutando = false;
+                } else {
+
+                    mEtapa = new Etapa(mEtapas.size() + 1, mArquivoCorrente);
+                    mEtapas.add(mEtapa);
+
+                    File arq = null;
+
+                    if (!mFila.estaPorCodigo()) {
+                        mRequisitados.add(mArquivoCorrente);
+                        arq = new File(mArquivoCorrente);
+                    }
+
+
+                    mFila.marcarProcessado();
+                    mPreProcessando = mIDCorrente + " de " + mIDTotal;
+                    mCorrentePreprocessando = true;
+
+                    if (!mFila.estaPorCodigo()) {
+                        if (!arq.exists()) {
+                            GrupoDeErro nG = new GrupoDeErro("SIGMAZ");
+                            nG.adicionarErro("Arquivo nao encontrado : " + mArquivoCorrente, 0, 0);
+                            mErros_Processamento.add(nG);
+                            mFila.terminar();
+                        }
+                    }
+
+
+                }
+
+
+            }
+        });
+
+        mCiclador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+                mArquivoLexando = mArquivoCorrente;
+                mArquivoParseando = "";
+            }
+        });
+
+
+        mCiclador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+                // LEXER
+
+                if (mExecutando) {
+
+                    Lexer LexerC = new Lexer();
+
+
+                    if (mFila.estaPorCodigo()) {
+
+                        LexerC.initDireto(mFila.getCodigo());
+
+                    } else {
+
+                        File arq = new File(mArquivoCorrente);
+
+                        if (arq.exists()) {
+
+                            mCorrenteParseando = true;
+
+                            LexerC.init(mArquivoCorrente);
+
+
+                        } else {
+
+                            GrupoDeErro nG = new GrupoDeErro("SIGMAZ");
+                            nG.adicionarErro("Arquivo nao encontrado : " + mArquivoCorrente, 0, 0);
+                            mErros_Processamento.add(nG);
+                            mFila.terminar();
+
+                        }
+
+
+                    }
+
+                    mLexerTempo = LexerC.getTempo();
+
+                    GrupoDeErro mErrosLexer = new GrupoDeErro(mArquivoCorrente);
+
+                    if (LexerC.getTokens().size() == 0) {
+                        mErrosLexer.adicionarErro("Arquivo vazio !", 0, 0);
+                    }
+
+
+                    for (Erro mErro : LexerC.getErros()) {
+                        mErrosLexer.adicionarErro(mErro.getMensagem(), mErro.getLinha(), mErro.getPosicao());
+                    }
+
+                    if (mErrosLexer.getErros().size() > 0) {
+                        mErros_Lexer.add(mErrosLexer);
+                    }
+
+                    mTodosTokens = LexerC.getTokens();
+
+                    mInfoLexers.add(new InfoLexer(mArquivoCorrente, LexerC.getChars(), LexerC.getTokens().size()));
+
+
+                    if (mErros_Processamento.size() > 0) {
+                        mFila.terminar();
+                    }
+
+                }
+            }
+        });
+
+        mCiclador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+                mArquivoLexando = "";
+                mArquivoParseando = mArquivoCorrente;
+            }
+        });
+
+        mCiclador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+                int ic = 0;
+
+                GrupoDeComentario GrupoDeComentarioC = new GrupoDeComentario(mArquivoCorrente);
+
+                ArrayList<Token> mTokens_Saida = new ArrayList<Token>();
+
+                for (Token TokenC : mTodosTokens) {
+
+                    if (TokenC.getTipo() == TokenTipo.COMENTARIO_LINHA) {
+                        GrupoDeComentarioC.adicionarComentario(TokenC);
+                        ic += 1;
+                    } else if (TokenC.getTipo() == TokenTipo.COMENTARIO_BLOCO) {
+                        GrupoDeComentarioC.adicionarComentario(TokenC);
+                        ic += 1;
+                    } else {
+                        mTokens_Saida.add(TokenC);
+
+                    }
+                }
+
+                mInfoComment.add(new InfoComment(mArquivoCorrente, mTodosTokens.size(), ic));
+
+                mTodosTokens = mTokens_Saida;
+
+                mComentarios.add(GrupoDeComentarioC);
+
+            }
+        });
+
+
+        mCiclador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+                mCorrenteCompilando = true;
+
+                File arq = new File(mArquivoCorrente);
+                String mLocal = arq.getParent() + "/";
+
+                mArquivoLexando = "";
+                mArquivoParseando = mArquivoCorrente;
+
+                Parser mParser = new Parser();
+                mParser.init(mArquivoCorrente, mLocal, mIsDebug, mTodosTokens, AST_Raiz, mAST_DEBUGGER, mRequisitados);
+                mParserTempo = mParser.getTempo();
+
+                mInfoParser.add(new InfoParser(mArquivoCorrente, mParser.getTokens().size(), mParser.getObjetos()));
+
+                GrupoDeErro mErrosParser = new GrupoDeErro(mArquivoCorrente);
+
+                if (mParser.getErros_Parser().size() > 0) {
+                    for (Erro mErro : mParser.getErros_Parser()) {
+                        mErrosParser.adicionarErro(mErro);
+                    }
+                }
+
+                if (mErrosParser.getErros().size() > 0) {
+                    mErros_Parser.add(mErrosParser);
+                }
+
+                eImportacoes = mParser.getFila();
+            }
+        });
+
+        mCiclador.implemente(new ProcessoCallback() {
+            @Override
+            public void processar() {
+                for (Importacao a : eImportacoes) {
+
+                    mFila.momentoAdicionar(a.getImportando());
+
+                    if (mFila.getProcessados().contains(a.getImportando())) {
+                        mEtapa.adicionarJaProcessado(a.getImportando());
+                    } else if (mFila.contem(a.getImportando())) {
+                        mEtapa.adicionarJaEsperando(a.getImportando());
+                    } else {
+                        mEtapa.adicionar(a.getImportando());
+                    }
+
+
+                    File arqIncluir = new File(a.getImportando());
+
+                    if (!arqIncluir.exists()) {
+                        GrupoDeErro nG = new GrupoDeErro(a.getOrigem());
+                        nG.adicionarErro("Importacao nao encontrado : " + a.getImportando(), a.getLinha(), a.getColuna());
+                        mErros_Processamento.add(nG);
+                        break;
+                    }
+
+                }
+
+
+                mFila.organizar();
+
+                if (mErros_Processamento.size() > 0) {
+                    mFila.terminar();
+                }
+
+                if (mFila.isTerminou()) {
+                    mExecutando = false;
+                }
+
+            }
+        });
+    }
+
 
     public void continuar() {
 
@@ -499,7 +787,12 @@ public class Compilador {
         return mCorrenteCompilando;
     }
 
-    public long getLexer_Tempo(){return mLexerTempo;}
-    public long getParser_Tempo(){return mParserTempo;}
+    public long getLexer_Tempo() {
+        return mLexerTempo;
+    }
+
+    public long getParser_Tempo() {
+        return mParserTempo;
+    }
 
 }

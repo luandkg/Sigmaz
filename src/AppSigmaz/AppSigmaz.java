@@ -27,7 +27,7 @@ public class AppSigmaz {
         ArrayList<String> mBibliotecas = Carregadores.Carregar_Bibliotecas();
         ArrayList<String> mMakes = Carregadores.Carregar_Makes();
 
-        String mCompilado = "res/build/Sigmaz.sigmad";
+        String mCompilado = "res/build/run.sigmad";
         String mLocalLibs = "res/build/";
 
 
@@ -55,8 +55,9 @@ public class AppSigmaz {
 
         boolean mDebugar = true;
 
-        int ARQUIVO = 96;
+        int ARQUIVO = 97;
 
+        CodigoSigmaz eCodigoSigmaz = new CodigoSigmaz();
 
         switch (SigmazApp.TESTES) {
 
@@ -64,21 +65,22 @@ public class AppSigmaz {
 
             case MONTAR_PLANO_COMPILACAO -> AppSigmazUtils.PLANO_COMPILACAO(ARQUIVO, mArquivos, mLOCAL_PLANOS, mLocalLibs);
 
-            case DEPENDENCIAS -> AppSigmazUtils.DEPENDENCIA(ARQUIVO, mArquivos,mLocalLibs);
+            case DEPENDENCIAS -> AppSigmazUtils.DEPENDENCIA(ARQUIVO, mArquivos, mLocalLibs);
             case ESTRUTURADOR -> AppSigmazUtils.ESTRUTURAL(ARQUIVO, mArquivos, mCompilado, mLocalLibs);
             case INTERNO -> AppSigmazUtils.INTERNO(ARQUIVO, mArquivos, mCompilado, mLocalLibs, mInternos);
 
 
-            case COMPILAR_BIBLIOTECA -> AppSigmazUtils.COMPILAR_BIBLIOTECA(ARQUIVO, mArquivos, mCompilado, mLocalLibs,mDebugar);
-            case COMPILAR_EXECUTAVEL -> AppSigmazUtils.COMPILAR_EXECUTAVEL(ARQUIVO, mArquivos, mCompilado, mLocalLibs,mDebugar);
+            case COMPILAR_BIBLIOTECA -> AppSigmazUtils.COMPILAR_BIBLIOTECA(ARQUIVO, mArquivos, mCompilado, mLocalLibs, mDebugar);
+            case COMPILAR_EXECUTAVEL -> AppSigmazUtils.COMPILAR_EXECUTAVEL(ARQUIVO, mArquivos, mCompilado, mLocalLibs, mDebugar);
 
-            case COMPILAR_E_EXECUTAR_SIMPLES -> AppSigmazUtils.COMPILAR_SIMPLES(ARQUIVO, mArquivos, mCompilado, mLocalLibs,mDebugar);
-            case COMPILAR_E_EXECUTAR_DETALHADO -> AppSigmazUtils.COMPILAR_DETALHADO(ARQUIVO, mArquivos, mCompilado, mLocalLibs,mDebugar);
+            case COMPILAR_E_EXECUTAR_SIMPLES -> AppSigmazUtils.COMPILAR_SIMPLES(ARQUIVO, mArquivos, mCompilado, mLocalLibs, mDebugar);
+            case COMPILAR_E_EXECUTAR_DETALHADO -> AppSigmazUtils.COMPILAR_DETALHADO(ARQUIVO, mArquivos, mCompilado, mLocalLibs, mDebugar);
+            case COMPILAR_E_EXECUTAR_DIRETO_DETALHADO -> AppSigmazUtils.COMPILAR_DIRETO_DETALHADO(eCodigoSigmaz.getCodigo(), mCompilado, mLocalLibs, mDebugar);
 
-            case TESTES_UNITARIOS ->AppSigmazUtils.TESTE_UNITARIO(ARQUIVO, mArquivos, mCompilado, mLocalLibs,mDebugar);
+            case TESTES_UNITARIOS -> AppSigmazUtils.TESTE_UNITARIO(ARQUIVO, mArquivos, mCompilado, mLocalLibs, mDebugar);
 
-            case EXECUTAR -> AppSigmazUtils.EXECUTAR(mCompilado, mLocalLibs,false);
-            case EXECUTAR_DEBUG -> AppSigmazUtils.EXECUTAR(mCompilado, mLocalLibs,true);
+            case EXECUTAR -> AppSigmazUtils.EXECUTAR(mCompilado, mLocalLibs, false);
+            case EXECUTAR_DEBUG -> AppSigmazUtils.EXECUTAR(mCompilado, mLocalLibs, true);
 
             case TESTES -> AppSigmazUtils.TESTE_GERAL(mArquivos, mCompilado, mLocal, mLocalLibs);
 
@@ -88,21 +90,21 @@ public class AppSigmaz {
             case IDENTAR_TUDO -> AppSigmazUtils.IDENTAR_LOTE("ARQUIVOS", mArquivos);
             case IDENTAR_BIBLIOTECAS -> AppSigmazUtils.IDENTAR_LOTE("BIBLIOTECAS", mBibliotecas);
 
-            case MONTAR_BIBLIOTECAS -> AppSigmazUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad, mLocalLibs,mDebugar);
-            case MONTAR_BIB_TRONARKO -> AppSigmazUtils.MONTAR_BIBLIOTECA(mBiblioteca_TronarkoFonte, mBiblioteca_Tronarko, mLocalLibs,mDebugar);
-            case MONTAR_BIB_CONSTAZ -> AppSigmazUtils.MONTAR_BIBLIOTECA(mBiblioteca_ConstazFonte, mBiblioteca_Constaz, mLocalLibs,mDebugar);
+            case MONTAR_BIBLIOTECAS -> AppSigmazUtils.MONTAR_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad, mLocalLibs, mDebugar);
+            case MONTAR_BIB_TRONARKO -> AppSigmazUtils.MONTAR_BIBLIOTECA(mBiblioteca_TronarkoFonte, mBiblioteca_Tronarko, mLocalLibs, mDebugar);
+            case MONTAR_BIB_CONSTAZ -> AppSigmazUtils.MONTAR_BIBLIOTECA(mBiblioteca_ConstazFonte, mBiblioteca_Constaz, mLocalLibs, mDebugar);
 
             case INTELLISENSE -> AppSigmazUtils.INTELISENSE(ARQUIVO, mArquivos, mCompilado, mLocalLibs, mIntellisense);
             case INTELLISENSE_BIBLIOTECA -> AppSigmazUtils.INTELISENSE_BIBLIOTECA(mBiblioteca_Fonte, mBiblioteca_Sigmad, mLocalLibs, mIntellisense);
 
             case LEXER -> AppSigmazUtils.LEXER(ARQUIVO, mArquivos);
-            case TODO -> AppSigmazUtils.TODO(ARQUIVO, mArquivos,mLocalLibs);
-            case COMENTARIOS -> AppSigmazUtils.COMENTARIOS(ARQUIVO, mArquivos,mLocalLibs);
+            case TODO -> AppSigmazUtils.TODO(ARQUIVO, mArquivos, mLocalLibs);
+            case COMENTARIOS -> AppSigmazUtils.COMENTARIOS(ARQUIVO, mArquivos, mLocalLibs);
 
             case MAKE_LEXER -> AppMake.MAKE_LEXER(ARQUIVO, mMakes);
             case MAKE_EXECUTAR -> AppMake.MAKE_EXECUTAR(ARQUIVO, mMakes);
 
-            case GERADOR_DETALHADO -> AppSigmazUtils.GERADOR_DETALHADO(mLocalGerador, mCompilado, mLocalLibs,mDebugar);
+            case GERADOR_DETALHADO -> AppSigmazUtils.GERADOR_DETALHADO(mLocalGerador, mCompilado, mLocalLibs, mDebugar);
             case GERADOR_INTELLISENSE -> AppSigmazUtils.GERADOR_INTELISENSE(mLocalGerador, mCompilado, mLocalLibs, mIntellisense);
 
             case APP -> APP();
@@ -150,7 +152,7 @@ public class AppSigmaz {
         mOARoadmap.receber("Roadmap.txt");
         mOARoadmap.exportarImagemHV("roadmap.png", new Color(52, 73, 94), eCorFonte);
         mOARoadmap.exportarMarkDown("ROADMAP.md", "Linguagem de Programação Estruturada - Implementações", IMG_ROAD, "RoadMap - Sigmaz");
-        mOARoadmap.exportarSetoresMarkDown("ROADMAP_V2.md", 12,"Linguagem de Programação Estruturada - Implementações", IMG_ROAD, "RoadMap - Sigmaz");
+        mOARoadmap.exportarSetoresMarkDown("ROADMAP_V2.md", 12, "Linguagem de Programação Estruturada - Implementações", IMG_ROAD, "RoadMap - Sigmaz");
 
         OARoad mChangeList = new OARoad("res/oa/ChangeList.trilha");
         mChangeList.receber("ChangeList.txt");

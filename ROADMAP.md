@@ -620,3 +620,10 @@ Linguagem de Programação Estruturada - Implementações
 		2021 02 23 -->> ASSERT_NULLABLE
 		2021 02 23 -->> ASSERT_NOTNULLABLE
 
+
+		2021 02 27 -->> Compilação de Codigo Direto
+
+
+		2021 03 01 -->> Structs Finais
+		2021 03 01 -->> Structs Nao Instanciaveis
+

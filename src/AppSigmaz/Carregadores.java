@@ -166,6 +166,7 @@ public class Carregadores {
         // 2021
 
         mArquivos.add("res/96 - testes.sigmaz");
+        mArquivos.add("res/97 - structfinal.sigmaz");
 
 
 

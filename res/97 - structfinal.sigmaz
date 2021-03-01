@@ -1,0 +1,43 @@
+
+
+struct Simples {
+
+	init Simples ( )  {
+
+
+	}
+}
+
+
+
+struct Complexa with Simples :: inhentable {
+
+	init Complexa ( )  -> Simples() {
+
+
+	}
+
+}
+
+struct HiperC with Complexa :: final  {
+
+    init HiperC ( )  -> Complexa() {
+
+
+	}
+
+}
+
+
+call comecar -> {
+
+
+    #def a : Complexa = init Complexa(); nao instanciavel
+    def b : HiperC = init HiperC();
+    def c : HiperC = init HiperC();
+
+
+    DEBUG -> LOCAL :: STACK  ;
+
+
+}

@@ -91,6 +91,12 @@ public class Item {
             mValor = eValor;
         }
 
+
+        if (this.getIsReferenciavel()){
+            this.getReferencia().setValor(mValor,eRunTime,eEscopo);
+        }
+
+
     }
 
     public String getValor(RunTime eRunTime, Escopo eEscopo) {

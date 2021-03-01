@@ -17,6 +17,8 @@ public class Enfileirador {
 
     private ArrayList<String> mProcessados;
     private String mProcessandoCorrente;
+    private String mCodigo;
+    private boolean mPorCodigo;
 
     public Enfileirador() {
 
@@ -31,8 +33,18 @@ public class Enfileirador {
 
         mProcessados = new ArrayList<String>();
         mEtapas = 0;
-
+        mCodigo = "";
+        mPorCodigo = false;
     }
+
+    public void setCodigo(String eCodigo) {
+        mCodigo = eCodigo;
+        mPorCodigo = true;
+    }
+
+    public boolean estaPorCodigo(){return mPorCodigo;}
+
+    public String getCodigo(){return mCodigo;}
 
     public void adicionar(String eArquivo) {
         mFila.add(eArquivo);

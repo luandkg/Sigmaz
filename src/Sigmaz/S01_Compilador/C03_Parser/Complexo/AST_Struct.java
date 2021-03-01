@@ -61,6 +61,9 @@ public class AST_Struct {
             AST mModels = AST_Corrente.criarBranch("MODELS");
             AST mRefers = AST_Corrente.criarBranch("REFERS");
 
+            AST mComplement = AST_Corrente.criarBranch("COMPLEMENT");
+            mComplement.setNome("NONE");
+
 
             AST AST_Inits = AST_Corrente.criarBranch("INITS");
 
@@ -128,7 +131,6 @@ public class AST_Struct {
                     eModelo.setNome(TokenP.getConteudo());
 
 
-
                     AST AST_Gen = AST_Model.criarBranch("GENERIC");
                     AST_Gen.setNome("FALSE");
 
@@ -147,6 +149,37 @@ public class AST_Struct {
 
                 }
             }
+
+            Token Futuro_Extra = mCompiler.getTokenFuturo();
+
+            if (Futuro_Extra.getTipo() == TokenTipo.QUAD) {
+                mCompiler.Proximo();
+
+                Token TokenP = mCompiler.getTokenAvante();
+
+
+                if (TokenP.getTipo() == TokenTipo.ID) {
+
+                    if (TokenP.mesmoConteudo("final")) {
+
+                        mComplement.setNome("FINAL");
+
+                    } else if (TokenP.mesmoConteudo("inhentable")) {
+
+                        mComplement.setNome("INHENTABLE");
+
+
+                    } else {
+                        mCompiler.errarCompilacao("Era esperado FINAL ou INHENTABLE !", TokenP);
+                    }
+
+                } else {
+                    mCompiler.errarCompilacao("Era esperado FINAL ou INHENTABLE !", TokenP);
+                }
+
+
+            }
+
 
             corpo(AST_Corpo, AST_Inits, AST_Destruct, TokenC.getConteudo());
 

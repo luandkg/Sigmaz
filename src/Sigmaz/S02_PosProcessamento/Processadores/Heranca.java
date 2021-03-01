@@ -394,6 +394,14 @@ public class Heranca {
         mensagem("\t\t\t  - Base Generics  : " + eBaseNome + " - Generics " + mBaseGenerica + " ( " + Base_Generics.getASTS().size() + " ) ");
 
 
+        if (Base.existeBranch("COMPLEMENT")) {
+            if (Base.getBranch("COMPLEMENT").mesmoNome("FINAL")) {
+                mensagem("\t\t\t  - A struct " +eStructNome + " nao pode herdar " +  eBaseNome + " porque e FINAL !");
+                errar("A struct " + eStructNome + " nao pode herdar " + eBaseNome + " porque e FINAL !");
+                return;
+            }
+        }
+
         if (SuperBase_With.mesmoValor("FALSE") && Base_Generics.mesmoNome("TRUE")) {
 
             mensagem("A Struct Base " + eBaseNome + " precisa implementar tipos genericos !");

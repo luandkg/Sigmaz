@@ -25,7 +25,6 @@ public class Run_Apply {
         AST mSettable = ASTCorrente.getBranch("SETTABLE");
 
 
-
         Run_Value mAplicador = new Run_Value(mRunTime, mEscopo);
         mAplicador.init(mSettable, "<<ANY>>");
 
@@ -33,25 +32,35 @@ public class Run_Apply {
             return;
         }
 
-        // System.out.println("Settable -->> " + SettableValue.getRetornoTipo());
+        // System.out.println("Settable -->> " + mAplicador.getConteudo() + " : " + mAplicador.getRetornoTipo());
 
-        //   System.out.println("Settable -->>" + SettableValue.getRetornoTipo() +  " ::: " +  SettableValue.getReferencia().getNome());
-
-        //   System.out.println("Erros : " + mRunTime.getErros().size());
+        //  if (mAplicador.getIsReferenciavel()) {
+        //     if (mAplicador.getReferencia().getIsReferenciavel()) {
+        //         System.out.println("Settable Ref -->> " + mAplicador.getReferencia().getReferencia().getNome());
+        //      }
+        //  }
+        // System.out.println("Erros : " + mRunTime.getErros().size());
 
 
         Run_Valoramento mRun_Valoramento = new Run_Valoramento(mRunTime, mEscopo);
         Run_Value mAST = null;
 
-        if (mAplicador.getReferencia().getModo() == 2) {
-            mAST = mRun_Valoramento.initSemCast(mAplicador.getReferencia().getNome(), mValue, mAplicador.getRetornoTipo());
+        if (mAplicador.getIsReferenciavel()) {
+
+            if (mAplicador.getReferencia().getModo() == 2) {
+                mAST = mRun_Valoramento.initSemCast(mAplicador.getReferencia().getNome(), mValue, mAplicador.getRetornoTipo());
+            } else {
+                mAST = mRun_Valoramento.init(mAplicador.getReferencia().getNome(), mValue, mAplicador.getRetornoTipo());
+            }
+
         } else {
-            mAST = mRun_Valoramento.init(mAplicador.getReferencia().getNome(), mValue, mAplicador.getRetornoTipo());
+            mRunTime.errar(mLocal, "Referencia nao encontrada !");
+            return;
         }
 
 
-        if (!mAST.getIsNulo()){
-            if (mAST.getIsStruct()){
+        if (!mAST.getIsNulo()) {
+            if (mAST.getIsStruct()) {
                 mRunTime.getHeap().aumentar(mAST.getConteudo());
             }
         }
@@ -68,16 +77,15 @@ public class Run_Apply {
             }
 
 
-
             if (mAplicador.getReferencia().getModo() == 2) {
 
-                mAplicador.getReferencia().setValor(mAST.getConteudo(),mRunTime,mEscopo);
-                mAplicador.getReferencia().setNulo(mAST.getIsNulo(),mRunTime);
+                mAplicador.getReferencia().setValor(mAST.getConteudo(), mRunTime, mEscopo);
+                mAplicador.getReferencia().setNulo(mAST.getIsNulo(), mRunTime);
                 mAplicador.getReferencia().setIsEstrutura(mAST.getIsStruct());
                 mAplicador.getReferencia().setTipo(mAST.getRetornoTipo());
 
-                if (! mAplicador.getReferencia().getNulo()){
-                    if (mAplicador.getReferencia().getIsEstrutura()){
+                if (!mAplicador.getReferencia().getNulo()) {
+                    if (mAplicador.getReferencia().getIsEstrutura()) {
                         mRunTime.getHeap().aumentar(mAST.getConteudo());
                     }
                 }
@@ -91,11 +99,11 @@ public class Run_Apply {
                 }
 
 
-                mAplicador.getReferencia().setValor(mAST.getConteudo(),mRunTime,mEscopo);
-                mAplicador.getReferencia().setNulo(mAST.getIsNulo(),mRunTime);
+                mAplicador.getReferencia().setValor(mAST.getConteudo(), mRunTime, mEscopo);
+                mAplicador.getReferencia().setNulo(mAST.getIsNulo(), mRunTime);
 
-                if (! mAplicador.getReferencia().getNulo()){
-                    if (mAplicador.getReferencia().getIsEstrutura()){
+                if (!mAplicador.getReferencia().getNulo()) {
+                    if (mAplicador.getReferencia().getIsEstrutura()) {
                         mRunTime.getHeap().aumentar(mAST.getConteudo());
                     }
                 }
