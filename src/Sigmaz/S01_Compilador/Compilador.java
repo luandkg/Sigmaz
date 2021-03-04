@@ -268,13 +268,12 @@ public class Compilador {
 
                     mRequisitados.add(mArquivoCorrente);
 
-                    File arq = new File(mArquivoCorrente);
 
                     mFila.marcarProcessado();
                     mPreProcessando = mIDCorrente + " de " + mIDTotal;
                     mCorrentePreprocessando = true;
 
-                    if (!arq.exists()) {
+                    if (!new File(mArquivoCorrente).exists()) {
                         GrupoDeErro nG = new GrupoDeErro("SIGMAZ");
                         nG.adicionarErro("Arquivo nao encontrado : " + mArquivoCorrente, 0, 0);
                         mErros_Processamento.add(nG);

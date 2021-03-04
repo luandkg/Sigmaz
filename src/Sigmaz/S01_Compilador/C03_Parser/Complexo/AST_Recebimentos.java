@@ -4,6 +4,7 @@ import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Recebimentos {
 
@@ -34,7 +35,7 @@ public class AST_Recebimentos {
                 mais=false;
 
 
-                AST ASTCorrente =   ASTPai.criarBranch("ARGUMENT");
+                AST ASTCorrente =   ASTPai.criarBranch(Orquestrantes.ARGUMENT);
                 ASTCorrente.setNome(TokenD.getConteudo());
                 ASTCorrente.setValor("INT");
 
@@ -54,7 +55,7 @@ public class AST_Recebimentos {
                 mais=false;
 
 
-                AST ASTCorrente =   ASTPai.criarBranch("ARGUMENT");
+                AST ASTCorrente =   ASTPai.criarBranch(Orquestrantes.ARGUMENT);
                 ASTCorrente.setNome(TokenD.getConteudo());
                 ASTCorrente.setValor("Text");
 
@@ -76,7 +77,7 @@ public class AST_Recebimentos {
 
 
 
-                AST ASTCorrente =   ASTPai.criarBranch("ARGUMENT");
+                AST ASTCorrente =   ASTPai.criarBranch(Orquestrantes.ARGUMENT);
                 ASTCorrente.setNome(TokenD.getConteudo());
                 ASTCorrente.setValor("ID");
 

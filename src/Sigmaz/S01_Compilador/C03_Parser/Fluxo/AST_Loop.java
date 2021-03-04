@@ -4,6 +4,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Loop {
 
@@ -17,7 +18,7 @@ public class AST_Loop {
 
 
 
-        AST AST_Corrente = new AST("LOOP");
+        AST AST_Corrente = new AST(Orquestrantes.LOOP);
         ASTPai.getASTS().add(AST_Corrente);
 
 
@@ -25,7 +26,7 @@ public class AST_Loop {
 
 
         AST_Corpo cAST = new AST_Corpo(mCompiler);
-        cAST.init(AST_Corrente.criarBranch("BODY"));
+        cAST.init(AST_Corrente.criarBranch(Orquestrantes.BODY));
 
 
 

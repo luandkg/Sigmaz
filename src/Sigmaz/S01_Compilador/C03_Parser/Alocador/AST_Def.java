@@ -5,6 +5,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Def {
 
@@ -35,7 +36,7 @@ public class AST_Def {
 
 
 
-        AST AST_Corrente = new AST("DEF");
+        AST AST_Corrente = new AST(Orquestrantes.DEF);
         AST_Corrente.setNome(TokenC.getConteudo());
         ASTPai.getASTS().add(AST_Corrente);
 
@@ -45,18 +46,18 @@ public class AST_Def {
         mType.init(AST_Corrente);
 
         //  System.out.println("To : " + mCompiler.getTokenCorrente().getConteudo());
-        AST AST_Valor = AST_Corrente.criarBranch("VALUE");
+        AST AST_Valor = AST_Corrente.criarBranch(Orquestrantes.VALUE);
 
 
         Token TokenP3 = mCompiler.getTokenAvante();
 
         if (TokenP3.getTipo() == TokenTipo.PONTOVIRGULA) {
-            AST_Valor.setValor("NULL");
+            AST_Valor.setValor(Orquestrantes.NULL);
             return;
         } else if (TokenP3.getTipo() == TokenTipo.IGUAL) {
 
             AST_Value mAST = new AST_Value(mCompiler);
-            mAST.sePrecisarTipar(AST_Corrente.getBranch("TYPE"));
+            mAST.sePrecisarTipar(AST_Corrente.getBranch(Orquestrantes.TYPE));
             mAST.init(AST_Valor);
 
         } else {
@@ -71,9 +72,6 @@ public class AST_Def {
     public void init_Define(  AST ASTPai,String Visibilidade) {
 
 
-        String erro = "Variável";
-
-
         Token TokenC = mCompiler.getTokenAvante();
 
         if (TokenC.getTipo() == TokenTipo.ID) {
@@ -81,39 +79,39 @@ public class AST_Def {
 
 
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome da " + erro + " !", TokenC);
+            mCompiler.errarCompilacao("Era esperado o nome da Variável !", TokenC);
             return;
         }
 
 
 
-        AST AST_Corrente = new AST("DEFINE");
+        AST AST_Corrente = new AST(Orquestrantes.DEFINE);
         AST_Corrente.setNome(TokenC.getConteudo());
         ASTPai.getASTS().add(AST_Corrente);
 
-        AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
+        AST AST_Visibilidade = AST_Corrente.criarBranch(Orquestrantes.VISIBILITY);
         AST_Visibilidade.setNome(Visibilidade);
 
         AST_TYPE mType = new AST_TYPE(mCompiler);
         mType.init(AST_Corrente);
 
         //  System.out.println("To : " + mCompiler.getTokenCorrente().getConteudo());
-        AST AST_Valor = AST_Corrente.criarBranch("VALUE");
+        AST AST_Valor = AST_Corrente.criarBranch(Orquestrantes.VALUE);
 
 
         Token TokenP3 = mCompiler.getTokenAvante();
 
         if (TokenP3.getTipo() == TokenTipo.PONTOVIRGULA) {
-            AST_Valor.setValor("NULL");
+            AST_Valor.setValor(Orquestrantes.NULL);
             return;
         } else if (TokenP3.getTipo() == TokenTipo.IGUAL) {
 
             AST_Value mAST = new AST_Value(mCompiler);
-
             mAST.init(AST_Valor);
+
         } else {
 
-            mCompiler.errarCompilacao("Era esperado o valor da " + erro + " !", TokenC);
+            mCompiler.errarCompilacao("Era esperado o valor da Variável !", TokenC);
 
         }
 

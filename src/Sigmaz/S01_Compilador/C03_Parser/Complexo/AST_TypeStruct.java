@@ -53,7 +53,6 @@ public class AST_TypeStruct {
 
             AST mRefers = AST_Corrente.criarBranch("REFERS");
 
-
             AST AST_Inits =  AST_Corrente.criarBranch("INITS");
 
             Token TokenFuturo = mCompiler.getTokenFuturo();
@@ -122,10 +121,6 @@ public class AST_TypeStruct {
                 Token TokenC9 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA, "Era esperado PONTO E VIRGULA ");
 
                 mExtended.setNome("TYPE_UNION");
-
-
-
-
 
 
             }else{

@@ -5,6 +5,8 @@ import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
+import Sigmaz.S01_Compilador.Termos;
 
 public class AST_Cast {
 
@@ -20,7 +22,7 @@ public class AST_Cast {
 
         if (TokenC.getTipo() == TokenTipo.ID) {
 
-            AST AST_Corrente = new AST("CAST");
+            AST AST_Corrente = new AST(Orquestrantes.CAST);
             AST_Corrente.setNome(TokenC.getConteudo());
             ASTPai.getASTS().add(AST_Corrente);
 
@@ -46,15 +48,15 @@ public class AST_Cast {
                     saiu = true;
                     break;
 
-                } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo("getter")) {
+                } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo(Termos.GETTER)) {
 
                     getter(TokenC.getConteudo(), AST_Corrente, ASTPai);
 
-                } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo("setter")) {
+                } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo(Termos.SETTER)) {
 
                     setter(TokenC.getConteudo(), AST_Corrente, ASTPai);
 
-                } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo("default")) {
+                } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo(Termos.DEFAULT)) {
 
                     defaultx(AST_Corrente, ASTPai);
 
@@ -84,7 +86,7 @@ public class AST_Cast {
 
         if (TokenC.getTipo() == TokenTipo.ID) {
 
-            AST AST_Corrente = new AST("GETTER");
+            AST AST_Corrente = new AST(Orquestrantes.GETTER);
             AST_Corrente.setNome(TokenC.getConteudo());
             ASTPai.getASTS().add(AST_Corrente);
 
@@ -116,7 +118,7 @@ public class AST_Cast {
 
         if (TokenC.getTipo() == TokenTipo.ID) {
 
-            AST AST_Corrente = new AST("SETTER");
+            AST AST_Corrente = new AST(Orquestrantes.SETTER);
             AST_Corrente.setNome(TokenC.getConteudo());
             ASTPai.getASTS().add(AST_Corrente);
 
@@ -144,7 +146,7 @@ public class AST_Cast {
     public void defaultx(AST ASTPai, AST ASTAvo) {
 
 
-        AST AST_Corrente = new AST("DEFAULT");
+        AST AST_Corrente = new AST(Orquestrantes.DEFAULT);
         ASTPai.getASTS().add(AST_Corrente);
 
 

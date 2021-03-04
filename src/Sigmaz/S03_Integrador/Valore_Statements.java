@@ -152,13 +152,13 @@ public class Valore_Statements {
         mOutros.setAnterior(mEscopo);
 
 
-        if (mEscopo.existeNesse(mAST.getNome())) {
+        if (mOutros.existeNesse(mAST.getNome())) {
 
             mIntegrador.mensagem(" Variavel Duplicada : " + mAST.getNome());
             mIntegrador.getErros().add("Variavel Duplicada : " + mAST.getNome());
 
         } else {
-            mEscopo.alocar((mAST.getNome()));
+            mOutros.alocar((mAST.getNome()));
         }
 
 
@@ -173,6 +173,67 @@ public class Valore_Statements {
 
 
     }
+
+    public void atribuidor_StepLet(String ePrefixo, AST mAST, Integralizante mIntegralizante,Escopante mEscopo) {
+
+        mIntegrador.mensagem(ePrefixo + " ESCOPO : STEPLET");
+
+        Escopante mOutros = new Escopante("STEPLET");
+        mOutros.setAnterior(mEscopo);
+
+
+        if (mOutros.existeNesse(mAST.getNome())) {
+
+            mIntegrador.mensagem(" Variavel Duplicada : " + mAST.getNome());
+            mIntegrador.getErros().add("Variavel Duplicada : " + mAST.getNome());
+
+        } else {
+            mOutros.alocar((mAST.getNome()));
+        }
+
+
+        for (AST eOutro : mAST.getBranch("ARGUMENTS").getASTS()) {
+
+            mValoramento.valore(ePrefixo + "\t", eOutro,mIntegralizante, mOutros);
+
+        }
+
+
+        getValore_Escopo().atribuicao_escopo(ePrefixo + "\t", mAST.getBranch("BODY"), mIntegralizante,mOutros);
+
+
+    }
+
+    public void atribuidor_StepMut(String ePrefixo, AST mAST, Integralizante mIntegralizante,Escopante mEscopo) {
+
+        mIntegrador.mensagem(ePrefixo + " ESCOPO : STEPMUT");
+
+        Escopante mOutros = new Escopante("STEPMUT");
+        mOutros.setAnterior(mEscopo);
+
+
+        if (mOutros.existeNesse(mAST.getNome())) {
+
+            mIntegrador.mensagem(" Variavel Duplicada : " + mAST.getNome());
+            mIntegrador.getErros().add("Variavel Duplicada : " + mAST.getNome());
+
+        } else {
+            mOutros.alocar((mAST.getNome()));
+        }
+
+
+        for (AST eOutro : mAST.getBranch("ARGUMENTS").getASTS()) {
+
+            mValoramento.valore(ePrefixo + "\t", eOutro,mIntegralizante, mOutros);
+
+        }
+
+
+        getValore_Escopo().atribuicao_escopo(ePrefixo + "\t", mAST.getBranch("BODY"), mIntegralizante,mOutros);
+
+
+    }
+
 
     public void atribuidor_daz(String ePrefixo, AST mAST, Integralizante mIntegralizante,Escopante mEscopo) {
 

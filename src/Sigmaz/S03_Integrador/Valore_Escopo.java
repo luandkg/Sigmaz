@@ -95,6 +95,14 @@ public class Valore_Escopo {
 
                 getValore_Statements().atribuidor_StepDef(ePrefixo, mAST, mIntegralizante, mEscopo);
 
+            } else if (mAST.mesmoTipo("STEPLET")) {
+
+                getValore_Statements().atribuidor_StepLet(ePrefixo, mAST, mIntegralizante, mEscopo);
+
+            } else if (mAST.mesmoTipo("STEPMUT")) {
+
+                getValore_Statements().atribuidor_StepMut(ePrefixo, mAST, mIntegralizante, mEscopo);
+
             } else if (mAST.mesmoTipo("WHEN")) {
 
                 getValore_Statements().atribuidor_when(ePrefixo, mAST, mIntegralizante, mEscopo);

@@ -167,6 +167,7 @@ public class Carregadores {
 
         mArquivos.add("res/96 - testes.sigmaz");
         mArquivos.add("res/97 - structfinal.sigmaz");
+        mArquivos.add("res/98 - contagem.sigmaz");
 
 
 

@@ -4,6 +4,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Require {
 
@@ -22,7 +23,7 @@ public class AST_Require {
         if (TokenC.getTipo() == TokenTipo.ID) {
 
 
-            AST mReq = ASTPai.criarBranch("REQUIRED");
+            AST mReq = ASTPai.criarBranch(Orquestrantes.REQUIRED);
             mReq.setNome(TokenC.getConteudo());
 
             if (mCompiler.getRequisicoes().contains(TokenC.getConteudo())){

@@ -5,6 +5,7 @@ import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_TYPE {
 
@@ -27,7 +28,7 @@ public class AST_TYPE {
 
     public void initDireto(AST ASTPai) {
 
-        AST AST_Tipo = ASTPai.criarBranch("TYPE");
+        AST AST_Tipo = ASTPai.criarBranch(Orquestrantes.TYPE);
 
 
         Token TokenC3 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado uma Tipagem");
@@ -36,13 +37,13 @@ public class AST_TYPE {
         AST_Tipo.setNome(TokenC3.getConteudo());
 
 
-        AST_Tipo.setValor("CONCRETE");
+        AST_Tipo.setValor(Orquestrantes.CONCRETE);
 
 
         Token TokenFuturo = mCompiler.getTokenFuturo();
         if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
 
-            AST_Tipo.setValor("GENERIC");
+            AST_Tipo.setValor(Orquestrantes.GENERIC);
 
             AST_Generic mg = new AST_Generic(mCompiler);
             mg.init(AST_Tipo);
@@ -57,20 +58,20 @@ public class AST_TYPE {
         public void init_Definicao(AST ASTPai) {
 
 
-        AST AST_Tipo = ASTPai.criarBranch("TYPE");
+        AST AST_Tipo = ASTPai.criarBranch(Orquestrantes.TYPE);
 
         Token TokenC3 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado uma Tipagem");
 
 
         AST_Tipo.setNome(TokenC3.getConteudo());
 
-        AST_Tipo.setValor("CONCRETE");
+        AST_Tipo.setValor(Orquestrantes.CONCRETE);
 
 
         Token TokenFuturo = mCompiler.getTokenFuturo();
         if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
 
-            AST_Tipo.setValor("GENERIC");
+            AST_Tipo.setValor(Orquestrantes.GENERIC);
 
             AST_Generic mg = new AST_Generic(mCompiler);
             mg.init(AST_Tipo);

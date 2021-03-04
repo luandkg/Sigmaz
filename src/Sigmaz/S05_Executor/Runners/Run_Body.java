@@ -188,6 +188,25 @@ public class Run_Body {
                     break;
                 }
 
+            } else if (fAST.mesmoTipo("STEPLET")) {
+
+                Run_Step mAST = new Run_Step(mRunTime, mEscopo);
+                mAST.initLet(fAST);
+
+                if (mAST.getRetornado()) {
+                    Retorne(mAST.getRetorno());
+                    break;
+                }
+            } else if (fAST.mesmoTipo("STEPMUT")) {
+
+                Run_Step mAST = new Run_Step(mRunTime, mEscopo);
+                mAST.initMut(fAST);
+
+                if (mAST.getRetornado()) {
+                    Retorne(mAST.getRetorno());
+                    break;
+                }
+
             } else if (fAST.mesmoTipo("WHEN")) {
 
                 Run_When mAST = new Run_When(mRunTime, mEscopo);

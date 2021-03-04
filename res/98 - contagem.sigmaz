@@ -1,0 +1,166 @@
+
+
+call vamos_contar -> {
+
+
+    println("Vamos contar de 0 a 1000");
+
+    def cc : int = -1;
+
+    step cc :: ( 0 , 10 , cc ++ 1 ) -> {
+        DEBUG -> REGRESSIVE :: STACK  ;
+    }
+
+
+    step def contagem1 : int :: ( 0 , 10 , contagem1 ++ 1 ) -> {
+        DEBUG -> REGRESSIVE :: STACK  ;
+    }
+
+	step let contagem  :: ( 0 , 10 , contagem ++ 1 ) -> {
+        DEBUG -> REGRESSIVE :: STACK  ;
+    }
+
+	step mut contagem  :: ( 0.0 , 100.0 , contagem ++ 1.0 ) -> {
+
+        def a : num = contagem;
+        contagem = "Oiee";
+	    DEBUG -> REGRESSIVE :: STACK  ;
+
+	    println(contagem);
+	    contagem = a;
+	    DEBUG -> REGRESSIVE :: STACK  ;
+
+
+    }
+
+
+}
+
+
+
+
+
+
+
+
+define PRINT_NULO : string = "A variavel da funcao PRINT nao pode ser NULA !";
+define PRINTLN_NULO : string = "A variavel da funcao PRINTLN nao pode ser NULA !";
+define OPERADOR_NULO : string = "O operador nao poder NULO !";
+
+
+act println ( a : string ) {
+
+   PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception PRINT_NULO;
+    }
+
+
+	reg @ R13 -> a;
+	PROC -> {
+		INVOKE CHANGE_LINE;
+		PRINT R13;
+	}
+
+}
+
+act println ( a : int ) {
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception PRINTLN_NULO;
+    }
+
+
+
+	reg @ R5 -> a;
+	PROC -> {
+		INVOKE CHANGE_LINE;
+		SET R13;
+		MOV "";
+		INT_STRING R5;
+		PRINT R13;
+	}
+
+}
+
+operator ++ ( a : int , b : int ) : int {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+	reg @ R5 -> a;
+	reg @ R6 -> b;
+	PROC -> {
+		SET R7;
+		MOV 0;
+		OPE R5 ADD R6;
+	}
+	return reg @ R7;
+}
+
+
+operator ++ ( a : num , b : num ) : num {
+
+    PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> a;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+  PROC -> {
+        SET R0;
+        MOV FALSE;
+    }
+
+    reg @R0 -> b;
+
+    if (reg @R0) -> {
+        exception OPERADOR_NULO;
+    }
+
+	reg @ R9 -> a;
+	reg @ R10 -> b;
+	PROC -> {
+		SET R11;
+		MOV 0.0;
+		OPE R9 SAX R10;
+	}
+	return reg @ R11;
+}

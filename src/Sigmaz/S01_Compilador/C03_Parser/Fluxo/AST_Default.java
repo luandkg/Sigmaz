@@ -5,6 +5,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Default {
 
@@ -23,7 +24,7 @@ public class AST_Default {
         AST_TYPE mType = new AST_TYPE(mCompiler);
         mType.initDireto(AST_Corrente);
 
-        AST AST_BODY = AST_Corrente.criarBranch("BODY");
+        AST AST_BODY = AST_Corrente.criarBranch(Orquestrantes.BODY);
         AST_Corpo mCorpo = new AST_Corpo(mCompiler);
         mCorpo.init(AST_BODY);
 

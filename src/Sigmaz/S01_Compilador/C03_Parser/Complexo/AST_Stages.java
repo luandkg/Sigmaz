@@ -4,6 +4,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Stages {
 
@@ -17,30 +18,30 @@ public class AST_Stages {
     public void init(String eNomePacote,AST ASTAvo) {
 
 
-        AST ASTPai = ASTAvo.criarBranch("STRUCT");
+        AST ASTPai = ASTAvo.criarBranch(Orquestrantes.STRUCT);
 
 
 
-        AST AST_With =  ASTPai.criarBranch("WITH");
-        AST_With.setValor("FALSE");
+        AST AST_With =  ASTPai.criarBranch(Orquestrantes.WITH);
+        AST_With.setValor(Orquestrantes.FALSE);
 
-        AST AST_Model =  ASTPai.criarBranch("MODEL");
-        AST_Model.setValor("FALSE");
-
-
-        AST mExtended = ASTPai.criarBranch("EXTENDED");
-        mExtended.setNome("STAGES");
-
-        AST mRefers = ASTPai.criarBranch("REFERS");
+        AST AST_Model =  ASTPai.criarBranch(Orquestrantes.MODEL);
+        AST_Model.setValor(Orquestrantes.FALSE);
 
 
-        AST AST_DEFINED = ASTPai.criarBranch("DEFINED");
-        AST_DEFINED.setNome("TRUE");
+        AST mExtended = ASTPai.criarBranch(Orquestrantes.EXTENDED);
+        mExtended.setNome(Orquestrantes.STAGES);
 
-        AST AST_Opcoes = ASTPai.criarBranch("STAGES");
+        AST mRefers = ASTPai.criarBranch(Orquestrantes.REFERS);
 
 
-        AST AST_Corpo = ASTPai.criarBranch("BODY");
+        AST AST_DEFINED = ASTPai.criarBranch(Orquestrantes.DEFINED);
+        AST_DEFINED.setNome(Orquestrantes.TRUE);
+
+        AST AST_Opcoes = ASTPai.criarBranch(Orquestrantes.STAGES);
+
+
+        AST AST_Corpo = ASTPai.criarBranch(Orquestrantes.BODY);
 
 
         Token TokenN = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome do STAGES !");
@@ -62,7 +63,7 @@ public class AST_Stages {
         if (TokenFuturo.getTipo() == TokenTipo.ID && TokenFuturo.mesmoConteudo("not")) {
 
             mCompiler.Proximo();
-            AST_DEFINED.setNome("FALSE");
+            AST_DEFINED.setNome(Orquestrantes.FALSE);
         } else if (TokenFuturo.getTipo() == TokenTipo.CHAVE_ABRE) {
 
         } else {
@@ -98,7 +99,7 @@ public class AST_Stages {
                 mais = false;
 
 
-                AST ASTCorrente = AST_Opcoes.criarBranch("STAGE");
+                AST ASTCorrente = AST_Opcoes.criarBranch(Orquestrantes.STAGE);
                 ASTCorrente.setNome(TokenD.getConteudo());
 
 

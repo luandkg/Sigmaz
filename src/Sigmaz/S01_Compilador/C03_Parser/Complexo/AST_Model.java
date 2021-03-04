@@ -17,7 +17,7 @@ public class AST_Model {
         mCompiler = eCompiler;
     }
 
-    public void init(String eNomePacote,AST ASTPai) {
+    public void init(String eNomePacote, AST ASTPai) {
 
         Token TokenC = mCompiler.getTokenAvante();
 
@@ -58,15 +58,11 @@ public class AST_Model {
 
             AST mRefers = AST_Corrente.criarBranch("REFERS");
 
-
             AST AST_Inits = AST_Corrente.criarBranch("INITS");
 
             AST AST_Corpo = AST_Corrente.criarBranch("BODY");
 
             AST AST_Destruct = AST_Corrente.criarBranch("DESTRUCT");
-
-
-
 
 
             Token TokenFuturo = mCompiler.getTokenFuturo();
@@ -81,14 +77,11 @@ public class AST_Model {
 
             }
 
-
             corpo(AST_Corpo);
-
 
         } else {
             mCompiler.errarCompilacao("Era esperado o nome para uma STRUCT !", TokenC);
         }
-
 
     }
 
@@ -121,19 +114,17 @@ public class AST_Model {
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
 
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
-                mAST.init_Definicao("MOCKIZ",AST_Corrente);
+                mAST.init_DefinicaoMockiz(AST_Corrente);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
 
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
-                mAST.init_Definicao("DEFINE",AST_Corrente);
+                mAST.init_DefinicaoDefine(AST_Corrente);
 
 
             } else {
 
-
                 mCompiler.errarCompilacao("Comando Deconhecido : " + TokenC.getConteudo(), TokenC);
-
             }
         }
 

@@ -7,6 +7,8 @@ import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
+import Sigmaz.S01_Compilador.Termos;
 
 public class AST_Acessadores {
 
@@ -19,23 +21,21 @@ public class AST_Acessadores {
     public void init(AST ASTPai, String Visibilidade) {
 
 
-
         Token TokenSeta = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma SETA");
 
         Token TokenID = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado GET ou SET");
 
+        if (TokenID.mesmoConteudo(Termos.GET)) {
 
-        if (TokenID.mesmoConteudo("get")) {
-
-            AST AST_Corrente = new AST("GETTER");
-            AST_Corrente.setNome("GETTER");
+            AST AST_Corrente = new AST(Orquestrantes.GETTER);
+            AST_Corrente.setNome(Orquestrantes.GETTER);
             ASTPai.getASTS().add(AST_Corrente);
 
-            AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
+            AST AST_Visibilidade = AST_Corrente.criarBranch(Orquestrantes.VISIBILITY);
             AST_Visibilidade.setNome(Visibilidade);
 
-            AST AST_Arguments = AST_Corrente.criarBranch("ARGUMENTS");
-            AST AST_BODY = AST_Corrente.criarBranch("BODY");
+            AST AST_Arguments = AST_Corrente.criarBranch(Orquestrantes.ARGUMENTS);
+            AST AST_BODY = AST_Corrente.criarBranch(Orquestrantes.BODY);
 
             AST_Argumentos mArgumentos = new AST_Argumentos(mCompiler);
             mArgumentos.initColchete(AST_Arguments);
@@ -46,20 +46,20 @@ public class AST_Acessadores {
             AST_Corpo mCorpo = new AST_Corpo(mCompiler);
             mCorpo.init(AST_BODY);
 
-        } else if (TokenID.mesmoConteudo("set")) {
+        } else if (TokenID.mesmoConteudo(Termos.SET)) {
 
 
-            AST AST_Corrente = new AST("SETTER");
-            AST_Corrente.setNome("SETTER");
+            AST AST_Corrente = new AST(Orquestrantes.SETTER);
+            AST_Corrente.setNome(Orquestrantes.SETTER);
             ASTPai.getASTS().add(AST_Corrente);
 
-            AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
+            AST AST_Visibilidade = AST_Corrente.criarBranch(Orquestrantes.VISIBILITY);
             AST_Visibilidade.setNome(Visibilidade);
 
-            AST AST_Arguments = AST_Corrente.criarBranch("ARGUMENTS");
-            AST AST_Values = AST_Corrente.criarBranch("VALUES");
+            AST AST_Arguments = AST_Corrente.criarBranch(Orquestrantes.ARGUMENTS);
+            AST AST_Values = AST_Corrente.criarBranch(Orquestrantes.VALUES);
 
-            AST AST_BODY = AST_Corrente.criarBranch("BODY");
+            AST AST_BODY = AST_Corrente.criarBranch(Orquestrantes.BODY);
 
             AST_Argumentos mArgumentos = new AST_Argumentos(mCompiler);
             mArgumentos.initColchete(AST_Arguments);

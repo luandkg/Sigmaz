@@ -5,6 +5,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Alocador {
 
@@ -19,31 +20,14 @@ public class AST_Alocador {
     public void init(String eTipo,  AST ASTPai) {
 
 
-        String erro = "";
-
-        if (eTipo.contentEquals("DEF")) {
-
-            erro = "Variável";
-
-        } else if (eTipo.contentEquals("MOC")) {
-
-            erro = "Constante";
-
-
-        }
-
-
         Token TokenC = mCompiler.getTokenAvante();
 
         if (TokenC.getTipo() == TokenTipo.ID) {
 
-
-
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome da " + erro + " !", TokenC);
+            mCompiler.errarCompilacao("Era esperado o nome da Variável !", TokenC);
             return;
         }
-
 
 
         AST AST_Corrente = new AST(eTipo);
@@ -51,27 +35,26 @@ public class AST_Alocador {
         ASTPai.getASTS().add(AST_Corrente);
 
 
-
         AST_TYPE mType = new AST_TYPE(mCompiler);
         mType.init(AST_Corrente);
 
         //  System.out.println("To : " + mCompiler.getTokenCorrente().getConteudo());
-        AST AST_Valor = AST_Corrente.criarBranch("VALUE");
+        AST AST_Valor = AST_Corrente.criarBranch(Orquestrantes.VALUE);
 
 
         Token TokenP3 = mCompiler.getTokenAvante();
 
         if (TokenP3.getTipo() == TokenTipo.PONTOVIRGULA) {
-            AST_Valor.setValor("NULL");
+            AST_Valor.setValor(Orquestrantes.NULL);
             return;
         } else if (TokenP3.getTipo() == TokenTipo.IGUAL) {
 
             AST_Value mAST = new AST_Value(mCompiler);
-
             mAST.init(AST_Valor);
+
         } else {
 
-            mCompiler.errarCompilacao("Era esperado o valor da " + erro + " !", TokenC);
+            mCompiler.errarCompilacao("Era esperado o valor da Variável !", TokenC);
 
         }
 
@@ -83,28 +66,13 @@ public class AST_Alocador {
     public void initSemTipagem(String eTipo,  AST ASTPai) {
 
 
-        String erro = "";
-
-        if (eTipo.contentEquals("LET")) {
-
-            erro = "Variável";
-
-        } else if (eTipo.contentEquals("VOZ")) {
-
-            erro = "Constante";
-
-
-        }
-
-
         Token TokenC = mCompiler.getTokenAvante();
 
         if (TokenC.getTipo() == TokenTipo.ID) {
 
 
-
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome da " + erro + " !", TokenC);
+            mCompiler.errarCompilacao("Era esperado o nome da Variável !", TokenC);
             return;
         }
 
@@ -118,14 +86,14 @@ public class AST_Alocador {
 
 
         //  System.out.println("To : " + mCompiler.getTokenCorrente().getConteudo());
-        AST AST_Valor = AST_Corrente.criarBranch("VALUE");
+        AST AST_Valor = AST_Corrente.criarBranch(Orquestrantes.VALUE);
 
 
         Token TokenP3 = mCompiler.getTokenAvante();
 
         if (TokenP3.getTipo() == TokenTipo.PONTOVIRGULA) {
 
-            mCompiler.errarCompilacao("A definicao de uma " +  erro + " com inferencia de tipo precisa receber um valor de atribuicao !", TokenC);
+            mCompiler.errarCompilacao("A definicao de uma Variável com inferencia de tipo precisa receber um valor de atribuicao !", TokenC);
 
             return;
         } else if (TokenP3.getTipo() == TokenTipo.IGUAL) {
@@ -136,13 +104,13 @@ public class AST_Alocador {
 
             if (AST_Valor.mesmoNome("null") && AST_Valor.mesmoValor("ID")){
 
-                mCompiler.errarCompilacao("A definicao de uma " +  erro + " com inferencia de tipo nao pode ter o valor de atribuicao NULO !", TokenC);
+                mCompiler.errarCompilacao("A definicao de uma Variável com inferencia de tipo nao pode ter o valor de atribuicao NULO !", TokenC);
 
             }
 
         } else {
 
-            mCompiler.errarCompilacao("Era esperado o valor da " + erro + " !", TokenC);
+            mCompiler.errarCompilacao("Era esperado o valor da Variável !", TokenC);
 
         }
 
@@ -188,9 +156,7 @@ public class AST_Alocador {
         mType.init(AST_Corrente);
 
 
-
         AST AST_Valor = AST_Corrente.criarBranch("VALUE");
-
 
 
         Token TokenP3 = mCompiler.getTokenAvante();
@@ -203,30 +169,114 @@ public class AST_Alocador {
             AST_Value mAST = new AST_Value(mCompiler);
             mAST.init(AST_Valor);
 
+        } else {
+            mCompiler.errarCompilacao("Era esperado o valor da " + erro + " !", TokenC);
+        }
+
+
+    }
+
+    public void initDefine( AST ASTPai,String Visibilidade) {
+
+
+
+        Token TokenC = mCompiler.getTokenAvante();
+
+        if (TokenC.getTipo() == TokenTipo.ID) {
+
+
 
         } else {
+            mCompiler.errarCompilacao("Era esperado o nome da DEFINE !", TokenC);
+            return;
+        }
 
-            mCompiler.errarCompilacao("Era esperado o valor da " + erro + " !", TokenC);
 
+        AST AST_Corrente = new AST("DEFINE");
+        AST_Corrente.setNome(TokenC.getConteudo());
+        ASTPai.getASTS().add(AST_Corrente);
+
+        AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
+        AST_Visibilidade.setNome(Visibilidade);
+
+        AST_TYPE mType = new AST_TYPE(mCompiler);
+        mType.init(AST_Corrente);
+
+
+        AST AST_Valor = AST_Corrente.criarBranch("VALUE");
+
+
+        Token TokenP3 = mCompiler.getTokenAvante();
+
+        if (TokenP3.getTipo() == TokenTipo.PONTOVIRGULA) {
+            AST_Valor.setValor("NULL");
+            return;
+        } else if (TokenP3.getTipo() == TokenTipo.IGUAL) {
+
+            AST_Value mAST = new AST_Value(mCompiler);
+            mAST.init(AST_Valor);
+
+        } else {
+            mCompiler.errarCompilacao("Era esperado o valor da DEFINE !", TokenC);
         }
 
 
     }
 
 
-    public void init_Definicao(String eTipo,  AST ASTPai) {
+    public void initMockiz( AST ASTPai,String Visibilidade) {
 
-        String erro = "";
 
-        if (eTipo.contentEquals("DEFINE")) {
 
-            erro = "DEFINE";
+        Token TokenC = mCompiler.getTokenAvante();
 
-        } else if (eTipo.contentEquals("MOCKIZ")) {
+        if (TokenC.getTipo() == TokenTipo.ID) {
 
-            erro = "MOCKIZ";
 
+
+        } else {
+            mCompiler.errarCompilacao("Era esperado o nome da MOCKIZ !", TokenC);
+            return;
         }
+
+
+        AST AST_Corrente = new AST("MOCKIZ");
+        AST_Corrente.setNome(TokenC.getConteudo());
+        ASTPai.getASTS().add(AST_Corrente);
+
+        AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
+        AST_Visibilidade.setNome(Visibilidade);
+
+        AST_TYPE mType = new AST_TYPE(mCompiler);
+        mType.init(AST_Corrente);
+
+
+        AST AST_Valor = AST_Corrente.criarBranch("VALUE");
+
+
+        Token TokenP3 = mCompiler.getTokenAvante();
+
+        if (TokenP3.getTipo() == TokenTipo.PONTOVIRGULA) {
+            AST_Valor.setValor("NULL");
+            return;
+        } else if (TokenP3.getTipo() == TokenTipo.IGUAL) {
+
+            AST_Value mAST = new AST_Value(mCompiler);
+            mAST.init(AST_Valor);
+
+        } else {
+            mCompiler.errarCompilacao("Era esperado o valor da MOCKIZ !", TokenC);
+        }
+
+
+    }
+
+
+    public void init_DefinicaoMockiz(  AST ASTPai) {
+
+        String erro = "MOCKIZ";
+
+
 
         Token TokenC = mCompiler.getTokenAvante();
 
@@ -240,7 +290,7 @@ public class AST_Alocador {
         }
 
 
-        AST AST_Corrente = new AST(eTipo);
+        AST AST_Corrente = new AST("MOCKIZ");
         AST_Corrente.setNome(TokenC.getConteudo());
         ASTPai.getASTS().add(AST_Corrente);
 
@@ -255,5 +305,37 @@ public class AST_Alocador {
 
     }
 
+    public void init_DefinicaoDefine(  AST ASTPai) {
+
+        String erro = "DEFINE";
+
+
+
+        Token TokenC = mCompiler.getTokenAvante();
+
+        if (TokenC.getTipo() == TokenTipo.ID) {
+
+
+
+        } else {
+            mCompiler.errarCompilacao("Era esperado o nome da " + erro + " !", TokenC);
+            return;
+        }
+
+
+        AST AST_Corrente = new AST("DEFINE");
+        AST_Corrente.setNome(TokenC.getConteudo());
+        ASTPai.getASTS().add(AST_Corrente);
+
+
+        AST_TYPE mType = new AST_TYPE(mCompiler);
+        mType.init(AST_Corrente);
+
+
+        Token TokenP2 = mCompiler.getTokenAvanteStatus(TokenTipo.PONTOVIRGULA,"Era esperado PONTO E VIRGULA !");
+
+
+
+    }
 
 }

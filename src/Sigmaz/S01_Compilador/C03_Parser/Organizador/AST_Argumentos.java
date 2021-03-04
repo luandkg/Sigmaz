@@ -6,6 +6,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Fluxo.AST_Value;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Argumentos {
 
@@ -25,7 +26,6 @@ public class AST_Argumentos {
 
 
         boolean saiu = false;
-
         boolean mais = false;
 
 
@@ -43,20 +43,20 @@ public class AST_Argumentos {
 
                 mais = false;
 
-                AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
+                AST ASTCorrente = ASTPai.criarBranch(Orquestrantes.ARGUMENT);
 
 
                 boolean mOpt = false;
 
                 if (TokenD.mesmoConteudo("ref")) {
-                    ASTCorrente.setValor("REF");
+                    ASTCorrente.setValor(Orquestrantes.REF);
 
                     Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro referenciado");
                     ASTCorrente.setNome(TokenC4.getConteudo());
 
                 } else if (TokenD.mesmoConteudo("moc")) {
 
-                    ASTCorrente.setValor("MOC");
+                    ASTCorrente.setValor(Orquestrantes.MOC);
 
                     Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro constante");
                     ASTCorrente.setNome(TokenC4.getConteudo());
@@ -65,19 +65,19 @@ public class AST_Argumentos {
                 } else if (TokenD.mesmoConteudo("opt")) {
                     mOpt = true;
 
-                    ASTCorrente.setValor("OPT");
+                    ASTCorrente.setValor(Orquestrantes.OPT);
 
                     Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro");
 
                     if (TokenC4.mesmoConteudo("ref")) {
 
-                        ASTCorrente.setValor("OPTREF");
+                        ASTCorrente.setValor(Orquestrantes.OPTREF);
 
                         Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro opcional referenciado");
                         ASTCorrente.setNome(TokenC5.getConteudo());
                     } else       if (TokenC4.mesmoConteudo("moc")) {
 
-                        ASTCorrente.setValor("OPTMOC");
+                        ASTCorrente.setValor(Orquestrantes.OPTMOC);
 
                         Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro opcional constante");
                         ASTCorrente.setNome(TokenC5.getConteudo());
@@ -90,7 +90,7 @@ public class AST_Argumentos {
 
 
                 } else {
-                    ASTCorrente.setValor("VALUE");
+                    ASTCorrente.setValor(Orquestrantes.VALUE);
                     ASTCorrente.setNome(TokenD.getConteudo());
                 }
 
@@ -105,15 +105,15 @@ public class AST_Argumentos {
                     Token TokenP3 = mCompiler.getTokenAvante();
                     if (TokenP3.getTipo() == TokenTipo.IGUAL) {
 
-                        AST ASTValue = ASTCorrente.criarBranch("VALUE");
+                        AST ASTValue = ASTCorrente.criarBranch(Orquestrantes.VALUE);
 
                         AST_Value gAST = new AST_Value(mCompiler);
-                        gAST.sePrecisarTipar(ASTCorrente.getBranch("TYPE"));
+                        gAST.sePrecisarTipar(ASTCorrente.getBranch(Orquestrantes.TYPE));
                         gAST.setBuscadorDeArgumentos();
 
                         gAST.init(ASTValue);
 
-                        ASTValue.setTipo("VALUE");
+                        ASTValue.setTipo(Orquestrantes.VALUE);
 
                     } else {
                         mCompiler.errarCompilacao("Era esperado o valor opcional do argumento " + ASTCorrente.getNome() + " !", TokenC);
@@ -227,13 +227,13 @@ public class AST_Argumentos {
 
                 mais = false;
 
-                AST ASTCorrente = ASTPai.criarBranch("ARGUMENT");
+                AST ASTCorrente = ASTPai.criarBranch(Orquestrantes.ARGUMENT);
 
 
                 boolean mOpt = false;
 
                 if (TokenD.mesmoConteudo("ref")) {
-                    ASTCorrente.setValor("REF");
+                    ASTCorrente.setValor(Orquestrantes.REF);
 
                     Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro");
                     ASTCorrente.setNome(TokenC4.getConteudo());
@@ -241,13 +241,13 @@ public class AST_Argumentos {
                 } else if (TokenD.mesmoConteudo("opt")) {
                     mOpt = true;
 
-                    ASTCorrente.setValor("OPT");
+                    ASTCorrente.setValor(Orquestrantes.OPT);
 
                     Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro");
 
                     if (TokenC4.mesmoConteudo("ref")) {
 
-                        ASTCorrente.setValor("OPTREF");
+                        ASTCorrente.setValor(Orquestrantes.OPTREF);
 
                         Token TokenC5 = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome de um parametro");
                         ASTCorrente.setNome(TokenC5.getConteudo());
@@ -260,7 +260,7 @@ public class AST_Argumentos {
 
 
                 } else {
-                    ASTCorrente.setValor("VALUE");
+                    ASTCorrente.setValor(Orquestrantes.VALUE);
                     ASTCorrente.setNome(TokenD.getConteudo());
                 }
 
@@ -275,15 +275,15 @@ public class AST_Argumentos {
                     Token TokenP3 = mCompiler.getTokenAvante();
                     if (TokenP3.getTipo() == TokenTipo.IGUAL) {
 
-                        AST ASTValue = ASTCorrente.criarBranch("VALUE");
+                        AST ASTValue = ASTCorrente.criarBranch(Orquestrantes.VALUE);
 
                         AST_Value gAST = new AST_Value(mCompiler);
-                        gAST.sePrecisarTipar(ASTCorrente.getBranch("TYPE"));
+                        gAST.sePrecisarTipar(ASTCorrente.getBranch(Orquestrantes.TYPE));
                         gAST.setBuscadorDeArgumentos_Colchete();
 
                         gAST.init(ASTValue);
 
-                        ASTValue.setTipo("VALUE");
+                        ASTValue.setTipo(Orquestrantes.VALUE);
 
                     } else {
                         mCompiler.errarCompilacao("Era esperado o valor opcional do argumento " + ASTCorrente.getNome() + " !", TokenC);

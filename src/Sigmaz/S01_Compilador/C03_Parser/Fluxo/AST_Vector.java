@@ -42,9 +42,6 @@ public class AST_Vector {
                 mCompiler.voltar();
 
 
-                //   AST_Value_ItemVector mAST = new AST_Value_ItemVector(mCompiler);
-                //  mAST.initArgumento(ASTPai.criarBranch("VALUE"));
-
                 AST_Value mAST = new AST_Value(mCompiler);
                 mAST.setBuscadorDeItensDeVetor();
                 mAST.init(ASTPai.criarBranch("VALUE"));
@@ -52,7 +49,6 @@ public class AST_Vector {
                 Token P2 = mCompiler.getTokenCorrente();
 
                 //  System.out.println("CORRENTE SAIR :: " + P2.getConteudo() + " :: " + P2.getLinha());
-
 
                 if (P2.getTipo() == TokenTipo.VIRGULA) {
                     mais = true;

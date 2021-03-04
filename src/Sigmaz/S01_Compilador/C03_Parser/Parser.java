@@ -12,6 +12,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Organizador.AST_Require;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S01_Compilador.C03_Parser.Testes.AST_Test;
+import Sigmaz.S01_Compilador.Termos;
 
 import java.util.ArrayList;
 
@@ -216,7 +217,7 @@ public class Parser {
 
             mArquivoDebug = mAST_DEBUGGER.getASTS().size();
 
-            AST eDebug = mAST_DEBUGGER.criarBranch("DEBUG");
+            AST eDebug = mAST_DEBUGGER.criarBranch(Termos.DEBUG);
             eDebug.setNome(String.valueOf(mArquivoDebug));
             eDebug.setValor(eArquivo);
 
@@ -229,7 +230,7 @@ public class Parser {
         while (Continuar()) {
 
             Token TokenC = this.getTokenCorrente();
-            if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("import")) {
+            if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.IMPORT)) {
 
                 AST_Import mAST = new AST_Import(this);
                 mAST.init(AST_Raiz);
@@ -239,7 +240,7 @@ public class Parser {
                     break;
                 }
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("require")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.REQUIRE)) {
 
                 AST_Require mAST = new AST_Require(this);
                 mAST.init(AST_Raiz);
@@ -248,113 +249,112 @@ public class Parser {
                 if (mErros_Parser.size() > 0) {
                     break;
                 }
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("package")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.PACKAGE)) {
 
                 AST_Package mAST = new AST_Package(this);
                 mAST.init(AST_Raiz);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("refer")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.REFER)) {
 
                 AST_Refer mAST = new AST_Refer(this);
                 mAST.init(AST_Raiz);
 
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.ACT)) {
 
                 AST_Action mAST = new AST_Action(this);
                 mAST.init(AST_Raiz, "ALL");
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.FUNC)) {
 
                 AST_Function mAST = new AST_Function(this);
                 mAST.init(AST_Raiz, "ALL");
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("call")) {
-
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.CALL)) {
                 AST_Call mAST = new AST_Call(this);
                 mAST.init(AST_Raiz);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.MOCKIZ)) {
 
                 AST_Alocador mAST = new AST_Alocador(this);
                 mAST.init("MOCKIZ", AST_Raiz, "ALL");
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.DEFINE)) {
 
                 AST_Alocador mAST = new AST_Alocador(this);
                 mAST.init("DEFINE", AST_Raiz, "ALL");
 
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("operator")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.OPERATOR)) {
 
                 AST_Operator mAST = new AST_Operator(this);
                 mAST.init(AST_Raiz);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("director")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.DIRECTOR)) {
 
                 AST_Director mAST = new AST_Director(this);
                 mAST.init(AST_Raiz);
 
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("cast")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.CAST)) {
 
                 AST_Cast mAST = new AST_Cast(this);
                 mAST.init("", AST_Raiz);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("struct")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.STRUCT)) {
 
                 AST_Struct mAST = new AST_Struct(this);
                 mAST.init("", AST_Raiz);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("type")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.TYPE)) {
 
                 AST_TypeStruct mAST = new AST_TypeStruct(this);
                 mAST.init("", AST_Raiz);
 
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("external")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.EXTERNAL)) {
 
                 AST_External mAST = new AST_External(this);
                 mAST.init(AST_Raiz);
 
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("stages")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.STAGES)) {
 
                 AST_Stages mAST = new AST_Stages(this);
                 mAST.init("", AST_Raiz);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("model")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.MODEL)) {
 
                 AST_Model mAST = new AST_Model(this);
                 mAST.init("", AST_Raiz);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("auto")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.AUTO)) {
 
                 AST_PrototypeAuto mAST = new AST_PrototypeAuto(this);
                 mAST.init(AST_Raiz);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("functor")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.FUNCTOR)) {
 
                 AST_PrototypeFunctor mAST = new AST_PrototypeFunctor(this);
                 mAST.init(AST_Raiz);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("default")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.DEFAULT)) {
 
                 AST_Default mAST = new AST_Default(this);
                 mAST.init(AST_Raiz);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mark")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.MARK)) {
 
                 AST_Marcador mAST = new AST_Marcador(this);
                 mAST.init(AST_Raiz, "ALL");
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("test")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.TEST)) {
 
                 AST_Test mAST = new AST_Test(this);
                 mAST.init(AST_Raiz);
 
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo_SemCS("DEBUG")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo_SemCS(Termos.DEBUG)) {
 
                 AST_Debug mAST = new AST_Debug(this);
                 mAST.init(AST_Raiz);

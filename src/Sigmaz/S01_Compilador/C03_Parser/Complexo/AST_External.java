@@ -7,6 +7,8 @@ import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
+import Sigmaz.S01_Compilador.Termos;
 
 public class AST_External {
 
@@ -22,31 +24,30 @@ public class AST_External {
 
         if (TokenC.getTipo() == TokenTipo.ID) {
 
-            AST AST_Corrente = new AST("STRUCT");
+            AST AST_Corrente = new AST(Orquestrantes.STRUCT);
             AST_Corrente.setNome(TokenC.getConteudo());
             ASTPai.getASTS().add(AST_Corrente);
 
-            AST AST_Generico = AST_Corrente.criarBranch("GENERIC");
-            AST_Generico.setNome("FALSE");
+            AST AST_Generico = AST_Corrente.criarBranch(Orquestrantes.GENERIC);
+            AST_Generico.setNome(Orquestrantes.FALSE);
 
-           AST AST_With =  AST_Corrente.criarBranch("WITH");
-            AST_With.setValor("FALSE");
+            AST AST_With = AST_Corrente.criarBranch(Orquestrantes.WITH);
+            AST_With.setValor(Orquestrantes.FALSE);
 
-            AST AST_Model=  AST_Corrente.criarBranch("MODEL");
-            AST_Model.setValor("FALSE");
+            AST AST_Model = AST_Corrente.criarBranch(Orquestrantes.MODEL);
+            AST_Model.setValor(Orquestrantes.FALSE);
 
-            AST AST_Stages =  AST_Corrente.criarBranch("STAGES");
-            AST_Stages.setValor("FALSE");
+            AST AST_Stages = AST_Corrente.criarBranch(Orquestrantes.STAGES);
+            AST_Stages.setValor(Orquestrantes.FALSE);
 
-            AST mExtended = AST_Corrente.criarBranch("EXTENDED");
-            mExtended.setNome("EXTERNAL");
+            AST mExtended = AST_Corrente.criarBranch(Orquestrantes.EXTENDED);
+            mExtended.setNome(Orquestrantes.EXTERNAL);
 
-            AST mBases = AST_Corrente.criarBranch("BASES");
+            AST mBases = AST_Corrente.criarBranch(Orquestrantes.BASES);
 
-            AST mRefers = AST_Corrente.criarBranch("REFERS");
+            AST mRefers = AST_Corrente.criarBranch(Orquestrantes.REFERS);
 
-
-            AST AST_Inits =  AST_Corrente.criarBranch("INITS");
+            AST AST_Inits = AST_Corrente.criarBranch(Orquestrantes.INITS);
 
 
             corpo(AST_Corrente);
@@ -62,9 +63,9 @@ public class AST_External {
     public void corpo(AST AST_Corrente) {
 
 
-        AST AST_Corpo = AST_Corrente.criarBranch("BODY");
+        AST AST_Corpo = AST_Corrente.criarBranch(Orquestrantes.BODY);
 
-        String VISIBILIDADE = "EXPLICIT";
+        String VISIBILIDADE = Orquestrantes.EXPLICIT;
 
 
         Token TokenD = mCompiler.getTokenAvanteStatus(TokenTipo.CHAVE_ABRE, "Era esperado abrir chaves");
@@ -82,50 +83,50 @@ public class AST_External {
                 break;
 
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.ACT)) {
 
                 AST_Action mAST = new AST_Action(mCompiler);
-                mAST.init(AST_Corpo,VISIBILIDADE);
+                mAST.init(AST_Corpo, VISIBILIDADE);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("func")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.FUNC)) {
 
                 AST_Function mAST = new AST_Function(mCompiler);
-                mAST.init(AST_Corpo,VISIBILIDADE);
+                mAST.init(AST_Corpo, VISIBILIDADE);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("mockiz")) {
-
-                AST_Alocador mAST = new AST_Alocador(mCompiler);
-                mAST.init("MOCKIZ",AST_Corpo,VISIBILIDADE);
-
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("define")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.MOCKIZ)) {
 
                 AST_Alocador mAST = new AST_Alocador(mCompiler);
-                mAST.init("DEFINE",AST_Corpo,VISIBILIDADE);
+                mAST.initMockiz( AST_Corpo, VISIBILIDADE);
+
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.DEFINE)) {
+
+                AST_Alocador mAST = new AST_Alocador(mCompiler);
+                mAST.initDefine( AST_Corpo, VISIBILIDADE);
 
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("explicit")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.EXPLICIT)) {
 
-                VISIBILIDADE = mudarEscopo("EXPLICIT");
+                VISIBILIDADE = mudarEscopo(Orquestrantes.EXPLICIT);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("implicit")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.IMPLICIT)) {
 
-                VISIBILIDADE = mudarEscopo("IMPLICIT");
+                VISIBILIDADE = mudarEscopo(Orquestrantes.IMPLICIT);
 
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("all")) {
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.ALL)) {
 
                 mCompiler.errarCompilacao("Externals nao possuem escopo : ALL", TokenC);
 
-                VISIBILIDADE = mudarEscopo("ALL");
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("restrict")) {
+                VISIBILIDADE = mudarEscopo(Orquestrantes.ALL);
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.RESTRICT)) {
 
                 mCompiler.errarCompilacao("Externals nao possuem escopo : RESTRICT", TokenC);
 
-                VISIBILIDADE = mudarEscopo("RESTRICT");
-            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("extra")) {
+                VISIBILIDADE = mudarEscopo(Orquestrantes.RESTRICT);
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo(Termos.EXTRA)) {
 
                 mCompiler.errarCompilacao("Externals nao possuem escopo : EXTRA", TokenC);
 
-                VISIBILIDADE = mudarEscopo("EXTRA");
+                VISIBILIDADE = mudarEscopo(Orquestrantes.EXTRA);
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("BLOCK")) {
 
                 mCompiler.errarCompilacao("Externals nao possuem escopo : BLOCK", TokenC);

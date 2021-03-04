@@ -4,6 +4,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Condition {
 
@@ -17,10 +18,10 @@ public class AST_Condition {
 
         Token TokenC = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
 
-        AST AST_Corrente = new AST("IF");
+        AST AST_Corrente = new AST(Orquestrantes.IF);
         ASTPai.getASTS().add(AST_Corrente);
 
-        AST AST_Condicao = AST_Corrente.criarBranch("CONDITION");
+        AST AST_Condicao = AST_Corrente.criarBranch(Orquestrantes.CONDITION);
 
         if (mCompiler.getIsDebug()) {
             mCompiler.debug(AST_Condicao);
@@ -31,14 +32,14 @@ public class AST_Condition {
         mAST.init(AST_Condicao);
 
 
-        AST_Condicao.setTipo("CONDITION");
+        AST_Condicao.setTipo(Orquestrantes.CONDITION);
 
 
         Token TokenSeta = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma SETA");
 
 
         AST_Corpo cAST = new AST_Corpo(mCompiler);
-        cAST.init(AST_Corrente.criarBranch("BODY"));
+        cAST.init(AST_Corrente.criarBranch(Orquestrantes.BODY));
 
         boolean possui_others = false;
 
@@ -55,23 +56,23 @@ public class AST_Condition {
                 TokenF = mCompiler.getTokenAvante();
                 Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
 
-                AST AST_Other = AST_Corrente.criarBranch("OTHER");
+                AST AST_Other = AST_Corrente.criarBranch(Orquestrantes.OTHER);
 
 
-                AST AST_OtherCondition = AST_Other.criarBranch("CONDITION");
+                AST AST_OtherCondition = AST_Other.criarBranch(Orquestrantes.CONDITION);
 
                 if (mCompiler.getIsDebug()) {
                     mCompiler.debug(AST_OtherCondition);
                 }
 
-                AST AST_OtherBody = AST_Other.criarBranch("BODY");
+                AST AST_OtherBody = AST_Other.criarBranch(Orquestrantes.BODY);
 
                 AST_Value mASTOther = new AST_Value(mCompiler);
                 mASTOther.setBloco();
                 mASTOther.init(AST_OtherCondition);
 
 
-                AST_OtherCondition.setTipo("CONDITION");
+                AST_OtherCondition.setTipo(Orquestrantes.CONDITION);
 
                 Token TokenSeta2 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma SETA");
 
@@ -87,7 +88,7 @@ public class AST_Condition {
                 TokenF = mCompiler.getTokenAvante();
 
 
-                AST AST_Others = AST_Corrente.criarBranch("OTHERS");
+                AST AST_Others = AST_Corrente.criarBranch(Orquestrantes.OTHERS);
 
                 if (mCompiler.getIsDebug()) {
                     mCompiler.debug(AST_Others);

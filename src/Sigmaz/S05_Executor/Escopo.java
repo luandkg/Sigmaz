@@ -375,9 +375,10 @@ public class Escopo {
 
     // MUTAVEL
 
-    public void criarMutavelNula(String eNome, String eTipo) {
-        mEscopoStack.alocar(eNome, eTipo, TipoStack.Mutable, true, "", false);
+    public Item criarMutavelNula(String eNome, String eTipo) {
+    return    mEscopoStack.alocar(eNome, eTipo, TipoStack.Mutable, true, "", false);
     }
+
 
     public void criarMutavelPrimitivo(String eNome, String eTipo, String eValor) {
         mEscopoStack.alocar(eNome, eTipo, TipoStack.Mutable, false, eValor, false);

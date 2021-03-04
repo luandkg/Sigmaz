@@ -4,6 +4,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_While {
 
@@ -37,7 +38,7 @@ public class AST_While {
 
 
         AST_Corpo cAST = new AST_Corpo(mCompiler);
-        cAST.init(AST_Corrente.criarBranch("BODY"));
+        cAST.init(AST_Corrente.criarBranch(Orquestrantes.BODY));
 
 
 

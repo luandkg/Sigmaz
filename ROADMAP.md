@@ -627,3 +627,12 @@ Linguagem de Programação Estruturada - Implementações
 		2021 03 01 -->> Structs Finais
 		2021 03 01 -->> Structs Nao Instanciaveis
 
+
+		2021 03 03 -->> Step Let
+		2021 03 03 -->> Step Mut
+
+
+		2021 03 04 -->> Organização dos Passos do Step
+		2021 03 04 -->> Termos
+		2021 03 04 -->> Orquestrantes
+

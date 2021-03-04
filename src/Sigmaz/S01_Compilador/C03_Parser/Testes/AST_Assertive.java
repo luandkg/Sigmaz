@@ -1,16 +1,15 @@
 package Sigmaz.S01_Compilador.C03_Parser.Testes;
 
-import Sigmaz.S01_Compilador.C03_Parser.Fluxo.AST_Value;
 import Sigmaz.S01_Compilador.C03_Parser.Fluxo.AST_ValueTypes;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Assertive {
 
     private Parser mCompiler;
-    private AST mGuardeASTSub;
 
     public AST_Assertive(Parser eCompiler) {
         mCompiler = eCompiler;
@@ -19,9 +18,8 @@ public class AST_Assertive {
 
     public void init(AST ASTPai) {
 
-        mGuardeASTSub = null;
 
-        AST ASTAssertive = ASTPai.criarBranch("ASSERTIVE");
+        AST ASTAssertive = ASTPai.criarBranch(Orquestrantes.ASSERTIVE);
 
         if (mCompiler.getIsDebug()) {
             mCompiler.debug(ASTAssertive);

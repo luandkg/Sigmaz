@@ -5,6 +5,7 @@ import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Test {
 
@@ -16,7 +17,7 @@ public class AST_Test {
 
     public void init(AST ASTPai) {
 
-        AST AST_Corrente = ASTPai.criarBranch("TEST");
+        AST AST_Corrente = ASTPai.criarBranch(Orquestrantes.TEST);
 
         Token TokenGrupo = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome do grupo do Teste !");
 
@@ -24,11 +25,11 @@ public class AST_Test {
 
         Token TokenTeste = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado o nome do Teste !");
 
-        AST_Corrente.criarBranch("GROUP").setNome(TokenGrupo.getConteudo());
-        AST_Corrente.criarBranch("TEST").setNome(TokenTeste.getConteudo());
+        AST_Corrente.criarBranch(Orquestrantes.GROUP).setNome(TokenGrupo.getConteudo());
+        AST_Corrente.criarBranch(Orquestrantes.TEST).setNome(TokenTeste.getConteudo());
 
 
-        AST AST_BODY = AST_Corrente.criarBranch("BODY");
+        AST AST_BODY = AST_Corrente.criarBranch(Orquestrantes.BODY);
         AST_Corpo mCorpo = new AST_Corpo(mCompiler);
         mCorpo.init(AST_BODY);
 

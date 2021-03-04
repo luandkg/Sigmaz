@@ -4,6 +4,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_When {
 
@@ -19,21 +20,17 @@ public class AST_When {
         AST AST_Corrente = new AST("WHEN");
         ASTPai.getASTS().add(AST_Corrente);
 
-      //  mCompiler.Proximo();
-
         AST AST_Arguments = AST_Corrente.criarBranch("CHOOSABLE");
         AST AST_Casos = AST_Corrente.criarBranch("CASES");
 
         Token TokenPrimeiro = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
 
         AST_Value mAST = new AST_Value(mCompiler);
-      //  mAST.initParam(AST_Arguments);
         mAST.setBloco();
         mAST.init(AST_Arguments);
 
 
        // Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.PARENTESES_ABRE, "Era esperado Abrir Parenteses");
-
 
         Token TokenC6 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado -> ");
 
@@ -44,7 +41,6 @@ public class AST_When {
         }
 
         boolean saiu = false;
-
 
         while (mCompiler.Continuar()) {
             Token TokenD = mCompiler.getTokenAvante();
@@ -71,13 +67,11 @@ public class AST_When {
                 Token TokenC7 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado -> ");
 
                 AST_Corpo cAST = new AST_Corpo(mCompiler);
-                cAST.init(AST_CASE.criarBranch("BODY"));
+                cAST.init(AST_CASE.criarBranch(Orquestrantes.BODY));
             } else  if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo("others")) {
 
 
                 AST AST_CASE = AST_Corrente.criarBranch("OTHERS");
-
-
 
                 AST_Corpo cAST = new AST_Corpo(mCompiler);
                 cAST.init(AST_CASE);
@@ -85,10 +79,7 @@ public class AST_When {
 
             } else {
 
-
-
                 mCompiler.errarCompilacao("When " + TokenD.getConteudo(), TokenD);
-
 
             }
         }

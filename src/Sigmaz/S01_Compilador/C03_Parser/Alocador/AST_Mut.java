@@ -5,6 +5,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Mut {
 
@@ -32,13 +33,13 @@ public class AST_Mut {
         }
 
 
-        AST AST_Corrente = new AST("MUT");
+        AST AST_Corrente = new AST(Orquestrantes.MUT);
         AST_Corrente.setNome(TokenC.getConteudo());
         ASTPai.getASTS().add(AST_Corrente);
 
 
         //  System.out.println("To : " + mCompiler.getTokenCorrente().getConteudo());
-        AST AST_Valor = AST_Corrente.criarBranch("VALUE");
+        AST AST_Valor = AST_Corrente.criarBranch(Orquestrantes.VALUE);
 
 
         Token TokenP3 = mCompiler.getTokenAvante();

@@ -4,6 +4,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Generic {
 
@@ -46,17 +47,17 @@ public class AST_Generic {
 
                 mais=false;
 
-                AST ASTCorrente =   ASTPai.criarBranch("TYPE");
+                AST ASTCorrente =   ASTPai.criarBranch(Orquestrantes.TYPE);
                 ASTCorrente.setNome(TokenD.getConteudo());
 
 
-                ASTCorrente.setValor("CONCRETE");
+                ASTCorrente.setValor(Orquestrantes.CONCRETE);
 
 
                 Token TokenFuturo = mCompiler.getTokenFuturo();
                 if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
 
-                    ASTCorrente.setValor("GENERIC");
+                    ASTCorrente.setValor(Orquestrantes.GENERIC);
 
                     AST_Generic mg = new AST_Generic(mCompiler);
                     mg.init(ASTCorrente);
@@ -115,17 +116,17 @@ public class AST_Generic {
 
                 mais=false;
 
-                AST ASTCorrente =   ASTPai.criarBranch("TYPE");
+                AST ASTCorrente =   ASTPai.criarBranch(Orquestrantes.TYPE);
                 ASTCorrente.setNome(TokenD.getConteudo());
 
 
-                ASTCorrente.setValor("CONCRETE");
+                ASTCorrente.setValor(Orquestrantes.CONCRETE);
 
 
                 Token TokenFuturo = mCompiler.getTokenFuturo();
                 if (TokenFuturo.getTipo() == TokenTipo.ENVIAR) {
 
-                    ASTCorrente.setValor("GENERIC");
+                    ASTCorrente.setValor(Orquestrantes.GENERIC);
 
                     AST_Generic mg = new AST_Generic(mCompiler);
                     mg.init(ASTCorrente);

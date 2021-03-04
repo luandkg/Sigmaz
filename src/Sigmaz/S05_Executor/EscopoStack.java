@@ -93,9 +93,13 @@ public class EscopoStack {
 
     public void setDefinido(String eNome, String eValor) {
 
+       // System.out.println("Aplicando Valor em : " + eNome + " -->> " + eValor);
 
         Item mItem = getItem(eNome);
-        if (mItem.getModo() == 0) {
+
+      //  System.out.println("Aplicado Valor em : " + eNome + " -->> " + eValor);
+
+        if (mItem.getModo() == 0 || mItem.getModo() == 2 ) {
             mItem.setValor(eValor, mRunTime, mEscopo);
             mItem.setNulo(false, mRunTime);
             //System.out.println("Aplicando Valor em : " + eNome + " -->> " + eValor);

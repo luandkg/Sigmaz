@@ -1,6 +1,7 @@
 package Sigmaz.S01_Compilador.C03_Parser.Fluxo;
 
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
+import Sigmaz.S01_Compilador.Orquestrantes;
 import Sigmaz.S05_Executor.Item;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
@@ -134,7 +135,7 @@ public class AST_Daz {
         Token TokenC7 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado -> ");
 
         AST_Corpo cAST = new AST_Corpo(mCompiler);
-        cAST.init(AST_CASE.criarBranch("BODY"));
+        cAST.init(AST_CASE.criarBranch(Orquestrantes.BODY));
 
 
     }

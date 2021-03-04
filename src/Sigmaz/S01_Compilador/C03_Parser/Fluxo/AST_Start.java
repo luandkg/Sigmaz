@@ -4,6 +4,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
 import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Start {
 
@@ -15,7 +16,7 @@ public class AST_Start {
 
     public void init(AST ASTPai) {
 
-        AST AST_Corpo = ASTPai.criarBranch("STARTED");
+        AST AST_Corpo = ASTPai.criarBranch(Orquestrantes.STARTED);
 
         Token TokenC = mCompiler.getTokenAvanteStatus(TokenTipo.CHAVE_ABRE, "Era esperado abrir chaves");
 
@@ -33,19 +34,19 @@ public class AST_Start {
             }else if (TokenD.getTipo()==TokenTipo.ID ){
 
 
-                AST ASTCorrente = AST_Corpo.criarBranch("APPLY");
-                AST AST_Set = ASTCorrente.criarBranch("SETTABLE");
+                AST ASTCorrente = AST_Corpo.criarBranch(Orquestrantes.APPLY);
+                AST AST_Set = ASTCorrente.criarBranch(Orquestrantes.SETTABLE);
 
 
                 AST_Set.setNome(TokenD.getConteudo());
-                AST_Set.setValor("ID");
+                AST_Set.setValor(Orquestrantes.ID);
 
                 Token P2 = mCompiler.getTokenAvante();
 
                 if (P2.getTipo() == TokenTipo.IGUAL) {
 
 
-                    AST ASTC = ASTCorrente.criarBranch("VALUE");
+                    AST ASTC = ASTCorrente.criarBranch(Orquestrantes.VALUE);
 
                     AST_Value mAST = new AST_Value(mCompiler);
 
@@ -64,7 +65,7 @@ public class AST_Start {
         }
 
         if (!saiu) {
-            mCompiler.errarCompilacao("Era esperado fechar chaves" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
+            mCompiler.errarCompilacao("Era esperado fechar chaves : " + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
         }
 
     }

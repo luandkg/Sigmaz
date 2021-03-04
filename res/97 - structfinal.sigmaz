@@ -37,6 +37,7 @@ call comecar -> {
     def c : HiperC = init HiperC();
 
 
+
     DEBUG -> LOCAL :: STACK  ;
 
 
