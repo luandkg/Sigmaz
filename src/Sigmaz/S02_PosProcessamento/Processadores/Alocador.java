@@ -2,9 +2,10 @@ package Sigmaz.S02_PosProcessamento.Processadores;
 
 import java.util.ArrayList;
 
+import Sigmaz.S01_Compilador.Orquestrantes;
 import Sigmaz.S02_PosProcessamento.PosProcessador;
-import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S00_Utilitarios.Utilitario;
+import Sigmaz.S08_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.Utilitario;
 
 public class Alocador {
 
@@ -138,7 +139,7 @@ public class Alocador {
 
                 checarAlocacao(aFixo + " " +" WHILE -> ",ePrefixo + "\t", mAST.getBranch("BODY"));
 
-            } else if (mAST.mesmoTipo("STRUCT")) {
+            } else if (mAST.mesmoTipo(Orquestrantes.COMPLEX)) {
 
                 AST mExtended = mAST.getBranch("EXTENDED");
                 if (mExtended.mesmoNome("STRUCT")) {

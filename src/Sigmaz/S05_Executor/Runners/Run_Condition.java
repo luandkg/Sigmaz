@@ -3,7 +3,7 @@ package Sigmaz.S05_Executor.Runners;
 import Sigmaz.S05_Executor.Escopo;
 import Sigmaz.S05_Executor.Item;
 import Sigmaz.S05_Executor.RunTime;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class Run_Condition {
 
@@ -65,7 +65,7 @@ public class Run_Condition {
                 //   System.out.println(" --> CONDICIONAR : Escopo Pai : " + mEscopo.getNome() + " -> Structs : " +mEscopo.getStructs().size() );
 
                 Escopo EscopoInterno = new Escopo(mRunTime, mEscopo);
-                EscopoInterno.setNome("Condicionate");
+                EscopoInterno.setNome("Condicionante");
 
                 Run_Body cAST = new Run_Body(mRunTime, EscopoInterno);
                 cAST.init(mCorpo);

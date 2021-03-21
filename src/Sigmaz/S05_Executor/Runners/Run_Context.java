@@ -1,5 +1,6 @@
 package Sigmaz.S05_Executor.Runners;
 
+import Sigmaz.S01_Compilador.Orquestrantes;
 import Sigmaz.S05_Executor.Escopo;
 import Sigmaz.S05_Executor.Escopos.Run_External;
 import Sigmaz.S05_Executor.Indexador.Index_Function;
@@ -8,7 +9,7 @@ import Sigmaz.S05_Executor.RunTime;
 
 import java.util.ArrayList;
 
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class Run_Context {
 
@@ -47,8 +48,8 @@ public class Run_Context {
         ArrayList<AST> ret = new ArrayList<AST>();
 
         for (AST eAST : mEscopo.getGuardadosCompleto()) {
-            if (eAST.mesmoTipo("STRUCT")) {
-                if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
+            if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
+                if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.STRUCT)) {
                     ret.add(eAST);
                 }
             }
@@ -59,11 +60,10 @@ public class Run_Context {
             if (mRunTime.existePacote(Referencia)) {
 
                 for (AST eAST : getPacote(Referencia).getASTS()) {
-                    if (eAST.mesmoTipo("STRUCT")) {
+                    if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
 
-                        if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
+                        if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.STRUCT)) {
                             ret.add(eAST);
-
                         }
 
                         //  System.out.println(" \t\t - " + eAST.getTipo() + " :  " + eAST.getNome());
@@ -85,10 +85,10 @@ public class Run_Context {
         ArrayList<AST> ret = new ArrayList<AST>();
 
         for (AST eAST : mEscopo.getGuardadosCompleto()) {
-            if (eAST.mesmoTipo("STRUCT")) {
-                if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
+            if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
+                if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.STRUCT)) {
                     ret.add(eAST);
-                } else if (eAST.getBranch("EXTENDED").mesmoNome("STAGES")) {
+                } else if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.STAGES)) {
                     ret.add(eAST);
                 }
             }
@@ -99,11 +99,11 @@ public class Run_Context {
             if (mRunTime.existePacote(Referencia)) {
 
                 for (AST eAST : getPacote(Referencia).getASTS()) {
-                    if (eAST.mesmoTipo("STRUCT")) {
+                    if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
 
-                        if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
+                        if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.STRUCT)) {
                             ret.add(eAST);
-                        } else if (eAST.getBranch("EXTENDED").mesmoNome("STAGES")) {
+                        } else if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.STAGES)) {
                             ret.add(eAST);
                         }
 
@@ -128,8 +128,8 @@ public class Run_Context {
 
 
         for (AST eAST : mEscopo.getGuardadosCompleto()) {
-            if (eAST.mesmoTipo("STRUCT")) {
-                if (eAST.getBranch("EXTENDED").mesmoNome("TYPE")) {
+            if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
+                if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.TYPE)) {
                     ret.add(eAST);
                 }
             }
@@ -140,9 +140,9 @@ public class Run_Context {
             if (mRunTime.existePacote(Referencia)) {
 
                 for (AST eAST : getPacote(Referencia).getASTS()) {
-                    if (eAST.mesmoTipo("STRUCT")) {
+                    if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
 
-                        if (eAST.getBranch("EXTENDED").mesmoNome("TYPE")) {
+                        if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.TYPE)) {
                             ret.add(eAST);
 
                         }
@@ -167,8 +167,8 @@ public class Run_Context {
 
 
         for (AST eAST : mEscopo.getGuardadosCompleto()) {
-            if (eAST.mesmoTipo("STRUCT")) {
-                if (eAST.getBranch("EXTENDED").mesmoNome("STAGES")) {
+            if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
+                if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.STAGES)) {
                     ret.add(eAST);
                 }
             }
@@ -180,9 +180,9 @@ public class Run_Context {
             if (mRunTime.existePacote(Referencia)) {
 
                 for (AST eAST : getPacote(Referencia).getASTS()) {
-                    if (eAST.mesmoTipo("STRUCT")) {
+                    if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
 
-                        if (eAST.getBranch("EXTENDED").mesmoNome("STAGES")) {
+                        if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.STAGES)) {
                             ret.add(eAST);
 
                         }
@@ -206,8 +206,8 @@ public class Run_Context {
         ArrayList<AST> ret = new ArrayList<AST>();
 
         for (AST eAST : mEscopo.getGuardadosCompleto()) {
-            if (eAST.mesmoTipo("STRUCT")) {
-                if (eAST.getBranch("EXTENDED").mesmoNome("EXTERNAL")) {
+            if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
+                if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.EXTERNAL)) {
                     ret.add(eAST);
                 }
             }
@@ -218,9 +218,9 @@ public class Run_Context {
             if (mRunTime.existePacote(Referencia)) {
 
                 for (AST eAST : getPacote(Referencia).getASTS()) {
-                    if (eAST.mesmoTipo("STRUCT")) {
+                    if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
 
-                        if (eAST.getBranch("EXTENDED").mesmoNome("EXTERNAL")) {
+                        if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.EXTERNAL)) {
                             ret.add(eAST);
 
                         }
@@ -250,7 +250,7 @@ public class Run_Context {
 
 
         for (AST eAST : gEscopo.getGuardadosCompleto()) {
-            if (eAST.mesmoTipo("CAST")) {
+            if (eAST.mesmoTipo(Orquestrantes.CAST)) {
                 ret.add(eAST);
             }
         }
@@ -261,7 +261,7 @@ public class Run_Context {
             if (mRunTime.existePacote(Referencia)) {
 
                 for (AST eAST : getPacote(Referencia).getASTS()) {
-                    if (eAST.mesmoTipo("CAST")) {
+                    if (eAST.mesmoTipo(Orquestrantes.CAST)) {
 
                         ret.add(eAST);
 
@@ -295,8 +295,8 @@ public class Run_Context {
 
 
         for (AST mStruct : getStructsOuStagesContexto(gEscopo)) {
-            for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
-                if (mStructBody.mesmoTipo("OPERATOR")) {
+            for (AST mStructBody : mStruct.getBranch(Orquestrantes.BODY).getASTS()) {
+                if (mStructBody.mesmoTipo(Orquestrantes.OPERATOR)) {
 
                     Index_Function mIndex_Function = new Index_Function(mRunTime, gEscopo, mStructBody);
                     mIndex_Function.resolverTipagem(gEscopo.getRefers());
@@ -311,11 +311,11 @@ public class Run_Context {
             if (mRunTime.existePacote(Referencia)) {
 
                 for (AST eAST : getPacote(Referencia).getASTS()) {
-                    if (eAST.mesmoTipo("STRUCT")) {
+                    if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
 
 
-                        for (AST mStructBody : eAST.getBranch("BODY").getASTS()) {
-                            if (mStructBody.mesmoTipo("OPERATOR")) {
+                        for (AST mStructBody : eAST.getBranch(Orquestrantes.BODY).getASTS()) {
+                            if (mStructBody.mesmoTipo(Orquestrantes.OPERATOR)) {
 
                                 Index_Function mIndex_Function = new Index_Function(mRunTime, gEscopo, mStructBody);
                                 mIndex_Function.resolverTipagem(gEscopo.getRefers());
@@ -351,8 +351,8 @@ public class Run_Context {
 
 
         for (AST mStruct : getStructsContexto(gEscopo)) {
-            for (AST mStructBody : mStruct.getBranch("BODY").getASTS()) {
-                if (mStructBody.mesmoTipo("DIRECTOR")) {
+            for (AST mStructBody : mStruct.getBranch(Orquestrantes.BODY).getASTS()) {
+                if (mStructBody.mesmoTipo(Orquestrantes.DIRECTOR)) {
 
                     Index_Function m = new Index_Function(mRunTime, gEscopo, mStructBody);
                     m.resolverTipagem(gEscopo.getRefers());
@@ -368,11 +368,11 @@ public class Run_Context {
             if (mRunTime.existePacote(Referencia)) {
 
                 for (AST eAST : getPacote(Referencia).getASTS()) {
-                    if (eAST.mesmoTipo("STRUCT")) {
+                    if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
 
 
-                        for (AST mStructBody : eAST.getBranch("BODY").getASTS()) {
-                            if (mStructBody.mesmoTipo("DIRECTOR")) {
+                        for (AST mStructBody : eAST.getBranch(Orquestrantes.BODY).getASTS()) {
+                            if (mStructBody.mesmoTipo(Orquestrantes.DIRECTOR)) {
 
                                 Index_Function m = new Index_Function(mRunTime, gEscopo, mStructBody);
                                 m.resolverTipagem(gEscopo.getRefers());
@@ -450,10 +450,10 @@ public class Run_Context {
         for (AST mAST : mRun_Context.getStagesContexto(mEscopo)) {
             //  System.out.println(" -->> " + mAST.getNome());
 
-            for (AST sAST : mAST.getBranch("STAGES").getASTS()) {
+            for (AST sAST : mAST.getBranch(Orquestrantes.STAGES).getASTS()) {
                 //  System.out.println("\t :: " + sAST.getNome());
 
-                if (sAST.mesmoTipo("STAGE")) {
+                if (sAST.mesmoTipo(Orquestrantes.STAGE)) {
                     String tmp = mAST.getNome() + "::" + sAST.getNome();
                     if (tmp.contentEquals(eStage)) {
                         enc = true;
@@ -479,10 +479,10 @@ public class Run_Context {
             // System.out.println(" -->> " + mAST.getNome());
 
 
-            for (AST sAST : mAST.getBranch("STAGES").getASTS()) {
+            for (AST sAST : mAST.getBranch(Orquestrantes.STAGES).getASTS()) {
                 //  System.out.println("\t :: " + sAST.getNome());
 
-                if (sAST.mesmoTipo("STAGE")) {
+                if (sAST.mesmoTipo(Orquestrantes.STAGE)) {
                     String tmp = mAST.getNome() + "::" + sAST.getNome();
                     if (tmp.contentEquals(eStage)) {
 
@@ -656,7 +656,7 @@ public class Run_Context {
             for (AST eAST : mStructs) {
 
                 if (eAST.mesmoNome(eNome)) {
-                    ret = "STRUCT";
+                    ret =Orquestrantes.STRUCT;
                     enc = true;
 
                     break;
@@ -670,7 +670,7 @@ public class Run_Context {
     }
 
     public boolean getQualificadorIsStruct(String aNome, Escopo mEscopo) {
-        return getQualificador(aNome, mEscopo).contentEquals("STRUCT");
+        return getQualificador(aNome, mEscopo).contentEquals(Orquestrantes.STRUCT);
     }
 
     public void incluirDoContexto(String eRefer, ArrayList<AST> mCasts, ArrayList<AST> mTipos, ArrayList<AST> Structs) {
@@ -679,11 +679,11 @@ public class Run_Context {
         if (mRunTime.existePacote(eRefer)) {
 
             for (AST eAST : getPacote(eRefer).getASTS()) {
-                if (eAST.mesmoTipo("STRUCT")) {
+                if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
 
-                    if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
+                    if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.STRUCT)) {
                         Structs.add(eAST);
-                    } else if (eAST.getBranch("EXTENDED").mesmoNome("TYPE")) {
+                    } else if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.TYPE)) {
                         mTipos.add(eAST);
                     }
 
@@ -700,29 +700,7 @@ public class Run_Context {
     }
 
 
-    public void log(Escopo mEscopo) {
 
-
-        System.out.println("ESCOPO :: " + mEscopo.getNome());
-
-        for (String eAST : mEscopo.getRefers()) {
-            System.out.println("REFER : " + eAST);
-        }
-
-        for (AST eAST : getCastsContexto(mEscopo)) {
-            System.out.println("CAST : " + eAST.getNome());
-        }
-
-        for (AST eAST : getTypesContexto(mEscopo)) {
-            System.out.println("TYPE : " + eAST.getNome());
-        }
-
-        for (AST eAST : getStructsContexto(mEscopo)) {
-            System.out.println("STRUCT : " + eAST.getNome());
-        }
-
-
-    }
 
 
     public ArrayList<AST> getDefinidos(Escopo mEscopo) {
@@ -730,14 +708,14 @@ public class Run_Context {
         ArrayList<AST> ret = new ArrayList<AST>();
 
         for (AST eAST : mEscopo.getGuardadosCompleto()) {
-            if (eAST.mesmoTipo("STRUCT")) {
-                if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
+            if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
+                if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.STRUCT)) {
                     ret.add(eAST);
-                } else if (eAST.getBranch("EXTENDED").mesmoNome("STAGES")) {
+                } else if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome("STAGES")) {
                     ret.add(eAST);
-                } else if (eAST.getBranch("EXTENDED").mesmoNome("TYPE")) {
+                } else if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome("TYPE")) {
                     ret.add(eAST);
-                } else if (eAST.getBranch("EXTENDED").mesmoNome("MODEL")) {
+                } else if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome("MODEL")) {
                     ret.add(eAST);
                 }
             }
@@ -748,15 +726,15 @@ public class Run_Context {
             if (mRunTime.existePacote(Referencia)) {
 
                 for (AST eAST : getPacote(Referencia).getASTS()) {
-                    if (eAST.mesmoTipo("STRUCT")) {
+                    if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
 
-                        if (eAST.getBranch("EXTENDED").mesmoNome("STRUCT")) {
+                        if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.STRUCT)) {
                             ret.add(eAST);
-                        } else if (eAST.getBranch("EXTENDED").mesmoNome("STAGES")) {
+                        } else if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome("STAGES")) {
                             ret.add(eAST);
-                        } else if (eAST.getBranch("EXTENDED").mesmoNome("TYPE")) {
+                        } else if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome("TYPE")) {
                             ret.add(eAST);
-                        } else if (eAST.getBranch("EXTENDED").mesmoNome("MODEL")) {
+                        } else if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome("MODEL")) {
                             ret.add(eAST);
                         }
 

@@ -2,7 +2,7 @@ package Sigmaz;
 
 import Sigmaz.Intellisenses.Intellisense;
 import Sigmaz.Intellisenses.IntellisenseTheme;
-import Sigmaz.S00_Utilitarios.*;
+import Sigmaz.S08_Utilitarios.*;
 import Sigmaz.S01_Compilador.C01_Enfileirador.Etapa;
 import Sigmaz.S01_Compilador.C01_Enfileirador.Planejador;
 import Sigmaz.S01_Compilador.Compilador;

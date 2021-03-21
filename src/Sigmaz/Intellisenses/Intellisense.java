@@ -1,7 +1,7 @@
 package Sigmaz.Intellisenses;
 
-import Sigmaz.S00_Utilitarios.Visualizador.SigmazPackage;
-import Sigmaz.S00_Utilitarios.Visualizador.SigmazRaiz;
+import Sigmaz.S08_Utilitarios.Visualizador.SigmazPackage;
+import Sigmaz.S08_Utilitarios.Visualizador.SigmazRaiz;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;
@@ -9,7 +9,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class Intellisense {
 

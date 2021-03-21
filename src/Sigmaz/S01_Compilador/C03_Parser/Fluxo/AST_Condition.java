@@ -3,7 +3,7 @@ package Sigmaz.S01_Compilador.C03_Parser.Fluxo;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Condition {

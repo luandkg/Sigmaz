@@ -1,12 +1,12 @@
 package Sigmaz.S05_Executor.Runners;
 
-import Sigmaz.S00_Utilitarios.Utilitario;
+import Sigmaz.S08_Utilitarios.Utilitario;
 import Sigmaz.S05_Executor.Alterador;
 import Sigmaz.S05_Executor.Escopo;
 import Sigmaz.S05_Executor.Indexador.Index_Function;
 import Sigmaz.S05_Executor.Item;
 import Sigmaz.S05_Executor.RunTime;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 import java.util.ArrayList;
 

@@ -3,10 +3,11 @@ package Sigmaz.S01_Compilador.C03_Parser.Complexo;
 import Sigmaz.S01_Compilador.C03_Parser.Alocador.AST_Alocador;
 import Sigmaz.S01_Compilador.C03_Parser.Bloco.AST_Action;
 import Sigmaz.S01_Compilador.C03_Parser.Bloco.AST_Function;
+import Sigmaz.S01_Compilador.C03_Parser.Errador;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 import Sigmaz.S01_Compilador.Orquestrantes;
 import Sigmaz.S01_Compilador.Termos;
 
@@ -24,7 +25,7 @@ public class AST_External {
 
         if (TokenC.getTipo() == TokenTipo.ID) {
 
-            AST AST_Corrente = new AST(Orquestrantes.STRUCT);
+            AST AST_Corrente = new AST(Orquestrantes.COMPLEX);
             AST_Corrente.setNome(TokenC.getConteudo());
             ASTPai.getASTS().add(AST_Corrente);
 
@@ -68,7 +69,7 @@ public class AST_External {
         String VISIBILIDADE = Orquestrantes.EXPLICIT;
 
 
-        Token TokenD = mCompiler.getTokenAvanteStatus(TokenTipo.CHAVE_ABRE, "Era esperado abrir chaves");
+        Token TokenD = mCompiler.getTokenAvanteStatus(TokenTipo.CHAVE_ABRE, Errador.eraEsperadoAbrirChaves());
 
         if (TokenD.getTipo() != TokenTipo.CHAVE_ABRE) {
             return;
@@ -142,14 +143,14 @@ public class AST_External {
         }
 
         if (!saiu) {
-            mCompiler.errarCompilacao("Era esperado fechar chaves" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
+            mCompiler.errarCompilacao(Errador.eraEsperadoFecharChaves() + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
         }
     }
 
 
     public String mudarEscopo(String eEscopo) {
 
-        Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado :");
+        Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, Errador.eraEsperadoDoisPontos());
 
         return eEscopo;
 

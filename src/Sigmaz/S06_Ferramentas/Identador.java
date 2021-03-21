@@ -1,7 +1,7 @@
 package Sigmaz.S06_Ferramentas;
 
-import Sigmaz.S00_Utilitarios.Erro;
-import Sigmaz.S00_Utilitarios.Formatador;
+import Sigmaz.S08_Utilitarios.Erro;
+import Sigmaz.S08_Utilitarios.Formatador;
 import Sigmaz.S01_Compilador.C02_Lexer.Lexer;
 
 public class Identador {

@@ -1,7 +1,6 @@
 package Sigmaz;
 
-import Sigmaz.S00_Utilitarios.*;
-import Sigmaz.S01_Compilador.C01_Enfileirador.Etapa;
+import Sigmaz.S08_Utilitarios.*;
 import Sigmaz.S01_Compilador.Compilador;
 import Sigmaz.S03_Integrador.Integrador;
 import Sigmaz.S04_Montador.Montador;

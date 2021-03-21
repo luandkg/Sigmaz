@@ -1,7 +1,7 @@
 package Sigmaz.Intellisenses;
 
-import Sigmaz.S00_Utilitarios.Visualizador.SigmazCast;
-import Sigmaz.S00_Utilitarios.Visualizador.SigmazModel;
+import Sigmaz.S08_Utilitarios.Visualizador.SigmazCast;
+import Sigmaz.S08_Utilitarios.Visualizador.SigmazModel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

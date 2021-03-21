@@ -2,13 +2,13 @@ package Sigmaz.S02_PosProcessamento.Processadores;
 
 import java.util.ArrayList;
 
-import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
-import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
-import Sigmaz.S00_Utilitarios.Alterador.SigmazStruct;
-import Sigmaz.S00_Utilitarios.ObjetoProcurado;
+import Sigmaz.S08_Utilitarios.Alterador.SigmazPackage;
+import Sigmaz.S08_Utilitarios.Alterador.SigmazRaiz;
+import Sigmaz.S08_Utilitarios.Alterador.SigmazStruct;
+import Sigmaz.S08_Utilitarios.ObjetoProcurado;
 import Sigmaz.S02_PosProcessamento.PosProcessador;
-import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S00_Utilitarios.Procurador;
+import Sigmaz.S08_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.Procurador;
 import Sigmaz.S05_Executor.Alterador;
 
 public class Heranca {

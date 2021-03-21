@@ -2,8 +2,9 @@ package Sigmaz.S02_PosProcessamento.Processadores;
 
 import java.util.ArrayList;
 
+import Sigmaz.S01_Compilador.Orquestrantes;
 import Sigmaz.S02_PosProcessamento.PosProcessador;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class Referenciador {
 
@@ -43,11 +44,11 @@ public class Referenciador {
             if (mSigmaz.mesmoTipo("SIGMAZ")) {
 
                 for (AST Struct_AST : mSigmaz.getASTS()) {
-                    if (Struct_AST.mesmoTipo("PACKAGE")) {
+                    if (Struct_AST.mesmoTipo(Orquestrantes.PACKAGE)) {
                         mPacotes.add(Struct_AST);
-                    } else  if (Struct_AST.mesmoTipo("STRUCT")) {
+                    } else  if (Struct_AST.mesmoTipo(Orquestrantes.COMPLEX)) {
                         mGlobalStruct.add(Struct_AST);
-                    } else  if (Struct_AST.mesmoTipo("REFER")) {
+                    } else  if (Struct_AST.mesmoTipo(Orquestrantes.REFER)) {
                         mGlobalRefer.add(Struct_AST);
                     }
                 }
@@ -65,9 +66,9 @@ public class Referenciador {
             ArrayList<AST> mRefers = new ArrayList<AST>();
 
             for (AST Struct_AST : mPacote.getASTS()) {
-                if (Struct_AST.mesmoTipo("STRUCT")) {
+                if (Struct_AST.mesmoTipo(Orquestrantes.COMPLEX)) {
                     mEstruturas.add(Struct_AST);
-                } else if (Struct_AST.mesmoTipo("REFER")) {
+                } else if (Struct_AST.mesmoTipo(Orquestrantes.REFER)) {
                     mRefers.add(Struct_AST);
                 }
             }
@@ -79,17 +80,17 @@ public class Referenciador {
             mensagem("\t -  STRUCTS : ");
             for (AST mStruct : mEstruturas) {
 
-                mStruct.getBranch("REFERS").criarBranch("BY").setNome(mPacote.getNome());
+                mStruct.getBranch(Orquestrantes.REFERS).criarBranch(Orquestrantes.BY).setNome(mPacote.getNome());
 
                 for (AST mRefer : mRefers) {
-                    mStruct.getBranch("REFERS").criarBranch("BY").setNome(mRefer.getNome());
+                    mStruct.getBranch(Orquestrantes.REFERS).criarBranch(Orquestrantes.BY).setNome(mRefer.getNome());
                 }
 
                mensagem("\t\t -  STRUCT : " + mStruct.getNome());
 
 
 
-                for (AST mRefer : mStruct.getBranch("REFERS").getASTS()) {
+                for (AST mRefer : mStruct.getBranch(Orquestrantes.REFERS).getASTS()) {
                  mensagem("\t\t\t -  BY : " + mRefer.getNome());
                 }
             }
@@ -107,7 +108,7 @@ public class Referenciador {
         for (AST mStruct : mGlobalStruct) {
 
             for (AST mRefer : mGlobalRefer) {
-                mStruct.getBranch("REFERS").criarBranch("BY").setNome(mRefer.getNome());
+                mStruct.getBranch(Orquestrantes.REFERS).criarBranch(Orquestrantes.BY).setNome(mRefer.getNome());
             }
 
           mensagem("\t\t -  STRUCT : " + mStruct.getNome());
@@ -115,7 +116,7 @@ public class Referenciador {
 
 
 
-            for (AST mRefer : mStruct.getBranch("REFERS").getASTS()) {
+            for (AST mRefer : mStruct.getBranch(Orquestrantes.REFERS).getASTS()) {
              mensagem("\t\t\t -  BY : " + mRefer.getNome());
             }
         }

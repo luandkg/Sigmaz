@@ -4,7 +4,8 @@ import Sigmaz.S01_Compilador.C03_Parser.*;
 import Sigmaz.S01_Compilador.C03_Parser.Organizador.AST_Refer;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class AST_Package {
 
@@ -25,7 +26,7 @@ public class AST_Package {
             boolean enc = false;
 
             for (AST eAST : ASTPai.getASTS()) {
-                if (eAST.mesmoTipo("PACKAGE") && eAST.mesmoNome(TokenC.getConteudo())) {
+                if (eAST.mesmoTipo(Orquestrantes.PACKAGE) && eAST.mesmoNome(TokenC.getConteudo())) {
                     AST_Corrente = eAST;
                     enc = true;
                     break;
@@ -33,7 +34,7 @@ public class AST_Package {
             }
 
             if (!enc) {
-                AST_Corrente = new AST("PACKAGE");
+                AST_Corrente = new AST(Orquestrantes.PACKAGE);
                 AST_Corrente.setNome(TokenC.getConteudo());
                 ASTPai.getASTS().add(AST_Corrente);
             }

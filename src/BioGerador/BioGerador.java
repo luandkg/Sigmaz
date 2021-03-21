@@ -1,7 +1,7 @@
 package BioGerador;
 
 import LuanDKG.Texto;
-import Sigmaz.S00_Utilitarios.Documento;
+import Sigmaz.S08_Utilitarios.Documento;
 
 import java.util.ArrayList;
 

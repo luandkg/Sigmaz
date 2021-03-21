@@ -2,8 +2,8 @@ package Sigmaz.S06_Ferramentas;
 
 import java.util.ArrayList;
 
-import Sigmaz.S00_Utilitarios.Documento;
-import Sigmaz.S00_Utilitarios.Texto;
+import Sigmaz.S08_Utilitarios.Documento;
+import Sigmaz.S08_Utilitarios.Texto;
 
 public class Gerador {
 

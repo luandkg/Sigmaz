@@ -2,12 +2,12 @@ package Sigmaz.S02_PosProcessamento.Processadores;
 
 import java.util.ArrayList;
 
-import Sigmaz.S00_Utilitarios.*;
-import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
-import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
-import Sigmaz.S00_Utilitarios.Alterador.SigmazStruct;
-import Sigmaz.S00_Utilitarios.Visualizador.SigmazDirector;
-import Sigmaz.S00_Utilitarios.Visualizador.SigmazOperator;
+import Sigmaz.S08_Utilitarios.*;
+import Sigmaz.S08_Utilitarios.Alterador.SigmazPackage;
+import Sigmaz.S08_Utilitarios.Alterador.SigmazRaiz;
+import Sigmaz.S08_Utilitarios.Alterador.SigmazStruct;
+import Sigmaz.S08_Utilitarios.Visualizador.SigmazDirector;
+import Sigmaz.S08_Utilitarios.Visualizador.SigmazOperator;
 import Sigmaz.S02_PosProcessamento.PosProcessador;
 
 public class Estruturador {

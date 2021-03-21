@@ -1,13 +1,14 @@
 package Sigmaz.S05_Executor;
 
-import Sigmaz.S00_Utilitarios.Chronos_Intervalo;
+import Sigmaz.S01_Compilador.Orquestrantes;
+import Sigmaz.S08_Utilitarios.Chronos_Intervalo;
 import Sigmaz.S04_Montador.Montador;
 import Sigmaz.S05_Executor.Debuggers.Global;
 
 import java.io.File;
 import java.util.ArrayList;
 
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 import Sigmaz.S05_Executor.Processor.TabelaDeArquivos;
 
 public class RunTime {
@@ -144,13 +145,13 @@ public class RunTime {
         limpar_run();
 
 
-        if (existeBranch("SIGMAZ")) {
+        if (existeBranch(Orquestrantes.SIGMAZ)) {
 
-            AST ASTCGlobal = getBranch("SIGMAZ");
+            AST ASTCGlobal = getBranch(Orquestrantes.SIGMAZ);
 
 
             Run_Required mRun_Required = new Run_Required(this);
-            mRun_Required.requerer(getBranch("SIGMAZ"));
+            mRun_Required.requerer(getBranch(Orquestrantes.SIGMAZ));
 
             Chronos_Intervalo mChronos = new Chronos_Intervalo();
 
@@ -184,13 +185,13 @@ public class RunTime {
         limpar_run();
 
 
-        if (existeBranch("SIGMAZ")) {
+        if (existeBranch(Orquestrantes.SIGMAZ)) {
 
-            AST ASTCGlobal = getBranch("SIGMAZ");
+            AST ASTCGlobal = getBranch(Orquestrantes.SIGMAZ);
 
 
             Run_Required mRun_Required = new Run_Required(this);
-            mRun_Required.requerer(getBranch("SIGMAZ"));
+            mRun_Required.requerer(getBranch(Orquestrantes.SIGMAZ));
 
             Chronos_Intervalo mChronos = new Chronos_Intervalo();
 
@@ -258,7 +259,7 @@ public class RunTime {
         AST mRet = null;
 
         for (AST ASTCGlobal : mASTS) {
-            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
+            if (ASTCGlobal.mesmoTipo(Orquestrantes.SIGMAZ)) {
                 mRet = ASTCGlobal;
             }
         }
@@ -401,7 +402,7 @@ public class RunTime {
 
         for (AST ASTCGlobal : mASTS) {
 
-            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
+            if (ASTCGlobal.mesmoTipo(Orquestrantes.SIGMAZ)) {
 
                 for (AST ASTC : ASTCGlobal.getASTS()) {
 
@@ -500,7 +501,7 @@ public class RunTime {
 
         for (AST ASTCGlobal : mASTS) {
 
-            if (ASTCGlobal.mesmoTipo("SIGMAZ")) {
+            if (ASTCGlobal.mesmoTipo(Orquestrantes.SIGMAZ)) {
 
 
                 enc = true;

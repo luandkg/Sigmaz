@@ -4,7 +4,7 @@ import Sigmaz.S05_Executor.Escopo;
 import Sigmaz.S05_Executor.Item;
 import Sigmaz.S05_Executor.RunTime;
 import Sigmaz.S05_Executor.Runners.*;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class RunValueType_Default {
 

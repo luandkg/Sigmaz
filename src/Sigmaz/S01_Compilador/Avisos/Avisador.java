@@ -1,6 +1,6 @@
 package Sigmaz.S01_Compilador.Avisos;
 
-import Sigmaz.S00_Utilitarios.Documento;
+import Sigmaz.S08_Utilitarios.Documento;
 
 import java.util.ArrayList;
 

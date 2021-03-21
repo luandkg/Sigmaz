@@ -1,6 +1,6 @@
 package Sigmaz.S06_Ferramentas;
 
-import Sigmaz.S00_Utilitarios.GrupoDeErro;
+import Sigmaz.S08_Utilitarios.GrupoDeErro;
 import Sigmaz.Sigmaz_Compilador;
 
 import java.util.ArrayList;

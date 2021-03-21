@@ -1,7 +1,7 @@
 package Sigmaz.S05_Executor;
 
 import java.util.ArrayList;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class Estrutural {
 

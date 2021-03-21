@@ -9,7 +9,7 @@ import Sigmaz.S05_Executor.Escopos.Run_External;
 
 import java.util.ArrayList;
 
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class Escopo {
 
@@ -376,7 +376,7 @@ public class Escopo {
     // MUTAVEL
 
     public Item criarMutavelNula(String eNome, String eTipo) {
-    return    mEscopoStack.alocar(eNome, eTipo, TipoStack.Mutable, true, "", false);
+        return mEscopoStack.alocar(eNome, eTipo, TipoStack.Mutable, true, "", false);
     }
 
 
@@ -472,10 +472,26 @@ public class Escopo {
 
     public String getCaminho() {
         if (mTemAnterior) {
-            return mEscopoAnterior.getCaminho()+ " -> " + this.getNome();
+            return mEscopoAnterior.getCaminho() + " -> " + this.getNome();
         } else {
             return this.getNome();
         }
     }
+
+
+    public void refer_antigos() {
+
+        if (mTemAnterior) {
+            mEscopoAnterior.refer_antigos();
+        }
+
+        System.out.println(" :: " + this.getNome());
+        for (String e : this.getRefers()) {
+            System.out.println("\t -> " + e);
+        }
+
+
+    }
+
 
 }

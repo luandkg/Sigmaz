@@ -1,6 +1,6 @@
 package Make.Compiler;
 
-import Sigmaz.S00_Utilitarios.*;
+import Sigmaz.S08_Utilitarios.*;
 import Sigmaz.S01_Compilador.C02_Lexer.Lexer;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;

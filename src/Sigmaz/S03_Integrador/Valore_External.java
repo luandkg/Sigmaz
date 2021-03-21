@@ -1,7 +1,7 @@
 package Sigmaz.S03_Integrador;
 
-import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S00_Utilitarios.Visualizador.SigmazExternal;
+import Sigmaz.S08_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.Visualizador.SigmazExternal;
 
 
 public class Valore_External {

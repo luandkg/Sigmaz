@@ -3,7 +3,7 @@ package Sigmaz.S06_Ferramentas;
 import Sigmaz.S01_Compilador.C02_Lexer.Lexer;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
-import Sigmaz.S00_Utilitarios.Erro;
+import Sigmaz.S08_Utilitarios.Erro;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

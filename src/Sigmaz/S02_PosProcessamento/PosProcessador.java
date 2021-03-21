@@ -2,11 +2,11 @@ package Sigmaz.S02_PosProcessamento;
 
 import java.util.ArrayList;
 
-import Sigmaz.S00_Utilitarios.Mensageiro;
-import Sigmaz.S00_Utilitarios.OrganizadorDeProcessos;
-import Sigmaz.S00_Utilitarios.ProcessoCallback;
+import Sigmaz.S08_Utilitarios.Mensageiro;
+import Sigmaz.S08_Utilitarios.OrganizadorDeProcessos;
+import Sigmaz.S08_Utilitarios.ProcessoCallback;
 import Sigmaz.S02_PosProcessamento.Processadores.*;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 import Sigmaz.S05_Executor.Debuggers.Simplificador;
 
 public class PosProcessador {

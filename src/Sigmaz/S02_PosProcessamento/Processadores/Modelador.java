@@ -1,17 +1,17 @@
 package Sigmaz.S02_PosProcessamento.Processadores;
 
-import Sigmaz.S00_Utilitarios.Alterador.SigmazModel;
-import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
-import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
-import Sigmaz.S00_Utilitarios.Alterador.SigmazStruct;
-import Sigmaz.S00_Utilitarios.Procurador;
-import Sigmaz.S00_Utilitarios.ObjetoProcurado;
+import Sigmaz.S08_Utilitarios.Alterador.SigmazModel;
+import Sigmaz.S08_Utilitarios.Alterador.SigmazPackage;
+import Sigmaz.S08_Utilitarios.Alterador.SigmazRaiz;
+import Sigmaz.S08_Utilitarios.Alterador.SigmazStruct;
+import Sigmaz.S08_Utilitarios.Procurador;
+import Sigmaz.S08_Utilitarios.ObjetoProcurado;
 import Sigmaz.S05_Executor.Alterador;
 
 import java.util.ArrayList;
 
 import Sigmaz.S02_PosProcessamento.PosProcessador;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class Modelador {
 

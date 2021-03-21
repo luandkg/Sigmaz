@@ -4,7 +4,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Fluxo.AST_Corpo;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 import Sigmaz.S01_Compilador.Orquestrantes;
 import Sigmaz.S01_Compilador.Termos;
 
@@ -145,17 +145,13 @@ public class AST_Cast {
 
     public void defaultx(AST ASTPai, AST ASTAvo) {
 
-
         AST AST_Corrente = new AST(Orquestrantes.DEFAULT);
         ASTPai.getASTS().add(AST_Corrente);
 
-
         Token TokenC4 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado -> ");
-
 
         AST_Corpo mCorpo = new AST_Corpo(mCompiler);
         mCorpo.init(AST_Corrente);
-
 
     }
 

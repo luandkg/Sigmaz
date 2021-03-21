@@ -55,7 +55,7 @@ public class AppSigmaz {
 
         boolean mDebugar = true;
 
-        int ARQUIVO = 98;
+        int ARQUIVO = 60;
 
         CodigoSigmaz eCodigoSigmaz = new CodigoSigmaz();
 

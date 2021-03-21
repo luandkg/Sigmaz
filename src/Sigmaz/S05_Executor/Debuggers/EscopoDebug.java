@@ -10,7 +10,7 @@ import Sigmaz.S05_Executor.Escopos.Run_Struct;
 
 import java.util.ArrayList;
 
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class EscopoDebug {
 

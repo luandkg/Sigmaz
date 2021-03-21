@@ -6,7 +6,8 @@ import Sigmaz.S01_Compilador.C03_Parser.Alocador.AST_TYPE;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class AST_Function {
 
@@ -22,14 +23,14 @@ public class AST_Function {
 
         if (TokenC.getTipo() == TokenTipo.ID) {
 
-            AST AST_Corrente = new AST("FUNCTION");
+            AST AST_Corrente = new AST(Orquestrantes.FUNCTION);
             AST_Corrente.setNome(TokenC.getConteudo());
             ASTPai.getASTS().add(AST_Corrente);
 
-            AST AST_Visibilidade = AST_Corrente.criarBranch("VISIBILITY");
+            AST AST_Visibilidade = AST_Corrente.criarBranch(Orquestrantes.VISIBILITY);
             AST_Visibilidade.setNome(Visibilidade);
 
-            AST AST_Arguments = AST_Corrente.criarBranch("ARGUMENTS");
+            AST AST_Arguments = AST_Corrente.criarBranch(Orquestrantes.ARGUMENTS);
 
 
 

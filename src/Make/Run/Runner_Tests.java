@@ -1,7 +1,7 @@
 package Make.Run;
 
 import Sigmaz.S07_Apps.SigmazTestes;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class Runner_Tests {
 

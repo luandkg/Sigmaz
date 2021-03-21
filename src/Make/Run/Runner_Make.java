@@ -1,7 +1,7 @@
 package Make.Run;
 
 import Sigmaz.S02_PosProcessamento.Processadores.Cabecalho;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 import Sigmaz.Sigmaz_Compilador;
 
 import java.util.ArrayList;

@@ -90,6 +90,7 @@ package Objetos  {
 }
 
 call iniciar -> inicio ( )  ;
+
 refer Objetos  ;
 struct Cristal  {
 }

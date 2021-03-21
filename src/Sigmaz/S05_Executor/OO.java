@@ -1,8 +1,9 @@
 package Sigmaz.S05_Executor;
 
+import Sigmaz.S01_Compilador.Orquestrantes;
 import Sigmaz.S05_Executor.Indexador.Index_Action;
 import Sigmaz.S05_Executor.Indexador.Index_Function;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 import java.util.ArrayList;
 
@@ -70,7 +71,6 @@ public class OO {
     private ArrayList<Index_Action> mSetter;
 
 
-
     public OO(Escopo eEscopo, RunTime eRunTime) {
 
         mEscopo = eEscopo;
@@ -130,7 +130,6 @@ public class OO {
         mColGet_All = new ArrayList<Index_Function>();
         mColGet_Restrict = new ArrayList<Index_Function>();
         mSetter = new ArrayList<Index_Action>();
-
 
 
     }
@@ -193,7 +192,6 @@ public class OO {
         mSetter.clear();
 
 
-
     }
 
 
@@ -210,7 +208,7 @@ public class OO {
 
         //   System.out.println("Escopo : " + mEscopo.getNome() + " Guardando " + eAST.getTipo() + " -> " + eAST.getNome());
 
-        if (eAST.mesmoTipo("ACTION")) {
+        if (eAST.mesmoTipo(Orquestrantes.ACTION)) {
 
             Index_Action mAct = new Index_Action(mRunTime, mEscopo, eAST);
 
@@ -234,7 +232,7 @@ public class OO {
 
             }
 
-        } else if (eAST.mesmoTipo("FUNCTION")) {
+        } else if (eAST.mesmoTipo(Orquestrantes.FUNCTION)) {
 
             Index_Function mFunc = new Index_Function(mRunTime, mEscopo, eAST);
             Index_Action mAct = new Index_Action(mRunTime, mEscopo, eAST);
@@ -261,8 +259,7 @@ public class OO {
             }
 
 
-
-        } else if (eAST.mesmoTipo("OPERATOR")) {
+        } else if (eAST.mesmoTipo(Orquestrantes.OPERATOR)) {
 
             Index_Function mFunc = new Index_Function(mRunTime, mEscopo, eAST);
 
@@ -282,7 +279,7 @@ public class OO {
                 mOperations_Restrict.add(mFunc);
 
             }
-        } else if (eAST.mesmoTipo("DIRECTOR")) {
+        } else if (eAST.mesmoTipo(Orquestrantes.DIRECTOR)) {
 
             Index_Function mFunc = new Index_Function(mRunTime, mEscopo, eAST);
 
@@ -304,7 +301,7 @@ public class OO {
             }
 
 
-        } else if (eAST.mesmoTipo("GETTER")) {
+        } else if (eAST.mesmoTipo(Orquestrantes.GETTER)) {
 
             Index_Function mFunc = new Index_Function(mRunTime, mEscopo, eAST);
 
@@ -324,16 +321,16 @@ public class OO {
 
             }
 
-        } else if (eAST.mesmoTipo("SETTER")) {
+        } else if (eAST.mesmoTipo(Orquestrantes.SETTER)) {
 
             Index_Action mFunc = new Index_Action(mRunTime, mEscopo, eAST);
 
             mSetter.add(mFunc);
 
-        } else if (eAST.mesmoTipo("CAST")) {
+        } else if (eAST.mesmoTipo(Orquestrantes.CAST)) {
 
             mCasts.add(eAST);
-        } else if (eAST.mesmoTipo("INIT")) {
+        } else if (eAST.mesmoTipo(Orquestrantes.INIT)) {
 
 
             Index_Action mAct = new Index_Action(mRunTime, mEscopo, eAST);
@@ -344,23 +341,26 @@ public class OO {
                 mInits_All.add(mAct);
             }
 
-        } else if (eAST.mesmoTipo("TYPE")) {
 
-            mTypes.add(eAST);
 
-        } else if (eAST.mesmoTipo("STRUCT")) {
+        } else if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
 
-            if (eAST.getBranch("EXTENDED").mesmoNome("STAGES")) {
+            if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.STAGES)) {
                 mStages.add(eAST);
+            } else if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.TYPE)) {
+                mTypes.add(eAST);
+            } else if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.STRUCT)) {
+                mStructs.add(eAST);
             } else {
                 mStructs.add(eAST);
             }
-        } else if (eAST.mesmoTipo("BASE")) {
+
+        } else if (eAST.mesmoTipo(Orquestrantes.BASE)) {
             mBases.add(eAST);
-        } else if (eAST.mesmoTipo("REFER")) {
+        } else if (eAST.mesmoTipo(Orquestrantes.REFER)) {
             mEscopo.adicionarRefer(eAST.getNome());
 
-        } else if (eAST.mesmoTipo("MARK")) {
+        } else if (eAST.mesmoTipo(Orquestrantes.MARK)) {
 
             Index_Function mFunc = new Index_Function(mRunTime, mEscopo, eAST);
 
@@ -604,7 +604,6 @@ public class OO {
     }
 
 
-
     public ArrayList<Index_Action> getInitsCompleto() {
 
         ArrayList<Index_Action> gc = new ArrayList<Index_Action>();
@@ -641,7 +640,7 @@ public class OO {
     }
 
     public String getModo(AST eAST) {
-        return eAST.getBranch("VISIBILITY").getNome();
+        return eAST.getBranch(Orquestrantes.VISIBILITY).getNome();
     }
 
 

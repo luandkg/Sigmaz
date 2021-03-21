@@ -1,9 +1,10 @@
 package Sigmaz.S05_Executor;
 
+import Sigmaz.S01_Compilador.Orquestrantes;
 import Sigmaz.S05_Executor.Escopos.Run_External;
 import Sigmaz.S05_Executor.Runners.*;
 
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 import java.util.ArrayList;
 
@@ -36,7 +37,7 @@ public class Run {
 
         if (mRunTime.isDebug()) {
 
-            if (mRunTime.getASTDebug().get(0).mesmoValor("TRUE")) {
+            if (mRunTime.getASTDebug().get(0).mesmoValor(Orquestrantes.TRUE)) {
 
             } else {
                 mRunTime.errar("RunTime", "O objeto nao e debugavel !");
@@ -64,7 +65,7 @@ public class Run {
         }
 
         for (AST ASTC : ASTSigmaz_Call.getASTS()) {
-            if (ASTC.mesmoTipo("DEBUG")) {
+            if (ASTC.mesmoTipo(Orquestrantes.DEBUG)) {
 
                 Run_Debug mRun_Debug = new Run_Debug(mRunTime, mGlobal);
                 mRun_Debug.init(ASTC);
@@ -87,7 +88,7 @@ public class Run {
 
         for (AST ASTC : ASTSigmaz_Call.getASTS()) {
 
-            if (ASTC.mesmoTipo("CALL")) {
+            if (ASTC.mesmoTipo(Orquestrantes.CALL)) {
 
                 Run_Call mRun_Call = new Run_Call(mRunTime, mGlobal);
                 mRun_Call.init(ASTC);
@@ -126,12 +127,12 @@ public class Run {
 
             String mValor = "SUCESSO";
 
-            if (ASTC.mesmoTipo("TEST")) {
+            if (ASTC.mesmoTipo(Orquestrantes.TEST)) {
 
                 boolean mSucesso = true;
 
                 Escopo mEscopoInterno = new Escopo(mRunTime, mGlobal);
-                mEscopoInterno.setNome(ASTC.getBranch("GROUP").getNome() + "::" + ASTC.getBranch("TEST").getNome());
+                mEscopoInterno.setNome(ASTC.getBranch(Orquestrantes.GROUP).getNome() + "::" + ASTC.getBranch(Orquestrantes.TEST).getNome());
 
 
                 if (mRunTime.getErros().size() > 0) {
@@ -140,7 +141,7 @@ public class Run {
 
                 if (mSucesso) {
                     Run_Body mAST = new Run_Body(mRunTime, mEscopoInterno);
-                    mAST.init(ASTC.getBranch("BODY"));
+                    mAST.init(ASTC.getBranch(Orquestrantes.BODY));
                     if (mRunTime.getErros().size() > 0) {
                         mSucesso = false;
                     }
@@ -156,9 +157,9 @@ public class Run {
                 }
 
 
-                mTestando.add("TEST -> " + ASTC.getBranch("GROUP").getNome() + "::" + ASTC.getBranch("TEST").getNome() + "  -->>  " + mValor);
+                mTestando.add("TEST -> " + ASTC.getBranch(Orquestrantes.GROUP).getNome() + "::" + ASTC.getBranch(Orquestrantes.TEST).getNome() + "  -->>  " + mValor);
 
-                System.out.println("TESTE :: " + ASTC.getBranch("GROUP").getNome() + "::" + ASTC.getBranch("TEST").getNome() + " --->>> " + mValor );
+                System.out.println("TESTE :: " + ASTC.getBranch(Orquestrantes.GROUP).getNome() + "::" + ASTC.getBranch(Orquestrantes.TEST).getNome() + " --->>> " + mValor );
                 if (mRunTime.getErros().size()>0){
                     for(String eErro : mRunTime.getErros()){
                         System.out.println("\t " + eErro);
@@ -199,7 +200,7 @@ public class Run {
 
         for (AST ASTC : ASTCGlobal.getASTS()) {
 
-            if (ASTC.mesmoTipo("PACKAGE")) {
+            if (ASTC.mesmoTipo(Orquestrantes.PACKAGE)) {
 
                 mRunTime.getGlobalPackages().add(ASTC);
 
@@ -224,12 +225,10 @@ public class Run {
                 mGlobal.guardar(ASTC);
             } else if (ASTC.mesmoTipo("CAST")) {
                 mGlobal.guardar(ASTC);
-            } else if (ASTC.mesmoTipo("STAGES")) {
+
+            } else if (ASTC.mesmoTipo(Orquestrantes.COMPLEX)) {
                 mGlobal.guardar(ASTC);
-            } else if (ASTC.mesmoTipo("STRUCT")) {
-                mGlobal.guardar(ASTC);
-            } else if (ASTC.mesmoTipo("TYPE")) {
-                mGlobal.guardar(ASTC);
+
             } else if (ASTC.mesmoTipo("PROTOTYPE_AUTO")) {
                 mGlobal.guardar(ASTC);
             } else if (ASTC.mesmoTipo("PROTOTYPE_FUNCTOR")) {
@@ -297,7 +296,7 @@ public class Run {
     public void externalizarPackage(AST ASTC, AST ASTCGlobal) {
 
         for (AST eAST : ASTC.getASTS()) {
-            if (eAST.mesmoTipo("STRUCT")) {
+            if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
 
                 String mExtended = eAST.getBranch("EXTENDED").getNome();
                 if (mExtended.contentEquals("STRUCT")) {
@@ -317,7 +316,7 @@ public class Run {
     public void referenciar(AST ASTCGlobal) {
 
         for (AST ASTC : ASTCGlobal.getASTS()) {
-            if (ASTC.mesmoTipo("REFER")) {
+            if (ASTC.mesmoTipo(Orquestrantes.REFER)) {
                 mGlobal.adicionarRefer(ASTC.getNome());
             }
         }
@@ -327,11 +326,11 @@ public class Run {
     public void externalizar(AST ASTCGlobal) {
 
         for (AST ASTC : ASTCGlobal.getASTS()) {
-            if (ASTC.mesmoTipo("PACKAGE")) {
+            if (ASTC.mesmoTipo(Orquestrantes.PACKAGE)) {
 
                 externalizarPackage(ASTC, ASTCGlobal);
 
-            } else if (ASTC.mesmoTipo("STRUCT")) {
+            } else if (ASTC.mesmoTipo(Orquestrantes.COMPLEX)) {
 
                 externalizarDireto(mGlobal, ASTC, ASTCGlobal);
 

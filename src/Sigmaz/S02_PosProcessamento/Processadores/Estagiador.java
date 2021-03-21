@@ -2,9 +2,10 @@ package Sigmaz.S02_PosProcessamento.Processadores;
 
 import java.util.ArrayList;
 
-import Sigmaz.S00_Utilitarios.AST_Implementador;
+import Sigmaz.S01_Compilador.Orquestrantes;
+import Sigmaz.S08_Utilitarios.AST_Implementador;
 import Sigmaz.S02_PosProcessamento.PosProcessador;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class Estagiador {
 
@@ -40,7 +41,7 @@ public class Estagiador {
 
                 for (AST mStruct : mSigmaz.getASTS()) {
 
-                    if (mStruct.mesmoTipo("STRUCT")) {
+                    if (mStruct.mesmoTipo(Orquestrantes.COMPLEX)) {
 
                         if (mStruct.getBranch("EXTENDED").mesmoNome("STAGES")) {
 
@@ -62,7 +63,7 @@ public class Estagiador {
 
 
                         for (AST PackageStruct : ePackage.getASTS()) {
-                            if (PackageStruct.mesmoTipo("STRUCT")) {
+                            if (PackageStruct.mesmoTipo(Orquestrantes.COMPLEX)) {
 
                                 if (PackageStruct.getBranch("EXTENDED").mesmoNome("STAGES")) {
 

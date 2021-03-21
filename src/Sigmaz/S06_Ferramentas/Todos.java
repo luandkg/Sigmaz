@@ -1,13 +1,13 @@
 package Sigmaz.S06_Ferramentas;
 
-import Sigmaz.S00_Utilitarios.Tempo;
+import Sigmaz.S08_Utilitarios.Tempo;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 
 import java.io.File;
 import java.util.ArrayList;
-import Sigmaz.S00_Utilitarios.Erro;
-import Sigmaz.S00_Utilitarios.GrupoDeErro;
-import Sigmaz.S00_Utilitarios.GrupoDeComentario;
+import Sigmaz.S08_Utilitarios.Erro;
+import Sigmaz.S08_Utilitarios.GrupoDeErro;
+import Sigmaz.S08_Utilitarios.GrupoDeComentario;
 import Sigmaz.Sigmaz_Compilador;
 
 public class Todos {

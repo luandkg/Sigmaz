@@ -1,6 +1,6 @@
 package AppSigmaz;
 
-import Sigmaz.S00_Utilitarios.Documento;
+import Sigmaz.S08_Utilitarios.Documento;
 
 public class CodigoSigmaz {
 

@@ -1,11 +1,11 @@
 package Sigmaz.S02_PosProcessamento.Processadores;
 
-import Sigmaz.S00_Utilitarios.*;
-import Sigmaz.S00_Utilitarios.Alterador.SigmazPackage;
-import Sigmaz.S00_Utilitarios.Alterador.SigmazRaiz;
-import Sigmaz.S00_Utilitarios.Alterador.SigmazType;
-import Sigmaz.S00_Utilitarios.ObjetoProcurado;
-import Sigmaz.S00_Utilitarios.Procurador;
+import Sigmaz.S08_Utilitarios.*;
+import Sigmaz.S08_Utilitarios.Alterador.SigmazPackage;
+import Sigmaz.S08_Utilitarios.Alterador.SigmazRaiz;
+import Sigmaz.S08_Utilitarios.Alterador.SigmazType;
+import Sigmaz.S08_Utilitarios.ObjetoProcurado;
+import Sigmaz.S08_Utilitarios.Procurador;
 import Sigmaz.S05_Executor.Alterador;
 import Sigmaz.S02_PosProcessamento.PosProcessador;
 

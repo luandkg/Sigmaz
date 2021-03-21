@@ -1,12 +1,13 @@
 package Sigmaz.S01_Compilador.C03_Parser.Bloco;
 
 import Sigmaz.S01_Compilador.C03_Parser.Alocador.AST_TYPE;
+import Sigmaz.S01_Compilador.C03_Parser.Errador;
 import Sigmaz.S01_Compilador.C03_Parser.Fluxo.AST_Corpo;
 import Sigmaz.S01_Compilador.C03_Parser.Organizador.AST_Argumentos;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 import Sigmaz.S01_Compilador.Orquestrantes;
 import Sigmaz.S01_Compilador.Termos;
 
@@ -20,10 +21,9 @@ public class AST_Acessadores {
 
     public void init(AST ASTPai, String Visibilidade) {
 
+        Token TokenSeta = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, Errador.eraEsperadoUmaSeta());
 
-        Token TokenSeta = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma SETA");
-
-        Token TokenID = mCompiler.getTokenAvanteStatus(TokenTipo.ID, "Era esperado GET ou SET");
+        Token TokenID = mCompiler.getTokenAvanteStatus(TokenTipo.ID, Errador.eraEsperadoGetESet());
 
         if (TokenID.mesmoConteudo(Termos.GET)) {
 
@@ -64,7 +64,7 @@ public class AST_Acessadores {
             AST_Argumentos mArgumentos = new AST_Argumentos(mCompiler);
             mArgumentos.initColchete(AST_Arguments);
 
-            Token TokenSeta2 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma SETA");
+            Token TokenSeta2 = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, Errador.eraEsperadoUmaSeta());
 
             AST_Argumentos mValores = new AST_Argumentos(mCompiler);
             mValores.init(AST_Values);
@@ -74,7 +74,7 @@ public class AST_Acessadores {
 
 
         }else{
-            mCompiler.errarCompilacao("Era esperado GET ou SET",TokenID);
+            mCompiler.errarCompilacao(Errador.eraEsperadoGetESet(),TokenID);
         }
 
 

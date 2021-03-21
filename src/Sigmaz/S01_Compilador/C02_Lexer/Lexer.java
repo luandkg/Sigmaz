@@ -3,9 +3,9 @@ package Sigmaz.S01_Compilador.C02_Lexer;
 import java.io.File;
 import java.util.ArrayList;
 
-import Sigmaz.S00_Utilitarios.Erro;
-import Sigmaz.S00_Utilitarios.Texto;
-import Sigmaz.S00_Utilitarios.Tempo;
+import Sigmaz.S08_Utilitarios.Erro;
+import Sigmaz.S08_Utilitarios.Texto;
+import Sigmaz.S08_Utilitarios.Tempo;
 
 public class Lexer {
 

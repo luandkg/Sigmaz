@@ -1,6 +1,6 @@
 package Sigmaz.S01_Compilador;
 
-import Sigmaz.S00_Utilitarios.*;
+import Sigmaz.S08_Utilitarios.*;
 import Sigmaz.S01_Compilador.Avisos.Avisador;
 import Sigmaz.S01_Compilador.Avisos.InfoComment;
 import Sigmaz.S01_Compilador.Avisos.InfoLexer;
@@ -11,7 +11,6 @@ import Sigmaz.S01_Compilador.C01_Enfileirador.Etapa;
 import Sigmaz.S01_Compilador.C02_Lexer.Lexer;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
-import Sigmaz.S02_PosProcessamento.Processadores.Caller;
 
 import java.io.File;
 import java.util.ArrayList;

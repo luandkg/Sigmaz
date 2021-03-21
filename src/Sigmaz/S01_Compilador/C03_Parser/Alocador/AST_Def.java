@@ -1,10 +1,11 @@
 package Sigmaz.S01_Compilador.C03_Parser.Alocador;
 
+import Sigmaz.S01_Compilador.C03_Parser.Errador;
 import Sigmaz.S01_Compilador.C03_Parser.Fluxo.AST_Value;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Def {
@@ -16,11 +17,7 @@ public class AST_Def {
     }
 
 
-
-    public void init_Def(  AST ASTPai) {
-
-
-        String erro = "Variável";
+    public void init_Def(AST ASTPai) {
 
 
         Token TokenC = mCompiler.getTokenAvante();
@@ -28,18 +25,15 @@ public class AST_Def {
         if (TokenC.getTipo() == TokenTipo.ID) {
 
 
-
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome da " + erro + " !", TokenC);
+            mCompiler.errarCompilacao(Errador.eraEsperadoNomeVariavel(), TokenC);
             return;
         }
-
 
 
         AST AST_Corrente = new AST(Orquestrantes.DEF);
         AST_Corrente.setNome(TokenC.getConteudo());
         ASTPai.getASTS().add(AST_Corrente);
-
 
 
         AST_TYPE mType = new AST_TYPE(mCompiler);
@@ -62,14 +56,14 @@ public class AST_Def {
 
         } else {
 
-            mCompiler.errarCompilacao("Era esperado o valor da " + erro + " !", TokenC);
+            mCompiler.errarCompilacao(Errador.eraEsperadoValorVariavel(), TokenC);
 
         }
 
 
     }
 
-    public void init_Define(  AST ASTPai,String Visibilidade) {
+    public void init_Define(AST ASTPai, String Visibilidade) {
 
 
         Token TokenC = mCompiler.getTokenAvante();
@@ -77,12 +71,10 @@ public class AST_Def {
         if (TokenC.getTipo() == TokenTipo.ID) {
 
 
-
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome da Variável !", TokenC);
+            mCompiler.errarCompilacao(Errador.eraEsperadoNomeVariavel(), TokenC);
             return;
         }
-
 
 
         AST AST_Corrente = new AST(Orquestrantes.DEFINE);
@@ -111,7 +103,7 @@ public class AST_Def {
 
         } else {
 
-            mCompiler.errarCompilacao("Era esperado o valor da Variável !", TokenC);
+            mCompiler.errarCompilacao(Errador.eraEsperadoValorVariavel(), TokenC);
 
         }
 

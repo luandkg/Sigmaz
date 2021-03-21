@@ -1,7 +1,7 @@
 package Sigmaz.S01_Compilador.C03_Parser.Fluxo;
 
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class AST_Escopo {
 

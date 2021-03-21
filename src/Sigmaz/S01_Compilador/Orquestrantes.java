@@ -2,9 +2,16 @@ package Sigmaz.S01_Compilador;
 
 public class Orquestrantes {
 
+    public static final String SIGMAZ = "SIGMAZ";
+
     public static final String DEF = "DEF";
     public static final String MOC = "MOC";
     public static final String MUT = "MUT";
+
+    public static final String PACKAGE = "PACKAGE";
+
+    public static final String COMPLEX = "COMPLEX";
+
 
     public static final String DEFINE = "DEFINE";
     public static final String VISIBILITY = "VISIBILITY";
@@ -79,5 +86,20 @@ public class Orquestrantes {
     public static final String ALL = "ALL";
     public static final String RESTRICT = "RESTRICT";
     public static final String EXTRA = "EXTRA";
+    public static final String BASE = "BASE";
+    public static final String MOCKIZ = "MOCKIZ";
+
+    public static final String ACTION = "ACTION";
+    public static final String FUNCTION = "FUNCTION";
+    public static final String INVERSE = "INVERSE";
+    public static final String DIRECTOR = "DIRECTOR";
+    public static final String OPERATOR = "OPERATOR";
+    public static final String MARK = "MARK";
+
+
+    public static final String INIT = "INIT";
+    public static final String DEBUG = "DEBUG";
+
+    public static final String BY = "BY";
 
 }

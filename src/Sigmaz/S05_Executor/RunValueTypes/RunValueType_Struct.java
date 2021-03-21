@@ -1,11 +1,12 @@
 package Sigmaz.S05_Executor.RunValueTypes;
 
+import Sigmaz.S01_Compilador.Orquestrantes;
 import Sigmaz.S05_Executor.Escopo;
 import Sigmaz.S05_Executor.RunTime;
 import Sigmaz.S05_Executor.Runners.Run_GetType;
 import Sigmaz.S05_Executor.Escopos.Run_Struct;
 import Sigmaz.S05_Executor.Runners.Run_Value;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class RunValueType_Struct {
 
@@ -31,7 +32,7 @@ public class RunValueType_Struct {
 
         Run_GetType mRun_GetType = new Run_GetType(mRunTime, mEscopo);
 
-        for(AST eGen : ASTCorrente.getBranch("GENERIC").getASTS()){
+        for(AST eGen : ASTCorrente.getBranch(Orquestrantes.GENERIC).getASTS()){
             // System.out.println("Generico : " + mRun_GetType.getTipagemSimples(eGen.getNome()));
             eGen.setNome(mRun_GetType.getTipagemSimples(eGen.getNome()));
         }

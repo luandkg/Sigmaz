@@ -1,6 +1,6 @@
 package Sigmaz.S01_Compilador.C01_Enfileirador;
 
-import Sigmaz.S00_Utilitarios.ImagemEscritor;
+import Sigmaz.S08_Utilitarios.ImagemEscritor;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

@@ -1,6 +1,6 @@
 package Sigmaz.S02_PosProcessamento.Processadores;
 
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 import Sigmaz.S02_PosProcessamento.PosProcessador;
 import Sigmaz.S05_Executor.Debuggers.Simplificador;
 

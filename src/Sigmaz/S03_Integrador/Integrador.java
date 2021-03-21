@@ -1,9 +1,9 @@
 package Sigmaz.S03_Integrador;
 
-import Sigmaz.S00_Utilitarios.Contador;
-import Sigmaz.S00_Utilitarios.Mensageiro;
-import Sigmaz.S00_Utilitarios.Visualizador.SigmazPackage;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.Contador;
+import Sigmaz.S08_Utilitarios.Mensageiro;
+import Sigmaz.S08_Utilitarios.Visualizador.SigmazPackage;
+import Sigmaz.S08_Utilitarios.AST;
 import Sigmaz.S05_Executor.RunTime;
 
 import java.io.File;

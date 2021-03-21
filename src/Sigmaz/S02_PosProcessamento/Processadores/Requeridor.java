@@ -1,7 +1,7 @@
 package Sigmaz.S02_PosProcessamento.Processadores;
 
-import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S00_Utilitarios.Contador;
+import Sigmaz.S08_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.Contador;
 import Sigmaz.S02_PosProcessamento.PosProcessador;
 import Sigmaz.S05_Executor.RunTime;
 

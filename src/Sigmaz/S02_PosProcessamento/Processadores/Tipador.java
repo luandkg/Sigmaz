@@ -2,12 +2,13 @@ package Sigmaz.S02_PosProcessamento.Processadores;
 
 import java.util.ArrayList;
 
-import Sigmaz.S00_Utilitarios.Mensageiro;
-import Sigmaz.S00_Utilitarios.Utilitario;
-import Sigmaz.S00_Utilitarios.EscopoTipos;
+import Sigmaz.S01_Compilador.Orquestrantes;
+import Sigmaz.S08_Utilitarios.Mensageiro;
+import Sigmaz.S08_Utilitarios.Utilitario;
+import Sigmaz.S08_Utilitarios.EscopoTipos;
 import Sigmaz.S05_Executor.Debuggers.Simplificador;
 import Sigmaz.S02_PosProcessamento.PosProcessador;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class Tipador {
 
@@ -145,7 +146,7 @@ public class Tipador {
 
                         mensagem(ePrefixo + "- Tipo CAST : " + ASTPackage.getNome() + "<>" + mAST.getNome());
 
-                    } else if (mAST.mesmoTipo("STRUCT")) {
+                    } else if (mAST.mesmoTipo(Orquestrantes.COMPLEX)) {
 
 
                         AST mExtended = mAST.getBranch("EXTENDED");
@@ -206,7 +207,7 @@ public class Tipador {
 
                 mensagem(ePrefixo + "- Tipo CAST : " + mAST.getNome());
 
-            } else if (mAST.mesmoTipo("STRUCT")) {
+            } else if (mAST.mesmoTipo(Orquestrantes.COMPLEX)) {
 
 
                 AST mExtended = mAST.getBranch("EXTENDED");

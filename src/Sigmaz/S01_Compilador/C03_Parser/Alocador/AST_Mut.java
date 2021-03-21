@@ -1,10 +1,11 @@
 package Sigmaz.S01_Compilador.C03_Parser.Alocador;
 
+import Sigmaz.S01_Compilador.C03_Parser.Errador;
 import Sigmaz.S01_Compilador.C03_Parser.Fluxo.AST_Value;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Mut {
@@ -18,17 +19,11 @@ public class AST_Mut {
 
     public void init_mut(AST ASTPai) {
 
-
-        String erro = "Mutavel";
-
-
         Token TokenC = mCompiler.getTokenAvante();
 
         if (TokenC.getTipo() == TokenTipo.ID) {
-
-
         } else {
-            mCompiler.errarCompilacao("Era esperado o nome da " + erro + " !", TokenC);
+            mCompiler.errarCompilacao(Errador.eraEsperadoNomeMutavel(), TokenC);
             return;
         }
 
@@ -41,12 +36,11 @@ public class AST_Mut {
         //  System.out.println("To : " + mCompiler.getTokenCorrente().getConteudo());
         AST AST_Valor = AST_Corrente.criarBranch(Orquestrantes.VALUE);
 
-
         Token TokenP3 = mCompiler.getTokenAvante();
 
         if (TokenP3.getTipo() == TokenTipo.PONTOVIRGULA) {
 
-            mCompiler.errarCompilacao("A definicao de uma " + erro + " com inferencia de tipo dinamico precisa receber um valor de atribuicao !", TokenC);
+            mCompiler.errarCompilacao(Errador.eraEsperadoValorMutavelInferencia(), TokenC);
 
             return;
         } else if (TokenP3.getTipo() == TokenTipo.IGUAL) {
@@ -56,14 +50,12 @@ public class AST_Mut {
             mAST.init(AST_Valor);
 
             if (AST_Valor.mesmoNome("null") && AST_Valor.mesmoValor("ID")) {
-
-                mCompiler.errarCompilacao("A definicao de uma " + erro + " com inferencia de tipo de tipo dinamico nao pode ter o valor de atribuicao NULO !", TokenC);
-
+                mCompiler.errarCompilacao(Errador.eraEsperadoValorMutavelNaoNulo(), TokenC);
             }
 
         } else {
 
-            mCompiler.errarCompilacao("Era esperado o valor da " + erro + " !", TokenC);
+            mCompiler.errarCompilacao(Errador.eraEsperadoValorMutavel(), TokenC);
 
         }
 

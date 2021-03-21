@@ -1,6 +1,6 @@
 package Sigmaz.S07_Apps;
 
-import Sigmaz.S00_Utilitarios.ArquivoTeste;
+import Sigmaz.S08_Utilitarios.ArquivoTeste;
 
 public class Estatisticas {
 

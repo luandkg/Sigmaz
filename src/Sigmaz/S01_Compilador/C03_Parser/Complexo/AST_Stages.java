@@ -3,7 +3,7 @@ package Sigmaz.S01_Compilador.C03_Parser.Complexo;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 import Sigmaz.S01_Compilador.Orquestrantes;
 
 public class AST_Stages {
@@ -18,7 +18,7 @@ public class AST_Stages {
     public void init(String eNomePacote,AST ASTAvo) {
 
 
-        AST ASTPai = ASTAvo.criarBranch(Orquestrantes.STRUCT);
+        AST ASTPai = ASTAvo.criarBranch(Orquestrantes.COMPLEX);
 
 
 

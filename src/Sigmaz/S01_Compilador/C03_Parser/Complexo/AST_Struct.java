@@ -10,7 +10,8 @@ import Sigmaz.S01_Compilador.C03_Parser.Organizador.AST_Generic;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class AST_Struct {
 
@@ -26,7 +27,7 @@ public class AST_Struct {
 
         if (TokenC.getTipo() == TokenTipo.ID) {
 
-            AST AST_Corrente = new AST("STRUCT");
+            AST AST_Corrente = new AST(Orquestrantes.COMPLEX);
             AST_Corrente.setNome(TokenC.getConteudo());
             AST_Corrente.setValor("");
 

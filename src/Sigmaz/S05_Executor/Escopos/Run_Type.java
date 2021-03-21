@@ -1,12 +1,13 @@
 package Sigmaz.S05_Executor.Escopos;
 
+import Sigmaz.S01_Compilador.Orquestrantes;
 import Sigmaz.S05_Executor.*;
 
 import java.util.ArrayList;
 
 import Sigmaz.S05_Executor.Runners.*;
-import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S00_Utilitarios.SemanticaPortugues;
+import Sigmaz.S08_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.SemanticaPortugues;
 
 public class Run_Type {
 
@@ -163,7 +164,7 @@ public class Run_Type {
 
         for (AST ASTC : mRun_Context.getTypesContexto(escopoProcurador)) {
 
-            if (ASTC.mesmoTipo("STRUCT")) {
+            if (ASTC.mesmoTipo(Orquestrantes.COMPLEX)) {
                 if (ASTC.mesmoNome(eProcurandoNome)) {
 
 

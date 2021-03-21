@@ -5,7 +5,7 @@ import Sigmaz.S05_Executor.RunTime;
 import Sigmaz.S05_Executor.Runners.Run_GetType;
 
 import java.util.ArrayList;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class Tipificador {
 

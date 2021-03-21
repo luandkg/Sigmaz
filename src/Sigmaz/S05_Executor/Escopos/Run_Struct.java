@@ -1,12 +1,13 @@
 package Sigmaz.S05_Executor.Escopos;
 
-import Sigmaz.S00_Utilitarios.Utilitario;
+import Sigmaz.S01_Compilador.Orquestrantes;
+import Sigmaz.S08_Utilitarios.Utilitario;
 import Sigmaz.S05_Executor.*;
 
 import java.util.ArrayList;
 
 import Sigmaz.S05_Executor.Runners.*;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class Run_Struct {
 
@@ -181,7 +182,11 @@ public class Run_Struct {
         }
 
         if (!enc) {
-            mRunTime.errar(mLocal, "Struct " + mStructNome + " : Nao Encontrada !");
+            mRunTime.errar(mLocal, "Struct " + mStructNome + "  : Nao Encontrada !");
+
+            if (mRunTime.isDebug()){
+                mRunTime.debug(mIniter);
+            }
             return;
         }
 
@@ -383,9 +388,26 @@ public class Run_Struct {
 
         Run_Context mRun_Context = new Run_Context(mRunTime);
 
+        //System.out.println("Local " + BuscadorDeArgumentos.getCaminho());
+
+
+     //   BuscadorDeArgumentos.refer_antigos();
+
+
+      //  System.out.println("Procurando " + mStructNome);
+
+      //  for(String e : BuscadorDeArgumentos.getRefers()){
+      //      System.out.println("\t Refer : " + e);
+      //  }
+
+
+
         for (AST ASTC : mRun_Context.getStructsContexto(BuscadorDeArgumentos)) {
 
-            if (ASTC.mesmoTipo("STRUCT")) {
+            if (ASTC.mesmoTipo(Orquestrantes.COMPLEX)) {
+
+              //  System.out.println("\t Achei " + ASTC.getNome());
+
                 if (ASTC.mesmoNome(mStructNome)) {
 
 
@@ -412,7 +434,7 @@ public class Run_Struct {
 
                     AST init_Extend = ASTC.getBranch("EXTENDED");
 
-                    if (init_Extend.mesmoNome("STRUCT")) {
+                    if (init_Extend.mesmoNome(Orquestrantes.STRUCT)) {
 
                         mBaseado = ASTC.getBranch("WITH").getNome();
 
@@ -424,7 +446,7 @@ public class Run_Struct {
                         mRunTime.errar(mLocal, "Struct " + mStructNome + " : Nao pode ser instanciada !");
                     }
 
-
+                    break;
                 }
 
             }

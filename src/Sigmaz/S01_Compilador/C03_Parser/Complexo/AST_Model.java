@@ -1,5 +1,6 @@
 package Sigmaz.S01_Compilador.C03_Parser.Complexo;
 
+import Sigmaz.S01_Compilador.C03_Parser.Errador;
 import Sigmaz.S01_Compilador.C03_Parser.Organizador.AST_Generic;
 import Sigmaz.S01_Compilador.C03_Parser.Alocador.AST_Alocador;
 import Sigmaz.S01_Compilador.C03_Parser.Bloco.AST_Action;
@@ -7,7 +8,8 @@ import Sigmaz.S01_Compilador.C03_Parser.Bloco.AST_Function;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S01_Compilador.Orquestrantes;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class AST_Model {
 
@@ -23,7 +25,7 @@ public class AST_Model {
 
         if (TokenC.getTipo() == TokenTipo.ID) {
 
-            AST AST_Corrente = new AST("STRUCT");
+            AST AST_Corrente = new AST(Orquestrantes.COMPLEX);
             AST_Corrente.setNome(TokenC.getConteudo());
             AST_Corrente.setValor("");
 
@@ -129,7 +131,7 @@ public class AST_Model {
         }
 
         if (!saiu) {
-            mCompiler.errarCompilacao("Era esperado fechar chaves" + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
+            mCompiler.errarCompilacao(Errador.eraEsperadoFecharChaves() + mCompiler.getTokenAvante().getConteudo(), mCompiler.getTokenAvante());
         }
     }
 

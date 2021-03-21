@@ -1,6 +1,6 @@
 package Sigmaz;
 
-import Sigmaz.S00_Utilitarios.Chronos;
+import Sigmaz.S08_Utilitarios.Chronos;
 import Sigmaz.S05_Executor.RunTime;
 
 import java.util.ArrayList;

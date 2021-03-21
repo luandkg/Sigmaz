@@ -2,9 +2,9 @@ package Make.Run;
 
 import Sigmaz.S06_Ferramentas.Dependenciador;
 import Sigmaz.Intellisenses.Intellisense;
-import Sigmaz.S00_Utilitarios.AST;
-import Sigmaz.S00_Utilitarios.Erro;
-import Sigmaz.S00_Utilitarios.GrupoDeErro;
+import Sigmaz.S08_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.Erro;
+import Sigmaz.S08_Utilitarios.GrupoDeErro;
 import Sigmaz.Sigmaz_Compilador;
 import Sigmaz.S06_Ferramentas.Syntax_HighLight;
 

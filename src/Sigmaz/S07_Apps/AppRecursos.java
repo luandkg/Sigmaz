@@ -1,7 +1,6 @@
 package Sigmaz.S07_Apps;
 
-import Sigmaz.S00_Utilitarios.Recursador.RecursoSequenciador;
-import Sigmaz.S00_Utilitarios.Recursador.Recursos;
+import Sigmaz.S08_Utilitarios.Recursador.Recursos;
 
 import java.awt.*;
 

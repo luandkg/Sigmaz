@@ -1,6 +1,6 @@
 package Sigmaz.S05_Executor.Debuggers;
 
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class Simplificador {
 

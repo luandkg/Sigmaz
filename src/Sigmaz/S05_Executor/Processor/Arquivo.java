@@ -1,6 +1,6 @@
 package Sigmaz.S05_Executor.Processor;
 
-import Sigmaz.S00_Utilitarios.Texto;
+import Sigmaz.S08_Utilitarios.Texto;
 
 public class Arquivo {
 

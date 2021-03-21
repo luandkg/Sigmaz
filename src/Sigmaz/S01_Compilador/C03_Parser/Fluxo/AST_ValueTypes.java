@@ -4,7 +4,7 @@ import Sigmaz.S01_Compilador.C03_Parser.Organizador.AST_Generic;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
 import Sigmaz.S01_Compilador.C02_Lexer.TokenTipo;
-import Sigmaz.S00_Utilitarios.AST;
+import Sigmaz.S08_Utilitarios.AST;
 
 public class AST_ValueTypes {
 
@@ -204,6 +204,10 @@ public class AST_ValueTypes {
             AST_Generic mg = new AST_Generic(mCompiler);
             mg.init(AST_Generico);
 
+        }
+
+        if (mCompiler.getIsDebug()) {
+            mCompiler.debug(ASTPai);
         }
 
     }
@@ -423,6 +427,10 @@ public class AST_ValueTypes {
 
         ReceberNovoEscopo(ASTPai, mTemTipo, mTipo);
 
+
+        if (mCompiler.getIsDebug()) {
+            mCompiler.debug(ASTPai);
+        }
 
     }
 

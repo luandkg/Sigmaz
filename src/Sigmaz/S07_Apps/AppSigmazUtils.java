@@ -3,7 +3,7 @@ package Sigmaz.S07_Apps;
 import AppSigmaz.Opcional;
 import AppSigmaz.OrdenadorSigmaz;
 import BioGerador.BioGerador;
-import Sigmaz.S00_Utilitarios.Tempo;
+import Sigmaz.S08_Utilitarios.Tempo;
 import Sigmaz.S05_Executor.RunTime;
 import Sigmaz.S05_Executor.UML;
 import Sigmaz.S06_Ferramentas.*;
@@ -18,11 +18,8 @@ import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 
-import Sigmaz.S00_Utilitarios.Erro;
+import Sigmaz.S08_Utilitarios.Erro;
 
 public class AppSigmazUtils {
 
