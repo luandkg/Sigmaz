@@ -1,0 +1,82 @@
+call iniciar -> inicio ( )  ;
+
+refer Mundo;
+
+act inicio ( )  {
+
+
+    def ana : PessoaFisica = init PessoaFisica();
+    def ana_tipo : string = ana.getTipo();
+
+    def beto : PessoaJuridica = init PessoaJuridica();
+    def beto_tipo : string = beto.getTipo();
+
+    mostrar(ana);
+
+
+    mostrar(
+
+        modelable -> Pessoa  {
+
+            init Pessoa(eNome : string) {
+                Nome = eNome;
+            }
+
+    	    restrict :
+    		    define Nome : string = ""  ;
+    		    mockiz Tipo : string = "FUNCIONARIO"  ;
+            all:
+    	        func getNome (  ) : string  {return Nome;}
+    	        func getTipo (  ) : string  {return Tipo;}
+
+        }("Luan Freitas")
+
+    );
+
+	DEBUG -> LOCAL :: STACK  ;
+
+
+}
+
+act mostrar(ePessoa : Pessoa){
+
+    def eNome : string = ePessoa.getNome();
+
+    def eTipo : string = ePessoa.getTipo();
+	DEBUG -> LOCAL :: STACK  ;
+
+}
+
+package Mundo{
+
+        model Pessoa  {
+
+            func getNome (  ) : string  ;
+            func getTipo (  ) : string  ;
+
+        }
+
+
+        struct PessoaFisica at Pessoa  {
+            restrict :
+                define Nome : string = ""  ;
+                mockiz Tipo : string = "FISICA"  ;
+            all:
+                func getNome (  ) : string  {return Nome;}
+                func getTipo (  ) : string  {return Tipo;}
+
+        }
+
+
+        struct PessoaJuridica at Pessoa  {
+            restrict :
+                define Nome : string = ""  ;
+                mockiz Tipo : string = "JURIDICA"  ;
+            all:
+                func getNome (  ) : string  {return Nome;}
+                func getTipo (  ) : string  {return Tipo;}
+
+        }
+
+
+}

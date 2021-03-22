@@ -636,3 +636,8 @@ Linguagem de Programação Estruturada - Implementações
 		2021 03 04 -->> Termos
 		2021 03 04 -->> Orquestrantes
 
+
+		2021 03 22 -->> Remoção do Comando Daz
+		2021 03 22 -->> Checagem de Parametros com Tipos Herdados
+		2021 03 22 -->> Implementação de Modables
+

@@ -33,7 +33,6 @@ public class Termos {
 
     public static final String STEP = "step";
     public static final String WHEN = "when";
-    public static final String DAZ = "daz";
     public static final String TRY = "try";
     public static final String EACH = "each";
 

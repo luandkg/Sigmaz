@@ -107,10 +107,6 @@ public class AST_Corpo {
 
                 AST_When mAST = new AST_When(mCompiler);
                 mAST.init(ASTPai);
-            } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo(Termos.DAZ)) {
-
-                AST_Daz mAST = new AST_Daz(mCompiler);
-                mAST.init(ASTPai);
 
             } else if (TokenD.getTipo() == TokenTipo.ID && TokenD.mesmoConteudo(Termos.TRY)) {
 

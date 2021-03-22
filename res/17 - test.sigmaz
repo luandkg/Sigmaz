@@ -178,12 +178,11 @@ act operando ( geral : num )  {
 							auxiliar = 9090.0  ;
 						}
 					
-					} }daz ( inteiro ( cc ) ) -> 
-			{
-				extrem ( 0.0 , 5.0 ) -> 
-					{
-						auxiliar = 55555.0  ;
-					} }println ( "  - Numero : ", cc )  ;
+					} }
+
+
+
+					println ( "  - Numero : ", cc )  ;
 		println ( "  - Inteiro : ", inteiro ( cc ) )  ;
 		println ( "  - Decimal : ", decimal ( cc ) )  ;
 		println ( "  - Auxilar : ", auxiliar )  ;

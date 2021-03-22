@@ -47,6 +47,7 @@ public class RunTime {
 
     private boolean mIsDebug;
     private TabelaDeArquivos mTabelaDeArquivos;
+    private ArrayList<TipoAssociativo> mTipoAssociativos;
 
     public RunTime() {
 
@@ -82,6 +83,7 @@ public class RunTime {
         mASTDebug = null;
 
         mTabelaDeArquivos = new TabelaDeArquivos();
+        mTipoAssociativos = new ArrayList<TipoAssociativo>();
 
     }
 
@@ -178,6 +180,10 @@ public class RunTime {
         }
 
 
+    }
+
+    public ArrayList<TipoAssociativo> getTipoAssociativos() {
+        return mTipoAssociativos;
     }
 
     public void runTestes() {
@@ -297,6 +303,9 @@ public class RunTime {
         mTempo_Execucao = 0.0F;
         mTempo_Inicializacao = 0.0F;
 
+        mTabelaDeArquivos.fecharTodos();
+
+        mTipoAssociativos.clear();
 
     }
 

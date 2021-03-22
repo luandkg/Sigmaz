@@ -129,3 +129,6 @@ Linguagem de Programação Estruturada - Alterações
 
 		2020 11 07 -->> Sistema de Etapas
 
+
+		2021 03 22 -->> Remoção do Comando Daz
+

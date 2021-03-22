@@ -224,22 +224,7 @@ public class Run_Body {
                     break;
                 }
 
-            } else if (fAST.mesmoTipo("DAZ")) {
 
-                Run_Daz mAST = new Run_Daz(mRunTime, mEscopo);
-
-                mAST.init(fAST);
-                if (mAST.getCancelado()) {
-                    Cancelar();
-                }
-                if (mAST.getContinuar()) {
-                    Continuar();
-                }
-
-                if (mAST.getRetornado()) {
-                    Retorne(mAST.getRetorno());
-                    break;
-                }
 
             } else if (fAST.mesmoTipo("RETURN")) {
 

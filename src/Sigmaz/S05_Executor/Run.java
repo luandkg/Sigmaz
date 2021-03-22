@@ -53,6 +53,19 @@ public class Run {
 
         indexar(ASTCGlobal);
 
+        for (AST eAST : mRunTime.getGlobalPackages()) {
+            for (AST eStruct : eAST.getASTS()) {
+                if (eStruct.mesmoTipo(Orquestrantes.COMPLEX)) {
+                    if (eStruct.getBranch(Orquestrantes.MODEL).mesmoValor("TRUE")) {
+                        mRunTime.getTipoAssociativos().add(new TipoAssociativo(eStruct.getBranch(Orquestrantes.MODEL).getNome(), eAST.getNome() + "<>" +eStruct.getNome()));
+                    }
+                }
+            }
+
+
+        }
+
+
         referenciar(ASTCGlobal);
 
         externalizar(ASTCGlobal);
@@ -148,7 +161,6 @@ public class Run {
                 }
 
 
-
                 if (mSucesso) {
                     cSucesso += 1;
                 } else {
@@ -159,16 +171,15 @@ public class Run {
 
                 mTestando.add("TEST -> " + ASTC.getBranch(Orquestrantes.GROUP).getNome() + "::" + ASTC.getBranch(Orquestrantes.TEST).getNome() + "  -->>  " + mValor);
 
-                System.out.println("TESTE :: " + ASTC.getBranch(Orquestrantes.GROUP).getNome() + "::" + ASTC.getBranch(Orquestrantes.TEST).getNome() + " --->>> " + mValor );
-                if (mRunTime.getErros().size()>0){
-                    for(String eErro : mRunTime.getErros()){
+                System.out.println("TESTE :: " + ASTC.getBranch(Orquestrantes.GROUP).getNome() + "::" + ASTC.getBranch(Orquestrantes.TEST).getNome() + " --->>> " + mValor);
+                if (mRunTime.getErros().size() > 0) {
+                    for (String eErro : mRunTime.getErros()) {
                         System.out.println("\t " + eErro);
                     }
                 }
 
 
             }
-
 
 
             mRunTime.getErros().clear();
@@ -228,6 +239,11 @@ public class Run {
 
             } else if (ASTC.mesmoTipo(Orquestrantes.COMPLEX)) {
                 mGlobal.guardar(ASTC);
+
+                if (ASTC.getBranch(Orquestrantes.MODEL).mesmoValor("TRUE")) {
+                    mRunTime.getTipoAssociativos().add(new TipoAssociativo(ASTC.getBranch(Orquestrantes.MODEL).getNome(), ASTC.getNome()));
+                }
+
 
             } else if (ASTC.mesmoTipo("PROTOTYPE_AUTO")) {
                 mGlobal.guardar(ASTC);

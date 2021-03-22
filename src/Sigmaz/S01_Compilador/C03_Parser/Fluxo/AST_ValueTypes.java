@@ -1,5 +1,6 @@
 package Sigmaz.S01_Compilador.C03_Parser.Fluxo;
 
+import Sigmaz.S01_Compilador.C03_Parser.Complexo.AST_Struct;
 import Sigmaz.S01_Compilador.C03_Parser.Organizador.AST_Generic;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
 import Sigmaz.S01_Compilador.C02_Lexer.Token;
@@ -908,6 +909,64 @@ public class AST_ValueTypes {
 
         ASTPai.setNome(TokenC.getConteudo());
         ASTPai.setValor("REG");
+
+
+    }
+
+    public void dentro_modelable(AST ASTPai, boolean mTemTipo, AST mTipo) {
+
+        ASTPai.setValor("MODELABLE");
+
+        Token Tokena = mCompiler.getTokenAvanteStatus(TokenTipo.SETA, "Era esperado uma SETA");
+
+        Token TokenC2 = mCompiler.getTokenAvante();
+        if (TokenC2.getTipo() == TokenTipo.ID) {
+
+            ASTPai.setNome(TokenC2.getConteudo());
+
+            AST AST_Inits = ASTPai.criarBranch("INITS");
+            AST AST_Corpo = ASTPai.criarBranch("BODY");
+            AST AST_Destructs = ASTPai.criarBranch("DESTRUCT");
+
+            AST_Struct eStruct = new AST_Struct(mCompiler);
+            eStruct.corpo(AST_Corpo, AST_Inits, AST_Destructs,  TokenC2.getConteudo());
+
+
+            if (AST_Inits.getASTS().size() == 0) {
+
+                AST AST_IniPadrao = new AST("INIT");
+                AST_IniPadrao.setNome(TokenC2.getConteudo());
+                AST_Inits.getASTS().add(AST_IniPadrao);
+
+                AST AST_Visibilidade = AST_IniPadrao.criarBranch("VISIBILITY");
+                AST_Visibilidade.setNome("ALL");
+
+
+                AST AST_Call = AST_IniPadrao.criarBranch("CALL");
+                AST_Call.setValor("FALSE");
+
+                AST_IniPadrao.criarBranch("ARGUMENTS");
+                AST_IniPadrao.criarBranch("BODY");
+            }
+
+
+        } else {
+            System.out.println("Problema IC : " + TokenC2.getConteudo());
+        }
+
+
+        Token TokenC3 = mCompiler.getTokenAvante();
+
+        if (TokenC3.getTipo() == TokenTipo.PARENTESES_ABRE) {
+
+
+            AST_Value gAST = new AST_Value(mCompiler);
+            ReceberArgumentos(ASTPai, mTemTipo, mTipo);
+
+
+        } else {
+            System.out.println("Problema IP : " + TokenC3.getConteudo());
+        }
 
 
     }

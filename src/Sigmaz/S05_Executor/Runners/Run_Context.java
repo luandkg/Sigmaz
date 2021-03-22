@@ -81,6 +81,44 @@ public class Run_Context {
         return ret;
     }
 
+    public ArrayList<AST> getModelsContexto(Escopo mEscopo) {
+        ArrayList<AST> ret = new ArrayList<AST>();
+
+        for (AST eAST : mEscopo.getGuardadosCompleto()) {
+            if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
+                if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.MODEL)) {
+                    ret.add(eAST);
+                }
+            }
+        }
+
+        for (String Referencia : mEscopo.getRefers()) {
+
+            if (mRunTime.existePacote(Referencia)) {
+
+                for (AST eAST : getPacote(Referencia).getASTS()) {
+                    if (eAST.mesmoTipo(Orquestrantes.COMPLEX)) {
+
+                        if (eAST.getBranch(Orquestrantes.EXTENDED).mesmoNome(Orquestrantes.MODEL)) {
+                            ret.add(eAST);
+                        }
+
+                        //  System.out.println(" \t\t - " + eAST.getTipo() + " :  " + eAST.getNome());
+
+                    }
+                }
+
+            } else {
+                mRunTime.errar(mLocal, "PACKAGE  " + Referencia + " : Nao encontrado x2 !");
+            }
+
+        }
+
+
+        return ret;
+    }
+
+
     public ArrayList<AST> getStructsOuStagesContexto(Escopo mEscopo) {
         ArrayList<AST> ret = new ArrayList<AST>();
 
@@ -589,6 +627,7 @@ public class Run_Context {
 
         ArrayList<AST> mTipos = new ArrayList<AST>();
         ArrayList<AST> mStructs = new ArrayList<AST>();
+        ArrayList<AST> mModels = new ArrayList<AST>();
 
         for (AST eAST : getCastsContexto(mEscopo)) {
             mCasts.add(eAST);
@@ -605,6 +644,10 @@ public class Run_Context {
 
         for (AST eAST : getStructsContexto(mEscopo)) {
             mStructs.add(eAST);
+        }
+
+        for (AST eAST : getModelsContexto(mEscopo)) {
+            mModels.add(eAST);
         }
 
         if (ePacoteDefinido.length() > 0) {
@@ -665,6 +708,19 @@ public class Run_Context {
             }
         }
 
+        if (!enc) {
+
+            for (AST eAST : mModels) {
+
+                if (eAST.mesmoNome(eNome)) {
+                    ret =Orquestrantes.STRUCT;
+                    enc = true;
+
+                    break;
+                }
+
+            }
+        }
 
         return ret;
     }

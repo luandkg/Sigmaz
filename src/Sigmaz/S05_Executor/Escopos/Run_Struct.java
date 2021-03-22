@@ -38,6 +38,7 @@ public class Run_Struct {
     private int mRefs;
 
     private String mHerdadeDe;
+    private String mTipoCompleto;
 
     public Run_Struct(RunTime eRunTime) {
 
@@ -110,7 +111,6 @@ public class Run_Struct {
         return eAST.getBranch("VISIBILITY").getNome();
     }
 
-    private String mTipoCompleto;
 
     public String getTipoCompleto() {
         return mTipoCompleto;
@@ -184,7 +184,7 @@ public class Run_Struct {
         if (!enc) {
             mRunTime.errar(mLocal, "Struct " + mStructNome + "  : Nao Encontrada !");
 
-            if (mRunTime.isDebug()){
+            if (mRunTime.isDebug()) {
                 mRunTime.debug(mIniter);
             }
             return;
@@ -203,7 +203,6 @@ public class Run_Struct {
         mEscopo.adicionarReferDe(BuscadorDeArgumentos);
 
         mRun_GetType.adicionarRefers(mEscopo.getRefersOcultas());
-
 
         mRun_GetType.tiparMultiplo(mStructGeneric);
 
@@ -230,6 +229,88 @@ public class Run_Struct {
         struct_Generic(init_Generic);
 
 
+        exportarOperadoresEDiretores(BuscadorDeArgumentos);
+
+
+        definirInits();
+
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
+
+        definirCorpo();
+
+
+        run();
+
+
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
+
+        criarThis();
+
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
+
+
+        run_Init(mIniter, BuscadorDeArgumentos);
+
+
+    }
+
+
+    public void modelable(AST mModelableAST, Escopo BuscadorDeArgumentos) {
+
+        mStructNome = mModelableAST.getNome();
+
+        mStructCorpo = mModelableAST.getBranch("BODY").copiar();
+        mStructInits = mModelableAST.getBranch("INITS").copiar();
+
+
+        mEscopo = new Escopo(mRunTime, mRunTime.getEscopoGlobal());
+
+        long HEAPID = mRunTime.getHeap().getHEAPID();
+        mNome = "<Struct::" + mStructNome + ":" + HEAPID + ">";
+
+
+        Run_GetType mRun_GetType = new Run_GetType(mRunTime, BuscadorDeArgumentos);
+
+        mEscopo.adicionarReferDe(BuscadorDeArgumentos);
+
+        mRun_GetType.adicionarRefers(mEscopo.getRefersOcultas());
+
+        mTipoCompleto = mRun_GetType.getTipagemSimples(mStructNome);
+
+        definirInits();
+
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
+
+        definirCorpo();
+
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
+
+        run();
+
+        if (mRunTime.getErros().size() > 0) {
+            return;
+        }
+
+        criarThis();
+
+        run_Init(mModelableAST, BuscadorDeArgumentos);
+
+        // System.out.println(mModelableAST.getImpressao());
+
+    }
+
+    private void exportarOperadoresEDiretores(Escopo BuscadorDeArgumentos){
+
         for (AST eAST : mStructCorpo.getASTS()) {
 
             if (eAST.mesmoTipo("OPERATOR")) {
@@ -244,17 +325,16 @@ public class Run_Struct {
 
         }
 
+    }
 
+    private void definirInits() {
         for (AST ASTC : mStructInits.getASTS()) {
             mEscopo.guardarStruct(ASTC);
             mEscopo.guardar(ASTC);
-            //   System.out.println("Passando Init : " + ASTC.getNome());
         }
+    }
 
-
-        if (mRunTime.getErros().size() > 0) {
-            return;
-        }
+    private void definirCorpo() {
 
         for (AST ASTC : mStructCorpo.getASTS()) {
 
@@ -291,6 +371,10 @@ public class Run_Struct {
         if (mRunTime.getErros().size() > 0) {
             return;
         }
+
+    }
+
+    private void run() {
 
         for (AST ASTC : mStructCorpo.getASTS()) {
 
@@ -329,16 +413,14 @@ public class Run_Struct {
 
         }
 
-        if (mRunTime.getErros().size() > 0) {
-            return;
-        }
+    }
 
+    private void criarThis() {
         mEscopo.criarConstanteStruct("this", mTipoCompleto, mNome);
         mStack_All.add("this");
+    }
 
-        if (mRunTime.getErros().size() > 0) {
-            return;
-        }
+    private void run_Init(AST mIniter, Escopo BuscadorDeArgumentos) {
 
         for (AST ASTC : mStructInits.getASTS()) {
 
@@ -361,12 +443,10 @@ public class Run_Struct {
 
         }
 
-
         if (mStructInits.getASTS().size() > 0) {
 
 
             Run_Any mRA = new Run_Any(mRunTime);
-
             mRA.Inicializador(mStructNome, mIniter, BuscadorDeArgumentos, mEscopo, mLocal);
 
 
@@ -378,9 +458,7 @@ public class Run_Struct {
 
         }
 
-
     }
-
 
     public boolean procurarStruct(Escopo BuscadorDeArgumentos) {
 
@@ -391,22 +469,21 @@ public class Run_Struct {
         //System.out.println("Local " + BuscadorDeArgumentos.getCaminho());
 
 
-     //   BuscadorDeArgumentos.refer_antigos();
+        //   BuscadorDeArgumentos.refer_antigos();
 
 
-      //  System.out.println("Procurando " + mStructNome);
+        //  System.out.println("Procurando " + mStructNome);
 
-      //  for(String e : BuscadorDeArgumentos.getRefers()){
-      //      System.out.println("\t Refer : " + e);
-      //  }
-
+        //  for(String e : BuscadorDeArgumentos.getRefers()){
+        //      System.out.println("\t Refer : " + e);
+        //  }
 
 
         for (AST ASTC : mRun_Context.getStructsContexto(BuscadorDeArgumentos)) {
 
             if (ASTC.mesmoTipo(Orquestrantes.COMPLEX)) {
 
-              //  System.out.println("\t Achei " + ASTC.getNome());
+                //  System.out.println("\t Achei " + ASTC.getNome());
 
                 if (ASTC.mesmoNome(mStructNome)) {
 

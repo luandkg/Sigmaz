@@ -55,11 +55,11 @@ public class AppSigmaz {
 
         boolean mDebugar = true;
 
-        int ARQUIVO = 60;
+        int ARQUIVO = 99;
 
         CodigoSigmaz eCodigoSigmaz = new CodigoSigmaz();
 
-        switch (SigmazApp.TESTES) {
+        switch (SigmazApp.COMPILAR_E_EXECUTAR_DETALHADO) {
 
             case ORDENADOR -> AppSigmazUtils.ORDENADOR(mLocal);
 

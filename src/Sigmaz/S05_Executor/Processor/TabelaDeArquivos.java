@@ -45,4 +45,11 @@ public class TabelaDeArquivos {
         }
     }
 
+    public void fecharTodos() {
+        for (Arquivo eArquivo : mArquivos) {
+            eArquivo.fechar();
+        }
+        mArquivos.clear();
+    }
+
 }

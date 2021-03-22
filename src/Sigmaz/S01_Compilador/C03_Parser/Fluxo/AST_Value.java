@@ -282,6 +282,13 @@ public class AST_Value {
 
                 SegundaParte(ASTPai);
 
+            } else if (TokenD.mesmoConteudo("modelable")) {
+
+
+                mAST_ValueTypes.dentro_modelable(ASTPai, mTemTipo, mTipo);
+
+
+                SegundaParte(ASTPai);
 
             } else if (TokenD.mesmoConteudo("this")) {
 
