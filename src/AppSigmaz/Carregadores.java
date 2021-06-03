@@ -169,6 +169,8 @@ public class Carregadores {
         mArquivos.add("res/97 - structfinal.sigmaz");
         mArquivos.add("res/98 - contagem.sigmaz");
         mArquivos.add("res/99 - modelagem.sigmaz");
+        mArquivos.add("res/100 - heranca.sigmaz");
+        mArquivos.add("res/101 - fields.sigmaz");
 
 
 

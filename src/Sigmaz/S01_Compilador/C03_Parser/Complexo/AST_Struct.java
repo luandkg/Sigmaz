@@ -2,9 +2,12 @@ package Sigmaz.S01_Compilador.C03_Parser.Complexo;
 
 import Sigmaz.S01_Compilador.C03_Parser.Alocador.AST_Alocador;
 import Sigmaz.S01_Compilador.C03_Parser.Alocador.AST_Def;
+import Sigmaz.S01_Compilador.C03_Parser.Alocador.AST_TYPE;
 import Sigmaz.S01_Compilador.C03_Parser.Bloco.*;
 import Sigmaz.S01_Compilador.C03_Parser.Bloco.AST_Acessadores;
+import Sigmaz.S01_Compilador.C03_Parser.Errador;
 import Sigmaz.S01_Compilador.C03_Parser.Fluxo.AST_Corpo;
+import Sigmaz.S01_Compilador.C03_Parser.Fluxo.AST_Value;
 import Sigmaz.S01_Compilador.C03_Parser.Organizador.AST_Argumentos;
 import Sigmaz.S01_Compilador.C03_Parser.Organizador.AST_Generic;
 import Sigmaz.S01_Compilador.C03_Parser.Parser;
@@ -322,6 +325,11 @@ public class AST_Struct {
 
                 mInicializadores += 1;
 
+            } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("field")) {
+
+                verificar_EscopoField(VISIBILIDADE, TokenC);
+
+                campos(AST_Corpo, VISIBILIDADE);
 
             } else if (TokenC.getTipo() == TokenTipo.ID && TokenC.mesmoConteudo("act")) {
 
@@ -512,6 +520,117 @@ public class AST_Struct {
     }
 
 
+    public void campos(AST ASTCorpo, String Visibilidade) {
+
+
+        Token TokenC = mCompiler.getTokenAvante();
+
+        if (TokenC.getTipo() == TokenTipo.ID) {
+
+
+        } else {
+            mCompiler.errarCompilacao(Errador.eraEsperadoNomeVariavel(), TokenC);
+            return;
+        }
+
+        String eNomeField = TokenC.getConteudo();
+
+        AST eDefine = criarFieldCampo("_" + eNomeField, ASTCorpo);
+
+        AST eTipo = eDefine.getBranch("TYPE");
+
+        AST eSet = criarSetCampo("set" + eNomeField, "_" + eNomeField, eTipo, ASTCorpo);
+        AST eGet = criarGetCampo("get" + eNomeField, "_" + eNomeField, eTipo, ASTCorpo);
+
+    }
+
+    public AST criarFieldCampo(String eNomeField, AST ASTCorpo) {
+
+        AST AST_Corrente = new AST(Orquestrantes.DEFINE);
+        AST_Corrente.setNome(eNomeField);
+        ASTCorpo.getASTS().add(AST_Corrente);
+
+        AST AST_Visibilidade = AST_Corrente.criarBranch(Orquestrantes.VISIBILITY);
+        AST_Visibilidade.setNome("RESTRICT");
+
+        AST_TYPE mType = new AST_TYPE(mCompiler);
+        mType.init(AST_Corrente);
+
+        //  System.out.println("To : " + mCompiler.getTokenCorrente().getConteudo());
+        AST AST_Valor = AST_Corrente.criarBranch(Orquestrantes.VALUE);
+
+
+        Token TokenP3 = mCompiler.getTokenAvante();
+
+        if (TokenP3.getTipo() == TokenTipo.PONTOVIRGULA) {
+            AST_Valor.setValor(Orquestrantes.NULL);
+            return AST_Corrente;
+        } else if (TokenP3.getTipo() == TokenTipo.IGUAL) {
+
+            AST_Value mAST = new AST_Value(mCompiler);
+            mAST.init(AST_Valor);
+
+        } else {
+            mCompiler.errarCompilacao(Errador.eraEsperadoValorVariavel(), TokenP3);
+        }
+
+        return AST_Corrente;
+    }
+
+    public AST criarSetCampo(String eNomeAction, String eNomeField, AST eTipo, AST ASTCorpo) {
+
+        AST AST_Corrente = new AST(Orquestrantes.ACTION);
+        AST_Corrente.setNome(eNomeAction);
+        ASTCorpo.getASTS().add(AST_Corrente);
+
+        AST AST_Visibilidade = AST_Corrente.criarBranch(Orquestrantes.VISIBILITY);
+        AST_Visibilidade.setNome("ALL");
+
+        AST AST_Arguments = AST_Corrente.criarBranch(Orquestrantes.ARGUMENTS);
+        AST AST_Argument = AST_Arguments.criarBranch(Orquestrantes.ARGUMENT);
+        AST_Argument.setNome("e" + eNomeField);
+        AST_Argument.setValor("VALUE");
+        AST_Argument.getASTS().add(eTipo);
+
+        AST AST_Body = AST_Corrente.criarBranch(Orquestrantes.BODY);
+
+        AST eApply = AST_Body.criarBranch(Orquestrantes.APPLY);
+
+        AST eSettable = eApply.criarBranch(Orquestrantes.SETTABLE);
+        eSettable.setNome(eNomeField);
+        eSettable.setValor("ID");
+
+        AST eValue = eApply.criarBranch(Orquestrantes.VALUE);
+        eValue.setNome("e" + eNomeField);
+        eValue.setValor("ID");
+
+        return AST_Corrente;
+    }
+
+    public AST criarGetCampo(String eNomeAction, String eNomeField, AST eTipo, AST ASTCorpo) {
+
+        AST AST_Corrente = new AST(Orquestrantes.FUNCTION);
+        AST_Corrente.setNome(eNomeAction);
+        ASTCorpo.getASTS().add(AST_Corrente);
+
+        AST AST_Visibilidade = AST_Corrente.criarBranch(Orquestrantes.VISIBILITY);
+        AST_Visibilidade.setNome("ALL");
+
+        AST AST_Arguments = AST_Corrente.criarBranch(Orquestrantes.ARGUMENTS);
+
+        AST_Corrente.getASTS().add(eTipo);
+
+        AST AST_Body = AST_Corrente.criarBranch(Orquestrantes.BODY);
+
+        AST eReturn = AST_Body.criarBranch(Orquestrantes.RETURN);
+
+        AST eValue = eReturn.criarBranch(Orquestrantes.VALUE);
+        eValue.setNome(eNomeField);
+        eValue.setValor("ID");
+
+        return AST_Corrente;
+    }
+
     public String mudarEscopo(String eEscopo) {
 
         Token TokenC2 = mCompiler.getTokenAvanteStatus(TokenTipo.DOISPONTOS, "Era esperado :");
@@ -527,6 +646,15 @@ public class AST_Struct {
             mCompiler.errarCompilacao("Inicializadores so podem ser declarados fora de Escopos", TokenC);
         }
     }
+
+    public void verificar_EscopoField(String VISIBILIDADE, Token TokenC) {
+        if (VISIBILIDADE.contentEquals("INIT")) {
+
+        } else {
+            mCompiler.errarCompilacao("Fields so podem ser declarados fora de Escopos", TokenC);
+        }
+    }
+
 
     public void verificar_EscopoDestrutor(String VISIBILIDADE, Token TokenC) {
 

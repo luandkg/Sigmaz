@@ -639,5 +639,10 @@ Linguagem de Programação Estruturada - Implementações
 
 		2021 03 22 -->> Remoção do Comando Daz
 		2021 03 22 -->> Checagem de Parametros com Tipos Herdados
-		2021 03 22 -->> Implementação de Modables
+		2021 03 22 -->> Implementação de Modelables
+
+
+		2021 06 03 -->> Implementando Fields em Structs
+		2021 06 03 -->> Actions criadas a partir de Fields "setField(eField : type)"
+		2021 06 03 -->> Functions criadas a partir de Fields "getField() : type"
 

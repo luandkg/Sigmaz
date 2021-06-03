@@ -38,31 +38,46 @@ public class Run_Debug {
 
         } else if (ASTCorrente.mesmoNome("STRUCT")) {
 
-            // mEscopo.getRegressiveDebug().mapear_regressive_stack();
+            if (ASTCorrente.mesmoValor("REF_COUNT")) {
 
-            boolean enc = false;
+                System.out.println(" #########################  REF_COUNT : " + mEscopo.getCaminho() + " ############################ ");
 
-            for (Item eItem : mEscopo.getStacksAll()) {
-                if (eItem.getNome().contentEquals("this")) {
-
-                    if (eItem.getIsEstrutura()) {
-
-                        if (!eItem.getNulo()) {
-
-                            Run_Struct rs = mRunTime.getHeap().getRun_Struct(eItem.getValor(mRunTime, mEscopo));
-                            rs.debug();
-
-
-                        }
-                    }
-
-                    enc = true;
-                    break;
+                for (Run_Struct eStruct : mRunTime.getHeap().getStructs_Instances()) {
+                    System.out.println("\t -->> " + getEspaco(eStruct.getNome(),25) + " = " + eStruct.getRefs());
                 }
-            }
 
-            if (!enc) {
-                mRunTime.errar(mLocal, "Debug STRUCT IMPOSSIVEL !");
+                System.out.println(" ######################### ##### ############################ ");
+
+
+            } else {
+
+
+                boolean enc = false;
+
+                for (Item eItem : mEscopo.getStacksAll()) {
+                    if (eItem.getNome().contentEquals("this")) {
+
+                        if (eItem.getIsEstrutura()) {
+
+                            if (!eItem.getNulo()) {
+
+                                Run_Struct rs = mRunTime.getHeap().getRun_Struct(eItem.getValor(mRunTime, mEscopo));
+                                rs.debug();
+
+
+                            }
+                        }
+
+                        enc = true;
+                        break;
+                    }
+                }
+
+                if (!enc) {
+                    mRunTime.errar(mLocal, "Debug STRUCT IMPOSSIVEL !");
+                }
+
+
             }
 
 
@@ -310,5 +325,12 @@ public class Run_Debug {
 
     }
 
+
+    public String getEspaco(String eTexto, int eTam) {
+        while (eTexto.length() < eTam) {
+            eTexto += " ";
+        }
+        return eTexto;
+    }
 
 }

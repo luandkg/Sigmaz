@@ -1,0 +1,54 @@
+call iniciar -> inicio ( )  ;
+
+
+act inicio ( )  {
+
+    def p1 : Pessoa = init Pessoa();
+
+    def mm : Heroi = init Heroi();
+    mm.setNome("Mulher-Maravilha");
+    mm.setNomeExterno("Princesa");
+
+    def mm_nomeInterno : string = mm.getNome();
+    def mm_nomeExterno : string = mm.getNomeExterno();
+
+	DEBUG -> LOCAL :: STACK  ;
+
+    passar(p1);
+
+	DEBUG -> STRUCT :: REF_COUNT;
+
+}
+
+act passar( ePessoa : Pessoa){
+
+	DEBUG -> STRUCT :: REF_COUNT;
+
+}
+
+
+struct Pessoa   {
+       restrict :
+                define Nome : string = ""  ;
+                mockiz Tipo : string = "PESSOA"  ;
+       all:
+                func getNome (  ) : string  {return Nome;}
+                func getTipo (  ) : string  {return Tipo;}
+                act setNome(eNome:string)   {Nome = eNome;}
+
+}
+
+
+struct Heroi with Pessoa {
+
+    init Heroi () -> Pessoa () {
+
+    }
+    restrict:
+       define Nome : string = ""  ;
+
+    all:
+        act setNomeExterno(eNome:string){Nome = eNome;}
+        func getNomeExterno (  ) : string  {return Nome;}
+
+}

@@ -257,6 +257,7 @@ public class Run_Struct {
 
         run_Init(mIniter, BuscadorDeArgumentos);
 
+        System.out.println(mStructCorpo.getImpressao());
 
     }
 
@@ -309,7 +310,7 @@ public class Run_Struct {
 
     }
 
-    private void exportarOperadoresEDiretores(Escopo BuscadorDeArgumentos){
+    private void exportarOperadoresEDiretores(Escopo BuscadorDeArgumentos) {
 
         for (AST eAST : mStructCorpo.getASTS()) {
 

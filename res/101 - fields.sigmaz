@@ -1,0 +1,27 @@
+call iniciar -> inicio ( )  ;
+
+
+act inicio ( )  {
+
+    def p1 : Humano = init Humano("Luan");
+    def nome_antes : string = p1.getNome();
+
+    p1.setNome("Rafael");
+
+    def nome_depois : string = p1.getNome();
+
+	DEBUG -> LOCAL :: STACK  ;
+
+}
+
+
+struct Humano  {
+
+	field Nome : string = "";
+
+	init Humano (eNome : string) {
+		setNome(eNome);
+	}
+
+
+}

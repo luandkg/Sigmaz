@@ -396,7 +396,7 @@ public class Heranca {
 
         if (Base.existeBranch("COMPLEMENT")) {
             if (Base.getBranch("COMPLEMENT").mesmoNome("FINAL")) {
-                mensagem("\t\t\t  - A struct " +eStructNome + " nao pode herdar " +  eBaseNome + " porque e FINAL !");
+                mensagem("\t\t\t  - A struct " + eStructNome + " nao pode herdar " + eBaseNome + " porque e FINAL !");
                 errar("A struct " + eStructNome + " nao pode herdar " + eBaseNome + " porque e FINAL !");
                 return;
             }
@@ -543,8 +543,31 @@ public class Heranca {
 
         ArrayList<AST> mHerdados = new ArrayList<AST>();
 
+        ArrayList<String> mTrocas = new ArrayList<String>();
+
+        String mPrefixo = "@_" + Base.getNome() + "_";
+
+        for (AST migrando : Base_Corpo.getASTS()) {
+
+            if (migrando.mesmoTipo("DEFINE")) {
+                AST AST_Visibilidade = migrando.getBranch("VISIBILITY");
+
+                if (AST_Visibilidade.mesmoNome("RESTRICT")) {
+                    System.out.println("Herdando " + migrando.getNome() + " Restrict");
+                    mTrocas.add(migrando.getNome());
+                    migrando.setNome(mPrefixo + migrando.getNome());
+                }
+
+            }
+
+        }
+
+
         int n = 0;
         for (AST migrando : Base_Corpo.getASTS()) {
+
+            trocar(migrando, mTrocas, mPrefixo);
+
             Super_Corpo.getASTS().add(n, migrando);
             n += 1;
             mHerdados.add(migrando);
@@ -615,5 +638,55 @@ public class Heranca {
 
     }
 
+
+    private void trocar(AST oAST, ArrayList<String> mTrocas, String ePrefixo) {
+
+        // FIXME : Passar por qualquer tipo de Comando e Corrigir !
+
+        if (oAST.mesmoTipo("ACTION")) {
+
+            for (AST trocando : oAST.getBranch("ARGUMENTS").getASTS()) {
+                trocar(trocando, mTrocas, ePrefixo);
+            }
+            for (AST trocando : oAST.getBranch("BODY").getASTS()) {
+                trocar(trocando, mTrocas, ePrefixo);
+            }
+        } else if (oAST.mesmoTipo("FUNCTION")) {
+
+            for (AST trocando : oAST.getBranch("ARGUMENTS").getASTS()) {
+                trocar(trocando, mTrocas, ePrefixo);
+            }
+            for (AST trocando : oAST.getBranch("BODY").getASTS()) {
+                trocar(trocando, mTrocas, ePrefixo);
+            }
+        } else if (oAST.mesmoTipo("ARGUMENT")) {
+            realizarTroca(oAST, mTrocas, ePrefixo);
+        } else if (oAST.mesmoTipo("APPLY")) {
+
+            if (oAST.getBranch("SETTABLE").mesmoValor("ID")) {
+                realizarTroca(oAST.getBranch("SETTABLE"), mTrocas, ePrefixo);
+            }
+
+        } else if (oAST.mesmoTipo("RETURN")) {
+
+            if (oAST.getBranch("VALUE").mesmoValor("ID")) {
+                realizarTroca(oAST.getBranch("VALUE"), mTrocas, ePrefixo);
+            }
+
+        }
+
+    }
+
+
+    private void realizarTroca(AST oAST, ArrayList<String> mTrocas, String ePrefixo) {
+
+        for (String eTroca : mTrocas) {
+            if (eTroca.contentEquals(oAST.getNome())) {
+                oAST.setNome(ePrefixo + oAST.getNome());
+                break;
+            }
+        }
+
+    }
 
 }

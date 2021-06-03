@@ -3,7 +3,7 @@
 call vamos_contar -> {
 
 
-    println("Vamos contar de 0 a 1000");
+    println("Vamos contar de 0 a 10");
 
     def cc : int = -1;
 
@@ -12,7 +12,7 @@ call vamos_contar -> {
     }
 
 
-    step def contagem1 : int :: ( 0 , 10 , contagem1 ++ 1 ) -> {
+    step def contagem : int :: ( 0 , 10 , contagem ++ 1 ) -> {
         DEBUG -> REGRESSIVE :: STACK  ;
     }
 
